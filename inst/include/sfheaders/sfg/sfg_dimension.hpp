@@ -1,0 +1,100 @@
+#ifndef R_SFHEADERS_SFG_DIMENSION_H
+#define R_SFHEADERS_SFG_DIMENSION_H
+
+#include <Rcpp.h>
+
+namespace sfheaders {
+namespace sfg {
+
+  inline void dimension_check( size_t& n ) {
+    if( n < 2 || n > 4 ) {
+      Rcpp::stop("sfheaders - invalid sfg_POINT size ");
+    }
+  }
+
+  inline std::string sfg_dimension( size_t& n ) {
+    dimension_check( n );
+    std::string dim = "XY";
+
+    // TODO: is "XYM" a valid dimension?
+
+    switch ( n ) {
+    case 3: {
+      return "XYZ";
+    }
+    case 4: {
+      return "XYZM";
+    }
+    }
+    return dim;
+  }
+
+  inline std::string sfg_dimension( Rcpp::IntegerVector& iv ) {
+    size_t n = iv.size();
+    return sfg_dimension( n );
+  }
+
+  inline std::string sfg_dimension( Rcpp::NumericVector& nv ) {
+    size_t n = nv.size();
+    return sfg_dimension( n );
+  }
+
+  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im ) {
+    size_t n_col = im.ncol();
+    return sfg_dimension( n_col );
+  }
+
+  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm ) {
+    size_t n_col = nm.ncol();
+    return sfg_dimension( n_col );
+  }
+
+  inline std::string sfg_dimension( Rcpp::DataFrame& df ) {
+    size_t n_col = df.ncol();
+    return sfg_dimension( n_col );
+  }
+
+  inline std::string sfg_dimension( SEXP x ) {
+
+    //int tp = TYPEOF( x );
+    //Rcpp::Rcout << "tp: " << tp << std::endl;
+
+    switch ( TYPEOF( x ) ) {
+    case INTSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return sfg_dimension( im );
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      return sfg_dimension( iv );
+    }
+    }
+    case REALSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix im = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return sfg_dimension( im );
+    } else {
+      Rcpp::NumericVector iv = Rcpp::as< Rcpp::NumericVector >( x );
+      return sfg_dimension( iv );
+    }
+    }
+    case VECSXP: { // data.frame && list?
+    // if( Rf_isNewList( x ) ) {
+    //   Rcpp::stop("sfheaders - lists not supported for sfg dimensions");
+    // }
+    // TODO - rather than Rf_isNewList - need to check the class is not data.frame
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+    return sfg_dimension( df );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg type");
+    }
+    }
+
+    return ""; // never reaches
+  }
+
+} // sfg
+} // sfheaders
+
+#endif
