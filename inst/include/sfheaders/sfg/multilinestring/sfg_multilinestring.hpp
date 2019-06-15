@@ -69,18 +69,17 @@ namespace sfg {
     return lst;
   }
 
-  // cols will already be sorted line_id, x, y, z, m
+  // cols will already be sorted x, y, z, m
   inline SEXP to_multilinestring(
       Rcpp::DataFrame& df,
-      Rcpp::StringVector cols
+      Rcpp::String line_id,
+      Rcpp::StringVector geometry_cols
   ) {
-    // data.frame must supply columnnames for 'line_id', and x,y,z,m
+
     size_t n_row = df.nrow();
 
-    // TODO - find 'line_id' in the vector of cols
-    Rcpp::String line_id = cols[0];
     //cols.erase( 0 );
-    size_t n_col = cols.size();
+    size_t n_col = geometry_cols.size();
 
     // line_id is an index, so we can assume it's an integer?
     Rcpp::IntegerVector line_ids = df[ line_id ];
@@ -99,18 +98,14 @@ namespace sfg {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
       int line_rows = end - start + 1;
-      Rcpp::NumericMatrix a_line( line_rows, ( n_col - 1 ) );
-      for( j = 1; j < n_col; j++ ) { // becaose '0' is the id column
+      Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
+      for( j = 0; j < n_col; j++ ) {
         Rcpp::NumericVector this_col = Rcpp::as< Rcpp::NumericVector >( df[ j ] );
-        a_line( Rcpp::_, ( j - 1 ) ) = this_col[ Rcpp::Range(start, end) ];
+        a_line( Rcpp::_, j ) = this_col[ Rcpp::Range(start, end) ];
       }
       mls( i ) = a_line;
     }
-
-    //return mls;
-
     return to_multilinestring( mls );
-
   }
 
   inline SEXP to_multilinestring(

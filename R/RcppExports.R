@@ -17,8 +17,8 @@ rcpp_to_multipoint <- function(x) {
     .Call(`_sfheaders_rcpp_to_multipoint`, x)
 }
 
-rcpp_to_multilinestring <- function(df, cols) {
-    .Call(`_sfheaders_rcpp_to_multilinestring`, df, cols)
+rcpp_to_multilinestring <- function(df, line_id, geometry_columns) {
+    .Call(`_sfheaders_rcpp_to_multilinestring`, df, line_id, geometry_columns)
 }
 
 rcpp_to_sfg <- function(x, geom_type) {

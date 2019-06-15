@@ -11,13 +11,13 @@ test_that("sfg multilinestring", {
     m = c(rep(0, length(ids)))
   )
 
-  res <- sfheaders:::rcpp_to_multilinestring(df, c("id","x","y"))
+  res <- sfheaders:::rcpp_to_multilinestring(df, c("id"), c("x","y"))
   expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING", "sfg"))
 
-  res <- sfheaders:::rcpp_to_multilinestring(df, c("id","x","y","z"))
+  res <- sfheaders:::rcpp_to_multilinestring(df, c("id"), c("x","y","z"))
   expect_equal( attr(res, "class"), c("XYZ", "MULTILINESTRING", "sfg"))
 
-  res <- sfheaders:::rcpp_to_multilinestring(df, c("id","x","y","z","m"))
+  res <- sfheaders:::rcpp_to_multilinestring(df, c("id"), c("x","y","z","m"))
   expect_equal( attr(res, "class"), c("XYZM", "MULTILINESTRING", "sfg"))
 
 })

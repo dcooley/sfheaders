@@ -14,9 +14,10 @@ SEXP rcpp_to_multipoint( SEXP x ) {
 // [[Rcpp::export]]
 SEXP rcpp_to_multilinestring(
   Rcpp::DataFrame df,
-  Rcpp::StringVector cols
+  Rcpp::String line_id,
+  Rcpp::StringVector geometry_columns
 ) {
-  return sfheaders::sfg::to_multilinestring( df, cols );
+  return sfheaders::sfg::to_multilinestring( df, line_id, geometry_columns );
 }
 
 // [[Rcpp::export]]
