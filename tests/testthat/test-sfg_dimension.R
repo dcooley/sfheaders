@@ -2,11 +2,11 @@ context("sfg")
 
 test_that("sfg dimensions", {
 
-  expect_error( sfheaders:::rcpp_sfg_dimension( 1 ), "sfheaders - invalid sfg_POINT size" )
+  expect_error( sfheaders:::rcpp_sfg_dimension( 1 ), "sfheaders - invalid dimension" )
   expect_equal( sfheaders:::rcpp_sfg_dimension( 1:2 ), "XY" )
   expect_equal( sfheaders:::rcpp_sfg_dimension( 1:3 ), "XYZ" )
   expect_equal( sfheaders:::rcpp_sfg_dimension( 1:4 ), "XYZM" )
-  expect_error( sfheaders:::rcpp_sfg_dimension( 1:5 ), "sfheaders - invalid sfg_POINT size" )
+  expect_error( sfheaders:::rcpp_sfg_dimension( 1:5 ), "sfheaders - invalid dimension" )
 
   m <- matrix(1:2, ncol = 2 )
   expect_equal( sfheaders:::rcpp_sfg_dimension( m ), "XY" )

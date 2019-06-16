@@ -2,7 +2,7 @@ context("sfg_to_multilinestring")
 
 test_that("sfg multilinestring", {
 
-  ids <- c(1,1,1,2,2,2,2,3,3)
+  ## data.farme
   df <- data.frame(
     id = ids,
     x = c(rep(0, length(ids))),
@@ -19,5 +19,10 @@ test_that("sfg multilinestring", {
 
   res <- sfheaders:::rcpp_to_multilinestring(df, c("id"), c("x","y","z","m"))
   expect_equal( attr(res, "class"), c("XYZM", "MULTILINESTRING", "sfg"))
+
+
+  ## matrix
+  m <- as.matrix( df )
+
 
 })

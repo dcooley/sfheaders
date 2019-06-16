@@ -63,11 +63,18 @@ namespace sfg {
       return sfheaders::sfg::to_multipoint( x );
     } else if ( geom_type == "LINESTRING" ) {
       return sfheaders::sfg::to_linestring( x );
+    } else if ( geom_type == "MULTIILNESTRING" ) {
+      return sfheaders::sfg::to_multilinestring( x );
     }
 
     return Rcpp::List::create();
   }
 
+  inline SEXP to_sfg( SEXP& x, std::string geom_type, SEXP geometry_columns ) {
+    if( geom_type == "POINT" ) {
+      return sfheaders::sfg::to_point( x, geometry_columns );
+    }
+  }
 
 } // sfg
 } // sfheaders

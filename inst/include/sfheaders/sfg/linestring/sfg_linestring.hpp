@@ -3,21 +3,20 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils.hpp"
+#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 
 namespace sfheaders {
 namespace sfg {
 
-  // need functions to get_line(), get_polygon(), etc.
+  // need functions to sfheaders::shapes::get_line(), get_polygon(), etc.
   //
-  // inline SEXP get_line(
+  // inline SEXP sfheaders::shapes::get_line(
   //     SEXP x
   // ) {
   //
   // }
-
-
 
   /*
    * assumes columns are in lon/lat/z/m order
@@ -39,15 +38,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-
-    size_t n_row = im.nrow();
-    size_t n_col = cols.size();
-    size_t i;
-    Rcpp::IntegerMatrix im2( n_row, n_col );
-    for( i = 0; i < n_col; i++ ) {
-      int this_col = cols[ i ];
-      im2( Rcpp::_, i ) = im( Rcpp::_, this_col );
-    }
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
     return to_linestring( im2 );
   }
 
@@ -69,14 +60,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols
   ) {
 
-    size_t n_row = nm.nrow();
-    size_t n_col = cols.size();
-    size_t i;
-    Rcpp::NumericMatrix nm2( n_row, n_col );
-    for( i = 0; i < n_col; i++ ) {
-      int this_col = cols[ i ];
-      nm2( Rcpp::_, i ) = nm( Rcpp::_, this_col );
-    }
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
     return to_linestring( nm2 );
   }
 
@@ -95,21 +79,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    size_t n_col = cols.size();
-    if( df.ncol() < n_col ) {
-      Rcpp::stop("sfheaders - incorrect number of columns");
-    }
-    size_t n_row = df.nrow();
-    Rcpp::NumericMatrix nm( n_row, n_col );
-    size_t i;
-
-    for( i = 0; i < n_col; i++ ) {
-      Rcpp::String this_col = cols[i];
-      //nm( Rcpp::_, i ) = df[ this_col ];
-      Rcpp::NumericVector this_vec = df[ this_col ];
-      nm( Rcpp::_, i ) = this_vec;
-
-    }
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
     return to_linestring( nm );
   }
 

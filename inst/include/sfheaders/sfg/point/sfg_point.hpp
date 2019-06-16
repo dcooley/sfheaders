@@ -2,6 +2,7 @@
 #define R_SFHEADERS_SFG_POINT_H
 
 #include <Rcpp.h>
+#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 
@@ -35,31 +36,23 @@ namespace sfg {
       Rcpp::IntegerMatrix& im
   ) {
 
-    size_t n_row = im.nrow();
-    if( n_row != 1 ) {
-      Rcpp::stop("sfheaders - expecting single-row matrix");
-    }
-    size_t n_col = im.ncol();
-    Rcpp::IntegerVector iv = im( 0, Rcpp::_ );
+    Rcpp::IntegerVector iv = sfheaders::shapes::get_point( im );
     return to_point( iv );
   }
 
   inline SEXP to_point(
       Rcpp::IntegerMatrix& im,
-      Rcpp::NumericVector& cols
+      Rcpp::IntegerVector& cols
   ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_point( im, cols );
+    return to_point( im2 );
+  }
 
-    size_t n_row = im.nrow();
-    if( n_row != 1 ) {
-      Rcpp::stop("sfheaders - expecting single-row matrix");
-    }
-    size_t n_col = im.ncol();
-    size_t i;
-    Rcpp::IntegerMatrix im2( n_row, n_col );
-    for( i = 0; i < n_col; i++ ) {
-      int this_col = cols[ i ];
-      im2( Rcpp::_, i ) = im( Rcpp::_, this_col );
-    }
+  inline SEXP to_point(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_point( im, cols );
     return to_point( im2 );
   }
 
@@ -67,71 +60,40 @@ namespace sfg {
       Rcpp::NumericMatrix& nm
   ) {
 
-    size_t n_row = nm.nrow();
-    if( n_row != 1 ) {
-      Rcpp::stop("sfheaders - expecting single-row matrix");
-    }
-    size_t n_col = nm.ncol();
-    Rcpp::NumericVector nv = nm( 0, Rcpp::_ );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_point( nm );
     return to_point( nv );
   }
 
   inline SEXP to_point(
       Rcpp::NumericMatrix& nm,
-      Rcpp::NumericVector& cols
+      Rcpp::IntegerVector& cols
   ) {
-
-    size_t n_row = nm.nrow();
-    if( n_row != 1 ) {
-      Rcpp::stop("sfheaders - expecting single-row matrix");
-    }
-    size_t n_col = nm.ncol();
-    size_t i;
-    Rcpp::NumericMatrix nm2( n_row, n_col );
-    for( i = 0; i < n_col; i++ ) {
-      int this_col = cols[ i ];
-      nm2( Rcpp::_, i ) = nm( Rcpp::_, this_col );
-    }
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_point( nm, cols );
     return to_point( nm2 );
   }
 
-  // expects only lon/lat/z/m columns
+  // expects only lon/lat/z/m columns in correct order
   inline SEXP to_point(
       Rcpp::DataFrame& df
   ) {
     // expecting single-row data.frame
-    size_t n_row = df.nrow();
-    if( n_row != 1 ) {
-      Rcpp::stop("sfheaders - expecting single-row data.frame");
-    }
-    size_t n_col = df.ncol();
-    // need to extract each column-vector, then create a numeric vector from those
-    Rcpp::NumericVector nv( n_col );
-    size_t i;
-    for( i = 0; i < n_col; i++ ) {
-      nv[i] = df[i];
-    }
+    Rcpp::NumericVector nv = sfheaders::shapes::get_point( df );
     return to_point( nv );
+  }
+
+  inline SEXP to_point(
+    Rcpp::DataFrame& df,
+    Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( df );
+    return to_point( nm, cols );
   }
 
   inline SEXP to_point(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& cols
   ) {
-    size_t n_col = cols.size();
-    if( df.ncol() < n_col ) {
-      Rcpp::stop("sfheaders - incorrect number of columns");
-    }
-    size_t n_row = df.nrow();
-    if( n_row != 1 ) {
-      Rcpp::stop("sfheaders - expecting single-row data.frame");
-    }
-    Rcpp::NumericVector nv( n_col );
-    size_t i;
-    for( i = 0; i < n_col; i++ ) {
-      Rcpp::String this_col = cols[i];
-      nv[i] = df[ this_col ];
-    }
+    Rcpp::NumericVector nv = sfheaders::shapes::get_point( df, cols );
     return to_point( nv );
   }
 
@@ -160,12 +122,10 @@ namespace sfg {
     }
     }
     case VECSXP: { // data.frame && list?
-    //   if( Rf_isNewList( x ) ) {
-    //   Rcpp::stop("sfheaders - lists not supported for sfg_POINT");
-    // }
-      // TODO - rather than Rf_isNewList - need to check the class is not data.frame
+    if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return to_point( df );
+    } // else default
     }
     default: {
       Rcpp::stop("sfheaders - unsupported sfg_POINT type");
@@ -177,12 +137,9 @@ namespace sfg {
 
   inline SEXP to_point(
       SEXP& x,
-      Rcpp::NumericVector& cols
+      Rcpp::IntegerVector& cols
   ) {
-    // with string columns it must be a data.frame(?)
-    if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("Expecting a matrix ");
-    }
+
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
@@ -192,8 +149,15 @@ namespace sfg {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return to_point( nm, cols );
     }
+    case VECSXP: {
+      // TODO - data.frame using numbers to index columns
+      if ( Rf_inherits( x, "data.frame" ) ) {
+        Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+        return to_point( df, cols );
+      } //else - default
+    }
     default: {
-      Rcpp::stop("Expecting a matrix") ; //should never reach?
+      Rcpp::stop("sfheaders - unknown point type");
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -204,11 +168,35 @@ namespace sfg {
       Rcpp::StringVector& cols
   ) {
     // with string columns it must be a data.frame(?)
-    if( Rf_isMatrix( x ) ) {
-      Rcpp::stop("Expecting a data.frame ");
-    }
+
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
     return to_point( df, cols );
+  }
+
+
+  /*
+   * Unknown x and col types
+   * First switch based on column types
+   */
+  inline SEXP to_point(
+    SEXP& x,
+    SEXP& cols
+  ) {
+    switch( TYPEOF( cols ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector int_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
+      return to_point( x, int_cols );
+    }
+    case STRSXP: {
+      Rcpp::StringVector str_cols = Rcpp::as< Rcpp::StringVector >( cols );
+      return to_point( x, str_cols );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column types");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
   }
 
 

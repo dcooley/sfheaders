@@ -5,15 +5,6 @@
 
 using namespace Rcpp;
 
-// test
-void test();
-RcppExport SEXP _sfheaders_test() {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    test();
-    return R_NilValue;
-END_RCPP
-}
 // rcpp_attach_sfc_attributes
 void rcpp_attach_sfc_attributes(Rcpp::List& sfc, std::string geom_type, Rcpp::NumericVector& bbox, std::string epsg, std::string proj4string, int n_empty, double precision);
 RcppExport SEXP _sfheaders_rcpp_attach_sfc_attributes(SEXP sfcSEXP, SEXP geom_typeSEXP, SEXP bboxSEXP, SEXP epsgSEXP, SEXP proj4stringSEXP, SEXP n_emptySEXP, SEXP precisionSEXP) {
@@ -88,6 +79,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_get_point
+SEXP rcpp_get_point(SEXP x, SEXP cols);
+RcppExport SEXP _sfheaders_rcpp_get_point(SEXP xSEXP, SEXP colsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_point(x, cols));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_to_sfc
 Rcpp::List rcpp_to_sfc();
 RcppExport SEXP _sfheaders_rcpp_to_sfc() {
@@ -121,13 +124,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_sfheaders_test", (DL_FUNC) &_sfheaders_test, 0},
     {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 1},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 1},
     {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 3},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
+    {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
     {"_sfheaders_rcpp_to_sfc", (DL_FUNC) &_sfheaders_rcpp_to_sfc, 0},
     {"_sfheaders_first_three", (DL_FUNC) &_sfheaders_first_three, 1},
     {"_sfheaders_rcpp_matrix", (DL_FUNC) &_sfheaders_rcpp_matrix, 0},

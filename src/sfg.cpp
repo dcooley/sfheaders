@@ -24,4 +24,3 @@ SEXP rcpp_to_multilinestring(
 SEXP rcpp_to_sfg( SEXP x, std::string geom_type ) {
   return sfheaders::sfg::to_sfg( x, geom_type );
 }
-

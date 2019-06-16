@@ -4,6 +4,7 @@
 #include "sfheaders/utils.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
+#include "sfheaders/shapes/shapes.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -73,38 +74,13 @@ namespace sfg {
   inline SEXP to_multilinestring(
       Rcpp::DataFrame& df,
       Rcpp::String line_id,
-      Rcpp::StringVector geometry_cols
+      Rcpp::StringVector& geometry_cols
   ) {
-
-    size_t n_row = df.nrow();
-
-    //cols.erase( 0 );
-    size_t n_col = geometry_cols.size();
 
     // line_id is an index, so we can assume it's an integer?
     Rcpp::IntegerVector line_ids = df[ line_id ];
-    Rcpp::IntegerVector unique_ids = Rcpp::sort_unique( line_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::line_ids( line_ids, unique_ids );
+    Rcpp::List mls = sfheaders::shapes::get_lines( df, geometry_cols, line_ids );
 
-    size_t n_lines = unique_ids.length();
-
-    Rcpp::List mls( n_lines );
-
-    // now iterate through the data.frame and get the matrices of lines
-    int first_id = line_ids[0];
-    size_t i, j;
-    for( i = 0; i < n_lines; i++ ) {
-
-      int start = line_positions(i, 0);
-      int end = line_positions(i, 1);
-      int line_rows = end - start + 1;
-      Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
-      for( j = 0; j < n_col; j++ ) {
-        Rcpp::NumericVector this_col = Rcpp::as< Rcpp::NumericVector >( df[ j ] );
-        a_line( Rcpp::_, j ) = this_col[ Rcpp::Range(start, end) ];
-      }
-      mls( i ) = a_line;
-    }
     return to_multilinestring( mls );
   }
 

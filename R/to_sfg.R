@@ -8,6 +8,16 @@
 #'
 #' converts a data.frame to an sfc object
 #'
+#'
+#' @examples
+#'
+#' df <- data.frame(
+#'   id = rep(1,5),
+#'   x = 1:5,
+#'   y = 6:10,
+#'   z = 11:15
+#' )
+#'
 #' @export
 to_sfg <- function(
   obj,

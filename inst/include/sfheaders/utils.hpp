@@ -12,7 +12,7 @@ namespace utils {
    * where the ids start & end
    *
    */
-  Rcpp::IntegerMatrix line_ids(
+  inline Rcpp::IntegerMatrix line_ids(
     Rcpp::IntegerVector& line_ids,
     Rcpp::IntegerVector& unique_ids
   ) {

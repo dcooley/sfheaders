@@ -8,7 +8,7 @@ namespace sfg {
 
   inline void dimension_check( size_t& n ) {
     if( n < 2 || n > 4 ) {
-      Rcpp::stop("sfheaders - invalid sfg_POINT size ");
+      Rcpp::stop("sfheaders - invalid dimension ");
     }
   }
 
