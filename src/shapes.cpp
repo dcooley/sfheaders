@@ -11,3 +11,11 @@ SEXP rcpp_get_point(
   return sfheaders::shapes::get_point( x, cols );
 }
 
+// LINES ----------
+// [[Rcpp::export]]
+SEXP rcpp_get_line(
+  SEXP x,
+  SEXP cols
+) {
+  return sfheaders::shapes::get_line( x, cols );
+}

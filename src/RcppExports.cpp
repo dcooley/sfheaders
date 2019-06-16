@@ -43,19 +43,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_multilinestring
-SEXP rcpp_to_multilinestring(Rcpp::DataFrame df, Rcpp::String line_id, Rcpp::StringVector geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_to_multilinestring(SEXP dfSEXP, SEXP line_idSEXP, SEXP geometry_columnsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type df(dfSEXP);
-    Rcpp::traits::input_parameter< Rcpp::String >::type line_id(line_idSEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multilinestring(df, line_id, geometry_columns));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_to_sfg
 SEXP rcpp_to_sfg(SEXP x, std::string geom_type);
 RcppExport SEXP _sfheaders_rcpp_to_sfg(SEXP xSEXP, SEXP geom_typeSEXP) {
@@ -88,6 +75,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_get_point(x, cols));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_get_line
+SEXP rcpp_get_line(SEXP x, SEXP cols);
+RcppExport SEXP _sfheaders_rcpp_get_line(SEXP xSEXP, SEXP colsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_line(x, cols));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -127,10 +126,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 1},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 1},
-    {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 3},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
+    {"_sfheaders_rcpp_get_line", (DL_FUNC) &_sfheaders_rcpp_get_line, 2},
     {"_sfheaders_rcpp_to_sfc", (DL_FUNC) &_sfheaders_rcpp_to_sfc, 0},
     {"_sfheaders_first_three", (DL_FUNC) &_sfheaders_first_three, 1},
     {"_sfheaders_rcpp_matrix", (DL_FUNC) &_sfheaders_rcpp_matrix, 0},

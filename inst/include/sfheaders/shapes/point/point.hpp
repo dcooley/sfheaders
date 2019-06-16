@@ -7,6 +7,8 @@
 namespace sfheaders {
 namespace shapes {
 
+  // POINTS are vectors
+
   inline SEXP get_point(
       Rcpp::IntegerVector& iv
   ) {
@@ -26,7 +28,6 @@ namespace shapes {
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
-    size_t n_col = im.ncol();
     Rcpp::IntegerVector iv = im( 0, Rcpp::_ );
     return iv;
   }
@@ -80,7 +81,7 @@ namespace shapes {
     Rcpp::NumericVector nv( n_col );
     size_t i;
     for( i = 0; i < n_col; i++ ) {
-      Rcpp::String this_col = cols[i];
+      Rcpp::String this_col = cols[ i ];
       nv[i] = df[ this_col ];
     }
     return nv;
@@ -91,7 +92,6 @@ namespace shapes {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    size_t n_row = im.nrow();
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
     return get_point( df, cols );
   }
@@ -103,7 +103,6 @@ namespace shapes {
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
-    size_t n_col = nm.ncol();
     Rcpp::NumericVector nv = nm( 0, Rcpp::_ );
     return nv;
   }
@@ -112,7 +111,6 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    size_t n_row = nm.nrow();
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
     return get_point( df, cols );
   }
@@ -140,7 +138,7 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( df );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     return get_point( nm, cols );
   }
 
@@ -184,9 +182,9 @@ namespace shapes {
       return get_point( nm, cols );
     }
     case VECSXP: {
-      if( Rf_inherits( x, "data.frame" ) ) {
+    if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_point( df );
+      return get_point( df, cols );
     } // else default
     }
     default: {
@@ -228,7 +226,6 @@ namespace shapes {
     }
     }
     }
-
     return Rcpp::List::create(); // never reaches
   }
 

@@ -11,14 +11,14 @@ SEXP rcpp_to_multipoint( SEXP x ) {
   return sfheaders::sfg::to_multipoint( x );
 }
 
-// [[Rcpp::export]]
-SEXP rcpp_to_multilinestring(
-  Rcpp::DataFrame df,
-  Rcpp::String line_id,
-  Rcpp::StringVector geometry_columns
-) {
-  return sfheaders::sfg::to_multilinestring( df, line_id, geometry_columns );
-}
+// // [[Rcpp::export]]
+// SEXP rcpp_to_multilinestring(
+//   Rcpp::DataFrame df,
+//   Rcpp::String line_id,
+//   Rcpp::StringVector geometry_columns
+// ) {
+//   return sfheaders::sfg::to_multilinestring( df, line_id, geometry_columns );
+// }
 
 // [[Rcpp::export]]
 SEXP rcpp_to_sfg( SEXP x, std::string geom_type ) {

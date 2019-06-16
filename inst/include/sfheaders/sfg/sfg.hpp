@@ -64,7 +64,7 @@ namespace sfg {
     } else if ( geom_type == "LINESTRING" ) {
       return sfheaders::sfg::to_linestring( x );
     } else if ( geom_type == "MULTIILNESTRING" ) {
-      return sfheaders::sfg::to_multilinestring( x );
+      //return sfheaders::sfg::to_multilinestring( x );
     }
 
     return Rcpp::List::create();

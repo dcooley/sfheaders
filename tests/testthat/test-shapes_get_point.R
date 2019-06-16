@@ -62,6 +62,16 @@ test_that("points extracted from different objects", {
   res <- sfheaders:::rcpp_get_point( x, c("x","y") )
   expect_equal( c(x$x, x$y), res )
 
+  ## matrix with cols in different order
+  df <- data.frame(y = 1, x = 2)
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_get_point( x, c("x","y") )
+  expect_equal( rev( as.vector( x ) ), res )
+
+  ## data.frame with cols in different order
+  x <- data.frame(y = 1, x = 2)
+  res <- sfheaders:::rcpp_get_point( x, c("x","y") )
+  expect_equal( rev( c(x$x, x$y) ), res )
 
   ## errors
   ## - too many rows

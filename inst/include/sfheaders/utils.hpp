@@ -6,6 +6,25 @@
 namespace sfheaders {
 namespace utils {
 
+  inline Rcpp::NumericMatrix df_to_matrix(
+    Rcpp::DataFrame& df
+  ) {
+    int i;
+    int n_cols = df.cols();
+    int n_rows = df.rows();
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::NumericMatrix nm( n_rows, n_cols );
+    for( i = 0; i < n_cols; i++ ) {
+      Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ i ] );
+      nm( Rcpp::_, i ) = this_column;
+    }
+    //nm.names() = df_names;
+    Rcpp::List m_attr(2);
+    m_attr(1) = df_names;
+    nm.attr("dimnames") = m_attr;
+    return nm;
+  }
+
   /* line_ids
    *
    * returns a 2-colummn matrix giving the start & end locations in a vector of'ids'
