@@ -9,8 +9,8 @@ namespace shapes {
 
  // LINEs are matrices
 
-  // -- LINES
-  // get lines from
+  // -- LINE
+  // get line from
   // - matrix
   // - matrix with columns identified
   // - data.frame
@@ -183,14 +183,14 @@ namespace shapes {
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
-      if( !Rf_isMatrix( x ) ) {
+    if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
       return get_line( im );
     }
     case REALSXP: {
-      if( !Rf_isMatrix( x ) ) {
+    if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
@@ -198,7 +198,7 @@ namespace shapes {
     }
     }
     case VECSXP: {
-      if( Rf_inherits( x, "data.frame" ) ) {
+    if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return get_line( df );
     } // else default

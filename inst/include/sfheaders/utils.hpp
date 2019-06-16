@@ -32,8 +32,8 @@ namespace utils {
    *
    */
   inline Rcpp::IntegerMatrix line_ids(
-    Rcpp::IntegerVector& line_ids,
-    Rcpp::IntegerVector& unique_ids
+    Rcpp::NumericVector& line_ids,
+    Rcpp::NumericVector& unique_ids
   ) {
 
     size_t n = line_ids.length();

@@ -5,6 +5,7 @@
 #include "sfheaders/utils.hpp"
 #include "sfheaders/shapes/point/point.hpp"
 #include "sfheaders/shapes/line/line.hpp"
+#include "sfheaders/shapes/lines/lines.hpp"
 
 
 #endif

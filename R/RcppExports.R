@@ -29,6 +29,10 @@ rcpp_get_line <- function(x, cols) {
     .Call(`_sfheaders_rcpp_get_line`, x, cols)
 }
 
+rcpp_get_lines <- function(x, cols, id) {
+    .Call(`_sfheaders_rcpp_get_lines`, x, cols, id)
+}
+
 rcpp_to_sfc <- function() {
     .Call(`_sfheaders_rcpp_to_sfc`)
 }

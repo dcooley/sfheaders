@@ -90,6 +90,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_get_lines
+SEXP rcpp_get_lines(SEXP x, SEXP cols, SEXP id);
+RcppExport SEXP _sfheaders_rcpp_get_lines(SEXP xSEXP, SEXP colsSEXP, SEXP idSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id(idSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_lines(x, cols, id));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_to_sfc
 Rcpp::List rcpp_to_sfc();
 RcppExport SEXP _sfheaders_rcpp_to_sfc() {
@@ -130,6 +143,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
     {"_sfheaders_rcpp_get_line", (DL_FUNC) &_sfheaders_rcpp_get_line, 2},
+    {"_sfheaders_rcpp_get_lines", (DL_FUNC) &_sfheaders_rcpp_get_lines, 3},
     {"_sfheaders_rcpp_to_sfc", (DL_FUNC) &_sfheaders_rcpp_to_sfc, 0},
     {"_sfheaders_first_three", (DL_FUNC) &_sfheaders_first_three, 1},
     {"_sfheaders_rcpp_matrix", (DL_FUNC) &_sfheaders_rcpp_matrix, 0},
