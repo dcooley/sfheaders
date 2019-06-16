@@ -29,7 +29,7 @@ test_that("sfg_POINTS returned from various R objects from src", {
   res <- attr( pt, "class" )
   expect_equal( res, c("XYZ", "POINT", "sfg") )
 
-  x <- matrix(c(0,0,0,0), ncol = 4 )
+  x <- matrix(c(0L,0L,0L,0L), ncol = 4 )
   pt <- sfheaders:::rcpp_to_point( x )
   res <- attr( pt, "class" )
   expect_equal( res, c("XYZM", "POINT", "sfg") )
@@ -55,7 +55,6 @@ test_that("sfg_POINTS returned from various R objects from src", {
 
   x <- data.frame( x = c(0,0), y = c(0,0) )
   expect_error( sfheaders:::rcpp_to_point( x ) )
-
 
 })
 
