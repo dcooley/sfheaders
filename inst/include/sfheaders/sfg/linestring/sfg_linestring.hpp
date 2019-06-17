@@ -10,21 +10,12 @@
 namespace sfheaders {
 namespace sfg {
 
-  // need functions to sfheaders::shapes::get_line(), get_polygon(), etc.
-  //
-  // inline SEXP sfheaders::shapes::get_line(
-  //     SEXP x
-  // ) {
-  //
-  // }
-
   /*
    * assumes columns are in lon/lat/z/m order
    */
   inline SEXP to_linestring(
       Rcpp::IntegerMatrix& im
   ) {
-
     size_t n_col = im.ncol();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
@@ -34,9 +25,18 @@ namespace sfg {
     return im;
   }
 
+
   inline SEXP to_linestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    return to_linestring( im2 );
+  }
+
+  inline SEXP to_linestring(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& cols
   ) {
     Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
     return to_linestring( im2 );
@@ -59,7 +59,14 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    return to_linestring( nm2 );
+  }
 
+  inline SEXP to_linestring(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& cols
+  ) {
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
     return to_linestring( nm2 );
   }
@@ -68,10 +75,7 @@ namespace sfg {
   inline SEXP to_linestring(
       Rcpp::DataFrame& df
   ) {
-    size_t n_row = df.nrow();
-    size_t n_col = df.ncol();
-    // need to extract each column-vector, then create a numeric vector from those
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( df );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     return to_linestring( nm );
   }
 
@@ -84,58 +88,132 @@ namespace sfg {
   }
 
   inline SEXP to_linestring(
-      SEXP& x
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& cols
   ) {
-    // switch on type of x
-    switch ( TYPEOF( x ) ) {
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    return to_linestring( nm );
+  }
+
+  inline SEXP to_linestring(
+      SEXP& x,
+      Rcpp::IntegerVector& cols
+  ) {
+    switch( TYPEOF( x ) ) {
     case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return to_linestring( im );
+      return to_linestring( im, cols );
     }
     case REALSXP: {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_linestring( nm );
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
     }
-    case VECSXP: { // data.frame && list?
-      //   if( Rf_isNewList( x ) ) {
-      //   Rcpp::stop("sfheaders - lists not supported for sfg_LINESTRING");
-      // }
-      // TODO - rather than Rf_isNewList - need to check the class is not data.frame
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_linestring( nm, cols );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return to_linestring( df );
+      return to_linestring( df, cols );
+    } // else default
     }
     default: {
       Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
     }
     }
 
+    return Rcpp::List::create(); // never reaches
+  }
+
+  inline SEXP to_linestring(
+      SEXP& x,
+      Rcpp::StringVector& cols
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_linestring( im, cols );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_linestring( nm, cols );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_linestring( df, cols );
+    } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+    }
+    }
+
+    return Rcpp::List::create(); // never reaches
+  }
+
+
+  inline SEXP to_linestring(
+      SEXP& x
+  ) {
+    // switch on type of x
+    switch ( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_linestring( im );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_linestring( nm );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_linestring( df );
+    } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+    }
+    }
     return x; // never reaches
   }
 
   inline SEXP to_linestring(
       SEXP& x,
-      Rcpp::IntegerVector cols
+      SEXP& cols
   ) {
-    // with string columns it must be a data.frame(?)
-    if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("Expecting a matrix ");
-    }
-    switch( TYPEOF( x ) ) {
+    switch( TYPEOF( cols ) ) {
+    case REALSXP: {}
     case INTSXP: {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return to_linestring( im, cols );
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
+      return to_linestring( x, iv );
     }
-    case REALSXP: {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_linestring( nm, cols );
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
+      return to_linestring( x, sv );
     }
     default: {
-      Rcpp::stop("Expecting a matrix") ; //should never reach?
+      Rcpp::stop("sfheaders - unknown column types");
     }
     }
     return Rcpp::List::create(); // never reaches
   }
-
 
 } // sfg
 } // sfheaders

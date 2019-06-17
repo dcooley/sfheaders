@@ -13,6 +13,10 @@ rcpp_to_multipoint <- function(x) {
     .Call(`_sfheaders_rcpp_to_multipoint`, x)
 }
 
+rcpp_to_linestring <- function(x) {
+    .Call(`_sfheaders_rcpp_to_linestring`, x)
+}
+
 rcpp_to_sfg <- function(x, geom_type) {
     .Call(`_sfheaders_rcpp_to_sfg`, x, geom_type)
 }

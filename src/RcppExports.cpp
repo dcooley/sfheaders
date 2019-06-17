@@ -43,6 +43,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_to_linestring
+SEXP rcpp_to_linestring(SEXP x);
+RcppExport SEXP _sfheaders_rcpp_to_linestring(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_linestring(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_to_sfg
 SEXP rcpp_to_sfg(SEXP x, std::string geom_type);
 RcppExport SEXP _sfheaders_rcpp_to_sfg(SEXP xSEXP, SEXP geom_typeSEXP) {
@@ -139,6 +150,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 1},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 1},
+    {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 1},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},

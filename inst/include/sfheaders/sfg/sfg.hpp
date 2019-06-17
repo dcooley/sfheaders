@@ -74,6 +74,8 @@ namespace sfg {
     if( geom_type == "POINT" ) {
       return sfheaders::sfg::to_point( x, geometry_columns );
     }
+
+    return Rcpp::List::create(); // never reaches
   }
 
 } // sfg
