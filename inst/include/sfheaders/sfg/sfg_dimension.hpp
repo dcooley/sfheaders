@@ -17,7 +17,6 @@ namespace sfg {
     std::string dim = "XY";
 
     // TODO: is "XYM" a valid dimension?
-
     switch ( n ) {
     case 3: {
       return "XYZ";
@@ -54,6 +53,21 @@ namespace sfg {
     return sfg_dimension( n_col );
   }
 
+  // we can just get the first element, because by this point
+  // all the elements should have been made correctly
+  inline std::string sfg_dimension( Rcpp::List& lst ) {
+
+    SEXP list_element = lst[ 0 ];
+    switch( TYPEOF( list_element ) ) {
+    case VECSXP: {
+    if( Rf_isNewList( list_element ) ) {
+      Rcpp::List x = Rcpp::as< Rcpp::List >( list_element );
+      return sfg_dimension( x );
+    }
+    }
+    }
+  }
+
   inline std::string sfg_dimension( SEXP x ) {
 
     //int tp = TYPEOF( x );
@@ -79,12 +93,18 @@ namespace sfg {
     }
     }
     case VECSXP: { // data.frame && list?
-    // if( Rf_isNewList( x ) ) {
-    //   Rcpp::stop("sfheaders - lists not supported for sfg dimensions");
-    // }
-    // TODO - rather than Rf_isNewList - need to check the class is not data.frame
-    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfg_dimension( df );
+    if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return sfg_dimension( df );
+    } else if ( Rf_isNewList( x ) ) {
+      // we can just get the first element, because by this point
+      // all the elements should have been made correctly
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
+      SEXP list_element = lst[ 0 ];
+      return sfg_dimension( list_element );
+    } // else default
+
+
     }
     default: {
       Rcpp::stop("sfheaders - unsupported sfg type");

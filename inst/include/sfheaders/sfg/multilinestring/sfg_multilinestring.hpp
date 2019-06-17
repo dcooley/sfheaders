@@ -2,43 +2,57 @@
 #define R_SFHEADERS_SFG_MULTILINESTRING_H
 
 #include "sfheaders/utils.hpp"
+#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 
 namespace sfheaders {
 namespace sfg {
 
   // multilinestring is a list of linestrings (matrices)
   // but can also be a single matrix
+  inline SEXP to_multilinestring(
+      Rcpp::IntegerMatrix& im
+  ) {
+    Rcpp::List mls( 1 );
+    mls[0] = im;
+    size_t n_col = im.ncol();
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
-  // inline SEXP to_multilinestring(
-  //   Rcpp::IntegerMatrix& im
-  // ) {
-  //   Rcpp::List mls( 1 );
-  //   mls[0] = im;
-  //   size_t n_col = im.ncol();
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-  //
-  //   std::string geom_type = "MULTILINESTRING";
-  //   mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  //
-  //   return mls;
-  // }
-  //
-  // inline SEXP to_multilinestring(
-  //     Rcpp::NumericMatrix& nm
-  // ) {
-  //   Rcpp::List mls( 1 );
-  //   mls[0] = nm;
-  //   size_t n_col = nm.ncol();
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-  //
-  //   std::string geom_type = "MULTILINESTRING";
-  //   mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  //
-  //   return mls;
-  // }
+    std::string geom_type = "MULTILINESTRING";
+    mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+
+    return mls;
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::NumericMatrix& nm
+  ) {
+    Rcpp::List mls( 1 );
+    mls[0] = nm;
+    size_t n_col = nm.ncol();
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+
+    std::string geom_type = "MULTILINESTRING";
+    mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+
+    return mls;
+  }
+
+  inline SEXP to_multilinestring(
+    Rcpp::List& lst
+  ) {
+
+    // each list element must be a matrix
+    std::string dim = sfheaders::sfg::sfg_dimension( lst );
+
+    std::string geom_type = "MULTILINESTRING";
+    lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+
+    return lst;
+  }
+
+
   //
   //
   // inline SEXP to_multilinestring(

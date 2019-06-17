@@ -16,6 +16,11 @@ SEXP rcpp_to_linestring( SEXP x ) {
   return sfheaders::sfg::to_linestring( x );
 }
 
+// [[Rcpp::export]]
+SEXP rcpp_to_multilinestring( SEXP x ) {
+  return sfheaders::sfg::to_multilinestring( x );
+}
+
 // // [[Rcpp::export]]
 // SEXP rcpp_to_multilinestring(
 //   Rcpp::DataFrame df,
