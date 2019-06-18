@@ -53,25 +53,7 @@ namespace sfg {
     return sfg_dimension( n_col );
   }
 
-  // we can just get the first element, because by this point
-  // all the elements should have been made correctly
-  inline std::string sfg_dimension( Rcpp::List& lst ) {
-
-    SEXP list_element = lst[ 0 ];
-    switch( TYPEOF( list_element ) ) {
-    case VECSXP: {
-    if( Rf_isNewList( list_element ) ) {
-      Rcpp::List x = Rcpp::as< Rcpp::List >( list_element );
-      return sfg_dimension( x );
-    }
-    }
-    }
-  }
-
   inline std::string sfg_dimension( SEXP x ) {
-
-    //int tp = TYPEOF( x );
-    //Rcpp::Rcout << "tp: " << tp << std::endl;
 
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
@@ -98,7 +80,7 @@ namespace sfg {
       return sfg_dimension( df );
     } else if ( Rf_isNewList( x ) ) {
       // we can just get the first element, because by this point
-      // all the elements should have been made correctly
+      // all the elements should have been made correctly (?)
       Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
       SEXP list_element = lst[ 0 ];
       return sfg_dimension( list_element );

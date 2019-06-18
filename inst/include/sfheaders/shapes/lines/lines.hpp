@@ -10,6 +10,28 @@ namespace shapes {
 
   // LINES are lists of matrices
   // gets lines from data.frame with a 'line_id' column
+  inline SEXP get_lines(
+    Rcpp::IntegerMatrix& im
+  ) {
+    Rcpp::List lst(1);
+    lst[0] = im;
+    return lst;
+  }
+
+  inline SEXP get_lines(
+    Rcpp::NumericMatrix& nm
+  ) {
+    Rcpp::List lst(1);
+    lst[0] = nm;
+    return lst;
+  }
+
+  inline SEXP get_lines(
+    Rcpp::DataFrame& df
+  ) {
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    return get_lines( nm );
+  }
 
   inline SEXP get_lines(
       Rcpp::DataFrame& df,
@@ -216,6 +238,13 @@ namespace shapes {
     return get_lines( df, cols, id_col );
   }
 
+  inline SEXP get_lines(
+    SEXP& x,
+    SEXP& cols
+  ) {
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( x, cols );
+    return get_lines( nm );
+  }
 
   inline SEXP get_lines(
       SEXP& x,

@@ -2,23 +2,24 @@
 #include "sfheaders/sfg/sfg.hpp"
 
 // [[Rcpp::export]]
-SEXP rcpp_to_point( SEXP x ) {
-  return sfheaders::sfg::to_point( x );
+SEXP rcpp_to_point( SEXP x, SEXP geometry_columns ) {
+  return sfheaders::sfg::to_point( x, geometry_columns );
+}
+
+
+// [[Rcpp::export]]
+SEXP rcpp_to_multipoint( SEXP x, SEXP geometry_columns ) {
+  return sfheaders::sfg::to_multipoint( x, geometry_columns );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_to_multipoint( SEXP x ) {
-  return sfheaders::sfg::to_multipoint( x );
+SEXP rcpp_to_linestring( SEXP x, SEXP geometry_columns ) {
+  return sfheaders::sfg::to_linestring( x, geometry_columns );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_to_linestring( SEXP x ) {
-  return sfheaders::sfg::to_linestring( x );
-}
-
-// [[Rcpp::export]]
-SEXP rcpp_to_multilinestring( SEXP x ) {
-  return sfheaders::sfg::to_multilinestring( x );
+SEXP rcpp_to_multilinestring( SEXP x, SEXP geometry_columns ) {
+  return sfheaders::sfg::to_multilinestring( x, geometry_columns );
 }
 
 // // [[Rcpp::export]]

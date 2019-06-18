@@ -21,6 +21,7 @@ namespace utils {
     //nm.names() = df_names;
     Rcpp::List m_attr(2);
     m_attr(1) = df_names;
+    //Rcpp::Rcout << "here" << std::endl;
     nm.attr("dimnames") = m_attr;
     return nm;
   }

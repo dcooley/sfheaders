@@ -111,6 +111,7 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
+    Rcpp::Rcout << "getting a point" << std::endl;
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
     return get_point( df, cols );
   }
@@ -139,6 +140,9 @@ namespace shapes {
       Rcpp::IntegerVector& cols
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::Rcout << "cols: " << cols << std::endl;
+    Rcpp::stop("stopping");
+
     return get_point( nm, cols );
   }
 

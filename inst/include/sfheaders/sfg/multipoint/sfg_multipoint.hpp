@@ -24,6 +24,14 @@ namespace sfg {
     return im;
   }
 
+  inline SEXP to_multipoint(
+      Rcpp::IntegerVector& iv
+  ) {
+    size_t n = iv.length();
+    Rcpp::IntegerMatrix im( 1, n );
+    im( 0, Rcpp::_ ) = iv;
+    return to_multipoint( im );
+  }
 
   inline SEXP to_multipoint(
       Rcpp::IntegerMatrix& im,
@@ -52,6 +60,15 @@ namespace sfg {
     nm.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
 
     return nm;
+  }
+
+  inline SEXP to_multipoint(
+      Rcpp::NumericVector& nv
+  ) {
+    size_t n = nv.length();
+    Rcpp::NumericMatrix nm( 1, n );
+    nm( 0, Rcpp::_ ) = nv;
+    return to_multipoint( nm );
   }
 
   inline SEXP to_multipoint(
@@ -101,17 +118,19 @@ inline SEXP to_multipoint(
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
-    }
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return to_multipoint( im, cols );
+        Rcpp::stop("sfheaders - expecting a matrix");
+      } else {
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        return to_multipoint( im, cols );
+      }
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
-    }
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_multipoint( nm, cols );
+        Rcpp::stop("sfheaders - expecting a matrix");
+      } else {
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        return to_multipoint( nm, cols );
+      }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame") ) {
@@ -133,18 +152,24 @@ inline SEXP to_multipoint(
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
-      if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
-    }
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return to_multipoint( im, cols );
+      if( Rf_isMatrix( x ) ) {
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        return to_multipoint( im, cols );
+      } else {
+        Rcpp::warning("sfheaders - ignoring geometry_columns argument");
+        Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+        return to_multipoint( iv );
+      }
     }
     case REALSXP: {
-      if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
-    }
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_multipoint( nm, cols );
+      if( Rf_isMatrix( x ) ) {
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        return to_multipoint( nm, cols );
+      } else {
+        Rcpp::warning("sfheaders - ignoring geometry_columns argument");
+        Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+        return to_multipoint( nv );
+      }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame") ) {
@@ -167,18 +192,22 @@ inline SEXP to_multipoint(
     // switch on type of x
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
-    if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
-    }
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return to_multipoint( im );
+      if( Rf_isMatrix( x ) ) {
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        return to_multipoint( im );
+      } else {
+        Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+        return to_multipoint( iv );
+      }
     }
     case REALSXP: {
-    if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
-    }
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_multipoint( nm );
+      if( Rf_isMatrix( x ) ) {
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        return to_multipoint( nm );
+      } else {
+        Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+        return to_multipoint( nv );
+      }
     }
     case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
@@ -197,6 +226,9 @@ inline SEXP to_multipoint(
     SEXP& x,
     SEXP& cols
   ) {
+    if( Rf_isNull( cols ) ) {
+      return to_multipoint( x );
+    }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}
     case INTSXP: {

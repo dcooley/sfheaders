@@ -5,16 +5,20 @@ rcpp_attach_sfc_attributes <- function(sfc, geom_type, bbox, epsg, proj4string, 
     invisible(.Call(`_sfheaders_rcpp_attach_sfc_attributes`, sfc, geom_type, bbox, epsg, proj4string, n_empty, precision))
 }
 
-rcpp_to_point <- function(x) {
-    .Call(`_sfheaders_rcpp_to_point`, x)
+rcpp_to_point <- function(x, geometry_columns) {
+    .Call(`_sfheaders_rcpp_to_point`, x, geometry_columns)
 }
 
-rcpp_to_multipoint <- function(x) {
-    .Call(`_sfheaders_rcpp_to_multipoint`, x)
+rcpp_to_multipoint <- function(x, geometry_columns) {
+    .Call(`_sfheaders_rcpp_to_multipoint`, x, geometry_columns)
 }
 
-rcpp_to_linestring <- function(x) {
-    .Call(`_sfheaders_rcpp_to_linestring`, x)
+rcpp_to_linestring <- function(x, geometry_columns) {
+    .Call(`_sfheaders_rcpp_to_linestring`, x, geometry_columns)
+}
+
+rcpp_to_multilinestring <- function(x, geometry_columns) {
+    .Call(`_sfheaders_rcpp_to_multilinestring`, x, geometry_columns)
 }
 
 rcpp_to_sfg <- function(x, geom_type) {

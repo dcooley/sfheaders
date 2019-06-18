@@ -35,7 +35,6 @@ namespace sfg {
   inline SEXP to_point(
       Rcpp::IntegerMatrix& im
   ) {
-
     Rcpp::IntegerVector iv = sfheaders::shapes::get_point( im );
     return to_point( iv );
   }
@@ -59,7 +58,6 @@ namespace sfg {
   inline SEXP to_point(
       Rcpp::NumericMatrix& nm
   ) {
-
     Rcpp::NumericVector nv = sfheaders::shapes::get_point( nm );
     return to_point( nv );
   }
@@ -69,6 +67,16 @@ namespace sfg {
       Rcpp::IntegerVector& cols
   ) {
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_point( nm, cols );
+    return to_point( nm2 );
+  }
+
+  inline SEXP to_point(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::Rcout << "to_poitn( nm, cols ) " << std::endl;
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_point( nm, cols );
+    Rcpp::Rcout << "matrix made? " << std::endl;
     return to_point( nm2 );
   }
 
@@ -85,8 +93,9 @@ namespace sfg {
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( df );
-    return to_point( nm, cols );
+    //Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_point( df, cols );
+    return to_point( nv );
   }
 
   inline SEXP to_point(
@@ -182,6 +191,9 @@ namespace sfg {
     SEXP& x,
     SEXP& cols
   ) {
+    if( Rf_isNull( cols ) ) {
+      return to_point( x );
+    }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}
     case INTSXP: {

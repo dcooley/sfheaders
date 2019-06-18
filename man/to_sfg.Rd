@@ -12,3 +12,13 @@ to_sfg(obj, x, y, z = NULL, m = NULL, point_id = NULL,
 \description{
 converts a data.frame to an sfc object
 }
+\examples{
+
+df <- data.frame(
+  id = rep(1,5),
+  x = 1:5,
+  y = 6:10,
+  z = 11:15
+)
+
+}

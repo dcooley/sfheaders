@@ -3,6 +3,79 @@
 ## - if defining column names, or numbers for matrix, the R function
 ## - needs to put them in order c(x, y, z, m)
 
+#' to POINT
+#'
+#' @examples
+#'
+#' to_point( 1:2 )
+#' to_point( 1:3 )
+#' to_point( 1:4 )
+#'
+#' to_point( matrix( 1:3, ncol = 3 ) )
+#' to_point( data.frame( x = 1, y = 2, z = 3 )  )
+#'
+#' to_point( data.frame( x = 1, y = 2, z = 3 ), geometry_columns = c("x","y") )
+#' to_point( data.frame( x = 1, y = 2, z = 3 ), geometry_columns = c(1,2) )
+#'
+#'
+#' ## will error
+#' # to_point( matrix( 1:4, ncol = 2 ) )
+#'
+#' @export
+to_point <- function( x, geometry_columns = NULL ) {
+  rcpp_to_point( x, index_correct( geometry_columns ) )
+}
+
+
+#' to MULTIPOINT
+#'
+#' @examples
+#'
+#' to_multipoint( 1:2 )
+#' to_multipoint( 1:3 )
+#' to_multipoint( 1:4 )
+#'
+#' to_multipoint( matrix( 1:3, ncol = 3 ) )
+#' to_multipoint( data.frame( x = 1, y = 2, z = 3 )  )
+#'
+#' to_multipoint( matrix( 1:4, ncol = 2 ) )
+#' to_multipoint( matrix( 1:24, ncol = 2, byrow = T ) )
+#' to_multipoint( matrix( 1:24, ncol = 3, byrow = T ) )
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ) )
+#'
+#' to_multipoint( data.frame( x = 1:5, y = 1:5 ) )
+#'
+#' ## using columns
+#'
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(1,2) )
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(1:3) )
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(3,4) )
+#'
+#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y") )
+#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y","z") )
+#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y","z","m") )
+#'
+#' @export
+to_multipoint <- function( x, geometry_columns = NULL ) {
+  ## numeric columns need to be zero-indexed
+  rcpp_to_multipoint( x, index_correct( geometry_columns ) )
+}
+
+#' to LINESTRING
+#'
+#' @export
+to_linestring <- function( x, geometry_columns = NULL ) {
+  rcpp_to_linestring( x, index_correct( geometry_columns ) )
+}
+
+#' to MULTILINESTRING
+#'
+#' @export
+to_multilinestring <- function( x, geometry_columns = NULL ) {
+  rcpp_to_multilinestring( x, index_correct( geometry_columns ) )
+}
+
+
 
 #' to sfc
 #'

@@ -198,6 +198,9 @@ namespace sfg {
       SEXP& x,
       SEXP& cols
   ) {
+    if( Rf_isNull( cols ) ) {
+      return to_linestring( x );
+    }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}
     case INTSXP: {

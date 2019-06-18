@@ -40,6 +40,22 @@ namespace sfg {
   }
 
   inline SEXP to_multilinestring(
+      Rcpp::DataFrame& df
+  ) {
+    Rcpp::List mls( 1 );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    mls[0] = nm;
+    size_t n_col = nm.ncol();
+    Rcpp::Rcout << "n_col: " << n_col << std::endl;
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+
+    std::string geom_type = "MULTILINESTRING";
+    mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+
+    return mls;
+  }
+
+  inline SEXP to_multilinestring(
     Rcpp::List& lst
   ) {
 
@@ -53,80 +69,238 @@ namespace sfg {
   }
 
 
-  //
-  //
-  // inline SEXP to_multilinestring(
-  //   Rcpp::List& lst
-  // ) {
-  //
-  //   size_t n = lst.size();
-  //   size_t i;
-  //   size_t n_col;
-  //   for( i = 0; i < n; i++ ) {
-  //     SEXP this_line = lst[ i ];
-  //     if( !Rf_isMatrix( this_line ) ) {
-  //       Rcpp::stop("sfheaders - multilinestring list must be a list of matrices");
-  //     }
-  //     size_t this_n_col = sfheaders::utils::get_sexp_n_col( this_line );
-  //
-  //     if( i == 0 ){
-  //       n_col = this_n_col;
-  //     }
-  //     if( n_col != this_n_col ) {
-  //       Rcpp::stop("sfheaders - multiple dimensions found for MULTILINESTRING");
-  //     }
-  //   }
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-  //
-  //   std::string geom_type = "MULTILINESTRING";
-  //   lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  //
-  //   return lst;
-  // }
-  //
-  // // cols will already be sorted x, y, z, m
-  // inline SEXP to_multilinestring(
-  //     Rcpp::DataFrame& df,
-  //     Rcpp::String line_id,
-  //     Rcpp::StringVector& geometry_cols
-  // ) {
-  //
-  //   // line_id is an index, so we can assume it's an integer?
-  //   Rcpp::IntegerVector line_ids = df[ line_id ];
-  //   Rcpp::List mls = sfheaders::shapes::get_lines( df, geometry_cols, line_ids );
-  //
-  //   return to_multilinestring( mls );
-  // }
-  //
-  // inline SEXP to_multilinestring(
-  //     SEXP& x
-  // ) {
-  //   // switch on type of x
-  //   switch ( TYPEOF( x ) ) {
-  //   case INTSXP: {
-  //     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-  //     return to_multilinestring( im );
-  //   }
-  //   case REALSXP: {
-  //     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-  //     return to_multilinestring( nm );
-  //   }
-  //   case VECSXP: { // data.frame && list?
-  //     //   if( Rf_isNewList( x ) ) {
-  //     //   Rcpp::stop("sfheaders - lists not supported for sfg_POINT");
-  //     // }
-  //     // TODO - rather than Rf_isNewList - need to check the class is not data.frame
-  //     //Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-  //     Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
-  //     return to_multilinestring( x );
-  //   }
-  //   default: {
-  //     Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
-  //   }
-  //   }
-  //
-  //   return x; // never reaches
-  // }
+  inline SEXP to_multilinestring(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    return to_multilinestring( nm );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    return to_multilinestring( nm );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    return to_multilinestring( nm2 );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    return to_multilinestring( nm2 );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    return to_multilinestring( im2 );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    return to_multilinestring( im2 );
+  }
+
+  // We're still on single sfg objects.
+  // when we go up to sfc objects then we will need multiline_id & line_id
+  inline SEXP to_multilinestring(
+    Rcpp::DataFrame& df,
+    Rcpp::IntegerVector& cols,
+    int& id_col
+  ) {
+    Rcpp::List lst = sfheaders::shapes::get_lines( df, cols, id_col );
+    return to_multilinestring( lst );
+  }
+
+  inline SEXP to_multilinestring(
+    Rcpp::DataFrame& df,
+    Rcpp::StringVector& cols,
+    Rcpp::String& id_col
+  ) {
+    Rcpp::List lst = sfheaders::shapes::get_lines( df, cols, id_col );
+    return to_multilinestring( lst );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& cols,
+      int& id_col
+  ) {
+    Rcpp::List lst = sfheaders::shapes::get_lines( nm, cols, id_col );
+    return to_multilinestring( lst );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& cols,
+      Rcpp::String& id_col
+  ) {
+    Rcpp::List lst = sfheaders::shapes::get_lines( nm, cols, id_col );
+    return to_multilinestring( lst );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::IntegerVector& cols,
+      int& id_col
+  ) {
+    Rcpp::List lst = sfheaders::shapes::get_lines( im, cols, id_col );
+    return to_multilinestring( lst );
+  }
+
+  inline SEXP to_multilinestring(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& cols,
+      Rcpp::String& id_col
+  ) {
+    Rcpp::List lst = sfheaders::shapes::get_lines( im, cols, id_col );
+    return to_multilinestring( lst );
+  }
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      Rcpp::IntegerVector& cols
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_multilinestring( im, cols );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_multilinestring( nm, cols );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_multilinestring( df, cols );
+    } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+    }
+    }
+
+    return Rcpp::List::create(); // never reaches
+  }
+
+
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      Rcpp::StringVector& cols
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_multilinestring( im, cols );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_multilinestring( nm, cols );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_multilinestring( df, cols );
+    } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+    }
+    }
+
+    return Rcpp::List::create(); // never reaches
+  }
+
+
+  inline SEXP to_multilinestring(
+      SEXP& x
+  ) {
+    switch ( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_multilinestring( im );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_multilinestring( nm );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      //Rcpp::Rcout << "inherites df : " << std::endl;
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_multilinestring( df );
+    } else {
+      //Rcpp::Rcout << "doesn't inherit df : " << std::endl;
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
+      return to_multilinestring( lst );
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+    }
+    }
+    return x; // never reaches
+  }
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      SEXP& cols
+  ) {
+    if( Rf_isNull( cols ) ) {
+      return to_multilinestring( x );
+    }
+    switch( TYPEOF( cols ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
+      return to_multilinestring( x, iv );
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
+      return to_multilinestring( x, sv );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column types");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
+  }
 
 
 } // sfg

@@ -78,6 +78,7 @@ namespace sfg {
     return Rcpp::List::create(); // never reaches
   }
 
+
 } // sfg
 } // sfheaders
 
