@@ -58,14 +58,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_to_multilinestring
-SEXP rcpp_to_multilinestring(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_to_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+SEXP rcpp_to_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_to_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multilinestring(x, geometry_columns));
+    Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_multilinestring(x, geometry_columns, line_id));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -160,13 +161,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_other_columns
+SEXP rcpp_other_columns(SEXP x, SEXP id_cols);
+RcppExport SEXP _sfheaders_rcpp_other_columns(SEXP xSEXP, SEXP id_colsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id_cols(id_colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_other_columns(x, id_cols));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 2},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 2},
     {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 2},
-    {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 2},
+    {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 3},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
@@ -175,6 +188,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_to_sfc", (DL_FUNC) &_sfheaders_rcpp_to_sfc, 0},
     {"_sfheaders_first_three", (DL_FUNC) &_sfheaders_first_three, 1},
     {"_sfheaders_rcpp_matrix", (DL_FUNC) &_sfheaders_rcpp_matrix, 0},
+    {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 2},
     {NULL, NULL, 0}
 };
 

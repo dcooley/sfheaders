@@ -40,7 +40,7 @@ namespace shapes {
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
-    size_t n_col = im.ncol();
+    size_t n_col = cols.length();
     size_t i;
     Rcpp::IntegerVector iv( n_col );
     for( i = 0; i < n_col; i++ ) {
@@ -70,7 +70,7 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    size_t n_col = cols.size();
+    size_t n_col = cols.length();
     if( df.ncol() < n_col ) {
       Rcpp::stop("sfheaders - incorrect number of columns");
     }
@@ -111,7 +111,6 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::Rcout << "getting a point" << std::endl;
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
     return get_point( df, cols );
   }
@@ -125,7 +124,7 @@ namespace shapes {
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
-    size_t n_col = nm.ncol();
+    size_t n_col = cols.length();
     size_t i;
     Rcpp::NumericVector nv( n_col );
     for( i = 0; i < n_col; i++ ) {
@@ -140,9 +139,6 @@ namespace shapes {
       Rcpp::IntegerVector& cols
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    Rcpp::Rcout << "cols: " << cols << std::endl;
-    Rcpp::stop("stopping");
-
     return get_point( nm, cols );
   }
 

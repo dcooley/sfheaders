@@ -210,6 +210,76 @@ namespace sfg {
 
   inline SEXP to_multilinestring(
       SEXP& x,
+      Rcpp::IntegerVector& cols,
+      int& line_id
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_multilinestring( im, cols, line_id );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_multilinestring( nm, cols, line_id );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_multilinestring( df, cols, line_id );
+    } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+    }
+    }
+
+    return Rcpp::List::create(); // never reaches
+  }
+
+
+  // inline SEXP to_multilinestring(
+  //     SEXP& x,
+  //     Rcpp::IntegerVector& cols,
+  //     Rcpp::String& line_id
+  // ) {
+  //   switch( TYPEOF( x ) ) {
+  //   case INTSXP: {
+  //     if( !Rf_isMatrix( x ) ) {
+  //     Rcpp::stop("sfheaders - expecting a matrix");
+  //   }
+  //     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+  //     return to_multilinestring( im, cols, line_id );
+  //   }
+  //   case REALSXP: {
+  //     if( !Rf_isMatrix( x ) ) {
+  //     Rcpp::stop("sfheaders - expecting a matrix");
+  //   }
+  //     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+  //     return to_multilinestring( nm, cols, line_id );
+  //   }
+  //   case VECSXP: {
+  //     if( Rf_inherits( x, "data.frame") ) {
+  //     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+  //     return to_multilinestring( df, cols, line_id );
+  //   } // else default
+  //   }
+  //   default: {
+  //     Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+  //   }
+  //   }
+  //
+  //   return Rcpp::List::create(); // never reaches
+  // }
+
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
       Rcpp::StringVector& cols
   ) {
     switch( TYPEOF( x ) ) {
@@ -231,6 +301,74 @@ namespace sfg {
       if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return to_multilinestring( df, cols );
+    } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+    }
+    }
+
+    return Rcpp::List::create(); // never reaches
+  }
+
+  // inline SEXP to_multilinestring(
+  //     SEXP& x,
+  //     Rcpp::StringVector& cols,
+  //     int& line_id
+  // ) {
+  //   switch( TYPEOF( x ) ) {
+  //   case INTSXP: {
+  //     if( !Rf_isMatrix( x ) ) {
+  //     Rcpp::stop("sfheaders - expecting a matrix");
+  //   }
+  //     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+  //     return to_multilinestring( im, cols, line_id );
+  //   }
+  //   case REALSXP: {
+  //     if( !Rf_isMatrix( x ) ) {
+  //     Rcpp::stop("sfheaders - expecting a matrix");
+  //   }
+  //     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+  //     return to_multilinestring( nm, cols, line_id );
+  //   }
+  //   case VECSXP: {
+  //     if( Rf_inherits( x, "data.frame") ) {
+  //     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+  //     return to_multilinestring( df, cols, line_id );
+  //   } // else default
+  //   }
+  //   default: {
+  //     Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+  //   }
+  //   }
+  //
+  //   return Rcpp::List::create(); // never reaches
+  // }
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      Rcpp::StringVector& cols,
+      Rcpp::String& line_id
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_multilinestring( im, cols, line_id );
+    }
+    case REALSXP: {
+      if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting a matrix");
+    }
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_multilinestring( nm, cols, line_id );
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_multilinestring( df, cols, line_id );
     } // else default
     }
     default: {
@@ -278,6 +416,7 @@ namespace sfg {
     return x; // never reaches
   }
 
+
   inline SEXP to_multilinestring(
       SEXP& x,
       SEXP& cols
@@ -294,6 +433,96 @@ namespace sfg {
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
       return to_multilinestring( x, sv );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column types");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
+  }
+
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      SEXP& cols,
+      Rcpp::String& line_id
+  ) {
+    if( Rf_isNull( cols ) ) {
+      return to_multilinestring( x );
+    }
+    switch( TYPEOF( cols ) ) {
+    case REALSXP: {}
+    // case INTSXP: {
+    //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
+    //   return to_multilinestring( x, iv, line_id );
+    // }
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
+      return to_multilinestring( x, sv, line_id );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column types");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
+  }
+
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      SEXP& cols,
+      int& line_id
+  ) {
+    // going to make the API require cols iff line_id is supplied
+
+    if( Rf_isNull( cols ) ) {
+      // TODO: supplied line_id, but without cols?
+      // is this valid?
+      // - yes; because it could be every column, other than ID, is a geometry.
+      Rcpp::Rcout << "cols is null " << std::endl;
+      Rcpp::IntegerVector id_cols( 1 );
+      id_cols[0] = line_id;
+      SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+      //Rcpp::stop("stop");
+      return to_multilinestring( x, other_cols, line_id );
+    }
+    switch( TYPEOF( cols ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
+      Rcpp::Rcout << "cols iv: " << iv << std::endl;
+      return to_multilinestring( x, iv, line_id );
+    }
+    // case STRSXP: {
+    //   Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
+    //   return to_multilinestring( x, sv, line_id );
+    // }
+    default: {
+      Rcpp::stop("sfheaders - unknown column types");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
+  }
+
+  inline SEXP to_multilinestring(
+      SEXP& x,
+      SEXP& cols,
+      SEXP& line_id
+  ) {
+    if( Rf_isNull( line_id ) ) {
+      return to_multilinestring( x, cols );
+    }
+    switch( TYPEOF( line_id ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( line_id );
+      int i = iv[0];
+      return to_multilinestring( x, cols, i );
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( line_id );
+      Rcpp::String s = sv[0];
+      return to_multilinestring( x, cols, s );
     }
     default: {
       Rcpp::stop("sfheaders - unknown column types");

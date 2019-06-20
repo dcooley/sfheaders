@@ -4,7 +4,7 @@
 \alias{to_multipoint}
 \title{to MULTIPOINT}
 \usage{
-to_multipoint(x, geometry_columns = NULL)
+to_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
 \description{
 to MULTIPOINT
@@ -27,12 +27,12 @@ to_multipoint( data.frame( x = 1:5, y = 1:5 ) )
 
 ## using columns
 
-to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(1,2) )
-to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(1:3) )
-to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(3,4) )
+to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 1, y = 2 )
+to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 1, y = 2, z = 3 )
+to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 3, y = 4 )
 
-to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y") )
-to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y","z") )
-to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y","z","m") )
+to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y" )
+to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y", z = "z" )
+to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y", z = "z", m = "m" )
 
 }

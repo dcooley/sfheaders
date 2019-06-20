@@ -4,8 +4,20 @@
 \alias{to_multilinestring}
 \title{to MULTILINESTRING}
 \usage{
-to_multilinestring(x, geometry_columns = NULL)
+to_multilinestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
+  line_id = NULL)
 }
 \description{
 to MULTILINESTRING
+}
+\examples{
+
+to_multilinestring( matrix( 1:24, ncol = 2 ) )
+to_multilinestring( matrix( 1:24, ncol = 3 ) )
+to_multilinestring( matrix( 1:24, ncol = 4 ) )
+
+## different lines
+m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+to_multilinestring( obj = m , line_id = 3 )
+
 }

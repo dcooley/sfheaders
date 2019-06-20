@@ -4,8 +4,22 @@
 \alias{to_linestring}
 \title{to LINESTRING}
 \usage{
-to_linestring(x, geometry_columns = NULL)
+to_linestring(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
 \description{
 to LINESTRING
+}
+\examples{
+
+to_linestring( matrix( 1:24, ncol = 2 ) )
+to_linestring( matrix( 1:24, ncol = 3 ) )
+to_linestring( matrix( 1:24, ncol = 4 ) )
+
+to_linestring( matrix( 1:24, ncol = 4 ), x = 3, y = 2, z = 3)
+
+to_linestring( data.frame( x = 1:10, y = 11:20 ) )
+to_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ) )
+to_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ), x = "x", y = "z" )
+
+
 }

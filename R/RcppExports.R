@@ -17,8 +17,8 @@ rcpp_to_linestring <- function(x, geometry_columns) {
     .Call(`_sfheaders_rcpp_to_linestring`, x, geometry_columns)
 }
 
-rcpp_to_multilinestring <- function(x, geometry_columns) {
-    .Call(`_sfheaders_rcpp_to_multilinestring`, x, geometry_columns)
+rcpp_to_multilinestring <- function(x, geometry_columns, line_id) {
+    .Call(`_sfheaders_rcpp_to_multilinestring`, x, geometry_columns, line_id)
 }
 
 rcpp_to_sfg <- function(x, geom_type) {
@@ -51,5 +51,9 @@ first_three <- function(x) {
 
 rcpp_matrix <- function() {
     .Call(`_sfheaders_rcpp_matrix`)
+}
+
+rcpp_other_columns <- function(x, id_cols) {
+    .Call(`_sfheaders_rcpp_other_columns`, x, id_cols)
 }
 

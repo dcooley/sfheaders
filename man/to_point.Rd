@@ -4,7 +4,7 @@
 \alias{to_point}
 \title{to POINT}
 \usage{
-to_point(x, geometry_columns = NULL)
+to_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
 \description{
 to POINT

@@ -22,8 +22,9 @@
 #' # to_point( matrix( 1:4, ncol = 2 ) )
 #'
 #' @export
-to_point <- function( x, geometry_columns = NULL ) {
-  rcpp_to_point( x, index_correct( geometry_columns ) )
+to_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_to_point( obj, index_correct( geometry_columns ) )
 }
 
 
@@ -47,32 +48,57 @@ to_point <- function( x, geometry_columns = NULL ) {
 #'
 #' ## using columns
 #'
-#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(1,2) )
-#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(1:3) )
-#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), geometry_columns = c(3,4) )
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 1, y = 2 )
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 1, y = 2, z = 3 )
+#' to_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 3, y = 4 )
 #'
-#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y") )
-#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y","z") )
-#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), geometry_columns = c("x","y","z","m") )
+#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y" )
+#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y", z = "z" )
+#' to_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y", z = "z", m = "m" )
 #'
 #' @export
-to_multipoint <- function( x, geometry_columns = NULL ) {
-  ## numeric columns need to be zero-indexed
-  rcpp_to_multipoint( x, index_correct( geometry_columns ) )
+to_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_to_multipoint( obj, index_correct( geometry_columns ) )
 }
 
 #' to LINESTRING
 #'
+#' @examples
+#'
+#' to_linestring( matrix( 1:24, ncol = 2 ) )
+#' to_linestring( matrix( 1:24, ncol = 3 ) )
+#' to_linestring( matrix( 1:24, ncol = 4 ) )
+#'
+#' to_linestring( matrix( 1:24, ncol = 4 ), x = 3, y = 2, z = 3)
+#'
+#' to_linestring( data.frame( x = 1:10, y = 11:20 ) )
+#' to_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ) )
+#' to_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ), x = "x", y = "z" )
+#'
+#'
 #' @export
-to_linestring <- function( x, geometry_columns = NULL ) {
-  rcpp_to_linestring( x, index_correct( geometry_columns ) )
+to_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_to_linestring( obj, index_correct( geometry_columns ) )
 }
 
 #' to MULTILINESTRING
 #'
+#' @examples
+#'
+#' to_multilinestring( matrix( 1:24, ncol = 2 ) )
+#' to_multilinestring( matrix( 1:24, ncol = 3 ) )
+#' to_multilinestring( matrix( 1:24, ncol = 4 ) )
+#'
+#' ## different lines
+#' m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+#' to_multilinestring( obj = m , line_id = 3 )
+#'
 #' @export
-to_multilinestring <- function( x, geometry_columns = NULL ) {
-  rcpp_to_multilinestring( x, index_correct( geometry_columns ) )
+to_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, line_id = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_to_multilinestring( obj, index_correct( geometry_columns ),  index_correct( line_id ) )
 }
 
 

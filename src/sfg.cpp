@@ -18,8 +18,8 @@ SEXP rcpp_to_linestring( SEXP x, SEXP geometry_columns ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_to_multilinestring( SEXP x, SEXP geometry_columns ) {
-  return sfheaders::sfg::to_multilinestring( x, geometry_columns );
+SEXP rcpp_to_multilinestring( SEXP x, SEXP geometry_columns, SEXP line_id ) {
+  return sfheaders::sfg::to_multilinestring( x, geometry_columns, line_id );
 }
 
 // // [[Rcpp::export]]
