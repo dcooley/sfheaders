@@ -18,6 +18,16 @@ to_multilinestring( matrix( 1:24, ncol = 4 ) )
 
 ## different lines
 m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
-to_multilinestring( obj = m , line_id = 3 )
+to_multilinestring( obj = m, x = 1, y = 2, line_id = 3 )
+
+## just specifying line_id will use all others as the geometries
+to_multilinestring( obj = m, line_id = 3 )
+
+df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
+to_multilinestring( df, x = "x", y = "y" )
+to_multilinestring( df, x = "x", y = "y", line_id = "id" )
+
+to_multilinestring( df, line_id = "id" )
+
 
 }

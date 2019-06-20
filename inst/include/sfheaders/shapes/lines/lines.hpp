@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SHAPES_LINES_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils.hpp"
+#include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/line/line.hpp"
 
 namespace sfheaders {

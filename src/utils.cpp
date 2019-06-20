@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "sfheaders/utils.hpp"
+#include "sfheaders/utils/utils.hpp"
 
 
 // [[Rcpp::export]]

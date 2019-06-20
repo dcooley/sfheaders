@@ -1,7 +1,7 @@
 #ifndef R_SFHEADERS_SFG_MULTILINESTRING_H
 #define R_SFHEADERS_SFG_MULTILINESTRING_H
 
-#include "sfheaders/utils.hpp"
+#include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
@@ -46,7 +46,8 @@ namespace sfg {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     mls[0] = nm;
     size_t n_col = nm.ncol();
-    Rcpp::Rcout << "n_col: " << n_col << std::endl;
+    //Rcpp::Rcout << "n_col: " << n_col << std::endl;
+
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = "MULTILINESTRING";
@@ -400,11 +401,9 @@ namespace sfg {
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame") ) {
-      //Rcpp::Rcout << "inherites df : " << std::endl;
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return to_multilinestring( df );
     } else {
-      //Rcpp::Rcout << "doesn't inherit df : " << std::endl;
       Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
       return to_multilinestring( lst );
     }
@@ -448,10 +447,14 @@ namespace sfg {
       Rcpp::String& line_id
   ) {
     if( Rf_isNull( cols ) ) {
-      return to_multilinestring( x );
+      //Rcpp::Rcout << "String line_id" << std::endl;
+      Rcpp::StringVector id_cols( 1 );
+      id_cols[0] = line_id;
+      SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+      return to_multilinestring( x, other_cols, line_id );
     }
     switch( TYPEOF( cols ) ) {
-    case REALSXP: {}
+    // case REALSXP: {}
     // case INTSXP: {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
     //   return to_multilinestring( x, iv, line_id );
@@ -473,24 +476,17 @@ namespace sfg {
       SEXP& cols,
       int& line_id
   ) {
-    // going to make the API require cols iff line_id is supplied
 
     if( Rf_isNull( cols ) ) {
-      // TODO: supplied line_id, but without cols?
-      // is this valid?
-      // - yes; because it could be every column, other than ID, is a geometry.
-      Rcpp::Rcout << "cols is null " << std::endl;
       Rcpp::IntegerVector id_cols( 1 );
       id_cols[0] = line_id;
       SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
-      //Rcpp::stop("stop");
       return to_multilinestring( x, other_cols, line_id );
     }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
-      Rcpp::Rcout << "cols iv: " << iv << std::endl;
       return to_multilinestring( x, iv, line_id );
     }
     // case STRSXP: {

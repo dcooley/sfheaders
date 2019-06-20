@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SFG_LINESTRING_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils.hpp"
+#include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
