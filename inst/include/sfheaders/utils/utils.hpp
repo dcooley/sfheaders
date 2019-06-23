@@ -20,10 +20,10 @@ namespace utils {
       Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ i ] );
       nm( Rcpp::_, i ) = this_column;
     }
-    //nm.names() = df_names;
+
     Rcpp::List m_attr(2);
     m_attr(1) = df_names;
-    //Rcpp::Rcout << "here" << std::endl;
+
     nm.attr("dimnames") = m_attr;
     return nm;
   }

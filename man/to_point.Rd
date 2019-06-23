@@ -18,11 +18,7 @@ to_point( 1:4 )
 to_point( matrix( 1:3, ncol = 3 ) )
 to_point( data.frame( x = 1, y = 2, z = 3 )  )
 
-to_point( data.frame( x = 1, y = 2, z = 3 ), geometry_columns = c("x","y") )
-to_point( data.frame( x = 1, y = 2, z = 3 ), geometry_columns = c(1,2) )
-
-
-## will error
-# to_point( matrix( 1:4, ncol = 2 ) )
+to_point( data.frame( x = 1, y = 2, z = 3 ), x = "x", y = "y" )
+to_point( data.frame( x = 1, y = 2, z = 3 ), x = 1, y = 3  )
 
 }

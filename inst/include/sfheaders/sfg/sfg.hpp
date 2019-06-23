@@ -5,6 +5,8 @@
 #include "sfheaders/sfg/multipoint/sfg_multipoint.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
+#include "sfheaders/sfg/polygon/sfg_polygon.hpp"
+#include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
 
 // TODO
 // - to_sfg() function, which works out, given the object and parameters which to_* to use

@@ -14,12 +14,8 @@
 #' to_point( matrix( 1:3, ncol = 3 ) )
 #' to_point( data.frame( x = 1, y = 2, z = 3 )  )
 #'
-#' to_point( data.frame( x = 1, y = 2, z = 3 ), geometry_columns = c("x","y") )
-#' to_point( data.frame( x = 1, y = 2, z = 3 ), geometry_columns = c(1,2) )
-#'
-#'
-#' ## will error
-#' # to_point( matrix( 1:4, ncol = 2 ) )
+#' to_point( data.frame( x = 1, y = 2, z = 3 ), x = "x", y = "y" )
+#' to_point( data.frame( x = 1, y = 2, z = 3 ), x = 1, y = 3  )
 #'
 #' @export
 to_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
@@ -109,6 +105,35 @@ to_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 to_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, line_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
   rcpp_to_multilinestring( obj, index_correct( geometry_columns ),  index_correct( line_id ) )
+}
+
+
+#' to MULTILINESTRING
+#'
+#' @examples
+#'
+#' to_polygon( matrix( 1:24, ncol = 2 ) )
+#' to_polygon( matrix( 1:24, ncol = 3 ) )
+#' to_polygon( matrix( 1:24, ncol = 4 ) )
+#'
+#' ## different lines
+#' m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+#' to_polygon( obj = m, x = 1, y = 2, line_id = 3 )
+#'
+#' ## just specifying line_id will use all others as the geometries
+#' to_polygon( obj = m, line_id = 3 )
+#'
+#' df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
+#' to_polygon( df, x = "x", y = "y" )
+#' to_polygon( df, x = "x", y = "y", line_id = "id" )
+#'
+#' to_polygon( df, line_id = "id" )
+#'
+#'
+#' @export
+to_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, line_id = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_to_polygon( obj, index_correct( geometry_columns ),  index_correct( line_id ) )
 }
 
 

@@ -70,6 +70,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_to_polygon
+SEXP rcpp_to_polygon(SEXP x, SEXP geometry_columns, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_to_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_polygon(x, geometry_columns, line_id));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_to_multipolygon
+SEXP rcpp_to_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_to_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipolygon(x, geometry_columns, polygon_id, line_id));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_to_sfg
 SEXP rcpp_to_sfg(SEXP x, std::string geom_type);
 RcppExport SEXP _sfheaders_rcpp_to_sfg(SEXP xSEXP, SEXP geom_typeSEXP) {
@@ -173,6 +200,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_line_ids
+Rcpp::IntegerMatrix rcpp_line_ids(Rcpp::NumericVector line_ids, Rcpp::NumericVector unique_ids);
+RcppExport SEXP _sfheaders_rcpp_line_ids(SEXP line_idsSEXP, SEXP unique_idsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type line_ids(line_idsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type unique_ids(unique_idsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_line_ids(line_ids, unique_ids));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_subset_dataframe
+Rcpp::DataFrame rcpp_subset_dataframe(Rcpp::DataFrame df, Rcpp::StringVector cols, int start, int end);
+RcppExport SEXP _sfheaders_rcpp_subset_dataframe(SEXP dfSEXP, SEXP colsSEXP, SEXP startSEXP, SEXP endSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type df(dfSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< int >::type start(startSEXP);
+    Rcpp::traits::input_parameter< int >::type end(endSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_subset_dataframe(df, cols, start, end));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
@@ -180,6 +233,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 2},
     {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 2},
     {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 3},
+    {"_sfheaders_rcpp_to_polygon", (DL_FUNC) &_sfheaders_rcpp_to_polygon, 3},
+    {"_sfheaders_rcpp_to_multipolygon", (DL_FUNC) &_sfheaders_rcpp_to_multipolygon, 4},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
@@ -189,6 +244,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_first_three", (DL_FUNC) &_sfheaders_first_three, 1},
     {"_sfheaders_rcpp_matrix", (DL_FUNC) &_sfheaders_rcpp_matrix, 0},
     {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 2},
+    {"_sfheaders_rcpp_line_ids", (DL_FUNC) &_sfheaders_rcpp_line_ids, 2},
+    {"_sfheaders_rcpp_subset_dataframe", (DL_FUNC) &_sfheaders_rcpp_subset_dataframe, 4},
     {NULL, NULL, 0}
 };
 

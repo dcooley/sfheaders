@@ -6,6 +6,6 @@
 #include "sfheaders/shapes/point/point.hpp"
 #include "sfheaders/shapes/line/line.hpp"
 #include "sfheaders/shapes/lines/lines.hpp"
-
+#include "sfheaders/shapes/polygon/polygon.hpp"
 
 #endif

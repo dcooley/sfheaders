@@ -1,5 +1,42 @@
 context("sfheaders")
 
+test_that("sfheaders::utils::subset subsets a data.frame",{
+
+  x <- data.frame(
+    id = c(1,1,1,2,2,2)
+    , x = c(1:6)
+    , y = c(6:1)
+    , z = letters[1:6]
+    , stringsAsFactors = FALSE
+  )
+  idx <- c(0,1)
+  res <- sfheaders:::rcpp_subset_dataframe(x, c("x","y"), idx[1], idx[2] )
+  expect_equal( x[ idx+1, ], res )
+
+
+  # x <- data.frame(
+  #   id = c(1,1,1,2,2,2)
+  #   , x = c(1:6)
+  #   , y = c(6:1)
+  #   , z = letters[1:6]
+  #   , stringsAsFactors = FALSE
+  # )
+  # idx <- c(0,1)
+  # res <- sfheaders:::rcpp_subset_dataframe(x, idx[1], idx[2] )
+
+})
+
+
+test_that("sfheaders::utils::line_ids returns correct positions",{
+
+  line_ids <- c(1,1,1,1,2,2,3,3,3,3)
+  unique_ids <- sort( unique( line_ids ) )
+  expected <- matrix(c(0,3,4,5,6,9), ncol = 2, byrow = T)
+  res <- sfheaders:::rcpp_line_ids( line_ids, unique_ids )
+  expect_equal( res, expected )
+
+})
+
 test_that("sfheaders::utils::other_columns works for various data types",{
 
   df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
@@ -45,7 +82,5 @@ test_that("sfheaders::utils::other_columns works for various data types",{
   id <- c("z","x")
   other_cols <- sfheaders:::rcpp_other_columns( m, id )
   expect_equal( other_cols, c("y"))
-
-
 
 })

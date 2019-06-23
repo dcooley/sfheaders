@@ -6,3 +6,4 @@ index_correct <- function( geometry_columns ) {
 
   return( geometry_columns )
 }
+
