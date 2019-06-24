@@ -1,6 +1,20 @@
 context("shapes_get_lines")
 
 
+url <- "https://raw.githubusercontent.com/SymbolixAU/data/master/geojson/SA1_2016_VIC.json"
+library(sf)
+library(data.table)
+sf <- geojsonsf::geojson_sf( url )
+
+coords <- sf::st_coordinates( sf )
+dt <- data.table::as.data.table( coords )
+
+x2 <- dt[ L3 %in% c(1:4) ]
+x2
+sf <- sfheaders:::rcpp_get_polygon(x2, c("X","Y"), "L2", "L3")
+
+
+# ## this is the logic for getting multipolygons
 ids <- c( rep(1,5), rep(2,3), rep(3,6) )
 x <- data.frame(
   polygon_id = c( rep(1, 5+3), rep(2,6) )
@@ -9,27 +23,26 @@ x <- data.frame(
   , y = seq(length(ids), 1)
 )
 
-polygon_ids <- x$polygon_id
-line_ids <- x$line_id
-## need to find the line_ids which correspond to each polygon_id
-unique_polygon_ids <- sort( unique( polygon_ids ) )
-polygons <- sfheaders:::rcpp_line_ids( polygon_ids, unique_polygon_ids )
-## loop over the rows
-lst_mpl <- list()
-
-for( i in 1:nrow( polygons ) ) {
-
-  polygon_line_ids <- line_ids[ polygons[i,1]:polygons[i,2] + 1 ]
-  unique_polygon_line_ids <- sort( unique( polygon_line_ids ) )
-  polygon_lines <- sfheaders:::rcpp_line_ids( polygon_ids, unique_polygon_line_ids )
-
-  lst_pl <- list()
-  df_subset <- sfheaders:::rcpp_subset_dataframe( x, c( "line_id", "x", "y"), polygons[i, 1], polygons[i, 2] )
-  # for( j in 1:nrow( polygon_lines ) ) {
-  #   lst_pl[[j]] <- sfheaders:::rcpp_get_lines( df_subset, c("x","y"), "line_id")
-  # }
-  lst_mpl[[i]] <- sfheaders:::rcpp_get_lines( df_subset, c("x","y"), "line_id")
-}
+mpl <- sfheaders:::rcpp_get_polygon(x, c("x","y"), "polygon_id",  "line_id" )
+#
+# polygon_ids <- x$polygon_id
+# line_ids <- x$line_id
+# ## need to find the line_ids which correspond to each polygon_id
+# unique_polygon_ids <- sort( unique( polygon_ids ) )
+# polygons <- sfheaders:::rcpp_line_ids( polygon_ids, unique_polygon_ids )
+# ## loop over the rows
+# lst_mpl <- list()
+#
+# for( i in 1:nrow( polygons ) ) {
+#
+#   polygon_line_ids <- line_ids[ polygons[i,1]:polygons[i,2] + 1 ]
+#   unique_polygon_line_ids <- sort( unique( polygon_line_ids ) )
+#   polygon_lines <- sfheaders:::rcpp_line_ids( polygon_ids, unique_polygon_line_ids )
+#
+#   lst_pl <- list()
+#   df_subset <- sfheaders:::rcpp_subset_dataframe( x, c( "line_id", "x", "y"), polygons[i, 1], polygons[i, 2] )
+#   lst_mpl[[i]] <- sfheaders:::rcpp_get_lines( df_subset, c("x","y"), "line_id")
+# }
 
 test_that("lines lists returend",{
 

@@ -97,6 +97,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_get_polygon
+SEXP rcpp_get_polygon(Rcpp::DataFrame x, Rcpp::StringVector geometry_cols, Rcpp::String polygon_id_column, Rcpp::String line_id_column);
+RcppExport SEXP _sfheaders_rcpp_get_polygon(SEXP xSEXP, SEXP geometry_colsSEXP, SEXP polygon_id_columnSEXP, SEXP line_id_columnSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geometry_cols(geometry_colsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type polygon_id_column(polygon_id_columnSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type line_id_column(line_id_columnSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_polygon(x, geometry_cols, polygon_id_column, line_id_column));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_to_sfg
 SEXP rcpp_to_sfg(SEXP x, std::string geom_type);
 RcppExport SEXP _sfheaders_rcpp_to_sfg(SEXP xSEXP, SEXP geom_typeSEXP) {
@@ -235,6 +249,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 3},
     {"_sfheaders_rcpp_to_polygon", (DL_FUNC) &_sfheaders_rcpp_to_polygon, 3},
     {"_sfheaders_rcpp_to_multipolygon", (DL_FUNC) &_sfheaders_rcpp_to_multipolygon, 4},
+    {"_sfheaders_rcpp_get_polygon", (DL_FUNC) &_sfheaders_rcpp_get_polygon, 4},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},

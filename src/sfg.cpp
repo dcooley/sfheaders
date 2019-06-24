@@ -32,6 +32,16 @@ SEXP rcpp_to_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP 
   return sfheaders::sfg::to_multipolygon( x, geometry_columns, polygon_id, line_id );
 }
 
+// [[Rcpp::export]]
+SEXP rcpp_get_polygon(
+    Rcpp::DataFrame x,
+    Rcpp::StringVector geometry_cols,
+    Rcpp::String polygon_id_column,
+    Rcpp::String line_id_column
+) {
+  return sfheaders::shapes::get_polygon( x, geometry_cols, line_id_column, polygon_id_column );
+}
+
 
 // [[Rcpp::export]]
 SEXP rcpp_to_sfg( SEXP x, std::string geom_type ) {
