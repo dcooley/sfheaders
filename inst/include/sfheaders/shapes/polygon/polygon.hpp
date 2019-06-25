@@ -13,6 +13,16 @@ namespace sfheaders {
 namespace shapes {
 
 
+  // need a 'get_polygon'
+  // which gets all the lines inside a polygon
+
+  /*
+   * get_polygon
+   *
+   * Gets all the polygons inside a single multipolygon
+   *
+   * The concept is
+   */
   inline SEXP get_polygon(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
@@ -40,9 +50,6 @@ namespace shapes {
       Rcpp::Range rng( start, end );
       Rcpp::NumericVector polygon_line_ids = line_ids[ rng ];
       Rcpp::NumericVector unique_polygon_line_ids = Rcpp::sort_unique( polygon_line_ids );
-
-      Rcpp::Rcout << "polygon_line_ids : " << polygon_line_ids << std::endl;
-      Rcpp::Rcout << "unique_polygon_line_id: " << unique_polygon_line_ids << std::endl;
 
       Rcpp::IntegerMatrix polygon_lines = sfheaders::utils::line_ids( polygon_ids, unique_polygon_line_ids );
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );

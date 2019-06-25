@@ -39,7 +39,7 @@ SEXP rcpp_get_polygon(
     Rcpp::String polygon_id_column,
     Rcpp::String line_id_column
 ) {
-  return sfheaders::shapes::get_polygon( x, geometry_cols, line_id_column, polygon_id_column );
+  return sfheaders::shapes::get_polygon( x, geometry_cols, polygon_id_column, line_id_column );
 }
 
 

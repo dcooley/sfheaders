@@ -43,6 +43,16 @@ namespace utils {
 
     size_t n = line_ids.length();
     size_t unique_n = unique_ids.length();
+
+    Rcpp::IntegerMatrix im( unique_n, 2);
+
+    // if n = 1, there's only 1 unique ID
+    if( n == 1 ) {
+      im( 0, 0 ) = 0;
+      im( 0, 1 ) = n - 1;
+      return im;
+    }
+
     size_t i;
 
     Rcpp::IntegerVector start_positions( unique_n );
@@ -69,11 +79,11 @@ namespace utils {
         end_positions[ idx ] = i;
       }
     }
-
-    Rcpp::IntegerMatrix im( unique_n, 2);
-
-    Rcpp::Rcout << "start_positions: " << start_positions << std::endl;
-    Rcpp::Rcout << "end_positions: " << end_positions << std::endl;
+//
+//
+//
+//     Rcpp::Rcout << "start_positions: " << start_positions << std::endl;
+//     Rcpp::Rcout << "end_positions: " << end_positions << std::endl;
 
     im( Rcpp::_, 0 ) = start_positions;
     im( Rcpp::_, 1 ) = end_positions;
