@@ -180,6 +180,68 @@ inline SEXP to_multipolygon(
   return to_multipolygon( lst );
 }
 
+  inline SEXP to_multipolygon(
+    Rcpp::IntegerMatrix& im,
+    Rcpp::IntegerVector& geometry_cols,
+    int& polygon_id_column,
+    int& line_id_column
+  ) {
+    Rcpp::List mp = sfheaders::shapes::get_polygons( im, geometry_cols, polygon_id_column, line_id_column );
+    return to_multipolygon( mp );
+  }
+
+  inline SEXP to_multipolygon(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& polygon_id_column,
+      Rcpp::String& line_id_column
+  ) {
+    Rcpp::List mp = sfheaders::shapes::get_polygons( im, geometry_cols, polygon_id_column, line_id_column );
+    return to_multipolygon( mp );
+  }
+
+  inline SEXP to_multipolygon(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& geometry_cols,
+      int& polygon_id_column,
+      int& line_id_column
+  ) {
+    Rcpp::List mp = sfheaders::shapes::get_polygons( nm, geometry_cols, polygon_id_column, line_id_column );
+    return to_multipolygon( mp );
+  }
+
+  inline SEXP to_multipolygon(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& polygon_id_column,
+      Rcpp::String& line_id_column
+  ) {
+    Rcpp::List mp = sfheaders::shapes::get_polygons( nm, geometry_cols, polygon_id_column, line_id_column );
+    return to_multipolygon( mp );
+  }
+
+  inline SEXP to_multipolygon(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      int& polygon_id_column,
+      int& line_id_column
+  ) {
+    Rcpp::List mp = sfheaders::shapes::get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+    return to_multipolygon( mp );
+  }
+
+
+  inline SEXP to_multipolygon(
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& polygon_id_column,
+      Rcpp::String& line_id_column
+  ) {
+    Rcpp::List mp = sfheaders::shapes::get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+    return to_multipolygon( mp );
+  }
+
+
 inline SEXP to_multipolygon(
     SEXP& x,
     Rcpp::IntegerVector& cols
@@ -507,6 +569,73 @@ inline SEXP to_multipolygon(
 }
 
 inline SEXP to_multipolygon(
+  SEXP& x,
+  Rcpp::IntegerVector geometry_cols,
+  int& polygon_id,
+  int& line_id
+) {
+  Rcpp::List mp = sfheaders::shapes::get_polygons( x, geometry_cols, polygon_id, line_id );
+  return to_multipolygon( mp );
+}
+
+inline SEXP to_multipolygon(
+    SEXP& x,
+    Rcpp::StringVector geometry_cols,
+    Rcpp::String& polygon_id,
+    Rcpp::String& line_id
+) {
+  Rcpp::List mp = sfheaders::shapes::get_polygons( x, geometry_cols, polygon_id, line_id );
+  return to_multipolygon( mp );
+}
+
+
+inline SEXP to_multipolygon(
+    SEXP& x,
+    SEXP& cols,
+    int& polygon_id,
+    int& line_id
+) {
+  switch( TYPEOF( cols ) ) {
+  case REALSXP: {}
+  case INTSXP: {
+    Rcpp::IntegerVector geometry_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
+    return to_multipolygon( x, geometry_cols, polygon_id, line_id );
+  }
+  // case STRSXP: {
+  //   Rcpp::StringVector geometry_cols = Rcpp::as< Rcpp::StringVector >( cols );
+  //   return to_multipolygon( x, geometry_cols, polygon_id, line_id );
+  // }
+  default: {
+    Rcpp::stop("sfheaders - unknown column types");
+  }
+  }
+}
+
+inline SEXP to_multipolygon(
+    SEXP& x,
+    SEXP& cols,
+    Rcpp::String& polygon_id,
+    Rcpp::String& line_id
+) {
+
+  switch( TYPEOF( cols ) ) {
+  // case REALSXP: {}
+  // case INTSXP: {
+  //   Rcpp::IntegerVector geometry_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
+  //   return to_multipolygon( x, geometry_cols, polygon_id, line_id );
+  // }
+  case STRSXP: {
+    Rcpp::StringVector geometry_cols = Rcpp::as< Rcpp::StringVector >( cols );
+    return to_multipolygon( x, geometry_cols, polygon_id, line_id );
+  }
+  default: {
+    Rcpp::stop("sfheaders - unknown column types");
+  }
+  }
+}
+
+
+inline SEXP to_multipolygon(
     SEXP& x,
     SEXP& cols,
     SEXP& polygon_id,
@@ -524,7 +653,7 @@ inline SEXP to_multipolygon(
 
   }
 
-  // otherwise the are both provided
+  // otherwise they are both provided
   if( TYPEOF( polygon_id ) != TYPEOF( line_id ) ) {
     Rcpp::stop("polygon_id and line_id must be the same type");
   }
@@ -536,7 +665,7 @@ inline SEXP to_multipolygon(
     Rcpp::IntegerVector iv_polygon = Rcpp::as< Rcpp::IntegerVector >( polygon_id );
     int il = iv_line[0];
     int ip = iv_polygon[0];
-    //return to_multipolygon( x, cols, il, ip );
+    return to_multipolygon( x, cols, il, ip );
   }
   case STRSXP: {
     Rcpp::StringVector sv_line = Rcpp::as< Rcpp::StringVector >( line_id );
@@ -544,7 +673,7 @@ inline SEXP to_multipolygon(
 
     Rcpp::String sl = sv_line[0];
     Rcpp::String sp = sv_polygon[0];
-    //return to_multipolygon( x, cols, sl, sp );
+    return to_multipolygon( x, cols, sl, sp );
   }
   default: {
     Rcpp::stop("sfheaders - unknown column types");

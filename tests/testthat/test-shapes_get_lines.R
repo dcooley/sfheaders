@@ -39,9 +39,10 @@ sf <- sf::st_sf( geometry = sf::st_sfc( sf::st_multipolygon( x = mp ) ) )
 coords <- sf::st_coordinates( sf )
 dt <- data.table::as.data.table( coords )
 
-setnames(dt, c("lon","lat","line_id","polygon_id","multipolygon_id"))
+data.table::setnames(dt, c("lon","lat","line_id","polygon_id","multipolygon_id"))
 
-res <- sfheaders:::rcpp_get_polygon(dt, c("lon","lat"), "polygon_id", "line_id")
+res <- sfheaders:::rcpp_get_polygons(dt, c("lon","lat"), "polygon_id", "line_id")
+res2 <- sfheaders:::rcpp_get_polygons2(dt, c(0,1), 3, 2)
 
 
 x <- dt
