@@ -32,25 +32,25 @@ SEXP rcpp_to_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP 
   return sfheaders::sfg::to_multipolygon( x, geometry_columns, polygon_id, line_id );
 }
 
-// [[Rcpp::export]]
-SEXP rcpp_get_polygons(
-    Rcpp::DataFrame x,
-    Rcpp::StringVector geometry_cols,
-    Rcpp::String polygon_id_column,
-    Rcpp::String line_id_column
-) {
-  return sfheaders::shapes::get_polygons( x, geometry_cols, polygon_id_column, line_id_column );
-}
-
-// [[Rcpp::export]]
-SEXP rcpp_get_polygons2(
-    Rcpp::DataFrame x,
-    Rcpp::IntegerVector geometry_cols,
-    int polygon_id_column,
-    int line_id_column
-) {
-  return sfheaders::shapes::get_polygons( x, geometry_cols, polygon_id_column, line_id_column );
-}
+// // [[Rcpp::export]]
+// SEXP rcpp_get_polygons(
+//     Rcpp::DataFrame x,
+//     Rcpp::StringVector geometry_cols,
+//     Rcpp::String polygon_id_column,
+//     Rcpp::String line_id_column
+// ) {
+//   return sfheaders::shapes::get_polygons( x, geometry_cols, polygon_id_column, line_id_column );
+// }
+//
+// // [[Rcpp::export]]
+// SEXP rcpp_get_polygons2(
+//     Rcpp::DataFrame x,
+//     Rcpp::IntegerVector geometry_cols,
+//     int polygon_id_column,
+//     int line_id_column
+// ) {
+//   return sfheaders::shapes::get_polygons( x, geometry_cols, polygon_id_column, line_id_column );
+// }
 
 
 // [[Rcpp::export]]

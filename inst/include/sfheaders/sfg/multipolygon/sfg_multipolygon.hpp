@@ -45,6 +45,7 @@ inline SEXP to_multipolygon(
 inline SEXP to_multipolygon(
     Rcpp::DataFrame& df
 ) {
+
   Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
@@ -56,7 +57,7 @@ inline SEXP to_multipolygon(
   std::string geom_type = "MULTIPOLYGON";
   mp.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
 
-  return nm;
+  return mp;
 }
 
 // need to check if it's a list of lists, OR a list with a matrix or df...

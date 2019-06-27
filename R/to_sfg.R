@@ -137,48 +137,36 @@ to_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, line_id = N
 }
 
 
-
-#' to sfc
-#'
-#' converts a data.frame to an sfc object
-#'
+#' to MULTIPOLYGON
 #'
 #' @examples
 #'
 #' df <- data.frame(
-#'   id = rep(1,5),
-#'   x = 1:5,
-#'   y = 6:10,
-#'   z = 11:15
+#'   polygon_id = c(rep(1, 5), rep(2, 10))
+#'   , line_id = c(rep(1, 10), rep(2, 5))
+#'   , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
+#'   , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
+#'   , z = c(1)
+#'   , m = c(1)
 #' )
 #'
+#' m <- as.matrix( df )
+#'
+#' to_multipolygon( df[, c("x","y") ] )
+#'
+#' to_multipolygon( df, x = "x", y = "y", polygon_id = "polygon_id", line_id = "line_id" )
+#' to_multipolygon( df, x = "x", y = "y", z = "z", polygon_id = "polygon_id", line_id = "line_id" )
+#' to_multipolygon( df, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", line_id = "line_id" )
+#'
+#'
+#' to_multipolygon( m[, c("x","y") ] )
+#'
+#' to_multipolygon( m, x = "x", y = "y", polygon_id = "polygon_id", line_id = "line_id" )
+#' to_multipolygon( m, x = "x", y = "y", z = "z", polygon_id = "polygon_id", line_id = "line_id" )
+#' to_multipolygon( m, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", line_id = "line_id" )
+#'
 #' @export
-to_sfg <- function(
-  obj,
-  x,
-  y,
-  z = NULL,
-  m = NULL,
-  point_id = NULL,
-  multipoint_id = NULL,
-  linestring_id = NULL,
-  multilinestring_id = NULL,
-  polygon_id = NULL,
-  multipolygon_id = NULL
-) {
-
-  l <- list()
-  l[["x"]] <- force( x )
-  l[["y"]] <- force( y )
-  l[["z"]] <- force( z )
-  l[["m"]] <- force( m )
-  l[["point_id"]] <- force( point_id )
-  l[["multipoint_id"]] <- force( multiponit_id )
-  l[["linestring_id"]] <- force( linestring_id )
-  l[["multilinestring_id"]] <- force( multilinestring_id )
-  l[["polygon_id"]] <- force( polygon_id )
-  l[["multipolygon_id"]] <- force( multipolygon_id )
-
-
-
+to_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, line_id = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_to_multipolygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( line_id ) )
 }

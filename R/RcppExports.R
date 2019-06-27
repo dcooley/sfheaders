@@ -29,14 +29,6 @@ rcpp_to_multipolygon <- function(x, geometry_columns, polygon_id, line_id) {
     .Call(`_sfheaders_rcpp_to_multipolygon`, x, geometry_columns, polygon_id, line_id)
 }
 
-rcpp_get_polygons <- function(x, geometry_cols, polygon_id_column, line_id_column) {
-    .Call(`_sfheaders_rcpp_get_polygons`, x, geometry_cols, polygon_id_column, line_id_column)
-}
-
-rcpp_get_polygons2 <- function(x, geometry_cols, polygon_id_column, line_id_column) {
-    .Call(`_sfheaders_rcpp_get_polygons2`, x, geometry_cols, polygon_id_column, line_id_column)
-}
-
 rcpp_to_sfg <- function(x, geom_type) {
     .Call(`_sfheaders_rcpp_to_sfg`, x, geom_type)
 }
