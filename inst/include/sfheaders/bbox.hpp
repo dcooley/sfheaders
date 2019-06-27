@@ -21,6 +21,11 @@ namespace bbox {
     bbox[3] = std::max(point[1], bbox[3]);
   }
 
+  inline void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::IntegerVector& point) {
+    Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( point );
+    calculate_bbox( bbox, nv );
+  }
+
 } // bbox
 } // sfheaders
 

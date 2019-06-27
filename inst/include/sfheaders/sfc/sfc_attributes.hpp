@@ -66,10 +66,10 @@ namespace sfc {
       std::string& geom_type,
       std::unordered_set< std::string >& geometry_types,
       Rcpp::NumericVector& bbox,
-      std::string epsg,
-      std::string proj4string,
-      int n_empty,
-      double precision
+      std::string& epsg,
+      std::string& proj4string,
+      int& n_empty,
+      double& precision
   ) {
 
     // to enter this function, will the geometry type already be sorted?

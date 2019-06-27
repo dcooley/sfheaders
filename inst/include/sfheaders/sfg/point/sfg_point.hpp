@@ -123,11 +123,11 @@ namespace sfg {
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix im = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_point( im );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_point( nm );
     } else {
-      Rcpp::NumericVector iv = Rcpp::as< Rcpp::NumericVector >( x );
-      return to_point( iv );
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      return to_point( nv );
     }
     }
     case VECSXP: { // data.frame && list?

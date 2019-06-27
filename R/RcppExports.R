@@ -5,6 +5,26 @@ rcpp_attach_sfc_attributes <- function(sfc, geom_type, bbox, epsg, proj4string, 
     invisible(.Call(`_sfheaders_rcpp_attach_sfc_attributes`, sfc, geom_type, bbox, epsg, proj4string, n_empty, precision))
 }
 
+rcpp_sfg_dimension <- function(x) {
+    .Call(`_sfheaders_rcpp_sfg_dimension`, x)
+}
+
+rcpp_get_point <- function(x, cols) {
+    .Call(`_sfheaders_rcpp_get_point`, x, cols)
+}
+
+rcpp_get_line <- function(x, cols) {
+    .Call(`_sfheaders_rcpp_get_line`, x, cols)
+}
+
+rcpp_get_lines <- function(x, cols, id) {
+    .Call(`_sfheaders_rcpp_get_lines`, x, cols, id)
+}
+
+rcpp_to_points <- function(x) {
+    .Call(`_sfheaders_rcpp_to_points`, x)
+}
+
 rcpp_to_point <- function(x, geometry_columns) {
     .Call(`_sfheaders_rcpp_to_point`, x, geometry_columns)
 }
@@ -31,34 +51,6 @@ rcpp_to_multipolygon <- function(x, geometry_columns, polygon_id, line_id) {
 
 rcpp_to_sfg <- function(x, geom_type) {
     .Call(`_sfheaders_rcpp_to_sfg`, x, geom_type)
-}
-
-rcpp_sfg_dimension <- function(x) {
-    .Call(`_sfheaders_rcpp_sfg_dimension`, x)
-}
-
-rcpp_get_point <- function(x, cols) {
-    .Call(`_sfheaders_rcpp_get_point`, x, cols)
-}
-
-rcpp_get_line <- function(x, cols) {
-    .Call(`_sfheaders_rcpp_get_line`, x, cols)
-}
-
-rcpp_get_lines <- function(x, cols, id) {
-    .Call(`_sfheaders_rcpp_get_lines`, x, cols, id)
-}
-
-rcpp_to_sfc <- function() {
-    .Call(`_sfheaders_rcpp_to_sfc`)
-}
-
-first_three <- function(x) {
-    .Call(`_sfheaders_first_three`, x)
-}
-
-rcpp_matrix <- function() {
-    .Call(`_sfheaders_rcpp_matrix`)
 }
 
 rcpp_other_columns <- function(x, id_cols) {
