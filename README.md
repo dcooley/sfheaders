@@ -23,6 +23,17 @@ TODO: how to use.
 
 ```r
 
+df <- data.frame(
+  x = 1:5
+  , y = 5:1
+)
+
+## from R
+to_polygon( df )
+
+
+## from C++
+
 library(Rcpp)
 library(sf) ## for print
 
@@ -38,10 +49,7 @@ cppFunction(
   depends = "sfheaders"
 )
 
-df <- data.frame(
-  x = 1:5
-  , y = 5:1
-)
+
 
 a_polygon( df )
 POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
