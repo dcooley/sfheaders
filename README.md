@@ -45,8 +45,16 @@ to_polygon( df )
 
 #### from C++
 
-there are various `sfheaders::sfg::to_polygon()` overloaded functions
-you can call
+there are various overloaded functions for each `sfg` type
+
+  - `sfheaders::sfg::to_point()`
+  - `sfheaders::sfg::to_multipoint()`
+  - `sfheaders::sfg::to_linestring()`
+  - `sfheaders::sfg::to_multilinestring()`
+  - `sfheaders::sfg::to_polygon()`
+  - `sfheaders::sfg::to_multipolygon()`
+
+<!-- end list -->
 
 ``` r
 library(Rcpp)
