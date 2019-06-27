@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "sfheaders/sfc_attributes.hpp"
+#include "sfheaders/sfc/sfc_attributes.hpp"
 
 // [[Rcpp::export]]
 void rcpp_attach_sfc_attributes(

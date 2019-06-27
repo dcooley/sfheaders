@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SFC_ATTRIBUTES_H
 
 #include <Rcpp.h>
-#include "sfheaders.hpp"
+#include "sfheaders/sfheaders.hpp"
 
 namespace sfheaders {
 namespace sfc {

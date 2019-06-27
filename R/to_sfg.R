@@ -1,8 +1,3 @@
-
-## TODO
-## - if defining column names, or numbers for matrix, the R function
-## - needs to put them in order c(x, y, z, m)
-
 #' to POINT
 #'
 #' @examples
@@ -170,3 +165,9 @@ to_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygo
   geometry_columns <- c(x,y,z,m)
   rcpp_to_multipolygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( line_id ) )
 }
+
+
+
+
+
+

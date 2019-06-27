@@ -66,7 +66,11 @@ namespace sfg {
     } else if ( geom_type == "LINESTRING" ) {
       return sfheaders::sfg::to_linestring( x );
     } else if ( geom_type == "MULTIILNESTRING" ) {
-      //return sfheaders::sfg::to_multilinestring( x );
+      return sfheaders::sfg::to_multilinestring( x );
+    } else if ( geom_type == "POLYGON" ) {
+      return sfheaders::sfg::to_polygon( x );
+    } else if ( geom_type == "MULTIPOLYGON" ) {
+      return sfheaders::sfg::to_multipolygon( x );
     }
 
     return Rcpp::List::create();
@@ -75,6 +79,16 @@ namespace sfg {
   inline SEXP to_sfg( SEXP& x, std::string geom_type, SEXP geometry_columns ) {
     if( geom_type == "POINT" ) {
       return sfheaders::sfg::to_point( x, geometry_columns );
+    } else if ( geom_type == "MULTIPOINT" ) {
+      return sfheaders::sfg::to_multipoint( x, geometry_columns );
+    } else if ( geom_type == "LINESTRING" ) {
+      return sfheaders::sfg::to_linestring( x, geometry_columns );
+    } else if ( geom_type == "MULTIILNESTRING" ) {
+      return sfheaders::sfg::to_multilinestring( x, geometry_columns );
+    } else if ( geom_type == "POLYGON" ) {
+      return sfheaders::sfg::to_polygon( x, geometry_columns );
+    } else if ( geom_type == "MULTIPOLYGON" ) {
+      return sfheaders::sfg::to_multipolygon( x, geometry_columns );
     }
 
     return Rcpp::List::create(); // never reaches

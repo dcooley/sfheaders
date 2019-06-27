@@ -18,7 +18,35 @@ Yep
 TODO: how to use.
 
 
+### sfg
 
+
+```r
+
+library(Rcpp)
+library(sf) ## for print
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( Rcpp::DataFrame df ) {
+      return sfheaders::sfg::to_polygon( df );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+df <- data.frame(
+  x = 1:5
+  , y = 5:1
+)
+
+a_polygon( df )
+POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
+
+```
 
 
 
