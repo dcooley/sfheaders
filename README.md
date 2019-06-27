@@ -74,9 +74,31 @@ a_polygon( df, c("x","y") )
 # POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
 
 a_polygon( df, c("y", "x") )
-POLYGON ((5 1, 4 2, 3 3, 2 4, 1 5))
+# POLYGON ((5 1, 4 2, 3 3, 2 4, 1 5))
 
 ```
+
+```r
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP x, SEXP geometry_columns ) {
+      return sfheaders::sfg::to_polygon( x, geometry_columns );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, c("x","y") )
+# POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
+
+a_polygon( df, c("y", "x") )
+# POLYGON ((5 1, 4 2, 3 3, 2 4, 1 5))
+
+```
+
 
 ```r
 
