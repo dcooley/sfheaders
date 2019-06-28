@@ -40,6 +40,13 @@ namespace sfg {
   }
 
   inline SEXP to_point(
+      Rcpp::NumericMatrix& nm
+  ) {
+    Rcpp::NumericVector nv = sfheaders::shapes::get_point( nm );
+    return to_point( nv );
+  }
+
+  inline SEXP to_point(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
@@ -53,13 +60,6 @@ namespace sfg {
   ) {
     Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_point( im, cols );
     return to_point( im2 );
-  }
-
-  inline SEXP to_point(
-      Rcpp::NumericMatrix& nm
-  ) {
-    Rcpp::NumericVector nv = sfheaders::shapes::get_point( nm );
-    return to_point( nv );
   }
 
   inline SEXP to_point(
@@ -74,9 +74,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::Rcout << "to_poitn( nm, cols ) " << std::endl;
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_point( nm, cols );
-    Rcpp::Rcout << "matrix made? " << std::endl;
     return to_point( nm2 );
   }
 

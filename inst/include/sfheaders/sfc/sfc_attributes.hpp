@@ -66,8 +66,8 @@ namespace sfc {
       std::string& geom_type,
       std::unordered_set< std::string >& geometry_types,
       Rcpp::NumericVector& bbox,
-      std::string& epsg,
-      std::string& proj4string,
+      Rcpp::String epsg,
+      Rcpp::String proj4string,
       int& n_empty,
       double& precision
   ) {

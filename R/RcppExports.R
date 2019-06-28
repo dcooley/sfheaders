@@ -21,8 +21,8 @@ rcpp_get_lines <- function(x, cols, id) {
     .Call(`_sfheaders_rcpp_get_lines`, x, cols, id)
 }
 
-rcpp_to_points <- function(x) {
-    .Call(`_sfheaders_rcpp_to_points`, x)
+rcpp_to_points <- function(x, cols) {
+    .Call(`_sfheaders_rcpp_to_points`, x, cols)
 }
 
 rcpp_to_point <- function(x, geometry_columns) {

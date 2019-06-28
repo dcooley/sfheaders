@@ -11,12 +11,21 @@ namespace sfheaders {
 namespace sfc {
 
   inline SEXP to_points(
-    Rcpp::IntegerMatrix& im,
-    Rcpp::NumericVector& bbox
+    Rcpp::IntegerMatrix& im
   ) {
 
     // given an 'sfg', attach sfc attributes
     // (if im.attr("class") != "sfg", attach it)
+
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+
+    std::string geom_type = "POINT";
+    std::unordered_set< std::string > geometry_types{ geom_type };
+
+    Rcpp::String epsg = NA_STRING;
+    Rcpp::String proj4string = NA_STRING;
+    int n_empty = 0;
+    double precision = 0.0;
 
     // matrix; iterate through each row, get bbox, create sfg of each point
     // then an sfc of all other points
@@ -31,22 +40,36 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::to_point( this_point );
     }
 
-    std::string geom_type = "POINT";
-    std::unordered_set< std::string > geometry_types{ "POINT" };
-    std::string epsg = "";
-    std::string proj4string = "";
-    int n_empty = 0.0;
-    double precision = 0.0;
-
-    sfheaders::sfc::attach_sfc_attributes( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    sfheaders::sfc::attach_sfc_attributes(
+      sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision
+      );
     return sfc;
+  }
+
+  inline SEXP to_points(
+    Rcpp::IntegerVector& iv
+  ) {
+    int n_col = iv.size();
+    Rcpp::IntegerMatrix im(1, n_col);
+    im(0, Rcpp::_ ) = iv;
+    return to_points( im );
   }
 
 
   inline SEXP to_points(
-      Rcpp::NumericMatrix& nm,
-      Rcpp::NumericVector& bbox
+      Rcpp::NumericMatrix& nm
   ) {
+
+
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+
+    std::string geom_type = "POINT";
+    std::unordered_set< std::string > geometry_types{ geom_type };
+
+    Rcpp::String epsg = NA_STRING;
+    Rcpp::String proj4string = NA_STRING;
+    int n_empty = 0;
+    double precision = 0.0;
 
     size_t n_row = nm.nrow();
     size_t n_col = nm.ncol();
@@ -59,83 +82,111 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::to_point( this_point );
     }
 
-    std::string geom_type = "POINT";
-    std::unordered_set< std::string > geometry_types{ "POINT" };
-    std::string epsg = "";
-    std::string proj4string = "";
-    int n_empty = 0.0;
-    double precision = 0.0;
-
-    sfheaders::sfc::attach_sfc_attributes( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    sfheaders::sfc::attach_sfc_attributes(
+      sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision
+      );
     return sfc;
   }
 
+  inline SEXP to_points(
+      Rcpp::NumericVector& iv
+  ) {
+    int n_col = iv.size();
+    Rcpp::NumericMatrix nm(1, n_col);
+    nm(0, Rcpp::_ ) = iv;
+    return to_points( nm );
+  }
 
-  // inline SEXP to_points(
-  //     Rcpp::DataFrame& df,
-  //     Rcpp::NumericVector& bbox
-  // ) {
-  //
-  //   Rcpp::StringVector df_names = df.names();
-  //   size_t n_row = df.nrow();
-  //   size_t n_col = df.ncol();
-  //   size_t i;
-  //   Rcpp::List sfc( n_row );
-  //
-  //   for( i = 0; i < n_row; i++ ) {
-  //
-  //     // subset df
-  //     int start = i;
-  //     int end = i;
-  //
-  //     Rcpp::Range rng( start, end );
-  //     Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
-  //
-  //     sfheaders::bbox::calculate_bbox( bbox, df_subset );
-  //     sfc[i] = sfheaders::sfg::to_point( df_subset );
-  //   }
-  //
-  //   std::string geom_type = "POINT";
-  //   std::unordered_set< std::string > geometry_types{ "POINT" };
-  //   std::string epsg = "";
-  //   std::string proj4string = "";
-  //   int n_empty = 0.0;
-  //   double precision = 0.0;
-  //
-  //   sfheaders::sfc::attach_sfc_attributes( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
-  //   return sfc;
-  // }
 
-  inline SEXP to_points( SEXP& x ) {
 
-    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  inline SEXP to_points(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    return to_points( im2 );
+  }
+
+  inline SEXP to_points(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    return to_points( im2 );
+  }
+
+  inline SEXP to_points(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& cols
+  ) {
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    return to_points( nm2 );
+  }
+
+  inline SEXP to_points(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    return to_points( nm2 );
+  }
+
+  // expects only lon/lat/z/m columns in correct order
+  inline SEXP to_points(
+      Rcpp::DataFrame& df
+  ) {
+    // expecting single-row data.frame
+    Rcpp::NumericMatrix nv = sfheaders::shapes::get_line( df );
+    return to_points( nv );
+  }
+
+  inline SEXP to_points(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& cols
+  ) {
+    //Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericMatrix nv = sfheaders::shapes::get_line( df, cols );
+    return to_points( nv );
+  }
+
+  inline SEXP to_points(
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& cols
+  ) {
+    Rcpp::NumericMatrix nv = sfheaders::shapes::get_line( df, cols );
+    return to_points( nv );
+  }
+
+  inline SEXP to_points(
+      SEXP& x
+  ) {
 
     // switch on type of x
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return to_points( im, bbox );
-    // } else {
-    //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
-    //   return to_points( iv, bbox );
+      return to_points( im );
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      return to_points( iv );
     }
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return to_points( nm, bbox );
-    // } else {
-    //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
-    //   return to_points( nv, bbox );
+      return to_points( nm );
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      return to_points( nv );
     }
     }
-    // case VECSXP: { // data.frame && list?
-    //   if( Rf_inherits( x, "data.frame") ) {
-    //   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    //   return to_points( df, bbox );
-    // } // else default
-    // }
+    case VECSXP: { // data.frame && list?
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_points( df );
+    } // else default
+    }
     default: {
       Rcpp::stop("sfheaders - unsupported sfg_POINT type");
     }
@@ -143,6 +194,74 @@ namespace sfc {
 
     return x; // never reaches
   }
+
+  inline SEXP to_points(
+      SEXP& x,
+      Rcpp::IntegerVector& cols
+  ) {
+
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return to_points( im, cols );
+    }
+    case REALSXP: {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return to_points( nm, cols );
+    }
+    case VECSXP: {
+      // TODO - data.frame using numbers to index columns
+      if ( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return to_points( df, cols );
+    } //else - default
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown point type");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
+  }
+
+  inline SEXP to_points(
+      SEXP& x,
+      Rcpp::StringVector& cols
+  ) {
+    // with string columns it must be a data.frame(?)
+
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+    return to_points( df, cols );
+  }
+
+
+  /*
+   * Unknown x and col types
+   * First switch based on column types
+   */
+  inline SEXP to_points(
+      SEXP& x,
+      SEXP& cols
+  ) {
+    if( Rf_isNull( cols ) ) {
+      return to_points( x );
+    }
+    switch( TYPEOF( cols ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector int_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
+      return to_points( x, int_cols );
+    }
+    case STRSXP: {
+      Rcpp::StringVector str_cols = Rcpp::as< Rcpp::StringVector >( cols );
+      return to_points( x, str_cols );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column types");
+    }
+    }
+    return Rcpp::List::create(); // never reaches
+  }
+
 
 
 } // sfc

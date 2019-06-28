@@ -4,8 +4,20 @@
 \alias{to_points}
 \title{to POINTS}
 \usage{
-to_points(obj)
+to_points(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
 \description{
 constructs sfc of POINT objects
+}
+\examples{
+
+x <- c(1:3)
+to_points( x )
+
+x <- matrix( c(1:10) , ncol = 2 )
+to_points( x )
+
+x <- setNames( as.data.frame( x ), c("x","y") )
+to_points( obj = x, x = "x", y = "y" )
+
 }

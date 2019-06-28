@@ -70,13 +70,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_to_points
-SEXP rcpp_to_points(SEXP x);
-RcppExport SEXP _sfheaders_rcpp_to_points(SEXP xSEXP) {
+SEXP rcpp_to_points(SEXP x, SEXP cols);
+RcppExport SEXP _sfheaders_rcpp_to_points(SEXP xSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_points(x));
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_points(x, cols));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -213,7 +214,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
     {"_sfheaders_rcpp_get_line", (DL_FUNC) &_sfheaders_rcpp_get_line, 2},
     {"_sfheaders_rcpp_get_lines", (DL_FUNC) &_sfheaders_rcpp_get_lines, 3},
-    {"_sfheaders_rcpp_to_points", (DL_FUNC) &_sfheaders_rcpp_to_points, 1},
+    {"_sfheaders_rcpp_to_points", (DL_FUNC) &_sfheaders_rcpp_to_points, 2},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 2},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 2},
     {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 2},
