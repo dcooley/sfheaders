@@ -3,9 +3,9 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
-#include "sfheaders/shapes/point/point.hpp"
-#include "sfheaders/shapes/line/line.hpp"
-#include "sfheaders/shapes/lines/lines.hpp"
-#include "sfheaders/shapes/polygon/polygon.hpp"
+#include "sfheaders/shapes/vec/vec.hpp"
+#include "sfheaders/shapes/mat/mat.hpp"
+#include "sfheaders/shapes/list_mat/list_mat.hpp"
+#include "sfheaders/shapes/list_list_mat/list_list_mat.hpp"
 
 #endif

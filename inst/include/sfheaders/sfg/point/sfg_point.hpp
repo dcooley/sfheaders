@@ -35,14 +35,14 @@ namespace sfg {
   inline SEXP to_point(
       Rcpp::IntegerMatrix& im
   ) {
-    Rcpp::IntegerVector iv = sfheaders::shapes::get_point( im );
+    Rcpp::IntegerVector iv = sfheaders::shapes::get_vec( im );
     return to_point( iv );
   }
 
   inline SEXP to_point(
       Rcpp::NumericMatrix& nm
   ) {
-    Rcpp::NumericVector nv = sfheaders::shapes::get_point( nm );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_vec( nm );
     return to_point( nv );
   }
 
@@ -50,7 +50,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_point( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_vec( im, cols );
     return to_point( im2 );
   }
 
@@ -58,7 +58,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_point( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_vec( im, cols );
     return to_point( im2 );
   }
 
@@ -66,7 +66,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_point( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_vec( nm, cols );
     return to_point( nm2 );
   }
 
@@ -74,7 +74,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_point( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_vec( nm, cols );
     return to_point( nm2 );
   }
 
@@ -83,7 +83,7 @@ namespace sfg {
       Rcpp::DataFrame& df
   ) {
     // expecting single-row data.frame
-    Rcpp::NumericVector nv = sfheaders::shapes::get_point( df );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df );
     return to_point( nv );
   }
 
@@ -92,7 +92,7 @@ namespace sfg {
     Rcpp::IntegerVector& cols
   ) {
     //Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    Rcpp::NumericVector nv = sfheaders::shapes::get_point( df, cols );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df, cols );
     return to_point( nv );
   }
 
@@ -100,7 +100,7 @@ namespace sfg {
     Rcpp::DataFrame& df,
     Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericVector nv = sfheaders::shapes::get_point( df, cols );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df, cols );
     return to_point( nv );
   }
 

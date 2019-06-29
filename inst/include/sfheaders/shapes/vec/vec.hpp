@@ -1,5 +1,5 @@
-#ifndef R_SFHEADERS_SHAPES_POINTS_H
-#define R_SFHEADERS_SHAPES_POINTS_H
+#ifndef R_SFHEADERS_SHAPES_VEC_H
+#define R_SFHEADERS_SHAPES_VEC_H
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
@@ -9,19 +9,19 @@ namespace shapes {
 
   // POINTS are vectors
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::IntegerVector& iv
   ) {
     return iv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::NumericVector& nv
   ) {
     return nv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::IntegerMatrix& im
   ) {
     size_t n_row = im.nrow();
@@ -32,7 +32,7 @@ namespace shapes {
     return iv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
@@ -50,7 +50,7 @@ namespace shapes {
     return iv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::DataFrame& df
   ) {
     size_t n_row = df.nrow();
@@ -66,7 +66,7 @@ namespace shapes {
     return nv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
@@ -88,15 +88,15 @@ namespace shapes {
   }
 
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return get_point( df, cols );
+    return get_vec( df, cols );
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::NumericMatrix& nm
   ) {
     size_t n_row = nm.nrow();
@@ -107,16 +107,16 @@ namespace shapes {
     return nv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return get_point( df, cols );
+    return get_vec( df, cols );
   }
 
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
@@ -134,31 +134,31 @@ namespace shapes {
     return nv;
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return get_point( nm, cols );
+    return get_vec( nm, cols );
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       SEXP& x,
       Rcpp::IntegerVector& cols
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_point( im, cols );
+      return get_vec( im, cols );
     }
     case REALSXP: {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_point( nm, cols );
+      return get_vec( nm, cols );
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_point( df );
+      return get_vec( df );
     } // else default
     }
     default: {
@@ -168,23 +168,23 @@ namespace shapes {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       SEXP& x,
       Rcpp::StringVector& cols
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_point( im, cols );
+      return get_vec( im, cols );
     }
     case REALSXP: {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_point( nm, cols );
+      return get_vec( nm, cols );
     }
     case VECSXP: {
     if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_point( df, cols );
+      return get_vec( df, cols );
     } // else default
     }
     default: {
@@ -194,31 +194,31 @@ namespace shapes {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       SEXP& x
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_point( im );
+      return get_vec( im );
     } else {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
-      return get_point( iv );
+      return get_vec( iv );
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_point( nm );
+      return get_vec( nm );
     } else {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
-      return get_point( nv );
+      return get_vec( nv );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_point( df );
+      return get_vec( df );
     } // else default
     }
     default: {
@@ -229,13 +229,13 @@ namespace shapes {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline SEXP get_point(
+  inline SEXP get_vec(
       SEXP& x,
       SEXP& cols
   ) {
 
     if( Rf_isNull( cols ) ) {
-      return get_point( x );
+      return get_vec( x );
     }
 
     switch( TYPEOF( cols ) ) {
@@ -243,17 +243,17 @@ namespace shapes {
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
       if( iv.length() == 0 ) {
-        return get_point( x );
+        return get_vec( x );
       } else {
-        return get_point( x, iv );
+        return get_vec( x, iv );
       }
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
       if( sv.length() == 0 ) {
-        return get_point( x );
+        return get_vec( x );
       } else {
-        return get_point( x, sv );
+        return get_vec( x, sv );
       }
     }
     default: {

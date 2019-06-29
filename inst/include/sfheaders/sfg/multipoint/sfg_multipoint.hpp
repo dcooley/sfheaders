@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SFG_MULTIPOINT_H
 
 #include <Rcpp.h>
-#include "sfheaders/shapes/line/line.hpp"
+#include "sfheaders/shapes/mat/mat.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 
@@ -37,7 +37,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_multipoint( im2 );
   }
 
@@ -45,7 +45,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_multipoint( im2 );
   }
 
@@ -75,7 +75,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_multipoint( nm2 );
   }
 
@@ -83,7 +83,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_multipoint( nm2 );
   }
 
@@ -99,7 +99,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return to_multipoint( nm );
   }
 
@@ -107,7 +107,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return to_multipoint( nm );
   }
 

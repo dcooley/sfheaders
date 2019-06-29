@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// rcpp_calculate_bbox
+SEXP rcpp_calculate_bbox(SEXP x);
+RcppExport SEXP _sfheaders_rcpp_calculate_bbox(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_bbox(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_attach_sfc_attributes
 void rcpp_attach_sfc_attributes(Rcpp::List& sfc, std::string geom_type, Rcpp::NumericVector& bbox, std::string epsg, std::string proj4string, int n_empty, double precision);
 RcppExport SEXP _sfheaders_rcpp_attach_sfc_attributes(SEXP sfcSEXP, SEXP geom_typeSEXP, SEXP bboxSEXP, SEXP epsgSEXP, SEXP proj4stringSEXP, SEXP n_emptySEXP, SEXP precisionSEXP) {
@@ -32,40 +43,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_get_point
-SEXP rcpp_get_point(SEXP x, SEXP cols);
-RcppExport SEXP _sfheaders_rcpp_get_point(SEXP xSEXP, SEXP colsSEXP) {
+// rcpp_get_vec
+SEXP rcpp_get_vec(SEXP x, SEXP cols);
+RcppExport SEXP _sfheaders_rcpp_get_vec(SEXP xSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_point(x, cols));
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_vec(x, cols));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_get_line
-SEXP rcpp_get_line(SEXP x, SEXP cols);
-RcppExport SEXP _sfheaders_rcpp_get_line(SEXP xSEXP, SEXP colsSEXP) {
+// rcpp_get_mat
+SEXP rcpp_get_mat(SEXP x, SEXP cols);
+RcppExport SEXP _sfheaders_rcpp_get_mat(SEXP xSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_line(x, cols));
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_mat(x, cols));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_get_lines
-SEXP rcpp_get_lines(SEXP x, SEXP cols, SEXP id);
-RcppExport SEXP _sfheaders_rcpp_get_lines(SEXP xSEXP, SEXP colsSEXP, SEXP idSEXP) {
+// rcpp_get_list_mat
+SEXP rcpp_get_list_mat(SEXP x, SEXP cols, SEXP id);
+RcppExport SEXP _sfheaders_rcpp_get_list_mat(SEXP xSEXP, SEXP colsSEXP, SEXP idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type id(idSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_lines(x, cols, id));
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_list_mat(x, cols, id));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -78,6 +89,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_to_points(x, cols));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_to_multipoints
+SEXP rcpp_to_multipoints(Rcpp::NumericMatrix x);
+RcppExport SEXP _sfheaders_rcpp_to_multipoints(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipoints(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -209,12 +231,14 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 1},
     {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
-    {"_sfheaders_rcpp_get_point", (DL_FUNC) &_sfheaders_rcpp_get_point, 2},
-    {"_sfheaders_rcpp_get_line", (DL_FUNC) &_sfheaders_rcpp_get_line, 2},
-    {"_sfheaders_rcpp_get_lines", (DL_FUNC) &_sfheaders_rcpp_get_lines, 3},
+    {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
+    {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},
+    {"_sfheaders_rcpp_get_list_mat", (DL_FUNC) &_sfheaders_rcpp_get_list_mat, 3},
     {"_sfheaders_rcpp_to_points", (DL_FUNC) &_sfheaders_rcpp_to_points, 2},
+    {"_sfheaders_rcpp_to_multipoints", (DL_FUNC) &_sfheaders_rcpp_to_multipoints, 1},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 2},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 2},
     {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 2},

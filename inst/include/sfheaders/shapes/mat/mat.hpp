@@ -1,40 +1,42 @@
-#ifndef R_SFHEADERS_SHAPES_LINE_H
-#define R_SFHEADERS_SHAPES_LINE_H
+#ifndef R_SFHEADERS_SHAPES_MAT_H
+#define R_SFHEADERS_SHAPES_MAT_H
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 
+/*
+ * get_mat
+ *
+ * Returns a matrix
+ *
+ * - sfg_MULTIPOINT
+ * - sfg_LINESTRING
+ * - sfc_POINTs
+ */
+
 namespace sfheaders {
 namespace shapes {
 
- // LINEs are matrices
-
-  // -- LINE
-  // get line from
-  // - matrix
-  // - matrix with columns identified
-  // - data.frame
-  // - data.frame with columns identified
-  inline SEXP get_line(
+  inline SEXP get_mat(
     Rcpp::IntegerMatrix& im
   ) {
     return im;
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
     Rcpp::NumericMatrix& nm
   ) {
     return nm;
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
     Rcpp::DataFrame& df
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     return nm;
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
@@ -50,7 +52,7 @@ namespace shapes {
   }
 
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
@@ -65,7 +67,7 @@ namespace shapes {
     return nm2;
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols
   ) {
@@ -85,32 +87,32 @@ namespace shapes {
     return nm;
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
     Rcpp::IntegerMatrix& im,
     Rcpp::StringVector& cols
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return get_line( df, cols );
+    return get_mat( df, cols );
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       Rcpp::NumericMatrix& im,
       Rcpp::StringVector& cols
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return get_line( df, cols );
+    return get_mat( df, cols );
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return get_line( nm, cols );
+    return get_mat( nm, cols );
   }
 
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       SEXP& x,
       Rcpp::StringVector& cols
   ) {
@@ -120,20 +122,20 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_line( im, cols );
+      return get_mat( im, cols );
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_line( nm, cols );
+      return get_mat( nm, cols );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_line( df, cols );
+      return get_mat( df, cols );
     } // else default
     }
     default: {
@@ -144,7 +146,7 @@ namespace shapes {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       SEXP& x,
       Rcpp::IntegerVector& cols
   ) {
@@ -154,20 +156,20 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_line( im, cols );
+      return get_mat( im, cols );
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_line( nm, cols );
+      return get_mat( nm, cols );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_line( df, cols );
+      return get_mat( df, cols );
     } // else default
     }
     default: {
@@ -178,7 +180,7 @@ namespace shapes {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       SEXP& x
   ) {
     switch( TYPEOF( x ) ) {
@@ -187,20 +189,20 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_line( im );
+      return get_mat( im );
     }
     case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_line( nm );
+      return get_mat( nm );
     }
     }
     case VECSXP: {
     if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_line( df );
+      return get_mat( df );
     } // else default
     }
     default: {
@@ -211,12 +213,12 @@ namespace shapes {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline SEXP get_line(
+  inline SEXP get_mat(
       SEXP& x,
       SEXP& cols
   ) {
     if( Rf_isNull( cols ) ) {
-      return get_line( x );
+      return get_mat( x );
     }
 
     switch( TYPEOF( cols ) ) {
@@ -224,17 +226,17 @@ namespace shapes {
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
       if( iv.length() == 0 ) {
-        return get_line( x );
+        return get_mat( x );
       } else {
-        return get_line( x, iv );
+        return get_mat( x, iv );
       }
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
       if( sv.length() == 0 ) {
-        return get_line( x );
+        return get_mat( x );
       } else {
-        return get_line( x, sv );
+        return get_mat( x, sv );
       }
     }
     default: {

@@ -18,6 +18,8 @@ x <- matrix( c(1:10) , ncol = 2 )
 to_points( x )
 
 x <- setNames( as.data.frame( x ), c("x","y") )
+to_points( x )
 to_points( obj = x, x = "x", y = "y" )
+to_points( obj = x, x = "y", y = "x" )
 
 }

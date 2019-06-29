@@ -30,7 +30,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_linestring( im2 );
   }
 
@@ -38,7 +38,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_linestring( im2 );
   }
 
@@ -59,7 +59,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_linestring( nm2 );
   }
 
@@ -67,7 +67,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_linestring( nm2 );
   }
 
@@ -83,7 +83,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return to_linestring( nm );
   }
 
@@ -91,7 +91,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return to_linestring( nm );
   }
 

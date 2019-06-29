@@ -74,7 +74,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return to_multilinestring( nm );
   }
 
@@ -82,7 +82,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return to_multilinestring( nm );
   }
 
@@ -90,7 +90,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_multilinestring( nm2 );
   }
 
@@ -98,7 +98,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_multilinestring( nm2 );
   }
 
@@ -106,7 +106,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_multilinestring( im2 );
   }
 
@@ -114,7 +114,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_multilinestring( im2 );
   }
 
@@ -125,7 +125,7 @@ namespace sfg {
     Rcpp::IntegerVector& cols,
     int& id_col
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_lines( df, cols, id_col );
+    Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
     return to_multilinestring( lst );
   }
 
@@ -134,7 +134,7 @@ namespace sfg {
     Rcpp::StringVector& cols,
     Rcpp::String& id_col
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_lines( df, cols, id_col );
+    Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
     return to_multilinestring( lst );
   }
 
@@ -143,7 +143,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       int& id_col
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_lines( nm, cols, id_col );
+    Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
     return to_multilinestring( lst );
   }
 
@@ -152,7 +152,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       Rcpp::String& id_col
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_lines( nm, cols, id_col );
+    Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
     return to_multilinestring( lst );
   }
 
@@ -161,7 +161,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       int& id_col
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_lines( im, cols, id_col );
+    Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
     return to_multilinestring( lst );
   }
 
@@ -170,7 +170,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       Rcpp::String& id_col
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_lines( im, cols, id_col );
+    Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
     return to_multilinestring( lst );
   }
 

@@ -145,8 +145,8 @@ to_points( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 # geometry type:  POINT
 # dimension:      XY
 # bbox:           xmin: 0 ymin: 3 xmax: 2 ymax: 5
-# epsg (SRID):    
-# proj4string:
+# epsg (SRID):    NA
+# proj4string:    NA
 # POINT (0 3)
 # POINT (1 4)
 # POINT (2 5)

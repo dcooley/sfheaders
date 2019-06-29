@@ -1,41 +1,42 @@
-#ifndef R_SFHEADERS_SHAPES_POLYGON_H
-#define R_SFHEADERS_SHAPES_POLYGON_H
+#ifndef R_SFHEADERS_SHAPES_LIST_LIST_MAT_H
+#define R_SFHEADERS_SHAPES_LIST_LIST_MAT_H
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/utils/subset.hpp"
-#include "sfheaders/shapes/line/line.hpp"
-#include "sfheaders/shapes/lines/lines.hpp"
+#include "sfheaders/shapes/mat/mat.hpp"
+#include "sfheaders/shapes/list_mat/list_mat.hpp"
 
-#include <Rcpp.h>
+/*
+ * get_listListMat
+ *
+ * - sfg_MULTIPOLYGON
+ */
 
 namespace sfheaders {
 namespace shapes {
 
-  // get_lines is used for get_polygon
-  // get_polygons is used for multipolygons; list of lists of matrices
-
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
     Rcpp::IntegerMatrix& im
   ) {
     Rcpp::List mp(1);
-    mp[0] = sfheaders::shapes::get_lines(im);
+    mp[0] = sfheaders::shapes::get_listMat(im);
     return mp;
   }
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::NumericMatrix& nm
   ) {
     Rcpp::List mp(1);
-    mp[0] = sfheaders::shapes::get_lines(nm);
+    mp[0] = sfheaders::shapes::get_listMat(nm);
     return mp;
   }
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::DataFrame& df
   ) {
     Rcpp::List mp(1);
-    mp[0] = sfheaders::shapes::get_lines(df);
+    mp[0] = sfheaders::shapes::get_listMat(df);
     return mp;
   }
 
@@ -46,14 +47,14 @@ namespace shapes {
    * Gets all the polygons inside a single multipolygon
    *
    */
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
-    Rcpp::String& polygon_id_column,
-    Rcpp::String& line_id_column
+    Rcpp::String& group_id_col_1,
+    Rcpp::String& group_id_col_2
   ) {
 
-    Rcpp::NumericVector polygon_ids = df[ polygon_id_column ];
+    Rcpp::NumericVector polygon_ids = df[ group_id_col_1 ];
     Rcpp::StringVector df_names = df.names();
 
     Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
@@ -71,77 +72,77 @@ namespace shapes {
       Rcpp::Range rng( start, end );
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
 
-      mpl[ i ] = sfheaders::shapes::get_lines( df_subset, geometry_cols, line_id_column );
+      mpl[ i ] = sfheaders::shapes::get_listMat( df_subset, geometry_cols, group_id_col_2 );
     }
     return mpl;
   }
 
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
-      int& polygon_id_column,
-      int& line_id_column
+      int& group_id_col_1,
+      int& group_id_col_2
   ) {
     // given polygon & line ids, collapse and matricise and listify
     Rcpp::StringVector df_names = df.names();
 
     // use the indexes to subset the df_names to get the columns
-    Rcpp::String str_polygon_id_column = df_names[ polygon_id_column ];
-    Rcpp::String str_line_id_column = df_names[ line_id_column ];
+    Rcpp::String str_group_id_col_1 = df_names[ group_id_col_1 ];
+    Rcpp::String str_group_id_col_2 = df_names[ group_id_col_2 ];
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
 
-    return get_polygons( df, str_geometry_cols, str_polygon_id_column, str_line_id_column );
+    return get_listListMat( df, str_geometry_cols, str_group_id_col_1, str_group_id_col_2 );
   }
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& geometry_cols,
-      Rcpp::String& polygon_id_column,
-      Rcpp::String& line_id_column
+      Rcpp::String& group_id_col_1,
+      Rcpp::String& group_id_col_2
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+    return get_listListMat( df, geometry_cols, group_id_col_1, group_id_col_2 );
   }
 
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols,
-      int& polygon_id_column,
-      int& line_id_column
+      int& group_id_col_1,
+      int& group_id_col_2
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+    return get_listListMat( df, geometry_cols, group_id_col_1, group_id_col_2 );
   }
 
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& geometry_cols,
-      Rcpp::String& polygon_id_column,
-      Rcpp::String& line_id_column
+      Rcpp::String& group_id_col_1,
+      Rcpp::String& group_id_col_2
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+    return get_listListMat( df, geometry_cols, group_id_col_1, group_id_col_2 );
   }
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& geometry_cols,
-      int& polygon_id_column,
-      int& line_id_column
+      int& group_id_col_1,
+      int& group_id_col_2
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+    return get_listListMat( df, geometry_cols, group_id_col_1, group_id_col_2 );
   }
 
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
       SEXP& x,
       Rcpp::StringVector& geometry_cols,
-      Rcpp::String& polygon_id_column,
-      Rcpp::String& line_id_column
+      Rcpp::String& group_id_col_1,
+      Rcpp::String& group_id_col_2
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -149,7 +150,7 @@ namespace shapes {
       Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_polygons( im, geometry_cols, polygon_id_column, line_id_column );
+      return get_listListMat( im, geometry_cols, group_id_col_1, group_id_col_2 );
     }
     }
     case REALSXP: {
@@ -157,13 +158,13 @@ namespace shapes {
       Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_polygons( nm, geometry_cols, polygon_id_column, line_id_column );
+      return get_listListMat( nm, geometry_cols, group_id_col_1, group_id_col_2 );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+      return get_listListMat( df, geometry_cols, group_id_col_1, group_id_col_2 );
     }
     }
     default: {
@@ -173,11 +174,11 @@ namespace shapes {
   }
 
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
     SEXP& x,
     Rcpp::IntegerVector& geometry_cols,
-    int& polygon_id_column,
-    int& line_id_column
+    int& group_id_col_1,
+    int& group_id_col_2
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -185,7 +186,7 @@ namespace shapes {
         Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return get_polygons( im, geometry_cols, polygon_id_column, line_id_column );
+      return get_listListMat( im, geometry_cols, group_id_col_1, group_id_col_2 );
     }
     }
     case REALSXP: {
@@ -193,13 +194,13 @@ namespace shapes {
       Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return get_polygons( nm, geometry_cols, polygon_id_column, line_id_column );
+      return get_listListMat( nm, geometry_cols, group_id_col_1, group_id_col_2 );
     }
     }
     case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return get_polygons( df, geometry_cols, polygon_id_column, line_id_column );
+      return get_listListMat( df, geometry_cols, group_id_col_1, group_id_col_2 );
     }
     }
     default: {
@@ -208,15 +209,15 @@ namespace shapes {
     }
   }
 
-  inline SEXP get_polygons(
+  inline SEXP get_listListMat(
     SEXP& x,
-    SEXP& geometry_cols, // IntegerVector or StringVector
-    SEXP& polygon_id_column,
-    SEXP& line_id_column
+    SEXP& geometry_cols,  // IntegerVector or StringVector
+    SEXP& group_id_col_1, // the outer-most ID column; e.g. polygon_id
+    SEXP& group_id_col_2  // the inner-most ID column; e.g. line_id
   ) {
 
-    if( ( TYPEOF( polygon_id_column ) != TYPEOF( line_id_column ) ) ||
-        TYPEOF( geometry_cols ) != TYPEOF( polygon_id_column ) ) {
+    if( ( TYPEOF( group_id_col_1 ) != TYPEOF( group_id_col_2 ) ) ||
+        TYPEOF( geometry_cols ) != TYPEOF( group_id_col_1 ) ) {
       Rcpp::stop("sfheaders - different column types detected");
     }
 
@@ -224,19 +225,19 @@ namespace shapes {
     case REALSXP: {}
     case INTSXP: {
       Rcpp::IntegerVector iv_geometry_cols = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
-      Rcpp::IntegerVector iv_polygon_id_column = Rcpp::as< Rcpp::IntegerVector >( polygon_id_column );
-      Rcpp::IntegerVector iv_line_id_column = Rcpp::as< Rcpp::IntegerVector >( line_id_column );
-      int i_polygon_id_column = iv_polygon_id_column[0];
-      int i_line_id_column = iv_line_id_column[0];
-      return get_polygons( x, iv_geometry_cols, i_polygon_id_column, i_line_id_column );
+      Rcpp::IntegerVector iv_group_id_col_1 = Rcpp::as< Rcpp::IntegerVector >( group_id_col_1 );
+      Rcpp::IntegerVector iv_group_id_col_2 = Rcpp::as< Rcpp::IntegerVector >( group_id_col_2 );
+      int i_group_id_col_1 = iv_group_id_col_1[0];
+      int i_group_id_col_2 = iv_group_id_col_2[0];
+      return get_listListMat( x, iv_geometry_cols, i_group_id_col_1, i_group_id_col_2 );
     }
     case STRSXP: {
       Rcpp::StringVector sv_geometry_cols = Rcpp::as< Rcpp::StringVector >( geometry_cols );
-      Rcpp::StringVector sv_polygon_id_column = Rcpp::as< Rcpp::StringVector >( polygon_id_column );
-      Rcpp::StringVector sv_line_id_column = Rcpp::as< Rcpp::StringVector >( line_id_column );
-      Rcpp::String s_polygon_id_column = sv_polygon_id_column[0];
-      Rcpp::String s_line_id_column = sv_line_id_column[0];
-      return get_polygons( x, sv_geometry_cols, s_polygon_id_column, s_line_id_column );
+      Rcpp::StringVector sv_group_id_col_1 = Rcpp::as< Rcpp::StringVector >( group_id_col_1 );
+      Rcpp::StringVector sv_group_id_col_2 = Rcpp::as< Rcpp::StringVector >( group_id_col_2 );
+      Rcpp::String s_group_id_col_1 = sv_group_id_col_1[0];
+      Rcpp::String s_group_id_col_2 = sv_group_id_col_2[0];
+      return get_listListMat( x, sv_geometry_cols, s_group_id_col_1, s_group_id_col_2 );
     }
     default: {
       Rcpp::stop("sfheaders - unknown id column types");

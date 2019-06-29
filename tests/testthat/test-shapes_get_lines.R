@@ -63,7 +63,7 @@ context("shapes_get_lines")
 #
 #   lst_pl <- list()
 #   df_subset <- sfheaders:::rcpp_subset_dataframe( x, c( "line_id", "lon", "lat"), polygons[i, 1], polygons[i, 2] )
-#   lst_mpl[[i]] <- sfheaders:::rcpp_get_lines( df_subset, c("lon","lat"), "line_id")
+#   lst_mpl[[i]] <- sfheaders:::rcpp_get_listListMat( df_subset, c("lon","lat"), "line_id")
 # }
 #
 #
@@ -79,7 +79,7 @@ test_that("lines lists returend",{
     , y = seq(length(ids), 1)
   )
 
-  res <- sfheaders:::rcpp_get_lines( x, c("x","y"), "id")
+  res <- sfheaders:::rcpp_get_list_mat( x, c("x","y"), "id")
   expect_true( is.list( res ) )
   expect_true( is.matrix( res[[1]] ) )
   expect_true( is.matrix( res[[2]] ) )
@@ -93,7 +93,7 @@ test_that("lines lists returend",{
   expect_equal( m3[,1], 9:14 )
   expect_equal( m3[,2], 6:1 )
 
-  res <- sfheaders:::rcpp_get_lines( x, c(2,1), 0)
+  res <- sfheaders:::rcpp_get_list_mat( x, c(2,1), 0)
   expect_true( is.list( res ) )
   expect_true( is.matrix( res[[1]] ) )
   expect_true( is.matrix( res[[2]] ) )
@@ -115,7 +115,7 @@ test_that("lines lists returend",{
   )
   x <- as.matrix( x )
 
-  res <- sfheaders:::rcpp_get_lines( x, c("x","y"), "id")
+  res <- sfheaders:::rcpp_get_list_mat( x, c("x","y"), "id")
   expect_true( is.list( res ) )
   expect_true( is.matrix( res[[1]] ) )
   expect_true( is.matrix( res[[2]] ) )
@@ -129,7 +129,7 @@ test_that("lines lists returend",{
   expect_equal( m3[,1], 9:14 )
   expect_equal( m3[,2], 6:1 )
 
-  res <- sfheaders:::rcpp_get_lines( x, c(2,1), 0)
+  res <- sfheaders:::rcpp_get_list_mat( x, c(2,1), 0)
   expect_true( is.list( res ) )
   expect_true( is.matrix( res[[1]] ) )
   expect_true( is.matrix( res[[2]] ) )
@@ -151,7 +151,7 @@ test_that("lines lists returend",{
   )
 
   x <- as.matrix( x )
-  res <- sfheaders:::rcpp_get_lines( x, c("x","y"), "id")
+  res <- sfheaders:::rcpp_get_list_mat( x, c("x","y"), "id")
   expect_true( is.list( res ) )
   expect_true( is.matrix( res[[1]] ) )
   expect_true( is.matrix( res[[2]] ) )
@@ -165,7 +165,7 @@ test_that("lines lists returend",{
   expect_equal( m3[,1], 9:14 )
   expect_equal( m3[,2], 6:1 )
 
-  res <- sfheaders:::rcpp_get_lines( x, c(2,1), 0)
+  res <- sfheaders:::rcpp_get_list_mat( x, c(2,1), 0)
   expect_true( is.list( res ) )
   expect_true( is.matrix( res[[1]] ) )
   expect_true( is.matrix( res[[2]] ) )

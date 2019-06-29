@@ -5,7 +5,6 @@
 #include "sfheaders/sfg/point/sfg_point.hpp"
 #include "sfheaders/bbox.hpp"
 #include "sfheaders/sfc/sfc.hpp"
-#include "sfheaders/sfc/sfc_attributes.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -40,10 +39,7 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::to_point( this_point );
     }
 
-    sfheaders::sfc::attach_sfc_attributes(
-      sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision
-      );
-    return sfc;
+    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
   inline SEXP to_points(
@@ -59,7 +55,6 @@ namespace sfc {
   inline SEXP to_points(
       Rcpp::NumericMatrix& nm
   ) {
-
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
 
@@ -82,10 +77,7 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::to_point( this_point );
     }
 
-    sfheaders::sfc::attach_sfc_attributes(
-      sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision
-      );
-    return sfc;
+    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
   inline SEXP to_points(
@@ -98,12 +90,11 @@ namespace sfc {
   }
 
 
-
   inline SEXP to_points(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_points( im2 );
   }
 
@@ -111,7 +102,7 @@ namespace sfc {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_line( im, cols );
+    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return to_points( im2 );
   }
 
@@ -119,7 +110,7 @@ namespace sfc {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_points( nm2 );
   }
 
@@ -127,7 +118,7 @@ namespace sfc {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_line( nm, cols );
+    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return to_points( nm2 );
   }
 
@@ -136,7 +127,7 @@ namespace sfc {
       Rcpp::DataFrame& df
   ) {
     // expecting single-row data.frame
-    Rcpp::NumericMatrix nv = sfheaders::shapes::get_line( df );
+    Rcpp::NumericMatrix nv = sfheaders::shapes::get_mat( df );
     return to_points( nv );
   }
 
@@ -145,7 +136,7 @@ namespace sfc {
       Rcpp::IntegerVector& cols
   ) {
     //Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    Rcpp::NumericMatrix nv = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nv = sfheaders::shapes::get_mat( df, cols );
     return to_points( nv );
   }
 
@@ -153,7 +144,7 @@ namespace sfc {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nv = sfheaders::shapes::get_line( df, cols );
+    Rcpp::NumericMatrix nv = sfheaders::shapes::get_mat( df, cols );
     return to_points( nv );
   }
 

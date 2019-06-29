@@ -1,6 +1,6 @@
 context("sfg_to_multipolygon")
 
-testthat("sfg multipolygon",{
+test_that("sfg multipolygon",{
 
   l1 <- matrix(c(0,0,0,1,1,1,1,0,0,0), ncol = 2, byrow = T)
   l2 <- matrix(c(2,2,2,5,5,5,5,2,2,2), ncol = 2, byrow = T)
@@ -16,5 +16,6 @@ testthat("sfg multipolygon",{
   m <- rbind(m, l3)
 
   res <- sfheaders:::rcpp_to_multipolygon( m, c(2,3), polygon_id = 0, line_id = 1)
+  ## TODO
 
 })
