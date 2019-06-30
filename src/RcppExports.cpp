@@ -93,13 +93,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_to_multipoints
-SEXP rcpp_to_multipoints(Rcpp::NumericMatrix x);
-RcppExport SEXP _sfheaders_rcpp_to_multipoints(SEXP xSEXP) {
+SEXP rcpp_to_multipoints(SEXP x, SEXP cols, SEXP id_col);
+RcppExport SEXP _sfheaders_rcpp_to_multipoints(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipoints(x));
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipoints(x, cols, id_col));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_to_linestrings
+SEXP rcpp_to_linestrings(SEXP x, SEXP cols, SEXP id_col);
+RcppExport SEXP _sfheaders_rcpp_to_linestrings(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_linestrings(x, cols, id_col));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -238,7 +253,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},
     {"_sfheaders_rcpp_get_list_mat", (DL_FUNC) &_sfheaders_rcpp_get_list_mat, 3},
     {"_sfheaders_rcpp_to_points", (DL_FUNC) &_sfheaders_rcpp_to_points, 2},
-    {"_sfheaders_rcpp_to_multipoints", (DL_FUNC) &_sfheaders_rcpp_to_multipoints, 1},
+    {"_sfheaders_rcpp_to_multipoints", (DL_FUNC) &_sfheaders_rcpp_to_multipoints, 3},
+    {"_sfheaders_rcpp_to_linestrings", (DL_FUNC) &_sfheaders_rcpp_to_linestrings, 3},
     {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 2},
     {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 2},
     {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 2},

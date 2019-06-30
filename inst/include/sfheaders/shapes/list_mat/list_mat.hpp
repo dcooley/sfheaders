@@ -51,6 +51,7 @@ namespace shapes {
     size_t i;
     size_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
+
     Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
 
     for( i = 0; i < n_col; i++ ) {
@@ -118,6 +119,17 @@ namespace shapes {
       int& end
   ) {
     size_t n_col = geometry_cols.length();
+
+    if( n_col <= 1 ) {
+      Rcpp::stop("sfheaders - need at least 2 columns");
+    }
+
+    // Rcpp::Rcout << "n_col: " << n_col << std::endl;
+    // Rcpp::Rcout << "start: " << start << std::endl;
+    // Rcpp::Rcout << "end: " << end << std::endl;
+
+    //return im;
+
     // matrix can just be subset by cols and rows
     Rcpp::Range rows = Rcpp::Range( start, end );
     Rcpp::Range cols = Rcpp::Range( geometry_cols[0], geometry_cols[ ( n_col - 1 ) ] );
@@ -134,6 +146,15 @@ namespace shapes {
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
     return get_listMat( df, geometry_cols, start, end );
+  }
+
+  inline SEXP get_listMat(
+    Rcpp::DataFrame& df,
+    Rcpp::IntegerVector& geometry_cols
+  ) {
+    Rcpp::List lst(1);
+    lst[0] = sfheaders::shapes::get_mat( df, geometry_cols );
+    return lst;
   }
 
   // get list of lines (e.g. MULTILINESTRING)
@@ -178,12 +199,25 @@ namespace shapes {
 
     Rcpp::List mls( n_lines );
 
+    // Rcpp::Rcout << "get list mat 7 " << std::endl;
+    // Rcpp::Rcout << "n_lines: " << n_lines << std::endl;
+    // Rcpp::Rcout << "line_ids: " << line_ids << std::endl;
+
+    int start;
+    int end;
+    if( n_lines == 1 ) {
+      //mls( 0 ) = get_listMat( df, geometry_cols );
+      //return mls;
+      mls( 0 ) = sfheaders::shapes::get_mat( df, geometry_cols );
+      return mls;
+    }
+
     // now iterate through the data.frame and get the matrices of lines
     size_t i;
     for( i = 0; i < n_lines; i++ ) {
 
-      int start = line_positions(i, 0);
-      int end = line_positions(i, 1);
+      start = line_positions(i, 0);
+      end = line_positions(i, 1);
 
       mls( i ) = get_listMat( df, geometry_cols, start, end );
     }
@@ -198,6 +232,7 @@ namespace shapes {
     int& id_col
   ) {
     Rcpp::NumericVector line_ids = df[ id_col ];
+    // Rcpp::Rcout << "get list mat 6 " << std::endl;
     return get_listMat( df, cols, line_ids );
   }
 
@@ -244,6 +279,7 @@ namespace shapes {
       int& id_col
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
+    // Rcpp::Rcout << "get list mat 5 " << std::endl;
     return get_listMat( df, cols, id_col );
   }
 
@@ -301,6 +337,7 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      // Rcpp::Rcout << "get list mat 3 " << std::endl;
       return get_listMat( im, cols, id_col );
     }
     }
@@ -309,6 +346,7 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      // Rcpp::Rcout << "get list mat 4 " << std::endl;
       return get_listMat( nm, cols, id_col );
     }
     }
@@ -349,6 +387,7 @@ namespace shapes {
       Rcpp::IntegerVector iv_id_col = Rcpp::as< Rcpp::IntegerVector >( id_col );
       int i_id_col = iv_id_col[0];
       Rcpp::IntegerVector iv_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
+      // Rcpp::Rcout << "get list mat 2 " << std::endl;
       return get_listMat( x, iv_cols, i_id_col );
     }
     case STRSXP: {

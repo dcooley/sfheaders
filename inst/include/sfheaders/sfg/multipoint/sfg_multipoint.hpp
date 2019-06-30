@@ -190,6 +190,9 @@ inline SEXP to_multipoint(
       SEXP& x
   ) {
     // switch on type of x
+    //int tp = TYPEOF( x );
+    // Rcpp::Rcout << "type of multipoint: " << tp << std::endl;
+
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {

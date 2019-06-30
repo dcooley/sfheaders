@@ -29,8 +29,12 @@ rcpp_to_points <- function(x, cols) {
     .Call(`_sfheaders_rcpp_to_points`, x, cols)
 }
 
-rcpp_to_multipoints <- function(x) {
-    .Call(`_sfheaders_rcpp_to_multipoints`, x)
+rcpp_to_multipoints <- function(x, cols, id_col) {
+    .Call(`_sfheaders_rcpp_to_multipoints`, x, cols, id_col)
+}
+
+rcpp_to_linestrings <- function(x, cols, id_col) {
+    .Call(`_sfheaders_rcpp_to_linestrings`, x, cols, id_col)
 }
 
 rcpp_to_point <- function(x, geometry_columns) {

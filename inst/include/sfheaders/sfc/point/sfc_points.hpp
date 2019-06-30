@@ -29,7 +29,7 @@ namespace sfc {
     // matrix; iterate through each row, get bbox, create sfg of each point
     // then an sfc of all other points
     size_t n_row = im.nrow();
-    size_t n_col = im.ncol();
+    //size_t n_col = im.ncol();
     size_t i;
     Rcpp::List sfc( n_row );
 
@@ -67,7 +67,7 @@ namespace sfc {
     double precision = 0.0;
 
     size_t n_row = nm.nrow();
-    size_t n_col = nm.ncol();
+    //size_t n_col = nm.ncol();
     size_t i;
     Rcpp::List sfc( n_row );
 

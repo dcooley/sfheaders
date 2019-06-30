@@ -150,4 +150,32 @@ to_points( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 # POINT (0 3)
 # POINT (1 4)
 # POINT (2 5)
+
+to_multipoints( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
+# Geometry set for 1 feature 
+# geometry type:  MULTIPOINT
+# dimension:      XY
+# bbox:           xmin: 0 ymin: 3 xmax: 2 ymax: 5
+# epsg (SRID):    NA
+# proj4string:    NA
+# MULTIPOINT (0 3, 1 4, 2 5)
+
+# n <- 1e7
+# df <- data.frame(
+#   id = rep(1:(n / 2), each = 2),
+#   x = rnorm( n ),
+#   y = rnorm( n ),
+#   z = rnorm( n )
+# )
+# 
+# system.time({
+#   res <- to_linestrings( df, linestring_id = "id" )
+# })
+# 
+# res
+# 
+# 
+# 
+# to_multipoints( df )
+# to_multipoints( df, x = "x", y = "y", multipoint_id = "id" )
 ```

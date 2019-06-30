@@ -139,4 +139,26 @@ a_polygon( df, "POLYGON" )
 ```{r}
 to_points( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 
+to_multipoints( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
+
+# n <- 1e7
+# df <- data.frame(
+#   id = rep(1:(n / 2), each = 2),
+#   x = rnorm( n ),
+#   y = rnorm( n ),
+#   z = rnorm( n )
+# )
+# 
+# system.time({
+#   res <- to_linestrings( df, linestring_id = "id" )
+# })
+# 
+# res
+# 
+# 
+# 
+# to_multipoints( df )
+# to_multipoints( df, x = "x", y = "y", multipoint_id = "id" )
+
+
 ```
