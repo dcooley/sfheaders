@@ -13,7 +13,7 @@
 namespace sfheaders {
 namespace sfc {
 
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
       Rcpp::IntegerMatrix& im
   ) {
     //
@@ -33,14 +33,14 @@ namespace sfc {
 
     // need to loop through ad get the bbox
     sfheaders::bbox::calculate_bbox( bbox, im );
-    Rcpp::IntegerMatrix mp = sfheaders::sfg::to_multipoint( im );
+    Rcpp::IntegerMatrix mp = sfheaders::sfg::sfg_multipoint( im );
 
     sfc[0] = mp;
     return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
 
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
     Rcpp::NumericMatrix& nm
   ) {
     //
@@ -60,7 +60,7 @@ namespace sfc {
 
     // need to loop through ad get the bbox
     sfheaders::bbox::calculate_bbox( bbox, nm );
-    Rcpp::NumericMatrix mp = sfheaders::sfg::to_multipoint( nm );
+    Rcpp::NumericMatrix mp = sfheaders::sfg::sfg_multipoint( nm );
 
     sfc[0] = mp;
 
@@ -68,25 +68,25 @@ namespace sfc {
   }
 
 
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
       Rcpp::IntegerVector& iv
   ) {
     int n_col = iv.size();
     Rcpp::IntegerMatrix im(1, n_col);
     im(0, Rcpp::_ ) = iv;
-    return to_multipoints( im );
+    return sfc_multipoint( im );
   }
 
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
     Rcpp::NumericVector& nv
   ) {
     int n_col = nv.size();
     Rcpp::NumericMatrix nm(1, n_col);
     nm(0, Rcpp::_ ) = nv;
-    return to_multipoints( nm );
+    return sfc_multipoint( nm );
   }
 
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
       Rcpp::List& sfc
   ) {
     // iterate each 'sfg' and assign 'sfg' attributes
@@ -118,7 +118,7 @@ namespace sfc {
       } else {
         Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( this_multipoint );
         sfheaders::bbox::calculate_bbox( bbox, im );
-        sfc[i] = sfheaders::sfg::to_multipoint( im );
+        sfc[i] = sfheaders::sfg::sfg_multipoint( im );
       }
       break;
       }
@@ -128,7 +128,7 @@ namespace sfc {
       } else {
         Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( this_multipoint );
         sfheaders::bbox::calculate_bbox( bbox, nm );
-        sfc[i] = sfheaders::sfg::to_multipoint( nm );
+        sfc[i] = sfheaders::sfg::sfg_multipoint( nm );
       }
       break;
       }
@@ -145,51 +145,51 @@ namespace sfc {
   }
 
   // no subsetting to do; so just turn the object into a matrix;
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
     SEXP& x
   ) {
     Rcpp::List mp(1);
     mp[0] = sfheaders::shapes::get_mat( x );
-    return to_multipoints( mp );
+    return sfc_multipoint( mp );
   }
 
 
   // no subsetting to do (except for columsn)
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
     SEXP& x,
     SEXP& geometry_cols
   ) {
     Rcpp::List mp(1);
     mp[0] = sfheaders::shapes::get_mat( x, geometry_cols );
-    return to_multipoints( mp );
+    return sfc_multipoint( mp );
   }
 
   // if an 'id' col is supplied, it means we have many multipoints
   // multipoint_id & point_id
-  inline SEXP to_multipoints(
+  inline SEXP sfc_multipoint(
     SEXP& x,
     SEXP& geometry_cols,
     SEXP& multipoint_id
   ) {
     // TODO - how to handle bbox
     if( Rf_isNull( geometry_cols ) && Rf_isNull( multipoint_id ) ) {
-      return to_multipoints( x );
+      return sfc_multipoint( x );
 
     } else if ( !Rf_isNull( geometry_cols ) && Rf_isNull( multipoint_id ) ) {
 
       // make the geometry cols all the other columns??
-      return to_multipoints( x, geometry_cols );
+      return sfc_multipoint( x, geometry_cols );
     } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( multipoint_id ) ) {
 
       SEXP other_cols = sfheaders::utils::other_columns( x, multipoint_id );
-      //return to_multipoints( x, other_cols, geometry_cols );
+      //return sfc_multipoint( x, other_cols, geometry_cols );
       Rcpp::List mp = sfheaders::shapes::get_listMat( x, other_cols, multipoint_id );
-      return to_multipoints( mp );
+      return sfc_multipoint( mp );
 
     } else {
       // Rcpp::Rcout << "get list mat " << std::endl;
       Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, multipoint_id );
-      return to_multipoints( mp );
+      return sfc_multipoint( mp );
     }
 
     return Rcpp::List::create(); // ??

@@ -1,18 +1,18 @@
-context("sfg_to_multilinestring")
+context("sfg_multilinestring")
 
 test_that("sfg multilinestring", {
 
   ## matrix
   x <- matrix(c(1:24), ncol = 2)
-  res <- sfheaders:::rcpp_to_multilinestring( x, NULL, NULL )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, NULL, NULL )
   expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
 
   x <- matrix(c(1:24), ncol = 3)
-  res <- sfheaders:::rcpp_to_multilinestring( x, NULL, NULL )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, NULL, NULL )
   expect_equal( attr(res, "class"), c("XYZ", "MULTILINESTRING","sfg"))
 
   x <- matrix(c(1:24), ncol = 4)
-  res <- sfheaders:::rcpp_to_multilinestring( x, NULL, NULL )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, NULL, NULL )
   expect_equal( attr(res, "class"), c("XYZM", "MULTILINESTRING","sfg"))
 
   ## data.frame
@@ -24,7 +24,7 @@ test_that("sfg multilinestring", {
     m = c(rep(0, length(ids)))
   )
 
-  res <- sfheaders:::rcpp_to_multilinestring( df, NULL, NULL )
+  res <- sfheaders:::rcpp_sfg_multilinestring( df, NULL, NULL )
   expect_equal( attr(res, "class"), c("XYZM", "MULTILINESTRING", "sfg"))
 
 })

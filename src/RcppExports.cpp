@@ -80,109 +80,123 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_points
-SEXP rcpp_to_points(SEXP x, SEXP cols);
-RcppExport SEXP _sfheaders_rcpp_to_points(SEXP xSEXP, SEXP colsSEXP) {
+// rcpp_sfc_point
+SEXP rcpp_sfc_point(SEXP x, SEXP cols);
+RcppExport SEXP _sfheaders_rcpp_sfc_point(SEXP xSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_points(x, cols));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_point(x, cols));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_multipoints
-SEXP rcpp_to_multipoints(SEXP x, SEXP cols, SEXP id_col);
-RcppExport SEXP _sfheaders_rcpp_to_multipoints(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipoints(x, cols, id_col));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_to_linestrings
-SEXP rcpp_to_linestrings(SEXP x, SEXP cols, SEXP id_col);
-RcppExport SEXP _sfheaders_rcpp_to_linestrings(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP) {
+// rcpp_sfc_multipoint
+SEXP rcpp_sfc_multipoint(SEXP x, SEXP cols, SEXP id_col);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_linestrings(x, cols, id_col));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipoint(x, cols, id_col));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_point
-SEXP rcpp_to_point(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_to_point(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+// rcpp_sfc_linestring
+SEXP rcpp_sfc_linestring(SEXP x, SEXP cols, SEXP id_col);
+RcppExport SEXP _sfheaders_rcpp_sfc_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_linestring(x, cols, id_col));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_multilinestring
+SEXP rcpp_sfc_multilinestring(SEXP x, SEXP cols, SEXP multiline_id, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_sfc_multilinestring(SEXP xSEXP, SEXP colsSEXP, SEXP multiline_idSEXP, SEXP line_idSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multiline_id(multiline_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multilinestring(x, cols, multiline_id, line_id));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfg_point
+SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns);
+RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_point(x, geometry_columns));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_point(x, geometry_columns));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_multipoint
-SEXP rcpp_to_multipoint(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_to_multipoint(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+// rcpp_sfg_multipoint
+SEXP rcpp_sfg_multipoint(SEXP x, SEXP geometry_columns);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipoint(SEXP xSEXP, SEXP geometry_columnsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipoint(x, geometry_columns));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoint(x, geometry_columns));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_linestring
-SEXP rcpp_to_linestring(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_to_linestring(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+// rcpp_sfg_linestring
+SEXP rcpp_sfg_linestring(SEXP x, SEXP geometry_columns);
+RcppExport SEXP _sfheaders_rcpp_sfg_linestring(SEXP xSEXP, SEXP geometry_columnsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_linestring(x, geometry_columns));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestring(x, geometry_columns));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_multilinestring
-SEXP rcpp_to_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id);
-RcppExport SEXP _sfheaders_rcpp_to_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
+// rcpp_sfg_multilinestring
+SEXP rcpp_sfg_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_sfg_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multilinestring(x, geometry_columns, line_id));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestring(x, geometry_columns, line_id));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_polygon
-SEXP rcpp_to_polygon(SEXP x, SEXP geometry_columns, SEXP line_id);
-RcppExport SEXP _sfheaders_rcpp_to_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
+// rcpp_sfg_polygon
+SEXP rcpp_sfg_polygon(SEXP x, SEXP geometry_columns, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_sfg_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_polygon(x, geometry_columns, line_id));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygon(x, geometry_columns, line_id));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_to_multipolygon
-SEXP rcpp_to_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id);
-RcppExport SEXP _sfheaders_rcpp_to_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP) {
+// rcpp_sfg_multipolygon
+SEXP rcpp_sfg_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -190,7 +204,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipolygon(x, geometry_columns, polygon_id, line_id));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygon(x, geometry_columns, polygon_id, line_id));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -252,15 +266,16 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},
     {"_sfheaders_rcpp_get_list_mat", (DL_FUNC) &_sfheaders_rcpp_get_list_mat, 3},
-    {"_sfheaders_rcpp_to_points", (DL_FUNC) &_sfheaders_rcpp_to_points, 2},
-    {"_sfheaders_rcpp_to_multipoints", (DL_FUNC) &_sfheaders_rcpp_to_multipoints, 3},
-    {"_sfheaders_rcpp_to_linestrings", (DL_FUNC) &_sfheaders_rcpp_to_linestrings, 3},
-    {"_sfheaders_rcpp_to_point", (DL_FUNC) &_sfheaders_rcpp_to_point, 2},
-    {"_sfheaders_rcpp_to_multipoint", (DL_FUNC) &_sfheaders_rcpp_to_multipoint, 2},
-    {"_sfheaders_rcpp_to_linestring", (DL_FUNC) &_sfheaders_rcpp_to_linestring, 2},
-    {"_sfheaders_rcpp_to_multilinestring", (DL_FUNC) &_sfheaders_rcpp_to_multilinestring, 3},
-    {"_sfheaders_rcpp_to_polygon", (DL_FUNC) &_sfheaders_rcpp_to_polygon, 3},
-    {"_sfheaders_rcpp_to_multipolygon", (DL_FUNC) &_sfheaders_rcpp_to_multipolygon, 4},
+    {"_sfheaders_rcpp_sfc_point", (DL_FUNC) &_sfheaders_rcpp_sfc_point, 2},
+    {"_sfheaders_rcpp_sfc_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfc_multipoint, 3},
+    {"_sfheaders_rcpp_sfc_linestring", (DL_FUNC) &_sfheaders_rcpp_sfc_linestring, 3},
+    {"_sfheaders_rcpp_sfc_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sfc_multilinestring, 4},
+    {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 2},
+    {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 2},
+    {"_sfheaders_rcpp_sfg_linestring", (DL_FUNC) &_sfheaders_rcpp_sfg_linestring, 2},
+    {"_sfheaders_rcpp_sfg_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sfg_multilinestring, 3},
+    {"_sfheaders_rcpp_sfg_polygon", (DL_FUNC) &_sfheaders_rcpp_sfg_polygon, 3},
+    {"_sfheaders_rcpp_sfg_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygon, 4},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 2},
     {"_sfheaders_rcpp_line_ids", (DL_FUNC) &_sfheaders_rcpp_line_ids, 2},

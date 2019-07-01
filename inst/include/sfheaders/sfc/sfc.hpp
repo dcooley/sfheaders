@@ -44,7 +44,7 @@ namespace sfc {
         // we need to loop on those values and create sfc objects
         // because sfg is a single object, not a collection?
 
-        //return sfheaders::sfg::to_multipoint( x, pt_id );
+        //return sfheaders::sfg::sfc_multipoint( x, pt_id );
       }
       }
     }
@@ -56,17 +56,17 @@ namespace sfc {
   // inline SEXP to_sfc( SEXP& x, std::string geom_type ) {
   //   if( geom_type == "POINT" ) {
   //     // must be a vector
-  //     return sfheaders::sfc::to_point( x );
+  //     return sfheaders::sfc::sfc_point( x );
   //   } else if ( geom_type == "MULTIPOINT" ) {
-  //     return sfheaders::sfc::to_multipoint( x );
+  //     return sfheaders::sfc::sfc_multipoint( x );
   //   } else if ( geom_type == "LINESTRING" ) {
-  //     return sfheaders::sfc::to_linestring( x );
+  //     return sfheaders::sfc::sfc_linestring( x );
   //   } else if ( geom_type == "MULTIILNESTRING" ) {
-  //     return sfheaders::sfc::to_multilinestring( x );
+  //     return sfheaders::sfc::sfc_multilinestring( x );
   //   } else if ( geom_type == "POLYGON" ) {
-  //     return sfheaders::sfc::to_polygon( x );
+  //     return sfheaders::sfc::sfc_polygon( x );
   //   } else if ( geom_type == "MULTIPOLYGON" ) {
-  //     return sfheaders::sfc::to_multipolygon( x );
+  //     return sfheaders::sfc::sfc_multipolygon( x );
   //   }
   //
   //   return Rcpp::List::create();
@@ -74,17 +74,17 @@ namespace sfc {
   //
   // inline SEXP to_sfc( SEXP& x, std::string geom_type, SEXP geometry_columns ) {
   //   if( geom_type == "POINT" ) {
-  //     return sfheaders::sfc::to_point( x, geometry_columns );
+  //     return sfheaders::sfc::sfc_point( x, geometry_columns );
   //   } else if ( geom_type == "MULTIPOINT" ) {
-  //     return sfheaders::sfc::to_multipoint( x, geometry_columns );
+  //     return sfheaders::sfc::sfc_multipoint( x, geometry_columns );
   //   } else if ( geom_type == "LINESTRING" ) {
-  //     return sfheaders::sfc::to_linestring( x, geometry_columns );
+  //     return sfheaders::sfc::sfc_linestring( x, geometry_columns );
   //   } else if ( geom_type == "MULTIILNESTRING" ) {
-  //     return sfheaders::sfc::to_multilinestring( x, geometry_columns );
+  //     return sfheaders::sfc::sfc_multilinestring( x, geometry_columns );
   //   } else if ( geom_type == "POLYGON" ) {
-  //     return sfheaders::sfc::to_polygon( x, geometry_columns );
+  //     return sfheaders::sfc::sfc_polygon( x, geometry_columns );
   //   } else if ( geom_type == "MULTIPOLYGON" ) {
-  //     return sfheaders::sfc::to_multipolygon( x, geometry_columns );
+  //     return sfheaders::sfc::sfc_multipolygon( x, geometry_columns );
   //   }
   //
   //   return Rcpp::List::create(); // never reaches

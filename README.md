@@ -30,7 +30,7 @@ df <- data.frame(
   , y = 5:1
 )
 
-to_polygon( df )
+sfg_polygon( df )
 # [[1]]
 #      x y
 # [1,] 1 5
@@ -47,12 +47,12 @@ to_polygon( df )
 
 there are various overloaded functions for each `sfg` type
 
-  - `sfheaders::sfg::to_point()`
-  - `sfheaders::sfg::to_multipoint()`
-  - `sfheaders::sfg::to_linestring()`
-  - `sfheaders::sfg::to_multilinestring()`
-  - `sfheaders::sfg::to_polygon()`
-  - `sfheaders::sfg::to_multipolygon()`
+  - `sfheaders::sfg::sfg_point()`
+  - `sfheaders::sfg::sfg_multipoint()`
+  - `sfheaders::sfg::sfg_linestring()`
+  - `sfheaders::sfg::sfg_multilinestring()`
+  - `sfheaders::sfg::sfg_polygon()`
+  - `sfheaders::sfg::sfg_multipolygon()`
 
 <!-- end list -->
 
@@ -69,7 +69,7 @@ cppFunction(
   ',
   code = '
     SEXP a_polygon( Rcpp::DataFrame df ) {
-      return sfheaders::sfg::to_polygon( df );
+      return sfheaders::sfg::sfg_polygon( df );
     }
   ',
   depends = "sfheaders"
@@ -86,7 +86,7 @@ cppFunction(
   ',
   code = '
     SEXP a_polygon( Rcpp::DataFrame df, Rcpp::StringVector geometry_columns ) {
-      return sfheaders::sfg::to_polygon( df, geometry_columns );
+      return sfheaders::sfg::sfg_polygon( df, geometry_columns );
     }
   ',
   depends = "sfheaders"
@@ -106,7 +106,7 @@ cppFunction(
   ',
   code = '
     SEXP a_polygon( SEXP x, SEXP geometry_columns ) {
-      return sfheaders::sfg::to_polygon( x, geometry_columns );
+      return sfheaders::sfg::sfg_polygon( x, geometry_columns );
     }
   ',
   depends = "sfheaders"
@@ -140,7 +140,7 @@ a_polygon( df, "POLYGON" )
 ### sfc
 
 ``` r
-to_points( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
+sfc_point( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 # Geometry set for 3 features 
 # geometry type:  POINT
 # dimension:      XY
@@ -151,7 +151,7 @@ to_points( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 # POINT (1 4)
 # POINT (2 5)
 
-to_multipoints( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
+sfc_multipoint( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 # Geometry set for 1 feature 
 # geometry type:  MULTIPOINT
 # dimension:      XY
@@ -169,13 +169,13 @@ to_multipoints( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
 # )
 # 
 # system.time({
-#   res <- to_linestrings( df, linestring_id = "id" )
+#   res <- sfc_linestring( df, linestring_id = "id" )
 # })
 # 
 # res
 # 
 # 
 # 
-# to_multipoints( df )
-# to_multipoints( df, x = "x", y = "y", multipoint_id = "id" )
+# sfc_multipoint( df )
+# sfc_multipoint( df, x = "x", y = "y", multipoint_id = "id" )
 ```

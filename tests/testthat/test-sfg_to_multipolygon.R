@@ -15,7 +15,7 @@ test_that("sfg multipolygon",{
   m <- rbind(l1, l2)
   m <- rbind(m, l3)
 
-  res <- sfheaders:::rcpp_to_multipolygon( m, c(2,3), polygon_id = 0, line_id = 1)
+  res <- sfheaders:::rcpp_sfg_multipolygon( m, c(2,3), polygon_id = 0, line_id = 1)
   ## TODO
 
 })
