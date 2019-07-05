@@ -15,6 +15,9 @@ sfc MULTILINESTRING
 m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
 sfc_multilinestring( m )
 
+m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = T)
+sfc_multilinestring( obj = m,  multilinestring_id = 1 )
+
 
 
 }

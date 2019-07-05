@@ -13,6 +13,9 @@ namespace bbox {
   }
 
   inline void bbox_size_check( Rcpp::NumericVector& point ) {
+
+    // Rcpp::Rcout << "point: " << point << std::endl;
+
     if( point.length() < 2 ) {
       Rcpp::stop("sfheaders - incorrect size of bounding box");
     }

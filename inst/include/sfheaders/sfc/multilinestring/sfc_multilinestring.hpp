@@ -117,7 +117,7 @@ inline SEXP sfc_multilinestring(
 
       SEXP this_linestring = sfgs[j];
 
-      // int tp = TYPEOF( this_linestring );
+      int tp = TYPEOF( this_linestring );
       // Rcpp::Rcout << "tp: " << tp << std::endl;
 
       switch( TYPEOF( this_linestring ) ) {
@@ -186,31 +186,63 @@ inline SEXP sfc_multilinestring(
 ) {
   // TODO - how to handle bbox
 
-  if( ( Rf_isNull( multilinestring_id ) && !Rf_isNull( linestring_id ) ) ||
-      ( !Rf_isNull( multilinestring_id ) && Rf_isNull( linestring_id ) )  ) {
-    Rcpp::stop("sfheaders - multilinestring AND linestring ids are required");
-  }
-
   if( Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( multilinestring_id ) ) {
     return sfc_multilinestring( x );
+  }
 
-  } else if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) ) {
+  // JUST multilinestring_id == each multilinestring is just one line
+  // JSUT linestring_id == they are all the same multilinestring_id
 
-    // make the geometry cols all the other columns??
-    return sfc_multilinestring( x, geometry_cols );
-  } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
+  if ( ( Rf_isNull( geometry_cols ) &&  Rf_isNull( multilinestring_id ) && !Rf_isNull( linestring_id ) ) ) {
+    // linestring is provided
+    // so they are all the same MULTILINESTRING
 
     SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
-    //return sfc_multilinestring( x, other_cols, geometry_cols );
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( x, other_cols, multilinestring_id, linestring_id );
-    return sfc_multilinestring( mp );
 
-  } else {
+    // Rcpp::Rcout << "typeof( other_cols ) " << TYPEOF( other_cols ) << std::endl;
+    // Rcpp::Rcout << "typeof( linestring_id ) " << TYPEOF( linestring_id ) << std::endl;
+    //
+    // Rcpp::Rcout << "linestring WITHOUT multilinestring" << std::endl;
+    Rcpp::List lst(1);
+    lst[0] = sfheaders::shapes::get_listMat( x, other_cols, linestring_id );
+    return sfc_multilinestring( lst );
+  }
+
+  if ( ( Rf_isNull( geometry_cols ) && !Rf_isNull( multilinestring_id ) && Rf_isNull( linestring_id ) ) ) {
+    // multilinestring is provided, so there is only one line per multiline
+    SEXP other_cols = sfheaders::utils::other_columns( x, multilinestring_id );
+
+    Rcpp::stop("not working yet");
+    // Rcpp::List lst = sfheaders::shapes::get_listMat( x, other_cols, multilinestring_id );
+    // Rcpp::Rcout << "lst.size() " << lst.size() << std::endl;
+    // Rcpp::List mls( 1 );
+    // mls[0] = lst;
+    // return sfc_multilinestring( mls );
+  }
+
+
+  /// TO HERE
+
+  if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( multilinestring_id ) ) {
+    // make the geometry cols all the other columns??
+    return sfc_multilinestring( x, geometry_cols );
+  }
+
+
+  // if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
+  //   SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
+  //   //return sfc_multilinestring( x, other_cols, geometry_cols );
+  //   Rcpp::List mp = sfheaders::shapes::get_listListMat( x, other_cols, multilinestring_id, linestring_id );
+  //   return sfc_multilinestring( mp );
+  // }
+
+  if( !Rf_isNull( geometry_cols ) && !Rf_isNull( multilinestring_id ) && !Rf_isNull( linestring_id ) ) {
     // Rcpp::Rcout << "get list mat " << std::endl;
     Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, multilinestring_id, linestring_id );
     return sfc_multilinestring( mp );
   }
 
+  Rcpp::stop("sfheaders - multilinestring case not yet implemented");
   return Rcpp::List::create(); // ??
 }
 

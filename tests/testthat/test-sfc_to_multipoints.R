@@ -22,6 +22,9 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
+  ## TODO
+  ## more helpful error message, by checking if supplying an ID column means there aren't enough
+  ## geometry columns left
   expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, c(0) ), "sfheaders - different column types detected")
 
   m <- matrix(c(0,0,0,0,1,1,1,1,1), ncol = 3, byrow = T)
