@@ -1,13 +1,15 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
+#include "sfheaders/utils/columns.hpp"
 #include "sfheaders/utils/subset.hpp"
 
 // [[Rcpp::export]]
 SEXP rcpp_other_columns(
   SEXP x,
-  SEXP id_cols
+  SEXP id_cols,
+  SEXP id_col2
 ) {
-  return sfheaders::utils::other_columns( x, id_cols );
+  return sfheaders::utils::other_columns( x, id_cols, id_col2 );
 }
 
 // [[Rcpp::export]]

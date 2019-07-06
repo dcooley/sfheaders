@@ -2,6 +2,7 @@
 #define R_SFHEADERS_SFC_MULTIPOINTS_H
 
 #include <Rcpp.h>
+#include "sfheaders/utils/columns.hpp"
 #include "sfheaders/sfg/multipoint/sfg_multipoint.hpp"
 #include "sfheaders/shapes/mat/mat.hpp"
 #include "sfheaders/shapes/list_mat/list_mat.hpp"

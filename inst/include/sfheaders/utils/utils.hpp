@@ -3,7 +3,6 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/matrix.hpp"
-#include "sfheaders/utils/columns.hpp"
 
 namespace sfheaders {
 namespace utils {
@@ -116,6 +115,9 @@ namespace utils {
   }
 
   inline int get_sexp_length( SEXP s ) {
+
+    // Rcpp::Rcout << "vector type: " << TYPEOF( s ) << std::endl;
+
     switch( TYPEOF(s) ) {
     case REALSXP:
       return sexp_length< REALSXP >( s );
@@ -123,7 +125,9 @@ namespace utils {
       return sexp_length< VECSXP >( s );
     case INTSXP:
       return sexp_length< INTSXP >( s );
-    default: Rcpp::stop("unknown sf type");
+    case STRSXP:
+      return sexp_length< STRSXP >( s );
+    default: Rcpp::stop("sfheaders - unknown vector type");
     }
     return 0;
   }

@@ -21,10 +21,10 @@ namespace utils {
   }
 
   inline Rcpp::StringVector subset_vector(
-      Rcpp::StringVector& nv,
+      Rcpp::StringVector& sv,
       Rcpp::Range& rng
   ) {
-    return nv[ rng ];
+    return sv[ rng ];
   }
 
   inline SEXP subset_vector(
@@ -33,6 +33,9 @@ namespace utils {
     int& end
   ) {
     Rcpp::Range rng = Rcpp::Range( start, end );
+
+    Rcpp::Rcout << "type of vector: " << TYPEOF( x ) << std::endl;
+
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -72,8 +75,6 @@ namespace utils {
       df_subset[i] = sfheaders::utils::subset_vector( this_vec, start, end );
     }
     df_subset.names() = cols;
-    //df_subset.attr("class") = "data.frame";
-    //df_subset.attr("rownames") = row_names;
     return df_subset;
   }
 

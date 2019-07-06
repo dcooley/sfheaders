@@ -41,6 +41,10 @@ rcpp_sfc_multilinestring <- function(x, cols, multiline_id, line_id) {
     .Call(`_sfheaders_rcpp_sfc_multilinestring`, x, cols, multiline_id, line_id)
 }
 
+rcpp_sfc_polygon <- function(x, cols, polygon_id, line_id) {
+    .Call(`_sfheaders_rcpp_sfc_polygon`, x, cols, polygon_id, line_id)
+}
+
 rcpp_sfg_point <- function(x, geometry_columns) {
     .Call(`_sfheaders_rcpp_sfg_point`, x, geometry_columns)
 }
@@ -69,8 +73,8 @@ rcpp_to_sfg <- function(x, geom_type) {
     .Call(`_sfheaders_rcpp_to_sfg`, x, geom_type)
 }
 
-rcpp_other_columns <- function(x, id_cols) {
-    .Call(`_sfheaders_rcpp_other_columns`, x, id_cols)
+rcpp_other_columns <- function(x, id_cols, id_col2) {
+    .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2)
 }
 
 rcpp_line_ids <- function(line_ids, unique_ids) {

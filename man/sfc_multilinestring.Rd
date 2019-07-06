@@ -16,7 +16,35 @@ m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
 sfc_multilinestring( m )
 
 m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = T)
-sfc_multilinestring( obj = m,  multilinestring_id = 1 )
+sfc_multilinestring( obj = m )
+sfc_multilinestring( obj = m, multilinestring_id = 1 )
+sfc_multilinestring( obj = m, linestring_id = 1 )
+
+sfc_multilinestring( obj = m, linestring_id = 1, multilinestring_id = 1 )
+
+sfc_multilinestring( obj = m, x = 2, y = 3 )
+sfc_multilinestring( obj = m, x = 1, y = 2, z = 3 )
+sfc_multilinestring( obj = m, x = 2, y = 3, linestring_id = 1, multilinestring_id = 1 )
+
+df <- data.frame(
+  ml_id = c(1,1,1,1,1,1,1,1,2,2,2,2,2)
+  , l_id = c(1,1,1,2,2,3,3,3,1,1,1,2,2)
+  , x = rnorm(13)
+  , y = rnorm(13)
+  , z = rnorm(13)
+  , m = rnorm(13)
+)
+
+sfc_multilinestring( obj = df, x = "x", y = "y")
+sfc_multilinestring( obj = df, x = "x", y = "y", z = "z")
+sfc_multilinestring( obj = df, x = "x", y = "y", z = "z", m = "m")
+
+sfc_multilinestring( obj = df, x = 2, y = 3)
+sfc_multilinestring( obj = df, x = 2, y = 3, z = 4)
+sfc_multilinestring( obj = df, x = 2, y = 3, z = 4, m = 5)
+
+sfc_multilinestring( obj = df, multilinestring_id = "ml_id", linestring_id = "l_id" )
+sfc_multilinestring( obj = df, multilinestring_id = 1, linestring_id = 2 )
 
 
 
