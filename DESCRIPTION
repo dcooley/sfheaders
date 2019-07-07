@@ -16,4 +16,5 @@ Imports:
     Rcpp
 Suggests:
     sf,
-    testthat
+    testthat,
+    covr

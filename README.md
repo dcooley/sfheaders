@@ -1,4 +1,9 @@
 
+[![Travis build
+status](https://travis-ci.org/dcooley/sfheaders.svg?branch=master)](https://travis-ci.org/dcooley/sfheaders)
+[![Coverage
+status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://codecov.io/github/dcooley/sfheaders?branch=master)
+
 # sfheaders
 
 ## Another spatial library?
