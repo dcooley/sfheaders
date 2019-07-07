@@ -5,7 +5,7 @@ Version: 0.0.1
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre"))
     )
-Description: Converts R objects to Simple Features `sf`
+Description: Converts R and 'Rcpp' objects to Simple Features `sf`. 
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true

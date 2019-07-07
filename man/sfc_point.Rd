@@ -6,6 +6,17 @@
 \usage{
 sfc_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+}
 \description{
 constructs sfc of POINT objects
 }

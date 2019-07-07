@@ -2,12 +2,23 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_point}
 \alias{sfg_point}
-\title{to POINT}
+\title{sfg POINT}
 \usage{
 sfg_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+}
 \description{
-to POINT
+sfg POINT
 }
 \examples{
 

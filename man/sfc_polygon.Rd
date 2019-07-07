@@ -7,6 +7,21 @@
 sfc_polygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   polygon_id = NULL, linestring_id = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
+\item{polygon_id}{column of ids for polygons}
+
+\item{linestring_id}{column of ids for lines (within polygons)}
+}
 \description{
 sfc POLYGON
 }
@@ -15,7 +30,7 @@ sfc POLYGON
 m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
 sfc_polygon( m )
 
-m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = T)
+m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
 sfc_polygon( obj = m )
 sfc_polygon( obj = m, polygon_id = 1 )
 sfc_polygon( obj = m, linestring_id = 1 )

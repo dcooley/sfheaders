@@ -2,12 +2,23 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multipoint}
 \alias{sfg_multipoint}
-\title{to MULTIPOINT}
+\title{sfg MULTIPOINT}
 \usage{
 sfg_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+}
 \description{
-to MULTIPOINT
+sfg MULTIPOINT
 }
 \examples{
 
@@ -19,20 +30,21 @@ sfg_multipoint( matrix( 1:3, ncol = 3 ) )
 sfg_multipoint( data.frame( x = 1, y = 2, z = 3 )  )
 
 sfg_multipoint( matrix( 1:4, ncol = 2 ) )
-sfg_multipoint( matrix( 1:24, ncol = 2, byrow = T ) )
-sfg_multipoint( matrix( 1:24, ncol = 3, byrow = T ) )
-sfg_multipoint( matrix( 1:24, ncol = 4, byrow = T ) )
+sfg_multipoint( matrix( 1:24, ncol = 2, byrow = TRUE ) )
+sfg_multipoint( matrix( 1:24, ncol = 3, byrow = TRUE ) )
+sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ) )
 
 sfg_multipoint( data.frame( x = 1:5, y = 1:5 ) )
 
 ## using columns
 
-sfg_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 1, y = 2 )
-sfg_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 1, y = 2, z = 3 )
-sfg_multipoint( matrix( 1:24, ncol = 4, byrow = T ), x = 3, y = 4 )
+sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 1, y = 2 )
+sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 1, y = 2, z = 3 )
+sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 3, y = 4 )
 
-sfg_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y" )
-sfg_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y", z = "z" )
-sfg_multipoint( data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 ), x = "x", y = "y", z = "z", m = "m" )
+df <- data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 )
+sfg_multipoint( df, x = "x", y = "y" )
+sfg_multipoint( df, x = "x", y = "y", z = "z" )
+sfg_multipoint( df, x = "x", y = "y", z = "z", m = "m" )
 
 }

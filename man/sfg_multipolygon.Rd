@@ -2,13 +2,28 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multipolygon}
 \alias{sfg_multipolygon}
-\title{to MULTIPOLYGON}
+\title{sfg MULTIPOLYGON}
 \usage{
 sfg_multipolygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
-  polygon_id = NULL, line_id = NULL)
+  polygon_id = NULL, linestring_id = NULL)
+}
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
+\item{polygon_id}{column of ids for polygons}
+
+\item{linestring_id}{column of ids for linestrings}
 }
 \description{
-to MULTIPOLYGON
+sfg MULTIPOLYGON
 }
 \examples{
 
@@ -25,15 +40,27 @@ m <- as.matrix( df )
 
 sfg_multipolygon( df[, c("x","y") ] )
 
-sfg_multipolygon( df, x = "x", y = "y", polygon_id = "polygon_id", line_id = "line_id" )
-sfg_multipolygon( df, x = "x", y = "y", z = "z", polygon_id = "polygon_id", line_id = "line_id" )
-sfg_multipolygon( df, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", line_id = "line_id" )
+sfg_multipolygon(
+  df, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
+  )
+sfg_multipolygon(
+  df, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id"
+  )
+sfg_multipolygon(
+  df, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", linestring_id = "line_id"
+  )
 
 
 sfg_multipolygon( m[, c("x","y") ] )
 
-sfg_multipolygon( m, x = "x", y = "y", polygon_id = "polygon_id", line_id = "line_id" )
-sfg_multipolygon( m, x = "x", y = "y", z = "z", polygon_id = "polygon_id", line_id = "line_id" )
-sfg_multipolygon( m, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", line_id = "line_id" )
+sfg_multipolygon(
+  m, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
+  )
+sfg_multipolygon(
+  m, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id"
+  )
+sfg_multipolygon(
+  m, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", linestring_id = "line_id"
+  )
 
 }

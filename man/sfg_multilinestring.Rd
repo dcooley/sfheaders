@@ -2,13 +2,26 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multilinestring}
 \alias{sfg_multilinestring}
-\title{to MULTILINESTRING}
+\title{sfg MULTILINESTRING}
 \usage{
 sfg_multilinestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
-  line_id = NULL)
+  linestring_id = NULL)
+}
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
+\item{linestring_id}{column of ids for lines}
 }
 \description{
-to MULTILINESTRING
+sfg MULTILINESTRING
 }
 \examples{
 
@@ -18,16 +31,16 @@ sfg_multilinestring( matrix( 1:24, ncol = 4 ) )
 
 ## different lines
 m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
-sfg_multilinestring( obj = m, x = 1, y = 2, line_id = 3 )
+sfg_multilinestring( obj = m, x = 1, y = 2, linestring_id = 3 )
 
-## just specifying line_id will use all others as the geometries
-sfg_multilinestring( obj = m, line_id = 3 )
+## just specifying linestring_id will use all others as the geometries
+sfg_multilinestring( obj = m, linestring_id = 3 )
 
 df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
 sfg_multilinestring( df, x = "x", y = "y" )
-sfg_multilinestring( df, x = "x", y = "y", line_id = "id" )
+sfg_multilinestring( df, x = "x", y = "y", linestring_id = "id" )
 
-sfg_multilinestring( df, line_id = "id" )
+sfg_multilinestring( df, linestring_id = "id" )
 
 
 }

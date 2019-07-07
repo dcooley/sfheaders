@@ -3,6 +3,12 @@
 #'
 #' constructs sfc of POINT objects
 #'
+#' @param obj matrix or data.frame
+#' @param x x geometry column
+#' @param y y geometry column
+#' @param z z geometry column
+#' @param m m geometry column
+#'
 #' @examples
 #'
 #' x <- c(1:3)
@@ -26,6 +32,9 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #'
 #' constructs sfc of MULTIPOINT objects
 #'
+#' @inheritParams sfc_point
+#' @param multipoint_id column of ids for multipoints
+#'
 #' @examples
 #'
 #' x <- matrix( c(1:4), ncol = 2 )
@@ -48,6 +57,9 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #'
 #' constructs sfc of MULTIPOINT objects
 #'
+#' @inheritParams sfc_point
+#' @param linestring_id column of ids for linestrings
+#'
 #' @examples
 #'
 #' x <- matrix( c(1:4), ncol = 2 )
@@ -68,12 +80,16 @@ sfc_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestr
 
 #' sfc MULTILINESTRING
 #'
+#' @inheritParams sfc_point
+#' @param multilinestring_id column of ids for multilinestrings
+#' @param linestring_id column of ids for linestrings (within multilinestrings)
+#'
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
 #' sfc_multilinestring( m )
 #'
-#' m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = T)
+#' m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
 #' sfc_multilinestring( obj = m )
 #' sfc_multilinestring( obj = m, multilinestring_id = 1 )
 #' sfc_multilinestring( obj = m, linestring_id = 1 )
@@ -116,12 +132,16 @@ sfc_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, mu
 
 #' sfc POLYGON
 #'
+#' @inheritParams sfc_point
+#' @param polygon_id column of ids for polygons
+#' @param linestring_id column of ids for lines (within polygons)
+#'
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
 #' sfc_polygon( m )
 #'
-#' m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = T)
+#' m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
 #' sfc_polygon( obj = m )
 #' sfc_polygon( obj = m, polygon_id = 1 )
 #' sfc_polygon( obj = m, linestring_id = 1 )

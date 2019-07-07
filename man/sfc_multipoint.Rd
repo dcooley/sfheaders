@@ -7,6 +7,19 @@
 sfc_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   multipoint_id = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
+\item{multipoint_id}{column of ids for multipoints}
+}
 \description{
 constructs sfc of MULTIPOINT objects
 }

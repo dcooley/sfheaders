@@ -7,6 +7,21 @@
 sfc_multilinestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   multilinestring_id = NULL, linestring_id = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
+\item{multilinestring_id}{column of ids for multilinestrings}
+
+\item{linestring_id}{column of ids for linestrings (within multilinestrings)}
+}
 \description{
 sfc MULTILINESTRING
 }
@@ -15,7 +30,7 @@ sfc MULTILINESTRING
 m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
 sfc_multilinestring( m )
 
-m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = T)
+m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
 sfc_multilinestring( obj = m )
 sfc_multilinestring( obj = m, multilinestring_id = 1 )
 sfc_multilinestring( obj = m, linestring_id = 1 )
