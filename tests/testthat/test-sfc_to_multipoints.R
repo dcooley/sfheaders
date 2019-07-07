@@ -22,10 +22,15 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
-  ## TODO
-  ## more helpful error message, by checking if supplying an ID column means there aren't enough
-  ## geometry columns left
-  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, c(0) ), "sfheaders - incorrect size of bounding box")
+  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, 0 ), "sfheaders - incorrect number of geometry columns" )
+
+
+  m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
+  res <- sfheaders:::rcpp_sfc_multipoint( m, c(0,1), 0 )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
+  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, c(0) ), "sfheaders - incorrect number of geometry columns")
 
   m <- matrix(c(0,0,0,0,1,1,1,1,1), ncol = 3, byrow = T)
   res <- sfheaders:::rcpp_sfc_multipoint( m, c(1,2), c(0) )

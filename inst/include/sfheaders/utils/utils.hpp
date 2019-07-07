@@ -2,134 +2,18 @@
 #define R_SFHEADERS_UTILS_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/matrix.hpp"
+#include "sfheaders/utils/lines.hpp"
+#include "sfheaders/utils/columns.hpp"
+#include "sfheaders/utils/sexp.hpp"
 
 namespace sfheaders {
 namespace utils {
 
-  inline Rcpp::NumericMatrix df_to_matrix(
-    Rcpp::DataFrame& df
-  ) {
-    int i;
-    int n_cols = df.cols();
-    int n_rows = df.rows();
-    Rcpp::StringVector df_names = df.names();
-    Rcpp::NumericMatrix nm( n_rows, n_cols );
-    for( i = 0; i < n_cols; i++ ) {
-      Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ i ] );
-      nm( Rcpp::_, i ) = this_column;
+  inline void geometry_column_check( SEXP x ) {
+    size_t n = sfheaders::utils::get_sexp_length( x );
+    if( n < 2 || n > 4) {
+      Rcpp::stop("sfheaders - incorrect number of geometry columns");
     }
-
-    Rcpp::List m_attr(2);
-    m_attr(1) = df_names;
-
-    nm.attr("dimnames") = m_attr;
-    return nm;
-  }
-
-
-
-  /* line_ids
-   *
-   * returns a 2-colummn matrix giving the start & end locations in a vector of'ids'
-   * where the ids start & end
-   *
-   */
-  inline Rcpp::IntegerMatrix line_ids(
-    Rcpp::NumericVector& line_ids,
-    Rcpp::NumericVector& unique_ids
-  ) {
-
-    size_t n = line_ids.length();
-    size_t unique_n = unique_ids.length();
-
-    Rcpp::IntegerMatrix im( unique_n, 2);
-
-    // if n = 1, there's only 1 unique ID
-    if( n == 1 ) {
-      im( 0, 0 ) = 0;
-      im( 0, 1 ) = n - 1;
-      return im;
-    }
-
-    size_t i;
-
-    Rcpp::IntegerVector start_positions( unique_n );
-    Rcpp::IntegerVector end_positions( unique_n );
-
-    int idx = 0;
-    int this_id;
-    for( i = 0; i < n; i++ ) {
-      //go through line_ids and find where ids change
-      if( i == 0 ) {
-        this_id = line_ids[ i ];
-        start_positions[ idx ] = i;
-      }
-
-      if( this_id != line_ids[ i ] ) {
-        //the id has changed
-        end_positions[ idx ] = i - 1;
-        idx++;
-        start_positions[ idx ] = i;
-        this_id = line_ids[ i ];
-      }
-
-      if( i == ( n - 1 ) ) {
-        end_positions[ idx ] = i;
-      }
-    }
-//
-//
-//
-//     Rcpp::Rcout << "start_positions: " << start_positions << std::endl;
-//     Rcpp::Rcout << "end_positions: " << end_positions << std::endl;
-
-    im( Rcpp::_, 0 ) = start_positions;
-    im( Rcpp::_, 1 ) = end_positions;
-
-    return im;
-  }
-
-  template <int RTYPE>
-  inline size_t sexp_n_col( Rcpp::Matrix < RTYPE > v ) {
-    return v.ncol();
-  }
-
-  inline size_t get_sexp_n_col( SEXP s ) {
-    switch( TYPEOF( s ) ) {
-    case REALSXP: {
-      return sexp_n_col< REALSXP >( s );
-    }
-    case INTSXP: {
-      return sexp_n_col< INTSXP >( s );
-    }
-    default: {
-      Rcpp::stop("sfheaders - can't determine n_col");
-    }
-    }
-  }
-
-  template <int RTYPE>
-  inline int sexp_length(Rcpp::Vector<RTYPE> v) {
-    return v.length();
-  }
-
-  inline int get_sexp_length( SEXP s ) {
-
-    // Rcpp::Rcout << "vector type: " << TYPEOF( s ) << std::endl;
-
-    switch( TYPEOF(s) ) {
-    case REALSXP:
-      return sexp_length< REALSXP >( s );
-    case VECSXP:
-      return sexp_length< VECSXP >( s );
-    case INTSXP:
-      return sexp_length< INTSXP >( s );
-    case STRSXP:
-      return sexp_length< STRSXP >( s );
-    default: Rcpp::stop("sfheaders - unknown vector type");
-    }
-    return 0;
   }
 
   inline bool is_null_geometry( SEXP& sfg, std::string& geom_type ) {

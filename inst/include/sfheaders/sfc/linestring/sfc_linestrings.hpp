@@ -159,6 +159,7 @@ inline SEXP sfc_linestring(
     SEXP& x,
     SEXP& geometry_cols
 ) {
+  sfheaders::utils::geometry_column_check( geometry_cols );
   Rcpp::List mp(1);
   mp[0] = sfheaders::shapes::get_mat( x, geometry_cols );
   return sfc_linestring( mp );
@@ -182,12 +183,13 @@ inline SEXP sfc_linestring(
   } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
 
     SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
+    sfheaders::utils::geometry_column_check( other_cols );
     //return sfc_linestrings( x, other_cols, geometry_cols );
     Rcpp::List mp = sfheaders::shapes::get_listMat( x, other_cols, linestring_id );
     return sfc_linestring( mp );
 
   } else {
-    // Rcpp::Rcout << "get list mat " << std::endl;
+    sfheaders::utils::geometry_column_check( geometry_cols );
     Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
     return sfc_linestring( mp );
   }

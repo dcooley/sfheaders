@@ -15,7 +15,8 @@ test_that("sfg multipolygon",{
   m <- rbind(l1, l2)
   m <- rbind(m, l3)
 
-  res <- sfheaders:::rcpp_sfg_multipolygon( m, c(2,3), polygon_id = 0, line_id = 1)
-  ## TODO
+  mp <- sfheaders:::rcpp_sfg_multipolygon( m, c(2,3), polygon_id = 0, line_id = 1)
+  res <- attr( mp, "class" )
+  expect_equal( res, c("XY", "MULTIPOLYGON", "sfg") )
 
 })

@@ -160,6 +160,7 @@ namespace sfc {
     SEXP& x,
     SEXP& geometry_cols
   ) {
+    sfheaders::utils::geometry_column_check( geometry_cols );
     Rcpp::List mp(1);
     mp[0] = sfheaders::shapes::get_mat( x, geometry_cols );
     return sfc_multipoint( mp );
@@ -177,18 +178,18 @@ namespace sfc {
       return sfc_multipoint( x );
 
     } else if ( !Rf_isNull( geometry_cols ) && Rf_isNull( multipoint_id ) ) {
+      sfheaders::utils::geometry_column_check( geometry_cols );
 
-      // make the geometry cols all the other columns??
       return sfc_multipoint( x, geometry_cols );
     } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( multipoint_id ) ) {
 
       SEXP other_cols = sfheaders::utils::other_columns( x, multipoint_id );
-      //return sfc_multipoint( x, other_cols, geometry_cols );
+      sfheaders::utils::geometry_column_check( other_cols );
+
       Rcpp::List mp = sfheaders::shapes::get_listMat( x, other_cols, multipoint_id );
       return sfc_multipoint( mp );
 
     } else {
-      // Rcpp::Rcout << "get list mat " << std::endl;
       Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, multipoint_id );
       return sfc_multipoint( mp );
     }

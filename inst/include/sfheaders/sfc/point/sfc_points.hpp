@@ -236,6 +236,7 @@ namespace sfc {
     if( Rf_isNull( cols ) ) {
       return sfc_point( x );
     }
+    sfheaders::utils::geometry_column_check( cols );
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}
     case INTSXP: {

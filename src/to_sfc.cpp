@@ -35,6 +35,8 @@ SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id ) {
 
 
 
+
+
 // SEXP rcpp_sfc_sfc( SEXP x ) {
 //
 // }
