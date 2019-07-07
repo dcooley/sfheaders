@@ -118,7 +118,7 @@ inline SEXP sfc_polygon(
 
       SEXP this_linestring = sfgs[j];
 
-      int tp = TYPEOF( this_linestring );
+      // int tp = TYPEOF( this_linestring );
       // Rcpp::Rcout << "tp: " << tp << std::endl;
 
       switch( TYPEOF( this_linestring ) ) {
