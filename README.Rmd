@@ -63,7 +63,7 @@ there are various overloaded functions for each `sfg` type
 
 ```{r}
 library(Rcpp)
-library(sf) ## for print
+# library(sf) ## for print
 
 cppFunction(
   includes = '

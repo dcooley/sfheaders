@@ -64,9 +64,7 @@ there are various overloaded functions for each `sfg` type
 ``` r
 library(Rcpp)
 # Warning: package 'Rcpp' was built under R version 3.5.2
-library(sf) ## for print
-# Warning: package 'sf' was built under R version 3.5.2
-# Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3
+# library(sf) ## for print
 
 cppFunction(
   includes = '
@@ -81,7 +79,16 @@ cppFunction(
 )
 
 a_polygon( df )
-# POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
+# [[1]]
+#      x y
+# [1,] 1 5
+# [2,] 2 4
+# [3,] 3 3
+# [4,] 4 2
+# [5,] 5 1
+# 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"
 ```
 
 ``` r
@@ -98,10 +105,28 @@ cppFunction(
 )
 
 a_polygon( df, c("x","y") )
-# POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
+# [[1]]
+#      [,1] [,2]
+# [1,]    1    5
+# [2,]    2    4
+# [3,]    3    3
+# [4,]    4    2
+# [5,]    5    1
+# 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"
 
 a_polygon( df, c("y", "x") )
-# POLYGON ((5 1, 4 2, 3 3, 2 4, 1 5))
+# [[1]]
+#      [,1] [,2]
+# [1,]    5    1
+# [2,]    4    2
+# [3,]    3    3
+# [4,]    2    4
+# [5,]    1    5
+# 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"
 ```
 
 ``` r
@@ -118,10 +143,28 @@ cppFunction(
 )
 
 a_polygon( df, c("x","y") )
-# POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
+# [[1]]
+#      [,1] [,2]
+# [1,]    1    5
+# [2,]    2    4
+# [3,]    3    3
+# [4,]    4    2
+# [5,]    5    1
+# 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"
 
 a_polygon( df, c("y", "x") )
-# POLYGON ((5 1, 4 2, 3 3, 2 4, 1 5))
+# [[1]]
+#      [,1] [,2]
+# [1,]    5    1
+# [2,]    4    2
+# [3,]    3    3
+# [4,]    2    4
+# [5,]    1    5
+# 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"
 ```
 
 ``` r
@@ -139,31 +182,87 @@ cppFunction(
 )
 
 a_polygon( df, "POLYGON" )
-# POLYGON ((1 5, 2 4, 3 3, 4 2, 5 1))
+# [[1]]
+#      x y
+# [1,] 1 5
+# [2,] 2 4
+# [3,] 3 3
+# [4,] 4 2
+# [5,] 5 1
+# 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"
 ```
 
 ### sfc
 
 ``` r
 sfc_point( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
-# Geometry set for 3 features 
-# geometry type:  POINT
-# dimension:      XY
-# bbox:           xmin: 0 ymin: 3 xmax: 2 ymax: 5
-# epsg (SRID):    NA
-# proj4string:    NA
-# POINT (0 3)
-# POINT (1 4)
-# POINT (2 5)
+# [[1]]
+# [1] 0 3
+# attr(,"class")
+# [1] "XY"    "POINT" "sfg"  
+# 
+# [[2]]
+# [1] 1 4
+# attr(,"class")
+# [1] "XY"    "POINT" "sfg"  
+# 
+# [[3]]
+# [1] 2 5
+# attr(,"class")
+# [1] "XY"    "POINT" "sfg"  
+# 
+# attr(,"class")
+# [1] "sfc_POINT" "sfc"      
+# attr(,"crs")
+# $epsg
+# [1] NA
+# 
+# $proj4string
+# [1] NA
+# 
+# attr(,"class")
+# [1] "crs"
+# attr(,"precision")
+# [1] 0
+# attr(,"n_empty")
+# [1] 0
+# attr(,"bbox")
+# xmin ymin xmax ymax 
+#    0    3    2    5 
+# attr(,"class")
+# [1] "bbox"
 
 sfc_multipoint( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
-# Geometry set for 1 feature 
-# geometry type:  MULTIPOINT
-# dimension:      XY
-# bbox:           xmin: 0 ymin: 3 xmax: 2 ymax: 5
-# epsg (SRID):    NA
-# proj4string:    NA
-# MULTIPOINT (0 3, 1 4, 2 5)
+# [[1]]
+#      [,1] [,2]
+# [1,]    0    3
+# [2,]    1    4
+# [3,]    2    5
+# attr(,"class")
+# [1] "XY"         "MULTIPOINT" "sfg"       
+# 
+# attr(,"class")
+# [1] "sfc_MULTIPOINT" "sfc"           
+# attr(,"crs")
+# $epsg
+# [1] NA
+# 
+# $proj4string
+# [1] NA
+# 
+# attr(,"class")
+# [1] "crs"
+# attr(,"precision")
+# [1] 0
+# attr(,"n_empty")
+# [1] 0
+# attr(,"bbox")
+# xmin ymin xmax ymax 
+#    0    3    2    5 
+# attr(,"class")
+# [1] "bbox"
 
 # n <- 1e7
 # df <- data.frame(
