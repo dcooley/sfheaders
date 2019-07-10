@@ -3,7 +3,7 @@
 #include "sfheaders/sfc/multipoint/sfc_multipoints.hpp"
 #include "sfheaders/sfc/linestring/sfc_linestrings.hpp"
 #include "sfheaders/sfc/multilinestring/sfc_multilinestring.hpp"
-//#include "sfheaders/sfc/polygon/sfc_polygon.hpp"
+#include "sfheaders/sfc/polygon/sfc_polygon.hpp"
 
 // [[Rcpp::export]]
 SEXP rcpp_sfc_point( SEXP x, SEXP cols ) {
@@ -28,10 +28,10 @@ SEXP rcpp_sfc_multilinestring( SEXP x, SEXP cols, SEXP multiline_id, SEXP line_i
 }
 
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id ) {
-//   return sfheaders::sfc::sfc_polygon( x, cols, polygon_id, line_id );
-// }
+// [[Rcpp::export]]
+SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id ) {
+  return sfheaders::sfc::sfc_polygon( x, cols, polygon_id, line_id );
+}
 
 
 

@@ -22,10 +22,10 @@ SEXP rcpp_sfg_multilinestring( SEXP x, SEXP geometry_columns, SEXP line_id ) {
   return sfheaders::sfg::sfg_multilinestring( x, geometry_columns, line_id );
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id ) {
-//   return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id );
-// }
+// [[Rcpp::export]]
+SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id ) {
+  return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id );
+}
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id ) {
