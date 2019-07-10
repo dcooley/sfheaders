@@ -1,6 +1,6 @@
 
 [![Travis build
-status](https://travis-ci.org/dcooley/sfheaders.svg?branch=master)](https://travis-ci.org/dcooley/sfheaders)
+status](https://travis-ci.com/dcooley/sfheaders.svg?branch=master)](https://travis-ci.com/dcooley/sfheaders)
 [![Coverage
 status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://codecov.io/github/dcooley/sfheaders?branch=master)
 
@@ -182,16 +182,7 @@ cppFunction(
 )
 
 a_polygon( df, "POLYGON" )
-# [[1]]
-#      x y
-# [1,] 1 5
-# [2,] 2 4
-# [3,] 3 3
-# [4,] 4 2
-# [5,] 5 1
-# 
-# attr(,"class")
-# [1] "XY"      "POLYGON" "sfg"
+# list()
 ```
 
 ### sfc
