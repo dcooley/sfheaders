@@ -5,7 +5,7 @@
 #include "sfheaders/sfg/multipoint/sfg_multipoint.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
-//#include "sfheaders/sfg/polygon/sfg_polygon.hpp"
+#include "sfheaders/sfg/polygon/sfg_polygon.hpp"
 #include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
 
 // TODO
@@ -68,7 +68,7 @@ namespace sfg {
     } else if ( geom_type == "MULTIILNESTRING" ) {
       return sfheaders::sfg::sfg_multilinestring( x );
     } else if ( geom_type == "POLYGON" ) {
-      //return sfheaders::sfg::sfg_polygon( x );
+      return sfheaders::sfg::sfg_polygon( x );
     } else if ( geom_type == "MULTIPOLYGON" ) {
       return sfheaders::sfg::sfg_multipolygon( x );
     }
@@ -86,7 +86,7 @@ namespace sfg {
     } else if ( geom_type == "MULTIILNESTRING" ) {
       return sfheaders::sfg::sfg_multilinestring( x, geometry_columns );
     } else if ( geom_type == "POLYGON" ) {
-      //return sfheaders::sfg::sfg_polygon( x, geometry_columns );
+      return sfheaders::sfg::sfg_polygon( x, geometry_columns );
     } else if ( geom_type == "MULTIPOLYGON" ) {
       return sfheaders::sfg::sfg_multipolygon( x, geometry_columns );
     }
