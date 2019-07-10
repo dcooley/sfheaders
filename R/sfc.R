@@ -130,52 +130,52 @@ sfc_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, mu
 
 
 
-#' sfc POLYGON
-#'
-#' @inheritParams sfc_point
-#' @param polygon_id column of ids for polygons
-#' @param linestring_id column of ids for lines (within polygons)
-#'
-#' @examples
-#'
-#' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
-#' sfc_polygon( m )
-#'
-#' m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
-#' sfc_polygon( obj = m )
-#' sfc_polygon( obj = m, polygon_id = 1 )
-#' sfc_polygon( obj = m, linestring_id = 1 )
-#'
-#' sfc_polygon( obj = m, linestring_id = 1, polygon_id = 1 )
-#'
-#' sfc_polygon( obj = m, x = 2, y = 3 )
-#' sfc_polygon( obj = m, x = 1, y = 2, z = 3 )
-#' sfc_polygon( obj = m, x = 2, y = 3, linestring_id = 1, polygon_id = 1 )
-#'
-#' df <- data.frame(
-#'   ml_id = c(1,1,1,1,1,1,1,1,2,2,2,2,2)
-#'   , l_id = c(1,1,1,2,2,3,3,3,1,1,1,2,2)
-#'   , x = rnorm(13)
-#'   , y = rnorm(13)
-#'   , z = rnorm(13)
-#'   , m = rnorm(13)
-#' )
-#'
-#' sfc_polygon( obj = df, x = "x", y = "y")
-#' sfc_polygon( obj = df, x = "x", y = "y", z = "z")
-#' sfc_polygon( obj = df, x = "x", y = "y", z = "z", m = "m")
-#'
-#' sfc_polygon( obj = df, x = 2, y = 3)
-#' sfc_polygon( obj = df, x = 2, y = 3, z = 4)
-#' sfc_polygon( obj = df, x = 2, y = 3, z = 4, m = 5)
-#'
-#' sfc_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
-#' sfc_polygon( obj = df, polygon_id = 1, linestring_id = 2 )
-#'
-#'
-#'
-#' @export
-sfc_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL ) {
-  geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ) )
-}
+#' #' sfc POLYGON
+#' #'
+#' #' @inheritParams sfc_point
+#' #' @param polygon_id column of ids for polygons
+#' #' @param linestring_id column of ids for lines (within polygons)
+#' #'
+#' #' @examples
+#' #'
+#' #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
+#' #' sfc_polygon( m )
+#' #'
+#' #' m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
+#' #' sfc_polygon( obj = m )
+#' #' sfc_polygon( obj = m, polygon_id = 1 )
+#' #' sfc_polygon( obj = m, linestring_id = 1 )
+#' #'
+#' #' sfc_polygon( obj = m, linestring_id = 1, polygon_id = 1 )
+#' #'
+#' #' sfc_polygon( obj = m, x = 2, y = 3 )
+#' #' sfc_polygon( obj = m, x = 1, y = 2, z = 3 )
+#' #' sfc_polygon( obj = m, x = 2, y = 3, linestring_id = 1, polygon_id = 1 )
+#' #'
+#' #' df <- data.frame(
+#' #'   ml_id = c(1,1,1,1,1,1,1,1,2,2,2,2,2)
+#' #'   , l_id = c(1,1,1,2,2,3,3,3,1,1,1,2,2)
+#' #'   , x = rnorm(13)
+#' #'   , y = rnorm(13)
+#' #'   , z = rnorm(13)
+#' #'   , m = rnorm(13)
+#' #' )
+#' #'
+#' #' sfc_polygon( obj = df, x = "x", y = "y")
+#' #' sfc_polygon( obj = df, x = "x", y = "y", z = "z")
+#' #' sfc_polygon( obj = df, x = "x", y = "y", z = "z", m = "m")
+#' #'
+#' #' sfc_polygon( obj = df, x = 2, y = 3)
+#' #' sfc_polygon( obj = df, x = 2, y = 3, z = 4)
+#' #' sfc_polygon( obj = df, x = 2, y = 3, z = 4, m = 5)
+#' #'
+#' #' sfc_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
+#' #' sfc_polygon( obj = df, polygon_id = 1, linestring_id = 2 )
+#' #'
+#' #'
+#' #'
+#' #' @export
+#' sfc_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL ) {
+#'   geometry_columns <- c(x,y,z,m)
+#'   rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ) )
+#' }
