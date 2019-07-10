@@ -1,11 +1,11 @@
 #ifndef R_SFHEADERS_SFG_POLYGON_H
 #define R_SFHEADERS_SFG_POLYGON_H
 
+#include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
-#include "sfheaders/utils/columns.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
+#include "sfheaders/sfg/sfg_dimension.hpp"
 
 namespace sfheaders {
 namespace sfg {

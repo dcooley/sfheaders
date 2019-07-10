@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 
-#include "sfheaders/bbox.hpp"
+#include "sfheaders/sfc/bbox.hpp"
 
 /*
  * calculate bbox

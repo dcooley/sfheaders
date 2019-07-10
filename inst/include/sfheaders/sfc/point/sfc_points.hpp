@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/sfg/point/sfg_point.hpp"
-#include "sfheaders/bbox.hpp"
+#include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/sfc.hpp"
 
 namespace sfheaders {

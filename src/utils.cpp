@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
-#include "sfheaders/utils/columns.hpp"
-#include "sfheaders/utils/subset.hpp"
+
 
 // [[Rcpp::export]]
 SEXP rcpp_other_columns(

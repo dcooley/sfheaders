@@ -2,7 +2,8 @@
 #define R_SFHEADERS_SFG_MULTIPOINT_H
 
 #include <Rcpp.h>
-#include "sfheaders/shapes/mat/mat.hpp"
+#include "sfheaders/utils/utils.hpp"
+#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
 

@@ -2,9 +2,11 @@
 #define R_SFHEADERS_UTILS_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/lines.hpp"
-#include "sfheaders/utils/columns.hpp"
-#include "sfheaders/utils/sexp.hpp"
+#include "sfheaders/utils/lines/lines.hpp"
+#include "sfheaders/utils/columns/columns.hpp"
+#include "sfheaders/utils/matrix/matrix.hpp"
+#include "sfheaders/utils/subset/subset.hpp"
+#include "sfheaders/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
 namespace utils {

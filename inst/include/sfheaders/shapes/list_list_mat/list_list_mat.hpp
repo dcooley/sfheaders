@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
-#include "sfheaders/utils/subset.hpp"
+#include "sfheaders/utils/subset/subset.hpp"
 #include "sfheaders/shapes/mat/mat.hpp"
 #include "sfheaders/shapes/list_mat/list_mat.hpp"
 

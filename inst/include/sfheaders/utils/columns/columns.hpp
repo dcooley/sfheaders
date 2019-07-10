@@ -2,8 +2,8 @@
 #define R_SFHEADERS_UTILS_COLUMNS_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/matrix.hpp"
-#include "sfheaders/utils/sexp.hpp"
+#include "sfheaders/utils/matrix/matrix.hpp"
+#include "sfheaders/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
 namespace utils {

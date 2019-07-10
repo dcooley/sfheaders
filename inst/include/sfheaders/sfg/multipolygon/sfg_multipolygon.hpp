@@ -1,10 +1,11 @@
 #ifndef R_SFHEADERS_SFG_MULTIPOLYGON_H
 #define R_SFHEADERS_SFG_MULTIPOLYGON_H
 
+#include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
+#include "sfheaders/sfg/sfg_dimension.hpp"
 
 namespace sfheaders {
 namespace sfg {
