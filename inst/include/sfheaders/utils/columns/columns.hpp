@@ -303,16 +303,6 @@ namespace utils {
     int n_2 = sfheaders::utils::get_sexp_length( col_2 );
     int n = n_1 + n_2;
     int i;
-    //
-    // Rcpp::Range rng_1 = Rcpp::seq( 0, (n_1 - 1) );
-    // Rcpp::Range rng_2 = Rcpp::seq( n_1, ( n_1 + n_2 - 1 ) );
-
-    // Rcpp::Rcout << "n_1 : " << n_1 << std::endl;
-    // Rcpp::Rcout << "n_2 : " << n_2 << std::endl;
-    // Rcpp::Rcout << "n: " << n << std::endl;
-    //
-    // Rcpp::Rcout << "rng_1: " << rng_1[0] << ", " << rng_1[1] << std::endl;
-    // Rcpp::Rcout << "rng_2: " << rng_2[0] << ", " << rng_2[1] << std::endl;
 
     switch(TYPEOF( col_1 ) ) {
     case INTSXP: {
@@ -387,11 +377,6 @@ namespace utils {
         idx++;
       }
 
-      // sv.insert( 0, sv_1 );
-      // sv.insert( (n_1 - 1), sv_2 );
-
-      // sv[ rng_1 ] = sv_1;
-      // sv[ rng_2 ] = sv_2;
       return other_columns( x, sv );
     }
     default: {
@@ -400,6 +385,44 @@ namespace utils {
     }
 
   }
+
+    inline SEXP other_columns(
+        SEXP& x,
+        SEXP& col_1,
+        SEXP& col_2,
+        SEXP& col_3
+    ) {
+
+      if( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+        return other_columns( x, col_1 );
+      }
+
+      if( Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+        return other_columns( x, col_2 );
+      }
+
+      if( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
+        return other_columns( x, col_3 );
+      }
+
+      if( Rf_isNull( col_1) && !Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
+        return other_columns( x, col_2, col_3 );
+      }
+
+      if ( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
+        return other_columns( x, col_1, col_3 );
+      }
+
+      if ( !Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+        return other_columns( x, col_1, col_2 );
+      }
+
+
+      Rcpp::stop("sfheaders - not yet implemented this other_columns function yet");
+      // SEXP other_cols1 = other_columns(x, col_1, col_2);
+      // SEXP other_cols2 = other_columns(x, col_1, col_3);
+      // return other_columns( x, other_cols1, other_cols2 );
+    }
 
 } // utils
 } // sfheaders

@@ -179,3 +179,52 @@ sfc_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id
   geometry_columns <- c(x,y,z,m)
   rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ) )
 }
+
+
+#' sfc MULTIPOLYGON
+#'
+#'
+#' @inheritParams sfc_polygon
+#' @param multipolygon_id column of ids for multipolygons
+#'
+#' @examples
+#'
+#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = T)
+#' sfc_multipolygon( m )
+#'
+#' df <- data.frame(
+#'   id = c(1,1,1,1,1)
+#'   , x = c(0,0,1,1,0)
+#'   , y = c(0,1,1,0,0)
+#' )
+#'
+#' sfc_multipolygon( df, x = "x", y = "y" )
+#'
+#' df <- data.frame(
+#'   id = c(1,1,1,1,1,2,2,2,2,2)
+#'   , x = c(0,0,1,1,0,1,1,2,2,1)
+#'   , y = c(0,1,1,0,0,1,2,2,1,1)
+#' )
+#'
+#' sfc_multipolygon( df, multipolygon_id = "id", polygon_id = "id", linestring_id = "id")
+#'
+#'
+#'
+#'
+#'
+#' @export
+sfc_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ) )
+}
+
+to_linestring <- function(x, y ) {
+  df <- data.frame(
+    x = x
+    , y = y
+  )
+  geometry_columns <- c("x","y")
+  rcpp_sfc_linestring( df, geometry_columns, NULL )
+}
+
+

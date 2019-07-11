@@ -3,6 +3,7 @@
 export(sfc_linestring)
 export(sfc_multilinestring)
 export(sfc_multipoint)
+export(sfc_multipolygon)
 export(sfc_point)
 export(sfc_polygon)
 export(sfg_linestring)
