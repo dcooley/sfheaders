@@ -189,7 +189,7 @@ sfc_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id
 #'
 #' @examples
 #'
-#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = T)
+#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE )
 #' sfc_multipolygon( m )
 #'
 #' df <- data.frame(
@@ -233,8 +233,12 @@ sfc_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id
 #'   , y = c(0,1,1,0,0,1,2,2,1,1)
 #' )
 #'
-#' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2")
-#'
+#' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2" )
+#' sfc_multipolygon( df, polygon_id = "id1", linestring_id = "id2" )
+#' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
+#' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
+#' sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
+#' sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
 #'
 #' @export
 sfc_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL ) {
@@ -250,5 +254,7 @@ to_linestring <- function(x, y ) {
   geometry_columns <- c("x","y")
   rcpp_sfc_linestring( df, geometry_columns, NULL )
 }
+
+# sfheaders:::rcpp_to_multipolygon(df$x, df$y, z = NULL, m = NULL, multipolygon_id = df$id1, polygon_id = df$id2, NULL)
 
 

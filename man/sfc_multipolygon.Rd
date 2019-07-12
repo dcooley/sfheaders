@@ -29,7 +29,7 @@ sfc MULTIPOLYGON
 }
 \examples{
 
-m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = T)
+m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE )
 sfc_multipolygon( m )
 
 df <- data.frame(
@@ -73,7 +73,11 @@ df <- data.frame(
   , y = c(0,1,1,0,0,1,2,2,1,1)
 )
 
-sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2")
-
+sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2" )
+sfc_multipolygon( df, polygon_id = "id1", linestring_id = "id2" )
+sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
+sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
+sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
+sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
 
 }

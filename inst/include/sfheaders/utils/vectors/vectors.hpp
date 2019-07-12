@@ -7,6 +7,19 @@
 namespace sfheaders {
 namespace utils {
 
+  inline int where_is(
+      Rcpp::String to_find,
+      Rcpp::StringVector& sv ) {
+    int n = sv.size();
+    int i;
+    for( i = 0; i < n; i++ ) {
+      if ( to_find == sv[i] ) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   inline SEXP concatenate_vectors(
     SEXP& vec_1,
     SEXP& vec_2

@@ -161,6 +161,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_to_multipolygon
+SEXP rcpp_to_multipolygon(Rcpp::NumericVector x, Rcpp::NumericVector y, Rcpp::NumericVector z, Rcpp::NumericVector m, Rcpp::NumericVector multipolygon_id, Rcpp::NumericVector polygon_id, Rcpp::NumericVector linestring_id);
+RcppExport SEXP _sfheaders_rcpp_to_multipolygon(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP mSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type z(zSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type m(mSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type multipolygon_id(multipolygon_idSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type polygon_id(polygon_idSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type linestring_id(linestring_idSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_multipolygon(x, y, z, m, multipolygon_id, polygon_id, linestring_id));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sfg_point
 SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns);
 RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP) {
@@ -315,6 +332,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sfc_multilinestring, 4},
     {"_sfheaders_rcpp_sfc_polygon", (DL_FUNC) &_sfheaders_rcpp_sfc_polygon, 4},
     {"_sfheaders_rcpp_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygon, 5},
+    {"_sfheaders_rcpp_to_multipolygon", (DL_FUNC) &_sfheaders_rcpp_to_multipolygon, 7},
     {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 2},
     {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 2},
     {"_sfheaders_rcpp_sfg_linestring", (DL_FUNC) &_sfheaders_rcpp_sfg_linestring, 2},

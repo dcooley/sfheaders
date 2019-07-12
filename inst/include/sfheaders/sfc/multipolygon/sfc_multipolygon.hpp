@@ -278,35 +278,6 @@ namespace sfc {
       return sfc_multipolygon( mpl );
     }
 
-    // if ( ( Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && Rf_isNull( linestring_id ) ) ) {
-    //   // polygon is provided, so there is only one line per multiline
-    //   SEXP other_cols = sfheaders::utils::other_columns( x, polygon_id );
-    //
-    //   //Rcpp::stop("not working yet");
-    //   Rcpp::List lst = sfheaders::shapes::get_listMat( x, other_cols, polygon_id );
-    //
-    //   // each list element needs to be nested one level deeper
-    //   size_t n = lst.size();
-    //   Rcpp::List mls( n );
-    //   size_t i;
-    //   for( i = 0; i < n; i++ ) {
-    //     Rcpp::List l(1);
-    //     l[0] = lst[i];
-    //     mls[i] = l;
-    //   }
-    //   //return lst;
-    //   // Rcpp::Rcout << "lst.size() " << lst.size() << std::endl;
-    //   // Rcpp::List mls( 1 );
-    //   // mls[0] = lst;
-    //   return sfc_multipolygon( mls );
-    // }
-    //
-    // if( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) && !Rf_isNull( polygon_id ) ) {
-    //   SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id, polygon_id );
-    //
-    //   return sfc_multipolygon( x, other_cols, polygon_id, linestring_id );
-    // }
-    //
     if ( !Rf_isNull( geometry_cols ) &&
          Rf_isNull( linestring_id ) &&
          Rf_isNull( polygon_id ) &&
@@ -315,20 +286,49 @@ namespace sfc {
       // make the geometry cols all the other columns??
       return sfc_multipolygon( x, geometry_cols );
     }
-    //
-    //
-    // // if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
-    // //   SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
-    // //   //return sfc_polygon( x, other_cols, geometry_cols );
-    // //   Rcpp::List mp = sfheaders::shapes::get_listListMat( x, other_cols, polygon_id, linestring_id );
-    // //   return sfc_polygon( mp );
-    // // }
-    //
-    // if( !Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && !Rf_isNull( linestring_id ) ) {
-    //   // Rcpp::Rcout << "get list mat " << std::endl;
-    //   Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, polygon_id, linestring_id );
-    //   return sfc_polygon( mp );
-    // }
+
+    if(
+      !Rf_isNull( geometry_cols ) &&
+        Rf_isNull( multipolygon_id ) &&
+        !Rf_isNull( polygon_id ) &&
+        !Rf_isNull( linestring_id )
+      ) {
+
+      Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, polygon_id, linestring_id );
+      Rcpp::List mpl(1);
+      mpl[0] = mp;
+      return sfc_multipolygon( mpl );
+    }
+
+    if(
+      !Rf_isNull( geometry_cols ) &&
+        Rf_isNull( multipolygon_id ) &&
+        !Rf_isNull( polygon_id ) &&
+        Rf_isNull( linestring_id )
+    ) {
+
+      Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, polygon_id );
+      Rcpp::List l1(1);
+      Rcpp::List l2(1);
+      l1[0] = mp;
+      l2[0] = l1;
+      return sfc_multipolygon( l2 );
+    }
+
+    if(
+      !Rf_isNull( geometry_cols ) &&
+        Rf_isNull( multipolygon_id ) &&
+        Rf_isNull( polygon_id ) &&
+        !Rf_isNull( linestring_id )
+    ) {
+
+      Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
+      Rcpp::List l1(1);
+      Rcpp::List l2(1);
+      l1[0] = mp;
+      l2[0] = l1;
+      return sfc_multipolygon( l2 );
+    }
 
     if( !Rf_isNull( geometry_cols ) &&
         !Rf_isNull( multipolygon_id ) &&
@@ -342,6 +342,113 @@ namespace sfc {
 
     Rcpp::stop("sfheaders - multipolygon case not yet implemented");
     return Rcpp::List::create(); // ??
+  }
+
+
+  inline SEXP sfc_multipolygon(
+    Rcpp::NumericVector x,
+    Rcpp::NumericVector y,
+    Rcpp::NumericVector z = R_NilValue,
+    Rcpp::NumericVector m = R_NilValue,
+    Rcpp::NumericVector multipolygon_id = R_NilValue,
+    Rcpp::NumericVector polygon_id = R_NilValue,
+    Rcpp::NumericVector linestring_id = R_NilValue
+  ) {
+    if( Rf_isNull( x ) || Rf_isNull( y ) ) {
+      Rcpp::stop("sfheaders - x and y columns required");
+    }
+
+    SEXP multipolygon_id_col = R_NilValue;
+    SEXP polygon_id_col = R_NilValue;
+    SEXP linestring_id_col = R_NilValue;
+
+    int n_cols = 2;
+    Rcpp::StringVector sv_geometry_columns{"x","y","z","m"};
+    Rcpp::StringVector sv_id_columns{"multipolygon_id","polygon_id","linestring_id"};
+    std::vector< std::string > columns;
+    columns.push_back("x");
+    columns.push_back("y");
+
+    if( Rf_isNull( z ) && !Rf_isNull( m ) ) {
+      Rcpp::stop("sfheaders - expecting z if m is provided");
+    }
+
+    int pos;
+
+    if( !Rf_isNull( z ) ) {
+      n_cols++;
+      columns.push_back("z");
+      if( !Rf_isNull( m ) ) {
+        n_cols++;
+        columns.push_back("m");
+      } else {
+        pos = sfheaders::utils::where_is( "m", sv_geometry_columns );
+        sv_geometry_columns.erase( pos );
+      }
+    } else {
+      pos = sfheaders::utils::where_is( "m", sv_geometry_columns );
+      sv_geometry_columns.erase( pos );
+      pos = sfheaders::utils::where_is( "z", sv_geometry_columns );
+      sv_geometry_columns.erase( pos );
+    }
+
+    if( !Rf_isNull( linestring_id ) ) {
+      n_cols++;
+      columns.push_back("linestring_id");
+      linestring_id_col = Rcpp::StringVector("linestring_id");
+    } else {
+      pos = sfheaders::utils::where_is( "linestring_id", sv_id_columns );
+      sv_id_columns.erase( pos );
+    }
+
+    if( !Rf_isNull( polygon_id ) ) {
+      n_cols++;
+      columns.push_back("polygon_id");
+      polygon_id_col = Rcpp::StringVector("polygon_id");
+    } else {
+      pos = sfheaders::utils::where_is( "polygon_id", sv_id_columns );
+      sv_id_columns.erase( pos );
+    }
+
+    if( !Rf_isNull( multipolygon_id ) ) {
+      n_cols++;
+      columns.push_back("multipolygon_id");
+      multipolygon_id_col = Rcpp::StringVector("multipolygon_id");
+    } else {
+      pos = sfheaders::utils::where_is( "multipolygon_id", sv_id_columns );
+      sv_id_columns.erase( pos );
+    }
+
+    Rcpp::List lst( n_cols );
+    int i;
+    for( i = 0; i < n_cols; i++ ) {
+      std::string this_col = columns[i];
+      if( this_col == "x" ) {
+        lst[i] = x;
+      } else if ( this_col == "y" ) {
+        lst[i] = y;
+      } else if ( this_col == "z" ) {
+        lst[i] = z;
+      } else if ( this_col == "m" ) {
+        lst[i] = m;
+      } else if ( this_col == "multipolygon_id" ) {
+        lst[i] = multipolygon_id;
+      } else if ( this_col == "polygon_id" ) {
+        lst[i] = polygon_id;
+      } else if ( this_col == "linestring_id" ) {
+        lst[i] = linestring_id;
+      }
+    }
+
+    lst.names() = columns;
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( lst );
+    SEXP obj = df;
+    SEXP geometry_columns = sv_geometry_columns;
+
+    return sfc_multipolygon(
+      obj, geometry_columns, multipolygon_id_col, polygon_id_col, linestring_id_col
+    );
+
   }
 
 } // sfc
