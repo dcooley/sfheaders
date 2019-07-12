@@ -30,6 +30,12 @@ Rcpp::DataFrame rcpp_subset_dataframe(
   return sfheaders::utils::subset_dataframe(df, cols, start, end);
 }
 
-
+// [[Rcpp::export]]
+SEXP rcpp_concatenate_vectors(
+  SEXP vec_1,
+  SEXP vec_2
+) {
+  return sfheaders::utils::concatenate_vectors( vec_1, vec_2 );
+}
 
 

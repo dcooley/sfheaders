@@ -141,7 +141,7 @@ namespace sfc {
           break;
           }
           default: {
-            Rcpp::stop("sfheaders - unknown polygon type");
+            Rcpp::stop("sfheaders - unknown multipolygon type");
           }
           }
         }
@@ -230,9 +230,28 @@ namespace sfc {
 
       SEXP other_cols = sfheaders::utils::other_columns( x, multipolygon_id, polygon_id, linestring_id );
 
-      Rcpp::List lst(1);
-      lst[0] = sfheaders::shapes::get_listListMat( x, other_cols, polygon_id, linestring_id );
+      Rcpp::List lst = sfheaders::shapes::get_listListMat( x, other_cols, multipolygon_id, polygon_id, linestring_id );
       return sfc_multipolygon( lst );
+    }
+
+    if(
+      Rf_isNull( geometry_cols ) &&
+        !Rf_isNull( multipolygon_id ) &&
+        !Rf_isNull( polygon_id ) &&
+        Rf_isNull( linestring_id )
+    ) {
+      SEXP other_cols = sfheaders::utils::other_columns( x, multipolygon_id, polygon_id );
+      Rcpp::List lst = sfheaders::shapes::get_listListMat( x, other_cols, multipolygon_id, polygon_id );
+
+      size_t n = lst.size();
+      Rcpp::List mpl( n );
+      size_t i;
+      for( i = 0; i < n; i++ ) {
+        Rcpp::List l1(1);
+        l1[0] = lst[i];
+        mpl[i] = l1;
+      }
+      return sfc_multipolygon( mpl );
     }
 
     if( ( Rf_isNull( geometry_cols ) &&
@@ -288,7 +307,11 @@ namespace sfc {
     //   return sfc_multipolygon( x, other_cols, polygon_id, linestring_id );
     // }
     //
-    if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( polygon_id ) && Rf_isNull( multipolygon_id )) {
+    if ( !Rf_isNull( geometry_cols ) &&
+         Rf_isNull( linestring_id ) &&
+         Rf_isNull( polygon_id ) &&
+         Rf_isNull( multipolygon_id )
+      ) {
       // make the geometry cols all the other columns??
       return sfc_multipolygon( x, geometry_cols );
     }
@@ -312,7 +335,6 @@ namespace sfc {
         !Rf_isNull( polygon_id ) &&
         !Rf_isNull( linestring_id )
         ) {
-
 
       Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, multipolygon_id, polygon_id, linestring_id );
       return sfc_multipolygon( mp );

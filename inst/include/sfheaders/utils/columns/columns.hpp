@@ -4,6 +4,7 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/matrix/matrix.hpp"
 #include "sfheaders/utils/sexp/sexp.hpp"
+#include "sfheaders/utils/vectors/vectors.hpp"
 
 namespace sfheaders {
 namespace utils {
@@ -172,19 +173,19 @@ namespace utils {
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
-      if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x ) ;
       return other_columns( im, id_cols );
     }
     }
     case REALSXP: {
-      if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return other_columns( nm, id_cols );
     }
     }
     case VECSXP: {
-      if( Rf_inherits( x, "data.frame") ) {
+    if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return other_columns( df, id_cols );
     }
@@ -202,19 +203,19 @@ namespace utils {
 
     switch( TYPEOF( x ) ) {
     case INTSXP: {
-      if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x ) ;
       return other_columns( im, id_cols );
     }
     }
     case REALSXP: {
-      if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return other_columns( nm, id_cols );
     }
     }
     case VECSXP: {
-      if( Rf_inherits( x, "data.frame") ) {
+    if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return other_columns( df, id_cols );
     }
@@ -231,19 +232,19 @@ namespace utils {
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
-      if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x ) ;
       return other_columns( im, id_cols );
     }
     }
     case REALSXP: {
-      if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return other_columns( nm, id_cols );
     }
     }
     case VECSXP: {
-      if( Rf_inherits( x, "data.frame") ) {
+    if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return other_columns( df, id_cols );
     }
@@ -260,18 +261,22 @@ namespace utils {
       SEXP& id_cols // will be a vector
   ) {
 
+    //Rcpp::Rcout << "typeof(): " << TYPEOF( id_cols ) << std::endl;
     switch( TYPEOF( id_cols ) ) {
     case REALSXP: {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( id_cols );
-      return other_columns( x, nv );
+      Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
+      return other_columns( x, nv2 );
     }
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( id_cols );
-      return other_columns( x, iv );
+      Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
+      return other_columns( x, iv2 );
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( id_cols );
-      return other_columns( x, sv );
+      Rcpp::StringVector sv2 = Rcpp::sort_unique( sv );
+      return other_columns( x, sv2 );
     }
     default: {
       Rcpp::stop("sfheaders - unsupported column types");
@@ -294,95 +299,8 @@ namespace utils {
       return other_columns( x, col_1 );
     }
 
-    if( TYPEOF( col_1 ) != TYPEOF( col_2) ) {
-      Rcpp::stop("sfheaders - different column types found");
-    }
-
-    // else - combine col_1 & col_2 into a single vector
-    int n_1 = sfheaders::utils::get_sexp_length( col_1 );
-    int n_2 = sfheaders::utils::get_sexp_length( col_2 );
-    int n = n_1 + n_2;
-    int i;
-
-    switch(TYPEOF( col_1 ) ) {
-    case INTSXP: {
-      Rcpp::IntegerVector iv_1 = Rcpp::as< Rcpp::IntegerVector >( col_1 );
-      Rcpp::IntegerVector iv_2 = Rcpp::as< Rcpp::IntegerVector >( col_2 );
-
-      Rcpp::IntegerVector iv( n );
-
-      if( n_1 == 1 ) {
-        iv[0] = iv_1[0];
-      } else {
-        for( i = 0; i < n_1; i++ ) {
-          iv[i] = iv_1[i];
-        }
-      }
-
-      if( n_2 == 1 ) {
-        iv[ n_1 ] = iv_2[0];
-      } else {
-        int idx = 0;
-        for( i = n_1; i < n; i++ ) {
-          iv[i] = iv_2[ idx ];
-          idx++;
-        }
-      }
-
-      Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
-
-      return other_columns( x, iv2 );
-    }
-    case REALSXP: {
-      Rcpp::NumericVector nv_1 = Rcpp::as< Rcpp::NumericVector >( col_1 );
-      Rcpp::NumericVector nv_2 = Rcpp::as< Rcpp::NumericVector >( col_2 );
-
-      Rcpp::NumericVector nv( n );
-
-      if( n_1 == 1 ) {
-        nv[0] = nv_1[0];
-      } else {
-        for( i = 0; i < n_1; i++ ) {
-          nv[i] = nv_1[i];
-        }
-      }
-
-      if( n_2 == 1 ) {
-        nv[ n_1 ] = nv_2[0];
-      } else {
-        int idx = 0;
-        for( i = n_1; i < n; i++ ) {
-          nv[i] = nv_2[ idx ];
-          idx++;
-        }
-      }
-
-      Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
-
-      return other_columns( x, nv2 );
-    }
-    case STRSXP: {
-      Rcpp::StringVector sv_1 = Rcpp::as< Rcpp::StringVector >( col_1 );
-      Rcpp::StringVector sv_2 = Rcpp::as< Rcpp::StringVector >( col_2 );
-
-      Rcpp::StringVector sv( n );
-
-      for( i = 0; i < n_1; i++ ) {
-        sv[i] = sv_1[i];
-      }
-
-      int idx = 0;
-      for( i = n_1; i < n; i++ ) {
-        sv[i] = sv_2[ idx ];
-        idx++;
-      }
-
-      return other_columns( x, sv );
-    }
-    default: {
-      Rcpp::stop("sfheaders - can't combine columns");
-    }
-    }
+    SEXP cols = sfheaders::utils::concatenate_vectors( col_1, col_2 );
+    return other_columns( x, cols );
 
   }
 
@@ -417,11 +335,11 @@ namespace utils {
         return other_columns( x, col_1, col_2 );
       }
 
+      // combine cols 1, 2 and 3
+      SEXP other_cols_1 = sfheaders::utils::concatenate_vectors( col_1, col_2 );
+      SEXP other_cols = sfheaders::utils::concatenate_vectors( other_cols_1, col_3 );
+      return other_columns( x, other_cols );
 
-      Rcpp::stop("sfheaders - not yet implemented this other_columns function yet");
-      // SEXP other_cols1 = other_columns(x, col_1, col_2);
-      // SEXP other_cols2 = other_columns(x, col_1, col_3);
-      // return other_columns( x, other_cols1, other_cols2 );
     }
 
 } // utils

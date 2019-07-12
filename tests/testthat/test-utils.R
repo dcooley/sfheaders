@@ -101,11 +101,32 @@ test_that("sfheaders::utils::other_columns works for various data types",{
   other_cols <- sfheaders:::rcpp_other_columns( df, id, id2, NULL )
   expect_equal( other_cols, numeric() )
 
-  # df <- data.frame(x = 1:2, y = 3:4, z = 5:6, m = 7:8 )
-  # id <- c(0)
-  # id2 <- c(1,2)
-  # id3 <- c(3)
-  # other_cols <- sfheaders:::rcpp_other_columns( df, id, id2, id3 )
-  # expect_equal( other_cols, numeric() )
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6, m = 7:8 )
+  id <- c(0)
+  id2 <- c(1,2)
+  id3 <- c(3)
+  other_cols <- sfheaders:::rcpp_other_columns( df, id, id2, id3 )
+  expect_equal( other_cols, numeric() )
+
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6, m = 7:8, id = 1:2 )
+  id <- c(0)
+  id2 <- c(1,2)
+  id3 <- c(3)
+  other_cols <- sfheaders:::rcpp_other_columns( df, id, id2, id3 )
+  expect_equal( other_cols, c(4) )
+
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6, m = 7:8, id = 1:2 )
+  id <- c(0)
+  id2 <- c(0)
+  id3 <- c(0)
+  other_cols <- sfheaders:::rcpp_other_columns( df, id, id2, id3 )
+  expect_equal( other_cols, c(1,2,3,4) )
 
 })
+
+test_that("concatenate_vectors works",{
+
+  expect_equal( sfheaders:::rcpp_concatenate_vectors(1,5), c(1,5))
+
+})
+

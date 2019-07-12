@@ -7,6 +7,7 @@
 #include "sfheaders/utils/matrix/matrix.hpp"
 #include "sfheaders/utils/subset/subset.hpp"
 #include "sfheaders/utils/sexp/sexp.hpp"
+#include "sfheaders/utils/vectors/vectors.hpp"
 
 namespace sfheaders {
 namespace utils {

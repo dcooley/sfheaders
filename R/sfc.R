@@ -208,8 +208,32 @@ sfc_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id
 #'
 #' sfc_multipolygon( df, multipolygon_id = "id", polygon_id = "id", linestring_id = "id")
 #'
+#' df <- data.frame(
+#'   id1 = c(1,1,1,1,1,1,1,1,1,1)
+#'   , id2 = c(1,1,1,1,1,2,2,2,2,2)
+#'   , x = c(0,0,1,1,0,1,1,2,2,1)
+#'   , y = c(0,1,1,0,0,1,2,2,1,1)
+#' )
 #'
+#' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2")
 #'
+#' df <- data.frame(
+#'   id1 = c(1,1,1,1,1,1,1,1,1,1,2,2,2,2,2)
+#'   , id2 = c(1,1,1,1,1,2,2,2,2,2,1,1,1,1,1)
+#'   , x = c(0,0,1,1,0,1,1,2,2,1,3,3,4,4,3)
+#'   , y = c(0,1,1,0,0,1,2,2,1,1,3,4,4,3,3)
+#' )
+#'
+#' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2")
+#'
+#' df <- data.frame(
+#'   id1 = c(1,1,1,1,1,2,2,2,2,2)
+#'   , id2 = c(1,1,1,1,1,1,1,1,1,1)
+#'   , x = c(0,0,1,1,0,1,1,2,2,1)
+#'   , y = c(0,1,1,0,0,1,2,2,1,1)
+#' )
+#'
+#' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2")
 #'
 #'
 #' @export

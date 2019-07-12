@@ -89,3 +89,7 @@ rcpp_subset_dataframe <- function(df, cols, start, end) {
     .Call(`_sfheaders_rcpp_subset_dataframe`, df, cols, start, end)
 }
 
+rcpp_concatenate_vectors <- function(vec_1, vec_2) {
+    .Call(`_sfheaders_rcpp_concatenate_vectors`, vec_1, vec_2)
+}
+
