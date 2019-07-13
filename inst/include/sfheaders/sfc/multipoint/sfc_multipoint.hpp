@@ -1,10 +1,10 @@
-#ifndef R_SFHEADERS_SFC_MULTIPOINTS_H
-#define R_SFHEADERS_SFC_MULTIPOINTS_H
+#ifndef R_SFHEADERS_SFC_MULTIPOINT_H
+#define R_SFHEADERS_SFC_MULTIPOINT_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/multipoint/sfg_multipoint.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/sfc.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -32,7 +32,7 @@ namespace sfc {
     Rcpp::IntegerMatrix mp = sfheaders::sfg::sfg_multipoint( im );
 
     sfc[0] = mp;
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
 
@@ -60,7 +60,7 @@ namespace sfc {
 
     sfc[0] = mp;
 
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
 
@@ -136,7 +136,7 @@ namespace sfc {
       // need to calculate bbox and stuff
       // I could create one here,
     }
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 
   }
 

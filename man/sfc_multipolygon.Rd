@@ -4,7 +4,7 @@
 \alias{sfc_multipolygon}
 \title{sfc MULTIPOLYGON}
 \usage{
-sfc_multipolygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
+sfc_multipolygon(obj = NULL, x, y, z = NULL, m = NULL,
   multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL)
 }
 \arguments{
@@ -79,5 +79,16 @@ sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
 sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
 sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
 sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
+
+df <- data.frame(
+  id1 = c('a','a','a','a','a','b','b','b','b','b')
+  , id2 = c(1,1,1,1,1,1,1,1,1,1)
+  , x = c(0,0,1,1,0,1,1,2,2,1)
+  , y = c(0,1,1,0,0,1,2,2,1,1)
+)
+
+sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
+
+sfc_multipolygon( x = df$x, y = df$y, polygon_id = df$id1)
 
 }

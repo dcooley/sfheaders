@@ -49,10 +49,6 @@ rcpp_sfc_multipolygon <- function(x, cols, multipolygon_id, polygon_id, linestri
     .Call(`_sfheaders_rcpp_sfc_multipolygon`, x, cols, multipolygon_id, polygon_id, linestring_id)
 }
 
-rcpp_to_multipolygon <- function(x, y, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL) {
-    .Call(`_sfheaders_rcpp_to_multipolygon`, x, y, z, m, multipolygon_id, polygon_id, linestring_id)
-}
-
 rcpp_sfg_point <- function(x, geometry_columns) {
     .Call(`_sfheaders_rcpp_sfg_point`, x, geometry_columns)
 }

@@ -1,10 +1,10 @@
-#ifndef R_SFHEADERS_SFC_LINESTRINGS_H
-#define R_SFHEADERS_SFC_LINESTRINGS_H
+#ifndef R_SFHEADERS_SFC_LINESTRING_H
+#define R_SFHEADERS_SFC_LINESTRING_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/sfc.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -32,7 +32,7 @@ inline SEXP sfc_linestring(
   Rcpp::IntegerMatrix mp = sfheaders::sfg::sfg_linestring( im );
 
   sfc[0] = mp;
-  return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -60,7 +60,7 @@ inline SEXP sfc_linestring(
 
   sfc[0] = mp;
 
-  return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -132,11 +132,9 @@ inline SEXP sfc_linestring(
       Rcpp::stop("sfheaders - unknown linestring type");
     }
     }
-
-    // need to calculate bbox and stuff
-    // I could create one here,
+    Rcpp::Rcout << "bbox: " << bbox << std::endl;
   }
-  return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 
 }
 

@@ -1,10 +1,10 @@
-#ifndef R_SFHEADERS_SFC_POLYGONS_H
-#define R_SFHEADERS_SFC_POLYGONS_H
+#ifndef R_SFHEADERS_SFC_POLYGON_H
+#define R_SFHEADERS_SFC_POLYGON_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/polygon/sfg_polygon.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/sfc.hpp"
 
 
 namespace sfheaders {
@@ -32,7 +32,7 @@ namespace sfc {
     Rcpp::List ml = sfheaders::sfg::sfg_polygon( im );
 
     sfc[0] = ml;
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
 
@@ -60,7 +60,7 @@ namespace sfc {
 
     sfc[0] = ml;
 
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
 
@@ -144,7 +144,7 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::sfg_polygon( ml );
 
     }
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 
   }
 

@@ -4,7 +4,7 @@
 \alias{sfc_linestring}
 \title{sfc LINESTRING}
 \usage{
-sfc_linestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
+sfc_linestring(obj = NULL, x, y, z = NULL, m = NULL,
   linestring_id = NULL)
 }
 \arguments{

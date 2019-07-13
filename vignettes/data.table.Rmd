@@ -1,0 +1,95 @@
+---
+title: "data.table"
+author: "David Cooley"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+header-includes: 
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "# ",
+  eval = F
+)
+```
+
+
+```{r}
+
+
+dt <- data.table(
+  x = 1:3
+  , y = 1:3
+  , id = c(1,1,2)
+  , val = c("a","a","b")
+)
+
+dt[, .(geometry = sfc_linestring(x = x, y = y, linestring_id = id))] %>% sf::st_sf()
+
+dt[, .(geometry = sfc_linestring(x = x, y = y, linestring_id = id)), by = .(val)] %>% sf::st_sf()
+```
+
+
+```{r}
+
+library(data.table)
+library(mapdeck)
+library(sf)
+
+sf_roads <- mapdeck::roads
+sf_roads$L1 <- 1:nrow( sf_roads )
+
+dt <- data.table::as.data.table(
+  sf::st_coordinates(
+    sf_roads
+  )
+)
+
+sf_roads$geometry <- NULL
+
+dt[, seq := 1:.N, by = L1]
+
+dt <- merge(
+  x = dt
+  , y = sf_roads
+  , by = "L1"
+)
+
+setorder( dt, L1, seq )
+
+sf1 <- dt[
+  , .(lines = sfc_linestring(x = X, y = Y, linestring_id = L1))
+  ] %>% 
+  sf::st_sf()
+
+sf2 <- dt[
+  , .(lines = sfc_linestring(x = X, y = Y, linestring_id = L1))
+  , by = .(FQID)
+  ] %>% 
+  sf::st_sf()
+
+sf3 <- dt[
+  , .(lines = sfc_linestring(x = X, y = Y, linestring_id = L1))
+  , by = setdiff(names(dt), c("X","Y","L1"))
+  ] %>% 
+  sf::st_sf()
+
+sf4 <- sfheaders::sfc_linestring(obj = dt, x = "X", y = "Y", linestring_id = "L1")
+
+sf::st_bbox( sf1 )
+sf::st_bbox( sf2 )
+sf::st_bbox( sf3 )
+sf::st_bbox( sf4 )
+
+c(min(dt$X), min(dt$Y), max(dt$X), max(dt$Y))
+
+
+```

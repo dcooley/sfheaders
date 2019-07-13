@@ -1,10 +1,10 @@
-#ifndef R_SFHEADERS_SFC_MULTILINESTRINGS_H
-#define R_SFHEADERS_SFC_MULTILINESTRINGS_H
+#ifndef R_SFHEADERS_SFC_MULTILINESTRING_H
+#define R_SFHEADERS_SFC_MULTILINESTRING_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/sfc.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -31,7 +31,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::List ml = sfheaders::sfg::sfg_multilinestring( im );
 
   sfc[0] = ml;
-  return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -59,7 +59,7 @@ inline SEXP sfc_multilinestring(
 
   sfc[0] = ml;
 
-  return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -146,7 +146,7 @@ inline SEXP sfc_multilinestring(
     sfc[i] = sfheaders::sfg::sfg_multilinestring( ml );
 
   }
-  return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 
 }
 

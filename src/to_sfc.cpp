@@ -1,7 +1,7 @@
 #include <Rcpp.h>
-#include "sfheaders/sfc/point/sfc_points.hpp"
-#include "sfheaders/sfc/multipoint/sfc_multipoints.hpp"
-#include "sfheaders/sfc/linestring/sfc_linestrings.hpp"
+#include "sfheaders/sfc/point/sfc_point.hpp"
+#include "sfheaders/sfc/multipoint/sfc_multipoint.hpp"
+#include "sfheaders/sfc/linestring/sfc_linestring.hpp"
 #include "sfheaders/sfc/multilinestring/sfc_multilinestring.hpp"
 #include "sfheaders/sfc/polygon/sfc_polygon.hpp"
 #include "sfheaders/sfc/multipolygon/sfc_multipolygon.hpp"
@@ -40,18 +40,18 @@ SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygo
   return sfheaders::sfc::sfc_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id );
 }
 
-// [[Rcpp::export]]
-SEXP rcpp_to_multipolygon(
-    Rcpp::NumericVector x,
-    Rcpp::NumericVector y,
-    Rcpp::NumericVector z = R_NilValue,
-    Rcpp::NumericVector m = R_NilValue,
-    Rcpp::NumericVector multipolygon_id = R_NilValue,
-    Rcpp::NumericVector polygon_id = R_NilValue,
-    Rcpp::NumericVector linestring_id = R_NilValue
-) {
-  return sfheaders::sfc::sfc_multipolygon(x, y, z, m, multipolygon_id, polygon_id, linestring_id);
-}
+// // [[Rcpp::export]]
+// SEXP rcpp_to_multipolygon(
+//     Rcpp::NumericVector x,
+//     Rcpp::NumericVector y,
+//     Rcpp::NumericVector z = R_NilValue,
+//     Rcpp::NumericVector m = R_NilValue,
+//     Rcpp::NumericVector multipolygon_id = R_NilValue,
+//     Rcpp::NumericVector polygon_id = R_NilValue,
+//     Rcpp::NumericVector linestring_id = R_NilValue
+// ) {
+//   return sfheaders::sfc::sfc_multipolygon(x, y, z, m, multipolygon_id, polygon_id, linestring_id);
+// }
 
 // SEXP rcpp_sfc_sfc( SEXP x ) {
 //

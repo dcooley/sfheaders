@@ -1,10 +1,10 @@
-#ifndef R_SFHEADERS_SFC_POINTS_H
-#define R_SFHEADERS_SFC_POINTS_H
+#ifndef R_SFHEADERS_SFC_POINT_H
+#define R_SFHEADERS_SFC_POINT_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/point/sfg_point.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/sfc.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -39,7 +39,7 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
     }
 
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
   inline SEXP sfc_point(
@@ -77,7 +77,7 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
     }
 
-    return sfheaders::sfc::to_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
   }
 
   inline SEXP sfc_point(
