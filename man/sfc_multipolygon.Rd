@@ -90,6 +90,4 @@ df <- data.frame(
 
 sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
 
-sfc_multipolygon( x = df$x, y = df$y, polygon_id = df$id1)
-
 }

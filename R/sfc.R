@@ -364,8 +364,6 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #'
 #' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
 #'
-#' sfc_multipolygon( x = df$x, y = df$y, polygon_id = df$id1)
-#'
 #' @export
 sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL ) {
 
