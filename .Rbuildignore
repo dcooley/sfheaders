@@ -3,3 +3,4 @@
 ^README\.Rmd$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^Vignettes/data.table.Rmd
