@@ -83,6 +83,13 @@ namespace sfc {
   }
 
   inline SEXP sfc_polygon(
+    Rcpp::DataFrame& df
+  ) {
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    return sfc_polygon( nm );
+  }
+
+  inline SEXP sfc_polygon(
       Rcpp::List& lst
   ) {
     // iterate each 'sfg' and assign 'sfg' attributes
@@ -170,6 +177,14 @@ namespace sfc {
     return sfc_polygon( mp );
   }
 
+  // inline SEXP sfc_polygon(
+  //     SEXP& x,
+  //     SEXP& geometry_cols,
+  //     SEXP& polygon_id
+  // ) {
+  //
+  // }
+
   // if an 'id' col is supplied, it means we have many polygons
   // linestring_id & point_id
   inline SEXP sfc_polygon(
@@ -192,10 +207,6 @@ namespace sfc {
 
       SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
 
-      // Rcpp::Rcout << "typeof( other_cols ) " << TYPEOF( other_cols ) << std::endl;
-      // Rcpp::Rcout << "typeof( linestring_id ) " << TYPEOF( linestring_id ) << std::endl;
-      //
-      // Rcpp::Rcout << "linestring WITHOUT polygon" << std::endl;
       Rcpp::List lst(1);
       lst[0] = sfheaders::shapes::get_listMat( x, other_cols, linestring_id );
       return sfc_polygon( lst );
@@ -217,10 +228,6 @@ namespace sfc {
         l[0] = lst[i];
         mls[i] = l;
       }
-      //return lst;
-      // Rcpp::Rcout << "lst.size() " << lst.size() << std::endl;
-      // Rcpp::List mls( 1 );
-      // mls[0] = lst;
       return sfc_polygon( mls );
     }
 
@@ -233,6 +240,13 @@ namespace sfc {
     if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( polygon_id ) ) {
       // make the geometry cols all the other columns??
       return sfc_polygon( x, geometry_cols );
+    }
+
+    if( !Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && Rf_isNull( linestring_id ) ) {
+      Rcpp::List pl = sfheaders::shapes::get_listMat( x, geometry_cols, polygon_id );
+      Rcpp::List sfc(1);
+      sfc[0] = pl;
+      return sfc_polygon( sfc );
     }
 
 

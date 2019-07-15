@@ -4,7 +4,7 @@
 \alias{sfc_polygon}
 \title{sfc POLYGON}
 \usage{
-sfc_polygon(obj = NULL, x, y, z = NULL, m = NULL,
+sfc_polygon(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
   polygon_id = NULL, linestring_id = NULL)
 }
 \arguments{

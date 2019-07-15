@@ -33,8 +33,6 @@ So I thought it would be useful to have these in one place. And here they are (o
 
 Yep
 
-TODO: how to use.
-
 
 ### sfg
 
@@ -52,7 +50,7 @@ sfg_polygon( df )
 
 #### from C++
 
-there are various overloaded functions for each `sfg` type
+there are various overloaded functions for each `sfg` and `sfc` type
 
 - `sfheaders::sfg::sfg_point()`
 - `sfheaders::sfg::sfg_multipoint()`
@@ -61,8 +59,16 @@ there are various overloaded functions for each `sfg` type
 - `sfheaders::sfg::sfg_polygon()`
 - `sfheaders::sfg::sfg_multipolygon()`
 
+- `sfheaders::sfc::sfc_point()`
+- `sfheaders::sfc::sfc_multipoint()`
+- `sfheaders::sfc::sfc_linestring()`
+- `sfheaders::sfc::sfc_multilinestring()`
+- `sfheaders::sfc::sfc_polygon()`
+- `sfheaders::sfc::sfc_multipolygon()`
+
 ```{r}
 library(Rcpp)
+library(sfheaders)
 # library(sf) ## for print
 
 cppFunction(
@@ -141,10 +147,96 @@ a_polygon( df, "POLYGON" )
 ### sfc
 
 ```{r}
-sfc_point( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
+sfc_point( df )
 
-sfc_multipoint( matrix(c(0,1,2,3,4,5), ncol = 2 ) )
+sfc_multipoint( df )
 
+sfc_polygon( df )
+```
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df ) {
+      return sfheaders::sfc::sfc_polygon( df );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df )
+```
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y") )
+```
+
+
+```{r}
+
+df <- data.frame(
+  id = c( rep(1, 5), rep(2, 5) )
+  , x = 1:10
+  , y = 1:10
+)
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y") )
+```
+
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns, SEXP polygon_id, SEXP linestring_id ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns, polygon_id, linestring_id );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y"), "id", NULL )
+```
+
+```{r}
 # n <- 1e7
 # df <- data.frame(
 #   id = rep(1:(n / 2), each = 2),
