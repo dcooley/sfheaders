@@ -80,7 +80,6 @@ there are various overloaded functions for each `sfg` and `sfc` type
 library(Rcpp)
 # Warning: package 'Rcpp' was built under R version 3.5.2
 library(sfheaders)
-# library(sf) ## for print
 
 cppFunction(
   includes = '

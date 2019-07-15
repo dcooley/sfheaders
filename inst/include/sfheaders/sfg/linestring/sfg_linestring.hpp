@@ -25,6 +25,15 @@ namespace sfg {
     return im;
   }
 
+  inline SEXP sfg_linestring(
+      Rcpp::IntegerVector& iv
+  ) {
+    size_t n = iv.length();
+    Rcpp::IntegerMatrix im( 1, n );
+    im( 0, Rcpp::_ ) = iv;
+    return sfg_linestring( im );
+  }
+
 
   inline SEXP sfg_linestring(
       Rcpp::IntegerMatrix& im,
@@ -53,6 +62,15 @@ namespace sfg {
     nm.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
 
     return nm;
+  }
+
+  inline SEXP sfg_linestring(
+      Rcpp::NumericVector& nv
+  ) {
+    size_t n = nv.length();
+    Rcpp::NumericMatrix nm( 1, n );
+    nm( 0, Rcpp::_ ) = nv;
+    return sfg_linestring( nm );
   }
 
   inline SEXP sfg_linestring(
@@ -168,15 +186,17 @@ namespace sfg {
     // switch on type of x
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
-      if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
+    if( !Rf_isMatrix( x ) ) {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      return sfg_linestring( iv );
     }
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
       return sfg_linestring( im );
     }
     case REALSXP: {
-      if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
+    if( !Rf_isMatrix( x ) ) {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      return sfg_linestring( nv );
     }
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return sfg_linestring( nm );

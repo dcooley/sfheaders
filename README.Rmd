@@ -69,7 +69,6 @@ there are various overloaded functions for each `sfg` and `sfc` type
 ```{r}
 library(Rcpp)
 library(sfheaders)
-# library(sf) ## for print
 
 cppFunction(
   includes = '
