@@ -667,7 +667,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::IntegerVector iv_polygon = Rcpp::as< Rcpp::IntegerVector >( polygon_id );
     int il = iv_line[0];
     int ip = iv_polygon[0];
-    return sfg_multipolygon( x, cols, il, ip );
+    return sfg_multipolygon( x, cols, ip, il );
   }
   case STRSXP: {
     Rcpp::StringVector sv_line = Rcpp::as< Rcpp::StringVector >( line_id );
@@ -675,7 +675,7 @@ inline SEXP sfg_multipolygon(
 
     Rcpp::String sl = sv_line[0];
     Rcpp::String sp = sv_polygon[0];
-    return sfg_multipolygon( x, cols, sl, sp );
+    return sfg_multipolygon( x, cols, sp, sl );
   }
   default: {
     Rcpp::stop("sfheaders - unknown column types");

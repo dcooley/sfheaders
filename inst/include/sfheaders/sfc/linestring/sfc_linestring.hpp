@@ -132,7 +132,7 @@ inline SEXP sfc_linestring(
       Rcpp::stop("sfheaders - unknown linestring type");
     }
     }
-    Rcpp::Rcout << "bbox: " << bbox << std::endl;
+    // Rcpp::Rcout << "bbox: " << bbox << std::endl;
   }
   return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
 
