@@ -66,6 +66,8 @@ namespace sfc {
       std::string& geom_type,
       std::unordered_set< std::string >& geometry_types,
       Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
       Rcpp::String epsg,
       Rcpp::String proj4string,
       int& n_empty,
@@ -96,6 +98,15 @@ namespace sfc {
     bbox.attr("class") = Rcpp::CharacterVector::create("bbox");
     bbox.attr("names") = Rcpp::CharacterVector::create("xmin", "ymin", "xmax", "ymax");
     sfc.attr("bbox") = bbox;
+
+    z_range.attr("class") = Rcpp::CharacterVector::create("z_range");
+    z_range.attr("names") = Rcpp::CharacterVector::create("zmin","zmax");
+    sfc.attr("z_range") = z_range;
+
+    m_range.attr("class") = Rcpp::CharacterVector::create("m_range");
+    m_range.attr("names") = Rcpp::CharacterVector::create("mmin","mmax");
+    sfc.attr("m_range") = m_range;
+
   }
 
   inline SEXP create_sfc(
@@ -103,13 +114,15 @@ namespace sfc {
       std::string& geom_type,
       std::unordered_set< std::string >& geometry_types,
       Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
       Rcpp::String& epsg,
       Rcpp::String& proj4string,
       int& n_empty,
       double& precision
   ) {
     sfheaders::sfc::attach_sfc_attributes(
-      sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision
+      sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision
     );
     return sfc;
   }

@@ -16,19 +16,43 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_calculate_z_range
+SEXP rcpp_calculate_z_range(SEXP x);
+RcppExport SEXP _sfheaders_rcpp_calculate_z_range(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_z_range(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_calculate_m_range
+SEXP rcpp_calculate_m_range(SEXP x);
+RcppExport SEXP _sfheaders_rcpp_calculate_m_range(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_m_range(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_attach_sfc_attributes
-void rcpp_attach_sfc_attributes(Rcpp::List& sfc, std::string geom_type, Rcpp::NumericVector& bbox, std::string epsg, std::string proj4string, int n_empty, double precision);
-RcppExport SEXP _sfheaders_rcpp_attach_sfc_attributes(SEXP sfcSEXP, SEXP geom_typeSEXP, SEXP bboxSEXP, SEXP epsgSEXP, SEXP proj4stringSEXP, SEXP n_emptySEXP, SEXP precisionSEXP) {
+void rcpp_attach_sfc_attributes(Rcpp::List& sfc, std::string geom_type, Rcpp::NumericVector& bbox, Rcpp::NumericVector& z_range, Rcpp::NumericVector& m_range, std::string epsg, std::string proj4string, int n_empty, double precision);
+RcppExport SEXP _sfheaders_rcpp_attach_sfc_attributes(SEXP sfcSEXP, SEXP geom_typeSEXP, SEXP bboxSEXP, SEXP z_rangeSEXP, SEXP m_rangeSEXP, SEXP epsgSEXP, SEXP proj4stringSEXP, SEXP n_emptySEXP, SEXP precisionSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type sfc(sfcSEXP);
     Rcpp::traits::input_parameter< std::string >::type geom_type(geom_typeSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type z_range(z_rangeSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type m_range(m_rangeSEXP);
     Rcpp::traits::input_parameter< std::string >::type epsg(epsgSEXP);
     Rcpp::traits::input_parameter< std::string >::type proj4string(proj4stringSEXP);
     Rcpp::traits::input_parameter< int >::type n_empty(n_emptySEXP);
     Rcpp::traits::input_parameter< double >::type precision(precisionSEXP);
-    rcpp_attach_sfc_attributes(sfc, geom_type, bbox, epsg, proj4string, n_empty, precision);
+    rcpp_attach_sfc_attributes(sfc, geom_type, bbox, z_range, m_range, epsg, proj4string, n_empty, precision);
     return R_NilValue;
 END_RCPP
 }
@@ -304,7 +328,9 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 1},
-    {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 7},
+    {"_sfheaders_rcpp_calculate_z_range", (DL_FUNC) &_sfheaders_rcpp_calculate_z_range, 1},
+    {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
+    {"_sfheaders_rcpp_attach_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_attach_sfc_attributes, 9},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

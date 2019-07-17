@@ -5,6 +5,8 @@
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfc/bbox.hpp"
+#include "sfheaders/sfc/z_range.hpp"
+#include "sfheaders/sfc/m_range.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -14,6 +16,8 @@ inline SEXP sfc_linestring(
 ) {
   //
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
   std::string geom_type = "LINESTRING";
   std::unordered_set< std::string > geometry_types{ geom_type };
@@ -23,16 +27,24 @@ inline SEXP sfc_linestring(
   int n_empty = 0;
   double precision = 0.0;
 
-  //size_t n_col = im.ncol();
+  size_t n_col = im.ncol();
   //size_t i;
   Rcpp::List sfc( 1 );
 
   // need to loop through ad get the bbox
   sfheaders::bbox::calculate_bbox( bbox, im );
+
+  if( n_col > 2 ) {
+    sfheaders::zm::calculate_z_range( z_range, im );
+    if( n_col > 3 ) {
+      sfheaders::zm::calculate_m_range( m_range, im );
+    }
+  }
+
   Rcpp::IntegerMatrix mp = sfheaders::sfg::sfg_linestring( im );
 
   sfc[0] = mp;
-  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -41,6 +53,8 @@ inline SEXP sfc_linestring(
 ) {
   //
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
   std::string geom_type = "LINESTRING";
   std::unordered_set< std::string > geometry_types{ geom_type };
@@ -50,17 +64,25 @@ inline SEXP sfc_linestring(
   int n_empty = 0;
   double precision = 0.0;
 
-  //size_t n_col = nm.ncol();
+  size_t n_col = nm.ncol();
   //size_t i;
   Rcpp::List sfc( 1 );
 
   // need to loop through ad get the bbox
   sfheaders::bbox::calculate_bbox( bbox, nm );
+
+  if( n_col > 2 ) {
+    sfheaders::zm::calculate_z_range( z_range, nm );
+    if( n_col > 3 ) {
+      sfheaders::zm::calculate_m_range( m_range, nm );
+    }
+  }
+
   Rcpp::NumericMatrix mp = sfheaders::sfg::sfg_linestring( nm );
 
   sfc[0] = mp;
 
-  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -88,6 +110,8 @@ inline SEXP sfc_linestring(
   // iterate each 'sfg' and assign 'sfg' attributes
 
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
   std::string geom_type = "LINESTRING";
   std::unordered_set< std::string > geometry_types{ geom_type };
@@ -114,6 +138,15 @@ inline SEXP sfc_linestring(
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( this_linestring );
       sfheaders::bbox::calculate_bbox( bbox, im );
+
+      size_t n_col = im.ncol();
+      if( n_col > 2 ) {
+        sfheaders::zm::calculate_z_range( z_range, im );
+        if( n_col > 3 ) {
+          sfheaders::zm::calculate_m_range( m_range, im );
+        }
+      }
+
       sfc[i] = sfheaders::sfg::sfg_linestring( im );
     }
     break;
@@ -124,6 +157,15 @@ inline SEXP sfc_linestring(
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( this_linestring );
       sfheaders::bbox::calculate_bbox( bbox, nm );
+
+      size_t n_col = nm.ncol();
+      if( n_col > 2 ) {
+        sfheaders::zm::calculate_z_range( z_range, nm );
+        if( n_col > 3 ) {
+          sfheaders::zm::calculate_m_range( m_range, nm );
+        }
+      }
+
       sfc[i] = sfheaders::sfg::sfg_linestring( nm );
     }
     break;
@@ -134,7 +176,7 @@ inline SEXP sfc_linestring(
     }
     // Rcpp::Rcout << "bbox: " << bbox << std::endl;
   }
-  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
 
 }
 

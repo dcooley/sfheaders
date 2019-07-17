@@ -8,6 +8,7 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
   m <- matrix(c(0,0), ncol = 2)
   res <- sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( all( is.na( attr( res, "z_range" ) ) ) )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
   res <- sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL )
@@ -16,6 +17,7 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
   m <- matrix(c(0,0,0,0,1,1), ncol = 3, byrow = T)
   res <- sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( all( attr( res, "z_range") == c(0,1) ) )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
   res <- sfheaders:::rcpp_sfc_multipoint( m, c(0,1), NULL )
@@ -23,7 +25,6 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
   expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, 0 ), "sfheaders - incorrect number of geometry columns" )
-
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
   res <- sfheaders:::rcpp_sfc_multipoint( m, c(0,1), 0 )

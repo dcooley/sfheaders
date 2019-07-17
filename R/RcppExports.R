@@ -5,8 +5,16 @@ rcpp_calculate_bbox <- function(x) {
     .Call(`_sfheaders_rcpp_calculate_bbox`, x)
 }
 
-rcpp_attach_sfc_attributes <- function(sfc, geom_type, bbox, epsg, proj4string, n_empty, precision) {
-    invisible(.Call(`_sfheaders_rcpp_attach_sfc_attributes`, sfc, geom_type, bbox, epsg, proj4string, n_empty, precision))
+rcpp_calculate_z_range <- function(x) {
+    .Call(`_sfheaders_rcpp_calculate_z_range`, x)
+}
+
+rcpp_calculate_m_range <- function(x) {
+    .Call(`_sfheaders_rcpp_calculate_m_range`, x)
+}
+
+rcpp_attach_sfc_attributes <- function(sfc, geom_type, bbox, z_range, m_range, epsg, proj4string, n_empty, precision) {
+    invisible(.Call(`_sfheaders_rcpp_attach_sfc_attributes`, sfc, geom_type, bbox, z_range, m_range, epsg, proj4string, n_empty, precision))
 }
 
 rcpp_sfg_dimension <- function(x) {

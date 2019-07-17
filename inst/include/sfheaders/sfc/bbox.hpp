@@ -12,11 +12,26 @@ namespace bbox {
     return bbox;
   }
 
-  inline void bbox_size_check( Rcpp::NumericVector& point ) {
-
-    // Rcpp::Rcout << "point: " << point << std::endl;
-
+  inline void bbox_size_check( Rcpp::IntegerVector& point ) {
     if( point.length() < 2 ) {
+      Rcpp::stop("sfheaders - incorrect size of bounding box");
+    }
+  }
+
+  inline void bbox_size_check( Rcpp::NumericVector& point ) {
+    if( point.length() < 2 ) {
+      Rcpp::stop("sfheaders - incorrect size of bounding box");
+    }
+  }
+
+  inline void bbox_size_check( Rcpp::IntegerMatrix& im ) {
+    if( im.ncol() < 2 ) {
+      Rcpp::stop("sfheaders - incorrect size of bounding box");
+    }
+  }
+
+  inline void bbox_size_check( Rcpp::NumericMatrix& nm ) {
+    if( nm.ncol() < 2 ) {
       Rcpp::stop("sfheaders - incorrect size of bounding box");
     }
   }
@@ -54,24 +69,56 @@ namespace bbox {
       Rcpp::NumericVector& bbox,
       Rcpp::IntegerMatrix& im
   ) {
-    size_t n_row = im.nrow();
-    size_t i;
-    for( i = 0; i < n_row; i++ ) {
-      Rcpp::IntegerVector iv = im( i, Rcpp::_ );
-      calculate_bbox( bbox, iv );
-    }
+
+    bbox_size_check( im );
+
+    Rcpp::IntegerVector x = im( Rcpp::_, 0 );
+    Rcpp::IntegerVector y = im( Rcpp::_, 1 );
+    double xmin = Rcpp::min( x );
+    double ymin = Rcpp::min( y );
+    double xmax = Rcpp::max( x );
+    double ymax = Rcpp::max( y );
+
+    bbox[0] = std::min( xmin, bbox[0] );
+    bbox[2] = std::max( xmax, bbox[2] );
+
+    bbox[1] = std::min( ymin, bbox[1] );
+    bbox[3] = std::max( ymax, bbox[3] );
+
+    // size_t n_row = im.nrow();
+    // size_t i;
+    // for( i = 0; i < n_row; i++ ) {
+    //   Rcpp::IntegerVector iv = im( i, Rcpp::_ );
+    //   calculate_bbox( bbox, iv );
+    // }
   }
 
   inline void calculate_bbox(
       Rcpp::NumericVector& bbox,
       Rcpp::NumericMatrix& nm
   ) {
-    size_t n_row = nm.nrow();
-    size_t i;
-    for( i = 0; i < n_row; i++ ) {
-      Rcpp::NumericVector nv = nm( i, Rcpp::_ );
-      calculate_bbox( bbox, nv );
-    }
+
+    bbox_size_check( nm );
+
+    Rcpp::NumericVector x = nm( Rcpp::_, 0 );
+    Rcpp::NumericVector y = nm( Rcpp::_, 1 );
+    double xmin = Rcpp::min( x );
+    double ymin = Rcpp::min( y );
+    double xmax = Rcpp::max( x );
+    double ymax = Rcpp::max( y );
+
+    bbox[0] = std::min( xmin, bbox[0] );
+    bbox[2] = std::max( xmax, bbox[2] );
+
+    bbox[1] = std::min( ymin, bbox[1] );
+    bbox[3] = std::max( ymax, bbox[3] );
+
+    // size_t n_row = nm.nrow();
+    // size_t i;
+    // for( i = 0; i < n_row; i++ ) {
+    //   Rcpp::NumericVector nv = nm( i, Rcpp::_ );
+    //   calculate_bbox( bbox, nv );
+    // }
   }
 
   inline void calculate_bbox(
@@ -80,6 +127,7 @@ namespace bbox {
   ) {
     // assumes 'x' & 'y' column vectors
     bbox_size_check( df );
+
     Rcpp::NumericVector x = df[0];
     Rcpp::NumericVector y = df[1];
     double xmin = Rcpp::min( x );

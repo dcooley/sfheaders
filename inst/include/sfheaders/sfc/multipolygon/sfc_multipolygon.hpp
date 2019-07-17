@@ -5,7 +5,8 @@
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-
+#include "sfheaders/sfc/z_range.hpp"
+#include "sfheaders/sfc/m_range.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -15,6 +16,8 @@ namespace sfc {
   ) {
     //
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
     std::string geom_type = "MULTIPOLYGON";
     std::unordered_set< std::string > geometry_types{ geom_type };
@@ -24,15 +27,23 @@ namespace sfc {
     int n_empty = 0;
     double precision = 0.0;
 
-    //size_t n_col = im.ncol();
+    size_t n_col = im.ncol();
     //size_t i;
     Rcpp::List sfc( 1 );
     // need to loop through ad get the bbox
     sfheaders::bbox::calculate_bbox( bbox, im );
+
+    if( n_col > 2 ) {
+      sfheaders::zm::calculate_z_range( z_range, im );
+      if( n_col > 3 ) {
+        sfheaders::zm::calculate_m_range( m_range, im );
+      }
+    }
+
     Rcpp::List ml = sfheaders::sfg::sfg_multipolygon( im );
 
     sfc[0] = ml;
-    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
   }
 
 
@@ -41,6 +52,8 @@ namespace sfc {
   ) {
     //
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
     std::string geom_type = "MULTIPOLYGON";
     std::unordered_set< std::string > geometry_types{ geom_type };
@@ -50,17 +63,25 @@ namespace sfc {
     int n_empty = 0;
     double precision = 0.0;
 
-    //size_t n_col = nm.ncol();
+    size_t n_col = nm.ncol();
     //size_t i;
     Rcpp::List sfc( 1 );
 
     // need to loop through ad get the bbox
     sfheaders::bbox::calculate_bbox( bbox, nm );
+
+    if( n_col > 2 ) {
+      sfheaders::zm::calculate_z_range( z_range, nm );
+      if( n_col > 3 ) {
+        sfheaders::zm::calculate_m_range( m_range, nm );
+      }
+    }
+
     Rcpp::List ml = sfheaders::sfg::sfg_multipolygon( nm );
 
     sfc[0] = ml;
 
-    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
   }
 
 
@@ -88,6 +109,8 @@ namespace sfc {
     // iterate each 'sfg' and assign 'sfg' attributes
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
     std::string geom_type = "MULTIPOLYGON";
     std::unordered_set< std::string > geometry_types{ geom_type };
@@ -126,6 +149,15 @@ namespace sfc {
           } else {
             Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( this_linestring );
             sfheaders::bbox::calculate_bbox( bbox, im );
+
+            size_t n_col = im.ncol();
+            if( n_col > 2 ) {
+              sfheaders::zm::calculate_z_range( z_range, im );
+              if( n_col > 3 ) {
+                sfheaders::zm::calculate_m_range( m_range, im );
+              }
+            }
+
             l[k] = im;
           }
           break;
@@ -136,6 +168,15 @@ namespace sfc {
           } else {
             Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( this_linestring );
             sfheaders::bbox::calculate_bbox( bbox, nm );
+
+            size_t n_col = nm.ncol();
+            if( n_col > 2 ) {
+              sfheaders::zm::calculate_z_range( z_range, nm );
+              if( n_col > 3 ) {
+                sfheaders::zm::calculate_m_range( m_range, nm );
+              }
+            }
+
             l[k] = nm;
           }
           break;
@@ -151,7 +192,7 @@ namespace sfc {
       sfc[i] = sfheaders::sfg::sfg_multipolygon( pl );
 
     }
-    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
   }
 
 

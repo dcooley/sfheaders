@@ -21,8 +21,8 @@ test_that("sfg multipolygon",{
   r_res <- sfg_multipolygon(mp)
 
   expect_equal( mp[[1]][[1]], r_res[[1]][[1]] )
-  expect_equal( mp[[1]][[2]], r_res[[1]][[2]] )
   expect_equal( mp[[2]][[1]], r_res[[2]][[1]] )
+  expect_equal( mp[[2]][[2]], r_res[[2]][[2]] )
 
   expect_true( all( lengths( mp ) == lengths( r_res ) ) )
 
