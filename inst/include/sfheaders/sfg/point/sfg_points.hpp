@@ -7,7 +7,7 @@
 namespace sfheaders {
 namespace sfg {
 
-  Rcpp::List sfg_points( Rcpp::List& lst ) {
+  inline Rcpp::List sfg_points( Rcpp::List& lst ) {
     size_t n = lst.size();
     size_t i;
     Rcpp::List sfcs(n);
