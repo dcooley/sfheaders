@@ -79,6 +79,7 @@ namespace sfc {
     std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
     sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
+
     // attribute::crs
     Rcpp::List crs = Rcpp::List::create(
       Rcpp::Named("epsg") = epsg,
@@ -87,7 +88,6 @@ namespace sfc {
 
     crs.attr("class") = Rcpp::CharacterVector::create("crs");
     sfc.attr("crs") = crs;
-
     // attribute::precision
     sfc.attr("precision") = precision;
 
@@ -106,7 +106,6 @@ namespace sfc {
     m_range.attr("class") = Rcpp::CharacterVector::create("m_range");
     m_range.attr("names") = Rcpp::CharacterVector::create("mmin","mmax");
     sfc.attr("m_range") = m_range;
-
   }
 
   inline SEXP create_sfc(

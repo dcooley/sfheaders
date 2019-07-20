@@ -2,10 +2,10 @@
 #define R_SFHEADERS_SFG_LINESTRING_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
+
 
 namespace sfheaders {
 namespace sfg {
@@ -16,13 +16,20 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::IntegerMatrix& im
   ) {
-    size_t n_col = im.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+    // I want something like this,
+    // where the poitn at which it can make an SFG
+    // it calls a 'make_sfg' function
+    // so that this can also be called from the 'shapes' file too
+    //make_sfg( im, sfheaders::sfg::SFG_LINESTRING );
 
-    std::string geom_type = "LINESTRING";
-    im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+    // size_t n_col = im.ncol();
+    // std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+    //
+    // std::string geom_type = get_sfg_type( sfheaders::sfg::SFG_LINESTRING );
+    // im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
 
-    return im;
+    //return im;
+    return sfheaders::sfg::make_sfg( im, sfheaders::sfg::SFG_LINESTRING );
   }
 
   inline SEXP sfg_linestring(
@@ -55,13 +62,14 @@ namespace sfg {
       Rcpp::NumericMatrix& nm
   ) {
 
-    size_t n_col = nm.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-    std::string geom_type = "LINESTRING";
-    nm.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
-
-    return nm;
+    // size_t n_col = nm.ncol();
+    // std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+    //
+    // std::string geom_type = get_sfg_type( sfheaders::sfg::SFG_LINESTRING );;
+    // nm.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
+    //
+    // return nm;
+    return sfheaders::sfg::make_sfg( nm, sfheaders::sfg::SFG_LINESTRING );
   }
 
   inline SEXP sfg_linestring(

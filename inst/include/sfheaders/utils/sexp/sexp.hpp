@@ -4,6 +4,7 @@
 
 #include <Rcpp.h>
 
+
 namespace sfheaders{
 namespace utils {
 

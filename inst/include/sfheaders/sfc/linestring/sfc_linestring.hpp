@@ -2,6 +2,7 @@
 #define R_SFHEADERS_SFC_LINESTRING_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfc/bbox.hpp"
@@ -125,10 +126,8 @@ inline SEXP sfc_linestring(
   size_t i;
 
   for( i = 0; i < n_linestrings; i++ ) {
+    Rcpp::Rcout << "looping sfc_linestrings() " << i << std::endl;
     SEXP this_linestring = sfc[i];
-
-    //int tp = TYPEOF( this_linestring );
-    // Rcpp::Rcout << "tp: " << tp << std::endl;
 
     // should each element only be allowed to be a matrix??
     switch( TYPEOF( this_linestring ) ) {
@@ -226,8 +225,9 @@ inline SEXP sfc_linestring(
 
   } else {
     sfheaders::utils::geometry_column_check( geometry_cols );
-    Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
-    return sfc_linestring( mp );
+    //Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
+    return sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id, sfheaders::sfg::SFG_LINESTRING, sfheaders::sfc::SFC_LINESTRING );
+    //return sfc_linestring( mp );
   }
 
   return Rcpp::List::create(); // ??

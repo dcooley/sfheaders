@@ -308,8 +308,6 @@ namespace sfc {
     return Rcpp::List::create(); // ??
   }
 
-
-
 } // sfc
 } // sfheaders
 
