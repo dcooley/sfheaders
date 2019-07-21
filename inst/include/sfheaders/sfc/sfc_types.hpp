@@ -47,7 +47,9 @@ namespace sfc {
     int n_empty = 0;
     double precision = 0.0;
 
-    return sfheaders::sfc::create_sfc( sfc, geom, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
+    return sfheaders::sfc::create_sfc(
+      sfc, geom, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision
+      );
   }
 
   // inline SEXP make_sfc(

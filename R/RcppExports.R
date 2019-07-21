@@ -33,6 +33,10 @@ rcpp_get_list_mat <- function(x, cols, id) {
     .Call(`_sfheaders_rcpp_get_list_mat`, x, cols, id)
 }
 
+rcpp_make_sf <- function(sfc, ids) {
+    .Call(`_sfheaders_rcpp_make_sf`, sfc, ids)
+}
+
 rcpp_sfc_point <- function(x, cols) {
     .Call(`_sfheaders_rcpp_sfc_point`, x, cols)
 }

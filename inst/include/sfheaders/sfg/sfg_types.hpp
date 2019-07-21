@@ -31,7 +31,29 @@ namespace sfg {
     return ""; // never reaches
   }
 
-  inline SEXP make_sfg(
+  inline void make_sfg(
+    Rcpp::IntegerVector& iv,
+    int sfg_type
+  ) {
+    size_t n_col = iv.length();
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+    iv.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
+  inline void make_sfg(
+      Rcpp::NumericVector& nv,
+      int sfg_type
+  ) {
+    size_t n_col = nv.length();
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+    nv.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
+  inline void make_sfg(
     Rcpp::IntegerMatrix& im,
     int sfg_type
   ) {
@@ -41,10 +63,9 @@ namespace sfg {
 
     std::string geom_type = get_sfg_type( sfg_type );
     im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-    return im;
   }
 
-  inline SEXP make_sfg(
+  inline void make_sfg(
       Rcpp::NumericMatrix& nm,
       int sfg_type
   ) {
@@ -54,8 +75,19 @@ namespace sfg {
 
     std::string geom_type = get_sfg_type( sfg_type );
     nm.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-    return nm;
   }
+
+  inline void make_sfg(
+    Rcpp::List& lst,
+    size_t n_col,
+    int sfg_type
+  ) {
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+    lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
 
 
 } // sfg

@@ -29,7 +29,8 @@ namespace sfg {
     // im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
 
     //return im;
-    return sfheaders::sfg::make_sfg( im, sfheaders::sfg::SFG_LINESTRING );
+    sfheaders::sfg::make_sfg( im, sfheaders::sfg::SFG_LINESTRING );
+    return im;
   }
 
   inline SEXP sfg_linestring(
@@ -61,15 +62,8 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::NumericMatrix& nm
   ) {
-
-    // size_t n_col = nm.ncol();
-    // std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-    //
-    // std::string geom_type = get_sfg_type( sfheaders::sfg::SFG_LINESTRING );;
-    // nm.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
-    //
-    // return nm;
-    return sfheaders::sfg::make_sfg( nm, sfheaders::sfg::SFG_LINESTRING );
+    sfheaders::sfg::make_sfg( nm, sfheaders::sfg::SFG_LINESTRING );
+    return nm;
   }
 
   inline SEXP sfg_linestring(

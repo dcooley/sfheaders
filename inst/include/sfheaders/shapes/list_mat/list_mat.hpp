@@ -2,6 +2,7 @@
 #define R_SFHEADERS_SHAPES_LIST_MAT_H
 
 #include <Rcpp.h>
+#include "sfheaders/sf/sf.hpp"
 #include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/z_range.hpp"
 #include "sfheaders/sfc/m_range.hpp"
@@ -32,6 +33,10 @@ namespace shapes {
   ) {
     Rcpp::List lst(1);
     lst[0] = im;
+    if( sfg_type > 0 ) {
+      size_t n_col = im.ncol();
+      sfheaders::sfg::make_sfg( lst, sfg_type, n_col );
+    }
     return lst;
   }
 
@@ -41,6 +46,10 @@ namespace shapes {
   ) {
     Rcpp::List lst(1);
     lst[0] = nm;
+    if( sfg_type > 0 ) {
+      size_t n_col = nm.ncol();
+      sfheaders::sfg::make_sfg( lst, sfg_type, n_col );
+    }
     return lst;
   }
 
@@ -49,7 +58,7 @@ namespace shapes {
     int sfg_type = 0
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return get_listMat( nm );
+    return get_listMat( nm, sfg_type );
   }
 
   inline SEXP get_listMat(
@@ -122,7 +131,6 @@ namespace shapes {
     if( sfg_type > 0 ) {
       sfheaders::sfg::make_sfg( nm, sfg_type );
     }
-
     return a_line;
   }
 
@@ -133,7 +141,6 @@ namespace shapes {
       int& end,
       int sfg_type = 0
   ) {
-
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
     return get_listMat( df, geometry_cols, start, end, sfg_type );
   }
@@ -172,7 +179,6 @@ namespace shapes {
       int& end,
       int sfg_type = 0
   ) {
-
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
     return get_listMat( df, geometry_cols, start, end, sfg_type );
   }
@@ -189,6 +195,10 @@ namespace shapes {
     return lst;
   }
 
+
+  // The design of this is;
+  // every time an 'sfg' *could* be created, -
+  // then every time an 'sfc' *could* be created
 
   // get list of lines (e.g. MULTILINESTRING)
   // from a data.frame, where geometry_cols are specified, and a vector of line_ids
@@ -212,7 +222,7 @@ namespace shapes {
       bbox = sfheaders::bbox::start_bbox();
       z_range = sfheaders::zm::start_z_range();
       m_range = sfheaders::zm::start_m_range();
-      sfheaders::bbox::calculate_bbox( bbox, df );
+      sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
     }
 
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
@@ -225,17 +235,21 @@ namespace shapes {
     // now iterate through the data.frame and get the matrices of lines
     size_t i;
     for( i = 0; i < n_lines; i++ ) {
-    Rcpp::Rcout << "looping for get_listMat() " <<  i << std::endl;
+    //Rcpp::Rcout << "looping for get_listMat() " <<  i << std::endl;
 
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
       mls( i ) = get_listMat( df, geometry_cols, start, end, sfg_type );  // this version returns a matrix
-      // TODO: can I just make the 'sfc' or 'sf' here??
     }
-    // if sfc_type > 0; attach_sfc_attributes()
+
+    //Rcpp::Rcout << "making sfc: " << sfc_type << std::endl;
     if( sfc_type > 0 ) {
       // make an sfc object from this lst
       mls = sfheaders::sfc::make_sfc( mls, sfc_type, bbox, z_range, m_range );
+    }
+
+    if( is_sf ) {
+      return sfheaders::sf::make_sf( mls, unique_ids );
     }
     // if sf > 0; attach the unique_ids
     return mls;
@@ -250,13 +264,26 @@ namespace shapes {
       bool is_sf = false
   ) {
 
+    Rcpp::NumericVector bbox;
+    Rcpp::NumericVector z_range;
+    Rcpp::NumericVector m_range;
+    if( sfc_type > 0 ) {
+      bbox = sfheaders::bbox::start_bbox();
+      z_range = sfheaders::zm::start_z_range();
+      m_range = sfheaders::zm::start_m_range();
+      sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+    }
+
+    // Rcpp::Rcout << "nm: " << std::endl;
+    // Rcpp::Rcout << "sfg_type : " << sfg_type << std::endl;
+    // Rcpp::Rcout << "sfc_type : " << sfc_type << std::endl;
+
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::line_ids( line_ids, unique_ids );
 
     size_t n_lines = unique_ids.length();
 
     Rcpp::List mls( n_lines );
-
 
     int start;
     int end;
@@ -276,6 +303,15 @@ namespace shapes {
 
       mls( i ) = get_listMat( df, geometry_cols, start, end, sfg_type );
     }
+
+    if( sfc_type > 0 ) {
+      mls = sfheaders::sfc::make_sfc( mls, sfc_type, bbox, z_range, m_range );
+    }
+
+    if( is_sf ) {
+      return sfheaders::sf::make_sf( mls, unique_ids );
+    }
+
     return mls;
   }
 
@@ -289,6 +325,7 @@ namespace shapes {
     int sfc_type = 0,
     bool is_sf = false
   ) {
+    // TODO( what if this isn't a NumericVector )?
     Rcpp::NumericVector line_ids = df[ id_col ];
     // Rcpp::Rcout << "get list mat 6 " << std::endl;
     return get_listMat( df, cols, line_ids, sfg_type, sfc_type, is_sf );
@@ -352,7 +389,6 @@ namespace shapes {
       bool is_sf = false
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    // Rcpp::Rcout << "get list mat 5 " << std::endl;
     return get_listMat( df, cols, id_col, sfg_type, sfc_type, is_sf );
   }
 

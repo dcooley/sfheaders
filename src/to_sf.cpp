@@ -1,7 +1,14 @@
-#include "sfheaders/sf/point/sf_point.hpp"
+
+
+#include "sfheaders/sf/sf.hpp"
 #include <Rcpp.h>
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sf_point( SEXP x, SEXP cols, SEXP id_col ) {
-//   return sfheaders::sf::sf_point( x, cols, id_col );
-// }
+/*
+ * rcpp_make_sf
+ *
+ * Creates an 'sf' object from an sfc, and a vector of ids
+ */
+// [[Rcpp::export]]
+SEXP rcpp_make_sf( Rcpp::List sfc, SEXP ids ) {
+  return sfheaders::sf::make_sf( sfc, ids );
+}

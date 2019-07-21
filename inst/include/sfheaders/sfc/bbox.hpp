@@ -24,6 +24,12 @@ namespace bbox {
     }
   }
 
+  inline void bbox_size_check( Rcpp::StringVector& sv ) {
+    if( sv.length() < 2 ) {
+      Rcpp::stop("sfheaders - incorrect size of bounding box");
+    }
+  }
+
   inline void bbox_size_check( Rcpp::IntegerMatrix& im ) {
     if( im.ncol() < 2 ) {
       Rcpp::stop("sfheaders - incorrect size of bounding box");
@@ -61,8 +67,27 @@ namespace bbox {
       Rcpp::NumericVector& bbox,
       Rcpp::IntegerVector& point
   ) {
+    bbox_size_check( point );
+
     Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( point );
     calculate_bbox( bbox, nv );
+  }
+
+  inline void make_bbox(
+    Rcpp::NumericVector& bbox,
+    Rcpp::NumericVector& x,
+    Rcpp::NumericVector& y
+  ) {
+    double xmin = Rcpp::min( x );
+    double ymin = Rcpp::min( y );
+    double xmax = Rcpp::max( x );
+    double ymax = Rcpp::max( y );
+
+    bbox[0] = std::min( xmin, bbox[0] );
+    bbox[2] = std::max( xmax, bbox[2] );
+
+    bbox[1] = std::min( ymin, bbox[1] );
+    bbox[3] = std::max( ymax, bbox[3] );
   }
 
   inline void calculate_bbox(
@@ -74,23 +99,11 @@ namespace bbox {
 
     Rcpp::IntegerVector x = im( Rcpp::_, 0 );
     Rcpp::IntegerVector y = im( Rcpp::_, 1 );
-    double xmin = Rcpp::min( x );
-    double ymin = Rcpp::min( y );
-    double xmax = Rcpp::max( x );
-    double ymax = Rcpp::max( y );
 
-    bbox[0] = std::min( xmin, bbox[0] );
-    bbox[2] = std::max( xmax, bbox[2] );
+    Rcpp::NumericVector nx = Rcpp::as< Rcpp::NumericVector >( x );
+    Rcpp::NumericVector ny = Rcpp::as< Rcpp::NumericVector >( y );
 
-    bbox[1] = std::min( ymin, bbox[1] );
-    bbox[3] = std::max( ymax, bbox[3] );
-
-    // size_t n_row = im.nrow();
-    // size_t i;
-    // for( i = 0; i < n_row; i++ ) {
-    //   Rcpp::IntegerVector iv = im( i, Rcpp::_ );
-    //   calculate_bbox( bbox, iv );
-    // }
+    make_bbox( bbox, nx, ny );
   }
 
   inline void calculate_bbox(
@@ -102,16 +115,8 @@ namespace bbox {
 
     Rcpp::NumericVector x = nm( Rcpp::_, 0 );
     Rcpp::NumericVector y = nm( Rcpp::_, 1 );
-    double xmin = Rcpp::min( x );
-    double ymin = Rcpp::min( y );
-    double xmax = Rcpp::max( x );
-    double ymax = Rcpp::max( y );
 
-    bbox[0] = std::min( xmin, bbox[0] );
-    bbox[2] = std::max( xmax, bbox[2] );
-
-    bbox[1] = std::min( ymin, bbox[1] );
-    bbox[3] = std::max( ymax, bbox[3] );
+    make_bbox( bbox, x, y );
 
     // size_t n_row = nm.nrow();
     // size_t i;
@@ -130,17 +135,53 @@ namespace bbox {
 
     Rcpp::NumericVector x = df[0];
     Rcpp::NumericVector y = df[1];
-    double xmin = Rcpp::min( x );
-    double ymin = Rcpp::min( y );
-    double xmax = Rcpp::max( x );
-    double ymax = Rcpp::max( y );
 
-    bbox[0] = std::min( xmin, bbox[0] );
-    bbox[2] = std::max( xmax, bbox[2] );
+    make_bbox( bbox, x, y );
 
-    bbox[1] = std::min( ymin, bbox[1] );
-    bbox[3] = std::max( ymax, bbox[3] );
+  }
 
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::NumericVector x = df[ geometry_cols[0] ];
+    Rcpp::NumericVector y = df[ geometry_cols[1] ];
+
+    make_bbox( bbox, x, y );
+  }
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::DataFrame& df,
+      Rcpp::NumericVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::NumericVector x = df[ geometry_cols[0] ];
+    Rcpp::NumericVector y = df[ geometry_cols[1] ];
+
+    make_bbox( bbox, x, y );
+  }
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::String x_col = geometry_cols[0];
+    Rcpp::String y_col = geometry_cols[1];
+    Rcpp::NumericVector x = df[ x_col ];
+    Rcpp::NumericVector y = df[ y_col ];
+
+    make_bbox( bbox, x, y );
   }
 
   inline void calculate_bbox(
@@ -186,6 +227,7 @@ namespace bbox {
     }
     }
   }
+
 
 } // bbox
 } // sfheaders

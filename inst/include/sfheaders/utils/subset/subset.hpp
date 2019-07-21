@@ -78,7 +78,6 @@ namespace utils {
     return df_subset;
   }
 
-
 } // utils
 } // sfheaderes
 

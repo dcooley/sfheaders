@@ -20,70 +20,73 @@ inline SEXP sfc_linestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  std::string geom_type = "LINESTRING";
-  std::unordered_set< std::string > geometry_types{ geom_type };
-
-  Rcpp::String epsg = NA_STRING;
-  Rcpp::String proj4string = NA_STRING;
-  int n_empty = 0;
-  double precision = 0.0;
-
-  size_t n_col = im.ncol();
-  //size_t i;
+  // std::string geom_type = "LINESTRING";
+  // std::unordered_set< std::string > geometry_types{ geom_type };
+  //
+  // Rcpp::String epsg = NA_STRING;
+  // Rcpp::String proj4string = NA_STRING;
+  // int n_empty = 0;
+  // double precision = 0.0;
+  //
+  // size_t n_col = im.ncol();
+  // //size_t i;
   Rcpp::List sfc( 1 );
-
-  // need to loop through ad get the bbox
-  sfheaders::bbox::calculate_bbox( bbox, im );
-
-  if( n_col > 2 ) {
-    sfheaders::zm::calculate_z_range( z_range, im );
-    if( n_col > 3 ) {
-      sfheaders::zm::calculate_m_range( m_range, im );
-    }
-  }
+  //
+  // // need to loop through ad get the bbox
+  // sfheaders::bbox::calculate_bbox( bbox, im );
+  //
+  // if( n_col > 2 ) {
+  //   sfheaders::zm::calculate_z_range( z_range, im );
+  //   if( n_col > 3 ) {
+  //     sfheaders::zm::calculate_m_range( m_range, im );
+  //   }
+  // }
 
   Rcpp::IntegerMatrix mp = sfheaders::sfg::sfg_linestring( im );
 
   sfc[0] = mp;
-  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
+  sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+  return sfc;
+  //return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
 }
 
 
 inline SEXP sfc_linestring(
     Rcpp::NumericMatrix& nm
 ) {
-  //
+
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
-
-  std::string geom_type = "LINESTRING";
-  std::unordered_set< std::string > geometry_types{ geom_type };
-
-  Rcpp::String epsg = NA_STRING;
-  Rcpp::String proj4string = NA_STRING;
-  int n_empty = 0;
-  double precision = 0.0;
-
-  size_t n_col = nm.ncol();
+  //
+  // std::string geom_type = "LINESTRING";
+  // std::unordered_set< std::string > geometry_types{ geom_type };
+  //
+  // Rcpp::String epsg = NA_STRING;
+  // Rcpp::String proj4string = NA_STRING;
+  // int n_empty = 0;
+  // double precision = 0.0;
+  //
+  // size_t n_col = nm.ncol();
   //size_t i;
   Rcpp::List sfc( 1 );
 
-  // need to loop through ad get the bbox
-  sfheaders::bbox::calculate_bbox( bbox, nm );
-
-  if( n_col > 2 ) {
-    sfheaders::zm::calculate_z_range( z_range, nm );
-    if( n_col > 3 ) {
-      sfheaders::zm::calculate_m_range( m_range, nm );
-    }
-  }
+  // // need to loop through ad get the bbox
+  // sfheaders::bbox::calculate_bbox( bbox, nm );
+  //
+  // if( n_col > 2 ) {
+  //   sfheaders::zm::calculate_z_range( z_range, nm );
+  //   if( n_col > 3 ) {
+  //     sfheaders::zm::calculate_m_range( m_range, nm );
+  //   }
+  // }
 
   Rcpp::NumericMatrix mp = sfheaders::sfg::sfg_linestring( nm );
 
   sfc[0] = mp;
-
-  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
+  sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+  return sfc;
+  //return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
 }
 
 
@@ -114,19 +117,19 @@ inline SEXP sfc_linestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  std::string geom_type = "LINESTRING";
-  std::unordered_set< std::string > geometry_types{ geom_type };
-
-  Rcpp::String epsg = NA_STRING;
-  Rcpp::String proj4string = NA_STRING;
-  int n_empty = 0;
-  double precision = 0.0;
+  // std::string geom_type = "LINESTRING";
+  // std::unordered_set< std::string > geometry_types{ geom_type };
+  //
+  // Rcpp::String epsg = NA_STRING;
+  // Rcpp::String proj4string = NA_STRING;
+  // int n_empty = 0;
+  // double precision = 0.0;
 
   size_t n_linestrings = sfc.size();
   size_t i;
 
   for( i = 0; i < n_linestrings; i++ ) {
-    Rcpp::Rcout << "looping sfc_linestrings() " << i << std::endl;
+    //Rcpp::Rcout << "looping sfc_linestrings() " << i << std::endl;
     SEXP this_linestring = sfc[i];
 
     // should each element only be allowed to be a matrix??
@@ -175,7 +178,9 @@ inline SEXP sfc_linestring(
     }
     // Rcpp::Rcout << "bbox: " << bbox << std::endl;
   }
-  return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
+  sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+  return sfc;
+  //return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
 
 }
 
@@ -209,24 +214,29 @@ inline SEXP sfc_linestring(
 ) {
   // TODO - how to handle bbox
   if( Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) ) {
+
     return sfc_linestring( x );
 
   } else if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) ) {
 
     // make the geometry cols all the other columns??
     return sfc_linestring( x, geometry_cols );
+
   } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
 
     SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
     sfheaders::utils::geometry_column_check( other_cols );
-    //return sfc_linestrings( x, other_cols, geometry_cols );
-    Rcpp::List mp = sfheaders::shapes::get_listMat( x, other_cols, linestring_id );
-    return sfc_linestring( mp );
+
+    return sfheaders::shapes::get_listMat(
+      x, other_cols, linestring_id, sfheaders::sfg::SFG_LINESTRING, sfheaders::sfc::SFC_LINESTRING
+      );
 
   } else {
     sfheaders::utils::geometry_column_check( geometry_cols );
     //Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
-    return sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id, sfheaders::sfg::SFG_LINESTRING, sfheaders::sfc::SFC_LINESTRING );
+    return sfheaders::shapes::get_listMat(
+      x, geometry_cols, linestring_id, sfheaders::sfg::SFG_LINESTRING, sfheaders::sfc::SFC_LINESTRING
+      );
     //return sfc_linestring( mp );
   }
 
