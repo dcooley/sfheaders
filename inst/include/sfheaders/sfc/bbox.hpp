@@ -185,6 +185,65 @@ namespace bbox {
   }
 
   inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
+    calculate_bbox( bbox, df, geometry_cols );
+  }
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::IntegerMatrix& im,
+      Rcpp::IntegerVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::IntegerVector x = im( Rcpp::_, geometry_cols[0] );
+    Rcpp::IntegerVector y = im( Rcpp::_, geometry_cols[1] );
+
+    Rcpp::NumericVector nx = Rcpp::as< Rcpp::NumericVector >( x );
+    Rcpp::NumericVector ny = Rcpp::as< Rcpp::NumericVector >( y );
+
+    make_bbox( bbox, nx, ny );
+  }
+
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
+    calculate_bbox( bbox, df, geometry_cols );
+  }
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& geometry_cols
+  ) {
+
+    bbox_size_check( geometry_cols );
+
+    Rcpp::NumericVector x = nm( Rcpp::_, geometry_cols[0] );
+    Rcpp::NumericVector y = nm( Rcpp::_, geometry_cols[1] );
+
+    Rcpp::NumericVector nx = Rcpp::as< Rcpp::NumericVector >( x );
+    Rcpp::NumericVector ny = Rcpp::as< Rcpp::NumericVector >( y );
+
+    make_bbox( bbox, nx, ny );
+  }
+
+  inline void calculate_bbox(
     Rcpp::NumericVector& bbox,
     SEXP& x
   ) {

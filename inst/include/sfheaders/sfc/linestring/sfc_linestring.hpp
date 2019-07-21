@@ -205,6 +205,88 @@ inline SEXP sfc_linestring(
   return sfc_linestring( mp );
 }
 
+
+inline SEXP sfc_linestring(
+  Rcpp::IntegerMatrix& im,
+  Rcpp::IntegerVector& geometry_cols,
+  Rcpp::IntegerVector& linestring_id
+) {
+  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+  sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
+  // sfheaders::zm::calculate_z_range( bbox, im, geometry_cols );
+  // sfheaders::zm::calculate_m_range( bbox, im, geometry_cols );
+
+}
+
+  inline SEXP sfc_linestring(
+    SEXP& x,
+    Rcpp::IntegerVector& geometry_cols,
+    Rcpp::IntegerVector& linestring_id
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return sfc_linestring( im, geometry_cols, linestring_id );
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      return sfc_linestring( iv, geometry_cols, linestring_id );
+    }
+    }
+    case REALSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return sfc_linestring( nm, geometry_cols, linestring_id );
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      return sfc_linestring( nv, geometry_cols, linestring_id );
+    }
+    }
+    case VECSXP: {
+    if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return sfc_linestring( df, geometry_cols, linestring_id );
+    }
+    }
+    }
+  }
+
+  inline SEXP sfc_linestring(
+      SEXP& x,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::StringVector& linestring_id
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return sfc_linestring( im, geometry_cols, linestring_id );
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      return sfc_linestring( iv, geometry_cols, linestring_id );
+    }
+    }
+    case REALSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return sfc_linestring( nm, geometry_cols, linestring_id );
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      return sfc_linestring( nv, geometry_cols, linestring_id );
+    }
+    }
+    case VECSXP: {
+    if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return sfc_linestring( df, geometry_cols, linestring_id );
+    }
+    }
+    }
+  }
+
 // if an 'id' col is supplied, it means we have many linestrings
 // linestring_id & point_id
 inline SEXP sfc_linestring(
@@ -227,17 +309,40 @@ inline SEXP sfc_linestring(
     SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
     sfheaders::utils::geometry_column_check( other_cols );
 
-    return sfheaders::shapes::get_listMat(
-      x, other_cols, linestring_id, sfheaders::sfg::SFG_LINESTRING, sfheaders::sfc::SFC_LINESTRING
-      );
+    //return sfheaders::shapes::get_listMat( x, other_cols, linestring_id );
+    return sfc_linestring( x, other_cols, linestring_id );
 
   } else {
+    // we have all the columns sorted, so we can now get their types, calcaulte ranges/bbox etc
     sfheaders::utils::geometry_column_check( geometry_cols );
-    //Rcpp::List mp = sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
-    return sfheaders::shapes::get_listMat(
-      x, geometry_cols, linestring_id, sfheaders::sfg::SFG_LINESTRING, sfheaders::sfc::SFC_LINESTRING
-      );
-    //return sfc_linestring( mp );
+
+    return sfheaders::shapes::get_listMat( x, geometry_cols, linestring_id );
+
+    // TODO
+    // if (TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) )
+    // switch( TYPEOF( linestring_id ) )
+    //
+    if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ) {
+      Rcpp::stop("sfheaders - linestring columns types are different");
+    }
+
+    switch( TYPEOF( geometry_cols ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector iv_geometry_cols = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
+      Rcpp::IntegerVector iv_linestring_id_col = Rcpp::as< Rcpp::IntegerVector >( linestring_id );
+      int i_linestring_id_col = iv_linestring_id_col[0];
+      return sfc_linestring( x, iv_geometry_cols, i_linestring_id_col );
+
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv_geometry_cols = Rcpp::as< Rcpp::StringVector >( geometry_cols );
+      Rcpp::StringVector sv_linestring_id_col = Rcpp::as< Rcpp::StringVector >( linestring_id );
+      Rcpp::String s_linestring_id_col = sv_linestring_id_col[0];
+      return sfc_linestring( x, sv_geometry_cols, s_linestring_id_col );
+    }
+    }
+
   }
 
   return Rcpp::List::create(); // ??
