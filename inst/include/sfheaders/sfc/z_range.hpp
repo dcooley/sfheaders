@@ -2,6 +2,7 @@
 #define R_SFHEADERS_Z_RANGE_H
 
 #include <Rcpp.h>
+#include "sfheaders/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
 namespace zm {
@@ -40,6 +41,41 @@ namespace zm {
   inline void z_range_size_check( Rcpp::DataFrame& df ) {
     if( df.ncol() < 3 ) {
       Rcpp::stop("sfheaders - incorrect size of z_range");
+    }
+  }
+
+  inline void z_range_size_check( SEXP& x ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      z_range_size_check( im );
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      z_range_size_check( iv );
+    }
+    break;
+    }
+    case REALSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      z_range_size_check( nm );
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      z_range_size_check( nv );
+    }
+    break;
+    }
+    case VECSXP: {
+    if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      z_range_size_check( df );
+      break;
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - invalid size of z_range");
+    }
     }
   }
 
@@ -185,6 +221,112 @@ namespace zm {
     default: {
       Rcpp::stop("sfheaders - can't calculate bounding box for this type");
     }
+    }
+  }
+
+  inline void calculate_z_range(
+    Rcpp::NumericVector& z_range,
+    Rcpp::IntegerMatrix& im,
+    Rcpp::IntegerVector& geometry_cols
+  ) {
+    if( geometry_cols.length() > 2 ) {
+      int idx = geometry_cols[2];
+      Rcpp::IntegerVector z = im( Rcpp::_, idx );
+      double zmin = Rcpp::min( z );
+      double zmax = Rcpp::max( z );
+
+      z_range[0] = std::min( zmin, z_range[0] );
+      z_range[1] = std::max( zmax, z_range[1] );
+    }
+  }
+
+  inline void calculate_z_range(
+      Rcpp::NumericVector& z_range,
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& geometry_cols
+  ) {
+
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
+
+    if( geometry_cols.length() > 2 ) {
+      Rcpp::String idx = geometry_cols[2];
+      std::string s_idx = idx.get_cstring();
+      Rcpp::IntegerVector z = df[ s_idx ];
+      double zmin = Rcpp::min( z );
+      double zmax = Rcpp::max( z );
+
+      z_range[0] = std::min( zmin, z_range[0] );
+      z_range[1] = std::max( zmax, z_range[1] );
+    }
+  }
+
+  inline void calculate_z_range(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& geometry_cols
+  ) {
+    if( geometry_cols.length() > 2 ) {
+      int idx = geometry_cols[2];
+      Rcpp::NumericVector z = nm( Rcpp::_, idx );
+      double zmin = Rcpp::min( z );
+      double zmax = Rcpp::max( z );
+
+      z_range[0] = std::min( zmin, z_range[0] );
+      z_range[1] = std::max( zmax, z_range[1] );
+    }
+  }
+
+  inline void calculate_z_range(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& geometry_cols
+  ) {
+
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
+
+    if( geometry_cols.length() > 2 ) {
+      Rcpp::String idx = geometry_cols[2];
+      std::string s_idx = idx.get_cstring();
+      Rcpp::IntegerVector z = df[ s_idx ];
+      double zmin = Rcpp::min( z );
+      double zmax = Rcpp::max( z );
+
+      z_range[0] = std::min( zmin, z_range[0] );
+      z_range[1] = std::max( zmax, z_range[1] );
+    }
+  }
+
+  inline void calculate_z_range(
+      Rcpp::NumericVector& z_range,
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols
+  ) {
+    if( geometry_cols.length() > 3 ) {
+      int idx = geometry_cols[3];
+      Rcpp::NumericVector z = df[ idx ];
+      double zmin = Rcpp::min( z );
+      double zmax = Rcpp::max( z );
+
+      z_range[0] = std::min( zmin, z_range[0] );
+      z_range[1] = std::max( zmax, z_range[1] );
+    }
+  }
+
+  inline void calculate_z_range(
+      Rcpp::NumericVector& z_range,
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& geometry_cols
+  ) {
+
+    if( geometry_cols.length() > 3 ) {
+      Rcpp::String idx = geometry_cols[3];
+      std::string s_idx = idx.get_cstring();
+      Rcpp::IntegerVector z = df[ s_idx ];
+      double zmin = Rcpp::min( z );
+      double zmax = Rcpp::max( z );
+
+      z_range[0] = std::min( zmin, z_range[0] );
+      z_range[1] = std::max( zmax, z_range[1] );
     }
   }
 

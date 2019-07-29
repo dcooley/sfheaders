@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
-
+//#include "sfheaders/sfg/sfg_types.hpp"
 /*
  * get_mat
  *

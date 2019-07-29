@@ -7,7 +7,7 @@
 #include "sfheaders/sfc/z_range.hpp"
 #include "sfheaders/sfc/m_range.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
-#include "sfheaders/sfc/sfc_types.hpp"
+//#include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfg/sfg_attributes.hpp"
 
 #include "sfheaders/utils/utils.hpp"
@@ -105,7 +105,6 @@ namespace shapes {
     Rcpp::Range rows = Rcpp::Range( start, end );
     Rcpp::Range cols = Rcpp::Range( geometry_cols[0], geometry_cols[ ( n_col - 1 ) ] );
     Rcpp::NumericMatrix a_line = nm( rows, cols );
-
     return a_line;
   }
 
@@ -355,7 +354,7 @@ namespace shapes {
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       // Rcpp::Rcout << "get list mat 4 " << std::endl;
-      return get_listMat( nm, cols, id_col);
+      return get_listMat( nm, cols, id_col );
     }
     }
     case VECSXP: {
