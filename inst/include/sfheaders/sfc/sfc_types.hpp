@@ -19,7 +19,7 @@ namespace sfc {
   inline std::string get_sfc_type( int sfc_type ) {
     switch( sfc_type ) {
     case SFC_POINT: { return "POINT"; }
-    case SFC_MULTIPOINT: { return "MULTIPOING"; }
+    case SFC_MULTIPOINT: { return "MULTIPOINT"; }
     case SFC_LINESTRING: { return "LINESTRING"; }
     case SFC_MULTILINESTRING: { return "MULTILINESTRING"; }
     case SFC_POLYGON: { return "POLYGON"; }

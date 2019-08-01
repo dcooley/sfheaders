@@ -3,7 +3,7 @@ context( "sfc_multipoints " )
 test_that("various objects converted to sfc_MULTIPOINT objects",{
 
   m <- matrix()
-  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL ), "sfheaders - lines need to be matrices or data.frames")
+  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL ), "sfheaders - unsupported multipoint type")
 
   m <- matrix(c(0,0), ncol = 2)
   res <- sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL )
@@ -55,3 +55,84 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
 })
+
+test_that("after refactoring issue14 I haven't lost anything",{
+
+  is_multipoint <- function(x) {
+    y <- sapply( x, function(y) is.matrix(unclass(y)))
+    z <- sapply( x, function(y) attr( y, "class")[2] == "MULTIPOINT")
+    return( all(y) & all(z))
+  }
+
+  v <- 1:3
+  res <- sfheaders:::rcpp_sfc_multipoint(v, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_multipoint(m, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0,1), NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(df, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(df, c(0,1), NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(df, c("V1","V2"), NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_multipoint(m, NULL, 2)
+  expect_true( is_multipoint( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0,1), 2)
+  expect_true( is_multipoint( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(df, NULL, 2)
+  expect_true( is_multipoint( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(df, c(0,1), 2)
+  expect_true( is_multipoint( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(df, c("V1","V2"), c("V3"))
+  expect_true( is_multipoint( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(1:4, ncol = 2)
+  expect_error( sfheaders:::rcpp_sfc_multipoint(m, NULL, 0), "sfheaders - incorrect number of geometry columns")
+
+
+})
+
