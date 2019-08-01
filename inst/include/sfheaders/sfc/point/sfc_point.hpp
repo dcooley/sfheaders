@@ -5,8 +5,7 @@
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/point/sfg_point.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/z_range.hpp"
-#include "sfheaders/sfc/m_range.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
 
 namespace sfheaders {
 namespace sfc {

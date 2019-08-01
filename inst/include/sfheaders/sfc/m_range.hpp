@@ -199,7 +199,7 @@ namespace zm {
     }
   }
 
-  inline void calculate_mm_range(
+  inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& geometry_cols
