@@ -38,4 +38,16 @@ SEXP rcpp_concatenate_vectors(
   return sfheaders::utils::concatenate_vectors( vec_1, vec_2 );
 }
 
+/*
+ * Given a matrix with names, and columns, returns the integer-index
+ * of those columsn
+ */
+// [[Rcpp::export]]
+Rcpp::IntegerVector rcpp_column_positions(
+  SEXP m,
+  Rcpp::StringVector cols
+) {
+  return sfheaders::utils::column_positions( m, cols );
+}
+
 

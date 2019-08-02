@@ -8,7 +8,26 @@
 namespace sfheaders{
 namespace utils {
 
-  template <int RTYPE>
+  template < int RTYPE >
+  inline Rcpp::StringVector sexp_col_names( Rcpp::Matrix < RTYPE > m ) {
+    return colnames( m );
+  }
+
+  inline Rcpp::StringVector get_sexp_col_names( SEXP m ) {
+    switch( TYPEOF( m ) ) {
+    case INTSXP: {
+      return sexp_col_names< INTSXP >( m );
+    }
+    case REALSXP: {
+      return sexp_col_names< REALSXP >( m );
+    }
+    default: {
+      Rcpp::stop("sfheaders - expecting a matrix when trying to get colnames");
+    }
+    }
+  }
+
+  template < int RTYPE >
   inline size_t sexp_n_col( Rcpp::Matrix < RTYPE > v ) {
     return v.ncol();
   }

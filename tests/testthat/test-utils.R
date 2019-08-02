@@ -130,3 +130,26 @@ test_that("concatenate_vectors works",{
 
 })
 
+
+test_that("column positions returned",{
+
+  df <- data.frame(
+    a = 1:3
+    , b = 4:6
+  )
+  m <- as.matrix( df )
+  expect_equal( sfheaders:::rcpp_column_positions( m, c("a") ), c(0) )
+  expect_equal( sfheaders:::rcpp_column_positions( m, c("a","b") ), c(0,1) )
+
+  df <- data.frame(
+    a = 1.3
+    , b = 4.6
+  )
+  m <- as.matrix( df )
+  expect_equal( sfheaders:::rcpp_column_positions( m, c("a") ), c(0) )
+  expect_equal( sfheaders:::rcpp_column_positions( m, c("a","b") ), c(0,1) )
+
+})
+
+
+

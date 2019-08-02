@@ -342,6 +342,62 @@ namespace utils {
 
     }
 
+  inline SEXP column_positions(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& cols
+  ) {
+
+    Rcpp::StringVector m_names = sfheaders::utils::get_sexp_col_names( nm );
+    size_t n_col = cols.size();
+
+    Rcpp::IntegerVector iv( n_col );
+    size_t i;
+    for( i = 0; i < n_col; i++ ) {
+      Rcpp::String this_col = cols[i];
+      iv[ i ] = sfheaders::utils::where_is( this_col, m_names );
+    }
+    return iv;
+  }
+
+  inline SEXP column_positions(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& cols
+  ) {
+
+    Rcpp::StringVector m_names = sfheaders::utils::get_sexp_col_names( im );
+    size_t n_col = cols.size();
+
+    Rcpp::IntegerVector iv( n_col );
+    size_t i;
+    for( i = 0; i < n_col; i++ ) {
+      Rcpp::String this_col = cols[i];
+      iv[ i ] = sfheaders::utils::where_is( this_col, m_names );
+    }
+    return iv;
+  }
+
+  inline SEXP column_positions(
+    SEXP& x,
+    Rcpp::StringVector& cols
+  ) {
+
+    if( !Rf_isMatrix( x ) ) {
+      Rcpp::stop("sfheaders - expecting matrix when finding column positions");
+    }
+
+    Rcpp::StringVector m_names = sfheaders::utils::get_sexp_col_names( x );
+    size_t n_col = cols.size();
+
+    Rcpp::IntegerVector iv( n_col );
+    size_t i;
+    for( i = 0; i < n_col; i++ ) {
+      Rcpp::String this_col = cols[i];
+      iv[ i ] = sfheaders::utils::where_is( this_col, m_names );
+    }
+    return iv;
+  }
+
+
 } // utils
 } // sfheaders
 

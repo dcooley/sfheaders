@@ -2,6 +2,7 @@
 #define R_SFHEADERS_SFC_POINT_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/point/sfg_point.hpp"
 #include "sfheaders/sfc/bbox.hpp"
@@ -14,44 +15,28 @@ namespace sfc {
     Rcpp::IntegerMatrix& im
   ) {
 
-    // given an 'sfg', attach sfc attributes
-    // (if im.attr("class") != "sfg", attach it)
-
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
-
-    std::string geom_type = "POINT";
-    std::unordered_set< std::string > geometry_types{ geom_type };
-
-    Rcpp::String epsg = NA_STRING;
-    Rcpp::String proj4string = NA_STRING;
-    int n_empty = 0;
-    double precision = 0.0;
 
     // matrix; iterate through each row, get bbox, create sfg of each point
     // then an sfc of all other points
     size_t n_row = im.nrow();
     size_t n_col = im.ncol();
-    size_t i;
-    Rcpp::List sfc( n_row );
 
     sfheaders::bbox::calculate_bbox( bbox, im );
-    if( n_col > 2 ) {
-      sfheaders::zm::calculate_z_range( z_range, im );
-      if( n_col > 3 ) {
-        sfheaders::zm::calculate_m_range( m_range, im );
-      }
-    }
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im );
 
-    //Rcpp::Rcout << "z_range: " << z_range << std::endl;
+    size_t i;
+    Rcpp::List sfc( n_row );
 
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
     }
 
-    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    return sfc;
   }
 
   inline SEXP sfc_point(
@@ -67,39 +52,28 @@ namespace sfc {
   inline SEXP sfc_point(
       Rcpp::NumericMatrix& nm
   ) {
-
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    std::string geom_type = "POINT";
-    std::unordered_set< std::string > geometry_types{ geom_type };
-
-    Rcpp::String epsg = NA_STRING;
-    Rcpp::String proj4string = NA_STRING;
-    int n_empty = 0;
-    double precision = 0.0;
-
+    // matrix; iterate through each row, get bbox, create sfg of each point
+    // then an sfc of all other points
     size_t n_row = nm.nrow();
     size_t n_col = nm.ncol();
-    size_t i;
-    Rcpp::List sfc( n_row );
 
     sfheaders::bbox::calculate_bbox( bbox, nm );
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm );
 
-    if( n_col > 2 ) {
-      sfheaders::zm::calculate_z_range( z_range, nm );
-      if( n_col > 3 ) {
-        sfheaders::zm::calculate_m_range( m_range, nm );
-      }
-    }
+    size_t i;
+    Rcpp::List sfc( n_row );
 
     for( i = 0; i < n_row; i++ ) {
       Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
     }
 
-    return sfheaders::sfc::create_sfc( sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision );
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    return sfc;
   }
 
   inline SEXP sfc_point(
@@ -116,16 +90,68 @@ namespace sfc {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
-    return sfc_point( im2 );
+
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+    // matrix; iterate through each row, get bbox, create sfg of each point
+    // then an sfc of all other points
+    size_t n_row = im.nrow();
+    size_t n_col = im.ncol();
+    size_t i;
+
+    sfheaders::bbox::calculate_bbox( bbox, im, cols );
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, cols );
+
+    Rcpp::List sfc(1);
+    for( i = 0; i < n_row; i++ ) {
+      Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+    }
+
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    return sfc;
   }
 
   inline SEXP sfc_point(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
-    return sfc_point( im2 );
+
+
+
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+    // matrix; iterate through each row, get bbox, create sfg of each point
+    // then an sfc of all other points
+    size_t n_row = im.nrow();
+    size_t n_col = im.ncol();
+    size_t i;
+
+    Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( im, cols );
+    Rcpp::IntegerMatrix im2( n_row, cols.size() );
+
+    // make a new matrix, just of the required columns/
+    // that way, they'll be in order too
+    for( i = 0; i < cols.size(); i++ ) {
+      im2( Rcpp::_, i ) = im( Rcpp::_, column_positions[i] );
+    }
+
+    sfheaders::bbox::calculate_bbox( bbox, im2 );
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im2 );
+
+    Rcpp::List sfc(1);
+
+    for( i = 0; i < n_row; i++ ) {
+      Rcpp::IntegerVector this_point = im2( i, Rcpp::_ );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+    }
+
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    return sfc;
   }
 
   inline SEXP sfc_point(

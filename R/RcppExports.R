@@ -153,3 +153,7 @@ rcpp_concatenate_vectors <- function(vec_1, vec_2) {
     .Call(`_sfheaders_rcpp_concatenate_vectors`, vec_1, vec_2)
 }
 
+rcpp_column_positions <- function(m, cols) {
+    .Call(`_sfheaders_rcpp_column_positions`, m, cols)
+}
+
