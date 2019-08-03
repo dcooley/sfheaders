@@ -95,8 +95,6 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    // matrix; iterate through each row, get bbox, create sfg of each point
-    // then an sfc of all other points
     size_t n_row = im.nrow();
     size_t n_col = im.ncol();
     size_t i;
@@ -104,7 +102,7 @@ namespace sfc {
     sfheaders::bbox::calculate_bbox( bbox, im, cols );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, cols );
 
-    Rcpp::List sfc(1);
+    Rcpp::List sfc(n_row);
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
@@ -119,35 +117,24 @@ namespace sfc {
       Rcpp::StringVector& cols
   ) {
 
-
-
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    // matrix; iterate through each row, get bbox, create sfg of each point
-    // then an sfc of all other points
+    Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( im, cols );
+
+    size_t i;
     size_t n_row = im.nrow();
     size_t n_col = im.ncol();
-    size_t i;
 
-    Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( im, cols );
-    Rcpp::IntegerMatrix im2( n_row, cols.size() );
+    sfheaders::bbox::calculate_bbox( bbox, im );
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im );
 
-    // make a new matrix, just of the required columns/
-    // that way, they'll be in order too
-    for( i = 0; i < cols.size(); i++ ) {
-      im2( Rcpp::_, i ) = im( Rcpp::_, column_positions[i] );
-    }
-
-    sfheaders::bbox::calculate_bbox( bbox, im2 );
-    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im2 );
-
-    Rcpp::List sfc(1);
+    Rcpp::List sfc(n_row);
 
     for( i = 0; i < n_row; i++ ) {
-      Rcpp::IntegerVector this_point = im2( i, Rcpp::_ );
-      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+      Rcpp::IntegerMatrix this_point = sfheaders::utils::matrix_row_to_matrix( im, i );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
@@ -158,25 +145,63 @@ namespace sfc {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
-    return sfc_point( nm2 );
+
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+    size_t n_row = nm.nrow();
+    size_t n_col = nm.ncol();
+    size_t i;
+
+    sfheaders::bbox::calculate_bbox( bbox, nm, cols );
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, cols );
+
+    Rcpp::List sfc( n_row );
+    for( i = 0; i < n_row; i++ ) {
+      Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+    }
+
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    return sfc;
   }
 
   inline SEXP sfc_point(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
-    return sfc_point( nm2 );
+
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+    Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( nm, cols );
+
+    size_t i;
+    size_t n_row = nm.nrow();
+    size_t n_col = nm.ncol();
+
+    sfheaders::bbox::calculate_bbox( bbox, nm );
+    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm );
+
+    Rcpp::List sfc(n_row);
+
+    for( i = 0; i < n_row; i++ ) {
+      Rcpp::NumericMatrix this_point = sfheaders::utils::matrix_row_to_matrix( nm, i );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions );
+    }
+
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    return sfc;
   }
 
   // expects only lon/lat/z/m columns in correct order
   inline SEXP sfc_point(
       Rcpp::DataFrame& df
   ) {
-    // expecting single-row data.frame
-    Rcpp::NumericMatrix nv = sfheaders::shapes::get_mat( df );
-    return sfc_point( nv );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    return sfc_point( nm );
   }
 
   inline SEXP sfc_point(
@@ -184,16 +209,16 @@ namespace sfc {
       Rcpp::IntegerVector& cols
   ) {
     //Rcpp::NumericMatrix nm = sfheaders::utils::df_sfc_matrix( df );
-    Rcpp::NumericMatrix nv = sfheaders::shapes::get_mat( df, cols );
-    return sfc_point( nv );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    return sfc_point( nm, cols );
   }
 
   inline SEXP sfc_point(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nv = sfheaders::shapes::get_mat( df, cols );
-    return sfc_point( nv );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    return sfc_point( nm, cols );
   }
 
   inline SEXP sfc_point(
@@ -268,8 +293,38 @@ namespace sfc {
   ) {
     // with string columns it must be a data.frame(?)
 
-    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfc_point( df, cols );
+    //Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return sfc_point( im, cols );
+    // } else {
+    //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+    //   return sfc_point( iv, cols );
+    }
+    }
+    case REALSXP: {
+    if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return sfc_point( nm, cols );
+    // } else {
+    //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+    //   return sfc_point( nv, cols );
+    }
+    }
+    case VECSXP: {
+    if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return sfc_point( df, cols );
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported sfc_POINT type");
+    }
+    }
+    return Rcpp::List::create();
+    //return sfc_point( df, cols );
   }
 
 

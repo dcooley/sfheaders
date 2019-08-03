@@ -51,32 +51,32 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_vec( im, cols );
-    return sfg_point( im2 );
+    Rcpp::IntegerVector iv = sfheaders::shapes::get_vec( im, cols );
+    return sfg_point( iv );
   }
 
   inline SEXP sfg_point(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_vec( im, cols );
-    return sfg_point( im2 );
+    Rcpp::IntegerVector iv = sfheaders::shapes::get_vec( im, cols );
+    return sfg_point( iv );
   }
 
   inline SEXP sfg_point(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_vec( nm, cols );
-    return sfg_point( nm2 );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_vec( nm, cols );
+    return sfg_point( nv );
   }
 
   inline SEXP sfg_point(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_vec( nm, cols );
-    return sfg_point( nm2 );
+    Rcpp::NumericVector nv = sfheaders::shapes::get_vec( nm, cols );
+    return sfg_point( nv );
   }
 
   // expects only lon/lat/z/m columns in correct order
