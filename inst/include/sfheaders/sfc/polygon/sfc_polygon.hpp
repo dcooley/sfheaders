@@ -379,7 +379,7 @@ inline SEXP sfc_polygon(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported linestring type");
+    Rcpp::stop("sfheaders - unsupported polygon type");
   }
   }
   return Rcpp::List::create();
@@ -416,7 +416,7 @@ inline SEXP sfc_polygon(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported linestring type");
+    Rcpp::stop("sfheaders - unsupported polygon type");
   }
   }
   return Rcpp::List::create();
@@ -491,26 +491,85 @@ inline SEXP sfc_polygon(
     start = polygon_positions( i, 0 );
     end = polygon_positions( i, 1 );
     Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
-    //Rcpp::List p = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id );
-    // p will be a list of matrices, each matrix being a 'line' of a polygon
     sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id );
   }
 
+  sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
+  return sfc;
+}
 
-  // if( n_lines == 1 ) {
-  //   sfc( 0 ) = sfheaders::sfg::sfg_linestring( df, geometry_cols );
-  // } else {
-  //
-  //   size_t i;
-  //   for( i = 0; i < n_lines; i++ ) {
-  //
-  //     start = line_positions(i, 0);
-  //     end = line_positions(i, 1);
-  //
-  //     Rcpp::NumericMatrix m = sfheaders::shapes::get_listMat( df, geometry_cols, start, end );  // returns a matrix
-  //     sfc( i ) = sfheaders::sfg::sfg_linestring( m );
-  //   }
-  // }
+inline SEXP sfc_polygon(
+    Rcpp::DataFrame& df,
+    Rcpp::StringVector& geometry_cols,
+    Rcpp::NumericVector& polygon_ids,
+    Rcpp::String& linestring_id
+) {
+  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+  sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+
+  size_t n_col = df.ncol();
+  sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
+
+  Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
+  Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+
+  size_t n_polygons = unique_polygon_ids.length();
+  size_t i;
+  Rcpp::List sfc( n_polygons );
+
+  int start;
+  int end;
+  Rcpp::StringVector df_names = df.names();
+
+  for( i = 0; i < n_polygons; i++ ) {
+    start = polygon_positions( i, 0 );
+    end = polygon_positions( i, 1 );
+    Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
+    sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id );
+  }
+
+  sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
+  return sfc;
+}
+
+inline SEXP sfc_polygon(
+    Rcpp::IntegerMatrix& im,
+    Rcpp::IntegerVector& geometry_cols,
+    Rcpp::IntegerVector& polygon_ids,
+    int& linestring_id
+) {
+  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+  sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
+
+  size_t n_col = im.ncol();
+  sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
+
+  Rcpp::IntegerVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
+  Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+
+  size_t n_polygons = unique_polygon_ids.length();
+  size_t i;
+  Rcpp::List sfc( n_polygons );
+
+  int start;
+  int end;
+  //Rcpp::StringVector df_names = df.names();
+
+  for( i = 0; i < n_polygons; i++ ) {
+    start = polygon_positions( i, 0 );
+    end = polygon_positions( i, 1 );
+    // subset the matrix based on start & end rows
+    // TODO: test the range is inclusive / exclusive etc.
+    Rcpp::IntegerMatrix im2 = im( Rcpp::Range(start, end), Rcpp::_ );
+    //Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
+    sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id );
+  }
 
   sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
   return sfc;
@@ -562,16 +621,16 @@ inline SEXP sfc_polygon(
   //   return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
   // }
   //
-  // inline SEXP sfc_polygon(
-  //     Rcpp::DataFrame& df,
-  //     Rcpp::StringVector& geometry_cols,
-  //     Rcpp::String& polygon_id,
-  //     Rcpp::String& linestring_id
-  // ) {
-  //   Rcpp::NumericVector polygon_ids = df[ polygon_id ];
-  //   //Rcpp::NumericVector line_ids = df[ linestring_id ];
-  //   return sfc_polygon( df, geometry_cols, polygon_id, linestring_id );
-  // }
+  inline SEXP sfc_polygon(
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& polygon_id,
+      Rcpp::String& linestring_id
+  ) {
+    Rcpp::NumericVector polygon_ids = df[ polygon_id ];
+    //Rcpp::NumericVector line_ids = df[ linestring_id ];
+    return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
+  }
 
   inline SEXP sfc_polygon(
       Rcpp::DataFrame& df,
@@ -617,7 +676,7 @@ inline SEXP sfc_polygon(
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported polygon type");
     }
     }
 
@@ -653,7 +712,7 @@ inline SEXP sfc_polygon(
   case VECSXP: {
     if( Rf_inherits( x, "data.frame" ) ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    //return sfc_polygon( df, geometry_cols, polygon_id, linestring_id );
+    return sfc_polygon( df, geometry_cols, polygon_id, linestring_id );
   }
   }
   default: {
@@ -762,10 +821,10 @@ inline SEXP sfc_polygon(
         Rcpp::StringVector sv_linestring_id_col = Rcpp::as< Rcpp::StringVector >( linestring_id );
         Rcpp::String s_polygon_id_col = sv_polygon_id_col[0];
         Rcpp::String s_linestring_id_col = sv_linestring_id_col[0];
-        //return sfc_polygon( x, sv_geometry_cols, s_polygon_id_col, s_linestring_id_col );
+        return sfc_polygon( x, sv_geometry_cols, s_polygon_id_col, s_linestring_id_col );
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported linestring type");
+        Rcpp::stop("sfheaders - unsupported polygon type");
       }
       }
     }
