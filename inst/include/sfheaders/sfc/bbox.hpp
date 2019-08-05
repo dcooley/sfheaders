@@ -247,11 +247,6 @@ namespace bbox {
     Rcpp::NumericVector& bbox,
     SEXP& x
   ) {
-    // integervector
-    // numericvector
-    // integermatrix
-    // numericmatrix
-    // dataframe
     // assumes 2-column?, and in correct order?
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -280,6 +275,113 @@ namespace bbox {
       calculate_bbox( bbox, df );
       break;
     } // else default
+    }
+    default: {
+      Rcpp::stop("sfheaders - can't calculate bounding box for this type");
+    }
+    }
+  }
+
+  inline void calculate_bbox(
+    Rcpp::NumericVector& bbox,
+    SEXP& x,
+    Rcpp::IntegerVector& geometry_cols
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      calculate_bbox( bbox, im, geometry_cols );
+      break;
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      calculate_bbox( bbox, iv );
+      break;
+    }
+    }
+    case REALSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      calculate_bbox( bbox, nm, geometry_cols );
+      break;
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      calculate_bbox( bbox, nv );
+      break;
+    }
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      calculate_bbox( bbox, df, geometry_cols );
+      break;
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported type for bbox");
+    }
+    }
+  }
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      SEXP& x,
+      Rcpp::StringVector& geometry_cols
+  ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      calculate_bbox( bbox, im, geometry_cols );
+      break;
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      calculate_bbox( bbox, iv );
+      break;
+    }
+    }
+    case REALSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      calculate_bbox( bbox, nm, geometry_cols );
+      break;
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      calculate_bbox( bbox, nv );
+      break;
+    }
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      calculate_bbox( bbox, df, geometry_cols );
+      break;
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported type for bbox");
+    }
+    }
+  }
+
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
+      SEXP& x,
+      SEXP& geometry_cols
+  ) {
+    // assumes 2-column?, and in correct order?
+    switch( TYPEOF( geometry_cols ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector iv_geometry_cols = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
+      calculate_bbox( bbox, x, iv_geometry_cols );
+      break;
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv_geometry_cols = Rcpp::as< Rcpp::StringVector >( geometry_cols );
+      calculate_bbox( bbox, x, sv_geometry_cols );
+      break;
     }
     default: {
       Rcpp::stop("sfheaders - can't calculate bounding box for this type");

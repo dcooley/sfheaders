@@ -6,8 +6,7 @@
 #include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfg/polygon/sfg_polygon.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/z_range.hpp"
-#include "sfheaders/sfc/m_range.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -559,68 +558,74 @@ inline SEXP sfc_polygon(
 
   int start;
   int end;
-  //Rcpp::StringVector df_names = df.names();
 
   for( i = 0; i < n_polygons; i++ ) {
     start = polygon_positions( i, 0 );
     end = polygon_positions( i, 1 );
-    // subset the matrix based on start & end rows
-    // TODO: test the range is inclusive / exclusive etc.
     Rcpp::IntegerMatrix im2 = im( Rcpp::Range(start, end), Rcpp::_ );
-    //Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
-    sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id );
+    sfc( i ) = sfheaders::sfg::sfg_polygon( im2, geometry_cols, linestring_id );
   }
 
   sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
   return sfc;
 }
 
-  // inline SEXP sfc_polygon(
-  //     Rcpp::IntegerMatrix& im,
-  //     Rcpp::IntegerVector& geometry_cols,
-  //     int& polygon_id,
-  //     int& linestring_id
-  // ) {
-  //   Rcpp::IntegerVector polygon_ids = im( Rcpp::_, polygon_id );
-  //   //Rcpp::IntegerVector line_ids = im( Rcpp::_, linestring_id );
-  //   return sfc_polygon( im, geometry_cols, polygon_ids, linestring_id );
-  // }
-  //
-  // inline SEXP sfc_polygon(
-  //     Rcpp::NumericMatrix& nm,
-  //     Rcpp::IntegerVector& geometry_cols,
-  //     int& polygon_id,
-  //     int& linestring_id
-  // ) {
-  //   Rcpp::NumericVector polygon_ids = nm( Rcpp::_, polygon_id );
-  //   //Rcpp::NumericVector line_ids = nm( Rcpp::_, linestring_id );
-  //   return sfc_polygon( nm, geometry_cols, polygon_ids, linestring_id );
-  // }
-  //
-  // inline SEXP sfc_polygon(
-  //     Rcpp::IntegerMatrix& im,
-  //     Rcpp::StringVector& geometry_cols,
-  //     Rcpp::String& polygon_id,
-  //     Rcpp::String& linestring_id
-  // ) {
-  //   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-  //   Rcpp::NumericVector polygon_ids = df[ polygon_id ];
-  //   //Rcpp::NumericVector line_ids = df[ linestring_id ];
-  //   return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
-  // }
-  //
-  // inline SEXP sfc_polygon(
-  //     Rcpp::NumericMatrix& nm,
-  //     Rcpp::StringVector& geometry_cols,
-  //     Rcpp::String& polygon_id,
-  //     Rcpp::String& linestring_id
-  // ) {
-  //   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-  //   Rcpp::NumericVector polygon_ids = df[ polygon_id ];
-  //   //Rcpp::NumericVector line_ids = df[ linestring_id ];
-  //   return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
-  // }
-  //
+inline SEXP sfc_polygon(
+    Rcpp::NumericMatrix& nm,
+    Rcpp::IntegerVector& geometry_cols,
+    Rcpp::NumericVector& polygon_ids,
+    int& linestring_id
+) {
+  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+  sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
+
+  size_t n_col = nm.ncol();
+  sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
+
+  Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
+  Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+
+  size_t n_polygons = unique_polygon_ids.length();
+  size_t i;
+  Rcpp::List sfc( n_polygons );
+
+  int start;
+  int end;
+
+  for( i = 0; i < n_polygons; i++ ) {
+    start = polygon_positions( i, 0 );
+    end = polygon_positions( i, 1 );
+    Rcpp::NumericMatrix nm2 = nm( Rcpp::Range(start, end), Rcpp::_ );
+    sfc( i ) = sfheaders::sfg::sfg_polygon( nm2, geometry_cols, linestring_id );
+  }
+
+  sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
+  return sfc;
+}
+
+  inline SEXP sfc_polygon(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::IntegerVector& geometry_cols,
+      int& polygon_id,
+      int& linestring_id
+  ) {
+    Rcpp::IntegerVector polygon_ids = im( Rcpp::_, polygon_id );
+    return sfc_polygon( im, geometry_cols, polygon_ids, linestring_id );
+  }
+
+  inline SEXP sfc_polygon(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::IntegerVector& geometry_cols,
+      int& polygon_id,
+      int& linestring_id
+  ) {
+    Rcpp::NumericVector polygon_ids = nm( Rcpp::_, polygon_id );
+    return sfc_polygon( nm, geometry_cols, polygon_ids, linestring_id );
+  }
+
   inline SEXP sfc_polygon(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
@@ -628,7 +633,6 @@ inline SEXP sfc_polygon(
       Rcpp::String& linestring_id
   ) {
     Rcpp::NumericVector polygon_ids = df[ polygon_id ];
-    //Rcpp::NumericVector line_ids = df[ linestring_id ];
     return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
   }
 
@@ -639,10 +643,28 @@ inline SEXP sfc_polygon(
       int& linestring_id
   ) {
     Rcpp::NumericVector polygon_ids = df[ polygon_id ];
-    //Rcpp::NumericVector line_ids = df[ linestring_id ];
     return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
   }
 
+  inline SEXP sfc_polygon(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& polygon_id,
+      Rcpp::String& linestring_id
+  ) {
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
+    return sfc_polygon( df, geometry_cols, polygon_id, linestring_id );
+  }
+
+  inline SEXP sfc_polygon(
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& polygon_id,
+      Rcpp::String& linestring_id
+  ) {
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
+    return sfc_polygon( df, geometry_cols, polygon_id, linestring_id );
+  }
 
   inline SEXP sfc_polygon(
       SEXP& x,
@@ -654,7 +676,7 @@ inline SEXP sfc_polygon(
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      //return sfc_polygon( im, geometry_cols, polygon_id, linestring_id );
+      return sfc_polygon( im, geometry_cols, polygon_id, linestring_id );
       // } else {
       // Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
       // return sfc_polygon( iv, geometry_cols, linestring_id );
@@ -663,7 +685,7 @@ inline SEXP sfc_polygon(
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      //return sfc_polygon( nm, geometry_cols, polygon_id, linestring_id );
+      return sfc_polygon( nm, geometry_cols, polygon_id, linestring_id );
       // } else {
       //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
       //   return sfc_linestring( nv, geometry_cols, linestring_id );
@@ -679,9 +701,7 @@ inline SEXP sfc_polygon(
       Rcpp::stop("sfheaders - unsupported polygon type");
     }
     }
-
     return Rcpp::List::create();
-
   }
 
 inline SEXP sfc_polygon(
@@ -694,7 +714,7 @@ inline SEXP sfc_polygon(
   case INTSXP: {
     if( Rf_isMatrix( x ) ) {
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-    //return sfc_polygon( im, geometry_cols, polygon_id, linestring_id );
+    return sfc_polygon( im, geometry_cols, polygon_id, linestring_id );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
     //   return sfc_polygon( iv, geometry_cols, linestring_id );
@@ -703,7 +723,7 @@ inline SEXP sfc_polygon(
   case REALSXP: {
     if( Rf_isMatrix( x ) ) {
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-    //return sfc_polygon( nm, geometry_cols, polygon_id, linestring_id );
+    return sfc_polygon( nm, geometry_cols, polygon_id, linestring_id );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
     //   return sfc_polygon( nv, geometry_cols, linestring_id );
@@ -739,64 +759,84 @@ inline SEXP sfc_polygon(
     // // JUST polygon_id == each polygon is just one line
     // // JSUT linestring_id == they are all the same polygon_id
     //
-    // if ( ( Rf_isNull( geometry_cols ) &&  Rf_isNull( polygon_id ) && !Rf_isNull( linestring_id ) ) ) {
-    //   // linestring is provided
-    //   // so they are all the same MULTILINESTRING
-    //
-    //   SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
-    //
-    //   Rcpp::List lst(1);
-    //   lst[0] = sfheaders::shapes::get_listMat( x, other_cols, linestring_id );
-    //   return sfc_polygon( lst );
-    // }
-    //
-    // if ( ( Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && Rf_isNull( linestring_id ) ) ) {
-    //   // polygon is provided, so there is only one line per multiline
-    //   SEXP other_cols = sfheaders::utils::other_columns( x, polygon_id );
-    //
-    //   //Rcpp::stop("not working yet");
-    //   Rcpp::List lst = sfheaders::shapes::get_listMat( x, other_cols, polygon_id );
-    //
-    //   // each list element needs to be nested one level deeper
-    //   size_t n = lst.size();
-    //   Rcpp::List mls( n );
-    //   size_t i;
-    //   for( i = 0; i < n; i++ ) {
-    //     Rcpp::List l(1);
-    //     l[0] = lst[i];
-    //     mls[i] = l;
-    //   }
-    //   return sfc_polygon( mls );
-    // }
-    //
-    // if( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) && !Rf_isNull( polygon_id ) ) {
-    //   SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id, polygon_id );
-    //
-    //   return sfc_polygon( x, other_cols, polygon_id, linestring_id );
-    // }
-    //
+    if ( ( Rf_isNull( geometry_cols ) && Rf_isNull( polygon_id ) && !Rf_isNull( linestring_id ) ) ) {
+      // linestring is provided
+      // so they are all the same POLYGON
+      SEXP geometry_cols2 = sfheaders::utils::other_columns( x, linestring_id );
+
+      // whatever x is, the linestring_id col is the ids of lines
+      // all the other columns are geometry columns
+      // so we have a matrix / data.frame, which will all become one polygon
+      Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+      Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+      Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+      sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols2 );
+
+      Rcpp::List sfc(1);
+
+      switch( TYPEOF( x ) ) {
+      case INTSXP: {
+        if( Rf_isMatrix( x ) ) {
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        size_t n_col = im.ncol();
+        sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols2 );
+        break;
+      }
+      }
+      case REALSXP: {
+        if( Rf_isMatrix( x ) ) {
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        size_t n_col = nm.ncol();
+        sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols2 );
+        break;
+      }
+      }
+      case VECSXP: {
+        if( Rf_inherits( x, "data.frame" ) ) {
+        Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+        size_t n_col = df.ncol();
+        sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols2 );
+        break;
+      }
+      }
+      default: {
+        Rcpp::stop("sfheaders - unsupported polygon type");
+      }
+      }
+
+      sfc[0] = sfheaders::sfg::sfg_polygon( x, geometry_cols2, linestring_id );
+      sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
+      return sfc;
+    }
+
+    if ( ( Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && Rf_isNull( linestring_id ) ) ) {
+      // polygon is provided, so there is only one line per polygon
+      SEXP geometry_cols2 = sfheaders::utils::other_columns( x, polygon_id );
+      // and given each polygon only has one line, can we simply set the linestring_id to be the
+      // same as the polygon_id column; will taht work??
+      SEXP linestring_id2 = polygon_id;
+      return sfc_polygon( x, geometry_cols2, polygon_id, linestring_id2 );
+    }
+
+    if( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) && !Rf_isNull( polygon_id ) ) {
+      SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id, polygon_id );
+      return sfc_polygon( x, other_cols, polygon_id, linestring_id );
+    }
+
     if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( polygon_id ) ) {
-      // make the geometry cols all the other columns??
+      // it's just a matrix / data.frame where the geometry columns are provided
       return sfc_polygon( x, geometry_cols );
     }
-    //
-    // if( !Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && Rf_isNull( linestring_id ) ) {
-    //   Rcpp::List pl = sfheaders::shapes::get_listMat( x, geometry_cols, polygon_id );
-    //   Rcpp::List sfc(1);
-    //   sfc[0] = pl;
-    //   return sfc_polygon( sfc );
-    // }
-    //
-    //
-    // // if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
-    // //   SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
-    // //   //return sfc_polygon( x, other_cols, geometry_cols );
-    // //   Rcpp::List mp = sfheaders::shapes::get_listListMat( x, other_cols, polygon_id, linestring_id );
-    // //   return sfc_polygon( mp );
-    // // }
-    //
+
+    if( !Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && Rf_isNull( linestring_id ) ) {
+      // each polygon only has one line
+      SEXP linestring_id2 = polygon_id;
+      return sfc_polygon( x, geometry_cols, polygon_id, linestring_id2 );
+    }
+
     if( !Rf_isNull( geometry_cols ) && !Rf_isNull( polygon_id ) && !Rf_isNull( linestring_id ) ) {
-      // Rcpp::Rcout << "get list mat " << std::endl;
+
       sfheaders::utils::geometry_column_check( geometry_cols );
 
       if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||

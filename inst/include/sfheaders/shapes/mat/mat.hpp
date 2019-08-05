@@ -69,9 +69,9 @@ namespace shapes {
 
   inline SEXP get_mat(
       Rcpp::DataFrame& df,
-      Rcpp::StringVector& geometry_cols
+      Rcpp::StringVector& cols
   ) {
-    size_t n_col = geometry_cols.size();
+    size_t n_col = cols.size();
     if( df.ncol() < n_col ) {
       Rcpp::stop("sfheaders - incorrect number of columns");
     }
@@ -80,7 +80,7 @@ namespace shapes {
     size_t i;
 
     for( i = 0; i < n_col; i++ ) {
-      Rcpp::String this_col = geometry_cols[i];
+      Rcpp::String this_col = cols[i];
       Rcpp::NumericVector this_vec = df[ this_col ];
       nm( Rcpp::_, i ) = this_vec;
     }

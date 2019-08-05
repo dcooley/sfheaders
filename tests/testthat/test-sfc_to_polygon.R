@@ -18,6 +18,10 @@ test_that("sfc_polygon works", {
   res <- sfheaders:::rcpp_sfc_polygon( df, c(2,3), c(0), c(1))
   expect_true( is_polygon( res ) )
 
+  m <- as.matrix( df )
+  m <- matrix( as.integer( m ), ncol = 4 )
+  res <- sfheaders:::rcpp_sfc_polygon( m, c(2,3), c(0), c(1))
+  expect_true( is_polygon( res ) )
 
   res <- sfheaders:::rcpp_sfc_polygon( df, c("x","y"),c("p_id"),c("l_id"))
   expect_true( is_polygon( res ) )
