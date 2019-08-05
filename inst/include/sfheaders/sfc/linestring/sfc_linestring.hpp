@@ -168,7 +168,6 @@ namespace sfc {
   ) {
     // here there is no subsetting required;
     // we have to assume the columsn are in order x,y,(z,(m))
-
     switch( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {
