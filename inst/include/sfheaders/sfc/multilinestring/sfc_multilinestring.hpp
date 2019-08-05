@@ -6,8 +6,7 @@
 #include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/z_range.hpp"
-#include "sfheaders/sfc/m_range.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
 
 namespace sfheaders {
 namespace sfc {
