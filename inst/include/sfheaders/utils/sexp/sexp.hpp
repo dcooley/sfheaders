@@ -46,6 +46,33 @@ namespace utils {
     }
   }
 
+  inline size_t sexp_n_row( SEXP& x ) {
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return im.nrow();
+    }
+    }
+    case REALSXP :{
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return nm.nrow();
+    }
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return df.nrow();
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - can't determine the number of rows");
+    }
+    }
+    return 0; // never reaches
+  }
+
   template <int RTYPE>
   inline int sexp_length(Rcpp::Vector<RTYPE> v) {
     return v.length();

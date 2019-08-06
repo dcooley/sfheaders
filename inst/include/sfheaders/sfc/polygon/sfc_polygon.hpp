@@ -641,8 +641,25 @@ namespace sfc {
       int& polygon_id,
       int& linestring_id
   ) {
-    Rcpp::NumericVector polygon_ids = df[ polygon_id ];
-    return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
+    // TODO:
+    // this may not be a numeric vector!!
+    SEXP polygon_ids = df[ polygon_id ];
+    switch( TYPEOF( polygon_ids ) ) {
+    case INTSXP: {
+      Rcpp::IntegerVector iv_polygon_ids = Rcpp::as< Rcpp::IntegerVector >( polygon_ids );
+      return sfc_polygon( df, geometry_cols, iv_polygon_ids, linestring_id );
+    }
+    case REALSXP: {
+      Rcpp::NumericVector nv_polygon_ids = Rcpp::as< Rcpp::NumericVector >( polygon_ids );
+      return sfc_polygon( df, geometry_cols, nv_polygon_ids, linestring_id );
+    }
+    default: {
+      Rcpp::StringVector sv_polygon_ids = Rcpp::as< Rcpp::StringVector >( polygon_ids );
+      return sfc_polygon( df, geometry_cols, sv_polygon_ids, linestring_id );
+    }
+    }
+    Rcpp::stop("sfheaders - don't know the column type of polygon_ids");
+    return Rcpp::List::create();
   }
 
   inline SEXP sfc_polygon(
@@ -820,7 +837,7 @@ namespace sfc {
 
     if ( !Rf_isNull( polygon_id ) &&
          Rf_isNull( linestring_id )
-           ) {
+        ) {
       // polygon is provided, so there is only one line per polygon
 
       // and given each polygon only has one line, can we simply set the linestring_id to be the

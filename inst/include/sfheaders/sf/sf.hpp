@@ -64,7 +64,17 @@ namespace sf {
   }
 
 
-  inline SEXP make_sf( Rcpp::List& sfc, SEXP ids ) {
+  inline SEXP make_sf(
+    Rcpp::List& sfc,
+    SEXP& ids
+  ) {
+
+    if( Rf_isNull( ids ) ) {
+      // need 1:n ids
+      int n_sfc = sfc.size();
+      Rcpp::IntegerVector ids2 = Rcpp::seq( 1, n_sfc );
+      make_sf( sfc, ids );
+    }
 
     switch( TYPEOF( ids ) ) {
     case INTSXP: {

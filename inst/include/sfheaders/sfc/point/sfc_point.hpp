@@ -196,7 +196,6 @@ namespace sfc {
     return sfc;
   }
 
-  // expects only lon/lat/z/m columns in correct order
   inline SEXP sfc_point(
       Rcpp::DataFrame& df
   ) {
@@ -208,7 +207,6 @@ namespace sfc {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    //Rcpp::NumericMatrix nm = sfheaders::utils::df_sfc_matrix( df );
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     return sfc_point( nm, cols );
   }
@@ -274,7 +272,6 @@ namespace sfc {
       return sfc_point( nm, cols );
     }
     case VECSXP: {
-      // TODO - data.frame using numbers to index columns
       if ( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return sfc_point( df, cols );
@@ -291,9 +288,7 @@ namespace sfc {
       SEXP& x,
       Rcpp::StringVector& cols
   ) {
-    // with string columns it must be a data.frame(?)
 
-    //Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
     switch( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {
@@ -324,7 +319,6 @@ namespace sfc {
     }
     }
     return Rcpp::List::create();
-    //return sfc_point( df, cols );
   }
 
 
@@ -356,8 +350,6 @@ namespace sfc {
     }
     return Rcpp::List::create(); // never reaches
   }
-
-
 
 } // sfc
 } // sfheaders
