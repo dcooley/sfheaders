@@ -78,42 +78,7 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #'
 #' @export
 sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
-
-  # geometry_columns <- c("x","y")
-  #
-  # if( is.null( obj ) ) {
-  #   if( !is.null( z ) ) {
-  #     if( !is.null( m ) ) {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #         , m = m
-  #       )
-  #       geometry_columns <- c("x","y","z","m")
-  #     } else {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #       )
-  #       geometry_columns <- c("x","y","z")
-  #     }
-  #   } else {
-  #     obj <- data.frame(
-  #       x = x
-  #       , y = y
-  #     )
-  #   }
-  #
-  #   if( !is.null( linestring_id ) ) {
-  #     obj <- cbind( obj, linestring_id )
-  #     linestring_id <- "linestring_id"
-  #   }
-  # } else {
-    geometry_columns <- c(x,y,z,m)
-  # }
-
+  geometry_columns <- c(x,y,z,m)
   rcpp_sfc_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ) )
 }
 
@@ -165,47 +130,7 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 #'
 #' @export
 sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multilinestring_id = NULL, linestring_id = NULL ) {
-
-  # geometry_columns <- c("x","y")
-  #
-  # if( is.null( obj ) ) {
-  #   if( !is.null( z ) ) {
-  #     if( !is.null( m ) ) {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #         , m = m
-  #       )
-  #       geometry_columns <- c("x","y","z","m")
-  #     } else {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #       )
-  #       geometry_columns <- c("x","y","z")
-  #     }
-  #   } else {
-  #     obj <- data.frame(
-  #       x = x
-  #       , y = y
-  #     )
-  #   }
-  #
-  #   if( !is.null( multilinestring_id ) ) {
-  #     obj <- cbind( obj, multilinestring_id )
-  #     multilinestring_id <- "multilinestring_id"
-  #   }
-  #
-  #   if( !is.null( linestring_id ) ) {
-  #     obj <- cbind( obj, linestring_id )
-  #     linestring_id <- "linestring_id"
-  #   }
-  # } else {
-    geometry_columns <- c(x,y,z,m)
-  # }
-
+  geometry_columns <- c(x,y,z,m)
   rcpp_sfc_multilinestring( obj, index_correct( geometry_columns ), index_correct( multilinestring_id ), index_correct( linestring_id ) )
 }
 
@@ -258,47 +183,7 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 #'
 #' @export
 sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL ) {
-
-  # geometry_columns <- c("x","y")
-  #
-  # if( is.null( obj ) ) {
-  #   if( !is.null( z ) ) {
-  #     if( !is.null( m ) ) {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #         , m = m
-  #       )
-  #       geometry_columns <- c("x","y","z","m")
-  #     } else {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #       )
-  #       geometry_columns <- c("x","y","z")
-  #     }
-  #   } else {
-  #     obj <- data.frame(
-  #       x = x
-  #       , y = y
-  #     )
-  #   }
-  #
-  #   if( !is.null( polygon_id ) ) {
-  #     obj <- cbind( obj, polygon_id )
-  #     polygon_id <- "polygon_id"
-  #   }
-  #
-  #   if( !is.null( linestring_id ) ) {
-  #     obj <- cbind( obj, linestring_id )
-  #     linestring_id <- "linestring_id"
-  #   }
-  # } else {
-    geometry_columns <- c(x,y,z,m)
-  # }
-
+  geometry_columns <- c(x,y,z,m)
   rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ) )
 }
 
@@ -374,123 +259,6 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #'
 #' @export
 sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL ) {
-
-  # geometry_columns <- c("x","y")
-  #
-  # if( is.null( obj ) ) {
-  #   if( !is.null( z ) ) {
-  #     if( !is.null( m ) ) {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #         , m = m
-  #       )
-  #       geometry_columns <- c("x","y","z","m")
-  #     } else {
-  #       obj <- data.frame(
-  #         x = x
-  #         , y = y
-  #         , z = z
-  #       )
-  #       geometry_columns <- c("x","y","z")
-  #     }
-  #   } else {
-  #     obj <- data.frame(
-  #       x = x
-  #       , y = y
-  #     )
-  #   }
-  #
-  #   if( !is.null( multipolygon_id ) ) {
-  #     obj <- cbind( obj, multipolygon_id )
-  #     multipolygon_id <- "multipolygon_id"
-  #   }
-  #
-  #   if( !is.null( polygon_id ) ) {
-  #     obj <- cbind( obj, polygon_id )
-  #     polygon_id <- "polygon_id"
-  #   }
-  #
-  #   if( !is.null( linestring_id ) ) {
-  #     obj <- cbind( obj, linestring_id )
-  #     linestring_id <- "linestring_id"
-  #   }
-  # } else {
-    geometry_columns <- c(x,y,z,m)
-  # }
+  geometry_columns <- c(x,y,z,m)
   rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ) )
 }
-
-#
-# n <- 1e6
-# x <- rnorm(n)
-# y <- rnorm(n)
-# z <- rnorm(n)
-# m <- rnorm(n)
-#
-# dt <- data.table(
-#   x = x
-#   , y = y
-#   , z = z
-#   , m = m
-# )
-#
-# dt[, .(sfc = sfc_multipolygon(x = x, y = y, z = z, m = m))]
-
-# library(microbenchmark)
-#
-# microbenchmark(
-#   df = {
-#     df <- data.frame(
-#       x = x
-#       , y = y
-#       , z = z
-#       , m = m
-#     )
-#   },
-#   cbind = {
-#     df <- data.frame(
-#       x = x
-#       , y = y
-#     )
-#     df <- cbind( df, z )
-#     df <- cbind( df, m )
-#   },
-#   times = 5
-# )
-#
-
-# library(data.table)
-#
-# dt <- as.data.table( df )
-#
-# dt[, .(sfc = sfc_multipolygon(x = x, y = y)), by = .(id1)] %>% sf::st_as_sf()
-
-# to_sfc <- function(
-#   x, y, z = NULL, m = NULL,
-#   point_id = NULL,
-#   multipoint_id = NULL,
-#   linestring_id = NULL,
-#   multilinestring_id = NULL,
-#   polygon_id = NULL,
-#   multipolygon_id = NULL
-#   ) {
-#   ## will this work?
-#   ## given the 'ids' supplied; create the sfc
-#   ## it can include NA values
-#   ## in which case, those are ignored, and the next-heighest is assumed??
-# }
-
-# to_linestring <- function(x, y ) {
-#   df <- data.frame(
-#     x = x
-#     , y = y
-#   )
-#   geometry_columns <- c("x","y")
-#   rcpp_sfc_linestring( df, geometry_columns, NULL )
-# }
-#
-# sfheaders:::rcpp_to_multipolygon(df$x, df$y, z = df$x, m = df$y, multipolygon_id = df$id1, polygon_id = df$id2, linestring_id = df$id1)
-
-

@@ -200,7 +200,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
     }
     }
 
@@ -236,7 +236,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
     }
     }
 

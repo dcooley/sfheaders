@@ -294,7 +294,10 @@ namespace utils {
       SEXP& id_cols // will be a vector
   ) {
 
-    //Rcpp::Rcout << "typeof(): " << TYPEOF( id_cols ) << std::endl;
+    if( Rf_isNull( id_cols ) ) {
+      return other_columns( x );
+    }
+
     switch( TYPEOF( id_cols ) ) {
     case REALSXP: {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( id_cols );
@@ -324,11 +327,15 @@ namespace utils {
     SEXP& col_2
   ) {
 
-    if( Rf_isNull( col_1 ) ) {
+    if( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) ) {
+      return other_columns( x );
+    }
+
+    if( Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) ) {
       return other_columns( x, col_2 );
     }
 
-    if( Rf_isNull( col_2 ) ) {
+    if( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) ) {
       return other_columns( x, col_1 );
     }
 
