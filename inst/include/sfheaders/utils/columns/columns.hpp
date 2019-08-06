@@ -197,6 +197,39 @@ namespace utils {
   }
 
   inline SEXP other_columns(
+      SEXP& x
+  ) {
+
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x ) ;
+      Rcpp::IntegerVector cols = Rcpp::seq( 0, (im.ncol() - 1) );
+      return cols;
+      //return other_columns( im, id_cols );
+    }
+    }
+    case REALSXP: {
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      Rcpp::IntegerVector cols = Rcpp::seq( 0, (nm.ncol() - 1) );
+      return cols;
+    }
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return df.names();
+    }
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported object");
+    }
+    }
+  }
+
+
+  inline SEXP other_columns(
       SEXP& x,
       Rcpp::NumericVector& id_cols
   ) {
@@ -333,6 +366,11 @@ namespace utils {
 
       if ( !Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
         return other_columns( x, col_1, col_2 );
+      }
+
+      if ( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+        // then it's just all teh columns
+        return other_columns( x );
       }
 
       // combine cols 1, 2 and 3

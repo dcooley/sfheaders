@@ -28,6 +28,11 @@ sfc_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
 \description{
 sfc MULTIPOLYGON
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+}
+
 \examples{
 
 m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE )

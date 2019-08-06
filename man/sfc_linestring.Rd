@@ -23,6 +23,11 @@ sfc_linestring(obj = NULL, x = NULL, y = NULL, z = NULL,
 \description{
 constructs sfc of MULTIPOINT objects
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+}
+
 \examples{
 
 x <- matrix( c(1:4), ncol = 2 )

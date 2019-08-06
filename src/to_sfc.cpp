@@ -63,20 +63,4 @@ Rcpp::List rcpp_sfc_multipolygons( Rcpp::List lst ) {
   return sfheaders::sfc::sfc_multipolygons( lst );
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_to_multipolygon(
-//     Rcpp::NumericVector x,
-//     Rcpp::NumericVector y,
-//     Rcpp::NumericVector z = R_NilValue,
-//     Rcpp::NumericVector m = R_NilValue,
-//     Rcpp::NumericVector multipolygon_id = R_NilValue,
-//     Rcpp::NumericVector polygon_id = R_NilValue,
-//     Rcpp::NumericVector linestring_id = R_NilValue
-// ) {
-//   return sfheaders::sfc::sfc_multipolygon(x, y, z, m, multipolygon_id, polygon_id, linestring_id);
-// }
-
-// SEXP rcpp_sfc_sfc( SEXP x ) {
-//
-// }
 

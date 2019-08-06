@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfc.R
 \name{sfc_multipoint}
 \alias{sfc_multipoint}
-\title{sfc MULTIPOINTS}
+\title{sfc MULTIPOINT}
 \usage{
 sfc_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   multipoint_id = NULL)
@@ -23,6 +23,11 @@ sfc_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 \description{
 constructs sfc of MULTIPOINT objects
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+}
+
 \examples{
 
 x <- matrix( c(1:4), ncol = 2 )

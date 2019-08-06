@@ -26,4 +26,7 @@ test_that("sfg multipolygon",{
 
   expect_true( all( lengths( mp ) == lengths( r_res ) ) )
 
+  res <- sfheaders:::rcpp_sfg_multipolygon( m, c(2,3), NULL, 1 )
+
+
 })

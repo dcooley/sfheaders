@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfc.R
 \name{sfc_point}
 \alias{sfc_point}
-\title{sfc POINTS}
+\title{sfc POINT}
 \usage{
 sfc_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
@@ -20,6 +20,11 @@ sfc_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 \description{
 constructs sfc of POINT objects
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+}
+
 \examples{
 
 x <- c(1:3)

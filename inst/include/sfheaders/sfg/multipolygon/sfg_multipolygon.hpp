@@ -559,10 +559,10 @@ inline SEXP sfg_multipolygon(
     Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
     return sfg_multipolygon( x, iv, line_id );
   }
-    // case STRSXP: {
-    //   Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
-    //   return sfg_multipolygon( x, sv, line_id );
-    // }
+  // case STRSXP: {
+  //   Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
+  //   return sfg_multipolygon( x, sv, line_id );
+  // }
   default: {
     Rcpp::stop("sfheaders - unknown column types");
   }
@@ -648,11 +648,19 @@ inline SEXP sfg_multipolygon(
   }
 
   if( Rf_isNull( polygon_id ) && !Rf_isNull( line_id ) ) {
-
+    // in this case the multiolygon is made of one polygon
+    // with one or more internal rings
+    Rcpp::List sfg(1);
+    sfg[0] = sfheaders::shapes::get_listMat( x, cols, line_id );
+    return sfg_multipolygon( sfg );
   }
 
   if( !Rf_isNull( polygon_id ) && Rf_isNull( line_id ) ) {
-
+    // in this case the multipolygon is made of one polygon
+    // with one or more polygons,
+    // but each polygon has a single line
+    SEXP line_id2 = polygon_id;
+    return sfg_multipolygon( x, cols, polygon_id, line_id2 );
   }
 
   // otherwise they are both provided

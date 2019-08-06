@@ -25,6 +25,11 @@ sfc_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
 \description{
 sfc MULTILINESTRING
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+}
+
 \examples{
 
 m <- matrix(c(0,0,0,0,1,1), ncol = 3 )

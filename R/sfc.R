@@ -1,5 +1,5 @@
 
-#' sfc POINTS
+#' sfc POINT
 #'
 #' constructs sfc of POINT objects
 #'
@@ -8,6 +8,9 @@
 #' @param y y geometry column
 #' @param z z geometry column
 #' @param m m geometry column
+#'
+#' @section notes:
+#' sfheaders functions do not perform any validity checks on the geometries.
 #'
 #' @examples
 #'
@@ -28,11 +31,12 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   rcpp_sfc_point( obj, index_correct( geometry_columns ) )
 }
 
-#' sfc MULTIPOINTS
+#' sfc MULTIPOINT
 #'
 #' constructs sfc of MULTIPOINT objects
 #'
 #' @inheritParams sfc_point
+#' @inheritSection sfc_point notes
 #' @param multipoint_id column of ids for multipoints
 #'
 #' @examples
@@ -58,6 +62,7 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #' constructs sfc of MULTIPOINT objects
 #'
 #' @inheritParams sfc_point
+#' @inheritSection sfc_point notes
 #' @param linestring_id column of ids for linestrings
 #'
 #' @examples
@@ -119,6 +124,7 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 #' @param multilinestring_id column of ids for multilinestrings
 #' @param linestring_id column of ids for linestrings (within multilinestrings)
 #'
+#' @inheritSection sfc_point notes
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
@@ -210,6 +216,7 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 #' @inheritParams sfc_point
 #' @param polygon_id column of ids for polygons
 #' @param linestring_id column of ids for lines (within polygons)
+#' @inheritSection sfc_point notes
 #'
 #' @examples
 #'
@@ -301,6 +308,7 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #'
 #' @inheritParams sfc_polygon
 #' @param multipolygon_id column of ids for multipolygons
+#' @inheritSection sfc_point notes
 #'
 #' @examples
 #'
