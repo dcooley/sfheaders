@@ -6,19 +6,12 @@
 namespace sfheaders {
 namespace sf {
 
-  inline SEXP create_sf( Rcpp::List lst ) {
+  inline SEXP make_sf( Rcpp::List& sfc ) {
 
     Rcpp::DataFrame df = Rcpp::DataFrame::create(
-      Rcpp::Named("id") = lst[0],
-      Rcpp::Named("geometry") = lst[1]
+      Rcpp::Named("geometry") = sfc
     );
 
-    // if (sfg_objects > 0 ) {
-    //   Rcpp::IntegerVector nv = Rcpp::seq( 1, sfg_objects );
-    //   properties.attr("row.names") = nv;
-    // } else {
-    //   properties.attr("row.names") = Rcpp::IntegerVector(0);
-    // }
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
 
@@ -69,11 +62,16 @@ namespace sf {
     SEXP& ids
   ) {
 
+    // if( Rf_isNull( ids ) ) {
+    //   // need 1:n ids
+    //   // int n_sfc = sfc.size();
+    //   // Rcpp::IntegerVector ids2 = Rcpp::seq( 1, n_sfc );
+    //   Rcpp::IntegerVector ids(1);
+    //   ids[0] = 1;
+    //   make_sf( sfc, ids );
+    // }
     if( Rf_isNull( ids ) ) {
-      // need 1:n ids
-      int n_sfc = sfc.size();
-      Rcpp::IntegerVector ids2 = Rcpp::seq( 1, n_sfc );
-      make_sf( sfc, ids );
+      make_sf( sfc );
     }
 
     switch( TYPEOF( ids ) ) {

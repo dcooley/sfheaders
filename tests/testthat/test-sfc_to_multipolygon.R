@@ -96,4 +96,43 @@ test_that("data.frame with non-numeric id columns work",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
   expect_true( is_multipolygon( res ) )
 
+  df <- data.frame(
+    mp_id = letters[c(1,1,2,2,3,3,3,3)]
+    , p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = letters[c(1,1,1,1,1,1,1,1)]
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+    , stringsAsFactors = F
+  )
+
+  res <- sfheaders::sfc_multipolygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , multipolygon_id = "mp_id"
+    , polygon_id = "p_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
+  expect_true( is_multipolygon( res ) )
+
+  df <- data.frame(
+    mp_id = letters[c(1,1,2,2,3,3,3,3)]
+    , p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = letters[c(1,2,1,1,1,1,2,2)]
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+    , stringsAsFactors = F
+  )
+
+  res <- sfheaders::sfc_multipolygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , multipolygon_id = "mp_id"
+    , polygon_id = "p_id"
+    , linestring_id = "l_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
+  expect_true( is_multipolygon( res ) )
+
 })

@@ -33,8 +33,8 @@ rcpp_get_list_mat <- function(x, cols, id) {
     .Call(`_sfheaders_rcpp_get_list_mat`, x, cols, id)
 }
 
-rcpp_sf_point <- function(x, cols, point_id) {
-    .Call(`_sfheaders_rcpp_sf_point`, x, cols, point_id)
+rcpp_sf_point <- function(x, cols) {
+    .Call(`_sfheaders_rcpp_sf_point`, x, cols)
 }
 
 rcpp_sf_multipoint <- function(x, cols, multipoint_id) {
@@ -47,6 +47,14 @@ rcpp_sf_linestring <- function(x, cols, linestring_id) {
 
 rcpp_sf_multilinestring <- function(x, cols, multilinestring_id, linestring_id) {
     .Call(`_sfheaders_rcpp_sf_multilinestring`, x, cols, multilinestring_id, linestring_id)
+}
+
+rcpp_sf_polygon <- function(x, cols, polygon_id, linestring_id) {
+    .Call(`_sfheaders_rcpp_sf_polygon`, x, cols, polygon_id, linestring_id)
+}
+
+rcpp_sf_multipolygon <- function(x, cols, multipolygon_id, polygon_id, linestring_id) {
+    .Call(`_sfheaders_rcpp_sf_multipolygon`, x, cols, multipolygon_id, polygon_id, linestring_id)
 }
 
 rcpp_sfc_point <- function(x, cols) {

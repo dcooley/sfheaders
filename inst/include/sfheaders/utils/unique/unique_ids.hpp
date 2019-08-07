@@ -91,8 +91,10 @@ namespace utils {
       SEXP& id_col
   ) {
     if( Rf_isNull( id_col ) ) {
-      size_t n_row = sfheaders::utils::sexp_n_row( x );
-      Rcpp::IntegerVector ids = Rcpp::seq( 1, n_row );
+      // size_t n_row = sfheaders::utils::sexp_n_row( x );
+      // Rcpp::IntegerVector ids = Rcpp::seq( 1, n_row );
+      Rcpp::IntegerVector ids(1);
+      ids[0] = 1;
       return ids;
     }
     switch( TYPEOF( id_col ) ) {

@@ -40,13 +40,6 @@ namespace shapes {
     return mp;
   }
 
-
-  /*
-   * get_polygon
-   *
-   * Gets all the polygons inside a single multipolygon
-   *
-   */
   inline SEXP get_listListMat(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
@@ -54,20 +47,26 @@ namespace shapes {
     Rcpp::String& group_id_col_2
   ) {
 
-    Rcpp::NumericVector polygon_ids = df[ group_id_col_1 ];
+    SEXP group_ids = df[ group_id_col_1 ];
     Rcpp::StringVector df_names = df.names();
 
-    Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    Rcpp::IntegerMatrix polygons = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
+    // Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
+    // Rcpp::IntegerMatrix polygons = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
+    //
+    // size_t n_polygons = unique_polygon_ids.length();
 
-    size_t n_polygons = unique_polygon_ids.length();
+    SEXP unique_ids = sfheaders::utils::get_sexp_unique( group_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids, unique_ids );
 
-    Rcpp::List mpl( n_polygons );
+    size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+
+
+    Rcpp::List mpl( n_lines );
 
     size_t i;
-    for( i = 0; i < n_polygons; i++ ) {
-      int start = polygons(i, 0);
-      int end = polygons(i, 1);
+    for( i = 0; i < n_lines; i++ ) {
+      int start = line_positions(i, 0);
+      int end = line_positions(i, 1);
 
       Rcpp::Range rng( start, end );
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
@@ -87,20 +86,20 @@ namespace shapes {
       Rcpp::String& group_id_col_3
   ) {
 
-    Rcpp::NumericVector multipolygon_ids = df[ group_id_col_1 ];
+    SEXP group_ids = df[ group_id_col_1 ];
     Rcpp::StringVector df_names = df.names();
 
-    Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
-    Rcpp::IntegerMatrix multipolygons = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
+    SEXP unique_ids = sfheaders::utils::get_sexp_unique( group_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids, unique_ids );
 
-    size_t n_multipolygons = unique_multipolygon_ids.length();
+    size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
-    Rcpp::List mpl( n_multipolygons );
+    Rcpp::List mpl( n_lines );
 
     size_t i;
-    for( i = 0; i < n_multipolygons; i++ ) {
-      int start = multipolygons(i, 0);
-      int end = multipolygons(i, 1);
+    for( i = 0; i < n_lines; i++ ) {
+      int start = line_positions(i, 0);
+      int end = line_positions(i, 1);
 
       Rcpp::Range rng( start, end );
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );

@@ -89,4 +89,22 @@ test_that("data.frame with non-numeric id columns work",{
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
+  df <- data.frame(
+    p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = letters[c(1,1,1,1,1,1,1,1)]
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+    , stringsAsFactors = F
+  )
+
+  res <- sfheaders::sfc_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , polygon_id = "p_id"
+    , linestring_id = "l_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
 })

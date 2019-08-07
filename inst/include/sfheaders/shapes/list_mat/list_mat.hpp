@@ -4,25 +4,8 @@
 #include <Rcpp.h>
 #include "sfheaders/sf/sf.hpp"
 #include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/z_range.hpp"
-#include "sfheaders/sfc/m_range.hpp"
-#include "sfheaders/sfg/sfg_types.hpp"
-//#include "sfheaders/sfc/sfc_types.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
-
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/mat/mat.hpp"
-
-/*
- * get_listMat
- *
- * Returns a list of matrices
- *
- * - sfg_MULTILINESTRING
- * - sfg_POLYGON
- * - sfc_MULTIPOINTs
- * - sfc_LINESTRINGs
- */
 
 namespace sfheaders {
 namespace shapes {
@@ -169,13 +152,13 @@ namespace shapes {
   inline SEXP get_listMat(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
-      Rcpp::NumericVector& line_ids
+      SEXP& line_ids
   ) {
 
-    Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
+    SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
-    size_t n_lines = unique_ids.length();
+    size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
     Rcpp::List mls( n_lines );
 
@@ -250,7 +233,7 @@ namespace shapes {
     Rcpp::StringVector& cols,
     Rcpp::String& id_col
   ) {
-    Rcpp::NumericVector line_ids = df[ id_col ];
+    SEXP line_ids = df[ id_col ];
     return get_listMat( df, cols, line_ids );
   }
 
