@@ -431,15 +431,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_line_ids
-Rcpp::IntegerMatrix rcpp_line_ids(Rcpp::NumericVector line_ids, Rcpp::NumericVector unique_ids);
-RcppExport SEXP _sfheaders_rcpp_line_ids(SEXP line_idsSEXP, SEXP unique_idsSEXP) {
+// rcpp_id_positions
+Rcpp::IntegerMatrix rcpp_id_positions(Rcpp::NumericVector line_ids, Rcpp::NumericVector unique_ids);
+RcppExport SEXP _sfheaders_rcpp_id_positions(SEXP line_idsSEXP, SEXP unique_idsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type line_ids(line_idsSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type unique_ids(unique_idsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_line_ids(line_ids, unique_ids));
+    rcpp_result_gen = Rcpp::wrap(rcpp_id_positions(line_ids, unique_ids));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -518,7 +518,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfg_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygons, 1},
     {"_sfheaders_rcpp_to_sfg", (DL_FUNC) &_sfheaders_rcpp_to_sfg, 2},
     {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 4},
-    {"_sfheaders_rcpp_line_ids", (DL_FUNC) &_sfheaders_rcpp_line_ids, 2},
+    {"_sfheaders_rcpp_id_positions", (DL_FUNC) &_sfheaders_rcpp_id_positions, 2},
     {"_sfheaders_rcpp_subset_dataframe", (DL_FUNC) &_sfheaders_rcpp_subset_dataframe, 4},
     {"_sfheaders_rcpp_concatenate_vectors", (DL_FUNC) &_sfheaders_rcpp_concatenate_vectors, 2},
     {"_sfheaders_rcpp_column_positions", (DL_FUNC) &_sfheaders_rcpp_column_positions, 2},

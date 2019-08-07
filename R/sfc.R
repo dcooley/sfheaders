@@ -3,7 +3,7 @@
 #'
 #' constructs sfc of POINT objects
 #'
-#' @param obj matrix or data.frame
+#' @param obj sorted vector, matrix or data.frame
 #' @param x x geometry column
 #' @param y y geometry column
 #' @param z z geometry column
@@ -36,6 +36,7 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' constructs sfc of MULTIPOINT objects
 #'
 #' @inheritParams sfc_point
+#' @param obj sorted matrix or data.frame
 #' @inheritSection sfc_point notes
 #' @param multipoint_id column of ids for multipoints
 #'
@@ -61,7 +62,7 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #'
 #' constructs sfc of MULTIPOINT objects
 #'
-#' @inheritParams sfc_point
+#' @inheritParams sfc_multipoint
 #' @inheritSection sfc_point notes
 #' @param linestring_id column of ids for linestrings
 #'
@@ -85,7 +86,7 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 
 #' sfc MULTILINESTRING
 #'
-#' @inheritParams sfc_point
+#' @inheritParams sfc_linestring
 #' @param multilinestring_id column of ids for multilinestrings
 #' @param linestring_id column of ids for linestrings (within multilinestrings)
 #'
@@ -138,7 +139,7 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 
 #' sfc POLYGON
 #'
-#' @inheritParams sfc_point
+#' @inheritParams sfc_linestring
 #' @param polygon_id column of ids for polygons
 #' @param linestring_id column of ids for lines (within polygons)
 #' @inheritSection sfc_point notes
@@ -191,7 +192,7 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' sfc MULTIPOLYGON
 #'
 #'
-#' @inheritParams sfc_polygon
+#' @inheritParams sfc_linestring
 #' @param multipolygon_id column of ids for multipolygons
 #' @inheritSection sfc_point notes
 #'

@@ -476,7 +476,7 @@ inline SEXP sfc_multipolygon(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
-  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::line_ids( multipolygon_ids, unique_multipolygon_ids );
+  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
   size_t n_multipolygons = unique_multipolygon_ids.length();
   size_t i;
@@ -514,7 +514,7 @@ inline SEXP sfc_multipolygon(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
-  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::line_ids( multipolygon_ids, unique_multipolygon_ids );
+  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
   size_t n_multipolygons = unique_multipolygon_ids.length();
   size_t i;
@@ -552,7 +552,7 @@ inline SEXP sfc_multipolygon(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
   Rcpp::IntegerVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
-  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::line_ids( multipolygon_ids, unique_multipolygon_ids );
+  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
   size_t n_multipolygons = unique_multipolygon_ids.length();
   size_t i;
@@ -589,7 +589,7 @@ inline SEXP sfc_multipolygon(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
   Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
-  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::line_ids( multipolygon_ids, unique_multipolygon_ids );
+  Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
   size_t n_multipolygons = unique_multipolygon_ids.length();
   size_t i;

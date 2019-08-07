@@ -173,7 +173,7 @@ namespace shapes {
   ) {
 
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::line_ids( line_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
     size_t n_lines = unique_ids.length();
 
@@ -203,7 +203,7 @@ namespace shapes {
     // Rcpp::Rcout << "sfc_type : " << sfc_type << std::endl;
 
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::line_ids( line_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
     size_t n_lines = unique_ids.length();
 

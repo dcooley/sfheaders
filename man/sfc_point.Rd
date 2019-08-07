@@ -7,7 +7,7 @@
 sfc_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
 \arguments{
-\item{obj}{matrix or data.frame}
+\item{obj}{sorted vector, matrix or data.frame}
 
 \item{x}{x geometry column}
 

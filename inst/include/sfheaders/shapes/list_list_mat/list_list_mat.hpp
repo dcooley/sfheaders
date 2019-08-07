@@ -58,7 +58,7 @@ namespace shapes {
     Rcpp::StringVector df_names = df.names();
 
     Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    Rcpp::IntegerMatrix polygons = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+    Rcpp::IntegerMatrix polygons = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
     size_t n_polygons = unique_polygon_ids.length();
 
@@ -91,7 +91,7 @@ namespace shapes {
     Rcpp::StringVector df_names = df.names();
 
     Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
-    Rcpp::IntegerMatrix multipolygons = sfheaders::utils::line_ids( multipolygon_ids, unique_multipolygon_ids );
+    Rcpp::IntegerMatrix multipolygons = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
     size_t n_multipolygons = unique_multipolygon_ids.length();
 

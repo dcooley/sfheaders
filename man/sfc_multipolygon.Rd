@@ -9,7 +9,7 @@ sfc_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
   linestring_id = NULL)
 }
 \arguments{
-\item{obj}{matrix or data.frame}
+\item{obj}{sorted matrix or data.frame}
 
 \item{x}{x geometry column}
 
@@ -21,9 +21,7 @@ sfc_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
 
 \item{multipolygon_id}{column of ids for multipolygons}
 
-\item{polygon_id}{column of ids for polygons}
-
-\item{linestring_id}{column of ids for lines (within polygons)}
+\item{linestring_id}{column of ids for linestrings}
 }
 \description{
 sfc MULTIPOLYGON

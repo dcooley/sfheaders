@@ -12,7 +12,7 @@ namespace utils {
    * where the ids start & end
    *
    */
-  inline Rcpp::IntegerMatrix line_ids(
+  inline Rcpp::IntegerMatrix id_positions(
       Rcpp::IntegerVector& line_ids,
       Rcpp::IntegerVector& unique_ids
   ) {
@@ -63,7 +63,7 @@ namespace utils {
   }
 
 
-  inline Rcpp::IntegerMatrix line_ids(
+  inline Rcpp::IntegerMatrix id_positions(
       Rcpp::NumericVector& line_ids,
       Rcpp::NumericVector& unique_ids
   ) {
@@ -113,7 +113,7 @@ namespace utils {
     return im;
   }
 
-  inline Rcpp::IntegerMatrix line_ids(
+  inline Rcpp::IntegerMatrix id_positions(
       Rcpp::StringVector& line_ids,
       Rcpp::StringVector& unique_ids
   ) {
@@ -161,6 +161,39 @@ namespace utils {
     im( Rcpp::_, 1 ) = end_positions;
 
     return im;
+  }
+
+  // returns a matrix with the indeces of the start & end of each shape/ geometry
+  inline Rcpp::IntegerMatrix id_positions(
+    SEXP& line_ids,
+    SEXP& unique_ids
+  ) {
+    if( TYPEOF( line_ids ) != TYPEOF( unique_ids ) ) {
+      Rcpp::stop("sfheaders - line_ids and unique_ids are not the same type");
+    }
+
+    switch( TYPEOF( line_ids ) ) {
+    case INTSXP: {
+      Rcpp::IntegerVector iv_line_ids = Rcpp::as< Rcpp::IntegerVector >( line_ids );
+      Rcpp::IntegerVector iv_unique_ids = Rcpp::as< Rcpp::IntegerVector >( unique_ids );
+      return id_positions( iv_line_ids, iv_unique_ids );
+    }
+    case REALSXP: {
+      Rcpp::NumericVector nv_line_ids = Rcpp::as< Rcpp::NumericVector >( line_ids );
+      Rcpp::NumericVector nv_unique_ids = Rcpp::as< Rcpp::NumericVector >( unique_ids );
+      return id_positions( nv_line_ids, nv_unique_ids );
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv_line_ids = Rcpp::as< Rcpp::StringVector >( line_ids );
+      Rcpp::StringVector sv_unique_ids = Rcpp::as< Rcpp::StringVector >( unique_ids );
+      return id_positions( sv_line_ids, sv_unique_ids );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported vector type for determining id positions");
+    }
+    }
+
+    return Rcpp::IntegerMatrix(0);
   }
 
 

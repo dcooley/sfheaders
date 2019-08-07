@@ -476,7 +476,7 @@ inline SEXP sfc_multilinestring(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::line_ids( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
   size_t n_multilinestrings = unique_multilinestring_ids.length();
   size_t i;
@@ -513,7 +513,7 @@ inline SEXP sfc_multilinestring(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::line_ids( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
   size_t n_multilinestrings = unique_multilinestring_ids.length();
   size_t i;
@@ -550,7 +550,7 @@ inline SEXP sfc_multilinestring(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
   Rcpp::IntegerVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::line_ids( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
   size_t n_multilinestrings = unique_multilinestring_ids.length();
   size_t i;
@@ -586,7 +586,7 @@ inline SEXP sfc_multilinestring(
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
   Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::line_ids( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
   size_t n_multilinestrings = unique_multilinestring_ids.length();
   size_t i;

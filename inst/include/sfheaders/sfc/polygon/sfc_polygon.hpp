@@ -462,7 +462,7 @@ namespace sfc {
   inline SEXP sfc_polygon(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
-      Rcpp::NumericVector& polygon_ids,
+      SEXP& polygon_ids,
       int& linestring_id
   ) {
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -474,10 +474,10 @@ namespace sfc {
     size_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-    Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+    SEXP unique_polygon_ids = sfheaders::utils::get_sexp_unique( polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
-    size_t n_polygons = unique_polygon_ids.length();
+    size_t n_polygons = sfheaders::utils::get_sexp_length( unique_polygon_ids );
     size_t i;
     Rcpp::List sfc( n_polygons );
 
@@ -499,7 +499,7 @@ namespace sfc {
   inline SEXP sfc_polygon(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
-      SEXP& polygon_ids,  // can be int, double, string
+      SEXP& polygon_ids,  // can be int, double, string, ...
       Rcpp::String& linestring_id
   ) {
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -511,10 +511,10 @@ namespace sfc {
     size_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-    Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+    SEXP unique_polygon_ids = sfheaders::utils::get_sexp_unique( polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
-    size_t n_polygons = unique_polygon_ids.length();
+    size_t n_polygons = sfheaders::utils::get_sexp_length( unique_polygon_ids ); //  unique_polygon_ids.length();
     size_t i;
     Rcpp::List sfc( n_polygons );
 
@@ -549,7 +549,7 @@ namespace sfc {
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
     Rcpp::IntegerVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
     size_t n_polygons = unique_polygon_ids.length();
     size_t i;
@@ -585,7 +585,7 @@ namespace sfc {
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
     Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::line_ids( polygon_ids, unique_polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
     size_t n_polygons = unique_polygon_ids.length();
     size_t i;
@@ -631,7 +631,7 @@ namespace sfc {
       Rcpp::String& polygon_id,
       Rcpp::String& linestring_id
   ) {
-    Rcpp::NumericVector polygon_ids = df[ polygon_id ];
+    SEXP polygon_ids = df[ polygon_id ];
     return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
   }
 
@@ -641,26 +641,8 @@ namespace sfc {
       int& polygon_id,
       int& linestring_id
   ) {
-    // TODO:
-    // this may not be a numeric vector!!
     SEXP polygon_ids = df[ polygon_id ];
     return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
-    // switch( TYPEOF( polygon_ids ) ) {
-    // case INTSXP: {
-    //   Rcpp::IntegerVector iv_polygon_ids = Rcpp::as< Rcpp::IntegerVector >( polygon_ids );
-    //   return sfc_polygon( df, geometry_cols, iv_polygon_ids, linestring_id );
-    // }
-    // case REALSXP: {
-    //   Rcpp::NumericVector nv_polygon_ids = Rcpp::as< Rcpp::NumericVector >( polygon_ids );
-    //   return sfc_polygon( df, geometry_cols, nv_polygon_ids, linestring_id );
-    // }
-    // default: {
-    //   Rcpp::StringVector sv_polygon_ids = Rcpp::as< Rcpp::StringVector >( polygon_ids );
-    //   return sfc_polygon( df, geometry_cols, sv_polygon_ids, linestring_id );
-    // }
-    // }
-    // Rcpp::stop("sfheaders - don't know the column type of polygon_ids");
-    // return Rcpp::List::create();
   }
 
   inline SEXP sfc_polygon(

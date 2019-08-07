@@ -8,7 +8,7 @@ sfc_linestring(obj = NULL, x = NULL, y = NULL, z = NULL,
   m = NULL, linestring_id = NULL)
 }
 \arguments{
-\item{obj}{matrix or data.frame}
+\item{obj}{sorted matrix or data.frame}
 
 \item{x}{x geometry column}
 

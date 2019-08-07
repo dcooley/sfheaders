@@ -21,18 +21,18 @@ test_that("sfheaders::utils::subset subsets a data.frame",{
 })
 
 
-test_that("sfheaders::utils::line_ids returns correct positions",{
+test_that("sfheaders::utils::id_positions returns correct positions",{
 
   line_ids <- c(1,1,1,1,1)
   unique_ids <- sort( unique( line_ids ) )
   expected <- matrix(c(0,4), ncol = 2)
-  res <- sfheaders:::rcpp_line_ids( line_ids, unique_ids )
+  res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
   expect_equal( res, expected )
 
   line_ids <- c(1,1,1,1,2,2,3,3,3,3)
   unique_ids <- sort( unique( line_ids ) )
   expected <- matrix(c(0,3,4,5,6,9), ncol = 2, byrow = T)
-  res <- sfheaders:::rcpp_line_ids( line_ids, unique_ids )
+  res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
   expect_equal( res, expected )
 
 })

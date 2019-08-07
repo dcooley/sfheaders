@@ -141,8 +141,8 @@ rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
     .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2, id_col3)
 }
 
-rcpp_line_ids <- function(line_ids, unique_ids) {
-    .Call(`_sfheaders_rcpp_line_ids`, line_ids, unique_ids)
+rcpp_id_positions <- function(line_ids, unique_ids) {
+    .Call(`_sfheaders_rcpp_id_positions`, line_ids, unique_ids)
 }
 
 rcpp_subset_dataframe <- function(df, cols, start, end) {
