@@ -136,3 +136,30 @@ test_that("after refactoring issue14 I haven't lost anything",{
 
 })
 
+test_that("data.frame with non-numeric id columns work",{
+
+
+  is_multipoint <- function(x) {
+    y <- sapply( x, function(y) is.matrix(unclass(y)))
+    z <- sapply( x, function(y) attr( y, "class")[2] == "MULTIPOINT")
+    return( all(y) & all(z))
+  }
+
+  df <- data.frame(
+    p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = c(1,1,1,1,1,1,1,1)
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+    , stringsAsFactors = F
+  )
+
+  res <- sfheaders::sfc_multipoint(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , multipoint_id = "p_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+})

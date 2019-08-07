@@ -47,6 +47,54 @@ namespace utils {
     return nm;
   }
 
+  inline Rcpp::NumericMatrix df_to_matrix(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& cols // may only want a subset of columns
+  ) {
+    int i;
+    int n_cols = cols.size();
+    int n_rows = df.rows();
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector m_names( n_cols );
+    Rcpp::NumericMatrix nm( n_rows, n_cols );
+    for( i = 0; i < n_cols; i++ ) {
+      int this_col = cols[i];
+      m_names[i] = df_names[ this_col ];
+      Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ this_col ] );
+      nm( Rcpp::_, i ) = this_column;
+    }
+
+    Rcpp::List m_attr(2);
+    m_attr(1) = m_names;
+
+    nm.attr("dimnames") = m_attr;
+    return nm;
+  }
+
+  inline Rcpp::NumericMatrix df_to_matrix(
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& cols // may only want a subset of columns
+  ) {
+    int i;
+    int n_cols = cols.size();
+    int n_rows = df.rows();
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector m_names( n_cols );
+    Rcpp::NumericMatrix nm( n_rows, n_cols );
+    for( i = 0; i < n_cols; i++ ) {
+      Rcpp::String this_col = cols[ i ];
+      m_names[i] = this_col;
+      Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ this_col ] );
+      nm( Rcpp::_, i ) = this_column;
+    }
+
+    Rcpp::List m_attr(2);
+    m_attr(1) = m_names;
+
+    nm.attr("dimnames") = m_attr;
+    return nm;
+  }
+
   inline Rcpp::IntegerMatrix matrix_row_to_matrix(
     Rcpp::IntegerMatrix& im,
     size_t& i

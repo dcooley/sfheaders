@@ -207,16 +207,16 @@ namespace sfc {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return sfc_point( nm, cols );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
+    return sfc_point( nm );
   }
 
   inline SEXP sfc_point(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return sfc_point( nm, cols );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
+    return sfc_point( nm );
   }
 
   inline SEXP sfc_point(
@@ -321,15 +321,11 @@ namespace sfc {
     return Rcpp::List::create();
   }
 
-
-  /*
-   * Unknown x and col types
-   * First switch based on column types
-   */
   inline SEXP sfc_point(
       SEXP& x,
       SEXP& cols
   ) {
+
     if( Rf_isNull( cols ) ) {
       return sfc_point( x );
     }
@@ -350,6 +346,60 @@ namespace sfc {
     }
     return Rcpp::List::create(); // never reaches
   }
+
+
+
+
+  // for POINTs, each row is a unique point
+  // and for sfc objects we don't keep the id column
+  // so don't need this case
+  // inline SEXP sfc_point(
+  //     SEXP& x,
+  //     SEXP& geometry_cols,
+  //     SEXP& point_id,
+  // ) {
+  //   if( Rf_isNull( geometry_cols ) && Rf_isNull( point_id ) ) {
+  //     return sfc_point( x );
+  //   }
+  //
+  //   if( Rf_isNull( point_id ) && !Rf_isNull( geometry_cols ) ) {
+  //     return sfc_point( x, geometry_cols );
+  //   }
+  //
+  //   if( !Rf_isNull( point_id ) && Rf_isNull( geometry_cols ) ) {
+  //     SEXP geometry_cols2 = sfheaders::utils::other_columns( x, point_id );
+  //     return sfc_point( x, geometry_cols, point_id ); // send back in
+  //   }
+  //
+  //   if( TYPEOF( geometry_cols ) != TYPEOF( point_id ) ) {
+  //     Rcpp::stop("sfheaders - point columns types are different");
+  //   }
+  //
+  //   sfheaders::utils::geometry_column_check( geometry_cols );
+  //
+  //   switch( TYPEOF( geometry_cols ) ) {
+  //   case REALSXP: {}
+  //   case INTSXP: {
+  //     Rcpp::IntegerVector iv_geometry_cols = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
+  //     Rcpp::IntegerVector iv_point_id_col = Rcpp::as< Rcpp::IntegerVector >( point_id );
+  //     int i_point_id_col = iv_point_id_col[0];
+  //     return sfc_point( x, iv_geometry_cols, i_point_id_col );
+  //
+  //   }
+  //   case STRSXP: {
+  //     Rcpp::StringVector sv_geometry_cols = Rcpp::as< Rcpp::StringVector >( geometry_cols );
+  //     Rcpp::StringVector sv_point_id_col = Rcpp::as< Rcpp::StringVector >( point_id );
+  //     Rcpp::String s_point_id_col = sv_point_id_col[0];
+  //     return sfc_point( x, sv_geometry_cols, s_point_id_col );
+  //   }
+  //   default: {
+  //     Rcpp::stop("sfheaders - unsupported multipoint type");
+  //   }
+  //   }
+  //
+  //   return Rcpp::List::create(); // never reaches
+  // }
+
 
 } // sfc
 } // sfheaders

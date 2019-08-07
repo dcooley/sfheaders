@@ -31,7 +31,6 @@ inline SEXP sfc_multilinestring(
   sfc[0] = mp;
   sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTILINESTRING, bbox, z_range, m_range );
   return sfc;
-
 }
 
 
@@ -108,7 +107,7 @@ inline SEXP sfc_multilinestring(
 //   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
 //   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 //
-//   std::string geom_type = "MULTILINESTRING";
+//   std::string geom_type = "POLYGON";
 //   std::unordered_set< std::string > geometry_types{ geom_type };
 //
 //   Rcpp::String epsg = NA_STRING;
@@ -463,7 +462,7 @@ inline SEXP sfc_multilinestring(
 inline SEXP sfc_multilinestring(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& geometry_cols,
-    Rcpp::NumericVector& multilinestring_ids,
+    SEXP& multilinestring_ids,
     int& linestring_id
 ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -475,10 +474,10 @@ inline SEXP sfc_multilinestring(
   size_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
+  SEXP unique_multilinestring_ids = sfheaders::utils::get_sexp_unique( multilinestring_ids );
   Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
-  size_t n_multilinestrings = unique_multilinestring_ids.length();
+  size_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids );
   size_t i;
   Rcpp::List sfc( n_multilinestrings );
 
@@ -500,7 +499,7 @@ inline SEXP sfc_multilinestring(
 inline SEXP sfc_multilinestring(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
-    Rcpp::NumericVector& multilinestring_ids,
+    SEXP& multilinestring_ids,  // can be int, double, string, ...
     Rcpp::String& linestring_id
 ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -512,10 +511,10 @@ inline SEXP sfc_multilinestring(
   size_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
+  SEXP unique_multilinestring_ids = sfheaders::utils::get_sexp_unique( multilinestring_ids );
   Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
-  size_t n_multilinestrings = unique_multilinestring_ids.length();
+  size_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids ); //  unique_multilinestring_ids.length();
   size_t i;
   Rcpp::List sfc( n_multilinestrings );
 
@@ -632,7 +631,7 @@ inline SEXP sfc_multilinestring(
     Rcpp::String& multilinestring_id,
     Rcpp::String& linestring_id
 ) {
-  Rcpp::NumericVector multilinestring_ids = df[ multilinestring_id ];
+  SEXP multilinestring_ids = df[ multilinestring_id ];
   return sfc_multilinestring( df, geometry_cols, multilinestring_ids, linestring_id );
 }
 
@@ -642,7 +641,7 @@ inline SEXP sfc_multilinestring(
     int& multilinestring_id,
     int& linestring_id
 ) {
-  Rcpp::NumericVector multilinestring_ids = df[ multilinestring_id ];
+  SEXP multilinestring_ids = df[ multilinestring_id ];
   return sfc_multilinestring( df, geometry_cols, multilinestring_ids, linestring_id );
 }
 
@@ -744,7 +743,6 @@ inline SEXP sfc_multilinestring(
 }
 
 
-// if an 'id' col is supplied, it means we have many multilinestrings
 inline SEXP sfc_multilinestring(
     SEXP& x,
     SEXP& geometry_cols,
@@ -752,17 +750,27 @@ inline SEXP sfc_multilinestring(
     SEXP& linestring_id
 ) {
 
-  if( Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( multilinestring_id ) ) {
-    return sfc_multilinestring( x );
+  if( Rf_isNull( geometry_cols ) ) {
+    // make this all the other columns, then send back in
+    SEXP geometry_cols2 = sfheaders::utils::other_columns( x, multilinestring_id, linestring_id );
+    return sfc_multilinestring( x, geometry_cols2, multilinestring_id, linestring_id );
+  }
+
+  // From now on, geometry_cols will never be null
+
+  if( Rf_isNull( linestring_id ) &&
+      Rf_isNull( multilinestring_id ) ) {
+    return sfc_multilinestring( x, geometry_cols );
   }
   //
   // // JUST multilinestring_id == each multilinestring is just one line
   // // JSUT linestring_id == they are all the same multilinestring_id
   //
-  if ( ( Rf_isNull( geometry_cols ) && Rf_isNull( multilinestring_id ) && !Rf_isNull( linestring_id ) ) ) {
+  if ( Rf_isNull( multilinestring_id ) &&
+       !Rf_isNull( linestring_id )
+  ) {
     // linestring is provided
-    // so they are all the same MULTILINESTRING
-    SEXP geometry_cols2 = sfheaders::utils::other_columns( x, linestring_id );
+    // so they are all the same POLYGON
 
     // whatever x is, the linestring_id col is the ids of lines
     // all the other columns are geometry columns
@@ -771,7 +779,7 @@ inline SEXP sfc_multilinestring(
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols2 );
+    sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols );
 
     Rcpp::List sfc(1);
 
@@ -780,7 +788,7 @@ inline SEXP sfc_multilinestring(
       if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
       size_t n_col = im.ncol();
-      sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols2 );
+      sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
       break;
     }
     }
@@ -788,7 +796,7 @@ inline SEXP sfc_multilinestring(
       if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       size_t n_col = nm.ncol();
-      sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols2 );
+      sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
       break;
     }
     }
@@ -796,7 +804,7 @@ inline SEXP sfc_multilinestring(
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       size_t n_col = df.ncol();
-      sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols2 );
+      sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
       break;
     }
     }
@@ -805,43 +813,47 @@ inline SEXP sfc_multilinestring(
     }
     }
 
-    sfc[0] = sfheaders::sfg::sfg_multilinestring( x, geometry_cols2, linestring_id );
+    sfc[0] = sfheaders::sfg::sfg_multilinestring( x, geometry_cols, linestring_id );
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTILINESTRING, bbox, z_range, m_range );
     return sfc;
   }
 
-  if ( ( Rf_isNull( geometry_cols ) && !Rf_isNull( multilinestring_id ) && Rf_isNull( linestring_id ) ) ) {
+  if ( !Rf_isNull( multilinestring_id ) &&
+       Rf_isNull( linestring_id )
+  ) {
     // multilinestring is provided, so there is only one line per multilinestring
-    SEXP geometry_cols2 = sfheaders::utils::other_columns( x, multilinestring_id );
+
     // and given each multilinestring only has one line, can we simply set the linestring_id to be the
     // same as the multilinestring_id column; will taht work??
-    SEXP linestring_id2 = multilinestring_id;
-    return sfc_multilinestring( x, geometry_cols2, multilinestring_id, linestring_id2 );
-  }
-
-  if( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) && !Rf_isNull( multilinestring_id ) ) {
-    SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id, multilinestring_id );
-    return sfc_multilinestring( x, other_cols, multilinestring_id, linestring_id );
-  }
-
-  if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) && Rf_isNull( multilinestring_id ) ) {
-    // it's just a matrix / data.frame where the geometry columns are provided
-    return sfc_multilinestring( x, geometry_cols );
-  }
-
-  if( !Rf_isNull( geometry_cols ) && !Rf_isNull( multilinestring_id ) && Rf_isNull( linestring_id ) ) {
-    // each multilinestring only has one line
     SEXP linestring_id2 = multilinestring_id;
     return sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id2 );
   }
 
-  if( !Rf_isNull( geometry_cols ) && !Rf_isNull( multilinestring_id ) && !Rf_isNull( linestring_id ) ) {
+  // if( !Rf_isNull( linestring_id ) &&
+  //     !Rf_isNull( multilinestring_id )
+  //     ) {
+  //   return sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id );
+  // }
+
+  // if( !Rf_isNull( geometry_cols ) &&
+  //     !Rf_isNull( multilinestring_id ) &&
+  //     Rf_isNull( linestring_id )
+  //       ) {
+  //
+  //   // each multilinestring only has one line
+  //   SEXP linestring_id2 = multilinestring_id;
+  //   return sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id2 );
+  // }
+
+  if( !Rf_isNull( multilinestring_id ) &&
+      !Rf_isNull( linestring_id )
+  ) {
 
     sfheaders::utils::geometry_column_check( geometry_cols );
 
     if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
          TYPEOF( geometry_cols ) != TYPEOF( multilinestring_id ) ) {
-      Rcpp::stop("sfheaders - linestring columns types are different");
+      Rcpp::stop("sfheaders - multilinestring columns types are different");
     }
 
     switch( TYPEOF( geometry_cols ) ) {

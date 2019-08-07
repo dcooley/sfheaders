@@ -9,6 +9,7 @@
 #include "sfheaders/utils/sexp/sexp.hpp"
 #include "sfheaders/utils/vectors/vectors.hpp"
 #include "sfheaders/utils/unique/unique_sort.hpp"
+#include "sfheaders/utils/unique/unique_ids.hpp"
 
 namespace sfheaders {
 namespace utils {

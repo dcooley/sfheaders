@@ -69,3 +69,31 @@ test_that("sfc_multipolygon works after refactoring issue14",{
   expect_true( length( res ) == 1 )
 
 })
+
+test_that("data.frame with non-numeric id columns work",{
+
+
+  is_multipolygon <- function(x) {
+    y <- sapply( x, function(y) is.list( unclass( y ) ) )
+    z <- sapply( x, function(y) attr( y, "class")[2] == "MULTIPOLYGON")
+    return( all(y) & all(z))
+  }
+
+  df <- data.frame(
+    p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = c(1,1,1,1,1,1,1,1)
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+    , stringsAsFactors = F
+  )
+
+  res <- sfheaders::sfc_multipolygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , multipolygon_id = "p_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
+  expect_true( is_multipolygon( res ) )
+
+})

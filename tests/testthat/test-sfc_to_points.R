@@ -83,3 +83,4 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_true( is_point( res ) )
 
 })
+

@@ -76,6 +76,7 @@ test_that("data.frame with non-numeric id columns work",{
     , l_id = c(1,1,1,1,1,1,1,1)
     , x = c(1,2,3,1,4,5,6,4)
     , y = c(1,2,3,1,4,5,6,4)
+    , stringsAsFactors = F
   )
 
   res <- sfheaders::sfc_polygon(

@@ -64,6 +64,6 @@ test_that("line matrices returend from various R objects",{
 
   x <- data.frame( y = 1:2, x = 3:4 )
   res <- sfheaders:::rcpp_get_mat( x, c(1,0) )
-  expect_equal( unname( as.matrix( x[, c(2,1)] ) ) , res )
+  expect_equal( as.matrix( x[, c(2,1)] ) , res )
 
 })

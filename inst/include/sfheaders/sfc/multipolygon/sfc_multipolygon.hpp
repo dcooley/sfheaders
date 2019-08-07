@@ -462,7 +462,7 @@ inline SEXP sfc_multipolygon(
 inline SEXP sfc_multipolygon(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& geometry_cols,
-    Rcpp::NumericVector& multipolygon_ids,
+    SEXP& multipolygon_ids,
     int& polygon_id,
     int& linestring_id
 ) {
@@ -475,10 +475,10 @@ inline SEXP sfc_multipolygon(
   size_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
+  SEXP unique_multipolygon_ids = sfheaders::utils::get_sexp_unique( multipolygon_ids );
   Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
-  size_t n_multipolygons = unique_multipolygon_ids.length();
+  size_t n_multipolygons = sfheaders::utils::get_sexp_length( unique_multipolygon_ids );
   size_t i;
   Rcpp::List sfc( n_multipolygons );
 
@@ -500,7 +500,7 @@ inline SEXP sfc_multipolygon(
 inline SEXP sfc_multipolygon(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
-    Rcpp::NumericVector& multipolygon_ids,
+    SEXP& multipolygon_ids,
     Rcpp::String& polygon_id,
     Rcpp::String& linestring_id
 ) {
@@ -513,10 +513,10 @@ inline SEXP sfc_multipolygon(
   size_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  Rcpp::NumericVector unique_multipolygon_ids = Rcpp::sort_unique( multipolygon_ids );
+  SEXP unique_multipolygon_ids = sfheaders::utils::get_sexp_unique( multipolygon_ids );
   Rcpp::IntegerMatrix multipolygon_positions = sfheaders::utils::id_positions( multipolygon_ids, unique_multipolygon_ids );
 
-  size_t n_multipolygons = unique_multipolygon_ids.length();
+  size_t n_multipolygons = sfheaders::utils::get_sexp_length( unique_multipolygon_ids );
   size_t i;
   Rcpp::List sfc( n_multipolygons );
 
@@ -638,7 +638,7 @@ inline SEXP sfc_multipolygon(
     Rcpp::String& polygon_id,
     Rcpp::String& linestring_id
 ) {
-  Rcpp::NumericVector multipolygon_ids = df[ multipolygon_id ];
+  SEXP multipolygon_ids = df[ multipolygon_id ];
   return sfc_multipolygon( df, geometry_cols, multipolygon_ids, polygon_id, linestring_id );
 }
 
@@ -649,7 +649,7 @@ inline SEXP sfc_multipolygon(
     int& polygon_id,
     int& linestring_id
 ) {
-  Rcpp::NumericVector multipolygon_ids = df[ multipolygon_id ];
+  SEXP multipolygon_ids = df[ multipolygon_id ];
   return sfc_multipolygon( df, geometry_cols, multipolygon_ids, polygon_id, linestring_id );
 }
 

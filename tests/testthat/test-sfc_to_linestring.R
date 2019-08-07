@@ -78,3 +78,29 @@ test_that("various objects converted to sfc_LINESTRING",{
   expect_error( sfheaders:::rcpp_sfc_linestring(m, NULL, 0), "sfheaders - incorrect number of geometry columns")
 
 })
+
+test_that("data.frame with non-numeric id columns work",{
+
+  is_linestring <- function(x) {
+    y <- sapply( x, function(y) is.matrix(unclass(y)))
+    z <- sapply( x, function(y) attr( y, "class")[2] == "LINESTRING")
+    return( all(y) & all(z))
+  }
+
+  df <- data.frame(
+    p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = c(1,1,1,1,1,1,1,1)
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+  )
+
+  res <- sfheaders::sfc_linestring(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , linestring_id = "p_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+  expect_true( is_linestring( res ) )
+
+})

@@ -511,7 +511,7 @@ inline SEXP sfc_multipoint(
 inline SEXP sfc_multipoint(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
-    Rcpp::NumericVector& line_ids
+    SEXP& line_ids
 ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
@@ -522,10 +522,10 @@ inline SEXP sfc_multipoint(
   size_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
+  SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
   Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
-  size_t n_lines = unique_ids.length();
+  size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
   Rcpp::List sfc( n_lines );
 
@@ -554,7 +554,7 @@ inline SEXP sfc_multipoint(
 inline SEXP sfc_multipoint(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& geometry_cols,
-    Rcpp::NumericVector& line_ids
+    SEXP& line_ids
 ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
@@ -565,10 +565,10 @@ inline SEXP sfc_multipoint(
   size_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
+  SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
   Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
-  size_t n_lines = unique_ids.length();
+  size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
   Rcpp::List sfc( n_lines );
 
@@ -617,7 +617,7 @@ inline SEXP sfc_multipoint(
     Rcpp::String& multipoint_id
 ) {
   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-  Rcpp::NumericVector line_ids = df[ multipoint_id ];
+  SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids );
 }
 
@@ -627,7 +627,7 @@ inline SEXP sfc_multipoint(
     Rcpp::String& multipoint_id
 ) {
   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-  Rcpp::NumericVector line_ids = df[ multipoint_id ];
+  SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids );
 }
 
@@ -637,7 +637,7 @@ inline SEXP sfc_multipoint(
     Rcpp::StringVector& geometry_cols,
     Rcpp::String& multipoint_id
 ) {
-  Rcpp::NumericVector line_ids = df[ multipoint_id ];
+  SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids );
 }
 
@@ -646,7 +646,7 @@ inline SEXP sfc_multipoint(
     Rcpp::IntegerVector& geometry_cols,
     int& multipoint_id
 ) {
-  Rcpp::NumericVector line_ids = df[ multipoint_id ];
+  SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids );
 }
 

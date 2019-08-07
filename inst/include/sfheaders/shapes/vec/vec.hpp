@@ -138,8 +138,8 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return get_vec( nm, cols );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
+    return get_vec( nm );
   }
 
   inline SEXP get_vec(

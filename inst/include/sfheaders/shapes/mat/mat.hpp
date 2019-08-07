@@ -107,8 +107,8 @@ namespace shapes {
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    return get_mat( nm, cols );
+    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
+    return get_mat( nm );
   }
 
 
