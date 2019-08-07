@@ -23,11 +23,12 @@ sfc_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
 \item{linestring_id}{column of ids for linestrings (within multilinestrings)}
 }
 \description{
-sfc MULTILINESTRING
+constructs an sfc of MULTILINESTRING objects
 }
 \section{notes}{
 
 sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
 }
 
 \examples{

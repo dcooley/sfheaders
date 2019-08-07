@@ -23,11 +23,12 @@ sfc_polygon(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
 \item{linestring_id}{column of ids for lines (within polygons)}
 }
 \description{
-sfc POLYGON
+constructs an sfc of POLYGON objects
 }
 \section{notes}{
 
 sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
 }
 
 \examples{

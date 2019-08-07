@@ -26,6 +26,7 @@ constructs sfc of MULTIPOINT objects
 \section{notes}{
 
 sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
 }
 
 \examples{

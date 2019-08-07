@@ -8,12 +8,15 @@ namespace sf {
 
   inline SEXP make_sf( Rcpp::List& sfc ) {
 
-    Rcpp::DataFrame df = Rcpp::DataFrame::create(
+    Rcpp::List df = Rcpp::List::create(
       Rcpp::Named("geometry") = sfc
     );
 
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
+
+    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
+    df.attr("row.names") = rn;
 
     return df;
 
@@ -21,7 +24,7 @@ namespace sf {
 
   inline SEXP make_sf( Rcpp::List& sfc, Rcpp::IntegerVector& iv ) {
 
-    Rcpp::DataFrame df = Rcpp::DataFrame::create(
+    Rcpp::List df = Rcpp::List::create(
       Rcpp::Named("id") = iv,
       Rcpp::Named("geometry") = sfc
     );
@@ -29,11 +32,14 @@ namespace sf {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
 
+    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
+    df.attr("row.names") = rn;
+
     return df;
   }
 
   inline SEXP make_sf( Rcpp::List& sfc, Rcpp::NumericVector& nv ) {
-    Rcpp::DataFrame df = Rcpp::DataFrame::create(
+    Rcpp::List df = Rcpp::List::create(
       Rcpp::Named("id") = nv,
       Rcpp::Named("geometry") = sfc
     );
@@ -41,17 +47,23 @@ namespace sf {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
 
+    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
+    df.attr("row.names") = rn;
+
     return df;
   }
 
   inline SEXP make_sf( Rcpp::List& sfc, Rcpp::StringVector& sv ) {
-    Rcpp::DataFrame df = Rcpp::DataFrame::create(
+    Rcpp::List df = Rcpp::List::create(
       Rcpp::Named("id") = sv,
       Rcpp::Named("geometry") = sfc
     );
 
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
+
+    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
+    df.attr("row.names") = rn;
 
     return df;
   }

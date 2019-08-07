@@ -11,6 +11,7 @@
 #'
 #' @section notes:
 #' sfheaders functions do not perform any validity checks on the geometries.
+#' Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
 #'
 #' @examples
 #'
@@ -86,6 +87,8 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 
 #' sfc MULTILINESTRING
 #'
+#' constructs an sfc of MULTILINESTRING objects
+#'
 #' @inheritParams sfc_linestring
 #' @param multilinestring_id column of ids for multilinestrings
 #' @param linestring_id column of ids for linestrings (within multilinestrings)
@@ -139,6 +142,8 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 
 #' sfc POLYGON
 #'
+#' constructs an sfc of POLYGON objects
+#'
 #' @inheritParams sfc_linestring
 #' @param polygon_id column of ids for polygons
 #' @param linestring_id column of ids for lines (within polygons)
@@ -190,6 +195,8 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 
 
 #' sfc MULTIPOLYGON
+#'
+#' constructs an sfc of MULTIPOLYGON objects
 #'
 #'
 #' @inheritParams sfc_linestring

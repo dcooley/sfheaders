@@ -148,6 +148,12 @@ test_that("ID order maintained",{
     , z = 1:10
     , m = 1:10
   )
+
+  # #res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L )
+  #
+  # res$geometry[[1]]
+  # res$geometry[[2]]
+
   expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L ), "Not a matrix." ) ## because the id2 is out of order
 
 })
