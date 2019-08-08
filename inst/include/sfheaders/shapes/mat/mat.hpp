@@ -3,16 +3,6 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
-//#include "sfheaders/sfg/sfg_types.hpp"
-/*
- * get_mat
- *
- * Returns a matrix
- *
- * - sfg_MULTIPOINT
- * - sfg_LINESTRING
- * - sfc_POINTs
- */
 
 namespace sfheaders {
 namespace shapes {
