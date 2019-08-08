@@ -1,5 +1,13 @@
 context("sfheaders")
 
+test_that("index_correct works",{
+
+  x <- 1:4
+  res <- sfheaders:::index_correct( x )
+  expect_equal( x - 1, res )
+
+})
+
 test_that("sfheaders::utils::subset subsets a data.frame",{
 
   x <- data.frame(
@@ -125,9 +133,7 @@ test_that("sfheaders::utils::other_columns works for various data types",{
 })
 
 test_that("concatenate_vectors works",{
-
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1,5), c(1,5))
-
 })
 
 

@@ -261,3 +261,44 @@ test_that("unordered ids cause issues",{
 })
 
 
+test_that("R API to sf works",{
+
+  is_sf <- function(x) {
+    a <- attributes(x)
+    all( a$class == c("sf", "data.frame") ) & a$sf_column == "geometry"
+  }
+
+  df <- data.frame(
+    multi_poly_id = rep(1,10)
+    , poly_id = c(1,1,1,1,1,1,1,2,2,2)
+    , line_id = rep(1,10)
+    , x = 1:10
+    , y = 1:10
+  )
+
+  res <- sf_point(obj = df, x = "x", y = "y")
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == nrow( df ) )
+
+  res <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "poly_id")
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$poly_id ) ) )
+
+  res <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "poly_id")
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$poly_id ) ) )
+
+  res <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "poly_id")
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$poly_id ) ) )
+
+  res <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "poly_id")
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$poly_id ) ) )
+
+  res <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "poly_id")
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$poly_id ) ) )
+
+})
+
