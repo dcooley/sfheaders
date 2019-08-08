@@ -47,6 +47,11 @@ namespace utils {
         //the id has changed
         end_positions[ idx ] = i - 1;
         idx++;
+
+        if( idx >= start_positions.length() ) {
+          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
+        }
+
         start_positions[ idx ] = i;
         this_id = line_ids[ i ];
       }
@@ -73,6 +78,7 @@ namespace utils {
 
     Rcpp::IntegerMatrix im( unique_n, 2);
 
+
     // if n = 1, there's only 1 unique ID
     if( n == 1 ) {
       im( 0, 0 ) = 0;
@@ -88,6 +94,7 @@ namespace utils {
     int idx = 0;
     double this_id;
     for( i = 0; i < n; i++ ) {
+
       //go through line_ids and find where ids change
       if( i == 0 ) {
         this_id = line_ids[ i ];
@@ -98,6 +105,11 @@ namespace utils {
         //the id has changed
         end_positions[ idx ] = i - 1;
         idx++;
+
+        if( idx >= start_positions.length() ) {
+          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
+        }
+
         start_positions[ idx ] = i;
         this_id = line_ids[ i ];
       }
@@ -105,6 +117,10 @@ namespace utils {
       if( i == ( n - 1 ) ) {
         end_positions[ idx ] = i;
       }
+    }
+
+    if( start_positions.length() != end_positions.length() ) {
+      Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
     }
 
     im( Rcpp::_, 0 ) = start_positions;
@@ -148,6 +164,11 @@ namespace utils {
         //the id has changed
         end_positions[ idx ] = i - 1;
         idx++;
+
+        if( idx >= start_positions.length() ) {
+          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
+        }
+
         start_positions[ idx ] = i;
         this_id = line_ids[ i ];
       }

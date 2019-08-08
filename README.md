@@ -78,7 +78,6 @@ there are various overloaded functions for each `sfg` and `sfc` type
 
 ``` r
 library(Rcpp)
-# Warning: package 'Rcpp' was built under R version 3.5.2
 library(sfheaders)
 
 cppFunction(
@@ -258,6 +257,16 @@ sfc_point( df )
 #    1    1    5    5 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 
 sfc_multipoint( df )
 # [[1]]
@@ -290,16 +299,26 @@ sfc_multipoint( df )
 #    1    1    5    5 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 
 sfc_polygon( df )
 # [[1]]
 # [[1]]
-#      x y
-# [1,] 1 5
-# [2,] 2 4
-# [3,] 3 3
-# [4,] 4 2
-# [5,] 5 1
+#      [,1] [,2]
+# [1,]    1    5
+# [2,]    2    4
+# [3,]    3    3
+# [4,]    4    2
+# [5,]    5    1
 # 
 # attr(,"class")
 # [1] "XY"      "POLYGON" "sfg"    
@@ -324,6 +343,16 @@ sfc_polygon( df )
 #    1    1    5    5 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 ```
 
 ``` r
@@ -374,6 +403,16 @@ a_polygon( df )
 #    1    1    5    5 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 ```
 
 ``` r
@@ -424,6 +463,16 @@ a_polygon( df, c("x","y") )
 #    1    1    5    5 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 ```
 
 ``` r
@@ -485,6 +534,16 @@ a_polygon( df, c("x","y") )
 #    1    1   10   10 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 ```
 
 ``` r
@@ -512,7 +571,11 @@ a_polygon( df, c("x","y"), "id", NULL )
 # [4,]    4    4
 # [5,]    5    5
 # 
+# attr(,"class")
+# [1] "XY"      "POLYGON" "sfg"    
+# 
 # [[2]]
+# [[1]]
 #      [,1] [,2]
 # [1,]    6    6
 # [2,]    7    7
@@ -543,25 +606,54 @@ a_polygon( df, c("x","y"), "id", NULL )
 #    1    1   10   10 
 # attr(,"class")
 # [1] "bbox"
+# attr(,"z_range")
+# zmin zmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "z_range"
+# attr(,"m_range")
+# mmin mmax 
+#   NA   NA 
+# attr(,"class")
+# [1] "m_range"
 ```
 
 ``` r
-# n <- 1e7
-# df <- data.frame(
-#   id = rep(1:(n / 2), each = 2),
-#   x = rnorm( n ),
-#   y = rnorm( n ),
-#   z = rnorm( n )
-# )
-# 
-# system.time({
-#   res <- sfc_linestring( df, linestring_id = "id" )
-# })
-# 
-# res
-# 
-# 
-# 
-# sfc_multipoint( df )
-# sfc_multipoint( df, x = "x", y = "y", multipoint_id = "id" )
+n <- 1e5
+df <- data.frame(
+  id = rep(1:(n/5), each = 5)
+  , x = rnorm(n)
+  , y = rnorm(n)
+)
+
+library(data.table)
+library(microbenchmark)
+
+dt <- as.data.table( df )
+microbenchmark(
+
+  dt = {
+    sf <- dt[
+      , {
+        geometry <- sf::st_linestring( x = matrix( c( x, y ), ncol = 2, byrow = T ))
+        geometry <- sf::st_sf( geometry = sf::st_sfc( geometry ) )
+      }
+      , by = id
+    ]
+    sf <- sf::st_as_sf( sf )
+  },
+  
+  sfheaders = {
+    sfh <- sfheaders::sf_linestring(
+      obj = df
+      , linestring_id = "id"
+    )
+  },
+  times = 5
+)
+
+# Unit: milliseconds
+#      expr        min         lq       mean     median         uq        max neval
+#        dt 6599.67479 6654.12357 6779.23543 6750.19807 6833.46262 7058.71809     5
+# sfheaders   21.07775   21.30438   23.20592   23.21665   25.06429   25.36654     5
 ```

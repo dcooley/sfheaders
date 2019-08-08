@@ -17,9 +17,9 @@ inline SEXP sf_multipolygon(
     SEXP& polygon_id,
     SEXP& linestring_id
 ) {
-  SEXP ids = sfheaders::utils::get_ids( x, multipolygon_id );
   Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id );
 
+  SEXP ids = sfheaders::utils::get_ids( x, multipolygon_id );
   Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
   return sf;
 }

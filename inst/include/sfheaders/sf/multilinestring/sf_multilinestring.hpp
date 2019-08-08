@@ -16,9 +16,9 @@ inline SEXP sf_multilinestring(
     SEXP& multilinestring_id,
     SEXP& linestring_id
 ) {
-  SEXP ids = sfheaders::utils::get_ids( x, multilinestring_id );
   Rcpp::List sfc = sfheaders::sfc::sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id );
 
+  SEXP ids = sfheaders::utils::get_ids( x, multilinestring_id );
   Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
   return sf;
 }

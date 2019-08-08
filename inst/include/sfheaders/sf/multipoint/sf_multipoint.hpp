@@ -15,9 +15,9 @@ inline SEXP sf_multipoint(
     SEXP& geometry_cols,
     SEXP& multipoint_id
 ) {
-  SEXP ids = sfheaders::utils::get_ids( x, multipoint_id );
   Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id );
 
+  SEXP ids = sfheaders::utils::get_ids( x, multipoint_id );
   Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
   return sf;
 }

@@ -235,25 +235,43 @@ cppFunction(
 a_polygon( df, c("x","y"), "id", NULL )
 ```
 
-```{r}
-# n <- 1e7
-# df <- data.frame(
-#   id = rep(1:(n / 2), each = 2),
-#   x = rnorm( n ),
-#   y = rnorm( n ),
-#   z = rnorm( n )
-# )
-# 
-# system.time({
-#   res <- sfc_linestring( df, linestring_id = "id" )
-# })
-# 
-# res
-# 
-# 
-# 
-# sfc_multipoint( df )
-# sfc_multipoint( df, x = "x", y = "y", multipoint_id = "id" )
+```r
+n <- 1e5
+df <- data.frame(
+  id = rep(1:(n/5), each = 5)
+  , x = rnorm(n)
+  , y = rnorm(n)
+)
 
+library(data.table)
+library(microbenchmark)
+
+dt <- as.data.table( df )
+microbenchmark(
+
+  dt = {
+    sf <- dt[
+      , {
+        geometry <- sf::st_linestring( x = matrix( c( x, y ), ncol = 2, byrow = T ))
+        geometry <- sf::st_sf( geometry = sf::st_sfc( geometry ) )
+      }
+      , by = id
+    ]
+    sf <- sf::st_as_sf( sf )
+  },
+  
+  sfheaders = {
+    sfh <- sfheaders::sf_linestring(
+      obj = df
+      , linestring_id = "id"
+    )
+  },
+  times = 5
+)
+
+# Unit: milliseconds
+#      expr        min         lq       mean     median         uq        max neval
+#        dt 6599.67479 6654.12357 6779.23543 6750.19807 6833.46262 7058.71809     5
+# sfheaders   21.07775   21.30438   23.20592   23.21665   25.06429   25.36654     5
 
 ```

@@ -154,7 +154,71 @@ test_that("ID order maintained",{
   # res$geometry[[1]]
   # res$geometry[[2]]
 
-  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L ), "Not a matrix." ) ## because the id2 is out of order
+  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
+
+})
+
+test_that("unordered ids cause issues",{
+
+  df <- data.frame(
+    id1 = c(2,2,2,2,2,1,1,1,1,1)
+    , x = 1:10
+    , y = 1:10
+    , z = 1:10
+    , m = 1:10
+  )
+
+  res <- sfheaders::sf_linestring(df, linestring_id = "id1")
+  expect_true( !any( res$id == unique( df$id1 ) ) )
+
+  ## sub-group order works
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,2,2,2,2,2)
+    , id2 = c(2,2,3,3,3,1,1,1,2,2)
+    , x = 1:10
+    , y = 1:10
+    , z = 1:10
+    , m = 1:10
+  )
+
+  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2")
+  expect_true( all( res$id == unique( df$id1 ) ) )
+  m1 <- res$geometry[[1]][[1]]
+  m2 <- res$geometry[[1]][[2]]
+  m3 <- res$geometry[[2]][[1]]
+  m4 <- res$geometry[[2]][[2]]
+
+  expect_equal( m1, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 2, 3:6 ] ) ) )
+  expect_equal( m2, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 3, 3:6 ] ) ) )
+  expect_equal( m3, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 1, 3:6 ] ) ) )
+  expect_equal( m4, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2, 3:6 ] ) ) )
+
+  ## sub-group order doesn't work
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,2,2,2,2,2)
+    , id2 = c(2,2,3,3,3,3,3,1,2,2)
+    , x = 1:10
+    , y = 1:10
+    , z = 1:10
+    , m = 1:10
+  )
+
+  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2")
+  expect_true( all( res$id == unique( df$id1 ) ) )
+  m1 <- res$geometry[[1]][[1]]
+  m2 <- res$geometry[[1]][[2]]
+  m3 <- res$geometry[[2]][[1]]
+  m4 <- res$geometry[[2]][[2]]
+  m5 <- res$geometry[[2]][[3]]
+
+
+  ## TODO: this should error, right??
+  ## OR, does the inner-most id not matter as much as the outer-most one?
+  expect_equal( m1, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 2, 3:6 ] ) ) )
+  expect_equal( m2, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 3, 3:6 ] ) ) )
+  expect_equal( m3, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 3, 3:6 ] ) ) )
+  expect_equal( m4, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 1, 3:6 ] ) ) )
+  expect_equal( m5, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2, 3:6 ] ) ) )
 
 })
 

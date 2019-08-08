@@ -23,9 +23,9 @@ namespace sf {
     SEXP& geometry_cols,
     SEXP& linestring_id
   ) {
-    SEXP ids = sfheaders::utils::get_ids( x, linestring_id );
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id );
 
+    SEXP ids = sfheaders::utils::get_ids( x, linestring_id );
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
