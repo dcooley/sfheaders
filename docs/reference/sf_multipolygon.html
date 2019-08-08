@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sfc MULTIPOLYGON — sfc_multipolygon • sfheaders</title>
+<title>sf MULTIPOLYGON — sf_multipolygon • sfheaders</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="sfc MULTIPOLYGON — sfc_multipolygon" />
+<meta property="og:title" content="sf MULTIPOLYGON — sf_multipolygon" />
 
-<meta property="og:description" content="constructs an sfc of MULTIPOLYGON objects" />
+<meta property="og:description" content="constructs an sf of MULTIPOLYGON objects" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,18 +112,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>sfc MULTIPOLYGON</h1>
+    <h1>sf MULTIPOLYGON</h1>
     
-    <div class="hidden name"><code>sfc_multipolygon.Rd</code></div>
+    <div class="hidden name"><code>sf_multipolygon.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>constructs an sfc of MULTIPOLYGON objects</p>
+    <p>constructs an sf of MULTIPOLYGON objects</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sfc_multipolygon</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>sf_multipolygon</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
@@ -155,8 +155,12 @@
       <td><p>column of ids for multipolygons</p></td>
     </tr>
     <tr>
+      <th>polygon_id</th>
+      <td><p>column of ids for polygons</p></td>
+    </tr>
+    <tr>
       <th>linestring_id</th>
-      <td><p>column of ids for linestrings</p></td>
+      <td><p>column of ids for lines (within polygons)</p></td>
     </tr>
     </table>
     
@@ -171,164 +175,25 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>m</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2] [,3]
-#&gt; [1,]    0    0    0
-#&gt; [2,]    0    1    0
-#&gt; [3,]    0    1    1
-#&gt; [4,]    0    0    1
-#&gt; [5,]    0    0    0
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XYZ"          "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    0    1 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;    0    1 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>m</span> )</div><div class='output co'>#&gt;   id                                    geometry
+#&gt; 1  1 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
   , <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>)
   , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
 )
 
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    1    1 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span> )</div><div class='output co'>#&gt;   id                     geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
   , <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>)
   , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
 )
 
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; [[2]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id"</span>)</div><div class='output co'>#&gt;   id                     geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0
+#&gt; 2  2 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>id1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
   , <span class='kw'>id2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
@@ -336,60 +201,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
   , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
 )
 
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>id1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
   , <span class='kw'>id2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
@@ -397,74 +210,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
   , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>3</span>)
 )
 
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; [[2]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    3    3
-#&gt; [2,]    3    4
-#&gt; [3,]    4    4
-#&gt; [4,]    4    3
-#&gt; [5,]    3    3
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    4    4 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1
+#&gt; 2  2                               3, 3, 4, 4, 3, 3, 4, 4, 3, 3</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>id1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
   , <span class='kw'>id2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
@@ -472,322 +220,14 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
   , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
 )
 
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; [[2]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; [[1]][[2]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;       [,1] [,2]
-#&gt;  [1,]    0    0
-#&gt;  [2,]    0    1
-#&gt;  [3,]    1    1
-#&gt;  [4,]    1    0
-#&gt;  [5,]    0    0
-#&gt;  [6,]    1    1
-#&gt;  [7,]    1    2
-#&gt;  [8,]    2    2
-#&gt;  [9,]    2    1
-#&gt; [10,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span> )</div><div class='output co'>#&gt;   id                     geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0
+#&gt; 2  2 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'><span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span> )</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'><span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'><span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'><span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'><span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id2"</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 1, 1, 2, 2, 1, 0, 1, 1, 0, 0, 1, 2, 2, 1, 1</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>id1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'a'</span>,<span class='st'>'a'</span>,<span class='st'>'a'</span>,<span class='st'>'a'</span>,<span class='st'>'a'</span>,<span class='st'>'b'</span>,<span class='st'>'b'</span>,<span class='st'>'b'</span>,<span class='st'>'b'</span>,<span class='st'>'b'</span>)
   , <span class='kw'>id2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
@@ -795,60 +235,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
   , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
 )
 
-<span class='fu'>sfc_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; [4,]    1    0
-#&gt; [5,]    0    0
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    1    1
-#&gt; [2,]    1    2
-#&gt; [3,]    2    2
-#&gt; [4,]    2    1
-#&gt; [5,]    1    1
-#&gt; 
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    2 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   NA   NA 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'>
+<span class='fu'>sf_multipolygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"id1"</span>)</div><div class='output co'>#&gt;   id                                                   geometry
+#&gt; 1  1 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

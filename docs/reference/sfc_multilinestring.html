@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="sfc MULTILINESTRING — sfc_multilinestring" />
 
-<meta property="og:description" content="sfc MULTILINESTRING" />
+<meta property="og:description" content="constructs an sfc of MULTILINESTRING objects" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,6 +91,9 @@
     <li>
       <a href="../articles/Rcpp.html">Rcpp</a>
     </li>
+    <li>
+      <a href="../articles/examples.html">examples</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -116,7 +119,7 @@
 
     <div class="ref-description">
     
-    <p>sfc MULTILINESTRING</p>
+    <p>constructs an sfc of MULTILINESTRING objects</p>
     
     </div>
 
@@ -128,7 +131,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>matrix or data.frame</p></td>
+      <td><p>sorted matrix or data.frame</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -155,6 +158,13 @@
       <td><p>column of ids for linestrings (within multilinestrings)</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="notes"><a class="anchor" href="#notes"></a>notes</h2>
+
+    
+    <p>sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.</p>
+<p>The data.frame and matrices you send into the sfheader functions must be ordered.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -188,7 +198,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    0    0 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;    1    1 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
@@ -221,18 +241,72 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    1    2 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;    0    3 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
+#&gt;      V2 V3
+#&gt; [1,]  0  0
+#&gt; [2,]  0  1
+#&gt; [3,]  1  1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
+#&gt;      V2 V3
+#&gt; [1,]  2  2
+#&gt; [2,]  2  3
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"crs")
+#&gt; $epsg
+#&gt; [1] NA
+#&gt; 
+#&gt; $proj4string
+#&gt; [1] NA
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "crs"
+#&gt; attr(,"precision")
+#&gt; [1] 0
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
+#&gt; attr(,"bbox")
+#&gt; xmin ymin xmax ymax 
+#&gt;    0    0    2    3 
+#&gt; attr(,"class")
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [[1]]
+#&gt;      [,1] [,2]
+#&gt; [1,]    0    0
+#&gt; [2,]    0    1
+#&gt; [3,]    1    1
+#&gt; 
+#&gt; [[2]]
 #&gt;      [,1] [,2]
 #&gt; [1,]    2    2
 #&gt; [2,]    2    3
@@ -259,56 +333,32 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; 
-#&gt; [[2]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    2    2
-#&gt; [2,]    2    3
-#&gt; 
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
 #&gt; attr(,"class")
-#&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
-#&gt; 
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
 #&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
+#&gt;      V2 V3
+#&gt; [1,]  0  0
+#&gt; [2,]  0  1
+#&gt; [3,]  1  1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    2    2
-#&gt; [2,]    2    3
+#&gt;      V2 V3
+#&gt; [1,]  2  2
+#&gt; [2,]  2  3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
@@ -332,7 +382,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
 #&gt;      [,1] [,2]
@@ -364,7 +424,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>3</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>3</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
 #&gt;      [,1] [,2] [,3]
 #&gt; [1,]    0    0    0
@@ -395,21 +465,31 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    1    2 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;    0    3 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
+#&gt;      V2 V3
+#&gt; [1,]  0  0
+#&gt; [2,]  0  1
+#&gt; [3,]  1  1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    2    2
-#&gt; [2,]    2    3
+#&gt;      V2 V3
+#&gt; [1,]  2  2
+#&gt; [2,]  2  3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
@@ -433,7 +513,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>ml_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
   , <span class='kw'>l_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
@@ -445,20 +535,20 @@
 
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;               [,1]        [,2]
-#&gt;  [1,] -1.400043517 -1.63098940
-#&gt;  [2,]  0.255317055  0.51242695
-#&gt;  [3,] -2.437263611 -1.86301149
-#&gt;  [4,] -0.005571287 -0.52201251
-#&gt;  [5,]  0.621552721 -0.05260191
-#&gt;  [6,]  1.148411606  0.54299634
-#&gt;  [7,] -1.821817661 -0.91407483
-#&gt;  [8,] -0.247325302  0.46815442
-#&gt;  [9,] -0.244199607  0.36295126
-#&gt; [10,] -0.282705449 -1.30454355
-#&gt; [11,] -0.553699384  0.73777632
-#&gt; [12,]  0.628982042  1.88850493
-#&gt; [13,]  2.065024895 -0.09744510
+#&gt;             [,1]        [,2]
+#&gt;  [1,] -1.7562754 -1.68428153
+#&gt;  [2,] -0.6905379  0.24940178
+#&gt;  [3,] -0.5585420  1.07283825
+#&gt;  [4,] -0.5366633  2.03936926
+#&gt;  [5,]  0.2271271  0.44945378
+#&gt;  [6,]  0.9784549  1.39181405
+#&gt;  [7,] -0.2088827  0.42656655
+#&gt;  [8,] -1.3994105  0.10758399
+#&gt;  [9,]  0.2585373  0.02229473
+#&gt; [10,] -0.4417995  0.60361101
+#&gt; [11,]  0.5685999 -0.26265057
+#&gt; [12,]  2.1268505 -0.52826408
+#&gt; [13,]  0.4248584  0.19214942
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
@@ -480,24 +570,34 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.437264 -1.863011  2.065025  1.888505 
+#&gt; -1.756275 -1.684282  2.126850  2.039369 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;               [,1]        [,2]        [,3]
-#&gt;  [1,] -1.400043517 -1.63098940 -0.93584735
-#&gt;  [2,]  0.255317055  0.51242695 -0.01595031
-#&gt;  [3,] -2.437263611 -1.86301149 -0.82678895
-#&gt;  [4,] -0.005571287 -0.52201251 -1.51239965
-#&gt;  [5,]  0.621552721 -0.05260191  0.93536319
-#&gt;  [6,]  1.148411606  0.54299634  0.17648861
-#&gt;  [7,] -1.821817661 -0.91407483  0.24368546
-#&gt;  [8,] -0.247325302  0.46815442  1.62354888
-#&gt;  [9,] -0.244199607  0.36295126  0.11203808
-#&gt; [10,] -0.282705449 -1.30454355 -0.13399701
-#&gt; [11,] -0.553699384  0.73777632 -1.91008747
-#&gt; [12,]  0.628982042  1.88850493 -0.27923724
-#&gt; [13,]  2.065024895 -0.09744510 -0.31344598
+#&gt;             [,1]        [,2]        [,3]
+#&gt;  [1,] -1.7562754 -1.68428153 -1.14619967
+#&gt;  [2,] -0.6905379  0.24940178  0.84618466
+#&gt;  [3,] -0.5585420  1.07283825  0.08171963
+#&gt;  [4,] -0.5366633  2.03936926 -1.30511701
+#&gt;  [5,]  0.2271271  0.44945378 -0.94491206
+#&gt;  [6,]  0.9784549  1.39181405  0.45434159
+#&gt;  [7,] -0.2088827  0.42656655 -0.85520250
+#&gt;  [8,] -1.3994105  0.10758399 -0.28689522
+#&gt;  [9,]  0.2585373  0.02229473  0.89496163
+#&gt; [10,] -0.4417995  0.60361101  0.06730444
+#&gt; [11,]  0.5685999 -0.26265057 -0.16267634
+#&gt; [12,]  2.1268505 -0.52826408 -0.82731017
+#&gt; [13,]  0.4248584  0.19214942  1.87650562
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
@@ -519,24 +619,34 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.437264 -1.863011  2.065025  1.888505 
+#&gt; -1.756275 -1.684282  2.126850  2.039369 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='st'>"m"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='st'>"m"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;               [,1]        [,2]        [,3]        [,4]
-#&gt;  [1,] -1.400043517 -1.63098940 -0.93584735  1.06730788
-#&gt;  [2,]  0.255317055  0.51242695 -0.01595031  0.07003485
-#&gt;  [3,] -2.437263611 -1.86301149 -0.82678895 -0.63912332
-#&gt;  [4,] -0.005571287 -0.52201251 -1.51239965 -0.04996490
-#&gt;  [5,]  0.621552721 -0.05260191  0.93536319 -0.25148344
-#&gt;  [6,]  1.148411606  0.54299634  0.17648861  0.44479712
-#&gt;  [7,] -1.821817661 -0.91407483  0.24368546  2.75541758
-#&gt;  [8,] -0.247325302  0.46815442  1.62354888  0.04653138
-#&gt;  [9,] -0.244199607  0.36295126  0.11203808  0.57770907
-#&gt; [10,] -0.282705449 -1.30454355 -0.13399701  0.11819487
-#&gt; [11,] -0.553699384  0.73777632 -1.91008747 -1.91172049
-#&gt; [12,]  0.628982042  1.88850493 -0.27923724  0.86208648
-#&gt; [13,]  2.065024895 -0.09744510 -0.31344598 -0.24323674
+#&gt;             [,1]        [,2]        [,3]       [,4]
+#&gt;  [1,] -1.7562754 -1.68428153 -1.14619967  0.7664402
+#&gt;  [2,] -0.6905379  0.24940178  0.84618466  0.9799567
+#&gt;  [3,] -0.5585420  1.07283825  0.08171963  1.3217810
+#&gt;  [4,] -0.5366633  2.03936926 -1.30511701 -1.1197108
+#&gt;  [5,]  0.2271271  0.44945378 -0.94491206  0.5145998
+#&gt;  [6,]  0.9784549  1.39181405  0.45434159 -1.5090998
+#&gt;  [7,] -0.2088827  0.42656655 -0.85520250  1.5327415
+#&gt;  [8,] -1.3994105  0.10758399 -0.28689522  0.4291474
+#&gt;  [9,]  0.2585373  0.02229473  0.89496163  0.1221034
+#&gt; [10,] -0.4417995  0.60361101  0.06730444 -1.1380124
+#&gt; [11,]  0.5685999 -0.26265057 -0.16267634 -0.5580151
+#&gt; [12,]  2.1268505 -0.52826408 -0.82731017  1.0525385
+#&gt; [13,]  0.4248584  0.19214942  1.87650562  0.6776836
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
@@ -558,25 +668,35 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.437264 -1.863011  2.065025  1.888505 
+#&gt; -1.756275 -1.684282  2.126850  2.039369 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   -1    1 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   -1    1 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       [,1]         [,2]
-#&gt;  [1,]    1 -1.400043517
-#&gt;  [2,]    1  0.255317055
-#&gt;  [3,]    1 -2.437263611
-#&gt;  [4,]    2 -0.005571287
-#&gt;  [5,]    2  0.621552721
-#&gt;  [6,]    3  1.148411606
-#&gt;  [7,]    3 -1.821817661
-#&gt;  [8,]    3 -0.247325302
-#&gt;  [9,]    1 -0.244199607
-#&gt; [10,]    1 -0.282705449
-#&gt; [11,]    1 -0.553699384
-#&gt; [12,]    2  0.628982042
-#&gt; [13,]    2  2.065024895
+#&gt;       l_id          x
+#&gt;  [1,]    1 -1.7562754
+#&gt;  [2,]    1 -0.6905379
+#&gt;  [3,]    1 -0.5585420
+#&gt;  [4,]    2 -0.5366633
+#&gt;  [5,]    2  0.2271271
+#&gt;  [6,]    3  0.9784549
+#&gt;  [7,]    3 -0.2088827
+#&gt;  [8,]    3 -1.3994105
+#&gt;  [9,]    1  0.2585373
+#&gt; [10,]    1 -0.4417995
+#&gt; [11,]    1  0.5685999
+#&gt; [12,]    2  2.1268505
+#&gt; [13,]    2  0.4248584
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
@@ -598,24 +718,34 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt;  1.000000 -2.437264  3.000000  2.065025 
+#&gt;  1.000000 -1.756275  3.000000  2.126850 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       [,1]         [,2]        [,3]
-#&gt;  [1,]    1 -1.400043517 -1.63098940
-#&gt;  [2,]    1  0.255317055  0.51242695
-#&gt;  [3,]    1 -2.437263611 -1.86301149
-#&gt;  [4,]    2 -0.005571287 -0.52201251
-#&gt;  [5,]    2  0.621552721 -0.05260191
-#&gt;  [6,]    3  1.148411606  0.54299634
-#&gt;  [7,]    3 -1.821817661 -0.91407483
-#&gt;  [8,]    3 -0.247325302  0.46815442
-#&gt;  [9,]    1 -0.244199607  0.36295126
-#&gt; [10,]    1 -0.282705449 -1.30454355
-#&gt; [11,]    1 -0.553699384  0.73777632
-#&gt; [12,]    2  0.628982042  1.88850493
-#&gt; [13,]    2  2.065024895 -0.09744510
+#&gt;       l_id          x           y
+#&gt;  [1,]    1 -1.7562754 -1.68428153
+#&gt;  [2,]    1 -0.6905379  0.24940178
+#&gt;  [3,]    1 -0.5585420  1.07283825
+#&gt;  [4,]    2 -0.5366633  2.03936926
+#&gt;  [5,]    2  0.2271271  0.44945378
+#&gt;  [6,]    3  0.9784549  1.39181405
+#&gt;  [7,]    3 -0.2088827  0.42656655
+#&gt;  [8,]    3 -1.3994105  0.10758399
+#&gt;  [9,]    1  0.2585373  0.02229473
+#&gt; [10,]    1 -0.4417995  0.60361101
+#&gt; [11,]    1  0.5685999 -0.26265057
+#&gt; [12,]    2  2.1268505 -0.52826408
+#&gt; [13,]    2  0.4248584  0.19214942
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
@@ -637,24 +767,34 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt;  1.000000 -2.437264  3.000000  2.065025 
+#&gt;  1.000000 -1.756275  3.000000  2.126850 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       [,1]         [,2]        [,3]        [,4]
-#&gt;  [1,]    1 -1.400043517 -1.63098940 -0.93584735
-#&gt;  [2,]    1  0.255317055  0.51242695 -0.01595031
-#&gt;  [3,]    1 -2.437263611 -1.86301149 -0.82678895
-#&gt;  [4,]    2 -0.005571287 -0.52201251 -1.51239965
-#&gt;  [5,]    2  0.621552721 -0.05260191  0.93536319
-#&gt;  [6,]    3  1.148411606  0.54299634  0.17648861
-#&gt;  [7,]    3 -1.821817661 -0.91407483  0.24368546
-#&gt;  [8,]    3 -0.247325302  0.46815442  1.62354888
-#&gt;  [9,]    1 -0.244199607  0.36295126  0.11203808
-#&gt; [10,]    1 -0.282705449 -1.30454355 -0.13399701
-#&gt; [11,]    1 -0.553699384  0.73777632 -1.91008747
-#&gt; [12,]    2  0.628982042  1.88850493 -0.27923724
-#&gt; [13,]    2  2.065024895 -0.09744510 -0.31344598
+#&gt;       l_id          x           y           z
+#&gt;  [1,]    1 -1.7562754 -1.68428153 -1.14619967
+#&gt;  [2,]    1 -0.6905379  0.24940178  0.84618466
+#&gt;  [3,]    1 -0.5585420  1.07283825  0.08171963
+#&gt;  [4,]    2 -0.5366633  2.03936926 -1.30511701
+#&gt;  [5,]    2  0.2271271  0.44945378 -0.94491206
+#&gt;  [6,]    3  0.9784549  1.39181405  0.45434159
+#&gt;  [7,]    3 -0.2088827  0.42656655 -0.85520250
+#&gt;  [8,]    3 -1.3994105  0.10758399 -0.28689522
+#&gt;  [9,]    1  0.2585373  0.02229473  0.89496163
+#&gt; [10,]    1 -0.4417995  0.60361101  0.06730444
+#&gt; [11,]    1  0.5685999 -0.26265057 -0.16267634
+#&gt; [12,]    2  2.1268505 -0.52826408 -0.82731017
+#&gt; [13,]    2  0.4248584  0.19214942  1.87650562
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
@@ -676,41 +816,51 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt;  1.000000 -2.437264  3.000000  2.065025 
+#&gt;  1.000000 -1.756275  3.000000  2.126850 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt;      zmin      zmax 
+#&gt; -1.305117  1.876506 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt;      mmin      mmax 
+#&gt; -1.305117  1.876506 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='st'>"ml_id"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"l_id"</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;            [,1]       [,2]        [,3]        [,4]
-#&gt; [1,] -1.4000435 -1.6309894 -0.93584735  1.06730788
-#&gt; [2,]  0.2553171  0.5124269 -0.01595031  0.07003485
-#&gt; [3,] -2.4372636 -1.8630115 -0.82678895 -0.63912332
+#&gt;            [,1]       [,2]        [,3]      [,4]
+#&gt; [1,] -1.7562754 -1.6842815 -1.14619967 0.7664402
+#&gt; [2,] -0.6905379  0.2494018  0.84618466 0.9799567
+#&gt; [3,] -0.5585420  1.0728383  0.08171963 1.3217810
 #&gt; 
 #&gt; [[2]]
-#&gt;              [,1]        [,2]       [,3]       [,4]
-#&gt; [1,] -0.005571287 -0.52201251 -1.5123997 -0.0499649
-#&gt; [2,]  0.621552721 -0.05260191  0.9353632 -0.2514834
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,] -0.5366633 2.0393693 -1.3051170 -1.1197108
+#&gt; [2,]  0.2271271 0.4494538 -0.9449121  0.5145998
 #&gt; 
 #&gt; [[3]]
-#&gt;            [,1]       [,2]      [,3]       [,4]
-#&gt; [1,]  1.1484116  0.5429963 0.1764886 0.44479712
-#&gt; [2,] -1.8218177 -0.9140748 0.2436855 2.75541758
-#&gt; [3,] -0.2473253  0.4681544 1.6235489 0.04653138
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,]  0.9784549 1.3918140  0.4543416 -1.5090998
+#&gt; [2,] -0.2088827 0.4265665 -0.8552025  1.5327415
+#&gt; [3,] -1.3994105 0.1075840 -0.2868952  0.4291474
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;            [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] -0.2441996  0.3629513  0.1120381  0.5777091
-#&gt; [2,] -0.2827054 -1.3045435 -0.1339970  0.1181949
-#&gt; [3,] -0.5536994  0.7377763 -1.9100875 -1.9117205
+#&gt;            [,1]        [,2]        [,3]       [,4]
+#&gt; [1,]  0.2585373  0.02229473  0.89496163  0.1221034
+#&gt; [2,] -0.4417995  0.60361101  0.06730444 -1.1380124
+#&gt; [3,]  0.5685999 -0.26265057 -0.16267634 -0.5580151
 #&gt; 
 #&gt; [[2]]
-#&gt;          [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] 0.628982  1.8885049 -0.2792372  0.8620865
-#&gt; [2,] 2.065025 -0.0974451 -0.3134460 -0.2432367
+#&gt;           [,1]       [,2]       [,3]      [,4]
+#&gt; [1,] 2.1268505 -0.5282641 -0.8273102 1.0525385
+#&gt; [2,] 0.4248584  0.1921494  1.8765056 0.6776836
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
@@ -732,40 +882,50 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.437264 -1.863011  2.065025  1.888505 
+#&gt; -1.756275 -1.684282  2.126850  2.039369 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>2</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   -1    1 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   -1    1 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>2</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;            [,1]       [,2]        [,3]        [,4]
-#&gt; [1,] -1.4000435 -1.6309894 -0.93584735  1.06730788
-#&gt; [2,]  0.2553171  0.5124269 -0.01595031  0.07003485
-#&gt; [3,] -2.4372636 -1.8630115 -0.82678895 -0.63912332
+#&gt;            [,1]       [,2]        [,3]      [,4]
+#&gt; [1,] -1.7562754 -1.6842815 -1.14619967 0.7664402
+#&gt; [2,] -0.6905379  0.2494018  0.84618466 0.9799567
+#&gt; [3,] -0.5585420  1.0728383  0.08171963 1.3217810
 #&gt; 
 #&gt; [[2]]
-#&gt;              [,1]        [,2]       [,3]       [,4]
-#&gt; [1,] -0.005571287 -0.52201251 -1.5123997 -0.0499649
-#&gt; [2,]  0.621552721 -0.05260191  0.9353632 -0.2514834
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,] -0.5366633 2.0393693 -1.3051170 -1.1197108
+#&gt; [2,]  0.2271271 0.4494538 -0.9449121  0.5145998
 #&gt; 
 #&gt; [[3]]
-#&gt;            [,1]       [,2]      [,3]       [,4]
-#&gt; [1,]  1.1484116  0.5429963 0.1764886 0.44479712
-#&gt; [2,] -1.8218177 -0.9140748 0.2436855 2.75541758
-#&gt; [3,] -0.2473253  0.4681544 1.6235489 0.04653138
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,]  0.9784549 1.3918140  0.4543416 -1.5090998
+#&gt; [2,] -0.2088827 0.4265665 -0.8552025  1.5327415
+#&gt; [3,] -1.3994105 0.1075840 -0.2868952  0.4291474
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;            [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] -0.2441996  0.3629513  0.1120381  0.5777091
-#&gt; [2,] -0.2827054 -1.3045435 -0.1339970  0.1181949
-#&gt; [3,] -0.5536994  0.7377763 -1.9100875 -1.9117205
+#&gt;            [,1]        [,2]        [,3]       [,4]
+#&gt; [1,]  0.2585373  0.02229473  0.89496163  0.1221034
+#&gt; [2,] -0.4417995  0.60361101  0.06730444 -1.1380124
+#&gt; [3,]  0.5685999 -0.26265057 -0.16267634 -0.5580151
 #&gt; 
 #&gt; [[2]]
-#&gt;          [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] 0.628982  1.8885049 -0.2792372  0.8620865
-#&gt; [2,] 2.065025 -0.0974451 -0.3134460 -0.2432367
+#&gt;           [,1]       [,2]       [,3]      [,4]
+#&gt; [1,] 2.1268505 -0.5282641 -0.8273102 1.0525385
+#&gt; [2,] 0.4248584  0.1921494  1.8765056 0.6776836
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
@@ -787,9 +947,19 @@
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.437264 -1.863011  2.065025  1.888505 
+#&gt; -1.756275 -1.684282  2.126850  2.039369 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt;      zmin      zmax 
+#&gt; -1.509100  1.532741 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt;      mmin      mmax 
+#&gt; -1.509100  1.532741 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 
 
 </div></pre>
@@ -798,7 +968,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#notes">notes</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

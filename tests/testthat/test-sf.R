@@ -149,12 +149,9 @@ test_that("ID order maintained",{
     , m = 1:10
   )
 
-  # #res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L )
-  #
-  # res$geometry[[1]]
-  # res$geometry[[2]]
-
   expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0 ), "sfheaders - linestring columns types are different")
 
 })
 
@@ -212,13 +209,54 @@ test_that("unordered ids cause issues",{
   m5 <- res$geometry[[2]][[3]]
 
 
-  ## TODO: this should error, right??
-  ## OR, does the inner-most id not matter as much as the outer-most one?
+  ## these tests will pass, but the coordinates will be wronge, becase the ID order is wrong
   expect_equal( m1, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 2, 3:6 ] ) ) )
   expect_equal( m2, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 3, 3:6 ] ) ) )
   expect_equal( m3, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 3, 3:6 ] ) ) )
   expect_equal( m4, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 1, 3:6 ] ) ) )
   expect_equal( m5, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2, 3:6 ] ) ) )
+
+
+
+
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,2,2,2,2,2)
+    , id2 = c(2,2,3,3,3,3,3,1,2,2)
+    , id3 = c(1,2,1,1,1,1,2,2,1,2)
+    , x = 1:10
+    , y = 1:10
+    , z = 1:10
+    , m = 1:10
+  )
+
+  res <- sfheaders::sf_multipolygon(df, multipolygon_id = "id1", polygon_id = "id2", linestring_id = "id3")
+  expect_true( all( res$id == unique( df$id1 ) ) )
+
+  m1 <- res$geometry[[1]][[1]][[1]]
+  m2 <- res$geometry[[1]][[1]][[2]]
+  m3 <- res$geometry[[1]][[2]][[1]]
+
+
+  m4 <- res$geometry[[2]][[1]][[1]]
+  m5 <- res$geometry[[2]][[1]][[2]]
+
+  m6 <- res$geometry[[2]][[2]][[1]]
+
+  m7 <- res$geometry[[2]][[3]][[1]]
+  m8 <- res$geometry[[2]][[3]][[2]]
+
+
+  ## these tests will pass, but the coordinates will be wronge, becase the ID order is wrong
+  expect_equal( m1, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 2 & df$id3 == 1, 4:7 ] ) ) )
+  expect_equal( m2, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 2 & df$id3 == 2, 4:7 ] ) ) )
+  expect_equal( m3, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 3 & df$id3 == 1, 4:7 ] ) ) )
+
+  expect_equal( m4, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 3 & df$id3 == 1, 4:7 ] ) ) )
+  expect_equal( m5, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 3 & df$id3 == 2, 4:7 ] ) ) )
+  expect_equal( m6, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 1 & df$id3 == 2, 4:7 ] ) ) )
+  expect_equal( m7, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2 & df$id3 == 1, 4:7 ] ) ) )
+  expect_equal( m8, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2 & df$id3 == 2, 4:7 ] ) ) )
+
 
 })
 

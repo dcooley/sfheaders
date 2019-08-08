@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="sfc POLYGON — sfc_polygon" />
 
-<meta property="og:description" content="sfc POLYGON" />
+<meta property="og:description" content="constructs an sfc of POLYGON objects" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,6 +91,9 @@
     <li>
       <a href="../articles/Rcpp.html">Rcpp</a>
     </li>
+    <li>
+      <a href="../articles/examples.html">examples</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -116,7 +119,7 @@
 
     <div class="ref-description">
     
-    <p>sfc POLYGON</p>
+    <p>constructs an sfc of POLYGON objects</p>
     
     </div>
 
@@ -128,7 +131,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>matrix or data.frame</p></td>
+      <td><p>sorted matrix or data.frame</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -155,6 +158,13 @@
       <td><p>column of ids for lines (within polygons)</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="notes"><a class="anchor" href="#notes"></a>notes</h2>
+
+    
+    <p>sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.</p>
+<p>The data.frame and matrices you send into the sfheader functions must be ordered.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -188,7 +198,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    0    0 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;    1    1 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
@@ -221,18 +241,72 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    1    2 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;    0    3 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
+#&gt;      V2 V3
+#&gt; [1,]  0  0
+#&gt; [2,]  0  1
+#&gt; [3,]  1  1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
+#&gt;      V2 V3
+#&gt; [1,]  2  2
+#&gt; [2,]  2  3
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "XY"      "POLYGON" "sfg"    
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "sfc_POLYGON" "sfc"        
+#&gt; attr(,"crs")
+#&gt; $epsg
+#&gt; [1] NA
+#&gt; 
+#&gt; $proj4string
+#&gt; [1] NA
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "crs"
+#&gt; attr(,"precision")
+#&gt; [1] 0
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
+#&gt; attr(,"bbox")
+#&gt; xmin ymin xmax ymax 
+#&gt;    0    0    2    3 
+#&gt; attr(,"class")
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [[1]]
+#&gt;      [,1] [,2]
+#&gt; [1,]    0    0
+#&gt; [2,]    0    1
+#&gt; [3,]    1    1
+#&gt; 
+#&gt; [[2]]
 #&gt;      [,1] [,2]
 #&gt; [1,]    2    2
 #&gt; [2,]    2    3
@@ -259,56 +333,32 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
-#&gt; 
-#&gt; [[2]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    2    2
-#&gt; [2,]    2    3
-#&gt; 
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
 #&gt; attr(,"class")
-#&gt; [1] "XY"      "POLYGON" "sfg"    
-#&gt; 
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
 #&gt; attr(,"class")
-#&gt; [1] "sfc_POLYGON" "sfc"        
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
+#&gt;      V2 V3
+#&gt; [1,]  0  0
+#&gt; [2,]  0  1
+#&gt; [3,]  1  1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    2    2
-#&gt; [2,]    2    3
+#&gt;      V2 V3
+#&gt; [1,]  2  2
+#&gt; [2,]  2  3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -332,7 +382,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
 #&gt;      [,1] [,2]
@@ -364,7 +424,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>3</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>3</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
 #&gt;      [,1] [,2] [,3]
 #&gt; [1,]    0    0    0
@@ -395,21 +465,31 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    1    2 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;    0    3 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    0    0
-#&gt; [2,]    0    1
-#&gt; [3,]    1    1
+#&gt;      V2 V3
+#&gt; [1,]  0  0
+#&gt; [2,]  0  1
+#&gt; [3,]  1  1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      [,1] [,2]
-#&gt; [1,]    2    2
-#&gt; [2,]    2    3
+#&gt;      V2 V3
+#&gt; [1,]  2  2
+#&gt; [2,]  2  3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -433,7 +513,17 @@
 #&gt; xmin ymin xmax ymax 
 #&gt;    0    0    2    3 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
   <span class='kw'>ml_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
   , <span class='kw'>l_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
@@ -446,19 +536,19 @@
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
 #&gt;              [,1]       [,2]
-#&gt;  [1,] -0.20608719 -0.9758506
-#&gt;  [2,]  0.01917759  1.0650573
-#&gt;  [3,]  0.02956075  0.1316706
-#&gt;  [4,]  0.54982754  0.4886288
-#&gt;  [5,] -2.27411486 -1.6994506
-#&gt;  [6,]  2.68255718 -1.4707363
-#&gt;  [7,] -0.36122126  0.2841503
-#&gt;  [8,]  0.21335575  1.3373204
-#&gt;  [9,]  1.07434588  0.2366963
-#&gt; [10,] -0.66508825  1.3182934
-#&gt; [11,]  1.11395242  0.5239098
-#&gt; [12,] -0.24589641  0.6067480
-#&gt; [13,] -1.17756331 -0.1099357
+#&gt;  [1,]  0.03849955  0.5176691
+#&gt;  [2,] -0.35638119 -0.1029087
+#&gt;  [3,]  0.78284410 -0.9740696
+#&gt;  [4,]  0.80441162  1.2706723
+#&gt;  [5,] -1.90006082  0.9608648
+#&gt;  [6,]  0.93578429  0.7687214
+#&gt;  [7,] -0.30905150  1.0359308
+#&gt;  [8,]  0.26306668 -0.4738871
+#&gt;  [9,] -1.79059186 -1.2753349
+#&gt; [10,] -0.78825884 -0.3056207
+#&gt; [11,] -1.13302167  2.2117695
+#&gt; [12,]  0.36365257 -1.0416684
+#&gt; [13,] -0.28588791 -1.1465239
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -479,25 +569,35 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.274115 -1.699451  2.682557  1.337320 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;              [,1]       [,2]        [,3]
-#&gt;  [1,] -0.20608719 -0.9758506  0.17218172
-#&gt;  [2,]  0.01917759  1.0650573 -0.09032729
-#&gt;  [3,]  0.02956075  0.1316706  1.92434334
-#&gt;  [4,]  0.54982754  0.4886288  1.29839276
-#&gt;  [5,] -2.27411486 -1.6994506  0.74879127
-#&gt;  [6,]  2.68255718 -1.4707363  0.55622433
-#&gt;  [7,] -0.36122126  0.2841503 -0.54825726
-#&gt;  [8,]  0.21335575  1.3373204  1.11053489
-#&gt;  [9,]  1.07434588  0.2366963 -2.61233433
-#&gt; [10,] -0.66508825  1.3182934 -0.15569378
-#&gt; [11,]  1.11395242  0.5239098  0.43388979
-#&gt; [12,] -0.24589641  0.6067480 -0.38195111
-#&gt; [13,] -1.17756331 -0.1099357  0.42418757
+#&gt;              [,1]       [,2]       [,3]
+#&gt;  [1,]  0.03849955  0.5176691 -1.6753273
+#&gt;  [2,] -0.35638119 -0.1029087  1.5259387
+#&gt;  [3,]  0.78284410 -0.9740696  0.5541855
+#&gt;  [4,]  0.80441162  1.2706723  1.9931103
+#&gt;  [5,] -1.90006082  0.9608648 -0.1541207
+#&gt;  [6,]  0.93578429  0.7687214  2.5644083
+#&gt;  [7,] -0.30905150  1.0359308  1.0619991
+#&gt;  [8,]  0.26306668 -0.4738871  1.1426949
+#&gt;  [9,] -1.79059186 -1.2753349  1.1238388
+#&gt; [10,] -0.78825884 -0.3056207 -0.3970015
+#&gt; [11,] -1.13302167  2.2117695 -0.8232612
+#&gt; [12,]  0.36365257 -1.0416684 -0.5788846
+#&gt; [13,] -0.28588791 -1.1465239  1.7637894
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    
@@ -518,25 +618,35 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.274115 -1.699451  2.682557  1.337320 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='st'>"m"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='st'>"m"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;              [,1]       [,2]        [,3]        [,4]
-#&gt;  [1,] -0.20608719 -0.9758506  0.17218172  1.06310200
-#&gt;  [2,]  0.01917759  1.0650573 -0.09032729  1.04871262
-#&gt;  [3,]  0.02956075  0.1316706  1.92434334 -0.03810289
-#&gt;  [4,]  0.54982754  0.4886288  1.29839276  0.48614892
-#&gt;  [5,] -2.27411486 -1.6994506  0.74879127  1.67288261
-#&gt;  [6,]  2.68255718 -1.4707363  0.55622433 -0.35436116
-#&gt;  [7,] -0.36122126  0.2841503 -0.54825726  0.94634789
-#&gt;  [8,]  0.21335575  1.3373204  1.11053489  1.31682636
-#&gt;  [9,]  1.07434588  0.2366963 -2.61233433 -0.29664002
-#&gt; [10,] -0.66508825  1.3182934 -0.15569378 -0.38721358
-#&gt; [11,]  1.11395242  0.5239098  0.43388979 -0.78543266
-#&gt; [12,] -0.24589641  0.6067480 -0.38195111 -1.05673687
-#&gt; [13,] -1.17756331 -0.1099357  0.42418757 -0.79554143
+#&gt;              [,1]       [,2]       [,3]        [,4]
+#&gt;  [1,]  0.03849955  0.5176691 -1.6753273  0.13299215
+#&gt;  [2,] -0.35638119 -0.1029087  1.5259387  0.37649933
+#&gt;  [3,]  0.78284410 -0.9740696  0.5541855  1.13870765
+#&gt;  [4,]  0.80441162  1.2706723  1.9931103  1.24126308
+#&gt;  [5,] -1.90006082  0.9608648 -0.1541207  0.61209094
+#&gt;  [6,]  0.93578429  0.7687214  2.5644083 -0.42938009
+#&gt;  [7,] -0.30905150  1.0359308  1.0619991  1.36046133
+#&gt;  [8,]  0.26306668 -0.4738871  1.1426949 -0.07085743
+#&gt;  [9,] -1.79059186 -1.2753349  1.1238388 -0.27215368
+#&gt; [10,] -0.78825884 -0.3056207 -0.3970015 -2.44668003
+#&gt; [11,] -1.13302167  2.2117695 -0.8232612  0.06548664
+#&gt; [12,]  0.36365257 -1.0416684 -0.5788846 -1.09850890
+#&gt; [13,] -0.28588791 -1.1465239  1.7637894 -0.63317818
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -557,26 +667,36 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.274115 -1.699451  2.682557  1.337320 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   -2    1 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   -2    1 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       [,1]        [,2]
-#&gt;  [1,]    1 -0.20608719
-#&gt;  [2,]    1  0.01917759
-#&gt;  [3,]    1  0.02956075
-#&gt;  [4,]    2  0.54982754
-#&gt;  [5,]    2 -2.27411486
-#&gt;  [6,]    3  2.68255718
-#&gt;  [7,]    3 -0.36122126
-#&gt;  [8,]    3  0.21335575
-#&gt;  [9,]    1  1.07434588
-#&gt; [10,]    1 -0.66508825
-#&gt; [11,]    1  1.11395242
-#&gt; [12,]    2 -0.24589641
-#&gt; [13,]    2 -1.17756331
+#&gt;       l_id           x
+#&gt;  [1,]    1  0.03849955
+#&gt;  [2,]    1 -0.35638119
+#&gt;  [3,]    1  0.78284410
+#&gt;  [4,]    2  0.80441162
+#&gt;  [5,]    2 -1.90006082
+#&gt;  [6,]    3  0.93578429
+#&gt;  [7,]    3 -0.30905150
+#&gt;  [8,]    3  0.26306668
+#&gt;  [9,]    1 -1.79059186
+#&gt; [10,]    1 -0.78825884
+#&gt; [11,]    1 -1.13302167
+#&gt; [12,]    2  0.36365257
+#&gt; [13,]    2 -0.28588791
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -597,25 +717,35 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt;  1.000000 -2.274115  3.000000  2.682557 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt;  1.0000000 -1.9000608  3.0000000  0.9357843 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       [,1]        [,2]       [,3]
-#&gt;  [1,]    1 -0.20608719 -0.9758506
-#&gt;  [2,]    1  0.01917759  1.0650573
-#&gt;  [3,]    1  0.02956075  0.1316706
-#&gt;  [4,]    2  0.54982754  0.4886288
-#&gt;  [5,]    2 -2.27411486 -1.6994506
-#&gt;  [6,]    3  2.68255718 -1.4707363
-#&gt;  [7,]    3 -0.36122126  0.2841503
-#&gt;  [8,]    3  0.21335575  1.3373204
-#&gt;  [9,]    1  1.07434588  0.2366963
-#&gt; [10,]    1 -0.66508825  1.3182934
-#&gt; [11,]    1  1.11395242  0.5239098
-#&gt; [12,]    2 -0.24589641  0.6067480
-#&gt; [13,]    2 -1.17756331 -0.1099357
+#&gt;       l_id           x          y
+#&gt;  [1,]    1  0.03849955  0.5176691
+#&gt;  [2,]    1 -0.35638119 -0.1029087
+#&gt;  [3,]    1  0.78284410 -0.9740696
+#&gt;  [4,]    2  0.80441162  1.2706723
+#&gt;  [5,]    2 -1.90006082  0.9608648
+#&gt;  [6,]    3  0.93578429  0.7687214
+#&gt;  [7,]    3 -0.30905150  1.0359308
+#&gt;  [8,]    3  0.26306668 -0.4738871
+#&gt;  [9,]    1 -1.79059186 -1.2753349
+#&gt; [10,]    1 -0.78825884 -0.3056207
+#&gt; [11,]    1 -1.13302167  2.2117695
+#&gt; [12,]    2  0.36365257 -1.0416684
+#&gt; [13,]    2 -0.28588791 -1.1465239
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    
@@ -636,25 +766,35 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt;  1.000000 -2.274115  3.000000  2.682557 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt;  1.0000000 -1.9000608  3.0000000  0.9357843 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   NA   NA 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       [,1]        [,2]       [,3]        [,4]
-#&gt;  [1,]    1 -0.20608719 -0.9758506  0.17218172
-#&gt;  [2,]    1  0.01917759  1.0650573 -0.09032729
-#&gt;  [3,]    1  0.02956075  0.1316706  1.92434334
-#&gt;  [4,]    2  0.54982754  0.4886288  1.29839276
-#&gt;  [5,]    2 -2.27411486 -1.6994506  0.74879127
-#&gt;  [6,]    3  2.68255718 -1.4707363  0.55622433
-#&gt;  [7,]    3 -0.36122126  0.2841503 -0.54825726
-#&gt;  [8,]    3  0.21335575  1.3373204  1.11053489
-#&gt;  [9,]    1  1.07434588  0.2366963 -2.61233433
-#&gt; [10,]    1 -0.66508825  1.3182934 -0.15569378
-#&gt; [11,]    1  1.11395242  0.5239098  0.43388979
-#&gt; [12,]    2 -0.24589641  0.6067480 -0.38195111
-#&gt; [13,]    2 -1.17756331 -0.1099357  0.42418757
+#&gt;       l_id           x          y          z
+#&gt;  [1,]    1  0.03849955  0.5176691 -1.6753273
+#&gt;  [2,]    1 -0.35638119 -0.1029087  1.5259387
+#&gt;  [3,]    1  0.78284410 -0.9740696  0.5541855
+#&gt;  [4,]    2  0.80441162  1.2706723  1.9931103
+#&gt;  [5,]    2 -1.90006082  0.9608648 -0.1541207
+#&gt;  [6,]    3  0.93578429  0.7687214  2.5644083
+#&gt;  [7,]    3 -0.30905150  1.0359308  1.0619991
+#&gt;  [8,]    3  0.26306668 -0.4738871  1.1426949
+#&gt;  [9,]    1 -1.79059186 -1.2753349  1.1238388
+#&gt; [10,]    1 -0.78825884 -0.3056207 -0.3970015
+#&gt; [11,]    1 -1.13302167  2.2117695 -0.8232612
+#&gt; [12,]    2  0.36365257 -1.0416684 -0.5788846
+#&gt; [13,]    2 -0.28588791 -1.1465239  1.7637894
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -675,42 +815,52 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt;  1.000000 -2.274115  3.000000  2.682557 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt;  1.0000000 -1.9000608  3.0000000  0.9357843 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt;      zmin      zmax 
+#&gt; -1.675327  2.564408 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt;      mmin      mmax 
+#&gt; -1.675327  2.564408 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"ml_id"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"l_id"</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;             [,1]       [,2]        [,3]        [,4]
-#&gt; [1,] -0.20608719 -0.9758506  0.17218172  1.06310200
-#&gt; [2,]  0.01917759  1.0650573 -0.09032729  1.04871262
-#&gt; [3,]  0.02956075  0.1316706  1.92434334 -0.03810289
+#&gt;             [,1]       [,2]       [,3]      [,4]
+#&gt; [1,]  0.03849955  0.5176691 -1.6753273 0.1329921
+#&gt; [2,] -0.35638119 -0.1029087  1.5259387 0.3764993
+#&gt; [3,]  0.78284410 -0.9740696  0.5541855 1.1387077
 #&gt; 
 #&gt; [[2]]
-#&gt;            [,1]       [,2]      [,3]      [,4]
-#&gt; [1,]  0.5498275  0.4886288 1.2983928 0.4861489
-#&gt; [2,] -2.2741149 -1.6994506 0.7487913 1.6728826
+#&gt;            [,1]      [,2]       [,3]      [,4]
+#&gt; [1,]  0.8044116 1.2706723  1.9931103 1.2412631
+#&gt; [2,] -1.9000608 0.9608648 -0.1541207 0.6120909
 #&gt; 
 #&gt; [[3]]
-#&gt;            [,1]       [,2]       [,3]       [,4]
-#&gt; [1,]  2.6825572 -1.4707363  0.5562243 -0.3543612
-#&gt; [2,] -0.3612213  0.2841503 -0.5482573  0.9463479
-#&gt; [3,]  0.2133557  1.3373204  1.1105349  1.3168264
+#&gt;            [,1]       [,2]     [,3]        [,4]
+#&gt; [1,]  0.9357843  0.7687214 2.564408 -0.42938009
+#&gt; [2,] -0.3090515  1.0359308 1.061999  1.36046133
+#&gt; [3,]  0.2630667 -0.4738871 1.142695 -0.07085743
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;            [,1]      [,2]       [,3]       [,4]
-#&gt; [1,]  1.0743459 0.2366963 -2.6123343 -0.2966400
-#&gt; [2,] -0.6650882 1.3182934 -0.1556938 -0.3872136
-#&gt; [3,]  1.1139524 0.5239098  0.4338898 -0.7854327
+#&gt;            [,1]       [,2]       [,3]        [,4]
+#&gt; [1,] -1.7905919 -1.2753349  1.1238388 -0.27215368
+#&gt; [2,] -0.7882588 -0.3056207 -0.3970015 -2.44668003
+#&gt; [3,] -1.1330217  2.2117695 -0.8232612  0.06548664
 #&gt; 
 #&gt; [[2]]
-#&gt;            [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] -0.2458964  0.6067480 -0.3819511 -1.0567369
-#&gt; [2,] -1.1775633 -0.1099357  0.4241876 -0.7955414
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,]  0.3636526 -1.041668 -0.5788846 -1.0985089
+#&gt; [2,] -0.2858879 -1.146524  1.7637894 -0.6331782
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -731,41 +881,51 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.274115 -1.699451  2.682557  1.337320 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>2</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt; zmin zmax 
+#&gt;   -2    1 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt; mmin mmax 
+#&gt;   -2    1 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>2</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;             [,1]       [,2]        [,3]        [,4]
-#&gt; [1,] -0.20608719 -0.9758506  0.17218172  1.06310200
-#&gt; [2,]  0.01917759  1.0650573 -0.09032729  1.04871262
-#&gt; [3,]  0.02956075  0.1316706  1.92434334 -0.03810289
+#&gt;             [,1]       [,2]       [,3]      [,4]
+#&gt; [1,]  0.03849955  0.5176691 -1.6753273 0.1329921
+#&gt; [2,] -0.35638119 -0.1029087  1.5259387 0.3764993
+#&gt; [3,]  0.78284410 -0.9740696  0.5541855 1.1387077
 #&gt; 
 #&gt; [[2]]
-#&gt;            [,1]       [,2]      [,3]      [,4]
-#&gt; [1,]  0.5498275  0.4886288 1.2983928 0.4861489
-#&gt; [2,] -2.2741149 -1.6994506 0.7487913 1.6728826
+#&gt;            [,1]      [,2]       [,3]      [,4]
+#&gt; [1,]  0.8044116 1.2706723  1.9931103 1.2412631
+#&gt; [2,] -1.9000608 0.9608648 -0.1541207 0.6120909
 #&gt; 
 #&gt; [[3]]
-#&gt;            [,1]       [,2]       [,3]       [,4]
-#&gt; [1,]  2.6825572 -1.4707363  0.5562243 -0.3543612
-#&gt; [2,] -0.3612213  0.2841503 -0.5482573  0.9463479
-#&gt; [3,]  0.2133557  1.3373204  1.1105349  1.3168264
+#&gt;            [,1]       [,2]     [,3]        [,4]
+#&gt; [1,]  0.9357843  0.7687214 2.564408 -0.42938009
+#&gt; [2,] -0.3090515  1.0359308 1.061999  1.36046133
+#&gt; [3,]  0.2630667 -0.4738871 1.142695 -0.07085743
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;            [,1]      [,2]       [,3]       [,4]
-#&gt; [1,]  1.0743459 0.2366963 -2.6123343 -0.2966400
-#&gt; [2,] -0.6650882 1.3182934 -0.1556938 -0.3872136
-#&gt; [3,]  1.1139524 0.5239098  0.4338898 -0.7854327
+#&gt;            [,1]       [,2]       [,3]        [,4]
+#&gt; [1,] -1.7905919 -1.2753349  1.1238388 -0.27215368
+#&gt; [2,] -0.7882588 -0.3056207 -0.3970015 -2.44668003
+#&gt; [3,] -1.1330217  2.2117695 -0.8232612  0.06548664
 #&gt; 
 #&gt; [[2]]
-#&gt;            [,1]       [,2]       [,3]       [,4]
-#&gt; [1,] -0.2458964  0.6067480 -0.3819511 -1.0567369
-#&gt; [2,] -1.1775633 -0.1099357  0.4241876 -0.7955414
+#&gt;            [,1]      [,2]       [,3]       [,4]
+#&gt; [1,]  0.3636526 -1.041668 -0.5788846 -1.0985089
+#&gt; [2,] -0.2858879 -1.146524  1.7637894 -0.6331782
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -786,10 +946,20 @@
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;      xmin      ymin      xmax      ymax 
-#&gt; -2.274115 -1.699451  2.682557  1.337320 
+#&gt;       xmin       ymin       xmax       ymax 
+#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
 #&gt; attr(,"class")
-#&gt; [1] "bbox"</div><div class='input'>
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt;      zmin      zmax 
+#&gt; -2.446680  1.360461 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt;      mmin      mmax 
+#&gt; -2.446680  1.360461 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'>
 
 
 </div></pre>
@@ -798,7 +968,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#notes">notes</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

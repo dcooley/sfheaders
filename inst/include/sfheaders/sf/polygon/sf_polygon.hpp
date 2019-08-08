@@ -18,8 +18,6 @@ inline SEXP sf_polygon(
 ) {
   Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id );
   SEXP ids = sfheaders::utils::get_ids( x, polygon_id );
-  // Rcpp::Rcout << "id check1 : " << TYPEOF( ids ) << std::endl;
-  // Rcpp::Rcout << "id check2 : " << TYPEOF( ids ) << std::endl;
 
   Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
   return sf;

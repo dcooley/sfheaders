@@ -1,0 +1,244 @@
+---
+title: "examples"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+```{r, eval = T}
+library(sfheaders)
+library(sf) ## for nice printing
+```
+
+
+### R
+
+```{r, eval = T}
+
+sfg_point( 1:2 )
+sfg_point( 1:3 )
+sfg_point( 1:4 )
+
+sfg_linestring( 1:4 )
+
+m <- matrix(1:4, ncol = 2)
+
+sfg_linestring(m)
+
+```
+
+#### from C++
+
+There are various overloaded functions for each `sfg`, `sfc` and `sf` types
+
+
+```{r}
+library(Rcpp)
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( Rcpp::DataFrame df ) {
+      return sfheaders::sfg::sfg_polygon( df );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df )
+```
+
+```{r}
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( Rcpp::DataFrame df, Rcpp::StringVector geometry_columns ) {
+      return sfheaders::sfg::sfg_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, c("x","y") )
+
+a_polygon( df, c("y", "x") )
+
+```
+
+```{r}
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP x, SEXP geometry_columns ) {
+      return sfheaders::sfg::sfg_polygon( x, geometry_columns );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, c("x","y") )
+
+a_polygon( df, c("y", "x") )
+
+```
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, std::string geom_type ) {
+      return sfheaders::sfg::to_sfg( df, geom_type );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, "POLYGON" )
+
+```
+
+
+### sfc
+
+```{r}
+sfc_point( df )
+
+sfc_multipoint( df )
+
+sfc_polygon( df )
+```
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df ) {
+      return sfheaders::sfc::sfc_polygon( df );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df )
+```
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y") )
+```
+
+
+```{r}
+
+df <- data.frame(
+  id = c( rep(1, 5), rep(2, 5) )
+  , x = 1:10
+  , y = 1:10
+)
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y") )
+```
+
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns, SEXP polygon_id, SEXP linestring_id ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns, polygon_id, linestring_id );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y"), "id", NULL )
+```
+
+```r
+n <- 1e5
+df <- data.frame(
+  id = rep(1:(n/5), each = 5)
+  , x = rnorm(n)
+  , y = rnorm(n)
+)
+
+library(data.table)
+library(microbenchmark)
+
+dt <- as.data.table( df )
+microbenchmark(
+
+  dt = {
+    sf <- dt[
+      , {
+        geometry <- sf::st_linestring( x = matrix( c( x, y ), ncol = 2, byrow = T ))
+        geometry <- sf::st_sf( geometry = sf::st_sfc( geometry ) )
+      }
+      , by = id
+    ]
+    sf <- sf::st_as_sf( sf )
+  },
+  
+  sfheaders = {
+    sfh <- sfheaders::sf_linestring(
+      obj = df
+      , linestring_id = "id"
+    )
+  },
+  times = 5
+)
+
+# Unit: milliseconds
+#      expr        min         lq       mean     median         uq        max neval
+#        dt 6599.67479 6654.12357 6779.23543 6750.19807 6833.46262 7058.71809     5
+# sfheaders   21.07775   21.30438   23.20592   23.21665   25.06429   25.36654     5
+
+```

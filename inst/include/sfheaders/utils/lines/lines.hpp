@@ -76,6 +76,9 @@ namespace utils {
     size_t n = line_ids.length();
     size_t unique_n = unique_ids.length();
 
+    // Rcpp::Rcout << "n: " << n << std::endl;
+    // Rcpp::Rcout << "unique_n: " << unique_n << std::endl;
+
     Rcpp::IntegerMatrix im( unique_n, 2);
 
 

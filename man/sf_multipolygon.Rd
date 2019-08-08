@@ -21,7 +21,9 @@ sf_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
 
 \item{multipolygon_id}{column of ids for multipolygons}
 
-\item{linestring_id}{column of ids for linestrings}
+\item{polygon_id}{column of ids for polygons}
+
+\item{linestring_id}{column of ids for lines (within polygons)}
 }
 \description{
 constructs an sf of MULTIPOLYGON objects

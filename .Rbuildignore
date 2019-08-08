@@ -6,3 +6,4 @@
 ^docs/
 ^Vignettes/data.table.Rmd
 ^Vignettes/Rcpp.Rmd
+^Vignettes/examples.Rmd
