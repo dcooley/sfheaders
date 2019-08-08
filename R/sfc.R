@@ -201,7 +201,7 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' constructs an sfc of MULTIPOLYGON objects
 #'
 #'
-#' @inheritParams sfc_linestring
+#' @inheritParams sfc_polygon
 #' @param multipolygon_id column of ids for multipolygons
 #' @inheritSection sfc_point notes
 #'

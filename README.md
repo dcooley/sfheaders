@@ -35,10 +35,10 @@ Yes. Your data has to be ordered before using these functions.
 ## Where are the examples?
 
 They’re on the
-[website](file:///Users/dave/Documents/github/sfheaders/docs/articles/examples.html).
+[website](https://dcooley.github.io/sfheaders/articles/examples.html).
 GO NOW\!
 
-(But here’s a taster)
+(however, here’s a taster)
 
 ``` r
 
