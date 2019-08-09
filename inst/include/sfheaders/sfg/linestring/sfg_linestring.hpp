@@ -141,7 +141,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type"); // #nocov
     }
     }
 
@@ -155,14 +155,14 @@ namespace sfg {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
+      Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
     }
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
       return sfg_linestring( im, cols );
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting a matrix");
+      Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
     }
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return sfg_linestring( nm, cols );
@@ -174,7 +174,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type"); // #nocov
     }
     }
 
