@@ -1,5 +1,208 @@
 context("sfc_POLYGON")
 
+test_that("various objects converted to sfc_polygon",{
+
+  is_polygon <- function(x) {
+    y <- sapply( x, function(y) is.list( unclass( y ) ) )
+    z <- sapply( x, function(y) attr( y, "class")[2] == "POLYGON")
+    return( all(y) & all(z))
+  }
+
+  v <- 1:3
+  expect_error( sfheaders:::rcpp_sfc_polygon(v, NULL, NULL, NULL), "sfheaders - unsupported object")
+
+  m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_polygon(m, NULL, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(c(1.2,3,4,5), ncol = 2)
+  res <- sfheaders:::rcpp_sfc_polygon(m, NULL, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_polygon(m, c(0,1), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(c(1.2,3,4,5), ncol = 2)
+  res <- sfheaders:::rcpp_sfc_polygon(m, c(0,1), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, NULL, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c(0,1), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(c(1.2,3,4,5), ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), NULL, NULL )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_polygon(m, NULL, 2, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_polygon(m, c(0,1), 2, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, NULL, 2, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L))
+  res <- sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  res <- sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c(0,1), 2, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_polygon(m, c("V1","V2"), NULL, NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_polygon(m, c("V1","V2"), NULL, NULL )
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(c(1.2,2:8), ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), NULL, NULL )
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_polygon(m, c("V1","V2"), "V3", NULL )
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(c(1.2,2:8), ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), "V3", NULL )
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), c("V3"), NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), c("V3"), NULL)
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), 2L, NULL )
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:4, ncol = 2)
+  expect_error( sfheaders:::rcpp_sfc_polygon(m, NULL, 0, NULL), "sfheaders - incorrect number of geometry columns")
+
+})
+
+test_that("data.frame with non-numeric id columns work",{
+
+  is_polygon <- function(x) {
+    y <- sapply( x, function(y) is.list( unclass( y ) ) )
+    z <- sapply( x, function(y) attr( y, "class")[2] == "POLYGON")
+    return( all(y) & all(z))
+  }
+
+  df <- data.frame(
+    p_id = letters[c(1,1,1,1,2,2,2,2)]
+    , l_id = c(1,1,1,1,1,1,1,1)
+    , x = c(1,2,3,1,4,5,6,4)
+    , y = c(1,2,3,1,4,5,6,4)
+  )
+
+  res <- sfheaders::sfc_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , linestring_id = "p_id"
+  )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+  expect_true( is_polygon( res ) )
+
+})
+
+
+
 test_that("sfc_polygon works", {
 
   is_polygon <- function(x) {
