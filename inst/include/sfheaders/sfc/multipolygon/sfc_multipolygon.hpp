@@ -11,6 +11,7 @@
 namespace sfheaders {
 namespace sfc {
 
+  // #nocov start
   inline SEXP sfc_multipolygon(
       Rcpp::IntegerMatrix& im
   ) {
@@ -95,6 +96,7 @@ namespace sfc {
     nm(0, Rcpp::_ ) = nv;
     return sfc_multipolygon( nm );
   }
+
 
   // inline SEXP sfc_multipolygon(
   //     Rcpp::List& lst
@@ -227,6 +229,7 @@ namespace sfc {
     return Rcpp::List::create();
   }
 
+  // #nocov end
 
   // no subsetting to do (except for columsn)
   inline SEXP sfc_multipolygon(
