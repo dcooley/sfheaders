@@ -76,9 +76,8 @@ namespace sfc {
 
     // to enter this function, will the geometry type already be sorted?
 
-    std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
-    sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
-
+    // attribute::n_empty
+    sfc.attr("n_empty") = n_empty;
 
     // attribute::crs
     Rcpp::List crs = Rcpp::List::create(
@@ -88,11 +87,13 @@ namespace sfc {
 
     crs.attr("class") = Rcpp::CharacterVector::create("crs");
     sfc.attr("crs") = crs;
+
+    std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
+    sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
+
+
     // attribute::precision
     sfc.attr("precision") = precision;
-
-    // attribute::n_empty
-    sfc.attr("n_empty") = n_empty;
 
     // attribute::bbox
     bbox.attr("class") = Rcpp::CharacterVector::create("bbox");

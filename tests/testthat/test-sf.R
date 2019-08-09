@@ -302,3 +302,27 @@ test_that("R API to sf works",{
 
 })
 
+test_that("string ids work",{
+
+  is_sf <- function(x) {
+    a <- attributes(x)
+    all( a$class == c("sf", "data.frame") ) & a$sf_column == "geometry"
+  }
+
+  df <- data.frame(
+    id = letters[1:5]
+    , x = 1:5
+    , y = 1:5
+    , stringsAsFactors = FALSE
+  )
+  res <- sfheaders:::sf_linestring(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , linestring_id = "id"
+  )
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$id ) ) )
+
+})
+
