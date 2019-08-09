@@ -46,7 +46,7 @@ test_that("sfg_MULTIPOINTS returned from various R objects from src", {
   expect_equal( pt, r_pt )
 
   x <- data.frame(x = 0L, y = 0L)
-  x <- as.matrix(df)
+  x <- as.matrix(x)
   pt <- sfheaders:::rcpp_sfg_multipoint( x, c("x","y") )
   res <- attr( pt, "class" )
   expect_equal( res, c("XY", "MULTIPOINT", "sfg") )
@@ -54,7 +54,7 @@ test_that("sfg_MULTIPOINTS returned from various R objects from src", {
   expect_equal( pt, r_pt )
 
   x <- data.frame(x = 1.2, y = 2.2)
-  x <- as.matrix(df)
+  x <- as.matrix(x)
   pt <- sfheaders:::rcpp_sfg_multipoint( x, c("x","y") )
   res <- attr( pt, "class" )
   expect_equal( res, c("XY", "MULTIPOINT", "sfg") )

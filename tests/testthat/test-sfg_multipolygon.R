@@ -2,6 +2,11 @@ context("sfg_to_multipolygon")
 
 test_that("sfg multipolygon",{
 
+  is_multipolygon <- function(x){
+    cls <- attr( x, "class")
+    cls[2] == "MULTIPOLYGON" & cls[3] == "sfg"
+  }
+
   l1 <- matrix(c(0,0,0,1,1,1,1,0,0,0), ncol = 2, byrow = T)
   l2 <- matrix(c(2,2,2,5,5,5,5,2,2,2), ncol = 2, byrow = T)
   l3 <- matrix(c(3,3,3,4,4,4,4,3,3,3), ncol = 2, byrow = T)
@@ -28,5 +33,55 @@ test_that("sfg multipolygon",{
 
   res <- sfheaders:::rcpp_sfg_multipolygon( m, c(2,3), NULL, 1 )
 
+  m <- matrix(1L:4L, ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, NULL, NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  m <- matrix(c(1.2,2.2,3.2,4.2), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, NULL, NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  m <- matrix(1L:4L, ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c(0,1), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  m <- matrix(c(1.2,2.2,3.2,4.2), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c(0,1), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  m <- matrix(1L:4L, ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c(0L, 1L), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  m <- matrix(c(1.2,2.2,3.2,4.2), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c(0L, 1L), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  df <- data.frame(
+    x = 1L
+    , y = 2L
+  )
+  res <- sfheaders:::rcpp_sfg_multipolygon(df, NULL, NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  res <- sfheaders:::rcpp_sfg_multipolygon(df, c(0,1), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  res <- sfheaders:::rcpp_sfg_multipolygon(df, c("x","y"), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  df <- data.frame(
+    x = 1L
+    , y = 2L
+  )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, NULL, NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c(0,1), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c("x","y"), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
 
 })

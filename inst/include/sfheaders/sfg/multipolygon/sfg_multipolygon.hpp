@@ -251,14 +251,14 @@ inline SEXP sfg_multipolygon(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
     return sfg_multipolygon( im, cols );
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
     return sfg_multipolygon( nm, cols );
@@ -287,14 +287,14 @@ inline SEXP sfg_multipolygon(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
     return sfg_multipolygon( im, cols, line_id );
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
     return sfg_multipolygon( nm, cols, line_id );
@@ -356,14 +356,14 @@ inline SEXP sfg_multipolygon(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
     return sfg_multipolygon( im, cols );
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
     return sfg_multipolygon( nm, cols );
@@ -424,14 +424,14 @@ inline SEXP sfg_multipolygon(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
     return sfg_multipolygon( im, cols, line_id );
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
     return sfg_multipolygon( nm, cols, line_id );
@@ -457,14 +457,14 @@ inline SEXP sfg_multipolygon(
   switch ( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
     return sfg_multipolygon( im );
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
-    Rcpp::stop("sfheaders - expecting a matrix");
+    Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
     return sfg_multipolygon( nm );
