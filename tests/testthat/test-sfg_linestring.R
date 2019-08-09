@@ -134,6 +134,10 @@ test_that("errors are found and handled", {
   x <- list(x = 1)
   expect_error( sfheaders:::rcpp_sfg_linestring( x, NULL ), "sfheaders - unsupported sfg_LINESTRING type" )
 
+  x <- matrix(1:4, ncol = 2)
+  expect_error( sfheaders:::rcpp_sfg_linestring( x, c(1,2) ) )
+
+  expect_error( sfheaders:::rcpp_sfg_linestring( x, as.factor( c(0,1) ) ) )
 
 })
 
