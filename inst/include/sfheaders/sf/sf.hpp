@@ -85,7 +85,7 @@ namespace sf {
     //   make_sf( sfc, ids );
     // }
     if( Rf_isNull( ids ) ) {
-      make_sf( sfc );
+      make_sf( sfc );          // #nocov
     }
 
     switch( TYPEOF( ids ) ) {

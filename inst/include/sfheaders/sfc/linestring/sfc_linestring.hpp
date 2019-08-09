@@ -194,7 +194,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported linestring type");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -355,7 +355,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported linestring type");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -391,7 +391,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported linestring type");   // #nocov
     }
     }
     return Rcpp::List::create();
@@ -415,7 +415,7 @@ namespace sfc {
       return sfc_linestring( x, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column type");
+      Rcpp::stop("sfheaders - unknown column type");    // #nocov
     }
     }
     return Rcpp::List::create();
