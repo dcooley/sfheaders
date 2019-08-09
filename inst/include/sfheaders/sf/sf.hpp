@@ -102,7 +102,7 @@ namespace sf {
       return make_sf( sfc, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - invalid sf id columns");
+      Rcpp::stop("sfheaders - invalid sf id columns");   // #nocov
     }
     }
 

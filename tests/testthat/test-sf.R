@@ -324,5 +324,15 @@ test_that("string ids work",{
   expect_true( is_sf( res ) )
   expect_true( nrow( res ) == length(unique( df$id ) ) )
 
+  ## and NULL ids
+  res <- sfheaders:::sf_linestring(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , linestring_id = NULL
+  )
+
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == 1 )
 })
 
