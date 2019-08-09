@@ -134,6 +134,9 @@ test_that("sfheaders::utils::other_columns works for various data types",{
 
 test_that("concatenate_vectors works",{
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1,5), c(1,5))
+  expect_equal( sfheaders:::rcpp_concatenate_vectors("a","b"), c("a","b"))
+  expect_error( sfheaders:::rcpp_concatenate_vectors(1,"a"), "sfheaders - different vector types found")
+
 })
 
 
@@ -157,5 +160,12 @@ test_that("column positions returned",{
 
 })
 
+test_that("where_is finds the correct position",{
 
+  sv <- c("hello", "world")
+  expect_equal( sfheaders:::rcpp_where_is( "hello" , sv ), 0L )
+  expect_equal( sfheaders:::rcpp_where_is( "world" , sv ), 1L )
+  expect_equal( sfheaders:::rcpp_where_is( "foo" , sv ), -1L )
+
+})
 

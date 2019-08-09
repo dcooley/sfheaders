@@ -532,6 +532,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_where_is
+int rcpp_where_is(Rcpp::String to_find, Rcpp::StringVector sv);
+RcppExport SEXP _sfheaders_rcpp_where_is(SEXP to_findSEXP, SEXP svSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::String >::type to_find(to_findSEXP);
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type sv(svSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_where_is(to_find, sv));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 1},
@@ -577,6 +589,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_subset_dataframe", (DL_FUNC) &_sfheaders_rcpp_subset_dataframe, 4},
     {"_sfheaders_rcpp_concatenate_vectors", (DL_FUNC) &_sfheaders_rcpp_concatenate_vectors, 2},
     {"_sfheaders_rcpp_column_positions", (DL_FUNC) &_sfheaders_rcpp_column_positions, 2},
+    {"_sfheaders_rcpp_where_is", (DL_FUNC) &_sfheaders_rcpp_where_is, 2},
     {NULL, NULL, 0}
 };
 

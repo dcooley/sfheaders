@@ -25,6 +25,7 @@
 
 namespace sfheaders {
 
+  // #nocov start
   template <int RTYPE>
   inline Rcpp::CharacterVector sfClass( Rcpp::Vector<RTYPE> v ) {
     return v.attr("class");
@@ -61,6 +62,7 @@ namespace sfheaders {
     }
     return "";
   }
+  // #nocov end
 
 } // sfheaders
 

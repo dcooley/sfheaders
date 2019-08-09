@@ -111,7 +111,7 @@ namespace utils {
       return sv;
     }
     default: {
-      Rcpp::stop("sfheaders - can't combine columns");
+      Rcpp::stop("sfheaders - can't combine columns");  // #nocov
     }
     }
 

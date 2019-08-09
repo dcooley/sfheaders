@@ -173,3 +173,7 @@ rcpp_column_positions <- function(m, cols) {
     .Call(`_sfheaders_rcpp_column_positions`, m, cols)
 }
 
+rcpp_where_is <- function(to_find, sv) {
+    .Call(`_sfheaders_rcpp_where_is`, to_find, sv)
+}
+

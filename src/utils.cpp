@@ -50,4 +50,10 @@ Rcpp::IntegerVector rcpp_column_positions(
   return sfheaders::utils::column_positions( m, cols );
 }
 
-
+// [[Rcpp::export]]
+int rcpp_where_is(
+  Rcpp::String to_find,
+  Rcpp::StringVector sv
+) {
+  return sfheaders::utils::where_is( to_find, sv );
+}
