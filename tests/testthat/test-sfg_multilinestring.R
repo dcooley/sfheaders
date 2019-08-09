@@ -124,6 +124,38 @@ test_that("sfg multilinestring", {
   # r_res <- sfg_multilinestring(x, x = "x", y = "y", linestring_id = "id")
   # expect_equal( res, r_res )
 
+  df <- data.frame(
+    id = 1,
+    x = 1L,
+    y = 2L
+  )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, c("x","y"), "id" )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(x, x = "x", y = "y", linestring_id = "id")
+  expect_equal( res, r_res )
+
+  df <- data.frame(
+    id = 1,
+    x = 1L,
+    y = 2L
+  )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, c(1L, 2L), 0L )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(x, x = 2, y = 3, linestring_id = 1 )
+  expect_equal( res, r_res )
+
+  x <- data.frame(
+    id = 1,
+    x = 1L,
+    y = 2L
+  )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, c("x","y"), "id")
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(x, x = "x", y = "y", linestring_id = "id")
+  expect_equal( res, r_res )
+
 
   ## data.frame
   ids <- c( rep(1,5), rep(2,3), rep(3,6) )
