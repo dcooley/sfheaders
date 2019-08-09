@@ -11,6 +11,8 @@
 namespace sfheaders {
 namespace sfc {
 
+  // #nocov start
+  // - no access here through R
   inline SEXP sfc_polygon(
       Rcpp::IntegerMatrix& im
   ) {
@@ -221,6 +223,7 @@ namespace sfc {
     }
     return Rcpp::List::create();
   }
+  // #nocov end
 
   inline SEXP sfc_polygon(
       Rcpp::IntegerMatrix& im,
@@ -377,7 +380,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported polygon type");
+      Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -414,7 +417,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported polygon type");
+      Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -438,7 +441,7 @@ namespace sfc {
       return sfc_polygon( x, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column type");
+      Rcpp::stop("sfheaders - unknown column type");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -697,7 +700,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported polygon type");
+      Rcpp::stop("sfheaders - unsupported polygon type");   // #nocov
     }
     }
     return Rcpp::List::create();
@@ -735,7 +738,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported polygon type");
+      Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
     }
     }
 
