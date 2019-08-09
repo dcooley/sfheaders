@@ -6,13 +6,13 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline void dimension_check( size_t& n ) {
+  inline void dimension_check( R_xlen_t& n ) {
     if( n < 2 || n > 4 ) {
       Rcpp::stop("sfheaders - invalid dimension ");
     }
   }
 
-  inline std::string sfg_dimension( size_t& n ) {
+  inline std::string sfg_dimension( R_xlen_t& n ) {
     dimension_check( n );
     std::string dim = "XY";
 
@@ -29,27 +29,27 @@ namespace sfg {
   }
 
   inline std::string sfg_dimension( Rcpp::IntegerVector& iv ) {
-    size_t n = iv.size();
+    R_xlen_t n = iv.size();
     return sfg_dimension( n );
   }
 
   inline std::string sfg_dimension( Rcpp::NumericVector& nv ) {
-    size_t n = nv.size();
+    R_xlen_t n = nv.size();
     return sfg_dimension( n );
   }
 
   inline std::string sfg_dimension( Rcpp::IntegerMatrix& im ) {
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
     return sfg_dimension( n_col );
   }
 
   inline std::string sfg_dimension( Rcpp::NumericMatrix& nm ) {
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
     return sfg_dimension( n_col );
   }
 
   inline std::string sfg_dimension( Rcpp::DataFrame& df ) {
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
     return sfg_dimension( n_col );
   }
 

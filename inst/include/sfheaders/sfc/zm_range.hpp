@@ -10,7 +10,7 @@ namespace sfheaders {
 namespace zm {
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::IntegerMatrix& im
@@ -24,7 +24,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& nm
@@ -38,7 +38,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df
@@ -52,7 +52,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-    size_t& n_col,
+    R_xlen_t& n_col,
     Rcpp::NumericVector& z_range,
     Rcpp::NumericVector& m_range,
     Rcpp::IntegerMatrix& im,
@@ -67,7 +67,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& im,
@@ -82,7 +82,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df,
@@ -97,7 +97,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df,
@@ -112,7 +112,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-    size_t& n_col,
+    R_xlen_t& n_col,
     Rcpp::NumericVector& z_range,
     Rcpp::NumericVector& m_range,
     Rcpp::IntegerMatrix& im,
@@ -138,7 +138,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& nm,
@@ -164,7 +164,7 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
-      size_t& n_col,
+      R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df,

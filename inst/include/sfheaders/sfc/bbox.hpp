@@ -118,12 +118,6 @@ namespace bbox {
 
     make_bbox( bbox, x, y );
 
-    // size_t n_row = nm.nrow();
-    // size_t i;
-    // for( i = 0; i < n_row; i++ ) {
-    //   Rcpp::NumericVector nv = nm( i, Rcpp::_ );
-    //   calculate_bbox( bbox, nv );
-    // }
   }
 
   inline void calculate_bbox(

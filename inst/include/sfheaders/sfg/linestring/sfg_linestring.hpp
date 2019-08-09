@@ -16,19 +16,6 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::IntegerMatrix& im
   ) {
-    // I want something like this,
-    // where the poitn at which it can make an SFG
-    // it calls a 'make_sfg' function
-    // so that this can also be called from the 'shapes' file too
-    //make_sfg( im, sfheaders::sfg::SFG_LINESTRING );
-
-    // size_t n_col = im.ncol();
-    // std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-    //
-    // std::string geom_type = get_sfg_type( sfheaders::sfg::SFG_LINESTRING );
-    // im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-
-    //return im;
     sfheaders::sfg::make_sfg( im, sfheaders::sfg::SFG_LINESTRING );
     return im;
   }
@@ -36,7 +23,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::IntegerVector& iv
   ) {
-    size_t n = iv.length();
+    R_xlen_t n = iv.length();
     Rcpp::IntegerMatrix im( 1, n );
     im( 0, Rcpp::_ ) = iv;
     return sfg_linestring( im );
@@ -69,7 +56,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::NumericVector& nv
   ) {
-    size_t n = nv.length();
+    R_xlen_t n = nv.length();
     Rcpp::NumericMatrix nm( 1, n );
     nm( 0, Rcpp::_ ) = nv;
     return sfg_linestring( nm );

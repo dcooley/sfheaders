@@ -97,10 +97,10 @@ namespace utils {
 
   inline Rcpp::IntegerMatrix matrix_row_to_matrix(
     Rcpp::IntegerMatrix& im,
-    size_t& i
+    R_xlen_t& i
   ) {
     Rcpp::IntegerVector this_row = im( i, Rcpp::_ );
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
     Rcpp::IntegerMatrix im2( 1, n_col );
     im2( 0, Rcpp::_ ) = this_row;
     return im2;
@@ -108,10 +108,10 @@ namespace utils {
 
   inline Rcpp::NumericMatrix matrix_row_to_matrix(
       Rcpp::NumericMatrix& nm,
-      size_t& i
+      R_xlen_t& i
   ) {
     Rcpp::NumericVector this_row = nm( i, Rcpp::_ );
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
     Rcpp::NumericMatrix nm2( 1, n_col );
     nm2( 0, Rcpp::_ ) = this_row;
     return nm2;

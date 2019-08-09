@@ -39,8 +39,8 @@ namespace shapes {
       int& start,
       int& end
   ) {
-    size_t i;
-    size_t n_col = geometry_cols.length();
+    R_xlen_t i;
+    R_xlen_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
 
     Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
@@ -60,8 +60,8 @@ namespace shapes {
       int& end
   ) {
 
-    size_t i;
-    size_t n_col = geometry_cols.length();
+    R_xlen_t i;
+    R_xlen_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
     Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
 
@@ -83,7 +83,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
-    size_t n_col = geometry_cols.length();
+    R_xlen_t n_col = geometry_cols.length();
     // matrix can just be subset by cols and rows
     Rcpp::Range rows = Rcpp::Range( start, end );
     Rcpp::Range cols = Rcpp::Range( geometry_cols[0], geometry_cols[ ( n_col - 1 ) ] );
@@ -108,7 +108,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
-    size_t n_col = geometry_cols.length();
+    R_xlen_t n_col = geometry_cols.length();
 
     if( n_col <= 1 ) {
       Rcpp::stop("sfheaders - need at least 2 columns");
@@ -158,12 +158,12 @@ namespace shapes {
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
-    size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
     Rcpp::List mls( n_lines );
 
     // now iterate through the data.frame and get the matrices of lines
-    size_t i;
+    R_xlen_t i;
     for( i = 0; i < n_lines; i++ ) {
     //Rcpp::Rcout << "looping for get_listMat() " <<  i << std::endl;
 
@@ -188,7 +188,7 @@ namespace shapes {
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
-    size_t n_lines = unique_ids.length();
+    R_xlen_t n_lines = unique_ids.length();
 
     Rcpp::List mls( n_lines );
 
@@ -202,7 +202,7 @@ namespace shapes {
     }
 
     // now iterate through the data.frame and get the matrices of lines
-    size_t i;
+    R_xlen_t i;
     for( i = 0; i < n_lines; i++ ) {
 
       start = line_positions(i, 0);

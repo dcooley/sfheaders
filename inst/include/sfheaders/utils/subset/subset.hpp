@@ -63,10 +63,10 @@ namespace utils {
     int& end
   ) {
 
-    size_t n_cols = cols.size();
+    R_xlen_t n_cols = cols.size();
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector row_names = Rcpp::seq( start + 1, end + 1 );
-    size_t i;
+    R_xlen_t i;
     Rcpp::List df_subset( n_cols );
     for( i = 0; i < n_cols; i++ ) {
       Rcpp::String this_col = cols[i];

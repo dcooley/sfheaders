@@ -35,7 +35,7 @@ namespace sfg {
     Rcpp::IntegerVector& iv,
     int sfg_type
   ) {
-    size_t n_col = iv.length();
+    R_xlen_t n_col = iv.length();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = get_sfg_type( sfg_type );
@@ -46,7 +46,7 @@ namespace sfg {
       Rcpp::NumericVector& nv,
       int sfg_type
   ) {
-    size_t n_col = nv.length();
+    R_xlen_t n_col = nv.length();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = get_sfg_type( sfg_type );
@@ -58,7 +58,7 @@ namespace sfg {
     int sfg_type
   ) {
 
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = get_sfg_type( sfg_type );
@@ -70,7 +70,7 @@ namespace sfg {
       int sfg_type
   ) {
 
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = get_sfg_type( sfg_type );
@@ -79,7 +79,7 @@ namespace sfg {
 
   inline void make_sfg(
     Rcpp::List& lst,
-    size_t n_col,
+    R_xlen_t n_col,
     int sfg_type
   ) {
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );

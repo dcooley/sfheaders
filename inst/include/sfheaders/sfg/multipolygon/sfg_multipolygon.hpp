@@ -18,7 +18,7 @@ inline SEXP sfg_multipolygon(
   Rcpp::List mp( 1 );
   p[0] = im;
   mp[0] = p;
-  size_t n_col = im.ncol();
+  R_xlen_t n_col = im.ncol();
   std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
   std::string geom_type = "MULTIPOLYGON";
@@ -34,7 +34,7 @@ inline SEXP sfg_multipolygon(
   Rcpp::List mp( 1 );
   p[0] = nm;
   mp[0] = p;
-  size_t n_col = nm.ncol();
+  R_xlen_t n_col = nm.ncol();
   std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
   std::string geom_type = "MULTIPOLYGON";
@@ -52,7 +52,7 @@ inline SEXP sfg_multipolygon(
   Rcpp::List mp( 1 );
   p[0] = nm;
   mp[0] = p;
-  size_t n_col = nm.ncol();
+  R_xlen_t n_col = nm.ncol();
   std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
   std::string geom_type = "MULTIPOLYGON";

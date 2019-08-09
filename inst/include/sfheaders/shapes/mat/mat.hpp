@@ -30,9 +30,9 @@ namespace shapes {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    size_t n_row = im.nrow();
-    size_t n_col = cols.size();
-    size_t i;
+    R_xlen_t n_row = im.nrow();
+    R_xlen_t n_col = cols.size();
+    R_xlen_t i;
     Rcpp::IntegerMatrix im2( n_row, n_col );
     for( i = 0; i < n_col; i++ ) {
       int this_col = cols[ i ];
@@ -46,9 +46,9 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    size_t n_row = nm.nrow();
-    size_t n_col = cols.size();
-    size_t i;
+    R_xlen_t n_row = nm.nrow();
+    R_xlen_t n_col = cols.size();
+    R_xlen_t i;
     Rcpp::NumericMatrix nm2( n_row, n_col );
     for( i = 0; i < n_col; i++ ) {
       int this_col = cols[ i ];
@@ -61,13 +61,13 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    size_t n_col = cols.size();
+    R_xlen_t n_col = cols.size();
     if( df.ncol() < n_col ) {
       Rcpp::stop("sfheaders - incorrect number of columns");
     }
-    size_t n_row = df.nrow();
+    R_xlen_t n_row = df.nrow();
     Rcpp::NumericMatrix nm( n_row, n_col );
-    size_t i;
+    R_xlen_t i;
 
     for( i = 0; i < n_col; i++ ) {
       Rcpp::String this_col = cols[i];

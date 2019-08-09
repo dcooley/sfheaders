@@ -21,7 +21,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
 
     Rcpp::List sfc( 1 );
 
@@ -44,7 +44,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
 
     Rcpp::List sfc( 1 );
 
@@ -67,7 +67,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
 
     Rcpp::List sfc( 1 );
 
@@ -117,15 +117,15 @@ namespace sfc {
   //   int n_empty = 0;
   //   double precision = 0.0;
   //
-  //   size_t n_polygons = lst.size();
+  //   R_xlen_t n_polygons = lst.size();
   //   // Rcpp::Rcout << "n_polygons: " << n_polygons << std::endl;
   //   Rcpp::List sfc( n_polygons );
   //
-  //   size_t i, j;
+  //   R_xlen_t i, j;
   //
   //   for( i = 0; i < n_polygons; i++ ) {
   //     Rcpp::List sfgs = lst[i];
-  //     size_t n_linestrings = sfgs.size();
+  //     R_xlen_t n_linestrings = sfgs.size();
   //
   //     // Rcpp::Rcout << "n_linestrings: " << n_linestrings << std::endl;
   //     Rcpp::List ml( n_linestrings );
@@ -142,7 +142,7 @@ namespace sfc {
   //         Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( this_linestring );
   //         sfheaders::bbox::calculate_bbox( bbox, im );
   //
-  //         size_t n_col = im.ncol();
+  //         R_xlen_t n_col = im.ncol();
   //         if( n_col > 2 ) {
   //           sfheaders::zm::calculate_z_range( z_range, im );
   //           if( n_col > 3 ) {
@@ -161,7 +161,7 @@ namespace sfc {
   //         Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( this_linestring );
   //         sfheaders::bbox::calculate_bbox( bbox, nm );
   //
-  //         size_t n_col = nm.ncol();
+  //         R_xlen_t n_col = nm.ncol();
   //         if( n_col > 2 ) {
   //           sfheaders::zm::calculate_z_range( z_range, nm );
   //           if( n_col > 3 ) {
@@ -235,7 +235,7 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
 
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
     Rcpp::List sfc( 1 );
@@ -255,7 +255,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
@@ -275,7 +275,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
@@ -297,7 +297,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
@@ -319,7 +319,7 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
     Rcpp::List sfc( 1 );
@@ -340,7 +340,7 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
     Rcpp::List sfc( 1 );
@@ -474,14 +474,14 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
     SEXP unique_polygon_ids = sfheaders::utils::get_sexp_unique( polygon_ids );
     Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
-    size_t n_polygons = sfheaders::utils::get_sexp_length( unique_polygon_ids );
-    size_t i;
+    R_xlen_t n_polygons = sfheaders::utils::get_sexp_length( unique_polygon_ids );
+    R_xlen_t i;
     Rcpp::List sfc( n_polygons );
 
     int start;
@@ -511,14 +511,14 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
     SEXP unique_polygon_ids = sfheaders::utils::get_sexp_unique( polygon_ids );
     Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
-    size_t n_polygons = sfheaders::utils::get_sexp_length( unique_polygon_ids ); //  unique_polygon_ids.length();
-    size_t i;
+    R_xlen_t n_polygons = sfheaders::utils::get_sexp_length( unique_polygon_ids ); //  unique_polygon_ids.length();
+    R_xlen_t i;
     Rcpp::List sfc( n_polygons );
 
     int start;
@@ -548,14 +548,14 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
 
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
     Rcpp::IntegerVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
     Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
-    size_t n_polygons = unique_polygon_ids.length();
-    size_t i;
+    R_xlen_t n_polygons = unique_polygon_ids.length();
+    R_xlen_t i;
     Rcpp::List sfc( n_polygons );
 
     int start;
@@ -584,14 +584,14 @@ namespace sfc {
 
     sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
 
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
     Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
     Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
 
-    size_t n_polygons = unique_polygon_ids.length();
-    size_t i;
+    R_xlen_t n_polygons = unique_polygon_ids.length();
+    R_xlen_t i;
     Rcpp::List sfc( n_polygons );
 
     int start;
@@ -790,7 +790,7 @@ namespace sfc {
       case INTSXP: {
         if( Rf_isMatrix( x ) ) {
         Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-        size_t n_col = im.ncol();
+        R_xlen_t n_col = im.ncol();
         sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
         break;
       }
@@ -798,7 +798,7 @@ namespace sfc {
       case REALSXP: {
         if( Rf_isMatrix( x ) ) {
         Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-        size_t n_col = nm.ncol();
+        R_xlen_t n_col = nm.ncol();
         sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
         break;
       }
@@ -806,7 +806,7 @@ namespace sfc {
       case VECSXP: {
         if( Rf_inherits( x, "data.frame" ) ) {
         Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-        size_t n_col = df.ncol();
+        R_xlen_t n_col = df.ncol();
         sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
         break;
       }

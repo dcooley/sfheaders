@@ -17,7 +17,7 @@ namespace sfg {
   ) {
     Rcpp::List mls( 1 );
     mls[0] = im;
-    size_t n_col = im.ncol();
+    R_xlen_t n_col = im.ncol();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = "MULTILINESTRING";
@@ -29,7 +29,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::IntegerVector& iv
   ) {
-    size_t n = iv.length();
+    R_xlen_t n = iv.length();
     Rcpp::IntegerMatrix im( 1, n );
     im( 0, Rcpp::_ ) = iv;
     return sfg_multilinestring( im );
@@ -40,7 +40,7 @@ namespace sfg {
   ) {
     Rcpp::List mls( 1 );
     mls[0] = nm;
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
     std::string geom_type = "MULTILINESTRING";
@@ -52,7 +52,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::NumericVector& nv
   ) {
-    size_t n = nv.length();
+    R_xlen_t n = nv.length();
     Rcpp::NumericMatrix nm( 1, n );
     nm( 0, Rcpp::_ ) = nv;
     return sfg_multilinestring( nm );
@@ -64,7 +64,7 @@ namespace sfg {
     Rcpp::List mls( 1 );
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     mls[0] = nm;
-    size_t n_col = nm.ncol();
+    R_xlen_t n_col = nm.ncol();
     //Rcpp::Rcout << "n_col: " << n_col << std::endl;
 
     std::string dim = sfheaders::sfg::sfg_dimension( n_col );

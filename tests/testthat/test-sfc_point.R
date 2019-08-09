@@ -84,3 +84,19 @@ test_that("after refactoring issue14 I haven't lost anything",{
 
 })
 
+
+test_that("vectorised version works",{
+
+  is_point <- function(x) {
+    y <- sapply( x, function(y) is.vector(unclass(y)))
+    z <- sapply( x, function(y) attr( y, "class")[2] == "POINT")
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:3, ncol = 3)
+  m2 <- matrix(1:3, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfc_points( lst )
+  expect_true( all( sapply( res, is_point ) ) )
+
+})

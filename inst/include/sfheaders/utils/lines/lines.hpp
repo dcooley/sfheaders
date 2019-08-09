@@ -17,8 +17,8 @@ namespace utils {
       Rcpp::IntegerVector& unique_ids
   ) {
 
-    size_t n = line_ids.length();
-    size_t unique_n = unique_ids.length();
+    R_xlen_t n = line_ids.length();
+    R_xlen_t unique_n = unique_ids.length();
 
     Rcpp::IntegerMatrix im( unique_n, 2);
 
@@ -29,7 +29,7 @@ namespace utils {
       return im;
     }
 
-    size_t i;
+    R_xlen_t i;
 
     Rcpp::IntegerVector start_positions( unique_n );
     Rcpp::IntegerVector end_positions( unique_n );
@@ -73,8 +73,8 @@ namespace utils {
       Rcpp::NumericVector& unique_ids
   ) {
 
-    size_t n = line_ids.length();
-    size_t unique_n = unique_ids.length();
+    R_xlen_t n = line_ids.length();
+    R_xlen_t unique_n = unique_ids.length();
 
     // Rcpp::Rcout << "n: " << n << std::endl;
     // Rcpp::Rcout << "unique_n: " << unique_n << std::endl;
@@ -89,7 +89,7 @@ namespace utils {
       return im;
     }
 
-    size_t i;
+    R_xlen_t i;
 
     Rcpp::IntegerVector start_positions( unique_n );
     Rcpp::IntegerVector end_positions( unique_n );
@@ -137,8 +137,8 @@ namespace utils {
       Rcpp::StringVector& unique_ids
   ) {
 
-    size_t n = line_ids.length();
-    size_t unique_n = unique_ids.length();
+    R_xlen_t n = line_ids.length();
+    R_xlen_t unique_n = unique_ids.length();
 
     Rcpp::IntegerMatrix im( unique_n, 2);
 
@@ -149,7 +149,7 @@ namespace utils {
       return im;
     }
 
-    size_t i;
+    R_xlen_t i;
 
     Rcpp::IntegerVector start_positions( unique_n );
     Rcpp::IntegerVector end_positions( unique_n );

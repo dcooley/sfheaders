@@ -109,3 +109,19 @@ test_that("data.frame with non-numeric id columns work",{
   expect_true( is_multilinestring( res ) )
 
 })
+
+test_that("vectorised version works",{
+
+  is_multilinestring <- function(x) {
+    y <- sapply( x, function(y) is.list( unclass( y ) ) )
+    z <- sapply( x, function(y) attr( y, "class")[2] == "MULTILINESTRING")
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:12, ncol = 3)
+  m2 <- matrix(1:12, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfc_multilinestrings( lst )
+  expect_true( all( sapply( res, is_multilinestring ) ) )
+
+})

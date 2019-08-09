@@ -21,13 +21,13 @@ namespace sfc {
 
     // matrix; iterate through each row, get bbox, create sfg of each point
     // then an sfc of all other points
-    size_t n_row = im.nrow();
-    size_t n_col = im.ncol();
+    R_xlen_t n_row = im.nrow();
+    R_xlen_t n_col = im.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, im );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im );
 
-    size_t i;
+    R_xlen_t i;
     Rcpp::List sfc( n_row );
 
     for( i = 0; i < n_row; i++ ) {
@@ -58,13 +58,13 @@ namespace sfc {
 
     // matrix; iterate through each row, get bbox, create sfg of each point
     // then an sfc of all other points
-    size_t n_row = nm.nrow();
-    size_t n_col = nm.ncol();
+    R_xlen_t n_row = nm.nrow();
+    R_xlen_t n_col = nm.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, nm );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm );
 
-    size_t i;
+    R_xlen_t i;
     Rcpp::List sfc( n_row );
 
     for( i = 0; i < n_row; i++ ) {
@@ -95,9 +95,9 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_row = im.nrow();
-    size_t n_col = im.ncol();
-    size_t i;
+    R_xlen_t n_row = im.nrow();
+    R_xlen_t n_col = im.ncol();
+    R_xlen_t i;
 
     sfheaders::bbox::calculate_bbox( bbox, im, cols );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, cols );
@@ -123,9 +123,9 @@ namespace sfc {
 
     Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( im, cols );
 
-    size_t i;
-    size_t n_row = im.nrow();
-    size_t n_col = im.ncol();
+    R_xlen_t i;
+    R_xlen_t n_row = im.nrow();
+    R_xlen_t n_col = im.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, im );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im );
@@ -150,9 +150,9 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    size_t n_row = nm.nrow();
-    size_t n_col = nm.ncol();
-    size_t i;
+    R_xlen_t n_row = nm.nrow();
+    R_xlen_t n_col = nm.ncol();
+    R_xlen_t i;
 
     sfheaders::bbox::calculate_bbox( bbox, nm, cols );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, cols );
@@ -178,9 +178,9 @@ namespace sfc {
 
     Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( nm, cols );
 
-    size_t i;
-    size_t n_row = nm.nrow();
-    size_t n_col = nm.ncol();
+    R_xlen_t i;
+    R_xlen_t n_row = nm.nrow();
+    R_xlen_t n_col = nm.ncol();
 
     sfheaders::bbox::calculate_bbox( bbox, nm );
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm );

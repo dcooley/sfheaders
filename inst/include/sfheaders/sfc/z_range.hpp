@@ -136,14 +136,6 @@ namespace zm {
 
     z_range[0] = std::min( zmin, z_range[0] );
     z_range[1] = std::max( zmax, z_range[1] );
-
-
-    // size_t n_row = im.nrow();
-    // size_t i;
-    // for( i = 0; i < n_row; i++ ) {
-    //   Rcpp::IntegerVector iv = im( i, Rcpp::_ );
-    //   calculate_bbox( bbox, iv );
-    // }
   }
 
   inline void calculate_z_range(
@@ -161,12 +153,6 @@ namespace zm {
     z_range[0] = std::min( zmin, z_range[0] );
     z_range[1] = std::max( zmax, z_range[1] );
 
-    // size_t n_row = nm.nrow();
-    // size_t i;
-    // for( i = 0; i < n_row; i++ ) {
-    //   Rcpp::NumericVector nv = nm( i, Rcpp::_ );
-    //   calculate_bbox( bbox, nv );
-    // }
   }
 
   inline void calculate_z_range(

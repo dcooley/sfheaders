@@ -28,11 +28,11 @@ namespace utils {
   }
 
   template < int RTYPE >
-  inline size_t sexp_n_col( Rcpp::Matrix < RTYPE > v ) {
+  inline R_xlen_t sexp_n_col( Rcpp::Matrix < RTYPE > v ) {
     return v.ncol();
   }
 
-  inline size_t get_sexp_n_col( SEXP s ) {
+  inline R_xlen_t get_sexp_n_col( SEXP s ) {
     switch( TYPEOF( s ) ) {
     case REALSXP: {
       return sexp_n_col< REALSXP >( s );
@@ -46,7 +46,7 @@ namespace utils {
     }
   }
 
-  inline size_t sexp_n_row( SEXP& x ) {
+  inline R_xlen_t sexp_n_row( SEXP& x ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {

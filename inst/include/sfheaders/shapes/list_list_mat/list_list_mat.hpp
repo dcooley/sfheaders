@@ -50,20 +50,15 @@ namespace shapes {
     SEXP group_ids = df[ group_id_col_1 ];
     Rcpp::StringVector df_names = df.names();
 
-    // Rcpp::NumericVector unique_polygon_ids = Rcpp::sort_unique( polygon_ids );
-    // Rcpp::IntegerMatrix polygons = sfheaders::utils::id_positions( polygon_ids, unique_polygon_ids );
-    //
-    // size_t n_polygons = unique_polygon_ids.length();
-
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( group_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids, unique_ids );
 
-    size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
 
     Rcpp::List mpl( n_lines );
 
-    size_t i;
+    R_xlen_t i;
     for( i = 0; i < n_lines; i++ ) {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
@@ -92,11 +87,11 @@ namespace shapes {
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( group_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids, unique_ids );
 
-    size_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
     Rcpp::List mpl( n_lines );
 
-    size_t i;
+    R_xlen_t i;
     for( i = 0; i < n_lines; i++ ) {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);

@@ -45,7 +45,7 @@ namespace zm {
   }
 
   inline void m_range_size_check( SEXP& x ) {
-    size_t n_col = sfheaders::utils::get_sexp_n_col( x );
+    R_xlen_t n_col = sfheaders::utils::get_sexp_n_col( x );
     if( n_col < 4 ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }

@@ -13,7 +13,7 @@ namespace sfg {
   inline SEXP sfg_point( Rcpp::IntegerVector& iv ) {
     // takes a vector of size >= 2 && size <= 4 (for z & m)
     // attaches sfg_POINT attributes
-    size_t n = iv.size();
+    R_xlen_t n = iv.size();
     std::string dim = sfheaders::sfg::sfg_dimension( n );
     std::string geom_type = "POINT";
     iv.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
@@ -23,7 +23,7 @@ namespace sfg {
   inline SEXP sfg_point( Rcpp::NumericVector& nv ) {
     // takes a vector of size >= 2 && size <= 4 (for z & m)
     // attaches sfg_POINT attributes
-    size_t n = nv.size();
+    R_xlen_t n = nv.size();
     std::string dim = sfheaders::sfg::sfg_dimension( n );
     std::string geom_type = "POINT";
     nv.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type) ;

@@ -19,7 +19,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  size_t n_col = im.ncol();
+  R_xlen_t n_col = im.ncol();
 
   Rcpp::List sfc( 1 );
 
@@ -42,7 +42,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  size_t n_col = nm.ncol();
+  R_xlen_t n_col = nm.ncol();
 
   Rcpp::List sfc( 1 );
 
@@ -65,7 +65,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
 
   Rcpp::List sfc( 1 );
 
@@ -115,15 +115,15 @@ inline SEXP sfc_multilinestring(
 //   int n_empty = 0;
 //   double precision = 0.0;
 //
-//   size_t n_multilinestrings = lst.size();
+//   R_xlen_t n_multilinestrings = lst.size();
 //   // Rcpp::Rcout << "n_multilinestrings: " << n_multilinestrings << std::endl;
 //   Rcpp::List sfc( n_multilinestrings );
 //
-//   size_t i, j;
+//   R_xlen_t i, j;
 //
 //   for( i = 0; i < n_multilinestrings; i++ ) {
 //     Rcpp::List sfgs = lst[i];
-//     size_t n_linestrings = sfgs.size();
+//     R_xlen_t n_linestrings = sfgs.size();
 //
 //     // Rcpp::Rcout << "n_linestrings: " << n_linestrings << std::endl;
 //     Rcpp::List ml( n_linestrings );
@@ -140,7 +140,7 @@ inline SEXP sfc_multilinestring(
 //         Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( this_linestring );
 //         sfheaders::bbox::calculate_bbox( bbox, im );
 //
-//         size_t n_col = im.ncol();
+//         R_xlen_t n_col = im.ncol();
 //         if( n_col > 2 ) {
 //           sfheaders::zm::calculate_z_range( z_range, im );
 //           if( n_col > 3 ) {
@@ -159,7 +159,7 @@ inline SEXP sfc_multilinestring(
 //         Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( this_linestring );
 //         sfheaders::bbox::calculate_bbox( bbox, nm );
 //
-//         size_t n_col = nm.ncol();
+//         R_xlen_t n_col = nm.ncol();
 //         if( n_col > 2 ) {
 //           sfheaders::zm::calculate_z_range( z_range, nm );
 //           if( n_col > 3 ) {
@@ -232,7 +232,7 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
 
-  size_t n_col = im.ncol();
+  R_xlen_t n_col = im.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
   Rcpp::List sfc( 1 );
@@ -252,7 +252,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
 
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
@@ -272,7 +272,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  size_t n_col = nm.ncol();
+  R_xlen_t n_col = nm.ncol();
 
   sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
@@ -294,7 +294,7 @@ inline SEXP sfc_multilinestring(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
 
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
@@ -316,7 +316,7 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   Rcpp::List sfc( 1 );
@@ -337,7 +337,7 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   Rcpp::List sfc( 1 );
@@ -471,14 +471,14 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   SEXP unique_multilinestring_ids = sfheaders::utils::get_sexp_unique( multilinestring_ids );
   Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
-  size_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids );
-  size_t i;
+  R_xlen_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids );
+  R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
   int start;
@@ -508,14 +508,14 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
 
-  size_t n_col = df.ncol();
+  R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
   SEXP unique_multilinestring_ids = sfheaders::utils::get_sexp_unique( multilinestring_ids );
   Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
-  size_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids ); //  unique_multilinestring_ids.length();
-  size_t i;
+  R_xlen_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids ); //  unique_multilinestring_ids.length();
+  R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
   int start;
@@ -545,14 +545,14 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
 
-  size_t n_col = im.ncol();
+  R_xlen_t n_col = im.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
   Rcpp::IntegerVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
   Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
-  size_t n_multilinestrings = unique_multilinestring_ids.length();
-  size_t i;
+  R_xlen_t n_multilinestrings = unique_multilinestring_ids.length();
+  R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
   int start;
@@ -581,14 +581,14 @@ inline SEXP sfc_multilinestring(
 
   sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
 
-  size_t n_col = nm.ncol();
+  R_xlen_t n_col = nm.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
   Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
   Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
 
-  size_t n_multilinestrings = unique_multilinestring_ids.length();
-  size_t i;
+  R_xlen_t n_multilinestrings = unique_multilinestring_ids.length();
+  R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
   int start;
@@ -787,7 +787,7 @@ inline SEXP sfc_multilinestring(
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      size_t n_col = im.ncol();
+      R_xlen_t n_col = im.ncol();
       sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
       break;
     }
@@ -795,7 +795,7 @@ inline SEXP sfc_multilinestring(
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      size_t n_col = nm.ncol();
+      R_xlen_t n_col = nm.ncol();
       sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
       break;
     }
@@ -803,7 +803,7 @@ inline SEXP sfc_multilinestring(
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      size_t n_col = df.ncol();
+      R_xlen_t n_col = df.ncol();
       sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
       break;
     }

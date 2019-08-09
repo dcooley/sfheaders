@@ -8,8 +8,8 @@ namespace sfheaders {
 namespace sfc {
 
   inline Rcpp::List sfc_linestrings( Rcpp::List& lst ) {
-    size_t n = lst.size();
-    size_t i;
+    R_xlen_t n = lst.size();
+    R_xlen_t i;
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; i++ ) {

@@ -15,7 +15,7 @@ namespace sfheaders {
 namespace utils {
 
   inline void geometry_column_check( SEXP x ) {
-    size_t n = sfheaders::utils::get_sexp_length( x );
+    R_xlen_t n = sfheaders::utils::get_sexp_length( x );
     if( n < 2 || n > 4) {
       Rcpp::stop("sfheaders - incorrect number of geometry columns");
     }
@@ -34,7 +34,7 @@ namespace utils {
     return false;
   }
 
-  inline std::string make_dimension( size_t n ) {
+  inline std::string make_dimension( R_xlen_t n ) {
     switch( n ) {
     case 2: {
       return "XY";

@@ -24,7 +24,7 @@ namespace shapes {
   inline SEXP get_vec(
       Rcpp::IntegerMatrix& im
   ) {
-    size_t n_row = im.nrow();
+    R_xlen_t n_row = im.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
@@ -36,12 +36,12 @@ namespace shapes {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols
   ) {
-    size_t n_row = im.nrow();
+    R_xlen_t n_row = im.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
-    size_t n_col = cols.length();
-    size_t i;
+    R_xlen_t n_col = cols.length();
+    R_xlen_t i;
     Rcpp::IntegerVector iv( n_col );
     for( i = 0; i < n_col; i++ ) {
       int this_col = cols[ i ];
@@ -53,13 +53,13 @@ namespace shapes {
   inline SEXP get_vec(
       Rcpp::DataFrame& df
   ) {
-    size_t n_row = df.nrow();
+    R_xlen_t n_row = df.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row data.frame");
     }
-    size_t n_col = df.ncol();
+    R_xlen_t n_col = df.ncol();
     Rcpp::NumericVector nv( n_col );
-    size_t i;
+    R_xlen_t i;
     for( i = 0; i < n_col; i++ ) {
       nv[i] = df[i];
     }
@@ -70,16 +70,16 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols
   ) {
-    size_t n_col = cols.length();
+    R_xlen_t n_col = cols.length();
     if( df.ncol() < n_col ) {
       Rcpp::stop("sfheaders - incorrect number of columns");
     }
-    size_t n_row = df.nrow();
+    R_xlen_t n_row = df.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row data.frame");
     }
     Rcpp::NumericVector nv( n_col );
-    size_t i;
+    R_xlen_t i;
     for( i = 0; i < n_col; i++ ) {
       Rcpp::String this_col = cols[ i ];
       nv[i] = df[ this_col ];
@@ -99,7 +99,7 @@ namespace shapes {
   inline SEXP get_vec(
       Rcpp::NumericMatrix& nm
   ) {
-    size_t n_row = nm.nrow();
+    R_xlen_t n_row = nm.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
@@ -120,12 +120,12 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols
   ) {
-    size_t n_row = nm.nrow();
+    R_xlen_t n_row = nm.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
     }
-    size_t n_col = cols.length();
-    size_t i;
+    R_xlen_t n_col = cols.length();
+    R_xlen_t i;
     Rcpp::NumericVector nv( n_col );
     for( i = 0; i < n_col; i++ ) {
       int this_col = cols[ i ];

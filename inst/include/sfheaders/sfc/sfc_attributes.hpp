@@ -7,7 +7,7 @@
 namespace sfheaders {
 namespace sfc {
 
-  inline Rcpp::StringVector start_sfc_classes( size_t collectionCount ) {
+  inline Rcpp::StringVector start_sfc_classes( R_xlen_t collectionCount ) {
     Rcpp::StringVector sfc_classes( collectionCount );
     return sfc_classes;
   }
