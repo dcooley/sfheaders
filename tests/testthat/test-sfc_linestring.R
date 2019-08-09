@@ -91,6 +91,12 @@ test_that("various objects converted to sfc_LINESTRING",{
   expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
 
   m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L))
+  res <- sfheaders:::rcpp_sfc_linestring(m, c(0L,1L), 2L)
+  expect_true( is_linestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   res <- sfheaders:::rcpp_sfc_linestring(m, c(0L,1L), 2L)
   expect_true( is_linestring( res ) )
@@ -112,7 +118,36 @@ test_that("various objects converted to sfc_LINESTRING",{
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), NULL )
+  expect_true( is_linestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+
+  m <- matrix(c(1.2,2:8), ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), NULL )
+  expect_true( is_linestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
   res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), c("V3"))
+  expect_true( is_linestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), c("V3"))
+  expect_true( is_linestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_linestring(df, c(0L,1L), 2L )
   expect_true( is_linestring( res ) )
   expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
 

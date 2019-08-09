@@ -681,7 +681,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
     }
     }
 
@@ -720,7 +720,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
     }
     }
 
@@ -775,7 +775,7 @@ namespace sfc {
         return sfc_linestring( x, sv_geometry_cols, s_linestring_id_col );
       }
       default: {
-          Rcpp::stop("sfheaders - unsupported linestring type");
+          Rcpp::stop("sfheaders - unsupported linestring type");  // #nocov
         }
       }
     }
