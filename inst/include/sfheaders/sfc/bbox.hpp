@@ -271,7 +271,7 @@ namespace bbox {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - can't calculate bounding box for this type");
+      Rcpp::stop("sfheaders - can't calculate bounding box for this type"); // #nocov
     }
     }
   }
@@ -312,7 +312,7 @@ namespace bbox {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported type for bbox");
+      Rcpp::stop("sfheaders - unsupported type for bbox");  // #nocov
     }
     }
   }
@@ -353,7 +353,7 @@ namespace bbox {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported type for bbox");
+      Rcpp::stop("sfheaders - unsupported type for bbox");  // #nocov
     }
     }
   }
@@ -364,6 +364,11 @@ namespace bbox {
       SEXP& x,
       SEXP& geometry_cols
   ) {
+
+    if( Rf_isNull( geometry_cols ) ) {
+      return calculate_bbox( bbox, x );
+    }
+
     // assumes 2-column?, and in correct order?
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -378,7 +383,7 @@ namespace bbox {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - can't calculate bounding box for this type");
+      Rcpp::stop("sfheaders - can't calculate bounding box for this type"); // #nocov
     }
     }
   }

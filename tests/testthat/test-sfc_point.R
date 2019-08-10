@@ -54,12 +54,22 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
   expect_true( is_point( res ) )
 
+  v <- c(1.2,2,3,4)
+  res <- sfheaders:::rcpp_sfc_point( v, NULL )
+  expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
+  expect_true( is_point( res ) )
+
   m <- matrix(1:4, ncol = 2)
   res <- sfheaders:::rcpp_sfc_point(m, NULL )
   expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
   expect_true( is_point( res ) )
 
   m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_point(m, c(0,1) )
+  expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
+  expect_true( is_point( res ) )
+
+  m <- matrix(c(1.2,2,3,4), ncol = 2)
   res <- sfheaders:::rcpp_sfc_point(m, c(0,1) )
   expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
   expect_true( is_point( res ) )
@@ -78,6 +88,20 @@ test_that("after refactoring issue14 I haven't lost anything",{
 
   m <- matrix(1:4, ncol = 2)
   df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_point(df, c("V1","V2") )
+  expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
+  expect_true( is_point( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_point(df, c("V1","V2") )
+  expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
+  expect_true( is_point( res ) )
+
+  m <- matrix(c(1.2,2,3,4), ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
   res <- sfheaders:::rcpp_sfc_point(df, c("V1","V2") )
   expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
   expect_true( is_point( res ) )

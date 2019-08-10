@@ -6,13 +6,14 @@
 using namespace Rcpp;
 
 // rcpp_calculate_bbox
-SEXP rcpp_calculate_bbox(SEXP x);
-RcppExport SEXP _sfheaders_rcpp_calculate_bbox(SEXP xSEXP) {
+SEXP rcpp_calculate_bbox(SEXP x, SEXP geometry_cols);
+RcppExport SEXP _sfheaders_rcpp_calculate_bbox(SEXP xSEXP, SEXP geometry_colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_bbox(x));
+    Rcpp::traits::input_parameter< SEXP >::type geometry_cols(geometry_colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_bbox(x, geometry_cols));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -546,7 +547,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 1},
+    {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 2},
     {"_sfheaders_rcpp_calculate_z_range", (DL_FUNC) &_sfheaders_rcpp_calculate_z_range, 1},
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},

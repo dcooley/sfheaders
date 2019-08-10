@@ -3,8 +3,8 @@ context("bbox")
 test_that("bounding box correctly calculated", {
 
 
-  bb <- function( x ) {
-    sfheaders:::rcpp_calculate_bbox( x )
+  bb <- function( x, cols = NULL ) {
+    sfheaders:::rcpp_calculate_bbox( x, cols )
   }
 
   bbox <- bb( 1:2 )
@@ -26,10 +26,39 @@ test_that("bounding box correctly calculated", {
   bbox <- bb( x )
   expect_equal( bbox, c(1,2,3,4) )
 
+  x <- matrix( c( 1.2, 2, 3, 4 ), ncol = 2, byrow = T )
+  bbox <- bb( x, c(0,1,2,3) )
+  expect_equal( bbox, c(1.2,2,3,4) )
+
+  x <- matrix( c( 1L:4L ), ncol = 2, byrow = T )
+  bbox <- bb( x, c(0,1,2,3) )
+  expect_equal( bbox, c(1,2,3,4) )
+
+  x <- matrix( c( 1L:4L ), ncol = 2, byrow = T )
+  df <- as.data.frame( x )
+  m <- as.matrix( m )
+  bbox <- bb( x, c("V1","V2","V3","V4") )
+  expect_equal( bbox, c(1,2,3,4) )
+
+  x <- matrix( c( 1.2,2,3,4 ), ncol = 2, byrow = T )
+  df <- as.data.frame( x )
+  m <- as.matrix( m )
+  bbox <- bb( x, c("V1","V2","V3","V4") )
+  expect_equal( bbox, c(1.2,2,3,4) )
+
 
   x <- data.frame( x = 1:5, y = 2:6 )
   bbox <- bb( x )
   expect_equal( bbox, c(1,2,5,6) )
+
+  x <- 1
+  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  x <- matrix(1)
+  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  x <- matrix(1.1)
+  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+
+
 })
 
 

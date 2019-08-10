@@ -10,9 +10,9 @@
  * assumes 2-column object, in the order x, y
  */
 // [[Rcpp::export]]
-SEXP rcpp_calculate_bbox( SEXP x ) {
+SEXP rcpp_calculate_bbox( SEXP x, SEXP geometry_cols ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-  sfheaders::bbox::calculate_bbox( bbox, x );
+  sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols );
   return bbox;
 }
 

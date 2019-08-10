@@ -278,7 +278,7 @@ namespace sfc {
     } //else - default
     }
     default: {
-      Rcpp::stop("sfheaders - unknown point type");
+      Rcpp::stop("sfheaders - unknown point type");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -315,7 +315,7 @@ namespace sfc {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfc_POINT type");
+      Rcpp::stop("sfheaders - unsupported sfc_POINT type");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -341,7 +341,7 @@ namespace sfc {
       return sfc_point( x, str_cols );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
