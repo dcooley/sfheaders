@@ -193,7 +193,7 @@ namespace utils {
     SEXP& unique_ids
   ) {
     if( TYPEOF( line_ids ) != TYPEOF( unique_ids ) ) {
-      Rcpp::stop("sfheaders - line_ids and unique_ids are not the same type");
+      Rcpp::stop("sfheaders - line_ids and unique_ids are not the same type"); // #nocov
     }
 
     switch( TYPEOF( line_ids ) ) {
@@ -213,7 +213,7 @@ namespace utils {
       return id_positions( sv_line_ids, sv_unique_ids );
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported vector type for determining id positions");
+      Rcpp::stop("sfheaders - unsupported vector type for determining id positions"); // #nocov
     }
     }
 

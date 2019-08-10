@@ -532,6 +532,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_get_ids
+SEXP rcpp_get_ids(SEXP x, SEXP id_col);
+RcppExport SEXP _sfheaders_rcpp_get_ids(SEXP xSEXP, SEXP id_colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_ids(x, id_col));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 1},
@@ -577,6 +589,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_concatenate_vectors", (DL_FUNC) &_sfheaders_rcpp_concatenate_vectors, 2},
     {"_sfheaders_rcpp_column_positions", (DL_FUNC) &_sfheaders_rcpp_column_positions, 2},
     {"_sfheaders_rcpp_where_is", (DL_FUNC) &_sfheaders_rcpp_where_is, 2},
+    {"_sfheaders_rcpp_get_ids", (DL_FUNC) &_sfheaders_rcpp_get_ids, 2},
     {NULL, NULL, 0}
 };
 

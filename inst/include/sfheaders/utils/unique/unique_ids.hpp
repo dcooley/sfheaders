@@ -38,7 +38,7 @@ namespace utils {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - could not get id column");
+      Rcpp::stop("sfheaders - could not get id column");  // #nocov
     }
     }
     return Rcpp::List::create();
@@ -77,7 +77,7 @@ namespace utils {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - could not get id column");
+      Rcpp::stop("sfheaders - could not get id column");  // #nocov
     }
     }
 
@@ -114,7 +114,7 @@ namespace utils {
       return get_ids( x, s_id_col );
     }
     default: {
-      Rcpp::stop("sfheaders - can't determine id column type");
+      Rcpp::stop("sfheaders - can't determine id column type"); // #nocov
     }
     }
     return Rcpp::List::create();

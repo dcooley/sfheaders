@@ -8,6 +8,7 @@
 namespace sfheaders{
 namespace utils {
 
+  // #nocov start
   template < int RTYPE >
   inline Rcpp::StringVector sexp_col_names( Rcpp::Matrix < RTYPE > m ) {
     return colnames( m );
@@ -93,6 +94,7 @@ namespace utils {
     }
     return 0;
   }
+  // #nocov end
 
 } // utils
 } // sfheaders

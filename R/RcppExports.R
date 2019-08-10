@@ -173,3 +173,7 @@ rcpp_where_is <- function(to_find, sv) {
     .Call(`_sfheaders_rcpp_where_is`, to_find, sv)
 }
 
+rcpp_get_ids <- function(x, id_col) {
+    .Call(`_sfheaders_rcpp_get_ids`, x, id_col)
+}
+

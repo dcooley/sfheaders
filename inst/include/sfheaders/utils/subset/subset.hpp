@@ -50,7 +50,7 @@ namespace utils {
       return subset_vector( sv, rng ); // shouldn't get here? should only be numerics
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported vector type for subsetting");
+      Rcpp::stop("sfheaders - unsupported vector type for subsetting");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches

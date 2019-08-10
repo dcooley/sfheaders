@@ -37,11 +37,27 @@ test_that("sfheaders::utils::id_positions returns correct positions",{
   res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
   expect_equal( res, expected )
 
+  line_ids <- c(1.1, 1.1)
+  unique_ids <- sort( unique( line_ids ) )
+  expected <- matrix(c(0,1), ncol = 2)
+  res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
+  expect_equal( res, expected )
+
   line_ids <- c(1,1,1,1,2,2,3,3,3,3)
   unique_ids <- sort( unique( line_ids ) )
   expected <- matrix(c(0,3,4,5,6,9), ncol = 2, byrow = T)
   res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
   expect_equal( res, expected )
+
+  line_ids <- c(1,1,1,1,2,2,1)
+  unique_ids <- sort( unique( line_ids ) )
+  expect_error( sfheaders:::rcpp_id_positions( line_ids, unique_ids ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?")
+
+  line_ids <- c(1.1,1.1,1.1,2,2,1.1)
+  unique_ids <- sort( unique( line_ids ) )
+  expect_error( sfheaders:::rcpp_id_positions( line_ids, unique_ids ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?")
+
+
 
 })
 
@@ -134,6 +150,7 @@ test_that("sfheaders::utils::other_columns works for various data types",{
 
 test_that("concatenate_vectors works",{
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1,5), c(1,5))
+  expect_equal( sfheaders:::rcpp_concatenate_vectors(1.2,5), c(1.2,5))
   expect_equal( sfheaders:::rcpp_concatenate_vectors("a","b"), c("a","b"))
   expect_error( sfheaders:::rcpp_concatenate_vectors(1,"a"), "sfheaders - different vector types found")
 
@@ -169,3 +186,24 @@ test_that("where_is finds the correct position",{
 
 })
 
+test_that("unique ids are retrieved from column",{
+
+  m <- matrix(1L:4L, ncol = 2)
+  expect_equal( sfheaders:::rcpp_get_ids( m, 0 ), c(1L:2L) )
+
+  m <- matrix(c(1.2, 2,3,4), ncol = 2)
+  expect_equal( sfheaders:::rcpp_get_ids( m, 0 ), c(1.2,2) )
+
+  m <- matrix(1L:4L, ncol = 2)
+  df <- as.data.frame(m)
+  m <- as.matrix(m)
+  expect_equal( sfheaders:::rcpp_get_ids( m, 0 ), c(1L:2L) )
+  expect_equal( sfheaders:::rcpp_get_ids( m, "V1" ), c(1L:2L) )
+
+  m <- matrix(c(1.2, 2,3,4), ncol = 2)
+  df <- as.data.frame(m)
+  m <- as.matrix(m)
+  expect_equal( sfheaders:::rcpp_get_ids( m, 0 ), c(1.2,2) )
+  expect_equal( sfheaders:::rcpp_get_ids( m, "V1" ), c(1.2,2) )
+
+})

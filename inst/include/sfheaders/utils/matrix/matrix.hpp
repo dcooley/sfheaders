@@ -6,6 +6,7 @@
 namespace sfheaders {
 namespace utils {
 
+  // #nocov start
   inline Rcpp::StringVector matrix_names(
       Rcpp::List m_attr
   ) {
@@ -116,6 +117,7 @@ namespace utils {
     nm2( 0, Rcpp::_ ) = this_row;
     return nm2;
   }
+  // #nocov end
 
 
 } // utils

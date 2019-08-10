@@ -57,3 +57,13 @@ int rcpp_where_is(
 ) {
   return sfheaders::utils::where_is( to_find, sv );
 }
+
+// [[Rcpp::export]]
+SEXP rcpp_get_ids(
+  SEXP x,
+  SEXP id_col
+) {
+  return sfheaders::utils::get_ids( x, id_col );
+}
+
+
