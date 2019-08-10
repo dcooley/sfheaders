@@ -1,5 +1,211 @@
 context("sfc_MULTILINESTRING")
 
+test_that("various objects converted to sfc_multilinestring",{
+
+
+  is_multilinestring <- function(x) {
+    y <- sapply( x, function(y) is.list( unclass( y ) ) )
+    z <- sapply( x, function(y) attr( y, "class")[2] == "MULTILINESTRING")
+    return( all(y) & all(z))
+  }
+
+  v <- 1:3
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(v, NULL, NULL, NULL), "sfheaders - unsupported object")
+
+  m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(c(1.2,3,4,5), ncol = 2)
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0,1), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(c(1.2,3,4,5), ncol = 2)
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0,1), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, NULL, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0,1), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(c(1.2,3,4,5), ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), NULL, NULL )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+
+  m <- matrix(1:4, ncol = 2)
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+  expect_true( is_multilinestring( res ) )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, 2, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0,1), 2, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, NULL, 2, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L))
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0,1), 2, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c("V1","V2"), NULL, NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c("V1","V2"), NULL, NULL )
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(c(1.2,2:8), ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), NULL, NULL )
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c("V1","V2"), "V3", NULL )
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c("V1","V2"), "V3", "V3")
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2) )
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c("V1","V2"), "V3", "V3")
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(c(1.2,2:8), ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), "V3", NULL )
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), c("V3"), NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c("V1","V2"), c("V3"), NULL)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), 2L, NULL )
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1L))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), NULL, 2L)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), NULL, 2L)
+  expect_true( is_multilinestring( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
+
+  m <- matrix(1:4, ncol = 2)
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, NULL, 0, NULL), "sfheaders - incorrect number of geometry columns")
+
+})
+
 test_that("sfc_multilinestring works", {
 
   is_multilinestring <- function(x) {

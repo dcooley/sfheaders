@@ -11,6 +11,7 @@
 namespace sfheaders {
 namespace sfc {
 
+// #nocov start
 inline SEXP sfc_multilinestring(
     Rcpp::IntegerMatrix& im
 ) {
@@ -444,6 +445,8 @@ inline SEXP sfc_multilinestring(
   return Rcpp::List::create();
 }
 
+// #nocov end
+
 // Must have both multilinestring_id and linestring_id
 // so the functions can be overloaded properly
 // otherwise there will be ambiguous functions
@@ -697,7 +700,7 @@ inline SEXP sfc_multilinestring(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multilinestring type");
+    Rcpp::stop("sfheaders - unsupported multilinestring type");  // #nocov
   }
   }
   return Rcpp::List::create();
@@ -735,7 +738,7 @@ inline SEXP sfc_multilinestring(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multilinestring type");
+    Rcpp::stop("sfheaders - unsupported multilinestring type");  // #nocov
   }
   }
 
@@ -809,7 +812,7 @@ inline SEXP sfc_multilinestring(
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported multilinestring type");
+      Rcpp::stop("sfheaders - unsupported multilinestring type");  // #nocov
     }
     }
 
@@ -853,7 +856,7 @@ inline SEXP sfc_multilinestring(
 
     if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
          TYPEOF( geometry_cols ) != TYPEOF( multilinestring_id ) ) {
-      Rcpp::stop("sfheaders - multilinestring columns types are different");
+      Rcpp::stop("sfheaders - multilinestring columns types are different");  // #nocov
     }
 
     switch( TYPEOF( geometry_cols ) ) {
@@ -876,12 +879,12 @@ inline SEXP sfc_multilinestring(
       return sfc_multilinestring( x, sv_geometry_cols, s_multilinestring_id_col, s_linestring_id_col );
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported multilinestring type");
+      Rcpp::stop("sfheaders - unsupported multilinestring type");  // #nocov
     }
     }
   }
 
-  Rcpp::stop("sfheaders - multilinestring case not yet implemented");
+  Rcpp::stop("sfheaders - multilinestring case not yet implemented"); // #nocov
   return Rcpp::List::create(); // ??
 }
 
