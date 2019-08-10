@@ -149,10 +149,6 @@ rcpp_sfg_multipolygons <- function(lst) {
     .Call(`_sfheaders_rcpp_sfg_multipolygons`, lst)
 }
 
-rcpp_to_sfg <- function(x, geom_type) {
-    .Call(`_sfheaders_rcpp_to_sfg`, x, geom_type)
-}
-
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
     .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2, id_col3)
 }

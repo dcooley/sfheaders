@@ -172,3 +172,19 @@ test_that("sfg multilinestring", {
   expect_equal( res, r_res )
 
 })
+
+test_that("vectorised version works",{
+
+  is_multilinestring <- function(x) {
+    y <- is.list(unclass(x))
+    z <- attr( x, "class")[2] == "MULTILINESTRING"
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:3, ncol = 3)
+  m2 <- matrix(1:3, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfg_multilinestrings( lst )
+  expect_true( all( sapply( res, is_multilinestring ) ) )
+
+})

@@ -138,7 +138,21 @@ test_that("sfg_MULTIPOINTS returned from various R objects from src", {
 
 })
 
+test_that("vectorised version works",{
 
+  is_multipoint <- function(x) {
+    y <- is.matrix(unclass(x))
+    z <- attr( x, "class")[2] == "MULTIPOINT"
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:3, ncol = 3)
+  m2 <- matrix(1:3, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfg_multipoints( lst )
+  expect_true( all( sapply( res, is_multipoint ) ) )
+
+})
 
 
 

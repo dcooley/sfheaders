@@ -85,3 +85,20 @@ test_that("sfg multipolygon",{
   expect_true( is_multipolygon( res ) )
 
 })
+
+test_that("vectorised version works",{
+
+  is_multipolygon <- function(x) {
+    y <- is.list(unclass(x))
+    z <- attr( x, "class")[2] == "MULTIPOLYGON"
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:3, ncol = 3)
+  m2 <- matrix(1:3, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfg_multipolygons( lst )
+  expect_true( all( sapply( res, is_multipolygon ) ) )
+
+})
+

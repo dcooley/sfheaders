@@ -61,9 +61,3 @@ SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP
 Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst ) {
   return sfheaders::sfg::sfg_multipolygons( lst );
 }
-
-
-// [[Rcpp::export]]
-SEXP rcpp_to_sfg( SEXP x, std::string geom_type ) {
-  return sfheaders::sfg::to_sfg( x, geom_type );
-}

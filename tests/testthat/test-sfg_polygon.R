@@ -36,3 +36,19 @@ test_that("sfg polygon", {
   expect_equal( res, r_res )
 
 })
+
+test_that("vectorised version works",{
+
+  is_polygon <- function(x) {
+    y <- is.list(unclass(x))
+    z <- attr( x, "class")[2] == "POLYGON"
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:3, ncol = 3)
+  m2 <- matrix(1:3, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfg_polygons( lst )
+  expect_true( all( sapply( res, is_polygon ) ) )
+
+})

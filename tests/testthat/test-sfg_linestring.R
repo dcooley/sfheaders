@@ -141,7 +141,21 @@ test_that("errors are found and handled", {
 
 })
 
+test_that("vectorised version works",{
 
+  is_linestring <- function(x) {
+    y <- is.matrix(unclass(x))
+    z <- attr( x, "class")[2] == "LINESTRING"
+    return( all(y) & all(z))
+  }
+
+  m1 <- matrix(1:3, ncol = 3)
+  m2 <- matrix(1:3, ncol = 3)
+  lst <- list( m1, m2 )
+  res <- sfheaders:::rcpp_sfg_linestrings( lst )
+  expect_true( all( sapply( res, is_linestring ) ) )
+
+})
 
 
 
