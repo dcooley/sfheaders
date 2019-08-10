@@ -35,14 +35,14 @@ test_that("bounding box correctly calculated", {
   expect_equal( bbox, c(1,2,3,4) )
 
   x <- matrix( c( 1L:4L ), ncol = 2, byrow = T )
-  df <- as.data.frame( x )
-  m <- as.matrix( m )
+  x <- as.data.frame( x )
+  x <- as.matrix( x )
   bbox <- bb( x, c("V1","V2","V3","V4") )
   expect_equal( bbox, c(1,2,3,4) )
 
   x <- matrix( c( 1.2,2,3,4 ), ncol = 2, byrow = T )
-  df <- as.data.frame( x )
-  m <- as.matrix( m )
+  x <- as.data.frame( x )
+  x <- as.matrix( x )
   bbox <- bb( x, c("V1","V2","V3","V4") )
   expect_equal( bbox, c(1.2,2,3,4) )
 
