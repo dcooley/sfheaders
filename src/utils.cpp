@@ -14,8 +14,8 @@ SEXP rcpp_other_columns(
 
 // [[Rcpp::export]]
 Rcpp::IntegerMatrix rcpp_id_positions(
-    Rcpp::NumericVector line_ids,
-    Rcpp::NumericVector unique_ids
+    SEXP line_ids,
+    SEXP unique_ids
 ) {
   return sfheaders::utils::id_positions( line_ids, unique_ids );
 }

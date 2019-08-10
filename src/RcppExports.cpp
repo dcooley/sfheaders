@@ -471,13 +471,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_id_positions
-Rcpp::IntegerMatrix rcpp_id_positions(Rcpp::NumericVector line_ids, Rcpp::NumericVector unique_ids);
+Rcpp::IntegerMatrix rcpp_id_positions(SEXP line_ids, SEXP unique_ids);
 RcppExport SEXP _sfheaders_rcpp_id_positions(SEXP line_idsSEXP, SEXP unique_idsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type line_ids(line_idsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type unique_ids(unique_idsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type line_ids(line_idsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type unique_ids(unique_idsSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_id_positions(line_ids, unique_ids));
     return rcpp_result_gen;
 END_RCPP

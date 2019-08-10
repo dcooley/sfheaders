@@ -110,7 +110,7 @@ namespace utils {
         idx++;
 
         if( idx >= start_positions.length() ) {
-          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
+          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");  // #nocov
         }
 
         start_positions[ idx ] = i;
@@ -123,7 +123,7 @@ namespace utils {
     }
 
     if( start_positions.length() != end_positions.length() ) {
-      Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
+      Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");  // #nocov
     }
 
     im( Rcpp::_, 0 ) = start_positions;
@@ -169,7 +169,7 @@ namespace utils {
         idx++;
 
         if( idx >= start_positions.length() ) {
-          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
+          Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?"); // #nocov
         }
 
         start_positions[ idx ] = i;

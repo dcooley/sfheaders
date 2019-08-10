@@ -387,6 +387,8 @@ namespace utils {
 
     }
 
+  // #nocov start
+
   inline SEXP column_positions(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols
@@ -421,13 +423,15 @@ namespace utils {
     return iv;
   }
 
+  // #nocov end
+
   inline SEXP column_positions(
     SEXP& x,
     Rcpp::StringVector& cols
   ) {
 
     if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - expecting matrix when finding column positions");
+      Rcpp::stop("sfheaders - expecting matrix when finding column positions");  // #nocov
     }
 
     Rcpp::StringVector m_names = sfheaders::utils::get_sexp_col_names( x );
