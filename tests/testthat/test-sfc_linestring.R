@@ -19,6 +19,12 @@ test_that("various objects converted to sfc_LINESTRING",{
   expect_true( is_linestring( res ) )
 
   m <- matrix(1:4, ncol = 2)
+  m <- cbind(c(1L,1L), m)
+  res <- sfheaders:::rcpp_sfc_linestring(m, c(1L,2L), 0L)
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+  expect_true( is_linestring( res ) )
+
+  m <- matrix(1:4, ncol = 2)
   res <- sfheaders:::rcpp_sfc_linestring(m, NULL, NULL)
   expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
   expect_true( is_linestring( res ) )
@@ -137,6 +143,14 @@ test_that("various objects converted to sfc_LINESTRING",{
   res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), NULL )
   expect_true( is_linestring( res ) )
   expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+
+  m <- matrix(1L:4L, ncol = 2)
+  m <- cbind(c(1L,1L), m)
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), "V3")
+  expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
+  expect_true( is_linestring( res ) )
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2) )
