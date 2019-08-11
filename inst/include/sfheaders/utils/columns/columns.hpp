@@ -112,6 +112,7 @@ namespace utils {
     return other_columns( nv, id_cols );
   }
 
+  // #nocov start
   inline SEXP other_columns(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& id_cols
@@ -120,7 +121,6 @@ namespace utils {
     return other_columns( nm_names, id_cols );
   }
 
-  // #nocov start
   inline SEXP other_columns(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& id_cols
@@ -275,7 +275,7 @@ namespace utils {
     }
     }
     case REALSXP: {
-    if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {  // #nocov
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x ); // #nocov
       return other_columns( nm, id_cols );                           // #nocov
     }
