@@ -200,7 +200,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");  // #nocov
     }
     }
 
@@ -236,7 +236,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");  // #nocov
     }
     }
 
@@ -305,7 +305,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");  // #nocov
     }
     }
 
@@ -373,7 +373,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type"); // #nocov
     }
     }
 
@@ -409,7 +409,7 @@ namespace sfg {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");
+      Rcpp::stop("sfheaders - unsupported sfg_POLYGON type");  // #nocov
     }
     }
     return x; // never reaches
@@ -464,7 +464,7 @@ namespace sfg {
       return sfg_polygon( x, sv, line_id );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types"); // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -494,7 +494,7 @@ namespace sfg {
       //   return sfg_polygon( x, sv, line_id );
       // }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -521,7 +521,7 @@ namespace sfg {
       return sfg_polygon( x, cols, s );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches

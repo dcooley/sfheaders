@@ -21,6 +21,66 @@ test_that("sfg polygon", {
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )
 
+  x <- matrix(c(1:24), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+  r_res <- sfg_polygon(x)
+  expect_equal( res, r_res )
+
+  x <- matrix(c(1.2,2), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+  r_res <- sfg_polygon(x)
+  expect_equal( res, r_res )
+
+  x <- matrix(c(1:24), ncol = 3)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), NULL )
+  expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
+  r_res <- sfg_polygon(x)
+  expect_equal( res, r_res )
+
+  x <- matrix(c(1:24), ncol = 4)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L,3L), NULL )
+  expect_equal( attr(res, "class"), c("XYZM", "POLYGON","sfg"))
+  r_res <- sfg_polygon(x)
+  expect_equal( res, r_res )
+
+  x <- matrix(c(1:2), ncol = 2)
+  df <- as.data.frame( x )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), NULL )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+  ## TODO names??
+  # r_res <- sfg_polygon(x)
+  # expect_equal( res, r_res )
+
+  x <- matrix(c(1.2,2), ncol = 2)
+  df <- as.data.frame( x )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), NULL )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+  ## TODO names??
+  # r_res <- sfg_polygon(x)
+  # expect_equal( res, r_res )
+
+  x <- matrix(c(1:3), ncol = 3)
+  df <- as.data.frame( x )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), "V3" )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+  ## TODO names??
+  # r_res <- sfg_polygon(x)
+  # expect_equal( res, r_res )
+
+  x <- matrix(c(1.2,2,3), ncol = 3)
+  df <- as.data.frame( x )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), "V3" )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+  ## TODO names??
+  # r_res <- sfg_polygon(x)
+  # expect_equal( res, r_res )
+
   ## data.frame
   ids <- c( rep(1,5), rep(2,3), rep(3,6) )
   df <- data.frame(

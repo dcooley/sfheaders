@@ -504,7 +504,7 @@ inline SEXP sfg_multipolygon(
     return sfg_multipolygon( x, sv );
   }
   default: {
-    Rcpp::stop("sfheaders - unknown column types");
+    Rcpp::stop("sfheaders - unknown column types");  // #nocov
   }
   }
   return Rcpp::List::create(); // never reaches
@@ -608,7 +608,7 @@ inline SEXP sfg_multipolygon(
   //   return sfg_multipolygon( x, geometry_cols, polygon_id, line_id );
   // }
   default: {
-    Rcpp::stop("sfheaders - unknown column types");
+    Rcpp::stop("sfheaders - unknown column types");  // #nocov
   }
   }
 }
@@ -665,7 +665,7 @@ inline SEXP sfg_multipolygon(
 
   // otherwise they are both provided
   if( TYPEOF( polygon_id ) != TYPEOF( line_id ) ) {
-    Rcpp::stop("polygon_id and line_id must be the same type");
+    Rcpp::stop("polygon_id and line_id must be the same type");  // #nocov
   }
 
   switch( TYPEOF( line_id ) ) {
@@ -686,7 +686,7 @@ inline SEXP sfg_multipolygon(
     return sfg_multipolygon( x, cols, sp, sl );
   }
   default: {
-    Rcpp::stop("sfheaders - unknown column types");
+    Rcpp::stop("sfheaders - unknown column types");  // #nocov
   }
   }
   return Rcpp::List::create(); // never reaches
