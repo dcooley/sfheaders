@@ -21,6 +21,31 @@ namespace utils {
     }
   }
 
+  inline void column_check( SEXP x, SEXP cols ) {
+    R_xlen_t n_col = sfheaders::utils::get_sexp_n_col( x );
+    R_xlen_t n = sfheaders::utils::get_sexp_length( cols );
+    if( n > n_col ) {
+      Rcpp::stop("sfheaders - number of columns requested is greater than those available");
+    }
+
+    if( TYPEOF( cols ) == INTSXP ) {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
+      int m = Rcpp::max( iv );
+      if( m > ( n_col - 1 ) ) {
+        Rcpp::stop("sfheaders - invalid geometry column index");
+      }
+    }
+
+  }
+
+  // checks if an integer column index exists
+  inline void column_exists( SEXP x, int& id_col ) {
+    R_xlen_t n_col = sfheaders::utils::get_sexp_n_col( x );
+    if( id_col > ( n_col - 1 ) ) {
+      Rcpp::stop("sfheaders - id column index doesn't exist");
+    }
+  }
+
   inline bool is_null_geometry( SEXP& sfg, std::string& geom_type ) {
     int n = get_sexp_length( sfg );
     if( geom_type == "POINT" ) {

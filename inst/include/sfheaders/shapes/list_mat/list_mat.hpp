@@ -39,6 +39,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
+    sfheaders::utils::column_check( df, geometry_cols );
     R_xlen_t i;
     R_xlen_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
@@ -60,6 +61,7 @@ namespace shapes {
       int& end
   ) {
 
+    sfheaders::utils::column_check( df, geometry_cols );
     R_xlen_t i;
     R_xlen_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
@@ -83,6 +85,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
+    sfheaders::utils::column_check( nm, geometry_cols );
     R_xlen_t n_col = geometry_cols.length();
     // matrix can just be subset by cols and rows
     Rcpp::Range rows = Rcpp::Range( start, end );
@@ -108,6 +111,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
+    sfheaders::utils::column_check( im, geometry_cols );
     R_xlen_t n_col = geometry_cols.length();
 
     if( n_col <= 1 ) {
@@ -178,12 +182,34 @@ namespace shapes {
   inline SEXP get_listMat(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
-      Rcpp::NumericVector& line_ids
+      SEXP& line_ids
   ) {
 
-    // Rcpp::Rcout << "nm: " << std::endl;
-    // Rcpp::Rcout << "sfg_type : " << sfg_type << std::endl;
-    // Rcpp::Rcout << "sfc_type : " << sfc_type << std::endl;
+    SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+
+    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+
+    Rcpp::List mls( n_lines );
+
+    // now iterate through the data.frame and get the matrices of lines
+    R_xlen_t i;
+    for( i = 0; i < n_lines; i++ ) {
+      //Rcpp::Rcout << "looping for get_listMat() " <<  i << std::endl;
+
+      int start = line_positions(i, 0);
+      int end = line_positions(i, 1);
+      mls( i ) = get_listMat( df, geometry_cols, start, end );  // this version returns a matrix
+    }
+
+    return mls;
+  }
+
+  inline SEXP get_listMat(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      Rcpp::NumericVector& line_ids
+  ) {
 
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
@@ -221,9 +247,9 @@ namespace shapes {
     Rcpp::IntegerVector& cols,
     int& id_col
   ) {
-    // TODO( what if this isn't a NumericVector )?
-    Rcpp::NumericVector line_ids = df[ id_col ];
-    // Rcpp::Rcout << "get list mat 6 " << std::endl;
+    sfheaders::utils::column_exists( df, id_col );
+
+    SEXP line_ids = df[ id_col ];
     return get_listMat( df, cols, line_ids );
   }
 

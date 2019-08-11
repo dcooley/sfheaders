@@ -598,6 +598,7 @@ inline SEXP sfc_multipoint(
     Rcpp::IntegerVector& geometry_cols,
     int& multipoint_id
 ) {
+  sfheaders::utils::column_exists( im, multipoint_id );
   Rcpp::IntegerVector line_ids = im( Rcpp::_, multipoint_id );
   return sfc_multipoint( im, geometry_cols, line_ids );
 }
@@ -607,6 +608,7 @@ inline SEXP sfc_multipoint(
     Rcpp::IntegerVector& geometry_cols,
     int& multipoint_id
 ) {
+  sfheaders::utils::column_exists( nm, multipoint_id );
   Rcpp::NumericVector line_ids = nm( Rcpp::_, multipoint_id );
   return sfc_multipoint( nm, geometry_cols, line_ids );
 }
@@ -646,6 +648,7 @@ inline SEXP sfc_multipoint(
     Rcpp::IntegerVector& geometry_cols,
     int& multipoint_id
 ) {
+  sfheaders::utils::column_exists( df, multipoint_id );
   SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids );
 }

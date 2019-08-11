@@ -27,23 +27,23 @@ test_that("bounding box correctly calculated", {
   expect_equal( bbox, c(1,2,3,4) )
 
   x <- matrix( c( 1.2, 2, 3, 4 ), ncol = 2, byrow = T )
-  bbox <- bb( x, c(0,1,2,3) )
+  bbox <- bb( x, c(0,1) )
   expect_equal( bbox, c(1.2,2,3,4) )
 
   x <- matrix( c( 1L:4L ), ncol = 2, byrow = T )
-  bbox <- bb( x, c(0,1,2,3) )
+  bbox <- bb( x, c(0,1) )
   expect_equal( bbox, c(1,2,3,4) )
 
   x <- matrix( c( 1L:4L ), ncol = 2, byrow = T )
   x <- as.data.frame( x )
   x <- as.matrix( x )
-  bbox <- bb( x, c("V1","V2","V3","V4") )
+  bbox <- bb( x, c("V1","V2") )
   expect_equal( bbox, c(1,2,3,4) )
 
   x <- matrix( c( 1.2,2,3,4 ), ncol = 2, byrow = T )
   x <- as.data.frame( x )
   x <- as.matrix( x )
-  bbox <- bb( x, c("V1","V2","V3","V4") )
+  bbox <- bb( x, c("V1","V2") )
   expect_equal( bbox, c(1.2,2,3,4) )
 
 
@@ -57,7 +57,6 @@ test_that("bounding box correctly calculated", {
   expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
   x <- matrix(1.1)
   expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
-
 
 })
 

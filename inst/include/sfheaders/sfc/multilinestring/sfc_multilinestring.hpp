@@ -614,6 +614,7 @@ inline SEXP sfc_multilinestring(
     int& multilinestring_id,
     int& linestring_id
 ) {
+  sfheaders::utils::column_exists( im, multilinestring_id );
   Rcpp::IntegerVector multilinestring_ids = im( Rcpp::_, multilinestring_id );
   return sfc_multilinestring( im, geometry_cols, multilinestring_ids, linestring_id );
 }
@@ -624,6 +625,7 @@ inline SEXP sfc_multilinestring(
     int& multilinestring_id,
     int& linestring_id
 ) {
+  sfheaders::utils::column_exists( nm, multilinestring_id );
   Rcpp::NumericVector multilinestring_ids = nm( Rcpp::_, multilinestring_id );
   return sfc_multilinestring( nm, geometry_cols, multilinestring_ids, linestring_id );
 }
@@ -644,6 +646,7 @@ inline SEXP sfc_multilinestring(
     int& multilinestring_id,
     int& linestring_id
 ) {
+  sfheaders::utils::column_exists( df, multilinestring_id );
   SEXP multilinestring_ids = df[ multilinestring_id ];
   return sfc_multilinestring( df, geometry_cols, multilinestring_ids, linestring_id );
 }

@@ -111,6 +111,11 @@ namespace shapes {
       int& group_id_col_1,
       int& group_id_col_2
   ) {
+
+    sfheaders::utils::column_exists( df, group_id_col_1 );
+    sfheaders::utils::column_exists( df, group_id_col_2 );
+    sfheaders::utils::column_check( df, geometry_cols );
+
     // given polygon & line ids, collapse and matricise and listify
     Rcpp::StringVector df_names = df.names();
 
@@ -130,6 +135,13 @@ namespace shapes {
       int& group_id_col_2,
       int& group_id_col_3
   ) {
+
+    sfheaders::utils::column_exists( df, group_id_col_1 );
+    sfheaders::utils::column_exists( df, group_id_col_2 );
+    sfheaders::utils::column_exists( df, group_id_col_3 );
+
+    sfheaders::utils::column_check( df, geometry_cols );
+
     // given polygon & line ids, collapse and matricise and listify
     Rcpp::StringVector df_names = df.names();
 

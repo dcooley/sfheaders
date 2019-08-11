@@ -619,6 +619,7 @@ inline SEXP sfc_multipolygon(
     int& polygon_id,
     int& linestring_id
 ) {
+  sfheaders::utils::column_exists( im, multipolygon_id );
   Rcpp::IntegerVector multipolygon_ids = im( Rcpp::_, multipolygon_id );
   return sfc_multipolygon( im, geometry_cols, multipolygon_ids, polygon_id, linestring_id );
 }
@@ -630,6 +631,7 @@ inline SEXP sfc_multipolygon(
     int& polygon_id,
     int& linestring_id
 ) {
+  sfheaders::utils::column_exists( nm, multipolygon_id );
   Rcpp::NumericVector multipolygon_ids = nm( Rcpp::_, multipolygon_id );
   return sfc_multipolygon( nm, geometry_cols, multipolygon_ids, polygon_id, linestring_id );
 }
@@ -652,6 +654,7 @@ inline SEXP sfc_multipolygon(
     int& polygon_id,
     int& linestring_id
 ) {
+  sfheaders::utils::column_exists( df, multipolygon_id );
   SEXP multipolygon_ids = df[ multipolygon_id ];
   return sfc_multipolygon( df, geometry_cols, multipolygon_ids, polygon_id, linestring_id );
 }

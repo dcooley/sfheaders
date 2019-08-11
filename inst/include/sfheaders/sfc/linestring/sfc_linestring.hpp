@@ -204,6 +204,7 @@ namespace sfc {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols
   ) {
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -288,6 +289,7 @@ namespace sfc {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols
   ) {
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -598,6 +600,8 @@ namespace sfc {
       Rcpp::IntegerVector& geometry_cols,
       int& linestring_id
   ) {
+    // TODO: test the linestring_id column exists in the object
+    sfheaders::utils::column_exists( im, linestring_id );
     Rcpp::IntegerVector line_ids = im( Rcpp::_, linestring_id );
     return sfc_linestring( im, geometry_cols, line_ids );
   }
@@ -607,6 +611,7 @@ namespace sfc {
       Rcpp::IntegerVector& geometry_cols,
       int& linestring_id
   ) {
+    sfheaders::utils::column_exists( nm, linestring_id );
     Rcpp::NumericVector line_ids = nm( Rcpp::_, linestring_id );
     return sfc_linestring( nm, geometry_cols, line_ids );
   }
@@ -646,6 +651,7 @@ namespace sfc {
       Rcpp::IntegerVector& geometry_cols,
       int& linestring_id
   ) {
+    sfheaders::utils::column_exists( df, linestring_id );
     SEXP line_ids = df[ linestring_id ];
     return sfc_linestring( df, geometry_cols, line_ids );
   }

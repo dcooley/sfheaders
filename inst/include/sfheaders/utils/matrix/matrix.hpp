@@ -55,6 +55,9 @@ namespace utils {
     int i;
     int n_cols = cols.size();
     int n_rows = df.rows();
+    if( n_cols > df.ncol() ) {
+      Rcpp::stop("sfheaders - number of columns requested is greater than those available");
+    }
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector m_names( n_cols );
     Rcpp::NumericMatrix nm( n_rows, n_cols );
@@ -79,6 +82,9 @@ namespace utils {
     int i;
     int n_cols = cols.size();
     int n_rows = df.rows();
+    if( n_cols > df.ncol() ) {
+      Rcpp::stop("sfheaders - number of columns requested is greater than those available");
+    }
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector m_names( n_cols );
     Rcpp::NumericMatrix nm( n_rows, n_cols );

@@ -614,6 +614,7 @@ namespace sfc {
       int& polygon_id,
       int& linestring_id
   ) {
+    sfheaders::utils::column_exists( im, polygon_id );
     Rcpp::IntegerVector polygon_ids = im( Rcpp::_, polygon_id );
     return sfc_polygon( im, geometry_cols, polygon_ids, linestring_id );
   }
@@ -624,6 +625,7 @@ namespace sfc {
       int& polygon_id,
       int& linestring_id
   ) {
+    sfheaders::utils::column_exists( nm, polygon_id );
     Rcpp::NumericVector polygon_ids = nm( Rcpp::_, polygon_id );
     return sfc_polygon( nm, geometry_cols, polygon_ids, linestring_id );
   }
@@ -644,6 +646,7 @@ namespace sfc {
       int& polygon_id,
       int& linestring_id
   ) {
+    sfheaders::utils::column_exists( df, polygon_id );
     SEXP polygon_ids = df[ polygon_id ];
     return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id );
   }

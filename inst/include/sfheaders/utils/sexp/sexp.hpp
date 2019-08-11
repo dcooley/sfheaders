@@ -28,23 +28,32 @@ namespace utils {
     }
   }
 
-  template < int RTYPE >
-  inline R_xlen_t sexp_n_col( Rcpp::Matrix < RTYPE > v ) {
-    return v.ncol();
-  }
 
-  inline R_xlen_t get_sexp_n_col( SEXP s ) {
-    switch( TYPEOF( s ) ) {
-    case REALSXP: {
-      return sexp_n_col< REALSXP >( s );
-    }
+  inline R_xlen_t get_sexp_n_col( SEXP& x ) {
+    switch( TYPEOF( x ) ) {
     case INTSXP: {
-      return sexp_n_col< INTSXP >( s );
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      return im.ncol();
+    }
+    }
+    case REALSXP :{
+      if( Rf_isMatrix( x ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      return nm.ncol();
+    }
+    }
+    case VECSXP: {
+      if( Rf_inherits( x, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      return df.ncol();
+    }
     }
     default: {
-      Rcpp::stop("sfheaders - can't determine n_col");
+      Rcpp::stop("sfheaders - can't determine the number of columns");
     }
     }
+    return 0; // never reaches
   }
 
   inline R_xlen_t sexp_n_row( SEXP& x ) {
