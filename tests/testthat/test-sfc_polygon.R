@@ -196,7 +196,15 @@ test_that("various objects converted to sfc_polygon",{
   m <- matrix(1:2, ncol = 2)
   m <- cbind(m, c(1))
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), NULL, 2L)
+  res <- sfheaders:::rcpp_sfc_polygon(df, c("V1","V2"), NULL, "V3")
+  expect_true( is_polygon( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
+
+  m <- matrix(1:2, ncol = 2)
+  m <- cbind(m, c(1))
+  df <- as.data.frame( m )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_polygon(m, c("V1","V2"), NULL, "V3")
   expect_true( is_polygon( res ) )
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
 

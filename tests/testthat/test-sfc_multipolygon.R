@@ -86,7 +86,7 @@ test_that("sfc_multipolygon works after refactoring issue14",{
     mp_id = c(1,1,1,1,2,2,2,2)
     , p_id = c(1,1,1,1,2,2,2,2)
     , l_id = c(1,1,1,1,1,1,1,1)
-    , x = c(1,2,3,1,4,5,6,4)
+    , x = c(1.1,2,3,1,4,5,6,4)
     , y = c(1,2,3,1,4,5,6,4)
   )
 
@@ -110,12 +110,24 @@ test_that("sfc_multipolygon works after refactoring issue14",{
   expect_true( is_multipolygon( res ) )
   expect_true( length( res ) == 1 )
 
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multipolygon( m, c(3,4), NULL, NULL, 2 )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
+  expect_true( is_multipolygon( res ) )
+  expect_true( length( res ) == 1 )
+
   res <- sfheaders:::rcpp_sfc_multipolygon( df, c(3,4), 0, NULL, 2 )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
   expect_true( is_multipolygon( res ) )
   expect_true( length( res ) == 2 )
 
   res <- sfheaders:::rcpp_sfc_multipolygon( df, c(3,4), NULL, 1, 2 )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
+  expect_true( is_multipolygon( res ) )
+  expect_true( length( res ) == 1 )
+
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfc_multipolygon( m, c(3,4), NULL, 1, 2 )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOLYGON", "sfc") )
   expect_true( is_multipolygon( res ) )
   expect_true( length( res ) == 1 )

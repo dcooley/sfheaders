@@ -575,7 +575,7 @@ inline SEXP sfc_multipoint(
   int start;
   int end;
   if( n_lines == 1 ) {
-    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( df, geometry_cols );
+    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( df, geometry_cols );  // #nocov
   } else {
 
     R_xlen_t i;

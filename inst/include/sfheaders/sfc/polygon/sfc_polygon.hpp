@@ -815,7 +815,7 @@ namespace sfc {
       }
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported polygon type");
+        Rcpp::stop("sfheaders - unsupported polygon type");   // #nocov
       }
       }
 
@@ -859,7 +859,7 @@ namespace sfc {
 
       if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
            TYPEOF( geometry_cols ) != TYPEOF( polygon_id ) ) {
-        Rcpp::stop("sfheaders - polygon columns types are different");
+        Rcpp::stop("sfheaders - polygon columns types are different");   // #nocov
       }
 
       switch( TYPEOF( geometry_cols ) ) {
@@ -882,12 +882,12 @@ namespace sfc {
         return sfc_polygon( x, sv_geometry_cols, s_polygon_id_col, s_linestring_id_col );
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported polygon type");
+        Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
       }
       }
     }
 
-    Rcpp::stop("sfheaders - polygon case not yet implemented");
+    Rcpp::stop("sfheaders - polygon case not yet implemented");   // #nocov
     return Rcpp::List::create(); // ??
   }
 
