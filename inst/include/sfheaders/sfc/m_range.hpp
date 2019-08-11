@@ -199,9 +199,7 @@ namespace zm {
       m_range[1] = std::max( zmax, m_range[1] );
     }
   }
-  // #nocov end
 
-  // #nocov start
   inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
       Rcpp::IntegerMatrix& im,
@@ -221,7 +219,6 @@ namespace zm {
       m_range[1] = std::max( zmax, m_range[1] );
     }
   }
-  // #nocov end
 
   inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
@@ -239,7 +236,6 @@ namespace zm {
     }
   }
 
-  // #nocov start
   inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& nm,

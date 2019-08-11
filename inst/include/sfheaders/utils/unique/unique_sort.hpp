@@ -20,7 +20,7 @@ namespace utils {
       return sexp_unique< INTSXP >( s );
     case STRSXP:
       return sexp_unique< STRSXP >( s );
-    default: Rcpp::stop("sfheaders - unknown vector type");
+    default: Rcpp::stop("sfheaders - unknown vector type"); // #nocov
     }
     return 0;
   }

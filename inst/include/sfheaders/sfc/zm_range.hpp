@@ -9,6 +9,7 @@
 namespace sfheaders {
 namespace zm {
 
+  // #nocov start
   inline void calculate_zm_ranges(
       R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
@@ -132,7 +133,7 @@ namespace zm {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unknown geometry column type for calculating zm ranges");
+      Rcpp::stop("sfheaders - unknown geometry column type for calculating zm ranges");  // #nocov
     }
     }
   }
@@ -158,7 +159,7 @@ namespace zm {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unknown geometry column type for calculating zm ranges");
+      Rcpp::stop("sfheaders - unknown geometry column type for calculating zm ranges");  // #nocov
     }
     }
   }
@@ -183,11 +184,11 @@ namespace zm {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unknown geometry column type for calculating zm ranges");
+      Rcpp::stop("sfheaders - unknown geometry column type for calculating zm ranges");  // #nocov
     }
     }
   }
-
+  // #nocov end
 } // zm
 } // sfheaders
 

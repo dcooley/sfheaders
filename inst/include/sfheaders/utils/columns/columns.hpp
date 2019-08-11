@@ -90,6 +90,7 @@ namespace utils {
     return other_columns( df_names, id_cols );
   }
 
+  // #nocov start
   inline SEXP other_columns(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& id_cols
@@ -98,14 +99,13 @@ namespace utils {
     Rcpp::IntegerVector other_cols = Rcpp::seq( 0, n_col - 1 );
     return other_columns( other_cols, id_cols );
   }
+  // #nocov end
 
   inline SEXP other_columns(
       Rcpp::DataFrame& df,
       Rcpp::NumericVector& id_cols
   ) {
     int n_col = df.ncol();
-
-    // Rcpp::Rcout << "n_col: " << n_col << std::endl;
 
     Rcpp::IntegerVector other_cols = Rcpp::seq( 0, n_col - 1 );
     Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( other_cols );
@@ -120,6 +120,7 @@ namespace utils {
     return other_columns( nm_names, id_cols );
   }
 
+  // #nocov start
   inline SEXP other_columns(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& id_cols
@@ -128,6 +129,7 @@ namespace utils {
     Rcpp::IntegerVector other_cols = Rcpp::seq( 0, n_col - 1 );
     return other_columns( other_cols, id_cols );
   }
+  // #nocov end
 
   inline SEXP other_columns(
       Rcpp::NumericMatrix& nm,
@@ -185,10 +187,12 @@ namespace utils {
     }
     }
     case VECSXP: {
+    // #nocov start
     if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return other_columns( df, id_cols );
     }
+    // #nocov end
     }
     default: {
       Rcpp::stop("sfheaders - unsupported object");
@@ -223,7 +227,7 @@ namespace utils {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported object");
+      Rcpp::stop("sfheaders - unsupported object"); // #nocov
     }
     }
   }
@@ -254,7 +258,7 @@ namespace utils {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported object");
+      Rcpp::stop("sfheaders - unsupported object");  // #nocov
     }
     }
   }
@@ -272,8 +276,8 @@ namespace utils {
     }
     case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return other_columns( nm, id_cols );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x ); // #nocov
+      return other_columns( nm, id_cols );                           // #nocov
     }
     }
     case VECSXP: {
@@ -283,7 +287,7 @@ namespace utils {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported object");
+      Rcpp::stop("sfheaders - unsupported object");  // #nocov
     }
     }
   }
@@ -295,7 +299,7 @@ namespace utils {
   ) {
 
     if( Rf_isNull( id_cols ) ) {
-      return other_columns( x );
+      return other_columns( x );  // #nocov
     }
 
     switch( TYPEOF( id_cols ) ) {
@@ -305,9 +309,11 @@ namespace utils {
       return other_columns( x, nv2 );
     }
     case INTSXP: {
+      // #nocov start
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( id_cols );
       Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
       return other_columns( x, iv2 );
+      // #nocov end
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( id_cols );
@@ -315,7 +321,7 @@ namespace utils {
       return other_columns( x, sv2 );
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported column types");
+      Rcpp::stop("sfheaders - unsupported column types");  // #nocov
     }
     }
   }

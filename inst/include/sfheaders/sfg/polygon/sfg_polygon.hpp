@@ -181,9 +181,11 @@ namespace sfg {
       return sfg_polygon( nm, cols );
     }
     case VECSXP: {
+      // #nocov start
       if( Rf_inherits( x, "data.frame") ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return sfg_polygon( df, cols );
+      // #nocov end
     } // else default
     }
     default: {

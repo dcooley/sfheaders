@@ -60,7 +60,7 @@ namespace sfc {
     } else if ( geom_type == "POLYGON" ) {
       return sfheaders::sfc::sfc_polygon( x );
     } else if ( geom_type == "MULTIPOLYGON" ) {
-      //return sfheaders::sfc::sfc_multipolygon( x );
+      return sfheaders::sfc::sfc_multipolygon( x );
     }
 
     Rcpp::stop("sfheaders - unknown sfc geometry type");
@@ -79,7 +79,7 @@ namespace sfc {
     } else if ( geom_type == "POLYGON" ) {
       return sfheaders::sfc::sfc_polygon( x, geometry_columns );
     } else if ( geom_type == "MULTIPOLYGON" ) {
-      //return sfheaders::sfc::sfc_multipolygon( x, geometry_columns );
+      return sfheaders::sfc::sfc_multipolygon( x, geometry_columns );
     }
 
     Rcpp::stop("sfheaders - unknown sfc geometry type");

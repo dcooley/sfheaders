@@ -5,7 +5,8 @@ Version: 0.0.1
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre"))
     )
-Description: Converts R and 'Rcpp' objects to Simple Features `sf`. 
+Description: Converts R and 'Rcpp' objects to Simple Features `sf`. Conversion functions
+  are available at both the R level, and through 'Rcpp'.
 License: GPL-3
 URL: https://dcooley.github.io/sfheaders/
 BugReports: https://github.com/dcooley/sfheaders/issues
