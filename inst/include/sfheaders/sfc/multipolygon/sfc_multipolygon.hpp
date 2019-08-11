@@ -229,8 +229,6 @@ namespace sfc {
     return Rcpp::List::create();
   }
 
-  // #nocov end
-
   // no subsetting to do (except for columsn)
   inline SEXP sfc_multipolygon(
       Rcpp::IntegerMatrix& im,
@@ -393,7 +391,6 @@ inline SEXP sfc_multipolygon(
   return Rcpp::List::create();
 }
 
-
 inline SEXP sfc_multipolygon(
     SEXP& x,
     Rcpp::IntegerVector& geometry_cols
@@ -456,6 +453,7 @@ inline SEXP sfc_multipolygon(
   }
   return Rcpp::List::create();
 }
+// #nocov end
 
 
 // is the idea here to first get the vector of polygon_ids
@@ -714,7 +712,7 @@ inline SEXP sfc_multipolygon(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported polygon type");
+    Rcpp::stop("sfheaders - unsupported polygon type");    // #nocov
   }
   }
   return Rcpp::List::create();
@@ -753,7 +751,7 @@ inline SEXP sfc_multipolygon(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported polygon type");
+    Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
   }
   }
 
@@ -840,7 +838,7 @@ inline SEXP sfc_multipolygon(
       }
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported multipolygon type");
+        Rcpp::stop("sfheaders - unsupported multipolygon type");   // #nocov
       }
       }
       }
@@ -915,7 +913,7 @@ inline SEXP sfc_multipolygon(
       }
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported multipolygon type");
+        Rcpp::stop("sfheaders - unsupported multipolygon type");  // #nocov
       }
       }
       }
@@ -954,7 +952,7 @@ inline SEXP sfc_multipolygon(
       if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
            TYPEOF( geometry_cols ) != TYPEOF( polygon_id ) ||
            TYPEOF( geometry_cols ) != TYPEOF( multipolygon_id ) ) {
-        Rcpp::stop("sfheaders - multipolygon columns types are different");
+        Rcpp::stop("sfheaders - multipolygon columns types are different");  // #nocov
       }
 
       switch( TYPEOF( geometry_cols ) ) {
@@ -981,12 +979,12 @@ inline SEXP sfc_multipolygon(
         return sfc_multipolygon( x, sv_geometry_cols, s_multipolygon_id_col, s_polygon_id_col, s_linestring_id_col );
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported polygon type");
+        Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
       }
       }
     }
 
-    Rcpp::stop("sfheaders - multipolygon case not yet implemented");
+    Rcpp::stop("sfheaders - multipolygon case not yet implemented");  // #nocov
     return Rcpp::List::create(); // ??
   }
 

@@ -447,7 +447,7 @@ inline SEXP sfc_multipoint(
   int start;
   int end;
   if( n_lines == 1 ) {
-    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( im, geometry_cols );
+    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( im, geometry_cols );    // #nocov
   } else {
 
     R_xlen_t i;
@@ -490,7 +490,7 @@ inline SEXP sfc_multipoint(
   int start;
   int end;
   if( n_lines == 1 ) {
-    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( nm, geometry_cols );
+    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( nm, geometry_cols );  // #nocov
   } else {
 
     R_xlen_t i;
@@ -532,7 +532,7 @@ inline SEXP sfc_multipoint(
   int start;
   int end;
   if( n_lines == 1 ) {
-    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( df, geometry_cols );
+    sfc( 0 ) = sfheaders::sfg::sfg_multipoint( df, geometry_cols );  // #nocov
   } else {
 
     R_xlen_t i;
@@ -613,6 +613,7 @@ inline SEXP sfc_multipoint(
   return sfc_multipoint( nm, geometry_cols, line_ids );
 }
 
+// #nocov start
 inline SEXP sfc_multipoint(
     Rcpp::IntegerMatrix& im,
     Rcpp::StringVector& geometry_cols,
@@ -632,7 +633,7 @@ inline SEXP sfc_multipoint(
   SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids );
 }
-
+// #nocov end
 
 inline SEXP sfc_multipoint(
     Rcpp::DataFrame& df,
@@ -684,7 +685,7 @@ inline SEXP sfc_multipoint(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multipoint type");  // #ncov
+    Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
   }
   }
 
@@ -699,6 +700,7 @@ inline SEXP sfc_multipoint(
 ) {
   switch( TYPEOF( x ) ) {
   case INTSXP: {
+    // #nocov start
     if( Rf_isMatrix( x ) ) {
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
     return sfc_multipoint( im, geometry_cols, multipoint_id );
@@ -715,6 +717,7 @@ inline SEXP sfc_multipoint(
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
     //   return sfc_multipoint( nv, geometry_cols, multipoint_id );
   }
+  // #nocov end
   }
   case VECSXP: {
     if( Rf_inherits( x, "data.frame" ) ) {
@@ -759,7 +762,7 @@ inline SEXP sfc_multipoint(
     sfheaders::utils::geometry_column_check( geometry_cols );
 
     if ( TYPEOF( geometry_cols ) != TYPEOF( multipoint_id ) ) {
-      Rcpp::stop("sfheaders - multipoint columns types are different");
+      Rcpp::stop("sfheaders - multipoint columns types are different");    // #nocov
     }
 
     switch( TYPEOF( geometry_cols ) ) {

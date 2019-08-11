@@ -704,7 +704,7 @@ namespace sfc {
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
-    if( Rf_isMatrix( x ) ) {
+    if( Rf_isMatrix( x ) ) {  // #nocov
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );  // #nocov
       return sfc_linestring( im, geometry_cols, linestring_id );      // #nocov
     // } else {
