@@ -195,7 +195,7 @@ namespace utils {
     // #nocov end
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported object");
+      Rcpp::stop("sfheaders - unsupported object"); // #nocov
     }
     }
   }
