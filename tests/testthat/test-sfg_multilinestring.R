@@ -21,6 +21,12 @@ test_that("sfg multilinestring", {
   r_res <- sfg_multilinestring(x)
   expect_equal( res, r_res )
 
+  x <- matrix(c(1.2,3), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, NULL, NULL )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(x)
+  expect_equal( res, r_res )
+
   x <- matrix(c(1:24), ncol = 3)
   res <- sfheaders:::rcpp_sfg_multilinestring( x, NULL, NULL )
   expect_equal( attr(res, "class"), c("XYZ", "MULTILINESTRING","sfg"))
@@ -99,6 +105,25 @@ test_that("sfg multilinestring", {
   res <- sfheaders:::rcpp_sfg_multilinestring( df, c(0L,1L),2L )
   expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
   r_res <- sfg_multilinestring(x, x = "x", y = "y")
+  expect_equal( res, r_res )
+
+  df <- data.frame(
+    x = 1L,
+    y = 2L
+  )
+  res <- sfheaders:::rcpp_sfg_multilinestring( df, c(0L,1L) , NULL )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  ## TODO names??
+  # r_res <- sfg_multilinestring(df, x = "x", y = "y")
+  # expect_equal( res, r_res )
+
+  df <- data.frame(
+    x = 1L,
+    y = 2L
+  )
+  res <- sfheaders:::rcpp_sfg_multilinestring( df, c("x","y") , NULL )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(df, x = "x", y = "y")
   expect_equal( res, r_res )
 
 

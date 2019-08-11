@@ -427,8 +427,8 @@ namespace sfg {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return sfg_multilinestring( df );
     } else {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
-      return sfg_multilinestring( lst );
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x ); // #nocov
+      return sfg_multilinestring( lst );            // #nocov
     }
     }
     default: {
@@ -444,7 +444,7 @@ namespace sfg {
       SEXP& geometry_cols
   ) {
     if( Rf_isNull( geometry_cols ) ) {
-      return sfg_multilinestring( x );
+      return sfg_multilinestring( x );   // #nocov
     }
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -470,11 +470,12 @@ namespace sfg {
       Rcpp::String& line_id
   ) {
     if( Rf_isNull( cols ) ) {
-      //Rcpp::Rcout << "String line_id" << std::endl;
+      // #nocov start
       Rcpp::StringVector id_cols( 1 );
       id_cols[0] = line_id;
       SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
       return sfg_multilinestring( x, other_cols, line_id );
+      // #nocov end
     }
     switch( TYPEOF( cols ) ) {
     // case REALSXP: {}
@@ -501,10 +502,12 @@ namespace sfg {
   ) {
 
     if( Rf_isNull( cols ) ) {
+      // #nocov start
       Rcpp::IntegerVector id_cols( 1 );
       id_cols[0] = line_id;
       SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
       return sfg_multilinestring( x, other_cols, line_id );
+      // #nocov end
     }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}

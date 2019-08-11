@@ -221,7 +221,7 @@ namespace sfg {
       return sfg_linestring( x, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types"); // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches

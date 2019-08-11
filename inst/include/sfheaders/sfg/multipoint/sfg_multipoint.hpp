@@ -140,7 +140,7 @@ inline SEXP sfg_multipoint(
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_MULTIPOINT type");
+      Rcpp::stop("sfheaders - unsupported sfg_MULTIPOINT type");  // #nocov
     }
     }
 
@@ -157,9 +157,11 @@ inline SEXP sfg_multipoint(
         Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
         return sfg_multipoint( im, cols );
       } else {
+        // #nocov start
         Rcpp::warning("sfheaders - ignoring geometry_columns argument");
         Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
         return sfg_multipoint( iv );
+        // #nocov end
       }
     }
     case REALSXP: {
@@ -167,9 +169,11 @@ inline SEXP sfg_multipoint(
         Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
         return sfg_multipoint( nm, cols );
       } else {
+        // #nocov start
         Rcpp::warning("sfheaders - ignoring geometry_columns argument");
         Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
         return sfg_multipoint( nv );
+        // #nocov end
       }
     }
     case VECSXP: {
@@ -179,7 +183,7 @@ inline SEXP sfg_multipoint(
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_MULTIPOINT type");
+      Rcpp::stop("sfheaders - unsupported sfg_MULTIPOINT type");  // #nocov
     }
     }
 
@@ -244,7 +248,7 @@ inline SEXP sfg_multipoint(
       return sfg_multipoint( x, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");   // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches

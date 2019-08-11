@@ -270,7 +270,7 @@ inline SEXP sfg_multipolygon(
   } // else default
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+    Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");  // #nocov
   }
   }
 
@@ -306,7 +306,7 @@ inline SEXP sfg_multipolygon(
   } // else default
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+    Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");  // #nocov
   }
   }
 
@@ -375,7 +375,7 @@ inline SEXP sfg_multipolygon(
   } // else default
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported sfg_MULTIPOLYGON type");
+    Rcpp::stop("sfheaders - unsupported sfg_MULTIPOLYGON type");  // #nocov
   }
   }
 
@@ -443,7 +443,7 @@ inline SEXP sfg_multipolygon(
   } // else default
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported sfg_MULTIPOLYGON type");
+    Rcpp::stop("sfheaders - unsupported sfg_MULTIPOLYGON type");  // #nocov
   }
   }
 
@@ -479,7 +479,7 @@ inline SEXP sfg_multipolygon(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported sfg_MULTIPOLYGON type");
+    Rcpp::stop("sfheaders - unsupported sfg_MULTIPOLYGON type");  // #nocov
   }
   }
   return x; // never reaches

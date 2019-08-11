@@ -84,6 +84,42 @@ test_that("sfg multipolygon",{
   res <- sfheaders:::rcpp_sfg_multipolygon(m, c("x","y"), NULL, NULL )
   expect_true( is_multipolygon( res ) )
 
+
+  df <- data.frame(
+    x = 1L
+    , y = 2L
+    , id = 3L
+  )
+  m <- as.matrix( df )
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), "id", NULL ), "sfheaders - unknown column types" )
+
+  df <- data.frame(
+    x = 1L
+    , y = 2L
+    , id = 1L
+  )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c("x","y"), c("id"), c("id") )
+  expect_true( is_multipolygon( res ) )
+
+  df <- data.frame(
+    x = 1.1
+    , y = 2.2
+    , id = 1.2
+  )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c("x","y"), c("id"), c("id") )
+  expect_true( is_multipolygon( res ) )
+
+  df <- data.frame(
+    x = 1.1
+    , y = 2.2
+    , id = 1.2
+  )
+  m <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multipolygon(m, c("x","y"), NULL, NULL )
+  expect_true( is_multipolygon( res ) )
+
 })
 
 test_that("vectorised version works",{

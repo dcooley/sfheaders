@@ -2,6 +2,7 @@ context( "sfc_multipoints " )
 
 test_that("various objects converted to sfc_MULTIPOINT objects",{
 
+
   m <- matrix()
   expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL ), "sfheaders - unsupported multipoint type")
 
