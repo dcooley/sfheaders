@@ -3,7 +3,7 @@ context("sfg_point")
 test_that("sfg_POINTS returned from various R objects from src", {
 
   ## vectors
-  x <- c(0,0)
+  x <- c(0L,0L)
   pt <- sfheaders:::rcpp_sfg_point( x, NULL )
   res <- attr( pt, "class" )
   expect_equal( res, c("XY", "POINT", "sfg") )
@@ -52,6 +52,20 @@ test_that("sfg_POINTS returned from various R objects from src", {
   ## data.frame
   x <- data.frame( x = 0, y = 0 )
   pt <- sfheaders:::rcpp_sfg_point( x, NULL )
+  res <- attr( pt, "class" )
+  expect_equal( res, c("XY", "POINT", "sfg") )
+  r_pt <- sfg_point(x)
+  expect_equal( pt, r_pt )
+
+  x <- data.frame( x = 0, y = 0 )
+  pt <- sfheaders:::rcpp_sfg_point( x, c(0L,1L) )
+  res <- attr( pt, "class" )
+  expect_equal( res, c("XY", "POINT", "sfg") )
+  r_pt <- sfg_point(x)
+  expect_equal( pt, r_pt )
+
+  x <- data.frame( x = 0, y = 0 )
+  pt <- sfheaders:::rcpp_sfg_point( x, c("x","y") )
   res <- attr( pt, "class" )
   expect_equal( res, c("XY", "POINT", "sfg") )
   r_pt <- sfg_point(x)

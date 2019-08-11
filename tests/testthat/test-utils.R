@@ -43,6 +43,12 @@ test_that("sfheaders::utils::id_positions returns correct positions",{
   res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
   expect_equal( res, expected )
 
+  line_ids <- c("a")
+  unique_ids <- sort( unique( line_ids ) )
+  expected <- matrix(c(0,0), ncol = 2)
+  res <- sfheaders:::rcpp_id_positions( line_ids, unique_ids )
+  expect_equal( res, expected )
+
   line_ids <- c("a","a")
   unique_ids <- sort( unique( line_ids ) )
   expected <- matrix(c(0,1), ncol = 2)
@@ -70,6 +76,15 @@ test_that("sfheaders::utils::id_positions returns correct positions",{
 test_that("sfheaders::utils::other_columns works for various data types",{
 
   df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
+  other_cols <- sfheaders:::rcpp_other_columns( df, NULL, NULL, NULL )
+  expect_equal( other_cols, c("x","y","z") )
+
+  m <- matrix( 1:24, ncol = 3 )
+  other_cols <- sfheaders:::rcpp_other_columns( m, NULL, NULL, NULL )
+  expect_equal( other_cols, c(0,1,2))
+
+
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
   id <- c(2)  ## c++ index
   other_cols <- sfheaders:::rcpp_other_columns( df, id, NULL, NULL )
   expect_equal( other_cols, c(0,1) )
@@ -160,6 +175,51 @@ test_that("sfheaders::utils::other_columns works for various data types",{
   other_cols <- sfheaders:::rcpp_other_columns( m, NULL, id, NULL )
   expect_equal( other_cols, c("y"))
 
+
+
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
+  id <- c(2)  ## c++ index
+  other_cols <- sfheaders:::rcpp_other_columns( df, NULL, NULL, id )
+  expect_equal( other_cols, c(0,1) )
+
+  m <- matrix( 1:24, ncol = 3 )
+  id <- c(2)
+  other_cols <- sfheaders:::rcpp_other_columns( m, NULL, NULL, id )
+  expect_equal( other_cols, c(0,1))
+
+
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
+  id <- c(0,2)  ## c++ index
+  other_cols <- sfheaders:::rcpp_other_columns( df, NULL, NULL, id )
+  expect_equal( other_cols, c(1) )
+
+  m <- matrix( 1:24, ncol = 3 )
+  id <- c(0,2)
+  other_cols <- sfheaders:::rcpp_other_columns( m, NULL, NULL, id )
+  expect_equal( other_cols, c(1))
+
+  ## using names / strings
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
+  id <- c("z")
+  other_cols <- sfheaders:::rcpp_other_columns( df, NULL, NULL, id )
+  expect_equal( other_cols, c("x","y") )
+
+  m <- matrix( 1:24, ncol = 3 )
+  dimnames(m) <- list(NULL, c("x","y","z") )
+  id <- c("z")
+  other_cols <- sfheaders:::rcpp_other_columns( m, NULL, NULL, id )
+  expect_equal( other_cols, c("x","y"))
+
+  df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
+  id <- c("z","x")
+  other_cols <- sfheaders:::rcpp_other_columns( df, NULL, NULL, id )
+  expect_equal( other_cols, c("y") )
+
+  m <- matrix( 1:24, ncol = 3 )
+  dimnames(m) <- list(NULL, c("x","y","z") )
+  id <- c("z","x")
+  other_cols <- sfheaders:::rcpp_other_columns( m, NULL, NULL, id )
+  expect_equal( other_cols, c("y"))
 
 
 
@@ -253,11 +313,17 @@ test_that("sfheaders::utils::other_columns works for various data types",{
 })
 
 test_that("concatenate_vectors works",{
+
+
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1L,5L), c(1L,5L))
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1,5), c(1,5))
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1.2,5), c(1.2,5))
   expect_equal( sfheaders:::rcpp_concatenate_vectors("a","b"), c("a","b"))
   expect_error( sfheaders:::rcpp_concatenate_vectors(1,"a"), "sfheaders - different vector types found")
+
+  expect_equal( sfheaders:::rcpp_concatenate_vectors(c(1L,2L), c(3L)), c(1L:3L))
+  expect_equal( sfheaders:::rcpp_concatenate_vectors(c(1L,2L), c(3L,4L)), c(1L:4L))
+  expect_equal( sfheaders:::rcpp_concatenate_vectors(c("a","b"), c("c","d")), c("a","b","c","d"))
 
 })
 
