@@ -194,7 +194,7 @@ inline SEXP sfc_multipoint(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multipoint type");
+    Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
   }
   }
   return Rcpp::List::create();
@@ -355,7 +355,7 @@ inline SEXP sfc_multipoint(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multipoint type");
+    Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
   }
   }
   return Rcpp::List::create();
@@ -391,7 +391,7 @@ inline SEXP sfc_multipoint(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multipoint type");
+    Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
   }
   }
   return Rcpp::List::create();
@@ -415,7 +415,7 @@ inline SEXP sfc_multipoint(
     return sfc_multipoint( x, sv );
   }
   default: {
-    Rcpp::stop("sfheaders - unknown column type");
+    Rcpp::stop("sfheaders - unknown column type");    // #nocov
   }
   }
   return Rcpp::List::create();
@@ -684,7 +684,7 @@ inline SEXP sfc_multipoint(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multipoint type");
+    Rcpp::stop("sfheaders - unsupported multipoint type");  // #ncov
   }
   }
 
@@ -723,7 +723,7 @@ inline SEXP sfc_multipoint(
   }
   }
   default: {
-    Rcpp::stop("sfheaders - unsupported multipoint type");
+    Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
   }
   }
 
@@ -778,7 +778,7 @@ inline SEXP sfc_multipoint(
       return sfc_multipoint( x, sv_geometry_cols, s_multipoint_id_col );
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported multipoint type");
+      Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
     }
     }
   }

@@ -69,6 +69,11 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
   expect_true( is_multipoint( res ) )
 
+  v <- c(1.2,2,3)
+  res <- sfheaders:::rcpp_sfc_multipoint(v, NULL, NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
   m <- matrix(1:4, ncol = 2)
   res <- sfheaders:::rcpp_sfc_multipoint(m, NULL, NULL)
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
@@ -97,17 +102,38 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
   expect_true( is_multipoint( res ) )
 
+  m <- matrix(1L:4L, ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c("V1","V2"), NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
+  m <- matrix(c(1.2,2,3,4), ncol = 2)
+  df <- as.data.frame( m )
+  m <- as.matrix( m )
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c("V1","V2"), NULL)
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+  expect_true( is_multipoint( res ) )
+
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   res <- sfheaders:::rcpp_sfc_multipoint(m, NULL, 2)
   expect_true( is_multipoint( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
-  m <- matrix(1:8, ncol = 2)
-  m <- cbind(m, c(1,1,2,2))
-  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0,1), 2)
+  m <- matrix(1L:8L, ncol = 2)
+  m <- cbind(m, c(1L,1L,2L,2L))
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0L,1L), 2L)
   expect_true( is_multipoint( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
+  m <- matrix(1:8, ncol = 2)
+  m <- cbind(m, c(1,1,2,2))
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0L,1L), 2L)
+  expect_true( is_multipoint( res ) )
+  expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
+
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))

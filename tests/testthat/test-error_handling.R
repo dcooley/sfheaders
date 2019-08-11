@@ -198,7 +198,6 @@ test_that("0-row & empty objects",{
   expect_error( sfheaders::sfg_polygon( m ) )
   expect_error( sfheaders::sfg_multipolygon( m ) )
 
-
 })
 
 

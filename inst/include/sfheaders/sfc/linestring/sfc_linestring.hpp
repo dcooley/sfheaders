@@ -616,6 +616,7 @@ namespace sfc {
     return sfc_linestring( nm, geometry_cols, line_ids );
   }
 
+  // #nocov start
   inline SEXP sfc_linestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& geometry_cols,
@@ -625,6 +626,7 @@ namespace sfc {
     SEXP line_ids = df[ linestring_id ];
     return sfc_linestring( df, geometry_cols, line_ids );
   }
+  // #nocov end
 
   inline SEXP sfc_linestring(
       Rcpp::NumericMatrix& nm,
@@ -703,8 +705,8 @@ namespace sfc {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return sfc_linestring( im, geometry_cols, linestring_id );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );  // #nocov
+      return sfc_linestring( im, geometry_cols, linestring_id );      // #nocov
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
     //   return sfc_linestring( iv, geometry_cols, linestring_id );
