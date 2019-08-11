@@ -4,8 +4,7 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
+#include "sfheaders/sfg/sfg_types.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -16,12 +15,7 @@ namespace sfg {
   inline SEXP sfg_multipoint(
       Rcpp::IntegerMatrix& im
   ) {
-    R_xlen_t n_col = im.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-    std::string geom_type = "MULTIPOINT";
-    im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-
+    sfheaders::sfg::make_sfg( im, sfheaders::sfg::SFG_MULTIPOINT );
     return im;
   }
 
@@ -54,12 +48,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm
   ) {
 
-    R_xlen_t n_col = nm.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-    std::string geom_type = "MULTIPOINT";
-    nm.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
-
+    sfheaders::sfg::make_sfg( nm, sfheaders::sfg::SFG_MULTIPOINT );
     return nm;
   }
 

@@ -2,6 +2,11 @@
 #include "sfheaders/sfg/sfg.hpp"
 
 // [[Rcpp::export]]
+std::string rcpp_get_sfg_type( int sfg_type ) {
+  return sfheaders::sfg::get_sfg_type( sfg_type );
+}
+
+// [[Rcpp::export]]
 SEXP rcpp_sfg_point( SEXP x, SEXP geometry_columns ) {
   return sfheaders::sfg::sfg_point( x, geometry_columns );
 }

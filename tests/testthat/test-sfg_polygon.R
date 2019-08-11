@@ -2,6 +2,21 @@ context("sfg_polygon")
 
 test_that("sfg polygon", {
 
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, NULL, NULL ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), NULL, NULL ), "sfheaders - expecting a matrix" )
+
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c(0L,1L), NULL ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c(0L,1L), NULL ), "sfheaders - expecting a matrix" )
+
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c(0L,1L), 2L ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c(0L,1L), 2L ), "sfheaders - expecting a matrix" )
+
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c("x","y"), NULL ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c("x","y"), NULL ), "sfheaders - expecting a matrix" )
+
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c("x","y"), "z" ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c("x","y"), "z" ), "sfheaders - expecting a matrix" )
+
   ## matrix
   x <- matrix(c(1:24), ncol = 2)
   res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL )
@@ -43,6 +58,18 @@ test_that("sfg polygon", {
   res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L,3L), NULL )
   expect_equal( attr(res, "class"), c("XYZM", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
+  expect_equal( res, r_res )
+
+  x <- matrix(c(1:4), ncol = 4)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), 3L )
+  expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
+  r_res <- sfg_polygon(x, linestring_id = 4L)
+  expect_equal( res, r_res )
+
+  x <- matrix(c(1.2,2,3,4), ncol = 4)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), 3L )
+  expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
+  r_res <- sfg_polygon(x, linestring_id = 4L)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:2), ncol = 2)
@@ -93,6 +120,11 @@ test_that("sfg polygon", {
   res <- sfheaders:::rcpp_sfg_polygon( df, NULL, NULL )
   expect_equal( attr(res, "class"), c("XYZM", "POLYGON", "sfg"))
   r_res <- sfg_polygon(df)
+  expect_equal( res, r_res )
+
+  res <- sfheaders:::rcpp_sfg_polygon( df, c("x","y"), NULL )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON", "sfg"))
+  r_res <- sfg_polygon(df, x = "x", y = "y")
   expect_equal( res, r_res )
 
 })

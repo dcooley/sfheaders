@@ -19,7 +19,7 @@ namespace sfg {
   inline std::string get_sfg_type( int sfg_type ) {
     switch( sfg_type ) {
     case SFG_POINT: { return "POINT"; }
-    case SFG_MULTIPOINT: { return "MULTIPOING"; }
+    case SFG_MULTIPOINT: { return "MULTIPOINT"; }
     case SFG_LINESTRING: { return "LINESTRING"; }
     case SFG_MULTILINESTRING: { return "MULTILINESTRING"; }
     case SFG_POLYGON: { return "POLYGON"; }
@@ -75,6 +75,16 @@ namespace sfg {
 
     std::string geom_type = get_sfg_type( sfg_type );
     nm.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
+  inline void make_sfg(
+      Rcpp::List& lst,
+      int sfg_type
+  ) {
+    std::string dim = sfheaders::sfg::sfg_dimension( lst );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+    lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
   }
 
   inline void make_sfg(

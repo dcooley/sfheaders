@@ -4,29 +4,18 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
+#include "sfheaders/sfg/sfg_types.hpp"
 
 namespace sfheaders {
 namespace sfg {
 
   inline SEXP sfg_point( Rcpp::IntegerVector& iv ) {
-    // takes a vector of size >= 2 && size <= 4 (for z & m)
-    // attaches sfg_POINT attributes
-    R_xlen_t n = iv.size();
-    std::string dim = sfheaders::sfg::sfg_dimension( n );
-    std::string geom_type = "POINT";
-    iv.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
+    sfheaders::sfg::make_sfg( iv, sfheaders::sfg::SFG_POINT );
     return iv;
   }
 
   inline SEXP sfg_point( Rcpp::NumericVector& nv ) {
-    // takes a vector of size >= 2 && size <= 4 (for z & m)
-    // attaches sfg_POINT attributes
-    R_xlen_t n = nv.size();
-    std::string dim = sfheaders::sfg::sfg_dimension( n );
-    std::string geom_type = "POINT";
-    nv.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type) ;
+    sfheaders::sfg::make_sfg( nv, sfheaders::sfg::SFG_POINT );
     return nv;
   }
 

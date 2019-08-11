@@ -89,7 +89,7 @@ namespace sfg {
 
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg type");
+      Rcpp::stop("sfheaders - unsupported sfg type"); // #nocov
     }
     }
 

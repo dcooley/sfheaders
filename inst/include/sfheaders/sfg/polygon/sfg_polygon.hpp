@@ -4,8 +4,7 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
+#include "sfheaders/sfg/sfg_types.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -17,10 +16,8 @@ namespace sfg {
     Rcpp::List mls( 1 );
     mls[0] = im;
     R_xlen_t n_col = im.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
-    std::string geom_type = "POLYGON";
-    mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+    sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON );
 
     return mls;
   }
@@ -31,10 +28,8 @@ namespace sfg {
     Rcpp::List mls( 1 );
     mls[0] = nm;
     R_xlen_t n_col = nm.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
 
-    std::string geom_type = "POLYGON";
-    mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+    sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON );
 
     return mls;
   }
@@ -46,12 +41,8 @@ namespace sfg {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     mls[0] = nm;
     R_xlen_t n_col = nm.ncol();
-    //Rcpp::Rcout << "n_col: " << n_col << std::endl;
 
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-    std::string geom_type = "POLYGON";
-    mls.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+    sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON );
 
     return mls;
   }
@@ -60,11 +51,7 @@ namespace sfg {
       Rcpp::List& lst
   ) {
 
-    // each list element must be a matrix
-    std::string dim = sfheaders::sfg::sfg_dimension( lst );
-
-    std::string geom_type = "POLYGON";
-    lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+    sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_POLYGON );
 
     return lst;
   }
@@ -404,8 +391,8 @@ namespace sfg {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
       return sfg_polygon( df );
     } else {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
-      return sfg_polygon( lst );
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x ); // #nocov
+      return sfg_polygon( lst );                    // #nocov
     }
     }
     default: {
@@ -434,7 +421,7 @@ namespace sfg {
       return sfg_polygon( x, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -447,11 +434,12 @@ namespace sfg {
       Rcpp::String& line_id
   ) {
     if( Rf_isNull( cols ) ) {
-      //Rcpp::Rcout << "String line_id" << std::endl;
+      // #nocov start
       Rcpp::StringVector id_cols( 1 );
       id_cols[0] = line_id;
       SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
       return sfg_polygon( x, other_cols, line_id );
+      // #nocov end
     }
     switch( TYPEOF( cols ) ) {
     // case REALSXP: {}
@@ -478,10 +466,12 @@ namespace sfg {
   ) {
 
     if( Rf_isNull( cols ) ) {
+      // #nocov start
       Rcpp::IntegerVector id_cols( 1 );
       id_cols[0] = line_id;
       SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
       return sfg_polygon( x, other_cols, line_id );
+      // #nocov end
     }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}

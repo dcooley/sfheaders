@@ -315,6 +315,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_get_sfg_type
+std::string rcpp_get_sfg_type(int sfg_type);
+RcppExport SEXP _sfheaders_rcpp_get_sfg_type(SEXP sfg_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type sfg_type(sfg_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_sfg_type(sfg_type));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sfg_point
 SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns);
 RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP) {
@@ -572,6 +583,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_polygons", (DL_FUNC) &_sfheaders_rcpp_sfc_polygons, 1},
     {"_sfheaders_rcpp_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygon, 5},
     {"_sfheaders_rcpp_sfc_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygons, 1},
+    {"_sfheaders_rcpp_get_sfg_type", (DL_FUNC) &_sfheaders_rcpp_get_sfg_type, 1},
     {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 2},
     {"_sfheaders_rcpp_sfg_points", (DL_FUNC) &_sfheaders_rcpp_sfg_points, 1},
     {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 2},

@@ -101,6 +101,10 @@ rcpp_sfc_multipolygons <- function(lst) {
     .Call(`_sfheaders_rcpp_sfc_multipolygons`, lst)
 }
 
+rcpp_get_sfg_type <- function(sfg_type) {
+    .Call(`_sfheaders_rcpp_get_sfg_type`, sfg_type)
+}
+
 rcpp_sfg_point <- function(x, geometry_columns) {
     .Call(`_sfheaders_rcpp_sfg_point`, x, geometry_columns)
 }

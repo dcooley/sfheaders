@@ -4,8 +4,7 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
-#include "sfheaders/sfg/sfg_dimension.hpp"
+#include "sfheaders/sfg/sfg_types.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -19,10 +18,7 @@ inline SEXP sfg_multipolygon(
   p[0] = im;
   mp[0] = p;
   R_xlen_t n_col = im.ncol();
-  std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-  std::string geom_type = "MULTIPOLYGON";
-  mp.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON );
 
   return mp;
 }
@@ -35,10 +31,7 @@ inline SEXP sfg_multipolygon(
   p[0] = nm;
   mp[0] = p;
   R_xlen_t n_col = nm.ncol();
-  std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-  std::string geom_type = "MULTIPOLYGON";
-  mp.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON );
 
   return mp;
 }
@@ -53,10 +46,7 @@ inline SEXP sfg_multipolygon(
   p[0] = nm;
   mp[0] = p;
   R_xlen_t n_col = nm.ncol();
-  std::string dim = sfheaders::sfg::sfg_dimension( n_col );
-
-  std::string geom_type = "MULTIPOLYGON";
-  mp.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON );
 
   return mp;
 }
@@ -69,11 +59,7 @@ inline SEXP sfg_multipolygon(
   Rcpp::List mp( 1 );
   mp[0] = lst;
   // each list element must be a matrix
-  std::string dim = sfheaders::sfg::sfg_dimension( lst );
-
-  std::string geom_type = "MULTIPOLYGON";
-  lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-
+  sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTIPOLYGON );
   return lst;
 }
 
