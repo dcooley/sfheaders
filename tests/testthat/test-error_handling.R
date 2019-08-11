@@ -200,4 +200,9 @@ test_that("0-row & empty objects",{
 
 })
 
+test_that("other misc errors are caught",{
 
+  x <- data.frame( x = c(0,0), y = c(0,0) )
+  expect_error( sfheaders:::rcpp_sfg_linestring( x, c(1L, 2L) ), "sfheaders - invalid column index")
+
+})

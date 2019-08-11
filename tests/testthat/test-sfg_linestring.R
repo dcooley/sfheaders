@@ -106,6 +106,11 @@ test_that("sfg_LINESTRINGS returned from various R objects from src", {
   r_pt <- sfg_linestring(x)
   expect_equal( pt, r_pt )
 
+  x <- data.frame( x = c(0,0), y = c(0,0) )
+  pt <- sfheaders:::rcpp_sfg_linestring( x, c(0L, 1L) )
+  res <- attr( pt, "class" )
+  expect_equal( res, c("XY", "LINESTRING", "sfg"))
+
   ## using column names
   x <- data.frame( x = c(0,0), y = c(0,0) )
   pt <- sfheaders:::rcpp_sfg_linestring( x, c("x","y") )

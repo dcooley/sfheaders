@@ -81,6 +81,28 @@ test_that("sfg multilinestring", {
 
 
   df <- data.frame(
+    x = 1L,
+    y = 2L,
+    id = 1L
+  )
+  x <- as.matrix( df )
+  res <- sfheaders:::rcpp_sfg_multilinestring( x, NULL, "id" )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(x, x = "x", y = "y")
+  expect_equal( res, r_res )
+
+  df <- data.frame(
+    x = 1L,
+    y = 2L,
+    id = 1L
+  )
+  res <- sfheaders:::rcpp_sfg_multilinestring( df, c(0L,1L),2L )
+  expect_equal( attr(res, "class"), c("XY", "MULTILINESTRING","sfg"))
+  r_res <- sfg_multilinestring(x, x = "x", y = "y")
+  expect_equal( res, r_res )
+
+
+  df <- data.frame(
     id = 1,
     x = 1,
     y = 2

@@ -165,7 +165,7 @@ namespace sfg {
       } //else - default
     }
     default: {
-      Rcpp::stop("sfheaders - unknown point type");
+      Rcpp::stop("sfheaders - unknown point type");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches

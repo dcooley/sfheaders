@@ -184,6 +184,7 @@ namespace sfg {
     return sfg_multilinestring( lst );
   }
 
+  // #nocov start
   inline SEXP sfg_multilinestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols,
@@ -192,6 +193,7 @@ namespace sfg {
     Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
     return sfg_multilinestring( lst );
   }
+  // #nocov end
 
   inline SEXP sfg_multilinestring(
       SEXP& x,
@@ -255,7 +257,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_LINESTRING type"); // #nocov
     }
     }
 
@@ -324,7 +326,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");   // #nocov
     }
     }
 
@@ -392,7 +394,7 @@ namespace sfg {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");   // #nocov
     }
     }
 
@@ -430,7 +432,7 @@ namespace sfg {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");
+      Rcpp::stop("sfheaders - unsupported sfg_MULTILINESTRING type");  // #nocov
     }
     }
     return x; // never reaches
@@ -455,7 +457,7 @@ namespace sfg {
       return sfg_multilinestring( x, sv );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");   // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -485,7 +487,7 @@ namespace sfg {
       return sfg_multilinestring( x, sv, line_id );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");   // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -515,7 +517,7 @@ namespace sfg {
     //   return sfg_multilinestring( x, sv, line_id );
     // }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
@@ -552,7 +554,7 @@ namespace sfg {
       return sfg_multilinestring( x, cols, s );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown column types");
+      Rcpp::stop("sfheaders - unknown column types");  // #nocov
     }
     }
     return Rcpp::List::create(); // never reaches
