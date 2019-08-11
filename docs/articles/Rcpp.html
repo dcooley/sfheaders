@@ -59,7 +59,7 @@
       <a href="../articles/Rcpp.html">Rcpp</a>
     </li>
     <li>
-      <a href="../articles/examples.html">examples</a>
+      <a href="../articles/examples.html">Examples</a>
     </li>
   </ul>
 </li>
@@ -79,7 +79,7 @@
       <h1>Rcpp</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-08-08</h4>
+            <h4 class="date">2019-08-12</h4>
       
       
       <div class="hidden name"><code>Rcpp.Rmd</code></div>
@@ -88,151 +88,149 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Rcpp)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">#  Warning: package 'Rcpp' was built under R version 3.5.2</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sfheaders)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">#  Warning: package 'sf' was built under R version 3.5.2</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">#  Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(Rcpp)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sfheaders)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#  Linking to GEOS 3.6.1, GDAL 2.1.3, PROJ 4.9.3</span></span></code></pre></div>
 <div id="point" class="section level3">
 <h3 class="hasAnchor">
 <a href="#point" class="anchor"></a>POINT</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">includes =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">code =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="st">    SEXP a_point( SEXP x ) {</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="st">      return sfheaders::sfg::sfg_point( x );</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="st">    }</span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb2-11" title="11">  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></a>
-<a class="sourceLine" id="cb2-12" title="12">)</a>
-<a class="sourceLine" id="cb2-13" title="13"></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="co">## vector</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="kw">a_point</span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>) )</a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="co">#  POINT (1 2)</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co">## single-row matrix</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="kw">a_point</span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>) )</a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="co">#  POINT (1 2)</span></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co">## single-row data.frame</span></a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="kw">a_point</span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span><span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">2</span>) )</a>
-<a class="sourceLine" id="cb2-22" title="22"><span class="co">#  POINT (1 2)</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  '</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="st">    SEXP a_point( SEXP x ) {</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="st">      return sfheaders::sfg::sfg_point( x );</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="st">    }</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="st">  '</span>,</span>
+<span id="cb2-11"><a href="#cb2-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">## vector</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="kw">a_point</span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>) )</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#  POINT (1 2)</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">## single-row matrix</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="kw">a_point</span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">ncol =</span> <span class="dv">2</span>) )</span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#  POINT (1 2)</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">## single-row data.frame</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="kw">a_point</span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span><span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">2</span>) )</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#  POINT (1 2)</span></span></code></pre></div>
 </div>
 <div id="multipoint" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multipoint" class="anchor"></a>MULTIPOINT</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</a>
-<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">includes =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb3-6" title="6">  <span class="dt">code =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">    SEXP a_multipoint( SEXP x ) {</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">      return sfheaders::sfg::sfg_multipoint( x );</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">    }</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb3-11" title="11">  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></a>
-<a class="sourceLine" id="cb3-12" title="12">)</a>
-<a class="sourceLine" id="cb3-13" title="13"></a>
-<a class="sourceLine" id="cb3-14" title="14">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="kw">a_multipoint</span>( x )</a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#  MULTIPOINT (1 2)</span></a>
-<a class="sourceLine" id="cb3-17" title="17"></a>
-<a class="sourceLine" id="cb3-18" title="18">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="kw">a_multipoint</span>( x )</a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co">#  MULTIPOINT (1 4, 2 5, 3 6)</span></a>
-<a class="sourceLine" id="cb3-21" title="21"></a>
-<a class="sourceLine" id="cb3-22" title="22">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="kw">a_multipoint</span>( x )</a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co">#  MULTIPOINT (1 4, 2 5, 3 6)</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="st">  '</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="st">    SEXP a_multipoint( SEXP x ) {</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">      return sfheaders::sfg::sfg_multipoint( x );</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">    }</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  '</span>,</span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>)</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="kw">a_multipoint</span>( x )</span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#  MULTIPOINT (1 2)</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="kw">a_multipoint</span>( x )</span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#  MULTIPOINT (1 4, 2 5, 3 6)</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="kw">a_multipoint</span>( x )</span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#  MULTIPOINT (1 4, 2 5, 3 6)</span></span></code></pre></div>
 </div>
 <div id="linestring" class="section level3">
 <h3 class="hasAnchor">
 <a href="#linestring" class="anchor"></a>LINESTRING</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</a>
-<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">includes =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb4-6" title="6">  <span class="dt">code =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="st">    SEXP a_linestring( SEXP x ) {</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="st">      return sfheaders::sfg::sfg_linestring( x );</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="st">    }</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb4-11" title="11">  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></a>
-<a class="sourceLine" id="cb4-12" title="12">)</a>
-<a class="sourceLine" id="cb4-13" title="13"></a>
-<a class="sourceLine" id="cb4-14" title="14">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="kw">a_linestring</span>( x )</a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#  LINESTRING (1 2)</span></a>
-<a class="sourceLine" id="cb4-17" title="17"></a>
-<a class="sourceLine" id="cb4-18" title="18">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="kw">a_linestring</span>( x )</a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#  LINESTRING (1 4, 2 5, 3 6)</span></a>
-<a class="sourceLine" id="cb4-21" title="21"></a>
-<a class="sourceLine" id="cb4-22" title="22">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb4-23" title="23"><span class="kw">a_linestring</span>( x )</a>
-<a class="sourceLine" id="cb4-24" title="24"><span class="co">#  LINESTRING (1 4, 2 5, 3 6)</span></a>
-<a class="sourceLine" id="cb4-25" title="25"></a>
-<a class="sourceLine" id="cb4-26" title="26">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="kw">a_linestring</span>( x )</a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="co">#  LINESTRING Z (1 4 7, 2 5 8, 3 6 9)</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="st">  '</span>,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="st">    SEXP a_linestring( SEXP x ) {</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="st">      return sfheaders::sfg::sfg_linestring( x );</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="st">    }</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="st">  '</span>,</span>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>)</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="kw">a_linestring</span>( x )</span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#  LINESTRING (1 2)</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a></span>
+<span id="cb4-18"><a href="#cb4-18"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="kw">a_linestring</span>( x )</span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#  LINESTRING (1 4, 2 5, 3 6)</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="kw">a_linestring</span>( x )</span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co">#  LINESTRING (1 4, 2 5, 3 6)</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a></span>
+<span id="cb4-26"><a href="#cb4-26"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="kw">a_linestring</span>( x )</span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co">#  LINESTRING Z (1 4 7, 2 5 8, 3 6 9)</span></span></code></pre></div>
 </div>
 <div id="multilinestring" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multilinestring" class="anchor"></a>MULTILINESTRING</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">includes =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb5-6" title="6">  <span class="dt">code =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">    SEXP a_multilinestring( SEXP x ) {</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="st">      return sfheaders::sfg::sfg_multilinestring( x );</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">    }</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb5-11" title="11">  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></a>
-<a class="sourceLine" id="cb5-12" title="12">)</a>
-<a class="sourceLine" id="cb5-13" title="13"></a>
-<a class="sourceLine" id="cb5-14" title="14">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="kw">a_multilinestring</span>( x )</a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="co">#  MULTILINESTRING ((1 2))</span></a>
-<a class="sourceLine" id="cb5-17" title="17"></a>
-<a class="sourceLine" id="cb5-18" title="18">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="kw">a_multilinestring</span>( x )</a>
-<a class="sourceLine" id="cb5-20" title="20"><span class="co">#  MULTILINESTRING ((1 4, 2 5, 3 6))</span></a>
-<a class="sourceLine" id="cb5-21" title="21"></a>
-<a class="sourceLine" id="cb5-22" title="22">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb5-23" title="23"><span class="kw">a_multilinestring</span>( x )</a>
-<a class="sourceLine" id="cb5-24" title="24"><span class="co">#  MULTILINESTRING ((1 4, 2 5, 3 6))</span></a>
-<a class="sourceLine" id="cb5-25" title="25"></a>
-<a class="sourceLine" id="cb5-26" title="26">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb5-27" title="27"><span class="kw">a_multilinestring</span>( x )</a>
-<a class="sourceLine" id="cb5-28" title="28"><span class="co">#  MULTILINESTRING Z ((1 4 7, 2 5 8, 3 6 9))</span></a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</a>
-<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">includes =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb6-6" title="6">  <span class="dt">code =</span> <span class="st">'</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="st">    SEXP a_multilinestring( SEXP x, SEXP geometry_cols, SEXP id_col ) {</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="st">      return sfheaders::sfg::sfg_multilinestring( x, geometry_cols, id_col );</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="st">    }</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="st">  '</span>,</a>
-<a class="sourceLine" id="cb6-11" title="11">  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></a>
-<a class="sourceLine" id="cb6-12" title="12">)</a>
-<a class="sourceLine" id="cb6-13" title="13"></a>
-<a class="sourceLine" id="cb6-14" title="14">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb6-15" title="15"><span class="kw">a_multilinestring</span>( x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>), <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb6-16" title="16"><span class="co">#  MULTILINESTRING ((1 4, 2 5), (3 6))</span></a>
-<a class="sourceLine" id="cb6-17" title="17"></a>
-<a class="sourceLine" id="cb6-18" title="18"><span class="kw">a_multilinestring</span>( x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>,<span class="st">"z"</span>), <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb6-19" title="19"><span class="co">#  MULTILINESTRING Z ((1 4 7, 2 5 8), (3 6 9))</span></a>
-<a class="sourceLine" id="cb6-20" title="20"></a>
-<a class="sourceLine" id="cb6-21" title="21"><span class="kw">a_multilinestring</span>( x, <span class="ot">NULL</span>, <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb6-22" title="22"><span class="co">#  MULTILINESTRING Z ((1 4 7, 2 5 8), (3 6 9))</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="st">  '</span>,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="st">    SEXP a_multilinestring( SEXP x ) {</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="st">      return sfheaders::sfg::sfg_multilinestring( x );</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="st">    }</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="st">  '</span>,</span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="kw">a_multilinestring</span>( x )</span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#  MULTILINESTRING ((1 2))</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="dt">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="kw">a_multilinestring</span>( x )</span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#  MULTILINESTRING ((1 4, 2 5, 3 6))</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>)</span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="kw">a_multilinestring</span>( x )</span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#  MULTILINESTRING ((1 4, 2 5, 3 6))</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="kw">a_multilinestring</span>( x )</span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#  MULTILINESTRING Z ((1 4 7, 2 5 8, 3 6 9))</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="st">  '</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="st">    SEXP a_multilinestring( SEXP x, SEXP geometry_cols, SEXP id_col ) {</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="st">      return sfheaders::sfg::sfg_multilinestring( x, geometry_cols, id_col );</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="st">    }</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="st">  '</span>,</span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>)</span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="kw">a_multilinestring</span>( x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>), <span class="st">"id"</span> )</span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#  MULTILINESTRING ((1 4, 2 5), (3 6))</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="kw">a_multilinestring</span>( x, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>,<span class="st">"z"</span>), <span class="st">"id"</span> )</span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#  MULTILINESTRING Z ((1 4 7, 2 5 8), (3 6 9))</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="kw">a_multilinestring</span>( x, <span class="ot">NULL</span>, <span class="st">"id"</span> )</span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="co">#  MULTILINESTRING Z ((1 4 7, 2 5 8), (3 6 9))</span></span></code></pre></div>
 </div>
 <div id="polygon" class="section level3">
 <h3 class="hasAnchor">
@@ -241,6 +239,145 @@
 <div id="multipoliygon" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multipoliygon" class="anchor"></a>MULTIPOLIYGON</h3>
+<div id="from-c" class="section level4">
+<h4 class="hasAnchor">
+<a href="#from-c" class="anchor"></a>from C++</h4>
+<p>There are various overloaded functions for each <code>sfg</code>, <code>sfc</code> and <code>sf</code> types</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="st">  '</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="st">    SEXP a_polygon( Rcpp::DataFrame df ) {</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="st">      return sfheaders::sfg::sfg_polygon( df );</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="st">    }</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="st">  '</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="kw">a_polygon</span>( df )</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  '</span>,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="st">    SEXP a_polygon( Rcpp::DataFrame df, Rcpp::StringVector geometry_columns ) {</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="st">      return sfheaders::sfg::sfg_polygon( df, geometry_columns );</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="st">    }</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="st">  '</span>,</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>) )</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"y"</span>, <span class="st">"x"</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="st">  '</span>,</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="st">    SEXP a_polygon( SEXP x, SEXP geometry_columns ) {</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="st">      return sfheaders::sfg::sfg_polygon( x, geometry_columns );</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="st">    }</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="st">  '</span>,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>) )</span>
+<span id="cb9-14"><a href="#cb9-14"></a></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"y"</span>, <span class="st">"x"</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">    #include "sfheaders/sfg/sfg.hpp"</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st">  '</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="st">    SEXP a_polygon( SEXP df, std::string geom_type ) {</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="st">      return sfheaders::sfg::to_sfg( df, geom_type );</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="st">    }</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="st">  '</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>)</span>
+<span id="cb10-13"><a href="#cb10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="kw">a_polygon</span>( df, <span class="st">"POLYGON"</span> )</span></code></pre></div>
+</div>
+</div>
+<div id="sfc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#sfc" class="anchor"></a>sfc</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="../reference/sfc_point.html">sfc_point</a></span>( df )</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw"><a href="../reference/sfc_multipoint.html">sfc_multipoint</a></span>( df )</span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="kw"><a href="../reference/sfc_polygon.html">sfc_polygon</a></span>( df )</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="st">    #include "sfheaders/sfc/sfc.hpp"</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="st">  '</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="st">    SEXP a_polygon( SEXP df ) {</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="st">      return sfheaders::sfc::sfc_polygon( df );</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="st">    }</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="st">  '</span>,</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12"></a>  <span class="dt">plugins =</span> <span class="st">"cpp11"</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>)</span>
+<span id="cb12-14"><a href="#cb12-14"></a></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="kw">a_polygon</span>( df )</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">    #include "sfheaders/sfc/sfc.hpp"</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="st">  '</span>,</span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="st">    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="st">      return sfheaders::sfc::sfc_polygon( df, geometry_columns );</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="st">    }</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="st">  '</span>,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12"></a>  <span class="dt">plugins =</span> <span class="st">"cpp11"</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>)</span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">2</span>, <span class="dv">5</span>) )</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  , <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  , <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="st">    #include "sfheaders/sfc/sfc.hpp"</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="st">  '</span>,</span>
+<span id="cb14-12"><a href="#cb14-12"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="st">    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="st">      return sfheaders::sfc::sfc_polygon( df, geometry_columns );</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="st">    }</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="st">  '</span>,</span>
+<span id="cb14-17"><a href="#cb14-17"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span>,</span>
+<span id="cb14-18"><a href="#cb14-18"></a>  <span class="dt">plugins =</span> <span class="st">"cpp11"</span></span>
+<span id="cb14-19"><a href="#cb14-19"></a>)</span>
+<span id="cb14-20"><a href="#cb14-20"></a></span>
+<span id="cb14-21"><a href="#cb14-21"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/Rcpp/topics/cppFunction">cppFunction</a></span>(</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="dt">includes =</span> <span class="st">'</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="st">    #include "sfheaders/sfc/sfc.hpp"</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="st">  '</span>,</span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="dt">code =</span> <span class="st">'</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="st">    SEXP a_polygon( SEXP df, SEXP geometry_columns, SEXP polygon_id, SEXP linestring_id ) {</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="st">      return sfheaders::sfc::sfc_polygon( df, geometry_columns, polygon_id, linestring_id );</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="st">    }</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="st">  '</span>,</span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="dt">depends =</span> <span class="st">"sfheaders"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12"></a>  <span class="dt">plugins =</span> <span class="st">"cpp11"</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a>)</span>
+<span id="cb15-14"><a href="#cb15-14"></a></span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="kw">a_polygon</span>( df, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"x"</span>,<span class="st">"y"</span>), <span class="st">"id"</span>, <span class="ot">NULL</span> )</span></code></pre></div>
 </div>
   </div>
 

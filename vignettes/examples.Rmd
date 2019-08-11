@@ -1,13 +1,33 @@
 ---
-title: "examples"
-output: html_document
+title: "Examples"
+author: "David Cooley"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+header-includes: 
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+vignette: >
+  %\VignetteIndexEntry{Rcpp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "# ",
+  echo = TRUE, 
+  eval = TRUE
+  )
 ```
 
-```{r, eval = T}
+```{r, eval = T, warning=FALSE, message = FALSE}
 library(sfheaders)
 library(sf) ## for nice printing
 ```
@@ -15,7 +35,17 @@ library(sf) ## for nice printing
 
 ### R
 
-```{r, eval = T}
+The hierarchy of `sf` objects goes
+
+1. sfg - simple feature geometry
+2. sfc - simple feature collection (a collection of sfg)
+3. sf - simple feature object (sfc with data attributes)
+
+#### sfg
+
+The `sfg_` group of functions assume the input is a single geometry.
+
+```{r}
 
 sfg_point( 1:2 )
 sfg_point( 1:3 )
@@ -23,184 +53,64 @@ sfg_point( 1:4 )
 
 sfg_linestring( 1:4 )
 
-m <- matrix(1:4, ncol = 2)
+df <- data.frame(
+  x = c(1,1,4,4,1)
+  , y = c(1,4,4,1,1)
+)
+sfg_linestring(df)
 
-sfg_linestring(m)
+sfg_polygon(df)
 
 ```
 
-#### from C++
+#### sfc
 
-There are various overloaded functions for each `sfg`, `sfc` and `sf` types
-
+The `sfc_` group of functions let you specify an 'id' value to identify individual geometries. (Except for `sfc_point()`, in this case every row is an individual geometry).
 
 ```{r}
-library(Rcpp)
 
-cppFunction(
-  includes = '
-    #include "sfheaders/sfg/sfg.hpp"
-  ',
-  code = '
-    SEXP a_polygon( Rcpp::DataFrame df ) {
-      return sfheaders::sfg::sfg_polygon( df );
-    }
-  ',
-  depends = "sfheaders"
+df <- data.frame(
+  id = c(1,1,2,2,3)
+  , x = c(1,1,4,4,1)
+  , y = c(1,4,4,1,1)
 )
 
-a_polygon( df )
-```
-
-```{r}
-cppFunction(
-  includes = '
-    #include "sfheaders/sfg/sfg.hpp"
-  ',
-  code = '
-    SEXP a_polygon( Rcpp::DataFrame df, Rcpp::StringVector geometry_columns ) {
-      return sfheaders::sfg::sfg_polygon( df, geometry_columns );
-    }
-  ',
-  depends = "sfheaders"
-)
-
-a_polygon( df, c("x","y") )
-
-a_polygon( df, c("y", "x") )
-
-```
-
-```{r}
-cppFunction(
-  includes = '
-    #include "sfheaders/sfg/sfg.hpp"
-  ',
-  code = '
-    SEXP a_polygon( SEXP x, SEXP geometry_columns ) {
-      return sfheaders::sfg::sfg_polygon( x, geometry_columns );
-    }
-  ',
-  depends = "sfheaders"
-)
-
-a_polygon( df, c("x","y") )
-
-a_polygon( df, c("y", "x") )
-
-```
-
-
-```{r}
-
-cppFunction(
-  includes = '
-    #include "sfheaders/sfg/sfg.hpp"
-  ',
-  code = '
-    SEXP a_polygon( SEXP df, std::string geom_type ) {
-      return sfheaders::sfg::to_sfg( df, geom_type );
-    }
-  ',
-  depends = "sfheaders"
-)
-
-a_polygon( df, "POLYGON" )
-
-```
-
-
-### sfc
-
-```{r}
 sfc_point( df )
 
-sfc_multipoint( df )
+sfc_multipoint( df, multipoint_id = "id" )
 
+sfc_linestring( df, linestring_id = "id" )
+
+## leaving the 'id' field blank
 sfc_polygon( df )
+
 ```
 
 
-```{r}
+#### sf
 
-cppFunction(
-  includes = '
-    #include "sfheaders/sfc/sfc.hpp"
-  ',
-  code = '
-    SEXP a_polygon( SEXP df ) {
-      return sfheaders::sfc::sfc_polygon( df );
-    }
-  ',
-  depends = "sfheaders",
-  plugins = "cpp11"
-)
-
-a_polygon( df )
-```
-
-```{r}
-
-cppFunction(
-  includes = '
-    #include "sfheaders/sfc/sfc.hpp"
-  ',
-  code = '
-    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
-      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
-    }
-  ',
-  depends = "sfheaders",
-  plugins = "cpp11"
-)
-
-a_polygon( df, c("x","y") )
-```
+The `sf_` functions also let you specify an 'id' value, but in this case the id is retained and kept on the object
 
 
 ```{r}
 
 df <- data.frame(
-  id = c( rep(1, 5), rep(2, 5) )
-  , x = 1:10
-  , y = 1:10
+  id = c(1,1,2,2,3)
+  , x = c(1,1,4,4,1)
+  , y = c(1,4,4,1,1)
 )
 
-cppFunction(
-  includes = '
-    #include "sfheaders/sfc/sfc.hpp"
-  ',
-  code = '
-    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
-      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
-    }
-  ',
-  depends = "sfheaders",
-  plugins = "cpp11"
-)
+sf_point( df )
 
-a_polygon( df, c("x","y") )
+sf_multipoint( df, multipoint_id = "id" )
+
+sf_linestring( df, linestring_id = "id" )
+
+## leaving the 'id' field blank
+sf_polygon( df )
+
 ```
 
-
-
-```{r}
-
-cppFunction(
-  includes = '
-    #include "sfheaders/sfc/sfc.hpp"
-  ',
-  code = '
-    SEXP a_polygon( SEXP df, SEXP geometry_columns, SEXP polygon_id, SEXP linestring_id ) {
-      return sfheaders::sfc::sfc_polygon( df, geometry_columns, polygon_id, linestring_id );
-    }
-  ',
-  depends = "sfheaders",
-  plugins = "cpp11"
-)
-
-a_polygon( df, c("x","y"), "id", NULL )
-```
 
 ```r
 n <- 1e5

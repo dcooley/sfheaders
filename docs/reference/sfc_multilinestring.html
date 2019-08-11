@@ -92,7 +92,7 @@
       <a href="../articles/Rcpp.html">Rcpp</a>
     </li>
     <li>
-      <a href="../articles/examples.html">examples</a>
+      <a href="../articles/examples.html">Examples</a>
     </li>
   </ul>
 </li>
@@ -179,8 +179,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -190,9 +190,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -222,8 +222,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -233,9 +233,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -253,25 +253,25 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      V2 V3
-#&gt; [1,]  0  0
-#&gt; [2,]  0  1
-#&gt; [3,]  1  1
+#&gt;      [,1] [,2]
+#&gt; [1,]    0    0
+#&gt; [2,]    0    1
+#&gt; [3,]    1    1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      V2 V3
-#&gt; [1,]  2  2
-#&gt; [2,]  2  3
+#&gt;      [,1] [,2]
+#&gt; [1,]    2    2
+#&gt; [2,]    2    3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -281,9 +281,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -314,8 +314,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -325,9 +325,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -346,25 +346,25 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      V2 V3
-#&gt; [1,]  0  0
-#&gt; [2,]  0  1
-#&gt; [3,]  1  1
+#&gt;      [,1] [,2]
+#&gt; [1,]    0    0
+#&gt; [2,]    0    1
+#&gt; [3,]    1    1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      V2 V3
-#&gt; [1,]  2  2
-#&gt; [2,]  2  3
+#&gt;      [,1] [,2]
+#&gt; [1,]    2    2
+#&gt; [2,]    2    3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -374,9 +374,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -405,8 +405,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -416,9 +416,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -446,8 +446,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -457,9 +457,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -477,25 +477,25 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_multilinestring</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>multilinestring_id</span> <span class='kw'>=</span> <span class='fl'>1</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      V2 V3
-#&gt; [1,]  0  0
-#&gt; [2,]  0  1
-#&gt; [3,]  1  1
+#&gt;      [,1] [,2]
+#&gt; [1,]    0    0
+#&gt; [2,]    0    1
+#&gt; [3,]    1    1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;      V2 V3
-#&gt; [1,]  2  2
-#&gt; [2,]  2  3
+#&gt;      [,1] [,2]
+#&gt; [1,]    2    2
+#&gt; [2,]    2    3
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -505,9 +505,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -553,8 +553,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -564,9 +564,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -602,8 +602,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -613,9 +613,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -651,8 +651,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -662,9 +662,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -701,8 +701,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"              "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -712,9 +712,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -750,8 +750,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"             "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -761,9 +761,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -799,8 +799,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -810,9 +810,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -865,8 +865,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -876,9 +876,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 
@@ -930,8 +930,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"            "MULTILINESTRING" "sfg"            
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -941,9 +941,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTILINESTRING" "sfc"                
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt;      xmin      ymin      xmax      ymax 

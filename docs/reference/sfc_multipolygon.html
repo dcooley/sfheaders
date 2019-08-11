@@ -92,7 +92,7 @@
       <a href="../articles/Rcpp.html">Rcpp</a>
     </li>
     <li>
-      <a href="../articles/examples.html">examples</a>
+      <a href="../articles/examples.html">Examples</a>
     </li>
   </ul>
 </li>
@@ -155,8 +155,12 @@
       <td><p>column of ids for multipolygons</p></td>
     </tr>
     <tr>
+      <th>polygon_id</th>
+      <td><p>column of ids for polygons</p></td>
+    </tr>
+    <tr>
       <th>linestring_id</th>
-      <td><p>column of ids for linestrings</p></td>
+      <td><p>column of ids for lines (within polygons)</p></td>
     </tr>
     </table>
     
@@ -185,8 +189,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"          "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -196,9 +200,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -235,8 +239,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -246,9 +250,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -299,8 +303,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -310,9 +314,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -360,8 +364,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -371,9 +375,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -435,8 +439,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -446,9 +450,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -500,8 +504,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -511,9 +515,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -553,8 +557,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -564,9 +568,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -606,8 +610,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -617,9 +621,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -659,8 +663,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -670,9 +674,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -710,8 +714,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -721,9 +725,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -758,8 +762,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -769,9 +773,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
@@ -819,8 +823,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "XY"           "MULTIPOLYGON" "sfg"         
 #&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
 #&gt; attr(,"crs")
 #&gt; $epsg
 #&gt; [1] NA
@@ -830,9 +834,9 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_MULTIPOLYGON" "sfc"             
 #&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"n_empty")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 

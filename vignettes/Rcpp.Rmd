@@ -22,11 +22,11 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "# ",
-  eval = T
+  eval = F
 )
 ```
 
-```{r packages, include = TRUE}
+```{r packages, include = TRUE, eval = T}
 library(Rcpp)
 library(sfheaders)
 library(sf)
@@ -36,7 +36,7 @@ library(sf)
 
 ### POINT
 
-```{r}
+```{r, eval = T}
 
 cppFunction(
   includes = '
@@ -61,7 +61,7 @@ a_point( data.frame(x =1, y = 2) )
 
 ### MULTIPOINT
 
-```{r}
+```{r, eval = T}
 
 cppFunction(
   includes = '
@@ -87,7 +87,7 @@ a_multipoint( x )
 
 ### LINESTRING
 
-```{r}
+```{r, eval = T}
 
 cppFunction(
   includes = '
@@ -119,7 +119,7 @@ a_linestring( x )
 ### MULTILINESTRING
 
 
-```{r}
+```{r, eval = T}
 
 cppFunction(
   includes = '
@@ -147,7 +147,7 @@ a_multilinestring( x )
 ```
 
 
-```{r}
+```{r, eval = T}
 
 cppFunction(
   includes = '
@@ -178,6 +178,177 @@ a_multilinestring( x, NULL, "id" )
 
 
 
+#### from C++
 
+There are various overloaded functions for each `sfg`, `sfc` and `sf` types
+
+
+```{r, eval = F}
+
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( Rcpp::DataFrame df ) {
+      return sfheaders::sfg::sfg_polygon( df );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df )
+```
+
+```{r}
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( Rcpp::DataFrame df, Rcpp::StringVector geometry_columns ) {
+      return sfheaders::sfg::sfg_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, c("x","y") )
+
+a_polygon( df, c("y", "x") )
+
+```
+
+```{r}
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP x, SEXP geometry_columns ) {
+      return sfheaders::sfg::sfg_polygon( x, geometry_columns );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, c("x","y") )
+
+a_polygon( df, c("y", "x") )
+
+```
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, std::string geom_type ) {
+      return sfheaders::sfg::to_sfg( df, geom_type );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+a_polygon( df, "POLYGON" )
+
+```
+
+
+### sfc
+
+```{r}
+sfc_point( df )
+
+sfc_multipoint( df )
+
+sfc_polygon( df )
+```
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df ) {
+      return sfheaders::sfc::sfc_polygon( df );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df )
+```
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y") )
+```
+
+
+```{r}
+
+df <- data.frame(
+  id = c( rep(1, 5), rep(2, 5) )
+  , x = 1:10
+  , y = 1:10
+)
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y") )
+```
+
+
+
+```{r}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/sfc.hpp"
+  ',
+  code = '
+    SEXP a_polygon( SEXP df, SEXP geometry_columns, SEXP polygon_id, SEXP linestring_id ) {
+      return sfheaders::sfc::sfc_polygon( df, geometry_columns, polygon_id, linestring_id );
+    }
+  ',
+  depends = "sfheaders",
+  plugins = "cpp11"
+)
+
+a_polygon( df, c("x","y"), "id", NULL )
+```
 
 
