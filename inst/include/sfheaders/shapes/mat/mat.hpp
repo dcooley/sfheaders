@@ -7,6 +7,7 @@
 namespace sfheaders {
 namespace shapes {
 
+  // #nocov start
   inline SEXP get_mat(
     Rcpp::IntegerMatrix& im
   ) {
@@ -237,6 +238,8 @@ namespace shapes {
     }
     }
   }
+
+  // #nocov end
 
 }
 } // sfheaders

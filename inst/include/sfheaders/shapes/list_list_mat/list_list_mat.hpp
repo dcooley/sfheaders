@@ -16,6 +16,7 @@
 namespace sfheaders {
 namespace shapes {
 
+  // #nocov start
   inline SEXP get_listListMat(
     Rcpp::IntegerMatrix& im
   ) {
@@ -254,7 +255,7 @@ namespace shapes {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");
+      Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");  // #nocov
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
       return get_listListMat( im, geometry_cols, group_id_col_1, group_id_col_2 );
@@ -262,7 +263,7 @@ namespace shapes {
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
-      Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");
+      Rcpp::stop("sfheaders - polygons needs to be matrices or dataframes");  // #nocov
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return get_listListMat( nm, geometry_cols, group_id_col_1, group_id_col_2 );
@@ -474,6 +475,8 @@ inline SEXP get_listListMat(
   }
 
 }
+
+// #nocov end
 
 } // shapes
 } // sfheaders

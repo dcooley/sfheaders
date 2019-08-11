@@ -27,7 +27,7 @@ namespace bbox {
 
   inline void bbox_size_check( Rcpp::StringVector& sv ) {
     if( sv.length() < 2 ) {
-      Rcpp::stop("sfheaders - incorrect size of bounding box");
+      Rcpp::stop("sfheaders - incorrect size of bounding box");  // #nocov
     }
   }
 

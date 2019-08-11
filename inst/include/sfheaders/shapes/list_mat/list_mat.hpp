@@ -10,6 +10,8 @@
 namespace sfheaders {
 namespace shapes {
 
+  // #nocov start
+
   inline SEXP get_listMat(
     Rcpp::IntegerMatrix& im
   ) {
@@ -418,6 +420,8 @@ namespace shapes {
     }
     return Rcpp::List::create(); // never reaches
   }
+
+  // #nocov end
 
 }
 } // sfheaders

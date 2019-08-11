@@ -60,6 +60,13 @@ test_that("bounding box correctly calculated", {
   bbox <- bb( x, c("V1","V2") )
   expect_equal( bbox, c(1.2,2,3,4) )
 
+  x <- 1:2
+  bbox <- bb( x, c("x","y") )
+  expect_equal( bbox, c(1,2,1,2) )
+
+  x <- c(1.1, 2)
+  bbox <- bb( x, c("x","y") )
+  expect_equal( bbox, c(1.1,2,1.1,2) )
 
   x <- data.frame( x = 1:5, y = 2:6 )
   bbox <- bb( x )
@@ -153,6 +160,9 @@ test_that("m_range correctly calculated", {
 
   x <- matrix(c(1L:8L), ncol = 4)
   expect_equal( mr(x), c(7L,8L))
+
+  x <- matrix(c(1.1,2,3,4), ncol = 4)
+  expect_equal( mr(x), c(4,4))
 
   x <- as.data.frame( matrix(c(1L:8L), ncol = 4) )
   expect_equal( mr(x), c(7,8))

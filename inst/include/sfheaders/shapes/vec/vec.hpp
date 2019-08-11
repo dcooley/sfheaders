@@ -7,8 +7,7 @@
 namespace sfheaders {
 namespace shapes {
 
-  // POINTS are vectors
-
+  // #nocov start
   inline SEXP get_vec(
       Rcpp::IntegerVector& iv
   ) {
@@ -264,7 +263,7 @@ namespace shapes {
     }
     }
   }
-
+  // #nocov end
 }
 } // sfheaders
 
