@@ -25,7 +25,7 @@ namespace sfc {
     case SFC_POLYGON: { return "POLYGON"; }
     case SFC_MULTIPOLYGON: { return "MULTIPOLYGON"; }
     default: {
-      Rcpp::stop("sfheaders - unknown sfc type");
+      Rcpp::stop("sfheaders - unknown sfc type");     // #nocov
     }
     }
     return ""; // never reaches

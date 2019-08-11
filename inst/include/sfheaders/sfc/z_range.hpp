@@ -205,11 +205,12 @@ namespace zm {
     } // else default
     }
     default: {
-      Rcpp::stop("sfheaders - can't calculate bounding box for this type");
+      Rcpp::stop("sfheaders - can't calculate bounding box for this type");  // #nocov
     }
     }
   }
 
+  // #nocov start
   inline void calculate_z_range(
     Rcpp::NumericVector& z_range,
     Rcpp::IntegerMatrix& im,
@@ -261,6 +262,7 @@ namespace zm {
       z_range[1] = std::max( zmax, z_range[1] );
     }
   }
+  // #nocov end
 
   inline void calculate_z_range(
       Rcpp::NumericVector& z_range,
