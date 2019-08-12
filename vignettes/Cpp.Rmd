@@ -1,0 +1,145 @@
+---
+title: "C++"
+author: "David Cooley"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+        number_sections: false
+        theme: flatly
+header-includes: 
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+vignette: >
+  %\VignetteIndexEntry{Rcpp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "# ",
+  eval = F
+)
+```
+
+```{r packages, include = TRUE, eval = T}
+library(Rcpp)
+library(sfheaders)
+library(sf)
+```
+
+There are two ways you can use the C++ code
+
+1. creating a `Rcpp::cppFunction()` 
+2. Linking to `sfheaders` in a package
+
+The first option works, but is a bit pointless because if you're in R anyway you would probably just call the R functions. 
+
+The second option is the whole reason I build this library!
+
+Having said that, here are some example `cppFunction()` calls you can use to make various sf objects
+
+#### sfg_POINT
+
+```{r, eval = T}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfg/sfg.hpp"
+  ',
+  code = '
+    SEXP a_point( SEXP x ) {
+      return sfheaders::sfg::sfg_point( x );
+    }
+  ',
+  depends = "sfheaders"
+)
+
+## vector
+a_point( c(1,2) )
+## single-row matrix
+a_point( matrix(c(1,2), ncol = 2) )
+## single-row data.frame
+a_point( data.frame(x =1, y = 2) )
+```
+
+
+#### sfc_MULTIPOINT
+
+```{r, eval = T}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sfc/multipoint/sfc_multipoint.hpp"
+  ',
+  code = '
+    SEXP a_multipoint( SEXP x ) {
+      return sfheaders::sfc::sfc_multipoint( x );
+    }
+  ',
+  plugins = "cpp11", 
+  depends = "sfheaders"
+)
+
+x <- 1:2
+a_multipoint( x )
+
+x <- matrix(c(1,2,3,4,5,6), ncol = 2)
+a_multipoint( x )
+
+x <- data.frame(x = 1:3, y = 4:6)
+a_multipoint( x )
+```
+
+#### sf_LINESTRING
+
+```{r, eval = T}
+
+cppFunction(
+  includes = '
+    #include "sfheaders/sf/linestring/sf_linestring.hpp"
+  ',
+  code = '
+    SEXP a_linestring( SEXP x, SEXP geometry_columns, SEXP id_column ) {
+      return sfheaders::sf::sf_linestring( x, geometry_columns, id_column );
+    }
+  ',
+  plugins = "cpp11",
+  depends = "sfheaders"
+)
+
+x <- 1:2
+a_linestring( x, NULL, NULL )
+
+x <- matrix(c(1,2,3,4,5,6), ncol = 2)
+a_linestring( x, NULL, NULL )
+
+x <- data.frame(x = 1:6, y = 4:9, id = c(rep(1,3), rep(2,3)))
+a_linestring( x, NULL, "id" )
+
+x <- data.frame(x = 1:6, y = 4:9, z = 8:10, id = c(rep(1,3), rep(2,3)))
+a_linestring( x, c("x","y"), "id" )
+
+a_linestring( x, c("x","y", "z"), "id" )
+
+```
+
+### Linking to a package
+
+
+1. Set the `LinkingTo` 
+
+For example, here's the [Description](https://github.com/dcooley/gpx/blob/master/DESCRIPTION) file of the `gpx` package I'm working on.
+
+
+![LinkingTo](./images/gpx_description.png)
+
+Then you can include the `sfheaders` header files (now you understand the name!) an a .cpp file and away you go
+
+TODO - example
+
+
