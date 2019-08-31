@@ -82,6 +82,8 @@ namespace utils {
     }
 
     SEXP ids = df[ id_col ];
+    //Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( ids );
+
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( ids );
     return unique_ids;
   }
@@ -90,14 +92,13 @@ namespace utils {
       SEXP& x,
       SEXP& id_col
   ) {
+
     if( Rf_isNull( id_col ) ) {
 
       Rcpp::IntegerVector ids(1);
       ids[0] = 1;
       return ids;
     }
-
-    // Rcpp::Rcout << "type of id_col: " << TYPEOF( id_col ) << std::endl;
 
     switch( TYPEOF( id_col ) ) {
     case REALSXP: {}
