@@ -11,6 +11,18 @@
 namespace sfheaders {
 namespace sfc {
 
+  // Requirs a list of sfg_POLYGONs, and the bbox / ranges
+  // does not do any calculations; just makes the SFC structure
+  inline SEXP sfc_polygon(
+      Rcpp::List& sfc,
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range
+  ) {
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
+    return sfc;
+  }
+
   // #nocov start
   // - no access here through R
   inline SEXP sfc_polygon(

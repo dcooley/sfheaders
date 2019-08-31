@@ -11,6 +11,18 @@
 namespace sfheaders {
 namespace sfc {
 
+  // Requirs a list of sfg_LINESTRINGs, and the bbox / ranges
+  // does not do any calculations; just makes the SFC structure
+  inline SEXP sfc_linestring(
+      Rcpp::List& sfc,
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range
+  ) {
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+    return sfc;
+  }
+
   inline SEXP sfc_linestring(
       Rcpp::IntegerMatrix& im
   ) {
@@ -95,18 +107,6 @@ namespace sfc {
     Rcpp::NumericMatrix nm(1, n_col);
     nm(0, Rcpp::_ ) = nv;
     return sfc_linestring( nm );
-  }
-
-  // Requirs a list of sfg_LINESTRINGs, and the bbox / ranges
-  // does not do any calculations; just makes the SFC structure
-  inline SEXP sfc_linestring(
-    Rcpp::List& sfc,
-    Rcpp::NumericVector& bbox,
-    Rcpp::NumericVector& z_range,
-    Rcpp::NumericVector& m_range
-  ) {
-    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
-    return sfc;
   }
 
   // inline SEXP sfc_linestring(

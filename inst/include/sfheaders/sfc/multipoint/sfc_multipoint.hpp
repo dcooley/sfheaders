@@ -11,6 +11,18 @@
 namespace sfheaders {
 namespace sfc {
 
+  // Requirs a list of sfg_MULTIPOINTs, and the bbox / ranges
+  // does not do any calculations; just makes the SFC structure
+  inline SEXP sfc_multipoint(
+      Rcpp::List& sfc,
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range
+  ) {
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTIPOINT, bbox, z_range, m_range );
+    return sfc;
+  }
+
 inline SEXP sfc_multipoint(
     Rcpp::IntegerMatrix& im
 ) {
