@@ -209,15 +209,12 @@ test_that("unordered ids cause issues",{
   m4 <- res$geometry[[2]][[2]]
   m5 <- res$geometry[[2]][[3]]
 
-
   ## these tests will pass, but the coordinates will be wronge, becase the ID order is wrong
   expect_equal( m1, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 2, 3:6 ] ) ) )
   expect_equal( m2, unname( as.matrix( df[ df$id1 == 1 & df$id2 == 3, 3:6 ] ) ) )
   expect_equal( m3, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 3, 3:6 ] ) ) )
   expect_equal( m4, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 1, 3:6 ] ) ) )
   expect_equal( m5, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2, 3:6 ] ) ) )
-
-
 
 
   df <- data.frame(
