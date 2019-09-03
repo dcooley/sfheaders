@@ -6,6 +6,13 @@
 namespace sfheaders {
 namespace utils {
 
+  inline Rcpp::LogicalVector subset_vector(
+      Rcpp::LogicalVector& lv,
+      Rcpp::Range& rng
+  ) {
+    return lv[ rng ];
+  }
+
   inline Rcpp::IntegerVector subset_vector(
       Rcpp::IntegerVector& iv,
       Rcpp::Range& rng
@@ -37,6 +44,10 @@ namespace utils {
     // Rcpp::Rcout << "type of vector: " << TYPEOF( x ) << std::endl;
 
     switch( TYPEOF( x ) ) {
+    case LGLSXP: {
+      Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( x );
+      return subset_vector( lv, rng );
+    }
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
       return subset_vector( iv, rng );
