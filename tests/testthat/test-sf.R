@@ -166,7 +166,8 @@ test_that("unordered ids cause issues",{
   )
 
   res <- sfheaders::sf_linestring(df, linestring_id = "id1")
-  expect_true( !any( res$id == unique( df$id1 ) ) )
+  #expect_true( !any( res$id == unique( df$id1 ) ) )
+  expect_true( all( res$id == unique( df$id1 ) ) )
 
   ## sub-group order works
   df <- data.frame(

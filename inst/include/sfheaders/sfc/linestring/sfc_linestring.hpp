@@ -11,6 +11,18 @@
 namespace sfheaders {
 namespace sfc {
 
+  // Requirs a list of sfg_LINESTRINGs, and the bbox / ranges
+  // does not do any calculations; just makes the SFC structure
+  inline SEXP sfc_linestring(
+      Rcpp::List& sfc,
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range
+  ) {
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+    return sfc;
+  }
+
   inline SEXP sfc_linestring(
       Rcpp::IntegerMatrix& im
   ) {
@@ -95,18 +107,6 @@ namespace sfc {
     Rcpp::NumericMatrix nm(1, n_col);
     nm(0, Rcpp::_ ) = nv;
     return sfc_linestring( nm );
-  }
-
-  // Requirs a list of sfg_LINESTRINGs, and the bbox / ranges
-  // does not do any calculations; just makes the SFC structure
-  inline SEXP sfc_linestring(
-    Rcpp::List& sfc,
-    Rcpp::NumericVector& bbox,
-    Rcpp::NumericVector& z_range,
-    Rcpp::NumericVector& m_range
-  ) {
-    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
-    return sfc;
   }
 
   // inline SEXP sfc_linestring(
@@ -494,7 +494,10 @@ namespace sfc {
     R_xlen_t n_col = nm.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
+    //Rcpp::Rcout << "line_ids: " << line_ids << std::endl;
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
+    //Rcpp::Rcout << "unique_ids: " << unique_ids << std::endl;
+
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
     R_xlen_t n_lines = unique_ids.length();
@@ -536,12 +539,23 @@ namespace sfc {
     R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
+    // Rcpp::Rcout << "getting line positions: " << std::endl;
+    // Rcpp::Rcout << "line_ids: " << line_ids << std::endl;
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
+    // Rcpp::Rcout << "unique_ids: " << unique_ids << std::endl;
+
+    // Rcpp::NumericVector iv1 = Rcpp::as< Rcpp::NumericVector >( line_ids );
+    // Rcpp::NumericVector iv2 = Rcpp::as< Rcpp::NumericVector >( unique_ids );
+
+    //Rcpp::Rcout << "line_ids: " << iv1 << std::endl;
+    //Rcpp::Rcout << "unique_ids: " << iv2 << std::endl;
+
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
     R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
     Rcpp::List sfc( n_lines );
+    // Rcpp::Rcout << "n_lines: " << n_lines << std::endl;
 
     int start;
     int end;
@@ -560,7 +574,10 @@ namespace sfc {
       }
     }
 
+    // Rcpp::Rcout << "make_sfc: " << std::endl;
+
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+    // Rcpp::Rcout << "return sfc: " << std::endl;
     return sfc;
   }
 
