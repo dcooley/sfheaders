@@ -111,14 +111,16 @@ namespace sfg {
       if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
     }
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfg_linestring( im, cols );
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
     }
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfg_linestring( nm, cols );
     }
     case VECSXP: {
@@ -144,14 +146,16 @@ namespace sfg {
       if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
     }
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfg_linestring( im, cols );
     }
     case REALSXP: {
       if( !Rf_isMatrix( x ) ) {
       Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
     }
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfg_linestring( nm, cols );
     }
     case VECSXP: {
@@ -179,7 +183,8 @@ namespace sfg {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
       return sfg_linestring( iv );
     }
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfg_linestring( im );
     }
     case REALSXP: {
@@ -187,7 +192,8 @@ namespace sfg {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
       return sfg_linestring( nv );
     }
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfg_linestring( nm );
     }
     case VECSXP: {

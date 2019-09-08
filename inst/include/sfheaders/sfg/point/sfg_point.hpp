@@ -98,29 +98,31 @@ namespace sfg {
     SEXP& x
   ) {
 
+    SEXP xc = Rcpp::clone( x );
+
     // switch on type of x
-    switch ( TYPEOF( x ) ) {
+    switch ( TYPEOF( xc ) ) {
     case INTSXP: {
-      if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      if( Rf_isMatrix( xc ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfg_point( im );
     } else {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( xc );
       return sfg_point( iv );
     }
     }
     case REALSXP: {
-      if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      if( Rf_isMatrix( xc ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfg_point( nm );
     } else {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( xc );
       return sfg_point( nv );
     }
     }
     case VECSXP: { // data.frame && list?
-    if( Rf_inherits( x, "data.frame") ) {
-      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+    if( Rf_inherits( xc, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( xc );
       return sfg_point( df );
     } // else default
     }
@@ -137,19 +139,21 @@ namespace sfg {
       Rcpp::IntegerVector& cols
   ) {
 
-    switch( TYPEOF( x ) ) {
+    SEXP xc = Rcpp::clone( x );
+
+    switch( TYPEOF( xc ) ) {
     case INTSXP: {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfg_point( im, cols );
     }
     case REALSXP: {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfg_point( nm, cols );
     }
     case VECSXP: {
       // TODO - data.frame using numbers to index columns
       if ( Rf_inherits( x, "data.frame" ) ) {
-        Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+        Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( xc );
         return sfg_point( df, cols );
       } //else - default
     }
@@ -179,6 +183,7 @@ namespace sfg {
     SEXP& x,
     SEXP& cols
   ) {
+
     if( Rf_isNull( cols ) ) {
       return sfg_point( x );
     }

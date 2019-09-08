@@ -183,7 +183,8 @@ inline SEXP sfc_multipoint(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
     return sfc_multipoint( im );
   } else {
     Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -192,7 +193,8 @@ inline SEXP sfc_multipoint(
   }
   case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
     return sfc_multipoint( nm );
   } else {
     Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -344,7 +346,8 @@ inline SEXP sfc_multipoint(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
     return sfc_multipoint( im, geometry_cols );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -353,7 +356,8 @@ inline SEXP sfc_multipoint(
   }
   case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
     return sfc_multipoint( nm, geometry_cols );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -380,7 +384,8 @@ inline SEXP sfc_multipoint(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
     return sfc_multipoint( im, geometry_cols );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -389,7 +394,8 @@ inline SEXP sfc_multipoint(
   }
   case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
     return sfc_multipoint( nm, geometry_cols );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -674,7 +680,8 @@ inline SEXP sfc_multipoint(
   switch( TYPEOF( x ) ) {
   case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
     return sfc_multipoint( im, geometry_cols, multipoint_id );
     // } else {
     // Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -683,7 +690,8 @@ inline SEXP sfc_multipoint(
   }
   case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
     return sfc_multipoint( nm, geometry_cols, multipoint_id );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -714,7 +722,8 @@ inline SEXP sfc_multipoint(
   case INTSXP: {
     // #nocov start
     if( Rf_isMatrix( x ) ) {
-    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
     return sfc_multipoint( im, geometry_cols, multipoint_id );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -723,7 +732,8 @@ inline SEXP sfc_multipoint(
   }
   case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+    SEXP xc = Rcpp::clone( x );
+    Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
     return sfc_multipoint( nm, geometry_cols, multipoint_id );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );

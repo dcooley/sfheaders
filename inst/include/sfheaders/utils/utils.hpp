@@ -49,9 +49,9 @@ namespace utils {
   inline bool is_null_geometry( Rcpp::IntegerVector& iv, std::string geom_type ) {
     int n = iv.length();
     if( geom_type == "POINT" ) {
-      Rcpp::Rcout << "is na? " << std::endl;
+      // Rcpp::Rcout << "is na? " << std::endl;
       if ( iv[0] == NA_INTEGER || iv[1] == NA_INTEGER ) {
-        Rcpp::Rcout << "yes " << std::endl;
+        // Rcpp::Rcout << "yes " << std::endl;
         return true;
       }
     } else if ( n == 0 ) {

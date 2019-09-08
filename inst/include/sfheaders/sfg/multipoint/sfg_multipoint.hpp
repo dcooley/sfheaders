@@ -47,7 +47,6 @@ namespace sfg {
   inline SEXP sfg_multipoint(
       Rcpp::NumericMatrix& nm
   ) {
-
     sfheaders::sfg::make_sfg( nm, sfheaders::sfg::SFG_MULTIPOINT );
     return nm;
   }
@@ -110,7 +109,8 @@ inline SEXP sfg_multipoint(
       if( !Rf_isMatrix( x ) ) {
         Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
       } else {
-        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        SEXP xc = Rcpp::clone( x );
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
         return sfg_multipoint( im, cols );
       }
     }
@@ -118,7 +118,8 @@ inline SEXP sfg_multipoint(
       if( !Rf_isMatrix( x ) ) {
         Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
       } else {
-        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        SEXP xc = Rcpp::clone( x );
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
         return sfg_multipoint( nm, cols );
       }
     }
@@ -143,7 +144,8 @@ inline SEXP sfg_multipoint(
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
-        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        SEXP xc = Rcpp::clone( x );
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
         return sfg_multipoint( im, cols );
       } else {
         // #nocov start
@@ -155,7 +157,8 @@ inline SEXP sfg_multipoint(
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
-        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        SEXP xc = Rcpp::clone( x );
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
         return sfg_multipoint( nm, cols );
       } else {
         // #nocov start
@@ -190,7 +193,8 @@ inline SEXP sfg_multipoint(
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
-        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        SEXP xc = Rcpp::clone( x );
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
         return sfg_multipoint( im );
       } else {
         Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -199,7 +203,8 @@ inline SEXP sfg_multipoint(
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
-        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        SEXP xc = Rcpp::clone( x );
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
         return sfg_multipoint( nm );
       } else {
         Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );

@@ -27,7 +27,7 @@ namespace sfc {
     Rcpp::IntegerMatrix& im
   ) {
 
-    Rcpp::Rcout << "int mat" << std::endl;
+    // Rcpp::Rcout << "int mat" << std::endl;
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -46,10 +46,10 @@ namespace sfc {
 
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
-      Rcpp::Rcout << "this_point: " << this_point << std::endl;
+      // Rcpp::Rcout << "this_point: " << this_point << std::endl;
 
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
-        Rcpp::Rcout << "null geometry" << std::endl;
+        // Rcpp::Rcout << "null geometry" << std::endl;
         n_empty++;
       }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
@@ -259,29 +259,31 @@ namespace sfc {
       SEXP& x
   ) {
 
+    SEXP xc = Rcpp::clone( x );
+
     // switch on type of x
-    switch ( TYPEOF( x ) ) {
+    switch ( TYPEOF( xc ) ) {
     case INTSXP: {
-      if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      if( Rf_isMatrix( xc ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_point( im );
     } else {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( xc );
       return sfc_point( iv );
     }
     }
     case REALSXP: {
-      if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      if( Rf_isMatrix( xc ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_point( nm );
     } else {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( xc );
       return sfc_point( nv );
     }
     }
     case VECSXP: { // data.frame && list?
-      if( Rf_inherits( x, "data.frame") ) {
-      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      if( Rf_inherits( xc, "data.frame") ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( xc );
       return sfc_point( df );
     } // else default
     }
@@ -298,18 +300,20 @@ namespace sfc {
       Rcpp::IntegerVector& cols
   ) {
 
-    switch( TYPEOF( x ) ) {
+    SEXP xc = Rcpp::clone( x );
+
+    switch( TYPEOF( xc ) ) {
     case INTSXP: {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_point( im, cols );
     }
     case REALSXP: {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_point( nm, cols );
     }
     case VECSXP: {
-      if ( Rf_inherits( x, "data.frame" ) ) {
-      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      if ( Rf_inherits( xc, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( xc );
       return sfc_point( df, cols );
     } //else - default
     }
@@ -325,10 +329,12 @@ namespace sfc {
       Rcpp::StringVector& cols
   ) {
 
-    switch( TYPEOF( x ) ) {
+    SEXP xc = Rcpp::clone( x );
+
+    switch( TYPEOF( xc ) ) {
     case INTSXP: {
-    if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+    if( Rf_isMatrix( xc ) ) {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_point( im, cols );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -336,8 +342,8 @@ namespace sfc {
     }
     }
     case REALSXP: {
-    if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+    if( Rf_isMatrix( xc ) ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_point( nm, cols );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -345,8 +351,8 @@ namespace sfc {
     }
     }
     case VECSXP: {
-    if( Rf_inherits( x, "data.frame" ) ) {
-      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+    if( Rf_inherits( xc, "data.frame" ) ) {
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( xc );
       return sfc_point( df, cols );
     }
     }

@@ -183,7 +183,8 @@ namespace sfc {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_linestring( im );
     } else {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -192,7 +193,8 @@ namespace sfc {
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_linestring( nm );
     } else {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -346,7 +348,8 @@ namespace sfc {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_linestring( im, geometry_cols );
       // } else {
       //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -355,7 +358,8 @@ namespace sfc {
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_linestring( nm, geometry_cols );
       // } else {
       //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -382,7 +386,8 @@ namespace sfc {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_linestring( im, geometry_cols );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -391,7 +396,8 @@ namespace sfc {
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_linestring( nm, geometry_cols );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -695,7 +701,8 @@ namespace sfc {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
       return sfc_linestring( im, geometry_cols, linestring_id );
     // } else {
     // Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -704,7 +711,8 @@ namespace sfc {
     }
     case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_linestring( nm, geometry_cols, linestring_id );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
@@ -734,7 +742,8 @@ namespace sfc {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {  // #nocov
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );  // #nocov
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );  // #nocov
       return sfc_linestring( im, geometry_cols, linestring_id );      // #nocov
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
@@ -743,7 +752,8 @@ namespace sfc {
     }
     case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      SEXP xc = Rcpp::clone( x );
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfc_linestring( nm, geometry_cols, linestring_id );
     // } else {
     //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
