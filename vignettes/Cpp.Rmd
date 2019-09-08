@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r packages, include = TRUE, eval = T}
+```{r packages, include = FALSE, eval = T}
 library(Rcpp)
 library(sfheaders)
 library(sf)
@@ -55,8 +55,9 @@ cppFunction(
     SEXP a_point( SEXP x ) {
       return sfheaders::sfg::sfg_point( x );
     }
-  ',
-  depends = "sfheaders"
+  '
+  , plugins = "cpp11"
+  , depends = "sfheaders"
 )
 
 ## vector
@@ -80,9 +81,9 @@ cppFunction(
     SEXP a_multipoint( SEXP x ) {
       return sfheaders::sfc::sfc_multipoint( x );
     }
-  ',
-  plugins = "cpp11", 
-  depends = "sfheaders"
+  '
+  , plugins = "cpp11"
+  , depends = "sfheaders"
 )
 
 x <- 1:2
@@ -130,6 +131,7 @@ a_linestring( x, c("x","y", "z"), "id" )
 
 ### Linking to a package
 
+The reason all the C++ code is in header files in `inst/include` is so you can call this code from another library. To do so
 
 1. Set the `LinkingTo` 
 
@@ -138,8 +140,14 @@ For example, here's the [Description](https://github.com/dcooley/gpx/blob/master
 
 ![LinkingTo](./images/gpx_description.png)
 
-Then you can include the `sfheaders` header files (now you understand the name!) an a .cpp file and away you go
+2. Include the `sfheaders` header files you need in a .cpp file
 
-TODO - example
+![include](./images/gpx_include.png)
 
+3. call the functions
+
+![functions](./images/gpx_functions.png)
+
+
+These screenshots are taken from my [gpx](https://github.com/dcooley/gpx/blob/master/inst/include/gpx/track/track.hpp) library. Feel free to have a look and see how I use them. 
 
