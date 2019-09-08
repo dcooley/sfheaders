@@ -120,6 +120,7 @@ namespace sfc {
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+    int n_empty = 0;
 
     R_xlen_t n_row = im.nrow();
     R_xlen_t n_col = im.ncol();
@@ -131,10 +132,14 @@ namespace sfc {
     Rcpp::List sfc(n_row);
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
+      if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
+        //Rcpp::Rcout << "null geometry" << std::endl;
+        n_empty++;
+      }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
     }
 
-    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
     return sfc;
   }
 
@@ -175,6 +180,7 @@ namespace sfc {
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+    int n_empty = 0;
 
     R_xlen_t n_row = nm.nrow();
     R_xlen_t n_col = nm.ncol();
@@ -186,10 +192,14 @@ namespace sfc {
     Rcpp::List sfc( n_row );
     for( i = 0; i < n_row; i++ ) {
       Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
+      if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
+        //Rcpp::Rcout << "null geometry" << std::endl;
+        n_empty++;
+      }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
     }
 
-    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
     return sfc;
   }
 
