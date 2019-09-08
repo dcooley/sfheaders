@@ -6,6 +6,9 @@
 namespace sfheaders {
 namespace sf {
 
+  // TODO
+  // - make_sf( Rcpp::List& sfc, Rcpp::List& data_cols ) {}
+
   inline SEXP make_sf( Rcpp::List& sfc ) {
 
     Rcpp::List df = Rcpp::List::create(

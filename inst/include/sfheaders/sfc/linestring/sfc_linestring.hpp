@@ -26,7 +26,7 @@ namespace sfc {
   inline SEXP sfc_linestring(
       Rcpp::IntegerMatrix& im
   ) {
-    //
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();

@@ -23,6 +23,13 @@
 // #define SF_TIN                16
 // #define SF_Triangle           17
 
+//#define SFC_POINT          1;
+// #define SFC_MULTIPOINT      = 2;
+// #define SFC_LINESTRING      = 3;
+// #define SFC_MULTILINESTRING = 4;
+// #define SFC_POLYGON         = 5;
+// #define SFC_MULTIPOLYGON    = 6;
+
 namespace sfheaders {
 
   // #nocov start

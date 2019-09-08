@@ -9,13 +9,6 @@
 namespace sfheaders {
 namespace sfc {
 
-  const int SFC_POINT           = 1;
-  const int SFC_MULTIPOINT      = 2;
-  const int SFC_LINESTRING      = 3;
-  const int SFC_MULTILINESTRING = 4;
-  const int SFC_POLYGON         = 5;
-  const int SFC_MULTIPOLYGON    = 6;
-
   inline std::string get_sfc_type( int sfc_type ) {
     switch( sfc_type ) {
     case SFC_POINT: { return "POINT"; }
@@ -36,7 +29,8 @@ namespace sfc {
     int sfc_type,
     Rcpp::NumericVector& bbox,
     Rcpp::NumericVector& z_range,
-    Rcpp::NumericVector& m_range
+    Rcpp::NumericVector& m_range,
+    int n_empty = 0
   ) {
 
     std::string geom = get_sfc_type( sfc_type );
@@ -44,7 +38,7 @@ namespace sfc {
 
     Rcpp::String epsg = NA_STRING;
     Rcpp::String proj4string = NA_STRING;
-    int n_empty = 0;
+    //int n_empty = 0;
     double precision = 0.0;
 
     return sfheaders::sfc::create_sfc(

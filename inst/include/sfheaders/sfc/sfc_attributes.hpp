@@ -7,6 +7,12 @@
 namespace sfheaders {
 namespace sfc {
 
+  const int SFC_POINT           = 1;
+  const int SFC_MULTIPOINT      = 2;
+  const int SFC_LINESTRING      = 3;
+  const int SFC_MULTILINESTRING = 4;
+  const int SFC_POLYGON         = 5;
+  const int SFC_MULTIPOLYGON    = 6;
 
   // #nocov start
   inline Rcpp::StringVector start_sfc_classes( R_xlen_t collectionCount ) {
@@ -73,8 +79,8 @@ namespace sfc {
       Rcpp::NumericVector& m_range,
       Rcpp::String epsg,
       Rcpp::String proj4string,
-      int& n_empty,
-      double& precision
+      int n_empty = 0,
+      double precision = 0.0
   ) {
 
     // to enter this function, will the geometry type already be sorted?
@@ -121,8 +127,8 @@ namespace sfc {
       Rcpp::NumericVector& m_range,
       Rcpp::String& epsg,
       Rcpp::String& proj4string,
-      int& n_empty,
-      double& precision
+      int n_empty = 0,
+      double precision = 0.0
   ) {
     sfheaders::sfc::attach_sfc_attributes(
       sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision

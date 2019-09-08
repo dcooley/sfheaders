@@ -68,3 +68,40 @@
 # str( sfc )
 #
 #
+
+# df <- data.frame(
+#   x = NA_real_
+#   , y = NA_real_
+# )
+#
+# m <- as.matrix( df )
+#
+# sfheaders::sfc_point( df )
+# sfheaders::sfc_point( m )
+#
+# sfheaders::sfc_linestring( df )
+# sfheaders::sfc_linestring( m )
+#
+# sf::st_sfc( sf::st_linestring( x = m ) )
+#
+# df <- data.frame(
+#   x = NA_real_
+#   , y = 1
+# )
+#
+# m <- as.matrix( df )
+#
+# sfheaders::sfc_point( df )
+# sfheaders::sfc_point( m )
+#
+# sfheaders::sfc_linestring( df )
+# sfheaders::sfc_linestring( m )  ## updating by reference
+#
+# m <- as.matrix( df )
+#
+# sf::st_sfc( sf::st_point( x = m[1, ] ) )
+# sf::st_sfc( sf::st_linestring( x = m ) )
+
+
+
+

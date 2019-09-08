@@ -51,6 +51,19 @@ namespace bbox {
 
   inline void calculate_bbox(
       Rcpp::NumericVector& bbox,
+      double& lon,
+      double& lat
+  ) {
+        //xmin, ymin, xmax, ymax
+        bbox[0] = std::min( lon, bbox[0] );
+        bbox[2] = std::max( lon, bbox[2] );
+
+        bbox[1] = std::min( lat, bbox[1] );
+        bbox[3] = std::max( lat, bbox[3] );
+  }
+
+  inline void calculate_bbox(
+      Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& point
   ) {
 

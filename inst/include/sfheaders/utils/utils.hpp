@@ -46,7 +46,34 @@ namespace utils {
     }
   }
 
-  inline bool is_null_geometry( SEXP& sfg, std::string& geom_type ) {
+  inline bool is_null_geometry( Rcpp::IntegerVector& iv, std::string geom_type ) {
+    int n = iv.length();
+    if( geom_type == "POINT" ) {
+      Rcpp::Rcout << "is na? " << std::endl;
+      if ( iv[0] == NA_INTEGER || iv[1] == NA_INTEGER ) {
+        Rcpp::Rcout << "yes " << std::endl;
+        return true;
+      }
+    } else if ( n == 0 ) {
+      return true;
+    }
+    return false;
+  }
+
+  inline bool is_null_geometry( Rcpp::NumericVector& nv, std::string geom_type ) {
+    int n = nv.length();
+    if( geom_type == "POINT" ) {
+
+      if (ISNAN( nv[0] ) || ISNAN( nv[1] ) ) {
+        return true;
+      }
+    } else if ( n == 0 ) {
+      return true;
+    }
+    return false;
+  }
+
+  inline bool is_null_geometry( SEXP& sfg, std::string geom_type ) {
     int n = get_sexp_length( sfg );
     if( geom_type == "POINT" ) {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
