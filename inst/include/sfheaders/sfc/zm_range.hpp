@@ -14,6 +14,35 @@ namespace zm {
       R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
+      Rcpp::IntegerVector& iv
+  ) {
+    if( n_col > 2 ) {
+      sfheaders::zm::calculate_z_range( z_range, iv );
+      if( n_col > 3 ) {
+        sfheaders::zm::calculate_m_range( m_range, iv );
+      }
+    }
+  }
+
+
+  inline void calculate_zm_ranges(
+    R_xlen_t& n_col,
+    Rcpp::NumericVector& z_range,
+    Rcpp::NumericVector& m_range,
+    Rcpp::NumericVector& nv
+  ) {
+    if( n_col > 2 ) {
+      sfheaders::zm::calculate_z_range( z_range, nv );
+      if( n_col > 3 ) {
+        sfheaders::zm::calculate_m_range( m_range, nv );
+      }
+    }
+  }
+
+  inline void calculate_zm_ranges(
+      R_xlen_t& n_col,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
       Rcpp::IntegerMatrix& im
   ) {
     if( n_col > 2 ) {
