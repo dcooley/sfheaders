@@ -2,6 +2,15 @@
 #define R_SFHEADERS_H
 
 #include <Rcpp.h>
+#include "sfheaders/shapes/shapes.hpp"
+#include "sfheaders/utils/utils.hpp"
+
+#include "sfheaders/sfg/sfg.hpp"
+
+#include "sfheaders/sfc/sfc.hpp"
+
+#include "sfheaders/sf/sf.hpp"
+
 
 // // from r-spatial/sf
 // #define SF_Unknown             0 /* sfc_GEOMETRY */
@@ -23,54 +32,11 @@
 // #define SF_TIN                16
 // #define SF_Triangle           17
 
-//#define SFC_POINT          1;
-// #define SFC_MULTIPOINT      = 2;
-// #define SFC_LINESTRING      = 3;
-// #define SFC_MULTILINESTRING = 4;
-// #define SFC_POLYGON         = 5;
-// #define SFC_MULTIPOLYGON    = 6;
-
-namespace sfheaders {
-
-  // #nocov start
-  template <int RTYPE>
-  inline Rcpp::CharacterVector sfClass( Rcpp::Vector<RTYPE> v ) {
-    return v.attr("class");
-  }
-
-  inline Rcpp::CharacterVector getSfClass( SEXP sf ) {
-
-    switch( TYPEOF(sf) ) {
-    case REALSXP:
-      return sfClass<REALSXP>( sf );
-    case VECSXP:
-      return sfClass<VECSXP>( sf );
-    case INTSXP:
-      return sfClass<INTSXP>( sf );
-    default: Rcpp::stop("unknown sf type");
-    }
-    return "";
-  }
-
-  template <int RTYPE>
-  inline Rcpp::CharacterVector rClass( Rcpp::Vector<RTYPE> v ) {
-    return v.attr("class");
-  }
-
-  inline Rcpp::CharacterVector getRClass( SEXP sf ) {
-
-    switch( TYPEOF(sf) ) {
-    case REALSXP:
-      return rClass<REALSXP>( sf );
-    case VECSXP:
-      return rClass<VECSXP>( sf );
-    case INTSXP:
-      return rClass<INTSXP>( sf );
-    }
-    return "";
-  }
-  // #nocov end
-
-} // sfheaders
+// #define SFC_POINT           1;
+// #define SFC_MULTIPOINT      2;
+// #define SFC_LINESTRING      3;
+// #define SFC_MULTILINESTRING 4;
+// #define SFC_POLYGON         5;
+// #define SFC_MULTIPOLYGON    6;
 
 #endif

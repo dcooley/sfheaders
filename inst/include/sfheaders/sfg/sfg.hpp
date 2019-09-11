@@ -15,6 +15,8 @@
 #include "sfheaders/sfg/polygon/sfg_polygons.hpp"
 #include "sfheaders/sfg/multipolygon/sfg_multipolygons.hpp"
 
+#include "sfheaders/sfg/sfg_types.hpp"
+
 // TODO
 // - to_sfg() function, which works out, given the object and parameters which to_* to use
 // - where parameters are point_id, linestring_id, etc
@@ -26,43 +28,43 @@ namespace sfg {
   // - defined parameter column-ids - use them
   // - params not defined, best-guess given number of columns / size of object.
 
-  // assumes the simpliest structures : POINT, LINESTRING, POLYGON
-  inline SEXP to_sfg( SEXP& x ) {
-    // guessing the type, given the object x
-
-    switch( TYPEOF( x ) ) {
-    case INTSXP: {
-    if( Rf_isMatrix( x ) ) {
-      // matrix can be MULTIPOINT or LINESTRING
-      //return sfheaders::sfg::to_linestring( x );
-      return sfheaders::sfg::sfg_linestring( x );
-    } else {
-      // vector is POINT
-      return sfheaders::sfg::sfg_point( x );
-    }
-    }
-    case REALSXP: {
-    if( Rf_isMatrix( x ) ) {
-      // matrix can be MULTIPOINT or LINESTRING
-      return sfheaders::sfg::sfg_linestring( x );
-    } else {
-      // vector is POINT
-      return sfheaders::sfg::sfg_point( x );
-    }
-    }
-    case VECSXP: {
-      // LIST is POLYIGON
-      // list of lists is MULTIPOLYGON
-      // or can be a GEOMETRYCOLLECTION
-      // data.frame could be single POINT, MULTIPOINT or LINESTRING
-    }
-    default: {
-      Rcpp::stop("sfheaders - could not guess the geometry type");
-    }
-    }
-
-    return Rcpp::List::create(); // never reaches?
-  }
+  // // assumes the simpliest structures : POINT, LINESTRING, POLYGON
+  // inline SEXP to_sfg( SEXP& x ) {
+  //   // guessing the type, given the object x
+  //
+  //   switch( TYPEOF( x ) ) {
+  //   case INTSXP: {
+  //   if( Rf_isMatrix( x ) ) {
+  //     // matrix can be MULTIPOINT or LINESTRING
+  //     //return sfheaders::sfg::to_linestring( x );
+  //     return sfheaders::sfg::sfg_linestring( x );
+  //   } else {
+  //     // vector is POINT
+  //     return sfheaders::sfg::sfg_point( x );
+  //   }
+  //   }
+  //   case REALSXP: {
+  //   if( Rf_isMatrix( x ) ) {
+  //     // matrix can be MULTIPOINT or LINESTRING
+  //     return sfheaders::sfg::sfg_linestring( x );
+  //   } else {
+  //     // vector is POINT
+  //     return sfheaders::sfg::sfg_point( x );
+  //   }
+  //   }
+  //   case VECSXP: {
+  //     // LIST is POLYIGON
+  //     // list of lists is MULTIPOLYGON
+  //     // or can be a GEOMETRYCOLLECTION
+  //     // data.frame could be single POINT, MULTIPOINT or LINESTRING
+  //   }
+  //   default: {
+  //     Rcpp::stop("sfheaders - could not guess the geometry type");
+  //   }
+  //   }
+  //
+  //   return Rcpp::List::create(); // never reaches?
+  // }
 
   inline SEXP to_sfg( SEXP& x, std::string geom_type ) {
     if( geom_type == "POINT" ) {

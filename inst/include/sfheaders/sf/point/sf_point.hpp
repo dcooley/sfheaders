@@ -3,9 +3,10 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/sexp/sexp.hpp"
-#include "sfheaders/sf/sf.hpp"
+#include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/sfc/point/sfc_point.hpp"
 #include "sfheaders/utils/unique/unique_ids.hpp"
+#include "sfheaders/shapes/shapes.hpp"
 
 namespace sfheaders {
 namespace sf {

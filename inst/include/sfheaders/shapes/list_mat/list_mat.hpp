@@ -2,8 +2,6 @@
 #define R_SFHEADERS_SHAPES_LIST_MAT_H
 
 #include <Rcpp.h>
-#include "sfheaders/sf/sf.hpp"
-#include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/mat/mat.hpp"
 

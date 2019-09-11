@@ -2,14 +2,13 @@
 #define R_SFHEADERS_UTILS_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/lines/lines.hpp"
 #include "sfheaders/utils/columns/columns.hpp"
+#include "sfheaders/utils/lines/lines.hpp"
 #include "sfheaders/utils/matrix/matrix.hpp"
-#include "sfheaders/utils/subset/subset.hpp"
 #include "sfheaders/utils/sexp/sexp.hpp"
-#include "sfheaders/utils/vectors/vectors.hpp"
-#include "sfheaders/utils/unique/unique_sort.hpp"
+#include "sfheaders/utils/subset/subset.hpp"
 #include "sfheaders/utils/unique/unique_ids.hpp"
+#include "sfheaders/utils/vectors/vectors.hpp"
 
 namespace sfheaders {
 namespace utils {

@@ -7,6 +7,7 @@
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
+#include "sfheaders/shapes/shapes.hpp"
 
 namespace sfheaders {
 namespace sfc {

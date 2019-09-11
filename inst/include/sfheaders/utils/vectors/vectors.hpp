@@ -20,6 +20,20 @@ namespace utils {
     return -1;
   }
 
+  inline Rcpp::IntegerVector where_is(
+      Rcpp::StringVector& param_value,
+      Rcpp::StringVector& data_names) {
+
+    int n = param_value.size();
+    int i;
+    Rcpp::IntegerVector res( n );
+    for ( i = 0; i < n; i++ ) {
+      Rcpp::String to_find = param_value[i];
+      res[i] = where_is( to_find, data_names );
+    }
+    return res;
+  }
+
   inline SEXP concatenate_vectors(
     SEXP& vec_1,
     SEXP& vec_2

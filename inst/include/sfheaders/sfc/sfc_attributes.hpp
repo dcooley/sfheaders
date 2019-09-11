@@ -2,7 +2,6 @@
 #define R_SFHEADERS_SFC_ATTRIBUTES_H
 
 #include <Rcpp.h>
-#include "sfheaders/sfheaders.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -15,6 +14,43 @@ namespace sfc {
   const int SFC_MULTIPOLYGON    = 6;
 
   // #nocov start
+  template <int RTYPE>
+  inline Rcpp::CharacterVector rClass( Rcpp::Vector<RTYPE> v ) {
+    return v.attr("class");
+  }
+
+  inline Rcpp::CharacterVector getRClass( SEXP sf ) {
+
+    switch( TYPEOF(sf) ) {
+    case REALSXP:
+      return rClass<REALSXP>( sf );
+    case VECSXP:
+      return rClass<VECSXP>( sf );
+    case INTSXP:
+      return rClass<INTSXP>( sf );
+    }
+    return "";
+  }
+
+  template <int RTYPE>
+  inline Rcpp::CharacterVector sfClass( Rcpp::Vector<RTYPE> v ) {
+    return v.attr("class");
+  }
+
+  inline Rcpp::CharacterVector getSfClass( SEXP sf ) {
+
+    switch( TYPEOF(sf) ) {
+    case REALSXP:
+      return sfClass<REALSXP>( sf );
+    case VECSXP:
+      return sfClass<VECSXP>( sf );
+    case INTSXP:
+      return sfClass<INTSXP>( sf );
+    default: Rcpp::stop("unknown sf type");
+    }
+    return "";
+  }
+
   inline Rcpp::StringVector start_sfc_classes( R_xlen_t collectionCount ) {
     Rcpp::StringVector sfc_classes( collectionCount );
     return sfc_classes;
@@ -34,6 +70,8 @@ namespace sfc {
 
     std::string geometry_class;
 
+    // handle no features
+    // '{"type":"FeatureCollection","features":[]}'
     if (geometry_types.size() == 0 ) {
       return "GEOMETRY";
     }
@@ -48,7 +86,7 @@ namespace sfc {
         Rcpp::StringVector sfc_classes = start_sfc_classes( sfc.size() );
         for (int i = 0; i < sfc.size(); i++) {
           SEXP sfci = sfc[i];
-          Rcpp::CharacterVector cls = sfheaders::getSfClass( sfci );
+          Rcpp::CharacterVector cls = getSfClass( sfci );
           sfc_classes[i] = cls[1];
         }
 
@@ -99,7 +137,6 @@ namespace sfc {
 
     std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
     sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
-
 
     // attribute::precision
     sfc.attr("precision") = precision;

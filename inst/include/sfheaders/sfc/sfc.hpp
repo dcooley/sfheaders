@@ -15,6 +15,10 @@
 #include "sfheaders/sfc/multipolygon/sfc_multipolygon.hpp"
 #include "sfheaders/sfc/multipolygon/sfc_multipolygons.hpp"
 
+#include "sfheaders/sfc/sfc_types.hpp"
+#include "sfheaders/sfc/bbox.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
+
 namespace sfheaders {
 namespace sfc {
 
