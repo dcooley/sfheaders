@@ -90,6 +90,7 @@ namespace sf {
     }
 
     switch( TYPEOF( ids ) ) {
+    case LGLSXP: {}
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( ids );
       return make_sf( sfc, iv );

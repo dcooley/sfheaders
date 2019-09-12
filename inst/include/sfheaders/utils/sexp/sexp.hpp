@@ -91,6 +91,8 @@ namespace utils {
   inline int get_sexp_length( SEXP s ) {
 
     switch( TYPEOF(s) ) {
+    case LGLSXP:
+      return sexp_length< LGLSXP >( s );
     case REALSXP:
       return sexp_length< REALSXP >( s );
     case VECSXP:

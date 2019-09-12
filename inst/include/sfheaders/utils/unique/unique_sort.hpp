@@ -34,6 +34,9 @@ namespace utils {
     SEXP s2 = Rcpp::clone( s );
 
     switch( TYPEOF( s2 ) ) {
+    case LGLSXP: {
+      return sexp_unique< bool, LGLSXP >( s2 );
+    }
     case REALSXP: {
       return sexp_unique< double, REALSXP >( s2 );
     }

@@ -335,5 +335,23 @@ test_that("string ids work",{
 
   expect_true( is_sf( res ) )
   expect_true( nrow( res ) == 1 )
+
+  ## logical ids
+  df <- data.frame(
+    id = c(T,T,T,F,F)
+    , x = 1:5
+    , y = 1:5
+    , stringsAsFactors = FALSE
+  )
+
+  res <- sfheaders:::sf_linestring(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , linestring_id = "id"
+  )
+  expect_true( is_sf( res ) )
+  expect_true( nrow( res ) == length(unique( df$id ) ) )
+
 })
 

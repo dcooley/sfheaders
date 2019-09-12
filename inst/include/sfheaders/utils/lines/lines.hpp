@@ -214,6 +214,11 @@ namespace utils {
     }
 
     switch( TYPEOF( line_ids ) ) {
+    case LGLSXP: {
+      // Rcpp::LogicalVector lv_line_ids = Rcpp::as< Rcpp::LogicalVector >( line_ids );
+      // Rcpp::LogicalVector lv_unique_ids = Rcpp::as< Rcpp::LogicalVector >( unique_ids );
+      // return id_positions( lv_line_ids, lv_unique_ids );
+    }
     case INTSXP: {
       Rcpp::IntegerVector iv_line_ids = Rcpp::as< Rcpp::IntegerVector >( line_ids );
       Rcpp::IntegerVector iv_unique_ids = Rcpp::as< Rcpp::IntegerVector >( unique_ids );
