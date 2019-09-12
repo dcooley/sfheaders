@@ -130,7 +130,6 @@ inline SEXP sfc_multilinestring(
 //   double precision = 0.0;
 //
 //   R_xlen_t n_multilinestrings = lst.size();
-//   // Rcpp::Rcout << "n_multilinestrings: " << n_multilinestrings << std::endl;
 //   Rcpp::List sfc( n_multilinestrings );
 //
 //   R_xlen_t i, j;
@@ -139,7 +138,6 @@ inline SEXP sfc_multilinestring(
 //     Rcpp::List sfgs = lst[i];
 //     R_xlen_t n_linestrings = sfgs.size();
 //
-//     // Rcpp::Rcout << "n_linestrings: " << n_linestrings << std::endl;
 //     Rcpp::List ml( n_linestrings );
 //
 //     for( j = 0; j < n_linestrings; j++ ) {

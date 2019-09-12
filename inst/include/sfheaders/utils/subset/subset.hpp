@@ -41,8 +41,6 @@ namespace utils {
   ) {
     Rcpp::Range rng = Rcpp::Range( start, end );
 
-    // Rcpp::Rcout << "type of vector: " << TYPEOF( x ) << std::endl;
-
     switch( TYPEOF( x ) ) {
     case LGLSXP: {
       Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( x );

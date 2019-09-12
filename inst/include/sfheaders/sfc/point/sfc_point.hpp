@@ -28,7 +28,6 @@ namespace sfc {
     Rcpp::IntegerMatrix& im
   ) {
 
-    // Rcpp::Rcout << "int mat" << std::endl;
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -47,10 +46,8 @@ namespace sfc {
 
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
-      // Rcpp::Rcout << "this_point: " << this_point << std::endl;
 
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
-        // Rcpp::Rcout << "null geometry" << std::endl;
         n_empty++;
       }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
@@ -73,7 +70,7 @@ namespace sfc {
   inline SEXP sfc_point(
       Rcpp::NumericMatrix& nm
   ) {
-    //Rcpp::Rcout << "num mat" << std::endl;
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -93,7 +90,6 @@ namespace sfc {
     for( i = 0; i < n_row; i++ ) {
       Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
-        //Rcpp::Rcout << "null geometry" << std::endl;
         n_empty++;
       }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
@@ -134,7 +130,6 @@ namespace sfc {
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
-        //Rcpp::Rcout << "null geometry" << std::endl;
         n_empty++;
       }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );
@@ -194,7 +189,6 @@ namespace sfc {
     for( i = 0; i < n_row; i++ ) {
       Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
-        //Rcpp::Rcout << "null geometry" << std::endl;
         n_empty++;
       }
       sfc[i] = sfheaders::sfg::sfg_point( this_point );

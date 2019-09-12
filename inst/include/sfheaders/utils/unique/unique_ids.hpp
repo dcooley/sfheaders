@@ -105,13 +105,11 @@ namespace utils {
     case INTSXP: {
       Rcpp::IntegerVector iv_id_col = Rcpp::as< Rcpp::IntegerVector >( id_col );
       int i_id_col = iv_id_col[0];
-      // Rcpp::Rcout << "int id : " << i_id_col << std::endl;
       return get_ids( x, i_id_col );
     }
     case STRSXP: {
       Rcpp::StringVector sv_id_col = Rcpp::as< Rcpp::StringVector >( id_col );
       Rcpp::String s_id_col = sv_id_col[0];
-      // Rcpp::Rcout << "string id : " << s_id_col.get_cstring() << std::endl;
       return get_ids( x, s_id_col );
     }
     default: {

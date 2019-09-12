@@ -503,7 +503,6 @@ inline SEXP sfg_multipolygon(
     Rcpp::String& line_id
 ) {
   if( Rf_isNull( cols ) ) {
-    //Rcpp::Rcout << "String line_id" << std::endl;
     Rcpp::StringVector id_cols( 1 );
     id_cols[0] = line_id;
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );

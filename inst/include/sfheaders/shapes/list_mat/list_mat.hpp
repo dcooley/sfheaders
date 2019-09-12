@@ -169,7 +169,6 @@ namespace shapes {
     // now iterate through the data.frame and get the matrices of lines
     R_xlen_t i;
     for( i = 0; i < n_lines; i++ ) {
-    //Rcpp::Rcout << "looping for get_listMat() " <<  i << std::endl;
 
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
@@ -195,7 +194,6 @@ namespace shapes {
     // now iterate through the data.frame and get the matrices of lines
     R_xlen_t i;
     for( i = 0; i < n_lines; i++ ) {
-      //Rcpp::Rcout << "looping for get_listMat() " <<  i << std::endl;
 
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
@@ -353,7 +351,6 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      // Rcpp::Rcout << "get list mat 3 " << std::endl;
       return get_listMat( im, cols, id_col );
     }
     }
@@ -362,7 +359,6 @@ namespace shapes {
       Rcpp::stop("sfheaders - lines need to be matrices or data.frames");
     } else {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      // Rcpp::Rcout << "get list mat 4 " << std::endl;
       return get_listMat( nm, cols, id_col );
     }
     }
@@ -403,7 +399,6 @@ namespace shapes {
       Rcpp::IntegerVector iv_id_col = Rcpp::as< Rcpp::IntegerVector >( id_col );
       int i_id_col = iv_id_col[0];
       Rcpp::IntegerVector iv_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
-      // Rcpp::Rcout << "get list mat 2 " << std::endl;
       return get_listMat( x, iv_cols, i_id_col );
     }
     case STRSXP: {

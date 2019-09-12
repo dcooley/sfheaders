@@ -48,9 +48,6 @@ namespace utils {
         end_positions[ idx ] = i - 1;
         idx++;
 
-        // Rcpp::Rcout << "this_id: " << this_id << std::endl;
-        // Rcpp::Rcout << "idx: " << idx << std::endl;
-
         if( idx >= start_positions.length() ) {
           Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");
         }
@@ -76,14 +73,8 @@ namespace utils {
       Rcpp::NumericVector& unique_ids
   ) {
 
-    // Rcpp::Rcout << "line_ids " << line_ids << std::endl;
-    // Rcpp::Rcout << "unique_ids " << unique_ids << std::endl;
-
     R_xlen_t n = line_ids.length();
     R_xlen_t unique_n = unique_ids.length();
-
-    // Rcpp::Rcout << "n: " << n << std::endl;
-    // Rcpp::Rcout << "unique_n: " << unique_n << std::endl;
 
     Rcpp::IntegerMatrix im( unique_n, 2);
 
@@ -115,9 +106,6 @@ namespace utils {
         end_positions[ idx ] = i - 1;
         idx++;
 
-        // Rcpp::Rcout << "this_id: " << this_id << std::endl;
-        // Rcpp::Rcout << "idx: " << idx << std::endl;
-
         if( idx >= start_positions.length() ) {
           Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");  // #nocov
         }
@@ -130,9 +118,6 @@ namespace utils {
         end_positions[ idx ] = i;
       }
     }
-
-    // Rcpp::Rcout << "this_id: " << this_id << std::endl;
-    // Rcpp::Rcout << "idx: " << idx << std::endl;
 
     if( start_positions.length() != end_positions.length() ) {
       Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?");  // #nocov
@@ -148,8 +133,6 @@ namespace utils {
       Rcpp::StringVector& line_ids,
       Rcpp::StringVector& unique_ids
   ) {
-
-    // Rcpp::Rcout << "line_positions" << std::endl;
 
     R_xlen_t n = line_ids.length();
     R_xlen_t unique_n = unique_ids.length();
@@ -181,9 +164,6 @@ namespace utils {
         //the id has changed
         end_positions[ idx ] = i - 1;
         idx++;
-
-        // Rcpp::Rcout << "this_id: " << this_id.get_cstring() << std::endl;
-        // Rcpp::Rcout << "idx: " << idx << std::endl;
 
         if( idx >= start_positions.length() ) {
           Rcpp::stop("sfheaders - error indexing lines, perhaps caused by un-ordered data?"); // #nocov

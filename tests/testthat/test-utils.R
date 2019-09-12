@@ -15,6 +15,7 @@ test_that("sfheaders::utils::subset subsets a data.frame",{
     , x = c(1:6)
     , y = c(6:1)
     , z = letters[1:6]
+    , a = c(TRUE,FALSE,TRUE,FALSE,TRUE,FALSE)
     , stringsAsFactors = FALSE
   )
   idx <- c(0,1)
@@ -24,8 +25,11 @@ test_that("sfheaders::utils::subset subsets a data.frame",{
   idx <- c(0,1)
   res <- sfheaders:::rcpp_subset_dataframe(x, c("id","x","y","z"), idx[1], idx[2] )
   ## TODO
-  #expect_equal( x[idx+1, ], res )
+  # expect_equal( x[idx+1, ], res )
 
+  idx <- c(0,1)
+  res <- sfheaders:::rcpp_subset_dataframe(x, c("a"), idx[1], idx[2] )
+  expect_equal( x[idx+1, "a", drop = F], res )
 })
 
 

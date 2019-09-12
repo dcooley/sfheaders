@@ -28,9 +28,7 @@ namespace sf {
 
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
-    // Rcpp::Rcout << "get_ids: " << std::endl;
     SEXP ids = sfheaders::utils::get_ids( x, linestring_id );
-    // Rcpp::Rcout << "making sf dataframe" << std::endl;
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }

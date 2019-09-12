@@ -34,19 +34,12 @@ namespace utils {
       Rcpp::NumericVector& id_cols
   ) {
 
-    // Rcpp::Rcout << "other_cols: " << other_cols << std::endl;
-    // Rcpp::Rcout << "id_cols: " << id_cols << std::endl;
-
-    // Rcpp::NumericVector nv = Rcpp::setdiff( other_cols, id_cols );
-    // return nv;
-
     int n_id_cols = id_cols.length();
     int i;
     for( i = (n_id_cols - 1); i >= 0; i-- ) {
       int to_remove = id_cols[ i ];
       other_cols.erase( to_remove );
     }
-    // Rcpp::Rcout << "erased columns, left with : " << other_cols << std::endl;
     return other_cols;
   }
 

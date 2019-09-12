@@ -455,7 +455,7 @@ inline SEXP get_listListMat(
     int i_group_id_col_1 = iv_group_id_col_1[0];
     int i_group_id_col_2 = iv_group_id_col_2[0];
     int i_group_id_col_3 = iv_group_id_col_3[0];
-    // Rcpp::Rcout << "cols : " << i_group_id_col_1 << ", " << i_group_id_col_2 << ", " << i_group_id_col_3 << std::endl;
+
     //Rcpp::stop("stopping");
     return get_listListMat( x, iv_geometry_cols, i_group_id_col_1, i_group_id_col_2, i_group_id_col_3 );
   }

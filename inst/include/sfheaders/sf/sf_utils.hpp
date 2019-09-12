@@ -75,8 +75,6 @@ namespace sf {
       SEXP& ids
   ) {
 
-    //Rcpp::Rcout << "type: " << TYPEOF( ids ) << std::endl;
-
     // if( Rf_isNull( ids ) ) {
     //   // need 1:n ids
     //   // int n_sfc = sfc.size();

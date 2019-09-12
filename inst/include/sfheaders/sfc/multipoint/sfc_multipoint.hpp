@@ -121,7 +121,6 @@ inline SEXP sfc_multipoint(
 //   R_xlen_t i;
 //
 //   for( i = 0; i < n_multipoints; i++ ) {
-//     //Rcpp::Rcout << "looping sfc_multipoints() " << i << std::endl;
 //     SEXP this_multipoint = sfc[i];
 //
 //     // should each element only be allowed to be a matrix??
@@ -763,7 +762,7 @@ inline SEXP sfc_multipoint(
     SEXP& geometry_cols,
     SEXP& multipoint_id
 ) {
-  // TODO - how to handle bbox
+
   if( Rf_isNull( geometry_cols ) && Rf_isNull( multipoint_id ) ) {
 
     return sfc_multipoint( x );

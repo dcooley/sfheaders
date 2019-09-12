@@ -22,9 +22,8 @@ test_that("sfg dimensions", {
   df <- data.frame(lon = 1, lat = 1, z = 1, m = 1)
   expect_equal( sfheaders:::rcpp_sfg_dimension( df ), "XYZM" )
 
-  ## TODO - this needs to error
   l <- list( 1, 2 )
-  expect_error( sfheaders:::rcpp_sfg_dimension( l ) )
+  expect_error( sfheaders:::rcpp_sfg_dimension( l ), "sfheaders - invalid dimension" )
 
 
 })

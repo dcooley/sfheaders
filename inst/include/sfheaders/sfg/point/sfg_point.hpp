@@ -151,7 +151,6 @@ namespace sfg {
       return sfg_point( nm, cols );
     }
     case VECSXP: {
-      // TODO - data.frame using numbers to index columns
       if ( Rf_inherits( x, "data.frame" ) ) {
         Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( xc );
         return sfg_point( df, cols );

@@ -122,7 +122,6 @@ namespace sfc {
   //   R_xlen_t i;
   //
   //   for( i = 0; i < n_linestrings; i++ ) {
-  //     //Rcpp::Rcout << "looping sfc_linestrings() " << i << std::endl;
   //     SEXP this_linestring = sfc[i];
   //
   //     // should each element only be allowed to be a matrix??
@@ -501,9 +500,7 @@ namespace sfc {
     R_xlen_t n_col = nm.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
-    //Rcpp::Rcout << "line_ids: " << line_ids << std::endl;
     Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
-    //Rcpp::Rcout << "unique_ids: " << unique_ids << std::endl;
 
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
@@ -546,23 +543,13 @@ namespace sfc {
     R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-    // Rcpp::Rcout << "getting line positions: " << std::endl;
-    // Rcpp::Rcout << "line_ids: " << line_ids << std::endl;
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-    // Rcpp::Rcout << "unique_ids: " << unique_ids << std::endl;
-
-    // Rcpp::NumericVector iv1 = Rcpp::as< Rcpp::NumericVector >( line_ids );
-    // Rcpp::NumericVector iv2 = Rcpp::as< Rcpp::NumericVector >( unique_ids );
-
-    //Rcpp::Rcout << "line_ids: " << iv1 << std::endl;
-    //Rcpp::Rcout << "unique_ids: " << iv2 << std::endl;
 
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
 
     R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
 
     Rcpp::List sfc( n_lines );
-    // Rcpp::Rcout << "n_lines: " << n_lines << std::endl;
 
     int start;
     int end;
@@ -580,11 +567,7 @@ namespace sfc {
         sfc( i ) = sfheaders::sfg::sfg_linestring( m );
       }
     }
-
-    // Rcpp::Rcout << "make_sfc: " << std::endl;
-
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
-    // Rcpp::Rcout << "return sfc: " << std::endl;
     return sfc;
   }
 
@@ -636,7 +619,7 @@ namespace sfc {
       Rcpp::IntegerVector& geometry_cols,
       int& linestring_id
   ) {
-    // TODO: test the linestring_id column exists in the object
+
     sfheaders::utils::column_exists( im, linestring_id );
     Rcpp::IntegerVector line_ids = im( Rcpp::_, linestring_id );
     return sfc_linestring( im, geometry_cols, line_ids );
@@ -782,7 +765,6 @@ namespace sfc {
       SEXP& geometry_cols,
       SEXP& linestring_id
   ) {
-    // TODO - how to handle bbox
     if( Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) ) {
 
       return sfc_linestring( x );

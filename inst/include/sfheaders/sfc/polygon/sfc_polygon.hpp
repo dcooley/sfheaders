@@ -131,7 +131,6 @@ namespace sfc {
   //   double precision = 0.0;
   //
   //   R_xlen_t n_polygons = lst.size();
-  //   // Rcpp::Rcout << "n_polygons: " << n_polygons << std::endl;
   //   Rcpp::List sfc( n_polygons );
   //
   //   R_xlen_t i, j;
@@ -140,7 +139,6 @@ namespace sfc {
   //     Rcpp::List sfgs = lst[i];
   //     R_xlen_t n_linestrings = sfgs.size();
   //
-  //     // Rcpp::Rcout << "n_linestrings: " << n_linestrings << std::endl;
   //     Rcpp::List ml( n_linestrings );
   //
   //     for( j = 0; j < n_linestrings; j++ ) {

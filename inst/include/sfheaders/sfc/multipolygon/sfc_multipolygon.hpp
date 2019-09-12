@@ -446,8 +446,6 @@ inline SEXP sfc_multipolygon(
     SEXP& geometry_cols
 ) {
 
-  //Rcpp::Rcout << "here 2" << std::endl;
-
   sfheaders::utils::geometry_column_check( geometry_cols );
 
   switch( TYPEOF( geometry_cols ) ) {
@@ -783,7 +781,6 @@ inline SEXP sfc_multipolygon(
   ) {
 
     if( Rf_isNull( geometry_cols ) ) {
-      //Rcpp::Rcout << "making geometry cols" << std::endl;
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = sfheaders::utils::other_columns( x, multipolygon_id, polygon_id, linestring_id );
       return sfc_multipolygon( x, geometry_cols2, multipolygon_id, polygon_id, linestring_id );
@@ -794,7 +791,6 @@ inline SEXP sfc_multipolygon(
     if( Rf_isNull( linestring_id ) &&
         Rf_isNull( polygon_id ) &&
         Rf_isNull( multipolygon_id) ) {
-      //Rcpp::Rcout << "here" << std::endl;
       return sfc_multipolygon( x, geometry_cols );
     }
 
