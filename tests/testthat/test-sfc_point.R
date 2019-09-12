@@ -120,7 +120,6 @@ test_that("after refactoring issue14 I haven't lost anything",{
 
 })
 
-
 test_that("vectorised version works",{
 
   is_point <- function(x) {

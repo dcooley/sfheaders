@@ -34,4 +34,13 @@ test_that("n_empty set for POINT", {
   res <- sfheaders::sfc_point( x )
   expect_equal( attr(res, "n_empty"), 2 )
 
+  x <- matrix(c(NA_integer_, NA_integer_, 1, 1, 1, 1), ncol = 3)
+  res <- sfheaders::sfc_point( x, x = 1, y = 2 )
+  expect_equal( attr(res, "n_empty"), 2 )
+
+  x <- matrix(c(NA_real_, NA_real_, 1.1, 1, 1, 1), ncol = 3)
+  res <- sfheaders::sfc_point( x, x = 1, y = 2 )
+  expect_equal( attr(res, "n_empty"), 2 )
+
+
 })
