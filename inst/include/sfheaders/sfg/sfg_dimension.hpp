@@ -12,29 +12,7 @@ namespace sfg {
     }
   }
 
-  inline void dimension_check( int& n ) {
-    if( n < 2 || n > 4 ) {
-      Rcpp::stop("sfheaders - invalid dimension ");
-    }
-  }
-
   inline std::string sfg_dimension( R_xlen_t& n ) {
-    dimension_check( n );
-    std::string dim = "XY";
-
-    // TODO: is "XYM" a valid dimension?
-    switch ( n ) {
-    case 3: {
-      return "XYZ";
-    }
-    case 4: {
-      return "XYZM";
-    }
-    }
-    return dim;
-  }
-
-  inline std::string sfg_dimension( int& n ) {
     dimension_check( n );
     std::string dim = "XY";
 
