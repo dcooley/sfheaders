@@ -22,6 +22,9 @@ sfc_polygon(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{linestring_id}{column of ids for lines (within polygons)}
 }
+\value{
+\code{sfc} object of POLYGON geometries
+}
 \description{
 constructs an sfc of POLYGON objects
 }

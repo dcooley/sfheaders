@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multilinestring}
 \alias{sfg_multilinestring}
-\title{sfg MULTILINESTRING}
+\title{sfg multilinestring}
 \usage{
 sfg_multilinestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   linestring_id = NULL)
@@ -20,8 +20,11 @@ sfg_multilinestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{linestring_id}{column of ids for lines}
 }
+\value{
+\code{sfg} object of MULTILINESTRING geometry
+}
 \description{
-sfg MULTILINESTRING
+constructs sfg MULTILINESTRING object
 }
 \examples{
 

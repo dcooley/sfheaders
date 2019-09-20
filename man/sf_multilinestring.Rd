@@ -22,6 +22,9 @@ sf_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
 
 \item{linestring_id}{column of ids for linestrings (within multilinestrings)}
 }
+\value{
+\code{sf} object of MULTILINESTRING geometries
+}
 \description{
 constructs an sf of MULTILINESTRING objects
 }

@@ -22,6 +22,9 @@ sf_polygon(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{linestring_id}{column of ids for lines (within polygons)}
 }
+\value{
+\code{sf} object of POLYGON geometries
+}
 \description{
 constructs an sf of POLYGON objects
 }

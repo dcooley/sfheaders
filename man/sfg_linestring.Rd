@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_linestring}
 \alias{sfg_linestring}
-\title{sfg LINESTRING}
+\title{sfg linestring}
 \usage{
 sfg_linestring(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
@@ -17,8 +17,11 @@ sfg_linestring(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 
 \item{m}{m geometry column}
 }
+\value{
+\code{sfg} object of LINESTRING geometry
+}
 \description{
-sfg LINESTRING
+constructs sfg LINESTRING object
 }
 \examples{
 

@@ -15,6 +15,8 @@
 #'
 #' The data.frame and matrices you send into the sfheader functions must be ordered.
 #'
+#' @return \code{sfc} object of POINT geometries
+#'
 #' @examples
 #'
 #' x <- c(1:3)
@@ -43,6 +45,8 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' @inheritSection sfc_point notes
 #' @param multipoint_id column of ids for multipoints
 #'
+#' @return \code{sfc} object of MULTIPOINT geometries
+#'
 #' @examples
 #'
 #' x <- matrix( c(1:4), ncol = 2 )
@@ -68,6 +72,8 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #' @inheritParams sfc_multipoint
 #' @inheritSection sfc_point notes
 #' @param linestring_id column of ids for linestrings
+#'
+#' @return \code{sfc} object of LINESTRING geometries
 #'
 #' @examples
 #'
@@ -96,6 +102,9 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 #' @param linestring_id column of ids for linestrings (within multilinestrings)
 #'
 #' @inheritSection sfc_point notes
+#'
+#' @return \code{sfc} object of MULTILINESTRING geometries
+#'
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
@@ -151,6 +160,8 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 #' @param linestring_id column of ids for lines (within polygons)
 #' @inheritSection sfc_point notes
 #'
+#' @return \code{sfc} object of POLYGON geometries
+#'
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
@@ -204,6 +215,8 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' @inheritParams sfc_polygon
 #' @param multipolygon_id column of ids for multipolygons
 #' @inheritSection sfc_point notes
+#'
+#' @return \code{sfc} object of MULTIPOLYGON geometries
 #'
 #' @examples
 #'

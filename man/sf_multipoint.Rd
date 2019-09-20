@@ -20,6 +20,9 @@ sf_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{multipoint_id}{column of ids for multipoints}
 }
+\value{
+\code{sf} object of MULTIPOINT geometries
+}
 \description{
 constructs sf of MULTIPOINT objects
 }

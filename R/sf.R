@@ -9,6 +9,8 @@
 #' @param m m geometry column
 #' @inheritSection sfc_point notes
 #'
+#' @return \code{sf} object of POINT geometries
+#'
 #' @examples
 #'
 #' x <- c(1:3)
@@ -37,6 +39,7 @@ sf_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' @inheritSection sfc_point notes
 #' @param multipoint_id column of ids for multipoints
 #'
+#' @return \code{sf} object of MULTIPOINT geometries
 #' @examples
 #'
 #' x <- matrix( c(1:4), ncol = 2 )
@@ -62,6 +65,8 @@ sf_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipoi
 #' @inheritParams sf_multipoint
 #' @inheritSection sfc_point notes
 #' @param linestring_id column of ids for linestrings
+#'
+#' @return \code{sf} object of LINESTRING geometries
 #'
 #' @examples
 #'
@@ -90,6 +95,9 @@ sf_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, l
 #' @param linestring_id column of ids for linestrings (within multilinestrings)
 #'
 #' @inheritSection sfc_point notes
+#'
+#' @return \code{sf} object of MULTILINESTRING geometries
+#'
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
@@ -145,6 +153,8 @@ sf_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NU
 #' @param linestring_id column of ids for lines (within polygons)
 #' @inheritSection sfc_point notes
 #'
+#' @return \code{sf} object of POLYGON geometries
+#'
 #' @examples
 #'
 #' m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
@@ -198,6 +208,8 @@ sf_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, poly
 #' @inheritParams sf_polygon
 #' @param multipolygon_id column of ids for multipolygons
 #' @inheritSection sfc_point notes
+#'
+#' @return \code{sf} object of MULTIPOLYGON geometries
 #'
 #' @examples
 #'

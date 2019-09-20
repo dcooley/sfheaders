@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_polygon}
 \alias{sfg_polygon}
-\title{sfg MULTILINESTRING}
+\title{sfg polygon}
 \usage{
 sfg_polygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   linestring_id = NULL)
@@ -20,8 +20,11 @@ sfg_polygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{linestring_id}{column of ids for linestrings}
 }
+\value{
+\code{sfg} object of POLYGON geometry
+}
 \description{
-sfg MULTILINESTRING
+constructs sfg POLYGON object
 }
 \examples{
 

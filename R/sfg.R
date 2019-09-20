@@ -1,10 +1,14 @@
-#' sfg POINT
+#' sfg point
+#'
+#' constructs sfg POINT object
 #'
 #' @param obj matrix or data.frame
 #' @param x x geometry column
 #' @param y y geometry column
 #' @param z z geometry column
 #' @param m m geometry column
+#'
+#' @return \code{sfg} object of POINT geometry
 #'
 #' @examples
 #'
@@ -25,10 +29,12 @@ sfg_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 }
 
 
-#' sfg MULTIPOINT
+#' sfg multipoint
+#'
+#' constructs sfg MULTIPOINT object
 #'
 #' @inheritParams sfg_point
-#'
+#' @return \code{sfg} object of MULTIPOINT geometry
 #' @examples
 #'
 #' sfg_multipoint( 1:2 )
@@ -62,9 +68,12 @@ sfg_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   rcpp_sfg_multipoint( obj, index_correct( geometry_columns ) )
 }
 
-#' sfg LINESTRING
+#' sfg linestring
+#'
+#' constructs sfg LINESTRING object
 #'
 #' @inheritParams sfg_point
+#' @return \code{sfg} object of LINESTRING geometry
 #'
 #' @examples
 #'
@@ -85,10 +94,14 @@ sfg_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   rcpp_sfg_linestring( obj, index_correct( geometry_columns ) )
 }
 
-#' sfg MULTILINESTRING
+#' sfg multilinestring
+#'
+#' constructs sfg MULTILINESTRING object
 #'
 #' @inheritParams sfg_point
 #' @param linestring_id column of ids for lines
+#'
+#' @return \code{sfg} object of MULTILINESTRING geometry
 #'
 #' @examples
 #'
@@ -117,10 +130,14 @@ sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, li
 }
 
 
-#' sfg MULTILINESTRING
+#' sfg polygon
+#'
+#' constructs sfg POLYGON object
 #'
 #' @inheritParams sfg_point
 #' @param linestring_id column of ids for linestrings
+#'
+#' @return \code{sfg} object of POLYGON geometry
 #'
 #' @examples
 #'
@@ -149,11 +166,15 @@ sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring
 }
 
 
-#' sfg MULTIPOLYGON
+#' sfg multipolygon
+#'
+#' constructs sfg MULTIPOLYGON object
 #'
 #' @inheritParams sfg_point
 #' @param polygon_id column of ids for polygons
 #' @param linestring_id column of ids for linestrings
+#'
+#' @return \code{sfg} object of MULTIPOLYGON geometry
 #'
 #' @examples
 #'

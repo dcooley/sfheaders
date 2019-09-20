@@ -17,6 +17,9 @@ sfc_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 
 \item{m}{m geometry column}
 }
+\value{
+\code{sfc} object of POINT geometries
+}
 \description{
 constructs sfc of POINT objects
 }

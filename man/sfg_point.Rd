@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_point}
 \alias{sfg_point}
-\title{sfg POINT}
+\title{sfg point}
 \usage{
 sfg_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
@@ -17,8 +17,11 @@ sfg_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 
 \item{m}{m geometry column}
 }
+\value{
+\code{sfg} object of POINT geometry
+}
 \description{
-sfg POINT
+constructs sfg POINT object
 }
 \examples{
 

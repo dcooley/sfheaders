@@ -20,6 +20,9 @@ sf_linestring(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{linestring_id}{column of ids for linestrings}
 }
+\value{
+\code{sf} object of LINESTRING geometries
+}
 \description{
 constructs sf of MULTIPOINT objects
 }

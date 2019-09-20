@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multipolygon}
 \alias{sfg_multipolygon}
-\title{sfg MULTIPOLYGON}
+\title{sfg multipolygon}
 \usage{
 sfg_multipolygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
   polygon_id = NULL, linestring_id = NULL)
@@ -22,8 +22,11 @@ sfg_multipolygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{linestring_id}{column of ids for linestrings}
 }
+\value{
+\code{sfg} object of MULTIPOLYGON geometry
+}
 \description{
-sfg MULTIPOLYGON
+constructs sfg MULTIPOLYGON object
 }
 \examples{
 

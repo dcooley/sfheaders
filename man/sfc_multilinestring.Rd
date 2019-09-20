@@ -22,6 +22,9 @@ sfc_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
 
 \item{linestring_id}{column of ids for linestrings (within multilinestrings)}
 }
+\value{
+\code{sfc} object of MULTILINESTRING geometries
+}
 \description{
 constructs an sfc of MULTILINESTRING objects
 }

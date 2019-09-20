@@ -1,7 +1,7 @@
 Package: sfheaders
 Type: Package
 Title: Constructs Simple Feature Objects
-Version: 0.0.2
+Version: 0.0.1
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre"))
     )

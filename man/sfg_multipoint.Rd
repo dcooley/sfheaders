@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multipoint}
 \alias{sfg_multipoint}
-\title{sfg MULTIPOINT}
+\title{sfg multipoint}
 \usage{
 sfg_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
@@ -17,8 +17,11 @@ sfg_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 
 \item{m}{m geometry column}
 }
+\value{
+\code{sfg} object of MULTIPOINT geometry
+}
 \description{
-sfg MULTIPOINT
+constructs sfg MULTIPOINT object
 }
 \examples{
 
