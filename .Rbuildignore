@@ -1,10 +1,11 @@
+^cran-comments\.md$
+^CRAN-RELEASE$
 ^codecov\.yml$
 ^\.travis\.yml$
 ^README\.Rmd$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^docs/
-^Vignettes/data.table.Rmd
-^Vignettes/Cpp.Rmd
-^Vignettes/examples.Rmd
+^Vignettes/Cpp*
+^Vignettes/examples*
 ^vignettes/images/*
