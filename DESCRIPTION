@@ -21,7 +21,4 @@ Imports:
     Rcpp
 Suggests:
     testthat,
-    covr,
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
+    covr
