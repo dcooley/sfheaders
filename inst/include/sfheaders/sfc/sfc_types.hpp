@@ -5,7 +5,6 @@
 
 #include "sfheaders/sfc/sfc_attributes.hpp"
 
-
 namespace sfheaders {
 namespace sfc {
 
@@ -36,7 +35,7 @@ namespace sfc {
     std::string geom = get_sfc_type( sfc_type );
     std::unordered_set< std::string > geometry_types{ geom };
 
-    Rcpp::String epsg = NA_STRING;
+    int epsg = NA_INTEGER;
     Rcpp::String proj4string = NA_STRING;
     //int n_empty = 0;
     double precision = 0.0;
