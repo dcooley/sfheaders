@@ -8,7 +8,7 @@ namespace polygon_utils {
 
   inline void check_closed_rows( int n_row ) {
     if( n_row < 4 ) {
-      Rcpp::stop("sfheaders - closed polygons must have at least 4 rows");
+      Rcpp::stop("sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check");
     }
   }
 
