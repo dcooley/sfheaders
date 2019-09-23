@@ -136,7 +136,8 @@ sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, li
 #'
 #' @inheritParams sfg_point
 #' @param linestring_id column of ids for linestrings
-#'
+#' @param close logical indicating whether polygons should be closed. If \code{TRUE},
+#' all polygons will be checked and force closed if possible
 #' @return \code{sfg} object of POLYGON geometry
 #'
 #' @examples
@@ -160,9 +161,9 @@ sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, li
 #'
 #'
 #' @export
-sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
+sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfg_polygon( obj, index_correct( geometry_columns ),  index_correct( linestring_id ) )
+  rcpp_sfg_polygon( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), close )
 }
 
 
@@ -215,9 +216,9 @@ sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring
 #'   )
 #'
 #' @export
-sfg_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL ) {
+sfg_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfg_multipolygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ) )
+  rcpp_sfg_multipolygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close )
 }
 
 

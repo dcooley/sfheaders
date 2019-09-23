@@ -15,9 +15,10 @@ inline SEXP sf_polygon(
     SEXP& x,
     SEXP& geometry_cols,
     SEXP& polygon_id,
-    SEXP& linestring_id
+    SEXP& linestring_id,
+    bool close = true
 ) {
-  Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id );
+  Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, close );
   SEXP ids = sfheaders::utils::get_ids( x, polygon_id );
 
   Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );

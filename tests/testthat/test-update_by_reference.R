@@ -117,11 +117,11 @@ test_that("input objects are unchanged",{
   # expect_equal( attr( x, "class" ), NULL )
 
   x <- matrix(1:2, ncol = 2)
-  res <- sfheaders::sfg_polygon( x )
+  res <- sfheaders::sfg_polygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), NULL )
 
   x <- data.frame( x = 1, y = 2 )
-  res <- sfheaders::sfg_polygon( x )
+  res <- sfheaders::sfg_polygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), "data.frame" )
 
   ### sfc
@@ -130,11 +130,11 @@ test_that("input objects are unchanged",{
   # expect_equal( attr( x, "class" ), NULL )
 
   x <- matrix(1:2, ncol = 2)
-  res <- sfheaders::sfc_polygon( x )
+  res <- sfheaders::sfc_polygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), NULL )
 
   x <- data.frame( x = 1, y = 2 )
-  res <- sfheaders::sfc_polygon( x )
+  res <- sfheaders::sfc_polygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), "data.frame" )
 
 
@@ -145,11 +145,11 @@ test_that("input objects are unchanged",{
   # expect_equal( attr( x, "class" ), NULL )
 
   x <- matrix(1:2, ncol = 2)
-  res <- sfheaders::sfg_multipolygon( x )
+  res <- sfheaders::sfg_multipolygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), NULL )
 
   x <- data.frame( x = 1, y = 2 )
-  res <- sfheaders::sfg_multipolygon( x )
+  res <- sfheaders::sfg_multipolygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), "data.frame" )
 
   ### sfc
@@ -158,11 +158,11 @@ test_that("input objects are unchanged",{
   # expect_equal( attr( x, "class" ), NULL )
 
   x <- matrix(1:2, ncol = 2)
-  res <- sfheaders::sfc_multipolygon( x )
+  res <- sfheaders::sfc_multipolygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), NULL )
 
   x <- data.frame( x = 1, y = 2 )
-  res <- sfheaders::sfc_multipolygon( x )
+  res <- sfheaders::sfc_multipolygon( x, close = FALSE )
   expect_equal( attr( x, "class" ), "data.frame" )
 
 })

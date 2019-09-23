@@ -90,7 +90,7 @@ test_that("single-row objects",{
 
   is_sf <- function(x) "sf" %in% attr(x, "class")
 
-  df <- data.frame(x =1, y =2)
+  df <- data.frame(x =1:3, y =2:4)
   expect_true( is_sf( sfheaders::sf_point( df ) ) )
   expect_true( is_sf( sfheaders::sf_multipoint( df ) ) )
   expect_true( is_sf( sfheaders::sf_linestring( df ) ) )
@@ -98,8 +98,8 @@ test_that("single-row objects",{
   expect_true( is_sf( sfheaders::sf_polygon( df ) ) )
   expect_true( is_sf( sfheaders::sf_multipolygon( df ) ) )
 
-  m <- matrix(1:2, ncol = 2)
-  expect_true( is_sf( sfheaders::sf_point( m ) ) )
+  m <- matrix(1:6, ncol = 2)
+  expect_true( is_sf( sfheaders::sf_point( m[1, ] ) ) )
   expect_true( is_sf( sfheaders::sf_multipoint( m ) ) )
   expect_true( is_sf( sfheaders::sf_linestring( m ) ) )
   expect_true( is_sf( sfheaders::sf_multilinestring( m ) ) )
@@ -108,7 +108,7 @@ test_that("single-row objects",{
 
   is_sfc <- function(x) "sfc" %in% attr( x, "class" )
 
-  df <- data.frame(x =1, y =2)
+  df <- data.frame(x =1:3, y =2:4)
   expect_true( is_sfc( sfheaders::sfc_point( df ) ) )
   expect_true( is_sfc( sfheaders::sfc_multipoint( df ) ) )
   expect_true( is_sfc( sfheaders::sfc_linestring( df ) ) )
@@ -116,7 +116,7 @@ test_that("single-row objects",{
   expect_true( is_sfc( sfheaders::sfc_polygon( df ) ) )
   expect_true( is_sfc( sfheaders::sfc_multipolygon( df ) ) )
 
-  m <- matrix(1:2, ncol = 2)
+  m <- matrix(1:6, ncol = 2)
   expect_true( is_sfc( sfheaders::sfc_point( m ) ) )
   expect_true( is_sfc( sfheaders::sfc_multipoint( m ) ) )
   expect_true( is_sfc( sfheaders::sfc_linestring( m ) ) )
@@ -126,16 +126,16 @@ test_that("single-row objects",{
 
   is_sfg <- function(x) "sfg" %in% attr( x, "class" )
 
-  df <- data.frame(x =1, y =2)
-  expect_true( is_sfg( sfheaders::sfg_point( df ) ) )
+  df <- data.frame(x =1:3, y =2:4)
+  expect_true( is_sfg( sfheaders::sfg_point( df[1,] ) ) )
   expect_true( is_sfg( sfheaders::sfg_multipoint( df ) ) )
   expect_true( is_sfg( sfheaders::sfg_linestring( df ) ) )
   expect_true( is_sfg( sfheaders::sfg_multilinestring( df ) ) )
   expect_true( is_sfg( sfheaders::sfg_polygon( df ) ) )
   expect_true( is_sfg( sfheaders::sfg_multipolygon( df ) ) )
 
-  m <- matrix(1:2, ncol = 2)
-  expect_true( is_sfg( sfheaders::sfg_point( m ) ) )
+  m <- matrix(1:6, ncol = 2)
+  expect_true( is_sfg( sfheaders::sfg_point( m[1,] ) ) )
   expect_true( is_sfg( sfheaders::sfg_multipoint( m ) ) )
   expect_true( is_sfg( sfheaders::sfg_linestring( m ) ) )
   expect_true( is_sfg( sfheaders::sfg_multilinestring( m ) ) )

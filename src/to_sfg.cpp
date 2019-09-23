@@ -48,21 +48,21 @@ Rcpp::List rcpp_sfg_multilinestrings( Rcpp::List& lst ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id ) {
-  return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id );
+SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id, bool close = true ) {
+  return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfg_polygons( Rcpp::List& lst ) {
-  return sfheaders::sfg::sfg_polygons( lst );
+Rcpp::List rcpp_sfg_polygons( Rcpp::List& lst, bool close = true ) {
+  return sfheaders::sfg::sfg_polygons( lst, close );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id ) {
-  return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, polygon_id, line_id );
+SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close = true ) {
+  return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, polygon_id, line_id, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst ) {
-  return sfheaders::sfg::sfg_multipolygons( lst );
+Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst, bool close = true ) {
+  return sfheaders::sfg::sfg_multipolygons( lst, close );
 }

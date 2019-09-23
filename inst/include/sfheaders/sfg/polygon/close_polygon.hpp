@@ -73,6 +73,8 @@ namespace polygon_utils {
     R_xlen_t n_col = nm.ncol();
     R_xlen_t i;
 
+    // Rcpp::Rcout << "n_row: " << n_row << std::endl;
+
     bool is_closed = true;
 
     Rcpp::NumericVector first_row = nm( 0, Rcpp::_ );
@@ -102,6 +104,46 @@ namespace polygon_utils {
     // it is closed
     check_closed_rows( nm.nrow() );
     return nm;
+  }
+
+  inline Rcpp::List close_polygon(
+      Rcpp::List& lst,
+      bool close = true
+  ) {
+
+    if( !close ) {
+      return lst;
+    }
+
+    R_xlen_t n_items = lst.size();
+    R_xlen_t i;
+
+    for( i = 0; i < n_items; i++ ) {
+      SEXP x = lst[i];
+      switch( TYPEOF(x) ) {
+      case INTSXP: {
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+        lst[i] = close_polygon( im, close );
+        break;
+      }
+      case REALSXP: {
+        Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+        lst[i] = close_polygon( nm, close );
+        break;
+      }
+      case VECSXP: {
+        Rcpp::List lst2 = Rcpp::as< Rcpp::List >( x );
+        lst[i] = close_polygon( lst2 );
+        break;
+      }
+      default: {
+        Rcpp::stop("sfheaders - closing polygons requires matrices");
+      }
+      }
+    }
+
+    return lst;
+
   }
 
 } // polygon

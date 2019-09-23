@@ -43,24 +43,24 @@ Rcpp::List rcpp_sfc_multilinestrings( Rcpp::List lst ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id ) {
-  return sfheaders::sfc::sfc_polygon( x, cols, polygon_id, line_id );
+SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, bool close = true ) {
+  return sfheaders::sfc::sfc_polygon( x, cols, polygon_id, line_id, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfc_polygons( Rcpp::List lst ) {
-  return sfheaders::sfc::sfc_polygons( lst );
+Rcpp::List rcpp_sfc_polygons( Rcpp::List lst, bool close = true ) {
+  return sfheaders::sfc::sfc_polygons( lst, close );
 }
 
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id ) {
-  return sfheaders::sfc::sfc_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id );
+SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close = true ) {
+  return sfheaders::sfc::sfc_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfc_multipolygons( Rcpp::List lst ) {
-  return sfheaders::sfc::sfc_multipolygons( lst );
+Rcpp::List rcpp_sfc_multipolygons( Rcpp::List lst, bool close = true ) {
+  return sfheaders::sfc::sfc_multipolygons( lst, close );
 }
 
 

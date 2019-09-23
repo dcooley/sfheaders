@@ -43,9 +43,9 @@ test_that("sfg polygon", {
   expect_equal( res, r_res )
 
   x <- matrix(c(1.2,2), ncol = 2)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, close = FALSE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
-  r_res <- sfg_polygon(x)
+  r_res <- sfg_polygon(x, close = FALSE)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:24), ncol = 3)
@@ -61,21 +61,21 @@ test_that("sfg polygon", {
   expect_equal( res, r_res )
 
   x <- matrix(c(1:4), ncol = 4)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), 3L )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), 3L, close = FALSE )
   expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
-  r_res <- sfg_polygon(x, linestring_id = 4L)
+  r_res <- sfg_polygon(x, linestring_id = 4L, close = FALSE)
   expect_equal( res, r_res )
 
   x <- matrix(c(1.2,2,3,4), ncol = 4)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), 3L )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), 3L, close = FALSE )
   expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
-  r_res <- sfg_polygon(x, linestring_id = 4L)
+  r_res <- sfg_polygon(x, linestring_id = 4L, close = FALSE)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:2), ncol = 2)
   df <- as.data.frame( x )
   x <- as.matrix( df )
-  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), NULL )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), NULL, close = FALSE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
   ## TODO names??
   # r_res <- sfg_polygon(x)
@@ -84,7 +84,7 @@ test_that("sfg polygon", {
   x <- matrix(c(1.2,2), ncol = 2)
   df <- as.data.frame( x )
   x <- as.matrix( df )
-  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), NULL )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), NULL, close = FALSE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
   ## TODO names??
   # r_res <- sfg_polygon(x)
@@ -93,7 +93,7 @@ test_that("sfg polygon", {
   x <- matrix(c(1:3), ncol = 3)
   df <- as.data.frame( x )
   x <- as.matrix( df )
-  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), "V3" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), "V3", close = FALSE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
   ## TODO names??
   # r_res <- sfg_polygon(x)
@@ -102,7 +102,7 @@ test_that("sfg polygon", {
   x <- matrix(c(1.2,2,3), ncol = 3)
   df <- as.data.frame( x )
   x <- as.matrix( df )
-  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), "V3" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c("V1","V2"), "V3", close = FALSE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
   ## TODO names??
   # r_res <- sfg_polygon(x)
@@ -140,7 +140,7 @@ test_that("vectorised version works",{
   m1 <- matrix(1:3, ncol = 3)
   m2 <- matrix(1:3, ncol = 3)
   lst <- list( m1, m2 )
-  res <- sfheaders:::rcpp_sfg_polygons( lst )
+  res <- sfheaders:::rcpp_sfg_polygons( lst, close = FALSE )
   expect_true( all( sapply( res, is_polygon ) ) )
 
 })

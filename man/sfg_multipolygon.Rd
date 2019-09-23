@@ -5,7 +5,7 @@
 \title{sfg multipolygon}
 \usage{
 sfg_multipolygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
-  polygon_id = NULL, linestring_id = NULL)
+  polygon_id = NULL, linestring_id = NULL, close = TRUE)
 }
 \arguments{
 \item{obj}{matrix or data.frame}

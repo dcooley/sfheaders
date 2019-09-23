@@ -42,13 +42,13 @@ Rcpp::DataFrame rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id) {
-  return sfheaders::sf::sf_polygon( x, cols, polygon_id, linestring_id );
+Rcpp::DataFrame rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close = true) {
+  return sfheaders::sf::sf_polygon( x, cols, polygon_id, linestring_id, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id) {
-  return sfheaders::sf::sf_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id );
+Rcpp::DataFrame rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close = true) {
+  return sfheaders::sf::sf_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, close );
 }
 
 

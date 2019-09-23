@@ -158,6 +158,8 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 #' @inheritParams sfc_linestring
 #' @param polygon_id column of ids for polygons
 #' @param linestring_id column of ids for lines (within polygons)
+#' @param close logical indicating whether polygons should be closed. If \code{TRUE},
+#' all polygons will be checked and force closed if possible
 #' @inheritSection sfc_point notes
 #'
 #' @return \code{sfc} object of POLYGON geometries
@@ -201,9 +203,9 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 #'
 #'
 #' @export
-sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL ) {
+sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ) )
+  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close )
 }
 
 
@@ -281,7 +283,7 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
 #'
 #' @export
-sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL ) {
+sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ) )
+  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), close )
 }

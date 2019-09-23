@@ -117,7 +117,7 @@ test_that("ID order maintained",{
   expect_equal( m2[, 1], df[ df$id1 == 2, "x" ] )
   expect_equal( m2[, 2], df[ df$id1 == 2, "y" ] )
 
-  res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L )
+  res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = F )
   m1 <- res$geometry[[1]][[1]]
   m2 <- res$geometry[[1]][[2]]
 
@@ -179,7 +179,7 @@ test_that("unordered ids cause issues",{
     , m = 1:10
   )
 
-  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2")
+  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2", close = FALSE)
   expect_true( all( res$id == unique( df$id1 ) ) )
   m1 <- res$geometry[[1]][[1]]
   m2 <- res$geometry[[1]][[2]]
@@ -201,7 +201,7 @@ test_that("unordered ids cause issues",{
     , m = 1:10
   )
 
-  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2")
+  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2", close = FALSE )
   expect_true( all( res$id == unique( df$id1 ) ) )
   m1 <- res$geometry[[1]][[1]]
   m2 <- res$geometry[[1]][[2]]
@@ -230,7 +230,7 @@ test_that("unordered ids cause issues",{
     , m = 1:10
   )
 
-  res <- sfheaders::sf_multipolygon(df, multipolygon_id = "id1", polygon_id = "id2", linestring_id = "id3")
+  res <- sfheaders::sf_multipolygon(df, multipolygon_id = "id1", polygon_id = "id2", linestring_id = "id3", close = FALSE )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
   m1 <- res$geometry[[1]][[1]][[1]]

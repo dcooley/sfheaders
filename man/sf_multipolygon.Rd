@@ -6,7 +6,7 @@
 \usage{
 sf_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
   m = NULL, multipolygon_id = NULL, polygon_id = NULL,
-  linestring_id = NULL)
+  linestring_id = NULL, close = TRUE)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
@@ -24,6 +24,9 @@ sf_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
 \item{polygon_id}{column of ids for polygons}
 
 \item{linestring_id}{column of ids for lines (within polygons)}
+
+\item{close}{logical indicating whether polygons should be closed. If \code{TRUE},
+all polygons will be checked and force closed if possible}
 }
 \value{
 \code{sf} object of MULTIPOLYGON geometries
