@@ -134,8 +134,8 @@ sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, li
 #'
 #' constructs sfg POLYGON object
 #'
-#' @inheritParams sfg_point
-#' @param linestring_id column of ids for linestrings
+#' @inheritParams sfg_linestring
+#' @param linestring_id column of ids for lines (within polygons)
 #' @param close logical indicating whether polygons should be closed. If \code{TRUE},
 #' all polygons will be checked and force closed if possible
 #' @return \code{sfg} object of POLYGON geometry
@@ -171,9 +171,8 @@ sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring
 #'
 #' constructs sfg MULTIPOLYGON object
 #'
-#' @inheritParams sfg_point
-#' @param polygon_id column of ids for polygons
-#' @param linestring_id column of ids for linestrings
+#' @inheritParams sfg_polygon
+#' @param polygon_id column of ids for polygons (within the multipolygon)
 #'
 #' @return \code{sfg} object of MULTIPOLYGON geometry
 #'

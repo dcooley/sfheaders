@@ -18,7 +18,7 @@ sfg_polygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{m}{m geometry column}
 
-\item{linestring_id}{column of ids for linestrings}
+\item{linestring_id}{column of ids for lines (within polygons)}
 
 \item{close}{logical indicating whether polygons should be closed. If \code{TRUE},
 all polygons will be checked and force closed if possible}
