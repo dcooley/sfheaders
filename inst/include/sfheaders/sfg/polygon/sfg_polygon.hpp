@@ -3,6 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
+#include "sfheaders/sfg/polygon/close_polygon.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 
@@ -11,10 +12,11 @@ namespace sfg {
 
   // polygon is a list of linestrings (matrices)
   inline SEXP sfg_polygon(
-      Rcpp::IntegerMatrix& im
+      Rcpp::IntegerMatrix& im,
+      bool close = true
   ) {
     Rcpp::List mls( 1 );
-    mls[0] = im;
+    mls[0] = sfheaders::polygon_utils::close_polygon( im, close );
     R_xlen_t n_col = im.ncol();
 
     sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON );
@@ -23,10 +25,11 @@ namespace sfg {
   }
 
   inline SEXP sfg_polygon(
-      Rcpp::NumericMatrix& nm
+      Rcpp::NumericMatrix& nm,
+      bool close = true
   ) {
     Rcpp::List mls( 1 );
-    mls[0] = nm;
+    mls[0] = sfheaders::polygon_utils::close_polygon( nm, close );;
     R_xlen_t n_col = nm.ncol();
 
     sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON );
@@ -35,11 +38,12 @@ namespace sfg {
   }
 
   inline SEXP sfg_polygon(
-      Rcpp::DataFrame& df
+      Rcpp::DataFrame& df,
+      bool close = true
   ) {
     Rcpp::List mls( 1 );
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
-    mls[0] = nm;
+    mls[0] = sfheaders::polygon_utils::close_polygon( nm, close );;
     R_xlen_t n_col = nm.ncol();
 
     sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON );
@@ -51,6 +55,8 @@ namespace sfg {
       Rcpp::List& lst
   ) {
 
+    // TODO
+    // close list of polygons
     sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_POLYGON );
 
     return lst;

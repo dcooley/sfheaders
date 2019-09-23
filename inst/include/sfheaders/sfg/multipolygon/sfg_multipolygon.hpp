@@ -5,17 +5,19 @@
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
+#include "sfheaders/sfg/polygon/close_polygon.hpp"
 
 namespace sfheaders {
 namespace sfg {
 
 // multipolygon is a list of list of linestrings (matrices)
 inline SEXP sfg_multipolygon(
-    Rcpp::IntegerMatrix& im
+    Rcpp::IntegerMatrix& im,
+    bool close = true
 ) {
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
-  p[0] = im;
+  p[0] = sfheaders::polygon_utils::close_polygon( im, close );;
   mp[0] = p;
   R_xlen_t n_col = im.ncol();
   sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON );
@@ -24,11 +26,12 @@ inline SEXP sfg_multipolygon(
 }
 
 inline SEXP sfg_multipolygon(
-    Rcpp::NumericMatrix& nm
+    Rcpp::NumericMatrix& nm,
+    bool close = true
 ) {
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
-  p[0] = nm;
+  p[0] = sfheaders::polygon_utils::close_polygon( nm, close );;
   mp[0] = p;
   R_xlen_t n_col = nm.ncol();
   sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON );
@@ -37,13 +40,14 @@ inline SEXP sfg_multipolygon(
 }
 
 inline SEXP sfg_multipolygon(
-    Rcpp::DataFrame& df
+    Rcpp::DataFrame& df,
+    bool close = true
 ) {
 
   Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
-  p[0] = nm;
+  p[0] = sfheaders::polygon_utils::close_polygon( nm, close );;
   mp[0] = p;
   R_xlen_t n_col = nm.ncol();
   sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON );
@@ -57,6 +61,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::List& lst
 ) {
   Rcpp::List mp( 1 );
+  // TODO - close list of polygons
   mp[0] = lst;
   // each list element must be a matrix
   sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTIPOLYGON );
