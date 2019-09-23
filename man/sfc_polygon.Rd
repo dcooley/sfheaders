@@ -41,10 +41,10 @@ The data.frame and matrices you send into the sfheader functions must be ordered
 
 \examples{
 
-m <- matrix(c(0,0,0,0,1,1), ncol = 3 )
+m <- matrix(c(0,0,0,0,1,1), ncol = 2 )
 sfc_polygon( m )
 
-m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3), ncol = 3, byrow = TRUE)
+m <- matrix(c(0,0,0,0,0,1,0,1,1,1,2,2,1,2,3,1,3,2), ncol = 3, byrow = TRUE)
 sfc_polygon( obj = m )
 sfc_polygon( obj = m, polygon_id = 1 )
 sfc_polygon( obj = m, linestring_id = 1 )
@@ -56,12 +56,12 @@ sfc_polygon( obj = m, x = 1, y = 2, z = 3 )
 sfc_polygon( obj = m, x = 2, y = 3, linestring_id = 1, polygon_id = 1 )
 
 df <- data.frame(
-  ml_id = c(1,1,1,1,1,1,1,1,2,2,2,2,2)
-  , l_id = c(1,1,1,2,2,3,3,3,1,1,1,2,2)
-  , x = rnorm(13)
-  , y = rnorm(13)
-  , z = rnorm(13)
-  , m = rnorm(13)
+  ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+  , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+  , x = rnorm(15)
+  , y = rnorm(15)
+  , z = rnorm(15)
+  , m = rnorm(15)
 )
 
 sfc_polygon( obj = df, x = "x", y = "y")
