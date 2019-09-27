@@ -1,5 +1,6 @@
 ## Submission feedback
 
+* removed directed-quotes from DESCRIPTION
 * Updated documentation to include \value
 
 ## Test environments
