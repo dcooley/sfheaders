@@ -36,7 +36,7 @@ namespace sfc {
     std::unordered_set< std::string > geometry_types{ geom };
 
     int epsg = NA_INTEGER;
-    std::string proj4string;
+    Rcpp::String proj4string = NA_STRING;
     //int n_empty = 0;
     double precision = 0.0;
 

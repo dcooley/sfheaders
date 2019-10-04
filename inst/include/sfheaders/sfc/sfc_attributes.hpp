@@ -116,7 +116,7 @@ namespace sfc {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       int& epsg,
-      std::string& proj4string,
+      Rcpp::String& proj4string,
       int n_empty = 0,
       double precision = 0.0
   ) {
@@ -163,7 +163,7 @@ namespace sfc {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       int& epsg,
-      std::string& proj4string,
+      Rcpp::String& proj4string,
       int n_empty = 0,
       double precision = 0.0
   ) {
