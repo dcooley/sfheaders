@@ -3,6 +3,9 @@
 status](https://travis-ci.com/dcooley/sfheaders.svg?branch=master)](https://travis-ci.com/dcooley/sfheaders)
 [![Coverage
 status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://codecov.io/github/dcooley/sfheaders?branch=master)
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/sfheaders)
+[![CRAN RStudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/sfheaders)](https://CRAN.R-project.org/package=sfheaders)
 
 ## Another spatial library?
 
