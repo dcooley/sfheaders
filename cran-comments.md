@@ -1,7 +1,6 @@
-## Submission feedback
 
-* removed directed-quotes from DESCRIPTION
-* Updated documentation to include \value
+* updates v0.0.1 to v0.0.2
+* 2 small patch fixes
 
 ## Test environments
 
@@ -11,6 +10,4 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
+0 errors | 0 warnings | 0 note
