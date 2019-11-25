@@ -289,8 +289,8 @@ namespace zm {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    if( geometry_cols.length() > 3 ) {
-      int idx = geometry_cols[3];
+    if( geometry_cols.length() > 2 ) {
+      int idx = geometry_cols[2];
       Rcpp::NumericVector z = df[ idx ];
       double zmin = Rcpp::min( z );
       double zmax = Rcpp::max( z );
@@ -306,8 +306,10 @@ namespace zm {
       Rcpp::StringVector& geometry_cols
   ) {
 
-    if( geometry_cols.length() > 3 ) {
-      Rcpp::String idx = geometry_cols[3];
+    // Rcpp::Rcout << "geometry_cols: " << geometry_cols << std::endl;
+
+    if( geometry_cols.length() > 2 ) {
+      Rcpp::String idx = geometry_cols[2];
       std::string s_idx = idx.get_cstring();
       Rcpp::IntegerVector z = df[ s_idx ];
       double zmin = Rcpp::min( z );

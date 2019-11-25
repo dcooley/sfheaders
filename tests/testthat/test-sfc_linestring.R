@@ -238,3 +238,17 @@ test_that("vectorised version works",{
 
 })
 
+test_that("issue 38 is fixed", {
+
+  df <- data.frame(
+    x = 1:10
+    , y = 1:10
+    , z = 1:10
+    # , m = 1:10
+    , id = c(1,1,1,1,1,2,2,2,2,2)
+  )
+
+  sfc <- sfheaders::sfc_linestring(df, linestring_id = "id")
+  expect_true( all( unclass( attr( sfc, "z_range" ) ) == c(1, 10) ) )
+  expect_true( all( is.na( unclass( attr( sfc, "m_range" ) ) ) ) )
+})

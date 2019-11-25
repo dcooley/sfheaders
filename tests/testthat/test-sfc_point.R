@@ -13,7 +13,7 @@ test_that("sfc_points works for various objects",{
   x <- matrix( c(1:10) , ncol = 2 )
   res <- sfheaders:::rcpp_sfc_point( x, NULL )
   expect_true( all( attr(res, "class") == c("sfc_POINT", "sfc") ) )
-  expect_true( all( is.na( attr(res, "z_range") ) ) )
+  expect_true( all( is.na( unclass( attr(res, "z_range") ) ) ) )
 
   x <- matrix( c(1:12) , ncol = 3 )
   res <- sfheaders:::rcpp_sfc_point( x, NULL )

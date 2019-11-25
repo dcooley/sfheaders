@@ -448,6 +448,7 @@ namespace sfc {
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& line_ids
   ) {
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -491,6 +492,7 @@ namespace sfc {
     Rcpp::IntegerVector& geometry_cols,
     Rcpp::NumericVector& line_ids
   ) {
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -534,6 +536,9 @@ namespace sfc {
       Rcpp::StringVector& geometry_cols,
       SEXP& line_ids
   ) {
+
+    // Rcpp::Rcout << "linestring" << std::endl;
+
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -542,6 +547,8 @@ namespace sfc {
 
     R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
+    // Rcpp::Rcout << "z_range: " << z_range << std::endl;
+    // Rcpp::Rcout << "m_range: " << m_range << std::endl;
 
     SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
 
