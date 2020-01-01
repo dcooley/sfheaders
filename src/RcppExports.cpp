@@ -87,6 +87,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_sfg_coordinates
+SEXP rcpp_sfg_coordinates(SEXP sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_coordinates(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_coordinates(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sf_point
 Rcpp::DataFrame rcpp_sf_point(SEXP x, SEXP cols);
 RcppExport SEXP _sfheaders_rcpp_sf_point(SEXP xSEXP, SEXP colsSEXP) {
@@ -575,6 +586,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},
     {"_sfheaders_rcpp_get_list_mat", (DL_FUNC) &_sfheaders_rcpp_get_list_mat, 3},
+    {"_sfheaders_rcpp_sfg_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_coordinates, 1},
     {"_sfheaders_rcpp_sf_point", (DL_FUNC) &_sfheaders_rcpp_sf_point, 2},
     {"_sfheaders_rcpp_sf_multipoint", (DL_FUNC) &_sfheaders_rcpp_sf_multipoint, 3},
     {"_sfheaders_rcpp_sf_linestring", (DL_FUNC) &_sfheaders_rcpp_sf_linestring, 3},

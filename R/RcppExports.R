@@ -29,6 +29,10 @@ rcpp_get_list_mat <- function(x, cols, id) {
     .Call(`_sfheaders_rcpp_get_list_mat`, x, cols, id)
 }
 
+rcpp_sfg_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_coordinates`, sfg)
+}
+
 rcpp_sf_point <- function(x, cols) {
     .Call(`_sfheaders_rcpp_sf_point`, x, cols)
 }
