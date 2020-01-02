@@ -53,6 +53,10 @@ rcpp_sfg_multipolygon_coordinates <- function(sfg) {
     .Call(`_sfheaders_rcpp_sfg_multipolygon_coordinates`, sfg)
 }
 
+rcpp_sfg_to_df <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_to_df`, sfg)
+}
+
 rcpp_sf_point <- function(x, cols) {
     .Call(`_sfheaders_rcpp_sf_point`, x, cols)
 }

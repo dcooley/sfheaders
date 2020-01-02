@@ -26,82 +26,86 @@
 # mp
 # sfheaders:::rcpp_sfg_multipolygon_coordinates( mp )
 # # sfheaders:::rcpp_sfg_coordinate_lists( mp )
-# # sfheaders:::rcpp_sfg_to_df( mp )
+# sfheaders:::rcpp_sfg_to_df( mp )
 # mp
 #
 #
 # pt
 # sfheaders:::rcpp_sfg_point_coordinates( pt )
 # # sfheaders:::rcpp_sfg_coordinate_lists( pt )
-# # sfheaders:::rcpp_sfg_to_df( pt )
+# sfheaders:::rcpp_sfg_to_df( pt )
 # pt
 #
 # mpt
 # sfheaders:::rcpp_sfg_multipoint_coordinates( mpt )
 # # sfheaders:::rcpp_sfg_coordinate_lists( mpt )
-# # sfheaders:::rcpp_sfg_to_df( mpt )
+# sfheaders:::rcpp_sfg_to_df( mpt )
 # mpt
 #
 # ls
 # sfheaders:::rcpp_sfg_linestring_coordinates( ls )
 # # sfheaders:::rcpp_sfg_coordinate_lists( ls )
-# # sfheaders:::rcpp_sfg_to_df( ls )
+# sfheaders:::rcpp_sfg_to_df( ls )
 # ls
 #
 # mls
 # sfheaders:::rcpp_sfg_multilinestring_coordinates( mls )
 # # sfheaders:::rcpp_sfg_coordinate_lists( mls )
-# # sfheaders:::rcpp_sfg_to_df( mls )
+# sfheaders:::rcpp_sfg_to_df( mls )
 # mls
 #
 # p
 # sfheaders:::rcpp_sfg_polygon_coordinates( p )
 # # sfheaders:::rcpp_sfg_coordinate_lists( p )
-# # sfheaders:::rcpp_sfg_to_df( p )
+# sfheaders:::rcpp_sfg_to_df( p )
 # p
+
 #
-
-
+#
 # ls <- sfg_linestring( matrix(1:1e7, ncol = 2) )
 #
-# res <- sfheaders:::rcpp_sfg_to_df( ls )
+# res <- sfheaders:::rcpp_sfg_linestring_coordinates( ls )
 #
 # library(microbenchmark)
 #
 # microbenchmark(
 #   sf = { coords <- sf::st_coordinates( ls ) },
-#   sfh = { df <- sfheaders:::rcpp_sfg_to_df( ls ) },
-#   sfh_c = { res <- sfheaders:::rcpp_sfg_coordinates( ls ) },
-#   sfh2 = { res <- sfheaders:::rcpp_sfg_coordinates( ls ); df2 <- as.data.frame( res ) },
-#   times = 5
-# )
-# #
-# # mls <- sfg_multilinestring(
-# #   cbind(
-# #     c(
-# #       rep(1, 1e6 / 8)
-# #       , rep(2, 1e6 / 8)
-# #       , rep(3, 1e6 / 8)
-# #       , rep(4, 1e6 / 8)
-# #       )
-# #     , matrix(1:1e6, ncol = 2)
-# #     )
-# #   , linestring_id = 1
-# #   )
-# #
-# # res <- sfheaders:::rcpp_sfg_to_df( mls )
-# #
-# # library(microbenchmark)
-# #
-# # ## Too slow??
-# microbenchmark(
-#   sf = { sf::st_coordinates( mls ) },
-#   sfh = { sfheaders:::rcpp_sfg_to_df( mls ) },
-#   sfh_c = { sfheaders:::rcpp_sfg_coordinates( mls ) },
+#   sfh = { lst <- sfheaders:::rcpp_sfg_linestring_coordinates( ls ) },
+#   #sfh = { df <- sfheaders:::rcpp_sfg_to_df( ls ) },
+#   #sfh_c = { res <- sfheaders:::rcpp_sfg_coordinates( ls ) },
+#   #sfh2 = { res <- sfheaders:::rcpp_sfg_coordinates( ls ); df2 <- as.data.frame( res ) },
 #   times = 5
 # )
 #
-# n <- 1e6
+# mls <- sfg_multilinestring(
+#   cbind(
+#     c(
+#       rep(1, 1e6 / 8)
+#       , rep(2, 1e6 / 8)
+#       , rep(3, 1e6 / 8)
+#       , rep(4, 1e6 / 8)
+#       )
+#     , matrix(1:1e6, ncol = 2)
+#     )
+#   , linestring_id = 1
+#   )
+#
+# res <- sfheaders:::rcpp_sfg_multilinestring_coordinates( mls )
+#
+# library(microbenchmark)
+# #
+# microbenchmark(
+#   sf = { sf::st_coordinates( mls ) },
+#   sfh = { sfheaders:::rcpp_sfg_multilinestring_coordinates( mls ) },
+#   # sfh = { sfheaders:::rcpp_sfg_to_df( mls ) },
+#   # sfh_c = { sfheaders:::rcpp_sfg_coordinates( mls ) },
+#   times = 5
+# )
+
+
+# sfheaders:::rcpp_sfg_to_df( p )
+
+# n <- 1e5
 # df <- data.frame(
 #   polygon_id = c(rep(1, n / 5), rep(2, n / 5), rep(3, n / 5), rep(4, n / 5), rep(5, n / 5))
 #   , line_id = c( rep(1, n / 10), rep(2, n / 10) )
@@ -113,9 +117,11 @@
 #   df, x = "x", y = "y"
 #   , polygon_id = "polygon_id"
 #   , linestring_id = "line_id"
+#   , close = F
 # )
 #
-# # res <- sfheaders:::rcpp_sfg_to_df( mp )
+# #res <- sfheaders:::rcpp_sfg_multipolygon_coordinates( mp )
+# library(microbenchmark)
 #
 # microbenchmark(
 #   sf = { coords <- sf::st_coordinates( mp ) },

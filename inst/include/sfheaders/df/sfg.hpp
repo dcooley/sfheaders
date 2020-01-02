@@ -46,8 +46,7 @@ namespace df {
     return Rcpp::CharacterVector();
   }
 
-  inline Rcpp::CharacterVector make_names( SEXP& sfg ) {
-    Rcpp::CharacterVector cls = getSfgClass( sfg );
+  inline Rcpp::CharacterVector make_names( Rcpp::CharacterVector& cls ) {
 
     std::string dim;
     std::string geometry;
@@ -167,7 +166,7 @@ namespace df {
   //   return res;
   // }
 
-  inline Rcpp::List matrix_to_list( Rcpp::NumericMatrix& mat ) {
+  inline Rcpp::List matrix_to_list( Rcpp::NumericMatrix& mat, R_xlen_t& sfg_rows ) {
     //R_xlen_t n_row = mat.nrow();
     R_xlen_t n_col = mat.ncol();
     Rcpp::List res( n_col );
@@ -175,17 +174,19 @@ namespace df {
     for( i = 0; i < n_col; ++i ) {
       res[ i ] = mat( Rcpp::_, i );
     }
+    sfg_rows = mat.nrow();
     return res;
   }
 
   template< int RTYPE >
-  inline Rcpp::List vector_to_list( Rcpp::Vector< RTYPE >& v ) {
+  inline Rcpp::List vector_to_list( Rcpp::Vector< RTYPE >& v, R_xlen_t& sfg_rows ) {
     R_xlen_t n = v.length();
     Rcpp::List res( n );
     R_xlen_t i;
     for( i = 0; i < n; ++i ) {
       res[ i ] = v[ i ];
     }
+    sfg_rows = 1; // TODO??
     return res;
   }
 
@@ -203,9 +204,9 @@ namespace df {
     R_xlen_t j;
 
     Rcpp::List first_list = lst[ 0 ];
-    R_xlen_t n_vectors = first_list.length();
+    R_xlen_t n_vectors = first_list.length() + 1; // vector for each matrix column, and an id column
 
-    Rcpp::List lst_res( n_vectors ); // vector for each matrix column.
+    Rcpp::List lst_res( n_vectors );
     Rcpp::NumericVector to_fill = Rcpp::NumericVector( total_rows, Rcpp::NumericVector::get_na() );
 
     for( i = 0; i < n_vectors; ++i ) {
@@ -219,15 +220,28 @@ namespace df {
       Rcpp::List inner_list = lst[ i ];
       R_xlen_t n_col = inner_list.size();
 
+      if( n_vectors - 1 != n_col ) {
+        Rcpp::stop("something's wrong here");
+      }
+
       for( j = 0; j < n_col; ++j ) {
 
-        Rcpp::NumericVector v = inner_list[ j ];
+        Rcpp::NumericVector v = inner_list[ j  ];
         vector_size = v.length();
 
-        Rcpp::NumericVector res_vec = lst_res[ j ];
+        Rcpp::NumericVector res_vec = lst_res[ j + 1];
         std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
-        lst_res[ j ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
+        lst_res[ j + 1 ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
       }
+
+      // id column
+      double id = i + 1;
+      Rcpp::NumericVector id_column = Rcpp::rep( id, vector_size );
+      Rcpp::NumericVector res_id = lst_res[ 0 ];
+      std::copy( id_column.begin(), id_column.end(), res_id.begin() + row_counter );
+      //Rcpp::Rcout << "id_column: " << id_column << std::endl;
+      lst_res[ 0 ] = Rcpp::clone( res_id );
+
       row_counter = row_counter + vector_size;
     }
 
@@ -235,19 +249,21 @@ namespace df {
   }
 
   template < int RTYPE >
-  inline Rcpp::List sfg_point_coordinates( Rcpp::Vector< RTYPE >& sfg ) {
-    return vector_to_list( sfg );
+  inline Rcpp::List sfg_point_coordinates( Rcpp::Vector< RTYPE >& sfg, R_xlen_t& sfg_rows ) {
+    return vector_to_list( sfg, sfg_rows );
   }
 
-  inline Rcpp::List sfg_multipoint_coordinates( Rcpp::NumericMatrix& sfg ) {
-    return matrix_to_list( sfg );
+  inline Rcpp::List sfg_multipoint_coordinates( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows) {
+    return matrix_to_list( sfg, sfg_rows );
   }
 
-  inline Rcpp::List sfg_linestring_coordinates( Rcpp::NumericMatrix& sfg ) {
-    return matrix_to_list( sfg );
+  inline Rcpp::List sfg_linestring_coordinates( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows ) {
+    return matrix_to_list( sfg, sfg_rows );
   }
 
-  inline Rcpp::List sfg_multilinestring_coordinates( Rcpp::List& sfg ) {
+  // any loop requires an additional 'id' column
+
+  inline Rcpp::List sfg_multilinestring_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
     R_xlen_t i;
     R_xlen_t n = sfg.size();
     Rcpp::List res( n );
@@ -255,46 +271,97 @@ namespace df {
     for( i = 0; i < n; ++i ) {
       Rcpp::NumericMatrix mat = sfg[ i ];
       total_rows = total_rows + mat.nrow();
-      res[ i ] = matrix_to_list( mat );
+      res[ i ] = matrix_to_list( mat, sfg_rows );
     }
-    //return res;
+    sfg_rows = total_rows;
     return collapse_list( res, total_rows );
   }
 
-  inline Rcpp::List sfg_polygon_coordinates( Rcpp::List& sfg ) {
-    return sfg_multilinestring_coordinates( sfg );
+  inline Rcpp::List sfg_polygon_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
+    return sfg_multilinestring_coordinates( sfg, sfg_rows );
   }
 
-  inline Rcpp::List sfg_multipolygon_coordinates( Rcpp::List& sfg ) {
+  inline Rcpp::List sfg_multipolygon_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
     R_xlen_t i;
     R_xlen_t j;
     R_xlen_t n = sfg.size();
     Rcpp::List res( n );
     R_xlen_t total_rows = 0;
+    R_xlen_t inner_total_rows;
 
     for( i = 0; i < n; ++i ) {
       Rcpp::List lst = sfg[ i ];
 
       R_xlen_t n2 = lst.size();
       Rcpp::List res2( n2 );
-      R_xlen_t inner_total_rows = 0;
+      inner_total_rows = 0;
 
       for( j = 0; j < n2; ++j ) {
         Rcpp::NumericMatrix mat = lst[ j ];
         inner_total_rows = inner_total_rows + mat.nrow();
-        res2[ j ] = matrix_to_list( mat );
+        res2[ j ] = matrix_to_list( mat, sfg_rows );
       }
 
       total_rows = total_rows + inner_total_rows;
 
-      res[ i ] = collapse_list( res2, total_rows );
+      res[ i ] = collapse_list( res2, inner_total_rows );
     }
+    //return res;
+    sfg_rows = total_rows;
     return collapse_list( res, total_rows );
   }
 
   inline Rcpp::List sfg_to_df( SEXP& sfg ) {
-    // this is where teh data.frame is made
-    // the _coordinates() gets just the coordinates with id values
+
+    Rcpp::List res;
+
+    Rcpp::CharacterVector cls = getSfgClass( sfg );
+
+    std::string dim;
+    std::string geometry;
+
+    Rcpp::LogicalVector columns( column_names.length() );
+
+    dim = cls[0];
+    geometry = cls[1];
+
+    R_xlen_t sfg_rows = 0;
+
+    if( geometry == "POINT" ) {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
+      res = sfg_point_coordinates( nv, sfg_rows );
+    } else if ( geometry == "MULTIPOINT" ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( sfg );
+      res = sfg_multipoint_coordinates( nm, sfg_rows );
+    } else if ( geometry == "LINESTRING" ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( sfg );
+      res = sfg_linestring_coordinates( nm, sfg_rows );
+    } else if ( geometry == "MULTILINESTRING" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      res = sfg_multilinestring_coordinates( lst, sfg_rows );
+    } else if ( geometry == "POLYGON" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      res = sfg_polygon_coordinates( lst, sfg_rows );
+    } else if ( geometry == "MULTIPOLYGON" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      res = sfg_multipolygon_coordinates( lst, sfg_rows );
+    } else {
+      Rcpp::stop("sfheaders - unknown geometry type");
+    }
+
+    Rcpp::CharacterVector df_names = make_names( cls );
+
+    res.attr("class") = Rcpp::CharacterVector("data.frame");
+
+    if( sfg_rows > 0 ) {
+      Rcpp::IntegerVector rownames = Rcpp::seq( 1, sfg_rows );
+      res.attr("row.names") = rownames;
+    } else {
+      res.attr("row.names") = Rcpp::IntegerVector(0);
+    }
+
+    res.attr("names") = df_names;
+    return res;
 
   }
 
