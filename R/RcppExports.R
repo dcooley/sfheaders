@@ -29,12 +29,28 @@ rcpp_get_list_mat <- function(x, cols, id) {
     .Call(`_sfheaders_rcpp_get_list_mat`, x, cols, id)
 }
 
-rcpp_sfg_coordinates <- function(sfg) {
-    .Call(`_sfheaders_rcpp_sfg_coordinates`, sfg)
+rcpp_sfg_point_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_point_coordinates`, sfg)
 }
 
-rcpp_sfg_to_df <- function(sfg) {
-    .Call(`_sfheaders_rcpp_sfg_to_df`, sfg)
+rcpp_sfg_multipoint_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_multipoint_coordinates`, sfg)
+}
+
+rcpp_sfg_linestring_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_linestring_coordinates`, sfg)
+}
+
+rcpp_sfg_multilinestring_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_multilinestring_coordinates`, sfg)
+}
+
+rcpp_sfg_polygon_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_polygon_coordinates`, sfg)
+}
+
+rcpp_sfg_multipolygon_coordinates <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_multipolygon_coordinates`, sfg)
 }
 
 rcpp_sf_point <- function(x, cols) {

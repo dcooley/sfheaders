@@ -87,25 +87,69 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_sfg_coordinates
-SEXP rcpp_sfg_coordinates(SEXP sfg);
-RcppExport SEXP _sfheaders_rcpp_sfg_coordinates(SEXP sfgSEXP) {
+// rcpp_sfg_point_coordinates
+SEXP rcpp_sfg_point_coordinates(Rcpp::NumericVector sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_point_coordinates(SEXP sfgSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_coordinates(sfg));
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_point_coordinates(sfg));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_sfg_to_df
-SEXP rcpp_sfg_to_df(SEXP sfg);
-RcppExport SEXP _sfheaders_rcpp_sfg_to_df(SEXP sfgSEXP) {
+// rcpp_sfg_multipoint_coordinates
+SEXP rcpp_sfg_multipoint_coordinates(Rcpp::NumericMatrix sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipoint_coordinates(SEXP sfgSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_to_df(sfg));
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoint_coordinates(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfg_linestring_coordinates
+SEXP rcpp_sfg_linestring_coordinates(Rcpp::NumericMatrix sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_linestring_coordinates(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestring_coordinates(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfg_multilinestring_coordinates
+SEXP rcpp_sfg_multilinestring_coordinates(Rcpp::List sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_multilinestring_coordinates(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestring_coordinates(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfg_polygon_coordinates
+SEXP rcpp_sfg_polygon_coordinates(Rcpp::List sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_polygon_coordinates(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygon_coordinates(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfg_multipolygon_coordinates
+SEXP rcpp_sfg_multipolygon_coordinates(Rcpp::List sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipolygon_coordinates(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygon_coordinates(sfg));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -597,8 +641,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},
     {"_sfheaders_rcpp_get_list_mat", (DL_FUNC) &_sfheaders_rcpp_get_list_mat, 3},
-    {"_sfheaders_rcpp_sfg_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_coordinates, 1},
-    {"_sfheaders_rcpp_sfg_to_df", (DL_FUNC) &_sfheaders_rcpp_sfg_to_df, 1},
+    {"_sfheaders_rcpp_sfg_point_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_point_coordinates, 1},
+    {"_sfheaders_rcpp_sfg_multipoint_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint_coordinates, 1},
+    {"_sfheaders_rcpp_sfg_linestring_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_linestring_coordinates, 1},
+    {"_sfheaders_rcpp_sfg_multilinestring_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_multilinestring_coordinates, 1},
+    {"_sfheaders_rcpp_sfg_polygon_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_polygon_coordinates, 1},
+    {"_sfheaders_rcpp_sfg_multipolygon_coordinates", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygon_coordinates, 1},
     {"_sfheaders_rcpp_sf_point", (DL_FUNC) &_sfheaders_rcpp_sf_point, 2},
     {"_sfheaders_rcpp_sf_multipoint", (DL_FUNC) &_sfheaders_rcpp_sf_multipoint, 3},
     {"_sfheaders_rcpp_sf_linestring", (DL_FUNC) &_sfheaders_rcpp_sf_linestring, 3},
