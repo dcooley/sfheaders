@@ -1,20 +1,80 @@
-# df <- data.frame(
-#   id = c(1,1,1,2,2,2)
-#   , x = c(1,1,1,2,2,2)
-#   , y = c(3,3,3,4,4,4)
+# # df <- data.frame(
+# #   id = c(1,1,1,2,2,2)
+# #   , x = c(1,1,1,2,2,2)
+# #   , y = c(3,3,3,4,4,4)
+# # )
+# #
+# # pt <- sfheaders:::sfg_point(c(1,2))
+# # mpt <- sfheaders:::sfg_multipoint( df )
+# # ls <- sfheaders::sfg_linestring(df, x = "x", y = "y")
+# # mls <- sfheaders::sfg_multilinestring(obj = df, linestring_id = "id")
+# #
+# # m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+# # p <- sfg_polygon( obj = m, x = 1, y = 2, linestring_id = 3 )
+# #
+# # df <- data.frame(
+# #   polygon_id = c(rep(1, 5), rep(2, 10))
+# #   , line_id = c(rep(1, 10), rep(2, 5))
+# #   , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
+# #   , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
+# #   , z = c(1)
+# #   , m = c(1)
+# # )
+# #
+# # mp <- sfg_multipolygon( df, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id" )
+# #
+# # pt
+# # sfheaders:::rcpp_sfg_to_df( pt )
+# # pt
+# # mpt
+# # sfheaders:::rcpp_sfg_to_df( mpt )
+# # mpt
+# # ls
+# # sfheaders:::rcpp_sfg_to_df( ls )
+# # ls
+# # mls
+# # sfheaders:::rcpp_sfg_to_df( mls )
+# # mls
+# # p
+# # sfheaders:::rcpp_sfg_to_df( p )
+# # p
+# # mp
+# # sfheaders:::rcpp_sfg_to_df( mp )
+# # mp
+# #
+# ls <- sfg_linestring( matrix(1:1e7, ncol = 2) )
+#
+# res <- sfheaders:::rcpp_sfg_to_df( ls )
+#
+# library(microbenchmark)
+#
+# microbenchmark(
+#   sf = { coords <- sf::st_coordinates( ls ) },
+#   sfh = { df <- sfheaders:::rcpp_sfg_to_df( ls ) },
+#   sfh2 = { res <- sfheaders:::rcpp_sfg_coordinates( ls ); df2 <- as.data.frame( res ) },
+#   times = 5
 # )
 #
+# mls <- sfg_multilinestring(
+#   cbind(
+#     c(
+#       rep(1, 1e6 / 8)
+#       , rep(2, 1e6 / 8)
+#       , rep(3, 1e6 / 8)
+#       , rep(4, 1e6 / 8)
+#       )
+#     , matrix(1:1e6, ncol = 2)
+#     )
+#   , linestring_id = 1
+#   )
 #
-# pt <- sfheaders:::sfg_point(c(1,2))
-# mp <- sfheaders:::sfg_multipoint( df )
-# ls <- sfheaders::sfg_linestring(df, x = "x", y = "y")
-# mls <- sfheaders::sfg_multilinestring(obj = df, linestring_id = "id")
+# res <- sfheaders:::rcpp_sfg_to_df( mls )
 #
-# m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
-# p <- sfg_polygon( obj = m, x = 1, y = 2, linestring_id = 3 )
+# library(microbenchmark)
 #
-# sfheaders:::rcpp_sfg_coordinates( pt )
-# sfheaders:::rcpp_sfg_coordinates( mp )
-# sfheaders:::rcpp_sfg_coordinates( ls )
-# sfheaders:::rcpp_sfg_coordinates( mls )
-# sfheaders:::rcpp_sfg_coordinates( p )
+# ## Too slow!
+# microbenchmark(
+#   sf = { sf::st_coordinates( mls ) },
+#   sfh = { sfheaders:::rcpp_sfg_to_df( mls ) },
+#   times = 5
+# )
