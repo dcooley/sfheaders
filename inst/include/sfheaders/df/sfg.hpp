@@ -34,7 +34,6 @@ namespace df {
   }
 
   inline Rcpp::CharacterVector getSfgClass( SEXP sfg ) {
-
     switch( TYPEOF( sfg ) ) {
     case REALSXP:
       return sfgClass<REALSXP>( sfg );
@@ -89,84 +88,84 @@ namespace df {
     return column_names[ columns ];
   }
 
-  inline Rcpp::NumericMatrix add_id_column( Rcpp::NumericMatrix& mat, double id ) {
-    // expands a matrix by one-column and adds the id value
-
-    R_xlen_t n_col = mat.ncol();
-    R_xlen_t n_row = mat.nrow();
-    Rcpp::NumericVector id_column = Rcpp::rep( id, n_row );
-
-    Rcpp::NumericMatrix res( n_row, n_col + 1 ); // to store id column
-
-    res( Rcpp::_, 0 ) = id_column;
-
-    // then put the geometries in the remaining columns
-    R_xlen_t i;
-    for( i = 0; i < n_col; ++i ) {
-      res( Rcpp::_, i + 1 ) = mat( Rcpp::_, i );
-    }
-    return res;
-  }
-
-
-  template < int RTYPE >
-  inline Rcpp::NumericMatrix vector_to_matrix( Rcpp::Vector< RTYPE >& v ) {
-    R_xlen_t n_col = v.length();
-    v.attr("class") = R_NilValue;
-    v.attr("dim") = Rcpp::Dimension( 1, n_col );
-    return Rcpp::as< Rcpp::NumericMatrix >( v );
-  }
-
-
-  inline Rcpp::NumericMatrix list_to_matrix( Rcpp::List& lst ) {
-    // only works with a list where each element is a matrix, no sub-lists.
-    R_xlen_t i, j;
-    R_xlen_t n = lst.size();
-
-    if( n == 0 ) {
-      // TODO:
-      // return empty?
-    }
-    R_xlen_t total_rows = 0;
-    for( i = 0; i < n; ++i ) {
-      SEXP sfg = lst[ i ];
-      total_rows += sfheaders::utils::sexp_n_row( sfg );
-    }
-    // can now create a vector (matrix) based on the number of rows, and teh number of columns.
-    Rcpp::NumericMatrix first_mat = lst[ 0 ];
-    R_xlen_t n_col = first_mat.ncol();
-
-    Rcpp::List lst_res( n_col ); // vector for each matrix column.
-    Rcpp::NumericVector to_fill = Rcpp::NumericVector( total_rows, Rcpp::NumericVector::get_na() );
-
-    for( i = 0; i < n_col; ++i ) {
-      lst_res[ i ] = to_fill;
-    }
-
-    Rcpp::NumericMatrix res( total_rows, n_col );
-    R_xlen_t row_counter = 0;
-
-    for( i = 0; i < n; ++i ) {
-      Rcpp::NumericMatrix inner_mat = lst[ i ];
-
-      for( j = 0; j < n_col; ++j ) {
-        Rcpp::NumericVector v = inner_mat( Rcpp::_, j );
-
-        Rcpp::NumericVector res_vec = lst_res[ j ];
-        std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
-        lst_res[ j ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
-      }
-      row_counter = row_counter + inner_mat.nrow();
-    }
-
-    // fill final matrix.
-    for( i = 0; i < n_col; ++i ) {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( lst_res[ i ] );
-      res( Rcpp::_, i ) = nv;
-    }
-
-    return res;
-  }
+  // inline Rcpp::NumericMatrix add_id_column( Rcpp::NumericMatrix& mat, double id ) {
+  //   // expands a matrix by one-column and adds the id value
+  //
+  //   R_xlen_t n_col = mat.ncol();
+  //   R_xlen_t n_row = mat.nrow();
+  //   Rcpp::NumericVector id_column = Rcpp::rep( id, n_row );
+  //
+  //   Rcpp::NumericMatrix res( n_row, n_col + 1 ); // to store id column
+  //
+  //   res( Rcpp::_, 0 ) = id_column;
+  //
+  //   // then put the geometries in the remaining columns
+  //   R_xlen_t i;
+  //   for( i = 0; i < n_col; ++i ) {
+  //     res( Rcpp::_, i + 1 ) = mat( Rcpp::_, i );
+  //   }
+  //   return res;
+  // }
+  //
+  //
+  // template < int RTYPE >
+  // inline Rcpp::NumericMatrix vector_to_matrix( Rcpp::Vector< RTYPE >& v ) {
+  //   R_xlen_t n_col = v.length();
+  //   v.attr("class") = R_NilValue;
+  //   v.attr("dim") = Rcpp::Dimension( 1, n_col );
+  //   return Rcpp::as< Rcpp::NumericMatrix >( v );
+  // }
+  //
+  //
+  // inline Rcpp::NumericMatrix list_to_matrix( Rcpp::List& lst ) {
+  //   // only works with a list where each element is a matrix, no sub-lists.
+  //   R_xlen_t i, j;
+  //   R_xlen_t n = lst.size();
+  //
+  //   if( n == 0 ) {
+  //     // TODO:
+  //     // return empty?
+  //   }
+  //   R_xlen_t total_rows = 0;
+  //   for( i = 0; i < n; ++i ) {
+  //     SEXP sfg = lst[ i ];
+  //     total_rows += sfheaders::utils::sexp_n_row( sfg );
+  //   }
+  //   // can now create a vector (matrix) based on the number of rows, and teh number of columns.
+  //   Rcpp::NumericMatrix first_mat = lst[ 0 ];
+  //   R_xlen_t n_col = first_mat.ncol();
+  //
+  //   Rcpp::List lst_res( n_col ); // vector for each matrix column.
+  //   Rcpp::NumericVector to_fill = Rcpp::NumericVector( total_rows, Rcpp::NumericVector::get_na() );
+  //
+  //   for( i = 0; i < n_col; ++i ) {
+  //     lst_res[ i ] = to_fill;
+  //   }
+  //
+  //   Rcpp::NumericMatrix res( total_rows, n_col );
+  //   R_xlen_t row_counter = 0;
+  //
+  //   for( i = 0; i < n; ++i ) {
+  //     Rcpp::NumericMatrix inner_mat = lst[ i ];
+  //
+  //     for( j = 0; j < n_col; ++j ) {
+  //       Rcpp::NumericVector v = inner_mat( Rcpp::_, j );
+  //
+  //       Rcpp::NumericVector res_vec = lst_res[ j ];
+  //       std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
+  //       lst_res[ j ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
+  //     }
+  //     row_counter = row_counter + inner_mat.nrow();
+  //   }
+  //
+  //   // fill final matrix.
+  //   for( i = 0; i < n_col; ++i ) {
+  //     Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( lst_res[ i ] );
+  //     res( Rcpp::_, i ) = nv;
+  //   }
+  //
+  //   return res;
+  // }
 
   inline Rcpp::List matrix_to_list( Rcpp::NumericMatrix& mat ) {
     //R_xlen_t n_row = mat.nrow();
@@ -206,11 +205,8 @@ namespace df {
     Rcpp::List first_list = lst[ 0 ];
     R_xlen_t n_vectors = first_list.length();
 
-    //Rcpp::Rcout << "n_vectors: " << n_vectors << std::endl;
-
     Rcpp::List lst_res( n_vectors ); // vector for each matrix column.
     Rcpp::NumericVector to_fill = Rcpp::NumericVector( total_rows, Rcpp::NumericVector::get_na() );
-    //Rcpp::Rcout << "to_fill: " << to_fill << std::endl;
 
     for( i = 0; i < n_vectors; ++i ) {
       lst_res[ i ] = to_fill;
@@ -223,12 +219,9 @@ namespace df {
       Rcpp::List inner_list = lst[ i ];
       R_xlen_t n_col = inner_list.size();
 
-      //Rcpp::Rcout << "inner_list ncol: " << n_col << std::endl;
-
       for( j = 0; j < n_col; ++j ) {
-        //Rcpp::Rcout << "type: " << TYPEOF( inner_list[ j ] ) << std::endl;
+
         Rcpp::NumericVector v = inner_list[ j ];
-        //Rcpp::Rcout << "v: " << v << std::endl;
         vector_size = v.length();
 
         Rcpp::NumericVector res_vec = lst_res[ j ];
@@ -297,6 +290,12 @@ namespace df {
       res[ i ] = collapse_list( res2, total_rows );
     }
     return collapse_list( res, total_rows );
+  }
+
+  inline Rcpp::List sfg_to_df( SEXP& sfg ) {
+    // this is where teh data.frame is made
+    // the _coordinates() gets just the coordinates with id values
+
   }
 
   // inline Rcpp::List sfg_coordinate_lists( SEXP& sfg, R_xlen_t& total_rows ) {

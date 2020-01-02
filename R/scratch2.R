@@ -115,13 +115,14 @@
 #   , linestring_id = "line_id"
 # )
 #
-# res <- sfheaders:::rcpp_sfg_to_df( mp )
+# # res <- sfheaders:::rcpp_sfg_to_df( mp )
 #
 # microbenchmark(
 #   sf = { coords <- sf::st_coordinates( mp ) },
 #   sf_df = { sdf <- as.data.frame( sf::st_coordinates( mp )) },
-#   sfh = { df <- sfheaders:::rcpp_sfg_to_df( mp ) },
-#   sfh_c = { mat <- sfheaders:::rcpp_sfg_coordinates( mp ) },
-#   sfh_l = { lst <- sfheaders:::rcpp_sfg_coordinate_lists( mp ) },
+#   sfh = { lst <- sfheaders:::rcpp_sfg_multipolygon_coordinates( mp ) },
+#   #sfh = { df <- sfheaders:::rcpp_sfg_to_df( mp ) },
+#   #sfh_c = { mat <- sfheaders:::rcpp_sfg_coordinates( mp ) },
+#   #sfh_l = { lst <- sfheaders:::rcpp_sfg_coordinate_lists( mp ) },
 #   times = 5
 # )
