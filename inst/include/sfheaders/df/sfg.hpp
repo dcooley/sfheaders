@@ -193,9 +193,6 @@ namespace df {
   // collapses a list of matrices only
   inline Rcpp::List collapse_list( Rcpp::List& lst, R_xlen_t& total_rows ) {
 
-    // if it's a MULTIPOLYGON it's a list of lists
-    // so need to go one-level deeper...
-
     // each list must have the same number of columns.
     if( lst.size() == 0 ) {
       return lst;
@@ -209,6 +206,8 @@ namespace df {
     Rcpp::List first_list = lst[ 0 ];
     R_xlen_t n_vectors = first_list.length();
 
+    //Rcpp::Rcout << "n_vectors: " << n_vectors << std::endl;
+
     Rcpp::List lst_res( n_vectors ); // vector for each matrix column.
     Rcpp::NumericVector to_fill = Rcpp::NumericVector( total_rows, Rcpp::NumericVector::get_na() );
     //Rcpp::Rcout << "to_fill: " << to_fill << std::endl;
@@ -220,12 +219,16 @@ namespace df {
     R_xlen_t row_counter = 0;
     R_xlen_t vector_size = 0;
 
-    for( i = 0; i < n_vectors; ++i ) {
+    for( i = 0; i < lst_size; ++i ) {
       Rcpp::List inner_list = lst[ i ];
       R_xlen_t n_col = inner_list.size();
 
+      //Rcpp::Rcout << "inner_list ncol: " << n_col << std::endl;
+
       for( j = 0; j < n_col; ++j ) {
+        //Rcpp::Rcout << "type: " << TYPEOF( inner_list[ j ] ) << std::endl;
         Rcpp::NumericVector v = inner_list[ j ];
+        //Rcpp::Rcout << "v: " << v << std::endl;
         vector_size = v.length();
 
         Rcpp::NumericVector res_vec = lst_res[ j ];
@@ -257,9 +260,9 @@ namespace df {
     Rcpp::List res( n );
     R_xlen_t total_rows = 0;
     for( i = 0; i < n; ++i ) {
-      Rcpp::NumericMatrix mat = sfg[i];
+      Rcpp::NumericMatrix mat = sfg[ i ];
       total_rows = total_rows + mat.nrow();
-      res[i] = matrix_to_list( mat );
+      res[ i ] = matrix_to_list( mat );
     }
     //return res;
     return collapse_list( res, total_rows );
@@ -274,13 +277,26 @@ namespace df {
     R_xlen_t j;
     R_xlen_t n = sfg.size();
     Rcpp::List res( n );
-    //R_xlent_t
+    R_xlen_t total_rows = 0;
+
     for( i = 0; i < n; ++i ) {
       Rcpp::List lst = sfg[ i ];
-      res[ i ] = sfg_polygon_coordinates( lst );
+
+      R_xlen_t n2 = lst.size();
+      Rcpp::List res2( n2 );
+      R_xlen_t inner_total_rows = 0;
+
+      for( j = 0; j < n2; ++j ) {
+        Rcpp::NumericMatrix mat = lst[ j ];
+        inner_total_rows = inner_total_rows + mat.nrow();
+        res2[ j ] = matrix_to_list( mat );
+      }
+
+      total_rows = total_rows + inner_total_rows;
+
+      res[ i ] = collapse_list( res2, total_rows );
     }
-    //return collapse_list( res, total_rows );
-    return res;
+    return collapse_list( res, total_rows );
   }
 
   // inline Rcpp::List sfg_coordinate_lists( SEXP& sfg, R_xlen_t& total_rows ) {

@@ -23,6 +23,13 @@
 #
 # mp <- sfg_multipolygon( df, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id" )
 #
+# mp
+# sfheaders:::rcpp_sfg_multipolygon_coordinates( mp )
+# # sfheaders:::rcpp_sfg_coordinate_lists( mp )
+# # sfheaders:::rcpp_sfg_to_df( mp )
+# mp
+#
+#
 # pt
 # sfheaders:::rcpp_sfg_point_coordinates( pt )
 # # sfheaders:::rcpp_sfg_coordinate_lists( pt )
@@ -53,10 +60,6 @@
 # # sfheaders:::rcpp_sfg_to_df( p )
 # p
 #
-# mp
-# sfheaders:::rcpp_sfg_coordinate_lists( mp )
-# sfheaders:::rcpp_sfg_to_df( mp )
-# mp
 
 
 # ls <- sfg_linestring( matrix(1:1e7, ncol = 2) )
