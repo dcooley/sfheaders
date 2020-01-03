@@ -2,7 +2,7 @@
 #define R_SFHEADERS_DF_SFG_H
 
 #include "sfheaders/utils/sexp/sexp.hpp"
-//#include "sfheaders/df/utils.hpp"
+#include "sfheaders/df/utils.hpp"
 
 #include <Rcpp.h>
 
@@ -230,18 +230,19 @@ namespace df {
         vector_size = v.length();
 
         Rcpp::NumericVector res_vec = lst_res[ j + 1];
-        std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
-        //lst_res[ j + 1 ] = res_vec;
-        lst_res[ j + 1 ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
+        //std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
+        //lst_res[ j + 1 ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
+        lst_res[ j + 1 ] = sfheaders::utils::fill_vector( res_vec, v, row_counter );
       }
 
       // id column
       double id = i + 1;
       Rcpp::NumericVector id_column = Rcpp::rep( id, vector_size );
       Rcpp::NumericVector res_id = lst_res[ 0 ];
-      std::copy( id_column.begin(), id_column.end(), res_id.begin() + row_counter );
+      //std::copy( id_column.begin(), id_column.end(), res_id.begin() + row_counter );
       //Rcpp::Rcout << "id_column: " << id_column << std::endl;
-      lst_res[ 0 ] = Rcpp::clone( res_id );
+      //lst_res[ 0 ] = Rcpp::clone( res_id );
+      lst_res[ 0 ] = sfheaders::utils::fill_vector( res_id, id_column, row_counter );
 
       row_counter = row_counter + vector_size;
     }

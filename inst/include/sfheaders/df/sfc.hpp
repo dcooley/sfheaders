@@ -2,7 +2,7 @@
 #define R_SFHEADERS_DF_SFC_H
 
 #include "sfheaders/df/sfg.hpp"
-#include "sfheaders/utils/vectors/vectors.hpp"
+#include "sfheaders/df/utils.hpp"
 
 #include <Rcpp.h>
 
@@ -113,18 +113,6 @@ namespace df {
   //   return nv;
   // }
 
-  inline Rcpp::NumericVector fill_vector( Rcpp::NumericVector& vec_1, Rcpp::NumericVector& vec_2, R_xlen_t& start_idx ) {
-    // fills vec_1 with vec_2, starting at 'start_idx'
-    R_xlen_t i;
-    R_xlen_t n = vec_2.length();
-
-    for( i = 0; i < n; i++ ) {
-      vec_1[ i + start_idx ] = vec_2[ i ] ;
-    }
-    return vec_1;
-  }
-
-
   inline Rcpp::List sfc_linestring_coordinates( Rcpp::List& sfc ) {
 
     R_xlen_t n_sfg = sfc.size();
@@ -169,14 +157,14 @@ namespace df {
       for( j = 0; j < n_col; ++j ) {
         Rcpp::NumericVector col = sfg[ j ];
         Rcpp::NumericVector v = res[ j + 1 ];
-        res[ j + 1 ] = fill_vector( v, col, total_rows );
+        res[ j + 1 ] = sfheaders::utils::fill_vector( v, col, total_rows );
       }
 
       double id = i + 1;
       Rcpp::NumericVector id_column = Rcpp::rep( id, sfc_rows );
       Rcpp::NumericVector id_to_fill = res[ 0 ];
 
-      res[ 0 ] = fill_vector( id_to_fill, id_column, total_rows );
+      res[ 0 ] = sfheaders::utils::fill_vector( id_to_fill, id_column, total_rows );
       total_rows = total_rows + sfc_rows;
     }
 
