@@ -124,10 +124,7 @@ namespace df {
     R_xlen_t total_rows = 0;
 
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
-    //Rcpp::Rcout << "sfc_n_coordinates: " << std::endl;
-    //Rcpp::Rcout << sfc_coordinates << std::endl;
 
-    // rather than collapsing the list, can I fill it directly as I go?
     R_xlen_t n_geometries = sfc_coordinates.nrow();
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
 
@@ -137,7 +134,7 @@ namespace df {
     Rcpp::NumericVector m_res( total_coordinates, Rcpp::NumericVector::get_na() );
     Rcpp::NumericVector z_res( total_coordinates, Rcpp::NumericVector::get_na() );
 
-    // internal geometry id columns are created during teh sfg_coordinates step
+    // internal geometry id columns are created during the sfg_coordinates step
     // now we need an id for each sfc geometry as well.
     Rcpp::List res = Rcpp::List::create(
       Rcpp::_["linestring_id"] = linestring_id_res,
@@ -149,7 +146,6 @@ namespace df {
 
     for( i = 0; i < n_sfg; ++i ) {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfc[ i ] );
-      //sfgs[ i ] = sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
 
       Rcpp::List sfg = sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
       n_col = sfg.size();
@@ -167,12 +163,64 @@ namespace df {
       res[ 0 ] = sfheaders::utils::fill_vector( id_to_fill, id_column, total_rows );
       total_rows = total_rows + sfc_rows;
     }
-
-    //Rcpp::Rcout << "sfc_coordinates; " << total_coordinates << std::endl;
     return res;
-    //return sfgs;
-    //return sfheaders::df::collapse_list( sfgs, total_rows );
   }
+
+  inline Rcpp::List sfc_multilinestring_coordinates( Rcpp::List& sfc ) {
+
+    R_xlen_t n_sfg = sfc.size();
+    R_xlen_t i;
+    R_xlen_t j;
+    R_xlen_t n_col;
+    Rcpp::List sfgs( n_sfg );
+    R_xlen_t sfc_rows = 0;
+    R_xlen_t total_rows = 0;
+
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+
+    R_xlen_t n_geometries = sfc_coordinates.nrow();
+    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
+
+    Rcpp::NumericVector multilinestring_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector linestring_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector x_res( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector y_res( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector m_res( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector z_res( total_coordinates, Rcpp::NumericVector::get_na() );
+
+    // internal geometry id columns are created during the sfg_coordinates step
+    // now we need an id for each sfc geometry as well.
+    Rcpp::List res = Rcpp::List::create(
+      Rcpp::_["multilinestring_id"] = multilinestring_id_res,
+      Rcpp::_["linestring_id"] = linestring_id_res,
+      Rcpp::_["x"] = x_res,
+      Rcpp::_["y"] = y_res,
+      Rcpp::_["z"] = z_res,
+      Rcpp::_["m"] = m_res
+    );
+
+    for( i = 0; i < n_sfg; ++i ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfc[ i ] );
+
+      Rcpp::List sfg = sfheaders::df::sfg_multilinestring_coordinates( lst, sfc_rows );
+      n_col = sfg.size();
+
+      for( j = 0; j < n_col; ++j ) {
+        Rcpp::NumericVector col = sfg[ j ];
+        Rcpp::NumericVector v = res[ j + 1 ];
+        res[ j + 1 ] = sfheaders::utils::fill_vector( v, col, total_rows );
+      }
+
+      double id = i + 1;
+      Rcpp::NumericVector id_column = Rcpp::rep( id, sfc_rows );
+      Rcpp::NumericVector id_to_fill = res[ 0 ];
+
+      res[ 0 ] = sfheaders::utils::fill_vector( id_to_fill, id_column, total_rows );
+      total_rows = total_rows + sfc_rows;
+    }
+    return res;
+  }
+
 
 } // df
 } // sfheaders

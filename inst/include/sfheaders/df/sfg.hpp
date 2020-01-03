@@ -230,9 +230,10 @@ namespace df {
         vector_size = v.length();
 
         Rcpp::NumericVector res_vec = lst_res[ j + 1];
+        //Rcpp::Rcout << "res_vec: " << res_vec << std::endl;
         //std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
         //lst_res[ j + 1 ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
-        lst_res[ j + 1 ] = sfheaders::utils::fill_vector( res_vec, v, row_counter );
+        lst_res[ j + 1 ] = Rcpp::clone( sfheaders::utils::fill_vector( res_vec, v, row_counter ) );
       }
 
       // id column
@@ -295,18 +296,23 @@ namespace df {
       Rcpp::List lst = sfg[ i ];
 
       R_xlen_t n2 = lst.size();
-      Rcpp::List res2( n2 );
       inner_total_rows = 0;
 
-      for( j = 0; j < n2; ++j ) {
-        Rcpp::NumericMatrix mat = lst[ j ];
-        inner_total_rows = inner_total_rows + mat.nrow();
-        res2[ j ] = matrix_to_list( mat, sfg_rows );
-      }
+      //Rcpp::List res2 = sfg_polygon_coordinates( lst, inner_total_rows );
 
+      // Rcpp::List res2( n2 );
+      // for( j = 0; j < n2; ++j ) {
+      //   Rcpp::NumericMatrix mat = lst[ j ];
+      //   inner_total_rows = inner_total_rows + mat.nrow();
+      //   res2[ j ] = matrix_to_list( mat, sfg_rows );
+      // }
+      //
+      // total_rows = total_rows + inner_total_rows;
+      //
+      // res[ i ] = collapse_list( res2, inner_total_rows );
+
+      res[ i ] = sfg_polygon_coordinates( lst, inner_total_rows );
       total_rows = total_rows + inner_total_rows;
-
-      res[ i ] = collapse_list( res2, inner_total_rows );
     }
     //return res;
     sfg_rows = total_rows;
