@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "sfheaders/df/sfg.hpp"
+#include "sfheaders/df/sfc.hpp"
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_point_coordinates( Rcpp::NumericVector sfg ) {
@@ -51,4 +51,11 @@ SEXP rcpp_sfg_multipolygon_coordinates( Rcpp::List sfg ) {
 // [[Rcpp::export]]
 SEXP rcpp_sfg_to_df( SEXP sfg ) {
   return sfheaders::df::sfg_to_df( sfg );
+}
+
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_linestring_coordinates( Rcpp::List sfc ) {
+  R_xlen_t sfc_rows = 0;
+  return sfheaders::df::sfc_linestring_coordinates( sfc );
 }

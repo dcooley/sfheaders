@@ -57,6 +57,10 @@ rcpp_sfg_to_df <- function(sfg) {
     .Call(`_sfheaders_rcpp_sfg_to_df`, sfg)
 }
 
+rcpp_sfc_linestring_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_linestring_coordinates`, sfc)
+}
+
 rcpp_sf_point <- function(x, cols) {
     .Call(`_sfheaders_rcpp_sf_point`, x, cols)
 }

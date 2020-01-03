@@ -231,6 +231,7 @@ namespace df {
 
         Rcpp::NumericVector res_vec = lst_res[ j + 1];
         std::copy( v.begin(), v.end(), res_vec.begin() + row_counter );
+        //lst_res[ j + 1 ] = res_vec;
         lst_res[ j + 1 ] = Rcpp::clone( res_vec );  // these are pointers, not the actual vectors.
       }
 

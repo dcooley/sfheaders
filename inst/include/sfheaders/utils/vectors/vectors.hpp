@@ -36,7 +36,8 @@ namespace utils {
 
   inline SEXP concatenate_vectors(
     SEXP& vec_1,
-    SEXP& vec_2
+    SEXP& vec_2,
+    bool sort_unique = true
   ) {
 
     if( TYPEOF( vec_1 ) != TYPEOF( vec_2 ) ) {
@@ -74,9 +75,11 @@ namespace utils {
         }
       }
 
-      Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
-
-      return iv2;
+      if( sort_unique ) {
+        Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
+        return iv2;
+      }
+      return iv;
     }
     case REALSXP: {
       Rcpp::NumericVector nv_1 = Rcpp::as< Rcpp::NumericVector >( vec_1 );
@@ -102,9 +105,11 @@ namespace utils {
         }
       }
 
-      Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
-
-      return nv2;
+      if( sort_unique ) {
+        Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
+        return nv2;
+      }
+      return nv;
     }
     case STRSXP: {
       Rcpp::StringVector sv_1 = Rcpp::as< Rcpp::StringVector >( vec_1 );
