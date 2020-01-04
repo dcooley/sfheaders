@@ -55,6 +55,17 @@ SEXP rcpp_sfg_to_df( SEXP sfg ) {
 
 
 // [[Rcpp::export]]
+SEXP rcpp_sfc_point_coordinates( Rcpp::List sfc ) {
+  return sfheaders::df::sfc_point_coordinates( sfc );
+}
+
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_multipoint_coordinates( Rcpp::List sfc ) {
+  return sfheaders::df::sfc_multipoint_coordinates( sfc );
+}
+
+// [[Rcpp::export]]
 SEXP rcpp_sfc_linestring_coordinates( Rcpp::List sfc ) {
   return sfheaders::df::sfc_linestring_coordinates( sfc );
 }
@@ -62,4 +73,14 @@ SEXP rcpp_sfc_linestring_coordinates( Rcpp::List sfc ) {
 // [[Rcpp::export]]
 SEXP rcpp_sfc_multilinestring_coordinates( Rcpp::List sfc ) {
   return sfheaders::df::sfc_multilinestring_coordinates( sfc );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_polygon_coordinates( Rcpp::List sfc ) {
+  return sfheaders::df::sfc_polygon_coordinates( sfc );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_multipolygon_coordinates( Rcpp::List sfc ) {
+  return sfheaders::df::sfc_multipolygon_coordinates( sfc );
 }

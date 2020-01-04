@@ -57,12 +57,28 @@ rcpp_sfg_to_df <- function(sfg) {
     .Call(`_sfheaders_rcpp_sfg_to_df`, sfg)
 }
 
+rcpp_sfc_point_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_point_coordinates`, sfc)
+}
+
+rcpp_sfc_multipoint_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_multipoint_coordinates`, sfc)
+}
+
 rcpp_sfc_linestring_coordinates <- function(sfc) {
     .Call(`_sfheaders_rcpp_sfc_linestring_coordinates`, sfc)
 }
 
 rcpp_sfc_multilinestring_coordinates <- function(sfc) {
     .Call(`_sfheaders_rcpp_sfc_multilinestring_coordinates`, sfc)
+}
+
+rcpp_sfc_polygon_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_polygon_coordinates`, sfc)
+}
+
+rcpp_sfc_multipolygon_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_multipolygon_coordinates`, sfc)
 }
 
 rcpp_sf_point <- function(x, cols) {
