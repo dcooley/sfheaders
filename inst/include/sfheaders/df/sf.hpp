@@ -13,14 +13,19 @@ namespace df {
     return v[ expand_index ];
   }
 
-  inline Rcpp::List sf_to_df( Rcpp::DataFrame& sf ) {
+  inline Rcpp::List sf_to_df( Rcpp::DataFrame& sf, bool fill = false ) {
 
     std::string geom_column = sf.attr("sf_column");
 
     Rcpp::List sfc = sf[ geom_column ];
 
+
     // TODO - don't re-call the sfc-n_coordinates function.
     Rcpp::List sfc_df = sfheaders::df::sfc_to_df( sfc );
+
+    if( !fill ) {
+      return sfc_df;
+    }
 
     R_xlen_t sfc_cols = sfc_df.length();
 
@@ -32,19 +37,23 @@ namespace df {
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
     total_coordinates = total_coordinates + 1;
 
-    //Rcpp::Rcout << "sfc_coordinates: " << std::endl;
-    //Rcpp::Rcout << sfc_coordinates << std::endl;
+    // Rcpp::Rcout << "sfc_coordinates: " << std::endl;
+    // Rcpp::Rcout << sfc_coordinates << std::endl;
     Rcpp::NumericVector expanded_index( total_coordinates );
+
+    // Rcpp::Rcout << "expanded_index1 " << expanded_index << std::endl;
 
     R_xlen_t i;
     R_xlen_t j;
     R_xlen_t counter = 0;
 
     for( i = 0; i < n_geometries; ++i ) {
-      R_xlen_t expand_by = sfc_coordinates( i, 1 ) - sfc_coordinates( i, 0 );
+      R_xlen_t expand_by = sfc_coordinates( i, 1 ) - sfc_coordinates( i, 0 ) + 1;
+      // Rcpp::Rcout << "expand_by: " << expand_by << std::endl;
 
       for( j = 0; j < expand_by; ++j ) {
         expanded_index[ counter + j ] = i;
+        // Rcpp::Rcout << "expanded_index j " << j << " " << expanded_index << std::endl;
       }
       counter = counter + expand_by;
     }
@@ -52,9 +61,9 @@ namespace df {
     // Rcpp::Rcout << "expandex_index: " << expanded_index << std::endl;
 
     R_xlen_t n_col = sf.ncol();
-    Rcpp::List res( n_col + sfc_cols );
+    Rcpp::List res( n_col - 1 + sfc_cols ); // -1 to remove the geometry
 
-    Rcpp::CharacterVector res_names( n_col + sfc_cols );
+    Rcpp::CharacterVector res_names( n_col - 1 + sfc_cols );
 
     Rcpp::CharacterVector sf_names = sf.names();
 
@@ -101,10 +110,9 @@ namespace df {
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
     for( i = 0; i < sfc_cols; ++i ) {
-      res_names[ i + n_col ] = sfc_df_names[ i ];
-      res[ i + n_col ] = sfc_df[ i ];
+      res_names[ i + n_col - 1 ] = sfc_df_names[ i ];
+      res[ i + n_col - 1 ] = sfc_df[ i ];
     }
-
 
     res.attr("class") = Rcpp::CharacterVector("data.frame");
 

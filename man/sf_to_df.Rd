@@ -4,10 +4,14 @@
 \alias{sf_to_df}
 \title{sf to df}
 \usage{
-sf_to_df(sf)
+sf_to_df(sf, fill = FALSE)
 }
 \arguments{
 \item{sf}{sf object}
+
+\item{fill}{logical indicating if the resulting data.frame should be filled
+with the data columns from the sf object. If \code{TRUE}, each row of data will
+be replicated for every coordiante in every geometry.}
 }
 \description{
 Converts an sf object ot a data.frame

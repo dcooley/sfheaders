@@ -12,7 +12,7 @@ SEXP rcpp_sfc_to_df( Rcpp::List sfc ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_to_df( Rcpp::DataFrame sf ) {
-  return sfheaders::df::sf_to_df( sf );
+SEXP rcpp_sf_to_df( Rcpp::DataFrame sf, bool fill = false ) {
+  return sfheaders::df::sf_to_df( sf, fill );
 }
 

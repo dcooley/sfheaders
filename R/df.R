@@ -23,6 +23,9 @@ sfc_to_df <- function( sfc ) return( rcpp_sfc_to_df( sfc ) )
 #' Converts an sf object ot a data.frame
 #'
 #' @param sf sf object
+#' @param fill logical indicating if the resulting data.frame should be filled
+#' with the data columns from the sf object. If \code{TRUE}, each row of data will
+#' be replicated for every coordiante in every geometry.
 #'
 #' @export
-sf_to_df <- function( sf ) return( rcpp_sf_to_df( sf ) )
+sf_to_df <- function( sf, fill = FALSE ) return( rcpp_sf_to_df( sf, fill ) )

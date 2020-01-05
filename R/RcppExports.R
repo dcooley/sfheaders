@@ -37,8 +37,8 @@ rcpp_sfc_to_df <- function(sfc) {
     .Call(`_sfheaders_rcpp_sfc_to_df`, sfc)
 }
 
-rcpp_sf_to_df <- function(sf) {
-    .Call(`_sfheaders_rcpp_sf_to_df`, sf)
+rcpp_sf_to_df <- function(sf, fill = FALSE) {
+    .Call(`_sfheaders_rcpp_sf_to_df`, sf, fill)
 }
 
 rcpp_sf_point <- function(x, cols) {
