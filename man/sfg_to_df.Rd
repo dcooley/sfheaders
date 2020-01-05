@@ -2,7 +2,7 @@
 % Please edit documentation in R/df.R
 \name{sfg_to_df}
 \alias{sfg_to_df}
-\title{sfg_to_df}
+\title{sfg to df}
 \usage{
 sfg_to_df(sfg)
 }

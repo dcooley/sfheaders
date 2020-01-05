@@ -2,7 +2,7 @@
 % Please edit documentation in R/df.R
 \name{sfc_to_df}
 \alias{sfc_to_df}
-\title{sfc_to_df}
+\title{sfc to df}
 \usage{
 sfc_to_df(sfc)
 }
