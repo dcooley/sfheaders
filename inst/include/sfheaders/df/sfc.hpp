@@ -350,6 +350,10 @@ namespace df {
       Rcpp::NumericVector current_id_vector = res[ sfg_column_idx ];
       Rcpp::NumericVector filled = sfheaders::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
       res[ sfg_column_idx ] = filled;
+
+      Rcpp::NumericVector current_sfg_id_vector = res[ SFG_COLUMN ];
+      filled = sfheaders::utils::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
+
       res[ SFG_COLUMN ] = filled;
 
       total_rows = total_rows + sfc_rows;

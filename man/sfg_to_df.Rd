@@ -6,6 +6,9 @@
 \usage{
 sfg_to_df(sfg)
 }
+\arguments{
+\item{sfg}{sfg object}
+}
 \description{
-Converts sfg objects to data.frames
+Converts an sfg object to a data.frame
 }
