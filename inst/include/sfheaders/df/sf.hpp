@@ -99,8 +99,6 @@ namespace df {
 
     }
 
-    Rcpp::Rcout << "sfc_cols: " << sfc_cols << std::endl;
-
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
     for( i = 0; i < sfc_cols; ++i ) {
       res_names[ i + n_col ] = sfc_df_names[ i ];

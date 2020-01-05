@@ -138,3 +138,33 @@ test_that("vectorised version works",{
 
 })
 
+test_that("issue 39 is fixed", {
+
+  df <- data.frame(
+    polygon_id = c(rep(1, 5), rep(2, 10))
+    , line_id = c(rep(1, 10), rep(2, 5))
+    , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
+    , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
+    , z = c(1)
+    , m = c(1)
+  )
+
+  mp <- sfg_multipolygon( df, polygon_id = "polygon_id", linestring_id = "line_id" )
+
+  expect_equal(
+    unname( as.matrix( df[ df$polygon_id == 1 & df$line_id == 1, c("x","y","z","m")] ) )
+    , mp[[1]][[1]]
+  )
+
+  expect_equal(
+    unname( as.matrix( df[ df$polygon_id == 2 & df$line_id == 1, c("x","y","z","m")] ) )
+    , mp[[2]][[1]]
+  )
+
+  expect_equal(
+    unname( as.matrix( df[ df$polygon_id == 2 & df$line_id == 2, c("x","y","z","m")] ) )
+    , mp[[2]][[2]]
+  )
+
+
+})

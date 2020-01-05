@@ -1,6 +1,8 @@
 context("to_df")
 
-test_that("sfc_coordinates constructs a 'max_column' list ",{
+
+
+test_that("sfc_to_df constructs data.frames",{
 
   x <- matrix( c(11:16), ncol = 2 )
   pt <- sfc_point( x )
@@ -14,7 +16,6 @@ test_that("sfc_coordinates constructs a 'max_column' list ",{
   mpt <- sfc_multipoint( x )
   df_mpt <- sfheaders:::rcpp_sfc_to_df( mpt )
 
-  expect_true( ncol( df_mpt ) == 4 )
   expect_equal( names( df_mpt ), c("sfg_id", "multipoint_id", "x", "y" ) )
   expect_equal( df_mpt$x, x[,1] )
   expect_equal( df_mpt$y, x[,2] )
@@ -23,10 +24,55 @@ test_that("sfc_coordinates constructs a 'max_column' list ",{
   ls <- sfc_linestring( x, linestring_id = "id" )
   df_ls <- sfheaders:::rcpp_sfc_to_df( ls )
 
-  expect_true( ncol( df_ls ) == 4 )
   expect_equal( names( df_ls ), c("sfg_id", "linestring_id", "x", "y" ) )
   expect_equal( df_ls$x, x$x )
   expect_equal( df_ls$y, x$y )
+
+  x <- data.frame(
+    ml_id = c(1,1,1,1,1,1,1,1,2,2,2,2,2)
+    , l_id = c(1,1,1,2,2,3,3,3,1,1,1,2,2)
+    , x = rnorm(13)
+    , y = rnorm(13)
+    , z = rnorm(13)
+    , m = rnorm(13)
+  )
+
+  mls <- sfc_multilinestring( obj = x, x = "x", y = "y")
+  df_mls <- sfc_to_df( mls )
+
+  expect_equal( names( df_mls ), c("sfg_id", "multilinestring_id", "linestring_id", "x", "y" ) )
+  expect_equal( df_mls$x, x$x )
+  expect_equal( df_mls$y, x$y )
+
+  x <- data.frame(
+    ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+    , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+    , x = rnorm(15)
+    , y = rnorm(15)
+    , z = rnorm(15)
+    , m = rnorm(15)
+  )
+
+  p <- sfc_polygon( obj = x, x = "x", y = "y", close = FALSE)
+  df_p <- sfc_to_df( p )
+
+  expect_equal( names( df_p ), c("sfg_id", "polygon_id", "linestring_id", "x", "y" ) )
+  expect_equal( df_p$x, x$x )
+  expect_equal( df_p$y, x$y )
+
+  x <- data.frame(
+    id1 = c(1,1,1,1,1,1,1,1,1,1)
+    , id2 = c(1,1,1,1,1,2,2,2,2,2)
+    , x = c(0,0,1,1,0,1,1,2,2,1)
+    , y = c(0,1,1,0,0,1,2,2,1,1)
+  )
+
+  mp <- sfc_multipolygon( x, multipolygon_id = "id1", polygon_id = "id2")
+  df_mp <- sfc_to_df( mp )
+
+  expect_equal( names( df_mp ), c("sfg_id", "multipolygon_id", "polygon_id", "linestring_id", "x", "y" ) )
+  expect_equal( df_mp$x, x$x )
+  expect_equal( df_mp$y, x$y )
 
 })
 

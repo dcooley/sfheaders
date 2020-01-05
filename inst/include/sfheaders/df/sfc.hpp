@@ -334,16 +334,20 @@ namespace df {
       n_col = sfg.size();
 
       Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, sfg_type, dim );
+      // Rcpp::Rcout << "sfg_cols: " << sfg_cols << std::endl;
       column_index_check( sfg_cols, n_col );
 
       for( j = 0; j < n_col; ++j ) {
 
         Rcpp::NumericVector new_values_vector = sfg[ j ];
         int col_idx = sfg_cols[ j ];
+        columns[ col_idx ] = true;
         Rcpp::NumericVector current_values_vector = res[ col_idx ];
         Rcpp::NumericVector result_vector = sfheaders::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
         res[ col_idx ] = result_vector;
       }
+
+      //return res;
 
       id = i + 1;
       Rcpp::NumericVector new_id_vector = Rcpp::rep( id, sfc_rows );
@@ -358,6 +362,8 @@ namespace df {
 
       total_rows = total_rows + sfc_rows;
     }
+
+    //return res;
 
     // make data.frame
     res = res[ columns ];
