@@ -210,7 +210,8 @@ namespace df {
   // they can be mixed, or individual.
   // if indiidual, loop over each one and extract the sfgs, list by list, then collapse the lists??
 
-  Rcpp::List get_sfg_coordinates( SEXP& sfg, R_xlen_t& sfc_rows, int SFG_TYPE ) {
+  inline Rcpp::List get_sfg_coordinates( SEXP& sfg, R_xlen_t& sfc_rows, int SFG_TYPE ) {
+
     switch( SFG_TYPE ) {
     case SFG_POINT: {
       Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfg );
@@ -243,268 +244,131 @@ namespace df {
     return Rcpp::List::create(); // #nocov never reaches
   }
 
-  // inline void x() {
-  //   R_xlen_t n_sfg = sfc.size();
-  //   R_xlen_t i;
-  //   R_xlen_t j;
-  //   R_xlen_t n_col;
-  //   Rcpp::List sfgs( n_sfg );
-  //   R_xlen_t sfc_rows = 0;
-  //   R_xlen_t total_rows = 0;
-  //
-  //   Rcpp::CharacterVector cls;
-  //   std::string dim;
-  //
-  //   Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
-  //
-  //   R_xlen_t n_geometries = sfc_coordinates.nrow();
-  //   R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
-  //
-  //   Rcpp::List res = setup_result( total_coordinates );
-  //
-  //   for( i = 0; i < n_sfg; ++i ) {
-  //     Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfc[ i ] );
-  //
-  //     Rcpp::List sfg = sfheaders::df::sfg_point_coordinates( vec, sfc_rows );
-  //     cls = sfg.attr("sfg_class");
-  //     dim = cls[0];
-  //
-  //     n_col = sfg.size();
-  //
-  //     Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, SFG_POINT, dim );
-  //     column_index_check( sfg_cols, n_col );
-  //
-  //     for( j = 0; j < n_col; ++j ) {
-  //       Rcpp::NumericVector col = sfg[ j ];
-  //       Rcpp::NumericVector v = res[ j + 1 ];
-  //       res[ j + 1 ] = sfheaders::utils::fill_vector( v, col, total_rows );
-  //     }
-  //
-  //     double id = i + 1;
-  //     Rcpp::NumericVector id_column = Rcpp::rep( id, sfc_rows );
-  //     Rcpp::NumericVector id_to_fill = res[ SFG_POINT ];
-  //
-  //     res[ SFG_POINT ] = sfheaders::utils::fill_vector( id_to_fill, id_column, total_rows );
-  //     total_rows = total_rows + sfc_rows;
-  //   }
-  // }
+  inline int get_sfg_type( std::string& sfg ) {
+    if( sfg == "POINT" ) {
+      return SFG_POINT;
+    } else if ( sfg == "MULTIPOINT" ) {
+      return SFG_MULTIPOINT;
+    } else if ( sfg == "LINESTRING" ) {
+      return SFG_LINESTRING;
+    } else if ( sfg == "MULTILINESTRING" ) {
+      return SFG_MULTILINESTRING;
+    } else if ( sfg == "POLYGON" ) {
+      return SFG_POLYGON;
+    } else if ( sfg == "MULTIPOLYGON" ) {
+      return SFG_MULTIPOLYGON;
+    } else {
+      Rcpp::stop("sfheaders - unknown sfg type");
+    }
+  }
 
-  inline Rcpp::List get_sfc_coordinates( Rcpp::List& sfc, int SFG_TYPE, int SFG_COLUMN_INDEX ) {
+  inline int get_sfg_column_index( std::string& sfg ) {
+    if( sfg == "POINT" ) {
+      return POINT_COLUMN;
+    } else if ( sfg == "MULTIPOINT" ) {
+      return MULTIPOINT_COLUMN;
+    } else if ( sfg == "LINESTRING" ) {
+      return LINESTRING_COLUMN;
+    } else if ( sfg == "MULTILINESTRING" ) {
+      return MULTILINESTRING_COLUMN;
+    } else if ( sfg == "POLYGON" ) {
+      return POLYGON_COLUMN;
+    } else if ( sfg == "MULTIPOLYGON" ) {
+      return MULTIPOLYGON_COLUMN;
+    } else {
+      Rcpp::stop("sfheaders - unknown sfg type");
+    }
+  }
+
+  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
     R_xlen_t n_sfg = sfc.size();
     R_xlen_t i;
     R_xlen_t j;
-    R_xlen_t k;
     R_xlen_t n_col;
-    //Rcpp::List sfgs( n_sfg );
+
     R_xlen_t sfc_rows = 0;
     R_xlen_t total_rows = 0;
 
     double id;
 
+    Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
+    columns[ X_COLUMN ] = true;
+    columns[ Y_COLUMN ] = true;
+    columns[ SFG_COLUMN ] = true;
+
     Rcpp::CharacterVector cls;
     std::string dim;
+    std::string sfg_class;
+    int sfg_type;
+    int sfg_column_idx;
 
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
 
-    // Rcpp::Rcout << "sfc_coordinates: " << std::endl;
-    // Rcpp::Rcout << sfc_coordinates << std::endl;
-
     R_xlen_t n_geometries = sfc_coordinates.nrow();
-    // Rcpp::Rcout << "n_geometries: " << n_geometries << std::endl;
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
     total_coordinates = total_coordinates + 1;
 
-    // Rcpp::Rcout << "total_coordinates: " << total_coordinates << std::endl;
     Rcpp::List res = setup_result( total_coordinates );
 
-    Rcpp::NumericVector result_vector;
-    Rcpp::NumericVector current_values_vector;
-
-
     for( i = 0; i < n_sfg; ++i ) {
-      // Rcpp::Rcout << "i: " << i << std::endl;
-
-      // for( j = 0; j < res.size(); ++j ) {
-      //   Rcpp::NumericVector nv = res[ j ];
-      //   Rcpp::Rcout << "res[ " << j << " ]: " << nv << std::endl;
-      // }
 
       SEXP sfci = sfc[ i ];
-      Rcpp::List sfg = get_sfg_coordinates( sfci, sfc_rows, SFG_TYPE );
 
-      // Rcpp::Rcout << "sfc_rows: " << sfc_rows << std::endl;
+      cls = sfheaders::df::getSfgClass( sfci );
 
-      // for( j = 0; j < sfg.size(); ++j ) {
-      //   Rcpp::NumericVector nv = sfg[ j ];
-      //   Rcpp::Rcout << "sfg[ " << j << " ]: " << nv << std::endl;
-      // }
-
-      cls = sfg.attr("sfg_class");
       dim = cls[0];
+
+      if( dim == "XYZ" ) {
+        columns[ Z_COLUMN ] = true;
+      } else if ( dim == "XYZM" ) {
+        columns[ M_COLUMN ] = true;
+      }
+
+      sfg_class = cls[1];
+      sfg_type = get_sfg_type( sfg_class );
+      sfg_column_idx = get_sfg_column_index( sfg_class );
+      columns[ sfg_column_idx ] = true;
+
+      Rcpp::List sfg = get_sfg_coordinates( sfci, sfc_rows, sfg_type );
 
       n_col = sfg.size();
 
-      Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, SFG_TYPE, dim );
-      // Rcpp::Rcout << "sfg_cols; " << sfg_cols << std::endl;
-      // Rcpp::Rcout << "sfg_cols.length(): " << sfg_cols.length() << std::endl;
-      //column_index_check( sfg_cols, n_col );
+      Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, sfg_type, dim );
+      column_index_check( sfg_cols, n_col );
 
-      for( j = 0; j < sfg_cols.length(); ++j ) {
+      for( j = 0; j < n_col; ++j ) {
 
-        // Rcpp::Rcout << "j: " << j << std::endl;
-        current_values_vector = sfg[ j ];
-        // Rcpp::Rcout << "sfg_vector: " << sfg_vector << std::endl;
+        Rcpp::NumericVector new_values_vector = sfg[ j ];
         int col_idx = sfg_cols[ j ];
-        result_vector = res[ col_idx ];
-
-        //Rcpp::Rcout << "result_vector: " << result_vector << std::endl;
-
-        //Rcpp::NumericVector v = res[ col_idx ];
-        // Rcpp::Rcout << "col_idx: " << col_idx << std::endl;
-        // Rcpp::Rcout << "v: " << v << std::endl;
-        //Rcpp::NumericVector v2 = sfheaders::utils::fill_vector( v, col, total_rows );
-        //Rcpp::Rcout << "v2: " << v2 << std::endl;
-        //R_xlen_t start_idx = total_rows - 1;
-        //Rcpp::NumericVector filled_result = sfheaders::utils::fill_vector( result_vector, sfg_vector, total_rows );
-        sfheaders::utils::fill_vector( result_vector, current_values_vector, total_rows );
-        //res[ col_idx ] = filled_result;
-
-        //res[ col_idx ] = sfheaders::utils::fill_vector( result_vector, sfg_vector, total_rows );
-
-        // for( k = 0; k < res.size(); ++k ) {
-        //   Rcpp::NumericVector nv = res[ k ];
-        //   Rcpp::Rcout << "res[ " << k << " ]: " << nv << std::endl;
-        // }
-
+        Rcpp::NumericVector current_values_vector = res[ col_idx ];
+        Rcpp::NumericVector result_vector = sfheaders::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
+        res[ col_idx ] = result_vector;
       }
 
-      // for( j = 0; j < res.size(); ++j ) {
-      //   Rcpp::NumericVector nv = res[ j ];
-      //   Rcpp::Rcout << "res[ " << j << " ]: " << nv << std::endl;
-      // }
-
       id = i + 1;
-      result_vector = Rcpp::rep( id, sfc_rows );
-      current_values_vector = res[ SFG_COLUMN_INDEX ];
-      sfheaders::utils::fill_vector( current_values_vector, result_vector, total_rows );
-      //Rcpp::Rcout << "id_to_fill: " << id_to_fill << std::endl;
-      //Rcpp::Rcout << "id_to_fill_2: " <<  id_to_fill_2 << std::endl;
-      //Rcpp::NumericVector id_to_fill_2 = sfheaders::utils::fill_vector( id_to_fill, id_column, total_rows );
-      // Rcpp::Rcout << "id_to_fill: " << id_to_fill << std::endl;
-      //Rcpp::Rcout << "id_to_fill_2: " <<  id_to_fill_2 << std::endl;
-      // //res[ SFG_COLUMN_INDEX ] = id_to_fill_2;
-      // Rcpp::Rcout << "SFG_COLUMN_INDEX: " << SFG_COLUMN_INDEX << std::endl;
-      //res[ SFG_COLUMN_INDEX ] = sfheaders::utils::fill_vector( id_to_fill, id_column, total_rows );;
+      Rcpp::NumericVector new_id_vector = Rcpp::rep( id, sfc_rows );
+      Rcpp::NumericVector current_id_vector = res[ sfg_column_idx ];
+      Rcpp::NumericVector filled = sfheaders::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
+      res[ sfg_column_idx ] = filled;
+      res[ SFG_COLUMN ] = filled;
 
       total_rows = total_rows + sfc_rows;
     }
+
+    // make data.frame
+    res = res[ columns ];
+    res.attr("class") = Rcpp::CharacterVector("data.frame");
+
+    if( total_coordinates > 0 ) {
+      Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
+      res.attr("row.names") = rownames;
+    } else {
+      res.attr("row.names") = Rcpp::IntegerVector(0);
+    }
+
+    res.attr("names") = column_names[ columns ];
     return res;
   }
-
-  inline Rcpp::List sfc_point_coordinates( Rcpp::List& sfc ) {
-    return get_sfc_coordinates( sfc, SFG_POINT, POINT_COLUMN );
-  }
-
-  inline Rcpp::List sfc_multipoint_coordinates( Rcpp::List& sfc ) {
-    return get_sfc_coordinates( sfc, SFG_MULTIPOINT, MULTIPOINT_COLUMN );
-  }
-
-  inline Rcpp::List sfc_linestring_coordinates( Rcpp::List& sfc ) {
-    return get_sfc_coordinates( sfc, SFG_LINESTRING, LINESTRING_COLUMN );
-  }
-
-  inline Rcpp::List sfc_multilinestring_coordinates( Rcpp::List& sfc ) {
-    return get_sfc_coordinates( sfc, SFG_MULTILINESTRING, MULTILINESTRING_COLUMN );
-  }
-
-  inline Rcpp::List sfc_polygon_coordinates( Rcpp::List& sfc ) {
-    return get_sfc_coordinates( sfc, SFG_POLYGON, POLYGON_COLUMN );
-  }
-
-  inline Rcpp::List sfc_multipolygon_coordinates( Rcpp::List& sfc ) {
-    return get_sfc_coordinates( sfc, SFG_MULTIPOLYGON, MULTIPOLYGON_COLUMN );
-  }
-
-
-  // inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
-  //
-  //   R_xlen_t n = sfc.length();
-  //
-  //   Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
-  //
-  //   R_xlen_t n_geometries = sfc_coordinates.nrow();
-  //   R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
-  //
-  //   Rcpp::List res = setup_result( total_coordinates );
-  //
-  //   Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
-  //   columns[ X_COLUMN ] = true;
-  //   columns[ Y_COLUMN ] = true;
-  //   columns[ SFG_COLUMN ] = true;
-  //
-  //   R_xlen_t i;
-  //   double id;
-  //   std::string dim;
-  //
-  //   for( i = 0; i < n; ++i ) {
-  //     SEXP s = sfc[i];
-  //     Rcpp::CharacterVector cls = sfheaders::df::getSfgClass( s );
-  //     std::string sfc_type;
-  //
-  //     dim = cls[0];
-  //     sfc_type = cls[1];
-  //     id = i + 1;
-  //
-  //     if( dim == "XYZ" ) {
-  //       columns[ Z_COLUMN ] = true;
-  //     } else if ( dim == "XYZM" ) {
-  //       columns[ M_COLUMN ] = true;
-  //     }
-  //
-  //     if( sfc_type == "POINT" ) {
-  //       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( s );
-  //       res[i] = sfg_point_coordinates( nv, id );
-  //       columns[ POINT_COLUMN ] = true;
-  //
-  //     } else if ( sfc_type == "MULTIPOINT" ) {
-  //       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( s );
-  //       res[i] = sfg_multipoint_coordinates( nm, id );
-  //       columns[ MULTIPOINT_COLUMN ] = true;
-  //
-  //     } else if ( sfc_type == "LINESTRING" ) {
-  //       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( s );
-  //       res[i] = sfg_linestring_coordinates( nm, id );
-  //       columns[ LINESTRING_COLUMN ] = true;
-  //
-  //     } else if ( sfc_type == "MULTILINESTRING" ) {
-  //       Rcpp::List l = Rcpp::as< Rcpp::List >( s );
-  //       res[i] = sfg_multilinestring_coordinates( s, id );
-  //       columns[ LINESTRING_COLUMN ] = true;
-  //       columns[ MULTILINESTRING_COLUMN ] = true;
-  //
-  //     } else if ( sfc_type == "POLYGON" ) {
-  //       Rcpp::List l = Rcpp::as< Rcpp::List >( s );
-  //       res[i] = sfg_polygon_coordinates( l, id );
-  //       columns[ LINESTRING_COLUMN ] = true;
-  //       columns[ POLYGON_COLUMN ] = true;
-  //
-  //     } else if ( sfc_type == "MULTIPOLYGON" ) {
-  //       Rcpp::List l = Rcpp::as< Rcpp::List >( s );
-  //       res[i] = sfg_multipolygon_coordinates( l, id );
-  //       columns[ LINESTRING_COLUMN ] = true;
-  //       columns[ POLYGON_COLUMN ] = true;
-  //       columns[ MULTIPOLYGON_COLUMN ] = true;
-  //
-  //     } else {
-  //       Rcpp::stop("sfheaders - unknown sfc type");
-  //     }
-  //
-  //
-  //   }
-  //
-  //   return res;
-  //
-  // }
 
 
 } // df

@@ -1,11 +1,24 @@
 
-#
+
 # df <- data.frame(
 #   id1 = c(1,1,1,1,1,1,1,1,1,1)
 #   , id2 = c(1,1,1,1,1,2,2,2,2,2)
 #   , x = c(0,0,1,1,0,1,1,2,2,1)
 #   , y = c(0,1,1,0,0,1,2,2,1,1)
 # )
+#
+# sfc_pt <- sfheaders::sfc_point( df, x= "x", y = "y" )
+# sfc_ls <- sfheaders::sfc_linestring( df, x = "x", y = "y", linestring_id = "id2")
+#
+# sf <- sf::st_sf( geometry = c( sfc_pt, sfc_ls ) )
+# sf$geometry
+#
+#
+# res <- sfheaders:::rcpp_get_sfc_coordinates( sf$geometry )
+#
+# str( res )
+
+
 #
 # sfc <- sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2")
 #
@@ -83,7 +96,6 @@
 # library(microbenchmark)
 #
 # nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
-#
 #
 # res <- sfheaders:::rcpp_sfc_multipolygon_coordinates( nc$geometry )
 # library(microbenchmark)
