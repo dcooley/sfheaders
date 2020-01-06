@@ -150,3 +150,46 @@ test_that("sfg objectse convereted to data.frames", {
   expect_equal( mp, res )
 
 })
+
+test_that("different data.frame columns supported",{
+
+  df <- data.frame(
+    id = 1L
+    , dte = as.Date("2020-01-01")
+    , psx = as.POSIXct("2020-01-01 00:00:01")
+    , fct = "a"
+    , num = 1.5
+    , int = 1L
+    , cplx = as.complex(1.0)
+    , rw = as.raw(1.0)
+    , x = 1
+    , y = 2
+  )
+
+  sf <- sfheaders::sf_point( obj = df, x = "x", y = "y" )
+  sf$id <- 1L
+  sf <- merge(
+    x = sf
+    , y = df[, setdiff(names(df), c("x","y"))]
+    , by = "id"
+  )
+
+  res <- sfheaders::sf_to_df( sf, fill = TRUE )
+
+  test_cols <- names( df )
+
+  expect_equal(
+    res[, test_cols ]
+    , df[, test_cols ]
+  )
+
+  sf <- sf_point( obj = 1:2 )
+  sf$id <- 1L
+  sf$geometry2 <- sfc_point( obj = 3:4 )
+
+  expect_error(
+    sf_to_df( sf, fill = TRUE )
+    , "sfheaders - unsupported column type using fill = TRUE"
+  )
+
+})

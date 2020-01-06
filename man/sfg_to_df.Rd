@@ -12,3 +12,13 @@ sfg_to_df(sfg)
 \description{
 Converts an sfg object to a data.frame
 }
+\examples{
+sfg <- sfg_point( obj = c(1,2) )
+df <- sfg_to_df( sfg )
+
+m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+sfg <- sfg_polygon( obj = m, x = 1, y = 2, linestring_id = 3 )
+df <- sfg_to_df( sfg )
+
+
+}

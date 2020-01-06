@@ -12,3 +12,22 @@ sfc_to_df(sfc)
 \description{
 Converts an sfc object a to data.frame
 }
+\examples{
+
+x <- matrix( c(1:16), ncol = 2 )
+sfc <- sfc_linestring( x )
+df <- sfc_to_df( sfc )
+
+df <- data.frame(
+ml_id = c(1,1,1,1,1,1,1,1,2,2,2,2,2)
+, l_id = c(1,1,1,2,2,3,3,3,1,1,1,2,2)
+, x = rnorm(13)
+, y = rnorm(13)
+, z = rnorm(13)
+, m = rnorm(13)
+)
+sfc <- sfc_multilinestring( obj = df, multilinestring_id = "ml_id", linestring_id = "l_id" )
+
+df <- sfc_to_df( sfc )
+
+}

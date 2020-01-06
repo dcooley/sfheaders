@@ -280,21 +280,17 @@ namespace df {
     }
   }
 
-  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
-    R_xlen_t n_sfg = sfc.size();
-    R_xlen_t i;
-    R_xlen_t j;
-    R_xlen_t n_col;
-
-    R_xlen_t sfc_rows = 0;
-    R_xlen_t total_rows = 0;
-
-    double id;
+  inline Rcpp::List get_sfc_coordinates( Rcpp::List& sfc, R_xlen_t& total_coordinates ) {
 
     Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
     columns[ X_COLUMN ] = true;
     columns[ Y_COLUMN ] = true;
     columns[ SFG_COLUMN ] = true;
+
+    R_xlen_t n_sfg = sfc.size();
+    R_xlen_t i;
+    R_xlen_t j;
+    R_xlen_t n_col;
 
     Rcpp::CharacterVector cls;
     std::string dim;
@@ -302,11 +298,10 @@ namespace df {
     int sfg_type;
     int sfg_column_idx;
 
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    R_xlen_t sfc_rows = 0;
+    R_xlen_t total_rows = 0;
 
-    R_xlen_t n_geometries = sfc_coordinates.nrow();
-    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
-    total_coordinates = total_coordinates + 1;
+    double id;
 
     Rcpp::List res = setup_result( total_coordinates );
 
@@ -334,7 +329,6 @@ namespace df {
       n_col = sfg.size();
 
       Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, sfg_type, dim );
-      // Rcpp::Rcout << "sfg_cols: " << sfg_cols << std::endl;
       column_index_check( sfg_cols, n_col );
 
       for( j = 0; j < n_col; ++j ) {
@@ -346,8 +340,6 @@ namespace df {
         Rcpp::NumericVector result_vector = sfheaders::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
         res[ col_idx ] = result_vector;
       }
-
-      //return res;
 
       id = i + 1;
       Rcpp::NumericVector new_id_vector = Rcpp::rep( id, sfc_rows );
@@ -363,8 +355,6 @@ namespace df {
       total_rows = total_rows + sfc_rows;
     }
 
-    //return res;
-
     // make data.frame
     res = res[ columns ];
     res.attr("class") = Rcpp::CharacterVector("data.frame");
@@ -378,6 +368,18 @@ namespace df {
 
     res.attr("names") = column_names[ columns ];
     return res;
+  }
+
+  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
+
+    // seprated this so it's independant / not called twice from `sf_to_df()`
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+
+    R_xlen_t n_geometries = sfc_coordinates.nrow();
+    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
+    total_coordinates = total_coordinates + 1;
+
+    return get_sfc_coordinates( sfc, total_coordinates );
   }
 
 

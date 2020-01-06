@@ -16,3 +16,24 @@ be replicated for every coordiante in every geometry.}
 \description{
 Converts an sf object ot a data.frame
 }
+\examples{
+
+df <- data.frame(
+ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+, l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+, x = rnorm(15)
+, y = rnorm(15)
+, z = rnorm(15)
+, m = rnorm(15)
+)
+
+sf <- sf_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
+df <- sf_to_df( sf )
+
+## with associated ata
+sf$val1 <- c("a","b")
+sf$val2 <- c(1L, 2L)
+
+df <- sf_to_df( sf, fill = TRUE )
+
+}
