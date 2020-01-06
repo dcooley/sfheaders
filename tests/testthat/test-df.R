@@ -174,6 +174,9 @@ test_that("different data.frame columns supported",{
     , by = "id"
   )
 
+  attr(sf, "class") <- c("sf", "data.frame")
+  attr(sf, "sf_column") <- "geometry"
+
   res <- sfheaders::sf_to_df( sf, fill = TRUE )
 
   test_cols <- names( df )

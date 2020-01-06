@@ -1,4 +1,3 @@
-# sfheaders 0.0.2
+# sfheaders 0.1.0
 
-* id column keeps user-supplied name (if character)
-* patch for `crs` attributes
+* to_df functions for converting sf objects to data.frames

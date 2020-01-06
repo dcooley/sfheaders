@@ -49,6 +49,10 @@ namespace df {
 
   inline Rcpp::List sf_to_df( Rcpp::DataFrame& sf, bool fill = false ) {
 
+    if( !sf.hasAttribute("sf_column") ) {
+      Rcpp::stop("sfheaders - sf_column not found");
+    }
+
     std::string geom_column = sf.attr("sf_column");
 
     Rcpp::List sfc = sf[ geom_column ];
