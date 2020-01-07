@@ -34,12 +34,29 @@ namespace sf {
     SEXP ids = sfheaders::utils::get_ids( x, linestring_id );
 
     // SEXP unique_ids = sfheaders::utils::get_sexp_unique( ids );
-    // Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( ids, unique_ids );
-    //
+    // Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( ids );
+    // Rcpp::Rcout << line_positions << std::endl;
 
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
+
+  inline SEXP sf_linestring(
+    SEXP& x,
+    SEXP& geometry_cols,
+    SEXP& linestring_id,
+    bool& keep
+  ) {
+    if( !keep ) {
+      return sf_linestring( x, geometry_cols, linestring_id );
+    }
+
+    // TODO:
+    // - get line_positions.
+    // - get call sfc_linestring with line_positions as an argument
+
+  }
+
 
 } // sfc
 } // sfheaders

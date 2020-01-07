@@ -455,10 +455,9 @@ inline SEXP sfc_multipoint(
   R_xlen_t n_col = im.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
-  Rcpp::IntegerVector unique_ids = Rcpp::sort_unique( line_ids );
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-  R_xlen_t n_lines = unique_ids.length();
+  R_xlen_t n_lines = line_positions.nrow();
 
   Rcpp::List sfc( n_lines );
 
@@ -498,10 +497,9 @@ inline SEXP sfc_multipoint(
   R_xlen_t n_col = nm.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
-  Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-  R_xlen_t n_lines = unique_ids.length();
+  R_xlen_t n_lines = line_positions.nrow();
 
   Rcpp::List sfc( n_lines );
 
@@ -540,10 +538,9 @@ inline SEXP sfc_multipoint(
   R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-  R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+  R_xlen_t n_lines = line_positions.nrow();
 
   Rcpp::List sfc( n_lines );
 
@@ -583,10 +580,9 @@ inline SEXP sfc_multipoint(
   R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-  R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+  R_xlen_t n_lines = line_positions.nrow();
 
   Rcpp::List sfc( n_lines );
 

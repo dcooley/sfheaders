@@ -159,10 +159,9 @@ namespace shapes {
       SEXP& line_ids
   ) {
 
-    SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mls( n_lines );
 
@@ -184,10 +183,9 @@ namespace shapes {
       SEXP& line_ids
   ) {
 
-    SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mls( n_lines );
 
@@ -209,10 +207,9 @@ namespace shapes {
       Rcpp::NumericVector& line_ids
   ) {
 
-    Rcpp::NumericVector unique_ids = Rcpp::sort_unique( line_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-    R_xlen_t n_lines = unique_ids.length();
+    R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mls( n_lines );
 

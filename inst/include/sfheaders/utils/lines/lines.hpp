@@ -2,6 +2,7 @@
 #define R_SFHEADERS_UTILS_LINES_H
 
 #include <Rcpp.h>
+#include "sfheaders/utils/unique/unique_sort.hpp"
 
 namespace sfheaders {
 namespace utils {
@@ -222,6 +223,33 @@ namespace utils {
     return Rcpp::IntegerMatrix(0);
   }
 
+  inline Rcpp::IntegerMatrix id_positions(
+    Rcpp::StringVector& line_ids
+  ) {
+    Rcpp::StringVector unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
+    return id_positions( line_ids, unique_ids );
+  }
+
+  inline Rcpp::IntegerMatrix id_positions(
+    Rcpp::IntegerVector& line_ids
+  ) {
+    Rcpp::IntegerVector unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
+    return id_positions( line_ids, unique_ids );
+  }
+
+  inline Rcpp::IntegerMatrix id_positions(
+    Rcpp::NumericVector& line_ids
+  ) {
+    Rcpp::NumericVector unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
+    return id_positions( line_ids, unique_ids );
+  }
+
+  inline Rcpp::IntegerMatrix id_positions(
+    SEXP& line_ids
+  ) {
+    SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
+    return id_positions( line_ids, unique_ids );
+  }
 
 } // utils
 } // sfheaders

@@ -488,10 +488,9 @@ inline SEXP sfc_multilinestring(
   R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  SEXP unique_multilinestring_ids = sfheaders::utils::get_sexp_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+  R_xlen_t n_multilinestrings = multilinestring_positions.nrow();
 
-  R_xlen_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids );
   R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
@@ -525,10 +524,9 @@ inline SEXP sfc_multilinestring(
   R_xlen_t n_col = df.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-  SEXP unique_multilinestring_ids = sfheaders::utils::get_sexp_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+  R_xlen_t n_multilinestrings = multilinestring_positions.nrow();
 
-  R_xlen_t n_multilinestrings = sfheaders::utils::get_sexp_length( unique_multilinestring_ids ); //  unique_multilinestring_ids.length();
   R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
@@ -562,10 +560,9 @@ inline SEXP sfc_multilinestring(
   R_xlen_t n_col = im.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
 
-  Rcpp::IntegerVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
 
-  R_xlen_t n_multilinestrings = unique_multilinestring_ids.length();
+  R_xlen_t n_multilinestrings = multilinestring_positions.nrow();
   R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 
@@ -598,10 +595,9 @@ inline SEXP sfc_multilinestring(
   R_xlen_t n_col = nm.ncol();
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
 
-  Rcpp::NumericVector unique_multilinestring_ids = Rcpp::sort_unique( multilinestring_ids );
-  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids, unique_multilinestring_ids );
+  Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
 
-  R_xlen_t n_multilinestrings = unique_multilinestring_ids.length();
+  R_xlen_t n_multilinestrings = multilinestring_positions.nrow();
   R_xlen_t i;
   Rcpp::List sfc( n_multilinestrings );
 

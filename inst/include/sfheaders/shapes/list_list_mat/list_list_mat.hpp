@@ -51,10 +51,9 @@ namespace shapes {
     SEXP group_ids = df[ group_id_col_1 ];
     Rcpp::StringVector df_names = df.names();
 
-    SEXP unique_ids = sfheaders::utils::get_sexp_unique( group_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids );
 
-    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = line_positions.nrow();
 
 
     Rcpp::List mpl( n_lines );
@@ -85,10 +84,9 @@ namespace shapes {
     SEXP group_ids = df[ group_id_col_1 ];
     Rcpp::StringVector df_names = df.names();
 
-    SEXP unique_ids = sfheaders::utils::get_sexp_unique( group_ids );
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids, unique_ids );
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids );
 
-    R_xlen_t n_lines = sfheaders::utils::get_sexp_length( unique_ids );
+    R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mpl( n_lines );
 
