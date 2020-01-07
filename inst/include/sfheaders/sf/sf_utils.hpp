@@ -7,17 +7,68 @@ namespace sf {
   // TODO
   // - make_sf( Rcpp::List& sfc, Rcpp::List& data_cols ) {}
 
+
+  // issue 41 - will subset a vector
+  inline SEXP subset_vector( Rcpp::List& res, SEXP& v, Rcpp::NumericVector& subset_index, R_xlen_t& i ) {
+    switch( TYPEOF( v ) ) {
+    case LGLSXP: {
+      Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
+      res[ i ] = lv[ subset_index ];
+      break;
+    }
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( v );
+      res[ i ] = iv[ subset_index ];
+      break;
+    }
+    case REALSXP: {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( v );
+      Rcpp::NumericVector res_nv = nv[ subset_index ];
+      res[ i ] = res_nv;
+      break;
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( v );
+      res[ i ] = sv[ subset_index ];
+      break;
+    }
+    case CPLXSXP: {
+      Rcpp::ComplexVector cv = Rcpp::as< Rcpp::ComplexVector >( v );
+      res[ i ] = cv[ subset_index ];
+      break;
+    }
+    case RAWSXP: {
+      Rcpp::RawVector rv = Rcpp::as< Rcpp::RawVector >( v );
+      res[ i ] = rv[ subset_index ];
+      break;
+    }
+    default: {
+      Rcpp::stop("sfheaders - unsupported column type using fill = TRUE");
+    }
+    }
+  }
+
+  inline void attach_dataframe_attributes( Rcpp::List& df, R_xlen_t& n_row ) {
+    df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
+    df.attr("sf_column") = "geometry";
+
+    if( n_row == 0 ) {
+      df.attr("row.names") = Rcpp::IntegerVector(0);;
+    } else {
+      Rcpp::IntegerVector rn = Rcpp::seq( 1, n_row );
+      df.attr("row.names") = rn;
+    }
+  }
+
+
   inline SEXP make_sf( Rcpp::List& sfc ) {
 
     Rcpp::List df = Rcpp::List::create(
       Rcpp::Named("geometry") = sfc
     );
 
-    df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-    df.attr("sf_column") = "geometry";
-
-    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
-    df.attr("row.names") = rn;
+    R_xlen_t n_row = sfc.length();
+    attach_dataframe_attributes( df, n_row );
 
     return df;
 
@@ -30,11 +81,8 @@ namespace sf {
       Rcpp::Named("geometry") = sfc
     );
 
-    df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-    df.attr("sf_column") = "geometry";
-
-    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
-    df.attr("row.names") = rn;
+    R_xlen_t n_row = sfc.length();
+    attach_dataframe_attributes( df, n_row );
 
     return df;
   }
@@ -45,11 +93,8 @@ namespace sf {
       Rcpp::Named("geometry") = sfc
     );
 
-    df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-    df.attr("sf_column") = "geometry";
-
-    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
-    df.attr("row.names") = rn;
+    R_xlen_t n_row = sfc.length();
+    attach_dataframe_attributes( df, n_row );
 
     return df;
   }
@@ -60,11 +105,8 @@ namespace sf {
       Rcpp::Named("geometry") = sfc
     );
 
-    df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-    df.attr("sf_column") = "geometry";
-
-    Rcpp::IntegerVector rn = Rcpp::seq( 1, sfc.length() );
-    df.attr("row.names") = rn;
+    R_xlen_t n_row = sfc.length();
+    attach_dataframe_attributes( df, n_row );
 
     return df;
   }
@@ -75,14 +117,6 @@ namespace sf {
       SEXP& ids
   ) {
 
-    // if( Rf_isNull( ids ) ) {
-    //   // need 1:n ids
-    //   // int n_sfc = sfc.size();
-    //   // Rcpp::IntegerVector ids2 = Rcpp::seq( 1, n_sfc );
-    //   Rcpp::IntegerVector ids(1);
-    //   ids[0] = 1;
-    //   make_sf( sfc, ids );
-    // }
     if( Rf_isNull( ids ) ) {
       make_sf( sfc );          // #nocov
     }

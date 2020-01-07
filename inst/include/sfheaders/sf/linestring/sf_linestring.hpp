@@ -24,11 +24,19 @@ namespace sf {
     SEXP& geometry_cols,
     SEXP& linestring_id
   ) {
+
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id );
 
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
+    // and for issue 41 we also want to know the row-index of the first
+    // row of each sfg, so we can keep the data for that row
     SEXP ids = sfheaders::utils::get_ids( x, linestring_id );
+
+    // SEXP unique_ids = sfheaders::utils::get_sexp_unique( ids );
+    // Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( ids, unique_ids );
+    //
+
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
