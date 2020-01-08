@@ -21,33 +21,33 @@
 // }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_point( SEXP x, SEXP cols) {
+SEXP rcpp_sf_point( SEXP x, SEXP cols) {
   return sfheaders::sf::sf_point( x, cols );
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id) {
+SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id) {
   return sfheaders::sf::sf_multipoint( x, cols, multipoint_id );
 }
 
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep) {
+SEXP rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep) {
   return sfheaders::sf::sf_linestring( x, cols, linestring_id, keep );
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id) {
+SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id) {
   return sfheaders::sf::sf_multilinestring( x, cols, multilinestring_id, linestring_id );
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close = true) {
+SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close = true) {
   return sfheaders::sf::sf_polygon( x, cols, polygon_id, linestring_id, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close = true) {
+SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close = true) {
   return sfheaders::sf::sf_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, close );
 }
 

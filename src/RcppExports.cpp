@@ -122,7 +122,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_point
-Rcpp::DataFrame rcpp_sf_point(SEXP x, SEXP cols);
+SEXP rcpp_sf_point(SEXP x, SEXP cols);
 RcppExport SEXP _sfheaders_rcpp_sf_point(SEXP xSEXP, SEXP colsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -134,7 +134,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_multipoint
-Rcpp::DataFrame rcpp_sf_multipoint(SEXP x, SEXP cols, SEXP multipoint_id);
+SEXP rcpp_sf_multipoint(SEXP x, SEXP cols, SEXP multipoint_id);
 RcppExport SEXP _sfheaders_rcpp_sf_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP multipoint_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -147,7 +147,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_linestring
-Rcpp::DataFrame rcpp_sf_linestring(SEXP x, SEXP cols, SEXP linestring_id, bool keep);
+SEXP rcpp_sf_linestring(SEXP x, SEXP cols, SEXP linestring_id, bool keep);
 RcppExport SEXP _sfheaders_rcpp_sf_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP linestring_idSEXP, SEXP keepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -161,7 +161,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_multilinestring
-Rcpp::DataFrame rcpp_sf_multilinestring(SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id);
+SEXP rcpp_sf_multilinestring(SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id);
 RcppExport SEXP _sfheaders_rcpp_sf_multilinestring(SEXP xSEXP, SEXP colsSEXP, SEXP multilinestring_idSEXP, SEXP linestring_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -175,7 +175,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_polygon
-Rcpp::DataFrame rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close);
+SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close);
 RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -190,7 +190,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_multipolygon
-Rcpp::DataFrame rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close);
+SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close);
 RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -218,7 +218,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_points
-Rcpp::List rcpp_sfc_points(Rcpp::List lst);
+SEXP rcpp_sfc_points(Rcpp::List lst);
 RcppExport SEXP _sfheaders_rcpp_sfc_points(SEXP lstSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -242,7 +242,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_multipoints
-Rcpp::List rcpp_sfc_multipoints(Rcpp::List lst);
+SEXP rcpp_sfc_multipoints(Rcpp::List lst);
 RcppExport SEXP _sfheaders_rcpp_sfc_multipoints(SEXP lstSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -266,7 +266,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_linestrings
-Rcpp::List rcpp_sfc_linestrings(Rcpp::List lst);
+SEXP rcpp_sfc_linestrings(Rcpp::List lst);
 RcppExport SEXP _sfheaders_rcpp_sfc_linestrings(SEXP lstSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -291,7 +291,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_multilinestrings
-Rcpp::List rcpp_sfc_multilinestrings(Rcpp::List lst);
+SEXP rcpp_sfc_multilinestrings(Rcpp::List lst);
 RcppExport SEXP _sfheaders_rcpp_sfc_multilinestrings(SEXP lstSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -317,7 +317,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_polygons
-Rcpp::List rcpp_sfc_polygons(Rcpp::List lst, bool close);
+SEXP rcpp_sfc_polygons(Rcpp::List lst, bool close);
 RcppExport SEXP _sfheaders_rcpp_sfc_polygons(SEXP lstSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -345,7 +345,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_multipolygons
-Rcpp::List rcpp_sfc_multipolygons(Rcpp::List lst, bool close);
+SEXP rcpp_sfc_multipolygons(Rcpp::List lst, bool close);
 RcppExport SEXP _sfheaders_rcpp_sfc_multipolygons(SEXP lstSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

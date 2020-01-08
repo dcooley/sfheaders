@@ -1,10 +1,10 @@
-#
+
 # library(mapdeck)
 # library(sf)
 #
 # sf <- mapdeck::roads
 #
-# df <- sfheaders::sf_to_df( sf )
+# df <- sfheaders::sf_to_df( sf[1:3, ] )
 #
 # res <- sfheaders::sf_linestring(
 #   df

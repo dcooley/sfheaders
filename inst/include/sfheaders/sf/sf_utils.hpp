@@ -8,43 +8,35 @@ namespace sf {
   // - make_sf( Rcpp::List& sfc, Rcpp::List& data_cols ) {}
 
   // issue 41 - will subset a vector
-  inline void subset_properties(
-      Rcpp::List& res,
+  inline SEXP subset_properties(
       SEXP& v,
-      Rcpp::IntegerVector& subset_index,
-      R_xlen_t& i
+      Rcpp::IntegerVector& subset_index
   ) {
 
     switch( TYPEOF( v ) ) {
     case LGLSXP: {
       Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
-      res[ i ] = lv[ subset_index ];
-      break;
+      return lv[ subset_index ];
     }
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( v );
-      res[ i ] = iv[ subset_index ];
-      break;
+      return iv[ subset_index ];
     }
     case REALSXP: {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( v );
-      res[ i ] = nv[ subset_index ];
-      break;
+      return nv[ subset_index ];
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( v );
-      res[ i ] = sv[ subset_index ];
-      break;
+      return sv[ subset_index ];
     }
     case CPLXSXP: {
       Rcpp::ComplexVector cv = Rcpp::as< Rcpp::ComplexVector >( v );
-      res[ i ] = cv[ subset_index ];
-      break;
+      return cv[ subset_index ];
     }
     case RAWSXP: {
       Rcpp::RawVector rv = Rcpp::as< Rcpp::RawVector >( v );
-      res[ i ] = rv[ subset_index ];
-      break;
+      return rv[ subset_index ];
     }
     default: {
       Rcpp::stop("sfheaders - unsupported column type using keep = TRUE");
@@ -63,7 +55,6 @@ namespace sf {
       df.attr("row.names") = rn;
     }
   }
-
 
   inline SEXP make_sf( Rcpp::List& sfc ) {
 

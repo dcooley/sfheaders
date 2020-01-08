@@ -60,28 +60,33 @@ namespace sf {
       Rcpp::StringVector& property_cols
   ) {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
 
 
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
-    Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
 
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions );
 
     R_xlen_t n_col = property_idx.length();
-    Rcpp::List res( n_col + 1);  // +1 == sfc
+    Rcpp::List res( n_col + 1 );  // +1 == sfc
     R_xlen_t i;
     for( i = 0; i < n_col; ++i ) {
       int idx = property_idx[i];
       SEXP v = df[ idx ];
-      sfheaders::sf::subset_properties( res, v, row_idx, i );
+      res[ i ] = sfheaders::sf::subset_properties( v, row_idx );
     }
 
+    //Rcpp::StringVector sfc_names = sfc.names();
+    Rcpp::String sfc_name = "geometry";
+    Rcpp::StringVector res_names = sfheaders::utils::concatenate_vectors( property_cols, sfc_name );
     res[ n_col ] = sfc;
+    res.names() = res_names;
+    R_xlen_t n_row = line_positions.nrow();
+    sfheaders::sf::attach_dataframe_attributes( res, n_row );
 
     return res;
-
   }
 
   inline SEXP sf_linestring(
@@ -92,8 +97,6 @@ namespace sf {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
     // now we have the line_positions we can get the first row of each vector
-    Rcpp::Rcout << "line_positions" << std::endl;
-    Rcpp::Rcout << line_positions << std::endl;
 
     return sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions );
   }
@@ -158,8 +161,6 @@ namespace sf {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
     Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
-
-    Rcpp::Rcout << "property_cols: " << property_cols << std::endl;
 
     SEXP line_ids = df[ linestring_id ];
     return sf_linestring( df, geometry_cols, line_ids, property_cols );
