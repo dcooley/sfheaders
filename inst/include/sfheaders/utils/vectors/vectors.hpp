@@ -35,9 +35,117 @@ namespace utils {
   }
 
   inline SEXP concatenate_vectors(
+    Rcpp::IntegerVector& iv_1,
+    Rcpp::IntegerVector& iv_2
+  ) {
+
+    int n_1 = iv_1.length();
+    int n_2 = iv_2.length();
+    int n = n_1 + n_2;
+    int i;
+
+    Rcpp::IntegerVector iv( n );
+
+    if( n_1 == 1 ) {
+      iv[0] = iv_1[0];
+    } else {
+      for( i = 0; i < n_1; i++ ) {
+        iv[i] = iv_1[i];
+      }
+    }
+
+    if( n_2 == 1 ) {
+      iv[ n_1 ] = iv_2[0];
+    } else {
+      int idx = 0;
+      for( i = n_1; i < n; i++ ) {
+        iv[i] = iv_2[ idx ];
+        idx++;
+      }
+    }
+
+    //if( sort_unique ) {
+    Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
+    return iv2;
+    //}
+    //return iv;
+  }
+
+
+  inline SEXP concatenate_vectors(
+    Rcpp::NumericVector& nv_1,
+    Rcpp::NumericVector& nv_2
+  ) {
+
+    int n_1 = nv_1.length();
+    int n_2 = nv_2.length();
+    int n = n_1 + n_2;
+    int i;
+
+    Rcpp::NumericVector nv( n );
+
+    if( n_1 == 1 ) {
+      nv[0] = nv_1[0];
+    } else {
+      for( i = 0; i < n_1; i++ ) {
+        nv[i] = nv_1[i];
+      }
+    }
+
+    if( n_2 == 1 ) {
+      nv[ n_1 ] = nv_2[0];
+    } else {
+      int idx = 0;
+      for( i = n_1; i < n; i++ ) {
+        nv[i] = nv_2[ idx ];
+        idx++;
+      }
+    }
+
+    //if( sort_unique ) {
+      Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
+      return nv2;
+    //}
+    //return nv;
+  }
+
+  inline SEXP concatenate_vectors(
+    Rcpp::StringVector& sv_1,
+    Rcpp::StringVector& sv_2
+  ) {
+
+    int n_1 = sv_1.length();
+    int n_2 = sv_2.length();
+    int n = n_1 + n_2;
+    int i;
+
+    Rcpp::StringVector sv( n );
+
+    for( i = 0; i < n_1; i++ ) {
+      sv[i] = sv_1[i];
+    }
+
+    int idx = 0;
+    for( i = n_1; i < n; i++ ) {
+      sv[i] = sv_2[ idx ];
+      idx++;
+    }
+    return sv;
+  }
+
+  inline SEXP concatenate_vectors(
+    Rcpp::StringVector& vec_1,
+    Rcpp::String& vec_2
+  ) {
+    Rcpp::StringVector sv(1);
+    sv[0] = vec_2.get_cstring();
+    return concatenate_vectors( vec_1, sv );
+  }
+
+  inline SEXP concatenate_vectors(
     SEXP& vec_1,
-    SEXP& vec_2,
-    bool sort_unique = true
+    SEXP& vec_2
+    // bool sort_unique = true
   ) {
 
     if( TYPEOF( vec_1 ) != TYPEOF( vec_2 ) ) {
@@ -45,89 +153,26 @@ namespace utils {
     }
 
     // else - combine vec_1 & vec_2 into a single vector
-    int n_1 = sfheaders::utils::get_sexp_length( vec_1 );
-    int n_2 = sfheaders::utils::get_sexp_length( vec_2 );
-    int n = n_1 + n_2;
-    int i;
+    // int n_1 = sfheaders::utils::get_sexp_length( vec_1 );
+    // int n_2 = sfheaders::utils::get_sexp_length( vec_2 );
+    // int n = n_1 + n_2;
+    // int i;
 
     switch(TYPEOF( vec_1 ) ) {
     case INTSXP: {
       Rcpp::IntegerVector iv_1 = Rcpp::as< Rcpp::IntegerVector >( vec_1 );
       Rcpp::IntegerVector iv_2 = Rcpp::as< Rcpp::IntegerVector >( vec_2 );
-
-      Rcpp::IntegerVector iv( n );
-
-      if( n_1 == 1 ) {
-        iv[0] = iv_1[0];
-      } else {
-        for( i = 0; i < n_1; i++ ) {
-          iv[i] = iv_1[i];
-        }
-      }
-
-      if( n_2 == 1 ) {
-        iv[ n_1 ] = iv_2[0];
-      } else {
-        int idx = 0;
-        for( i = n_1; i < n; i++ ) {
-          iv[i] = iv_2[ idx ];
-          idx++;
-        }
-      }
-
-      if( sort_unique ) {
-        Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
-        return iv2;
-      }
-      return iv;
+      return concatenate_vectors( iv_1, iv_2 );
     }
     case REALSXP: {
       Rcpp::NumericVector nv_1 = Rcpp::as< Rcpp::NumericVector >( vec_1 );
       Rcpp::NumericVector nv_2 = Rcpp::as< Rcpp::NumericVector >( vec_2 );
-
-      Rcpp::NumericVector nv( n );
-
-      if( n_1 == 1 ) {
-        nv[0] = nv_1[0];
-      } else {
-        for( i = 0; i < n_1; i++ ) {
-          nv[i] = nv_1[i];
-        }
-      }
-
-      if( n_2 == 1 ) {
-        nv[ n_1 ] = nv_2[0];
-      } else {
-        int idx = 0;
-        for( i = n_1; i < n; i++ ) {
-          nv[i] = nv_2[ idx ];
-          idx++;
-        }
-      }
-
-      if( sort_unique ) {
-        Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
-        return nv2;
-      }
-      return nv;
+      return concatenate_vectors( nv_1, nv_2 );
     }
     case STRSXP: {
       Rcpp::StringVector sv_1 = Rcpp::as< Rcpp::StringVector >( vec_1 );
       Rcpp::StringVector sv_2 = Rcpp::as< Rcpp::StringVector >( vec_2 );
-
-      Rcpp::StringVector sv( n );
-
-      for( i = 0; i < n_1; i++ ) {
-        sv[i] = sv_1[i];
-      }
-
-      int idx = 0;
-      for( i = n_1; i < n; i++ ) {
-        sv[i] = sv_2[ idx ];
-        idx++;
-      }
-
-      return sv;
+      return concatenate_vectors( sv_1, sv_2 );
     }
     default: {
       Rcpp::stop("sfheaders - can't combine columns");  // #nocov

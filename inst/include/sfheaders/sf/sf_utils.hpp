@@ -7,9 +7,14 @@ namespace sf {
   // TODO
   // - make_sf( Rcpp::List& sfc, Rcpp::List& data_cols ) {}
 
-
   // issue 41 - will subset a vector
-  inline SEXP subset_vector( Rcpp::List& res, SEXP& v, Rcpp::NumericVector& subset_index, R_xlen_t& i ) {
+  inline void subset_properties(
+      Rcpp::List& res,
+      SEXP& v,
+      Rcpp::IntegerVector& subset_index,
+      R_xlen_t& i
+  ) {
+
     switch( TYPEOF( v ) ) {
     case LGLSXP: {
       Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
@@ -23,8 +28,7 @@ namespace sf {
     }
     case REALSXP: {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( v );
-      Rcpp::NumericVector res_nv = nv[ subset_index ];
-      res[ i ] = res_nv;
+      res[ i ] = nv[ subset_index ];
       break;
     }
     case STRSXP: {
@@ -43,7 +47,7 @@ namespace sf {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported column type using fill = TRUE");
+      Rcpp::stop("sfheaders - unsupported column type using keep = TRUE");
     }
     }
   }

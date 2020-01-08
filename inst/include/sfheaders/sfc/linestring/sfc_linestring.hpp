@@ -442,13 +442,11 @@ namespace sfc {
   }
 
 
-
   inline SEXP sfc_linestring(
-      Rcpp::IntegerMatrix& im,
-      Rcpp::IntegerVector& geometry_cols,
-      Rcpp::IntegerVector& line_ids
+    Rcpp::IntegerMatrix& im,
+    Rcpp::IntegerVector& geometry_cols,
+    Rcpp::IntegerMatrix& line_positions
   ) {
-
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -457,8 +455,6 @@ namespace sfc {
 
     R_xlen_t n_col = im.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
-
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
     R_xlen_t n_lines = line_positions.nrow();
 
@@ -485,13 +481,20 @@ namespace sfc {
     return sfc;
   }
 
+  inline SEXP sfc_linestring(
+      Rcpp::IntegerMatrix& im,
+      Rcpp::IntegerVector& geometry_cols,
+      Rcpp::IntegerVector& line_ids
+  ) {
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    return sfc_linestring( im, geometry_cols, line_positions );
+  }
 
   inline SEXP sfc_linestring(
     Rcpp::NumericMatrix& nm,
     Rcpp::IntegerVector& geometry_cols,
-    Rcpp::NumericVector& line_ids
+    Rcpp::IntegerMatrix& line_positions
   ) {
-
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
@@ -500,8 +503,6 @@ namespace sfc {
 
     R_xlen_t n_col = nm.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, geometry_cols );
-
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
     R_xlen_t n_lines = line_positions.nrow();
 
@@ -529,26 +530,19 @@ namespace sfc {
   }
 
   inline SEXP sfc_linestring(
-      Rcpp::DataFrame& df,
-      Rcpp::StringVector& geometry_cols,
-      SEXP& line_ids
+    Rcpp::NumericMatrix& nm,
+    Rcpp::IntegerVector& geometry_cols,
+    Rcpp::NumericVector& line_ids
   ) {
-
-    // TODO:
-    // have sfc_linestring() functions which accept 'line_positions' as a paramter.
-    // if it doesn't exist, it calls a function to generate them.
-    // This function can then also be called by sf_linestring()
-    // then inside sf_linestring it can call sfc_linestring(..., line_positions)
-    // which removes the double-call.
-
-    //SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-    //Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
-
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    return sfc_linestring( nm, geometry_cols, line_positions );
+  }
 
-    // the first column in 'line_positions' give the first row of each property.
-    //Rcpp::Rcout << line_positions << std::endl;
-
+  inline SEXP sfc_linestring(
+    Rcpp::DataFrame& df,
+    Rcpp::StringVector& geometry_cols,
+    Rcpp::IntegerMatrix& line_positions
+  ) {
     R_xlen_t n_lines = line_positions.nrow();
     Rcpp::List sfc( n_lines );
 
@@ -581,20 +575,22 @@ namespace sfc {
     return sfc;
   }
 
-
   inline SEXP sfc_linestring(
       Rcpp::DataFrame& df,
-      Rcpp::IntegerVector& geometry_cols,
+      Rcpp::StringVector& geometry_cols,
       SEXP& line_ids
   ) {
-    // SEXP unique_ids = sfheaders::utils::get_sexp_unique( line_ids );
-    // Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids, unique_ids );
-
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    return sfc_linestring( df, geometry_cols, line_positions );
+  }
 
+  inline SEXP sfc_linestring(
+    Rcpp::DataFrame& df,
+    Rcpp::IntegerVector& geometry_cols,
+    Rcpp::IntegerMatrix& line_positions
+  ) {
     R_xlen_t n_lines = line_positions.nrow();
     Rcpp::List sfc( n_lines );
-
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
@@ -604,8 +600,6 @@ namespace sfc {
 
     R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
-
-
 
     int start;
     int end;
@@ -626,6 +620,16 @@ namespace sfc {
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
     return sfc;
+  }
+
+
+  inline SEXP sfc_linestring(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      SEXP& line_ids
+  ) {
+    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    return sfc_linestring( df, geometry_cols, line_positions );
   }
 
   inline SEXP sfc_linestring(

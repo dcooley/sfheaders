@@ -81,9 +81,9 @@ sf_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipoi
 #' sf_linestring( x, linestring_id = "id", x = "x", y = "y")
 #'
 #' @export
-sf_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
+sf_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL, keep = FALSE ) {
   geometry_columns <- c(x,y,z,m)
-  res <- rcpp_sf_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ) )
+  res <- rcpp_sf_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), keep )
   return( replace_id( res, linestring_id ) )
 }
 

@@ -32,8 +32,8 @@ Rcpp::DataFrame rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id) {
 
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id) {
-  return sfheaders::sf::sf_linestring( x, cols, linestring_id );
+Rcpp::DataFrame rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep) {
+  return sfheaders::sf::sf_linestring( x, cols, linestring_id, keep );
 }
 
 // [[Rcpp::export]]

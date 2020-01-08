@@ -49,8 +49,8 @@ rcpp_sf_multipoint <- function(x, cols, multipoint_id) {
     .Call(`_sfheaders_rcpp_sf_multipoint`, x, cols, multipoint_id)
 }
 
-rcpp_sf_linestring <- function(x, cols, linestring_id) {
-    .Call(`_sfheaders_rcpp_sf_linestring`, x, cols, linestring_id)
+rcpp_sf_linestring <- function(x, cols, linestring_id, keep) {
+    .Call(`_sfheaders_rcpp_sf_linestring`, x, cols, linestring_id, keep)
 }
 
 rcpp_sf_multilinestring <- function(x, cols, multilinestring_id, linestring_id) {
