@@ -37,8 +37,8 @@ SEXP rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id) {
-  return sfheaders::sf::sf_multilinestring( x, cols, multilinestring_id, linestring_id );
+SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep ) {
+  return sfheaders::sf::sf_multilinestring( x, cols, multilinestring_id, linestring_id, keep );
 }
 
 // [[Rcpp::export]]

@@ -53,8 +53,8 @@ rcpp_sf_linestring <- function(x, cols, linestring_id, keep) {
     .Call(`_sfheaders_rcpp_sf_linestring`, x, cols, linestring_id, keep)
 }
 
-rcpp_sf_multilinestring <- function(x, cols, multilinestring_id, linestring_id) {
-    .Call(`_sfheaders_rcpp_sf_multilinestring`, x, cols, multilinestring_id, linestring_id)
+rcpp_sf_multilinestring <- function(x, cols, multilinestring_id, linestring_id, keep) {
+    .Call(`_sfheaders_rcpp_sf_multilinestring`, x, cols, multilinestring_id, linestring_id, keep)
 }
 
 rcpp_sf_polygon <- function(x, cols, polygon_id, linestring_id, close = TRUE) {

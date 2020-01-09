@@ -39,6 +39,16 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 The data.frame and matrices you send into the sfheader functions must be ordered.
 }
 
+\section{Keeping Properties}{
+
+
+Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
+coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
+
+The \code{sf_} functions assume the input \code{obj} is a long data.frame / matrix,
+where any properties are repeated down the table for the same geometry.
+}
+
 \examples{
 
 m <- matrix(c(0,0,0,0,1,1), ncol = 2 )

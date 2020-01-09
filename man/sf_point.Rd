@@ -16,6 +16,9 @@ sf_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 \item{z}{z geometry column}
 
 \item{m}{m geometry column}
+
+\item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
+if TRUE, only the first row of each geometry is kept. See Keeping Properties.}
 }
 \value{
 \code{sf} object of POINT geometries
@@ -23,6 +26,16 @@ sf_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 \description{
 constructs sf of POINT objects
 }
+\section{Keeping Properties}{
+
+
+Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
+coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
+
+The \code{sf_} functions assume the input \code{obj} is a long data.frame / matrix,
+where any properties are repeated down the table for the same geometry.
+}
+
 \section{notes}{
 
 sfheaders functions do not perform any validity checks on the geometries.
