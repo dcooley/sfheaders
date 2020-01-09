@@ -19,6 +19,7 @@ namespace sf {
 // BUT, this is a two-step id extract
 // and is there a guarantee they'll be combined in the correct order??
 
+  // this function won't keep any attributes
   inline SEXP sf_linestring(
     SEXP& x,
     SEXP& geometry_cols,
@@ -34,26 +35,6 @@ namespace sf {
   }
 
   inline SEXP sf_linestring(
-      Rcpp::NumericMatrix& nm,
-      Rcpp::IntegerVector& geometry_cols,
-      Rcpp::NumericVector& line_ids
-  ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
-
-
-    return sfheaders::sfc::sfc_linestring( nm, geometry_cols, line_positions );
-  }
-
-  inline SEXP sf_linestring(
-      Rcpp::IntegerMatrix& im,
-      Rcpp::IntegerVector& geometry_cols,
-      Rcpp::IntegerVector& line_ids
-  ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
-    return sfheaders::sfc::sfc_linestring( im, geometry_cols, line_positions );
-  }
-
-  inline SEXP sf_linestring(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
       SEXP& line_ids,
@@ -61,44 +42,52 @@ namespace sf {
   ) {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
-
-
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
-
-
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions );
 
-    R_xlen_t n_col = property_idx.length();
-    Rcpp::List res( n_col + 1 );  // +1 == sfc
-    R_xlen_t i;
-    for( i = 0; i < n_col; ++i ) {
-      int idx = property_idx[i];
-      SEXP v = df[ idx ];
-      res[ i ] = sfheaders::sf::subset_properties( v, row_idx );
-    }
-
-    //Rcpp::StringVector sfc_names = sfc.names();
-    Rcpp::String sfc_name = "geometry";
-    Rcpp::StringVector res_names = sfheaders::utils::concatenate_vectors( property_cols, sfc_name );
-    res[ n_col ] = sfc;
-    res.names() = res_names;
-    R_xlen_t n_row = line_positions.nrow();
-    sfheaders::sf::attach_dataframe_attributes( res, n_row );
-
-    return res;
+    return sfheaders::sf::create_sf( df, sfc, property_cols, property_idx, row_idx );
   }
 
   inline SEXP sf_linestring(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
-      SEXP& line_ids
+      SEXP& line_ids,
+      Rcpp::IntegerVector& property_idx
   ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
 
-    // now we have the line_positions we can get the first row of each vector
+    // get the property cols as a string_vector so we get the column names
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector property_cols = df_names[ property_idx ];
+    Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
+    return sf_linestring( df, str_geometry_cols, line_ids, property_cols );
+  }
 
-    return sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions );
+  inline SEXP sf_linestring(
+      Rcpp::DataFrame& df,
+      Rcpp::StringVector& geometry_cols,
+      Rcpp::String& linestring_id
+  ) {
+
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+    Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
+
+    SEXP line_ids = df[ linestring_id ];
+    return sf_linestring( df, geometry_cols, line_ids, property_cols );
+  }
+
+  inline SEXP sf_linestring(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      int& linestring_id
+  ) {
+
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
+    Rcpp::String line_id = df_names[ linestring_id ];
+
+    return sf_linestring( df, str_geometry_cols, line_id );
   }
 
   inline SEXP sf_linestring(
@@ -106,10 +95,9 @@ namespace sf {
       Rcpp::IntegerVector& geometry_cols,
       int& linestring_id
   ) {
-
     sfheaders::utils::column_exists( im, linestring_id );
-    Rcpp::IntegerVector line_ids = im( Rcpp::_, linestring_id );
-    return sf_linestring( im, geometry_cols, line_ids );
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
+    return sf_linestring( df, geometry_cols, linestring_id );
   }
 
   inline SEXP sf_linestring(
@@ -118,8 +106,8 @@ namespace sf {
       int& linestring_id
   ) {
     sfheaders::utils::column_exists( nm, linestring_id );
-    Rcpp::NumericVector line_ids = nm( Rcpp::_, linestring_id );
-    return sf_linestring( nm, geometry_cols, line_ids );
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
+    return sf_linestring( df, geometry_cols, linestring_id );
   }
 
   inline SEXP sf_linestring(
@@ -129,12 +117,12 @@ namespace sf {
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
 
-    Rcpp::StringVector df_names = df.names();
-    Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
-    Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
-
-    SEXP line_ids = df[ linestring_id ];
-    return sf_linestring( df, geometry_cols, line_ids, property_cols );
+    // Rcpp::StringVector df_names = df.names();
+    // Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+    // Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
+    //SEXP line_ids = df[ linestring_id ];
+    //return sf_linestring( df, geometry_cols, line_ids, property_cols );
+    return sf_linestring( df, geometry_cols, linestring_id );
   }
 
   inline SEXP sf_linestring(
@@ -143,37 +131,14 @@ namespace sf {
       Rcpp::String& linestring_id
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-
-    Rcpp::StringVector df_names = df.names();
-    Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
-    Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
-
-    SEXP line_ids = df[ linestring_id ];
-    return sf_linestring( df, geometry_cols, line_ids, property_cols );
-  }
-
-  inline SEXP sf_linestring(
-      Rcpp::DataFrame& df,
-      Rcpp::StringVector& geometry_cols,
-      Rcpp::String& linestring_id
-  ) {
-
-    Rcpp::StringVector df_names = df.names();
-    Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
-    Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
-
-    SEXP line_ids = df[ linestring_id ];
-    return sf_linestring( df, geometry_cols, line_ids, property_cols );
-  }
-
-  inline SEXP sf_linestring(
-      Rcpp::DataFrame& df,
-      Rcpp::IntegerVector& geometry_cols,
-      int& linestring_id
-  ) {
-    sfheaders::utils::column_exists( df, linestring_id );
-    SEXP line_ids = df[ linestring_id ];
-    return sf_linestring( df, geometry_cols, line_ids );
+//
+//     Rcpp::StringVector df_names = df.names();
+//     Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+//     Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
+//
+//     SEXP line_ids = df[ linestring_id ];
+//    return sf_linestring( df, geometry_cols, line_ids, property_cols );
+    return sf_linestring( df, geometry_cols, linestring_id );
   }
 
   inline SEXP sf_linestring(
@@ -210,8 +175,6 @@ namespace sf {
     return Rcpp::List::create();
   }
 
-
-  // will keep all properties
   inline SEXP sf_linestring(
       SEXP& x,
       Rcpp::StringVector& geometry_cols,
@@ -267,7 +230,6 @@ namespace sf {
 
       // can't work out which are the geometry columns
       Rcpp::stop("sfheaders - please specify the geometry and id columns");
-      //return sf_linestring( x );
 
     } else {
       // we have all the columns sorted, so the 'properties' are all the other columns

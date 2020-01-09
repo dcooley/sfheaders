@@ -1,6 +1,8 @@
 #ifndef R_SFHEADERS_SF_UTILS_H
 #define R_SFHEADERS_SF_UTILS_H
 
+#include "sfheaders/utils/vectors/vectors.hpp"
+
 namespace sfheaders {
 namespace sf {
 
@@ -44,6 +46,7 @@ namespace sf {
     }
   }
 
+
   inline void attach_dataframe_attributes( Rcpp::List& df, R_xlen_t& n_row ) {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
@@ -54,6 +57,39 @@ namespace sf {
       Rcpp::IntegerVector rn = Rcpp::seq( 1, n_row );
       df.attr("row.names") = rn;
     }
+  }
+
+  // where the input is a data.frame
+  inline Rcpp::List create_sf(
+      Rcpp::DataFrame& df,
+      Rcpp::List& sfc,
+      Rcpp::StringVector& property_cols,
+      Rcpp::IntegerVector& property_idx,
+      Rcpp::IntegerVector& row_idx
+  ) {
+
+    R_xlen_t n_col = property_idx.length();
+    Rcpp::List sf( n_col + 1 );  // +1 == sfc
+    R_xlen_t i;
+
+    // fill columns of properties
+    for( i = 0; i < n_col; ++i ) {
+      int idx = property_idx[i];
+      SEXP v = df[ idx ];
+      sf[ i ] = subset_properties( v, row_idx );
+    }
+
+    // make data.frame
+    Rcpp::String sfc_name = "geometry";
+    Rcpp::StringVector res_names = sfheaders::utils::concatenate_vectors( property_cols, sfc_name );
+    sf[ n_col ] = sfc;
+    sf.names() = res_names;
+
+    R_xlen_t n_row = row_idx.length();
+
+    sfheaders::sf::attach_dataframe_attributes( sf, n_row );
+
+    return sf;
   }
 
   inline SEXP make_sf( Rcpp::List& sfc ) {

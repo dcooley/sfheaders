@@ -24,7 +24,7 @@ test_that("sf objects are created",{
   res <- sfheaders:::rcpp_sf_multipoint(df, 1:4, NULL )
   expect_true( is_sf( res ) )
 
-  res <- sfheaders:::rcpp_sf_linestring(df, 1:4, NULL )
+  res <- sfheaders:::rcpp_sf_linestring(df, 1:4, NULL, FALSE )
   expect_true( is_sf( res ) )
 
   res <- sfheaders:::rcpp_sf_multilinestring(df, 1:4, NULL, NULL )
@@ -60,7 +60,7 @@ test_that("correct number of rows returned",{
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
-  res <- sfheaders:::rcpp_sf_linestring( df, c(2:3), 0L )
+  res <- sfheaders:::rcpp_sf_linestring( df, c(2:3), 0L, FALSE )
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
@@ -77,9 +77,6 @@ test_that("correct number of rows returned",{
   expect_true( all( res$id == unique( df$id1 ) ) )
 
 })
-
-
-
 
 test_that("ID order maintained",{
 
@@ -150,8 +147,8 @@ test_that("ID order maintained",{
   )
 
   expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0 ), "sfheaders - linestring columns types are different")
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, FALSE ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0, FALSE ), "sfheaders - linestring columns types are different")
 
 })
 
