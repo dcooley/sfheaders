@@ -42,10 +42,11 @@ sf_point <- function(
   x = NULL,
   y = NULL,
   z = NULL,
-  m = NULL
+  m = NULL,
+  keep = FALSE
   ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sf_point( obj, index_correct( geometry_columns ) )
+  return( rcpp_sf_point( obj, index_correct( geometry_columns ), keep ) )
 }
 
 #' sf MULTIPOINT

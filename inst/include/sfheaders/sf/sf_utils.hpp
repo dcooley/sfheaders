@@ -46,6 +46,11 @@ namespace sf {
     }
   }
 
+  // // extract the first row of an object and return as the same object
+  // inline SEXP get_first_row( SEXP& x, SEXP& property_columns ) {
+  //
+  // }
+
 
   inline void attach_dataframe_attributes( Rcpp::List& df, R_xlen_t& n_row ) {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
@@ -90,6 +95,73 @@ namespace sf {
     sfheaders::sf::attach_dataframe_attributes( sf, n_row );
 
     return sf;
+  }
+
+
+  // where there's only one-row sf
+  inline SEXP create_sf(
+      Rcpp::DataFrame& df,
+      Rcpp::List& sfc,
+      SEXP& property_columns
+  ) {
+
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector str_property_columns;
+
+    switch( TYPEOF( property_columns ) ) {
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( property_columns );
+      str_property_columns = df_names[ iv ];
+      break;
+    }
+    case REALSXP: {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( property_columns );
+      str_property_columns = df_names[ nv ];
+      break;
+    }
+    case STRSXP: {
+      str_property_columns = Rcpp::as< Rcpp::StringVector >( property_columns );
+      break;
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknow column types");
+    }
+    }
+
+    // make_data.frame
+    Rcpp::IntegerVector row_idx(1);
+    row_idx[0] = 0;
+
+    Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( str_property_columns, df_names );
+    return sfheaders::sf::create_sf( df, sfc, str_property_columns, property_idx, row_idx );
+  }
+
+  inline SEXP create_sf(
+      SEXP& x,
+      Rcpp::List& sfc,
+      SEXP& property_columns
+  ) {
+    Rcpp::DataFrame df;
+    switch( TYPEOF( x ) ) {
+    case INTSXP: {
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+      df = Rcpp::as< Rcpp::DataFrame >( im );
+      break;
+    }
+    case REALSXP: {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+      df = Rcpp::as< Rcpp::DataFrame >( nm );
+      break;
+    }
+    case VECSXP: {
+      df = Rcpp::as< Rcpp::DataFrame >( x );
+      break;
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown type");
+    }
+    }
+    return create_sf( df, sfc, property_columns );
   }
 
   inline SEXP make_sf( Rcpp::List& sfc ) {

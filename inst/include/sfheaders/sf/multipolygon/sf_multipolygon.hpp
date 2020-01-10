@@ -246,6 +246,8 @@ inline SEXP sf_multipolygon(
   return Rcpp::List::create();
 }
 
+
+
 inline SEXP sf_multipolygon(
     SEXP& x,
     SEXP& geometry_cols,
@@ -260,31 +262,103 @@ inline SEXP sf_multipolygon(
     return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
   }
 
-  // if ONLY geometry_cols are supplied, then everything else is a property.
-  // if ONLY outer_id is supplied, assume the remainder are geometries?
-  // - then check the size of geometry column.
-  // if geometry && outer_id, then all the others are properties.
-
   // if all NULL, can we make any assumptions?
   // need at least outer-geometry id?
-  if( Rf_isNull( geometry_cols ) ||
-      Rf_isNull( linestring_id ) ||
-      Rf_isNull( polygon_id) ||
-      Rf_isNull( multipolygon_id)
-    ) {
+  if( Rf_isNull( geometry_cols ) ) {
+      Rcpp::stop("sfheaders - please specify the geometry columns x, y (and z, m)");
+  }
 
-    // can't work out which are the geometry columns
-    Rcpp::stop("sfheaders - please specify the geometry and id columns");
+    // form here geometry != null
 
-  } else {
+  if(
+    !Rf_isNull( multipolygon_id ) &&
+      Rf_isNull( polygon_id ) &&
+      Rf_isNull( linestring_id )
+  ) {
+    SEXP polygon_id2 = multipolygon_id;
+    SEXP linestring_id2 = multipolygon_id;
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id2, linestring_id2, close );
+  }
 
-    sfheaders::utils::geometry_column_check( geometry_cols );
+  if(
+    Rf_isNull( multipolygon_id ) &&
+      !Rf_isNull( polygon_id ) &&
+      Rf_isNull( linestring_id )
+  ) {
+    // the entire object is one multipolygon
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
+    SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id );
+    return sfheaders::sf::create_sf( x, sfc, property_columns );
 
-    if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
-         TYPEOF( geometry_cols ) != TYPEOF( polygon_id ) ||
-         TYPEOF( geometry_cols ) != TYPEOF( multipolygon_id ) ) {
-      Rcpp::stop("sfheaders - polygon columns types are different");  // #nocov
-    }
+  }
+
+  if(
+    Rf_isNull( multipolygon_id ) &&
+      Rf_isNull( polygon_id ) &&
+      !Rf_isNull( linestring_id )
+  ) {
+    // the entire object is one multipolygon
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
+    SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, linestring_id );
+    return sfheaders::sf::create_sf( x, sfc, property_columns );
+  }
+
+
+  if(
+    !Rf_isNull( multipolygon_id ) &&
+      !Rf_isNull( polygon_id ) &&
+      Rf_isNull( linestring_id )
+  ) {
+    SEXP linestring_id2 = polygon_id;
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id2, close );
+  }
+
+  if(
+    !Rf_isNull( multipolygon_id ) &&
+      Rf_isNull( polygon_id ) &&
+      !Rf_isNull( linestring_id )
+  ) {
+    SEXP polygon_id2 = multipolygon_id;
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id2, linestring_id, close );
+  }
+
+  if(
+    Rf_isNull( multipolygon_id ) &&
+      !Rf_isNull( polygon_id ) &&
+      !Rf_isNull( linestring_id )
+  ) {
+    // the entire object is one multipolygon
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
+    SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id, linestring_id );
+    return sfheaders::sf::create_sf( x, sfc, property_columns );
+  }
+
+  if(
+    Rf_isNull( multipolygon_id ) &&
+      Rf_isNull( polygon_id ) &&
+      Rf_isNull( linestring_id )
+  ) {
+    // the entire object is one multipolygon
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
+    SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
+    return sfheaders::sf::create_sf( x, sfc, property_columns );
+  }
+
+  if(
+    !Rf_isNull( geometry_cols ) &&
+    !Rf_isNull( multipolygon_id ) &&
+    !Rf_isNull( polygon_id ) &&
+    !Rf_isNull( linestring_id )
+  ) {
+
+
+    // sfheaders::utils::geometry_column_check( geometry_cols );
+    //
+    // if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
+    //      TYPEOF( geometry_cols ) != TYPEOF( polygon_id ) ||
+    //      TYPEOF( geometry_cols ) != TYPEOF( multipolygon_id ) ) {
+    //   Rcpp::stop("sfheaders - polygon columns types are different");  // #nocov
+    // }
 
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -315,7 +389,7 @@ inline SEXP sf_multipolygon(
     }
   }
 
-  Rcpp::stop("sfheaders - polygon case not yet implemented"); // #nocov
+  Rcpp::stop("sfheaders - multipolygon case not yet implemented"); // #nocov
   return Rcpp::List::create(); // ??
 }
 

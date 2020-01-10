@@ -4,7 +4,8 @@
 \alias{sf_point}
 \title{sf POINT}
 \usage{
-sf_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
+sf_point(obj, x = NULL, y = NULL, z = NULL, m = NULL,
+  keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}

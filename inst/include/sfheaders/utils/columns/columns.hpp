@@ -40,6 +40,7 @@ namespace utils {
       int to_remove = id_cols[ i ];
       other_cols.erase( to_remove );
     }
+    Rcpp::Rcout << "final ohter cols " << other_cols << std::endl;
     return other_cols;
   }
 
@@ -129,7 +130,9 @@ namespace utils {
       Rcpp::NumericVector& id_cols
   ) {
     int n_col = nm.ncol();
+    Rcpp::Rcout << "n_col: " << n_col << std::endl;
     Rcpp::IntegerVector other_cols = Rcpp::seq( 0, n_col - 1 );
+    Rcpp::Rcout << "other_cols: " << other_cols << std::endl;
     Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( other_cols );
     return other_columns( nv, id_cols );
   }
@@ -240,6 +243,7 @@ namespace utils {
     }
     case REALSXP: {
     if( Rf_isMatrix( x ) ) {
+      Rcpp::Rcout << "numeric matrix" << std::endl;
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return other_columns( nm, id_cols );
     }

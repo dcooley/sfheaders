@@ -21,8 +21,8 @@
 // }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_point( SEXP x, SEXP cols) {
-  return sfheaders::sf::sf_point( x, cols );
+SEXP rcpp_sf_point( SEXP x, SEXP cols, bool keep ) {
+  return sfheaders::sf::sf_point( x, cols, keep );
 }
 
 // [[Rcpp::export]]
@@ -42,12 +42,12 @@ SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP l
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep) {
+SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep ) {
   return sfheaders::sf::sf_polygon( x, cols, polygon_id, linestring_id, close, keep );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep) {
+SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep ) {
   return sfheaders::sf::sf_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, close, keep );
 }
 
