@@ -260,6 +260,10 @@ inline SEXP sf_multipolygon(
     return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
   }
 
+  // if ONLY geometry_cols are supplied, then everything else is a property.
+  // if ONLY outer_id is supplied, assume the remainder are geometries?
+  // - then check the size of geometry column.
+  // if geometry && outer_id, then all the others are properties.
 
   // if all NULL, can we make any assumptions?
   // need at least outer-geometry id?

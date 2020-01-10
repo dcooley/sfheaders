@@ -25,6 +25,10 @@ sf_polygon(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
 
 \item{close}{logical indicating whether polygons should be closed. If \code{TRUE},
 all polygons will be checked and force closed if possible}
+
+\item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
+if TRUE you must supply the geometry and id columns, and only the first row of
+each geometry is kept. See Keeping Properties.}
 }
 \value{
 \code{sf} object of POLYGON geometries

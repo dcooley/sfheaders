@@ -26,8 +26,8 @@ SEXP rcpp_sf_point( SEXP x, SEXP cols) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id) {
-  return sfheaders::sf::sf_multipoint( x, cols, multipoint_id );
+SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id, bool keep ) {
+  return sfheaders::sf::sf_multipoint( x, cols, multipoint_id, keep );
 }
 
 

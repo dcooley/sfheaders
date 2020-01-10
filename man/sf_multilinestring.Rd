@@ -22,6 +22,10 @@ sf_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
 \item{multilinestring_id}{column of ids for multilinestrings}
 
 \item{linestring_id}{column of ids for linestrings (within multilinestrings)}
+
+\item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
+if TRUE you must supply the geometry and id columns, and only the first row of
+each geometry is kept. See Keeping Properties.}
 }
 \value{
 \code{sf} object of MULTILINESTRING geometries

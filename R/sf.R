@@ -77,13 +77,15 @@ sf_multipoint <- function(
   y = NULL,
   z = NULL,
   m = NULL,
-  multipoint_id = NULL
+  multipoint_id = NULL,
+  keep = FALSE
   ) {
   geometry_columns <- c(x,y,z,m)
   res <- rcpp_sf_multipoint(
     obj
     , index_correct( geometry_columns )
     , index_correct( multipoint_id )
+    , keep
     )
   return( replace_id( res, multipoint_id ) )
 }

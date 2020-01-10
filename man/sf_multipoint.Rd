@@ -5,7 +5,7 @@
 \title{sf MULTIPOINT}
 \usage{
 sf_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
-  multipoint_id = NULL)
+  multipoint_id = NULL, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
@@ -19,6 +19,10 @@ sf_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
 \item{m}{m geometry column}
 
 \item{multipoint_id}{column of ids for multipoints}
+
+\item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
+if TRUE you must supply the geometry and id columns, and only the first row of
+each geometry is kept. See Keeping Properties.}
 }
 \value{
 \code{sf} object of MULTIPOINT geometries
