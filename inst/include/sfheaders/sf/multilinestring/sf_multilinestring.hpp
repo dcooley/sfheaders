@@ -65,11 +65,9 @@ namespace sf {
   ) {
 
     Rcpp::StringVector df_names = df.names();
+    SEXP multiline_ids = df[ multilinestring_id ];
     Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
     Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols );
-
-    SEXP multiline_ids = df[ multilinestring_id ];
-    //SEXP line_ids = df[ linestring_id ];
     return sf_multilinestring( df, geometry_cols, multiline_ids, linestring_id, property_cols );
   }
 
@@ -84,7 +82,6 @@ namespace sf {
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::String multiline_id = df_names[ multilinestring_id ];
     Rcpp::String line_id = df_names[ linestring_id ];
-
     return sf_multilinestring( df, str_geometry_cols, multiline_id, line_id );
   }
 

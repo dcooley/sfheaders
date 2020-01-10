@@ -176,8 +176,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_polygon
-SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close);
-RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP) {
+SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep);
+RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP keepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -186,13 +186,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_polygon(x, cols, polygon_id, linestring_id, close));
+    Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_polygon(x, cols, polygon_id, linestring_id, close, keep));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_multipolygon
-SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close);
-RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP) {
+SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep);
+RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP keepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -202,7 +203,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, close));
+    Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, close, keep));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -618,8 +620,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sf_multipoint", (DL_FUNC) &_sfheaders_rcpp_sf_multipoint, 3},
     {"_sfheaders_rcpp_sf_linestring", (DL_FUNC) &_sfheaders_rcpp_sf_linestring, 4},
     {"_sfheaders_rcpp_sf_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sf_multilinestring, 5},
-    {"_sfheaders_rcpp_sf_polygon", (DL_FUNC) &_sfheaders_rcpp_sf_polygon, 5},
-    {"_sfheaders_rcpp_sf_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sf_multipolygon, 6},
+    {"_sfheaders_rcpp_sf_polygon", (DL_FUNC) &_sfheaders_rcpp_sf_polygon, 6},
+    {"_sfheaders_rcpp_sf_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sf_multipolygon, 7},
     {"_sfheaders_rcpp_sfc_point", (DL_FUNC) &_sfheaders_rcpp_sfc_point, 2},
     {"_sfheaders_rcpp_sfc_points", (DL_FUNC) &_sfheaders_rcpp_sfc_points, 1},
     {"_sfheaders_rcpp_sfc_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfc_multipoint, 3},

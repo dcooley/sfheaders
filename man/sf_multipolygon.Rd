@@ -6,7 +6,7 @@
 \usage{
 sf_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
   m = NULL, multipolygon_id = NULL, polygon_id = NULL,
-  linestring_id = NULL, close = TRUE)
+  linestring_id = NULL, close = TRUE, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
@@ -101,7 +101,7 @@ df <- data.frame(
 sf_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2" )
 sf_multipolygon( df, polygon_id = "id1", linestring_id = "id2" )
 sf_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
-sf_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
+sf_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2")
 sf_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
 sf_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
 

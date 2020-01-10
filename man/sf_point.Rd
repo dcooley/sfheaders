@@ -18,7 +18,8 @@ sf_point(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 \item{m}{m geometry column}
 
 \item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
-if TRUE, only the first row of each geometry is kept. See Keeping Properties.}
+if TRUE you must supply the geometry and id columns, and only the first row of
+each geometry is kept. See Keeping Properties.}
 }
 \value{
 \code{sf} object of POINT geometries

@@ -27,13 +27,13 @@ test_that("sf objects are created",{
   res <- sfheaders:::rcpp_sf_linestring(df, 1:4, NULL, FALSE )
   expect_true( is_sf( res ) )
 
-  res <- sfheaders:::rcpp_sf_multilinestring(df, 1:4, NULL, NULL )
+  res <- sfheaders:::rcpp_sf_multilinestring(df, 1:4, NULL, NULL, FALSE )
   expect_true( is_sf( res ) )
 
-  res <- sfheaders:::rcpp_sf_polygon(df, 1:4, NULL, NULL )
+  res <- sfheaders:::rcpp_sf_polygon(df, 1:4, NULL, NULL, FALSE, FALSE )
   expect_true( is_sf( res ) )
 
-  res <- sfheaders:::rcpp_sf_multipolygon(df, 1:4, NULL, NULL, NULL )
+  res <- sfheaders:::rcpp_sf_multipolygon(df, 1:4, NULL, NULL, NULL, FALSE, FALSE )
   expect_true( is_sf( res ) )
 })
 
@@ -64,15 +64,15 @@ test_that("correct number of rows returned",{
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
-  res <- sfheaders:::rcpp_sf_multilinestring( df, c(2:3), 0L, NULL )
+  res <- sfheaders:::rcpp_sf_multilinestring( df, c(2:3), 0L, NULL, FALSE )
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
-  res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, NULL )
+  res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, NULL, FALSE, FALSE )
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
-  res <- sfheaders:::rcpp_sf_multipolygon( df, c(2:3), 0L, NULL, NULL )
+  res <- sfheaders:::rcpp_sf_multipolygon( df, c(2:3), 0L, NULL, NULL, FALSE, FALSE )
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
@@ -114,7 +114,7 @@ test_that("ID order maintained",{
   expect_equal( m2[, 1], df[ df$id1 == 2, "x" ] )
   expect_equal( m2[, 2], df[ df$id1 == 2, "y" ] )
 
-  res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = F )
+  res <- sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = FALSE, keep = FALSE )
   m1 <- res$geometry[[1]][[1]]
   m2 <- res$geometry[[1]][[2]]
 
@@ -146,9 +146,9 @@ test_that("ID order maintained",{
     , m = 1:10
   )
 
-  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, FALSE ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0, FALSE ), "sfheaders - linestring columns types are different")
+  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = FALSE, keep = FALSE ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, keep = FALSE ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0, keep = FALSE ), "sfheaders - linestring columns types are different")
 
 })
 

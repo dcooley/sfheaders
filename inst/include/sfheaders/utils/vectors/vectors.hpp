@@ -3,6 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/sexp/sexp.hpp"
+#include "sfheaders/utils/unique/unique_sort.hpp"
 
 namespace sfheaders {
 namespace utils {
@@ -65,10 +66,11 @@ namespace utils {
     }
 
     //if( sort_unique ) {
-    Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
-    return iv2;
+    //Rcpp::IntegerVector iv2 = Rcpp::sort_unique( iv );
+    //return iv2;
     //}
     //return iv;
+    return sfheaders::utils::get_sexp_unique( iv );
   }
 
 
@@ -103,10 +105,11 @@ namespace utils {
     }
 
     //if( sort_unique ) {
-      Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
-      return nv2;
+      // Rcpp::NumericVector nv2 = Rcpp::sort_unique( nv );
+      // return nv2;
     //}
     //return nv;
+    return sfheaders::utils::get_sexp_unique( nv );
   }
 
   inline SEXP concatenate_vectors(
@@ -130,7 +133,13 @@ namespace utils {
       sv[i] = sv_2[ idx ];
       idx++;
     }
-    return sv;
+
+    return sfheaders::utils::get_sexp_unique( sv );
+
+    //Rcpp::StringVector sv2 = Rcpp::sort_unique( sv );
+    //Rcpp::StringVector sv2 = Rcpp::unique( sv );
+    //return sv2;
+    //return sv;
   }
 
   inline SEXP concatenate_vectors(

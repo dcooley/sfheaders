@@ -57,12 +57,12 @@ rcpp_sf_multilinestring <- function(x, cols, multilinestring_id, linestring_id, 
     .Call(`_sfheaders_rcpp_sf_multilinestring`, x, cols, multilinestring_id, linestring_id, keep)
 }
 
-rcpp_sf_polygon <- function(x, cols, polygon_id, linestring_id, close = TRUE) {
-    .Call(`_sfheaders_rcpp_sf_polygon`, x, cols, polygon_id, linestring_id, close)
+rcpp_sf_polygon <- function(x, cols, polygon_id, linestring_id, close, keep) {
+    .Call(`_sfheaders_rcpp_sf_polygon`, x, cols, polygon_id, linestring_id, close, keep)
 }
 
-rcpp_sf_multipolygon <- function(x, cols, multipolygon_id, polygon_id, linestring_id, close = TRUE) {
-    .Call(`_sfheaders_rcpp_sf_multipolygon`, x, cols, multipolygon_id, polygon_id, linestring_id, close)
+rcpp_sf_multipolygon <- function(x, cols, multipolygon_id, polygon_id, linestring_id, close, keep) {
+    .Call(`_sfheaders_rcpp_sf_multipolygon`, x, cols, multipolygon_id, polygon_id, linestring_id, close, keep)
 }
 
 rcpp_sfc_point <- function(x, cols) {

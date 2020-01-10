@@ -86,7 +86,6 @@ namespace sf {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::String line_id = df_names[ linestring_id ];
-
     return sf_linestring( df, str_geometry_cols, line_id );
   }
 

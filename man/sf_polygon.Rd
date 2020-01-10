@@ -5,7 +5,8 @@
 \title{sf POLYGON}
 \usage{
 sf_polygon(obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
-  polygon_id = NULL, linestring_id = NULL, close = TRUE)
+  polygon_id = NULL, linestring_id = NULL, close = TRUE,
+  keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
