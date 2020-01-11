@@ -40,7 +40,7 @@ namespace utils {
       int to_remove = id_cols[ i ];
       other_cols.erase( to_remove );
     }
-    Rcpp::Rcout << "final ohter cols " << other_cols << std::endl;
+
     return other_cols;
   }
 
@@ -50,8 +50,6 @@ namespace utils {
       Rcpp::StringVector& id_cols
   ) {
 
-    // Rcpp::StringVector sv = Rcpp::setdiff( all_cols, id_cols );
-    // return sv;
     int n_id_cols = id_cols.size();
     int n_other_cols = all_cols.size();
     int i, j;
@@ -73,7 +71,6 @@ namespace utils {
       }
     }
     return all_cols;
-    //return other_cols;
   }
 
   inline SEXP other_columns(
@@ -130,9 +127,7 @@ namespace utils {
       Rcpp::NumericVector& id_cols
   ) {
     int n_col = nm.ncol();
-    Rcpp::Rcout << "n_col: " << n_col << std::endl;
     Rcpp::IntegerVector other_cols = Rcpp::seq( 0, n_col - 1 );
-    Rcpp::Rcout << "other_cols: " << other_cols << std::endl;
     Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( other_cols );
     return other_columns( nv, id_cols );
   }
@@ -243,7 +238,6 @@ namespace utils {
     }
     case REALSXP: {
     if( Rf_isMatrix( x ) ) {
-      Rcpp::Rcout << "numeric matrix" << std::endl;
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
       return other_columns( nm, id_cols );
     }
@@ -347,48 +341,48 @@ namespace utils {
 
   }
 
-    inline SEXP other_columns(
-        SEXP& x,
-        SEXP& col_1,
-        SEXP& col_2,
-        SEXP& col_3
-    ) {
+  inline SEXP other_columns(
+      SEXP& x,
+      SEXP& col_1,
+      SEXP& col_2,
+      SEXP& col_3
+  ) {
 
-      if( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
-        return other_columns( x, col_1 );
-      }
-
-      if( Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
-        return other_columns( x, col_2 );
-      }
-
-      if( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
-        return other_columns( x, col_3 );
-      }
-
-      if( Rf_isNull( col_1) && !Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
-        return other_columns( x, col_2, col_3 );
-      }
-
-      if ( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
-        return other_columns( x, col_1, col_3 );
-      }
-
-      if ( !Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
-        return other_columns( x, col_1, col_2 );
-      }
-
-      if ( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
-        // then it's just all teh columns
-        return other_columns( x );
-      }
-
-      // combine cols 1, 2 and 3
-      SEXP other_cols_1 = sfheaders::utils::concatenate_vectors( col_1, col_2 );
-      SEXP other_cols = sfheaders::utils::concatenate_vectors( other_cols_1, col_3 );
-      return other_columns( x, other_cols );
-
+    if( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+      return other_columns( x, col_1 );
     }
+
+    if( Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+      return other_columns( x, col_2 );
+    }
+
+    if( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
+      return other_columns( x, col_3 );
+    }
+
+    if( Rf_isNull( col_1) && !Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
+      return other_columns( x, col_2, col_3 );
+    }
+
+    if ( !Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && !Rf_isNull( col_3 ) ) {
+      return other_columns( x, col_1, col_3 );
+    }
+
+    if ( !Rf_isNull( col_1 ) && !Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+      return other_columns( x, col_1, col_2 );
+    }
+
+    if ( Rf_isNull( col_1 ) && Rf_isNull( col_2 ) && Rf_isNull( col_3 ) ) {
+      // then it's just all teh columns
+      return other_columns( x );
+    }
+
+    // combine cols 1, 2 and 3
+    SEXP other_cols_1 = sfheaders::utils::concatenate_vectors( col_1, col_2 );
+    SEXP other_cols = sfheaders::utils::concatenate_vectors( other_cols_1, col_3 );
+    return other_columns( x, other_cols );
+
+  }
 
   // #nocov start
 

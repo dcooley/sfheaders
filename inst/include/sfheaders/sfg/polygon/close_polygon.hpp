@@ -73,8 +73,6 @@ namespace polygon_utils {
     R_xlen_t n_col = nm.ncol();
     R_xlen_t i;
 
-    // Rcpp::Rcout << "n_row: " << n_row << std::endl;
-
     bool is_closed = true;
 
     Rcpp::NumericVector first_row = nm( 0, Rcpp::_ );

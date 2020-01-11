@@ -46,12 +46,6 @@ namespace sf {
     }
   }
 
-  // // extract the first row of an object and return as the same object
-  // inline SEXP get_first_row( SEXP& x, SEXP& property_columns ) {
-  //
-  // }
-
-
   inline void attach_dataframe_attributes( Rcpp::List& df, R_xlen_t& n_row ) {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
     df.attr("sf_column") = "geometry";
@@ -64,7 +58,6 @@ namespace sf {
     }
   }
 
-  // where the input is a data.frame
   inline Rcpp::List create_sf(
       Rcpp::DataFrame& df,
       Rcpp::List& sfc,
@@ -75,6 +68,7 @@ namespace sf {
 
     R_xlen_t n_col = property_idx.length();
     Rcpp::List sf( n_col + 1 );  // +1 == sfc
+    Rcpp::StringVector res_names( n_col + 1 );
     R_xlen_t i;
 
     // fill columns of properties
@@ -82,12 +76,55 @@ namespace sf {
       int idx = property_idx[i];
       SEXP v = df[ idx ];
       sf[ i ] = subset_properties( v, row_idx );
+      res_names[ i ] = property_cols[ i ];
     }
 
     // make data.frame
     Rcpp::String sfc_name = "geometry";
-    Rcpp::StringVector res_names = sfheaders::utils::concatenate_vectors( property_cols, sfc_name );
+
     sf[ n_col ] = sfc;
+    res_names[ n_col ] = sfc_name;
+    sf.names() = res_names;
+
+    R_xlen_t n_row = row_idx.length();
+
+    sfheaders::sf::attach_dataframe_attributes( sf, n_row );
+
+    return sf;
+  }
+
+  // where the input is a data.frame, and output includes an id column
+  inline Rcpp::List create_sf(
+      Rcpp::DataFrame& df,
+      Rcpp::List& sfc,
+      Rcpp::String& id_column,
+      Rcpp::StringVector& property_cols,
+      Rcpp::IntegerVector& property_idx,
+      Rcpp::IntegerVector& row_idx
+  ) {
+
+    R_xlen_t n_col = property_idx.length();
+    Rcpp::List sf( n_col + 2 );  // +1 == sfc, +1 == sf_id
+    Rcpp::StringVector res_names( n_col + 2 );
+    R_xlen_t i;
+
+    // fill columns of properties
+    for( i = 0; i < n_col; ++i ) {
+      int idx = property_idx[i];
+      SEXP v = df[ idx ];
+      sf[ i + 1 ] = subset_properties( v, row_idx );
+      res_names[ i + 1 ] = property_cols[ i ];
+    }
+
+    // id column
+    SEXP id = df[ id_column ];
+    sf[ 0 ] = subset_properties( id, row_idx );
+    res_names[ 0 ] = id_column;
+
+    // make data.frame
+    sf[ n_col + 1 ] = sfc;
+    Rcpp::String sfc_name = "geometry";
+    res_names[ n_col + 1 ] = sfc_name;
     sf.names() = res_names;
 
     R_xlen_t n_row = row_idx.length();

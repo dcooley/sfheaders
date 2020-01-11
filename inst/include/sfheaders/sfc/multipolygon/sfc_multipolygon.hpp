@@ -248,7 +248,7 @@ namespace sfc {
     return Rcpp::List::create();
   }
 
-  // no subsetting to do (except for columsn)
+  // no subsetting to do (except for columns)
   inline SEXP sfc_multipolygon(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols,
@@ -481,11 +481,6 @@ inline SEXP sfc_multipolygon(
 }
 // #nocov end
 
-
-// is the idea here to first get the vector of polygon_ids
-// but keep the line_ids as a column reference
-// then subset the df in teh outerloop by polygon_id
-// then go in and get the sfg_multipolygon based on the line_ids?
 inline SEXP sfc_multipolygon(
   Rcpp::DataFrame& df,
   Rcpp::IntegerVector& geometry_cols,

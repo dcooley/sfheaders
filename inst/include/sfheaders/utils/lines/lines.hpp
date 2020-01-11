@@ -22,13 +22,17 @@ namespace utils {
     R_xlen_t unique_n = unique_ids.length();
 
     Rcpp::IntegerMatrix im( unique_n, 2 );
+    // 3 columns:
+    // 1 - start position
+    // 2 - end position
+    // 3 - id value
 
-    // if n = 1, there's only 1 unique ID
-    if( n == 1 ) {
-      im( 0, 0 ) = 0;
-      im( 0, 1 ) = n - 1;
-      return im;
-    }
+    // // if n = 1, there's only 1 unique ID
+    // if( n == 1 ) {
+    //   im( 0, 0 ) = 0;
+    //   im( 0, 1 ) = n - 1;
+    //   return im;
+    // }
 
     R_xlen_t i;
 
@@ -80,12 +84,12 @@ namespace utils {
     Rcpp::IntegerMatrix im( unique_n, 2);
 
 
-    // if n = 1, there's only 1 unique ID
-    if( n == 1 ) {
-      im( 0, 0 ) = 0;
-      im( 0, 1 ) = n - 1;
-      return im;
-    }
+    // // if n = 1, there's only 1 unique ID
+    // if( n == 1 ) {
+    //   im( 0, 0 ) = 0;
+    //   im( 0, 1 ) = n - 1;
+    //   return im;
+    // }
 
     R_xlen_t i;
 
@@ -140,12 +144,12 @@ namespace utils {
 
     Rcpp::IntegerMatrix im( unique_n, 2);
 
-    // if n = 1, there's only 1 unique ID
-    if( n == 1 ) {
-      im( 0, 0 ) = 0;
-      im( 0, 1 ) = n - 1;
-      return im;
-    }
+    // // if n = 1, there's only 1 unique ID
+    // if( n == 1 ) {
+    //   im( 0, 0 ) = 0;
+    //   im( 0, 1 ) = n - 1;
+    //   return im;
+    // }
 
     R_xlen_t i;
 

@@ -306,8 +306,6 @@ namespace zm {
       Rcpp::StringVector& geometry_cols
   ) {
 
-    // Rcpp::Rcout << "geometry_cols: " << geometry_cols << std::endl;
-
     if( geometry_cols.length() > 2 ) {
       Rcpp::String idx = geometry_cols[2];
       std::string s_idx = idx.get_cstring();

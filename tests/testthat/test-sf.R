@@ -15,13 +15,13 @@ test_that("sf objects are created",{
     , m = 1:10
   )
 
-  res <- sfheaders:::rcpp_sf_point(df, 1:4 )
+  res <- sfheaders:::rcpp_sf_point(df, 1:4, FALSE )
   expect_true( is_sf( res ) )
 
-  res <- sfheaders:::rcpp_sf_point(df, 1:2 )
+  res <- sfheaders:::rcpp_sf_point(df, 1:2, FALSE )
   expect_true( is_sf( res ) )
 
-  res <- sfheaders:::rcpp_sf_multipoint(df, 1:4, NULL )
+  res <- sfheaders:::rcpp_sf_multipoint(df, 1:4, NULL, FALSE )
   expect_true( is_sf( res ) )
 
   res <- sfheaders:::rcpp_sf_linestring(df, 1:4, NULL, FALSE )
@@ -53,10 +53,10 @@ test_that("correct number of rows returned",{
     , m = 1:10
   )
 
-  res <- sfheaders:::rcpp_sf_point( df, c(2:3) )
+  res <- sfheaders:::rcpp_sf_point( df, c(2:3), FALSE )
   expect_true( nrow(res) == nrow( df ) )
 
-  res <- sfheaders:::rcpp_sf_multipoint( df, c(2:3), 0L )
+  res <- sfheaders:::rcpp_sf_multipoint( df, c(2:3), 0L, FALSE )
   expect_true( nrow(res) == length( unique( df$id1 ) ) )
   expect_true( all( res$id == unique( df$id1 ) ) )
 
@@ -94,7 +94,7 @@ test_that("ID order maintained",{
     , m = 1:10
   )
 
-  res <- sfheaders:::rcpp_sf_point( df, c(2:3) )
+  res <- sfheaders:::rcpp_sf_point( df, c(2:3), FALSE )
   m1 <- unclass( res$geometry[[1]] )
   expect_equal( m1[1], df[1, "x"] )
   expect_equal( m1[2], df[1, "y"] )
@@ -104,7 +104,7 @@ test_that("ID order maintained",{
   expect_equal( m7[2], df[7, "y"] )
 
 
-  res <- sfheaders:::rcpp_sf_multipoint( df, c(2:3), 0L )
+  res <- sfheaders:::rcpp_sf_multipoint( df, c(2:3), 0L, FALSE )
   m1 <- unclass( res$geometry[[1]] )
   m2 <- unclass( res$geometry[[2]] )
 
@@ -213,8 +213,6 @@ test_that("unordered ids cause issues",{
   expect_equal( m3, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 3, 3:6 ] ) ) )
   expect_equal( m4, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 1, 3:6 ] ) ) )
   expect_equal( m5, unname( as.matrix( df[ df$id1 == 2 & df$id2 == 2, 3:6 ] ) ) )
-
-
 
 
   df <- data.frame(
@@ -352,3 +350,61 @@ test_that("string ids work",{
 
 })
 
+
+test_that("sf properties are kept",{
+
+  df <- data.frame(
+    multi_poly_id = rep(1,10)
+    , poly_id = c(1,1,1,1,1,1,1,2,2,2)
+    , line_id = rep(1,10)
+    , x = 1:10
+    , y = 1:10
+    , val = letters[1:10]
+  )
+
+  res <- sf_point(obj = df, x = "x", y = "y", keep = TRUE )
+  expect_true(all(c("multi_poly_id", "poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( all( res$multi_poly_id == df$multi_poly_id ) )
+  expect_true( all( res$val == df$val ) )
+
+  res <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "poly_id", keep = TRUE )
+  expect_true(all(c( "poly_id","multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( res[ 2, ]$val == "h" )
+
+  res <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "poly_id", keep = TRUE )
+  expect_true(all(c("poly_id", "multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( res[ 2, ]$val == "h" )
+
+  res <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "poly_id", keep = TRUE )
+  expect_true(all(c("poly_id", "multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( res[ 2, ]$val == "h" )
+
+  res <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "line_id", keep = TRUE )
+  expect_true(all(c("line_id", "multi_poly_id", "poly_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( nrow( res ) == 1 )
+
+  res <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "poly_id", keep = TRUE )
+  expect_true(all(c("poly_id", "multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( res[ 2, ]$val == "h" )
+
+  res <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "multi_poly_id", keep = TRUE )
+  expect_true(all(c("multi_poly_id", "poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( nrow( res ) == 1 )
+
+  res <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "poly_id", keep = TRUE )
+  expect_true(all(c("poly_id", "multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( res[ 2, ]$val == "h" )
+
+  res <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "multi_poly_id", polygon_id = "poly_id", keep = TRUE )
+  expect_true(all(c("multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true( res[ 1, ]$val == "a" )
+  expect_true( nrow( res ) == 1 )
+
+})
