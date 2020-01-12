@@ -1,12 +1,12 @@
 Package: sfheaders
 Type: Package
-Title: Constructs Simple Feature Objects
-Date: 2020-01-06
-Version: 0.1.0
+Title: Converts Between R Objects and Simple Feature Objects
+Date: 2020-01-12
+Version: 1.0.0
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre"))
     )
-Description: Converts R and 'Rcpp' objects to Simple Features 'sf', without depending
+Description: Converts between R and Simple Feature 'sf' objects, without depending
   on the Simple Feature library. Conversion functions are available at both the R level, 
   and through 'Rcpp'.
 License: GPL-3
