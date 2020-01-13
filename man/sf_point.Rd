@@ -34,7 +34,7 @@ constructs sf of POINT objects
 Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
 coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
 
-The \code{sf_} functions assume the input \code{obj} is a long data.frame / matrix,
+The \code{sf_*} functions assume the input \code{obj} is a long data.frame / matrix,
 where any properties are repeated down the table for the same geometry.
 }
 
@@ -58,5 +58,9 @@ x <- setNames( as.data.frame( x ), c("x","y") )
 sf_point( x )
 sf_point( obj = x, x = "x", y = "y" )
 sf_point( obj = x, x = "y", y = "x" )
+
+# keeping properties
+x$val <- letters[1:5]
+sf_point( x, x = "x", y = "y", keep = TRUE )
 
 }
