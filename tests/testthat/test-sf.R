@@ -373,7 +373,7 @@ test_that("sf properties are kept",{
   expect_true( res[ 2, ]$val == "h" )
 
   res <- sf_multipoint(obj = df, x = "x", y = "y", keep = TRUE )
-  expect_true(all(c( "poly_id","multi_poly_id", "line_id","val","geometry") == names(res)))
+  expect_true(all(c( "multi_poly_id", "poly_id", "line_id","val","geometry") == names(res)))
   expect_true( res[ 1, ]$val == "a" )
   expect_true( nrow( res ) == 1 )
 
