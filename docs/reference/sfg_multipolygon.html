@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sfg MULTIPOLYGON — sfg_multipolygon • sfheaders</title>
+<title>sfg multipolygon — sfg_multipolygon • sfheaders</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="sfg MULTIPOLYGON — sfg_multipolygon" />
+<meta property="og:title" content="sfg multipolygon — sfg_multipolygon" />
 
-<meta property="og:description" content="sfg MULTIPOLYGON" />
+<meta property="og:description" content="constructs sfg MULTIPOLYGON object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sfheaders</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     <span class="fa fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/sfheaders.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -96,6 +93,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -112,19 +112,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>sfg MULTIPOLYGON</h1>
+    <h1>sfg multipolygon</h1>
     
     <div class="hidden name"><code>sfg_multipolygon.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>sfg MULTIPOLYGON</p>
+    <p>constructs sfg MULTIPOLYGON object</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>sfg_multipolygon</span>(<span class='no'>obj</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>close</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,13 +151,22 @@
     </tr>
     <tr>
       <th>polygon_id</th>
-      <td><p>column of ids for polygons</p></td>
+      <td><p>column of ids for polygons (within the multipolygon)</p></td>
     </tr>
     <tr>
       <th>linestring_id</th>
-      <td><p>column of ids for linestrings</p></td>
+      <td><p>column of ids for lines (within polygons)</p></td>
+    </tr>
+    <tr>
+      <th>close</th>
+      <td><p>logical indicating whether polygons should be closed. If <code>TRUE</code>,
+all polygons will be checked and force closed if possible</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>sfg</code> object of MULTIPOLYGON geometry</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -175,22 +184,23 @@
 
 <span class='fu'>sfg_multipolygon</span>( <span class='no'>df</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"x"</span>,<span class='st'>"y"</span>) ] )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]][[1]]
-#&gt;       x y
-#&gt;  [1,] 0 0
-#&gt;  [2,] 0 1
-#&gt;  [3,] 1 1
-#&gt;  [4,] 1 0
-#&gt;  [5,] 0 0
-#&gt;  [6,] 2 2
-#&gt;  [7,] 2 5
-#&gt;  [8,] 5 5
-#&gt;  [9,] 5 2
-#&gt; [10,] 2 2
-#&gt; [11,] 3 3
-#&gt; [12,] 3 4
-#&gt; [13,] 4 4
-#&gt; [14,] 4 3
-#&gt; [15,] 3 3
+#&gt;       [,1] [,2]
+#&gt;  [1,]    0    0
+#&gt;  [2,]    0    1
+#&gt;  [3,]    1    1
+#&gt;  [4,]    1    0
+#&gt;  [5,]    0    0
+#&gt;  [6,]    2    2
+#&gt;  [7,]    2    5
+#&gt;  [8,]    5    5
+#&gt;  [9,]    5    2
+#&gt; [10,]    2    2
+#&gt; [11,]    3    3
+#&gt; [12,]    3    4
+#&gt; [13,]    4    4
+#&gt; [14,]    4    3
+#&gt; [15,]    3    3
+#&gt; [16,]    0    0
 #&gt; 
 #&gt; 
 #&gt; attr(,"class")
@@ -292,22 +302,23 @@
 
 <span class='fu'>sfg_multipolygon</span>( <span class='no'>m</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"x"</span>,<span class='st'>"y"</span>) ] )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]][[1]]
-#&gt;       x y
-#&gt;  [1,] 0 0
-#&gt;  [2,] 0 1
-#&gt;  [3,] 1 1
-#&gt;  [4,] 1 0
-#&gt;  [5,] 0 0
-#&gt;  [6,] 2 2
-#&gt;  [7,] 2 5
-#&gt;  [8,] 5 5
-#&gt;  [9,] 5 2
-#&gt; [10,] 2 2
-#&gt; [11,] 3 3
-#&gt; [12,] 3 4
-#&gt; [13,] 4 4
-#&gt; [14,] 4 3
-#&gt; [15,] 3 3
+#&gt;       [,1] [,2]
+#&gt;  [1,]    0    0
+#&gt;  [2,]    0    1
+#&gt;  [3,]    1    1
+#&gt;  [4,]    1    0
+#&gt;  [5,]    0    0
+#&gt;  [6,]    2    2
+#&gt;  [7,]    2    5
+#&gt;  [8,]    5    5
+#&gt;  [9,]    5    2
+#&gt; [10,]    2    2
+#&gt; [11,]    3    3
+#&gt; [12,]    3    4
+#&gt; [13,]    4    4
+#&gt; [14,]    4    3
+#&gt; [15,]    3    3
+#&gt; [16,]    0    0
 #&gt; 
 #&gt; 
 #&gt; attr(,"class")
@@ -412,7 +423,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

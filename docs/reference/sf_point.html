@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sfheaders</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     <span class="fa fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/sfheaders.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -95,6 +92,9 @@
       <a href="../articles/examples.html">Examples</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -123,7 +123,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>sf_point</span>(<span class='no'>obj</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>sf_point</span>(<span class='no'>obj</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,7 +149,25 @@
       <th>m</th>
       <td><p>m geometry column</p></td>
     </tr>
+    <tr>
+      <th>keep</th>
+      <td><p>logical indicating if the non-geometry and non-id columns should be kept.
+if TRUE you must supply the geometry and id columns, and only the first row of
+each geometry is kept. See Keeping Properties.</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>sf</code> object of POINT geometries</p>
+    
+    <h2 class="hasAnchor" id="keeping-properties"><a class="anchor" href="#keeping-properties"></a>Keeping Properties</h2>
+
+    
+    <p>Setting <code>keep = TRUE</code> will retain the first row of any columns not specified as a
+coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input <code>obj</code>.</p>
+<p>The <code>sf_*</code> functions assume the input <code>obj</code> is a long data.frame / matrix,
+where any properties are repeated down the table for the same geometry.</p>
     
     <h2 class="hasAnchor" id="notes"><a class="anchor" href="#notes"></a>notes</h2>
 
@@ -187,6 +206,14 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; 3     8, 3
 #&gt; 4     9, 4
 #&gt; 5    10, 5</div><div class='input'>
+<span class='co'># keeping properties</span>
+<span class='no'>x</span>$<span class='no'>val</span> <span class='kw'>&lt;-</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]
+<span class='fu'>sf_point</span>( <span class='no'>x</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span> )</div><div class='output co'>#&gt;   val geometry
+#&gt; 1   a     1, 6
+#&gt; 2   b     2, 7
+#&gt; 3   c     3, 8
+#&gt; 4   d     4, 9
+#&gt; 5   e    5, 10</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -194,6 +221,10 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#keeping-properties">Keeping Properties</a></li>
+
       <li><a href="#notes">notes</a></li>
       
       <li><a href="#examples">Examples</a></li>

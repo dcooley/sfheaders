@@ -112,6 +112,66 @@ sf_polygon( df )
 ```
 
 
+In all these examples I haven't needed to specify the geometry columns, because other than the `id` field, all the other columns are used for the coordinates.
+
+If your data.frame has other, non-geometry and non-id columns, you must specify at least the `x` and `y` paramters
+
+```{r}
+
+df <- data.frame(
+  id = c(1,1,2,2,3)
+  , x = c(1,1,4,4,1)
+  , y = c(1,4,4,1,1)
+)
+
+df$val <- letters[ df$id ]
+
+sf_point( df, x = "x", y = "y" )
+
+sf_linestring( df, x = "x", y = "y", linestring_id = "id" )
+
+```
+
+If you want to keep all the other columns, set `keep = TRUE`
+
+```{r}
+sf_linestring( df, x = "x", y = "y", linestring_id = "id", keep = TRUE )
+```
+
+
+## Converting to Data Frames
+
+As of version 1.0 you can now  convert from `sfg`, `sfc` and `sf` objects to `data.frames`
+
+```{r}
+
+df <- data.frame(
+  id = c(1,1,2,2,3)
+  , x = c(1,1,4,4,1)
+  , y = c(1,4,4,1,1)
+)
+
+df$val <- letters[ df$id ]
+
+sf <- sf_linestring( df, x = "x", y = "y", linestring_id = "id", keep = TRUE )
+
+sf_to_df( sf )
+
+```
+
+And if you want to keep all the other columns and fill them down each row of the data.frame, set `fill = TRUE`
+
+```{r}
+
+sf_to_df( sf, fill = TRUE )
+
+```
+
+
+### Performance
+
+Here's a quick benchmark showing how well this library performs
+
 ```r
 n <- 1e5
 df <- data.frame(

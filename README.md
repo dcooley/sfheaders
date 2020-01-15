@@ -33,7 +33,7 @@ assign these values yourself.
 
 ## Are there any catches?
 
-Yes. Your data has to be ordered before using these functions.
+Yes. Your data has to be ordered before coverting to `sf`.
 
 ## Where are the examples?
 
@@ -51,27 +51,33 @@ df <- data.frame(
   , y = c(1,1,2,2,1,3,3,4,4,3)
 )
 
-sfheaders::sf_linestring( df, linestring_id = "id" )
+df$val <- letters[df$id]
 
-# Simple feature collection with 2 features and 1 field
+sfheaders::sf_linestring( df, x = "x", y = "y", linestring_id = "id", keep = TRUE )
+
+# Simple feature collection with 2 features and 2 fields
 # geometry type:  LINESTRING
 # dimension:      XY
 # bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4
+# z_range:        zmin: NA zmax: NA
+# m_range:        mmin: NA mmax: NA
 # epsg (SRID):    NA
 # proj4string:    NA
-#   id                       geometry
-# 1  1 LINESTRING (1 1, 2 1, 2 2, ...
-# 2  2 LINESTRING (3 3, 4 3, 4 4, ...
+#   id val                       geometry
+# 1  1   a LINESTRING (1 1, 2 1, 2 2, ...
+# 2  2   b LINESTRING (3 3, 4 3, 4 4, ...
 
-sfheaders::sf_polygon( df, polygon_id = "id" )
+sfheaders::sf_polygon( df, x = "x", y = "y", polygon_id = "id" , keep = TRUE )
 
-# Simple feature collection with 2 features and 1 field
+# Simple feature collection with 2 features and 2 fields
 # geometry type:  POLYGON
 # dimension:      XY
 # bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4
+# z_range:        zmin: NA zmax: NA
+# m_range:        mmin: NA mmax: NA
 # epsg (SRID):    NA
 # proj4string:    NA
-#   id                       geometry
-# 1  1 POLYGON ((1 1, 2 1, 2 2, 1 ...
-# 2  2 POLYGON ((3 3, 4 3, 4 4, 3 ...
+#   id val                       geometry
+# 1  1   a POLYGON ((1 1, 2 1, 2 2, 1 ...
+# 2  2   b POLYGON ((3 3, 4 3, 4 4, 3 ...
 ```

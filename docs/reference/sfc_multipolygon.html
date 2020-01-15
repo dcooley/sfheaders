@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sfheaders</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     <span class="fa fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/sfheaders.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -95,6 +92,9 @@
       <a href="../articles/examples.html">Examples</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -125,7 +125,7 @@
 
     <pre class="usage"><span class='fu'>sfc_multipolygon</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>multipolygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>close</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,7 +162,16 @@
       <th>linestring_id</th>
       <td><p>column of ids for lines (within polygons)</p></td>
     </tr>
+    <tr>
+      <th>close</th>
+      <td><p>logical indicating whether polygons should be closed. If <code>TRUE</code>,
+all polygons will be checked and force closed if possible</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>sfc</code> object of MULTIPOLYGON geometries</p>
     
     <h2 class="hasAnchor" id="notes"><a class="anchor" href="#notes"></a>notes</h2>
 
@@ -757,6 +766,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt;  [8,]    2    2
 #&gt;  [9,]    2    1
 #&gt; [10,]    1    1
+#&gt; [11,]    0    0
 #&gt; 
 #&gt; 
 #&gt; attr(,"class")
@@ -860,6 +870,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#notes">notes</a></li>
       
       <li><a href="#examples">Examples</a></li>

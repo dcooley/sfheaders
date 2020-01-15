@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sfg MULTILINESTRING — sfg_polygon • sfheaders</title>
+<title>sfg polygon — sfg_polygon • sfheaders</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="sfg MULTILINESTRING — sfg_polygon" />
+<meta property="og:title" content="sfg polygon — sfg_polygon" />
 
-<meta property="og:description" content="sfg MULTILINESTRING" />
+<meta property="og:description" content="constructs sfg POLYGON object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sfheaders</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     <span class="fa fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/sfheaders.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -96,6 +93,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -112,19 +112,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>sfg MULTILINESTRING</h1>
+    <h1>sfg polygon</h1>
     
     <div class="hidden name"><code>sfg_polygon.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>sfg MULTILINESTRING</p>
+    <p>constructs sfg POLYGON object</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>sfg_polygon</span>(<span class='no'>obj</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>close</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,9 +151,18 @@
     </tr>
     <tr>
       <th>linestring_id</th>
-      <td><p>column of ids for linestrings</p></td>
+      <td><p>column of ids for lines (within polygons)</p></td>
+    </tr>
+    <tr>
+      <th>close</th>
+      <td><p>logical indicating whether polygons should be closed. If <code>TRUE</code>,
+all polygons will be checked and force closed if possible</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>sfg</code> object of POLYGON geometry</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -172,18 +181,20 @@
 #&gt; [10,]   10   22
 #&gt; [11,]   11   23
 #&gt; [12,]   12   24
+#&gt; [13,]    1   13
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    </div><div class='input'><span class='fu'>sfg_polygon</span>( <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>( <span class='fl'>1</span>:<span class='fl'>24</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span> ) )</div><div class='output co'>#&gt; [[1]]
-#&gt;      [,1] [,2] [,3]
-#&gt; [1,]    1    9   17
-#&gt; [2,]    2   10   18
-#&gt; [3,]    3   11   19
-#&gt; [4,]    4   12   20
-#&gt; [5,]    5   13   21
-#&gt; [6,]    6   14   22
-#&gt; [7,]    7   15   23
-#&gt; [8,]    8   16   24
+#&gt;       [,1] [,2] [,3]
+#&gt;  [1,]    1    9   17
+#&gt;  [2,]    2   10   18
+#&gt;  [3,]    3   11   19
+#&gt;  [4,]    4   12   20
+#&gt;  [5,]    5   13   21
+#&gt;  [6,]    6   14   22
+#&gt;  [7,]    7   15   23
+#&gt;  [8,]    8   16   24
+#&gt;  [9,]    1    9   17
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    </div><div class='input'><span class='fu'>sfg_polygon</span>( <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>( <span class='fl'>1</span>:<span class='fl'>24</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span> ) )</div><div class='output co'>#&gt; [[1]]
@@ -194,6 +205,7 @@
 #&gt; [4,]    4   10   16   22
 #&gt; [5,]    5   11   17   23
 #&gt; [6,]    6   12   18   24
+#&gt; [7,]    1    7   13   19
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    </div><div class='input'>
@@ -207,6 +219,7 @@
 #&gt; [4,]    4   16
 #&gt; [5,]    5   17
 #&gt; [6,]    6   18
+#&gt; [7,]    1   13
 #&gt; 
 #&gt; [[2]]
 #&gt;      [,1] [,2]
@@ -216,6 +229,7 @@
 #&gt; [4,]   10   22
 #&gt; [5,]   11   23
 #&gt; [6,]   12   24
+#&gt; [7,]    7   19
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    </div><div class='input'>
@@ -228,6 +242,7 @@
 #&gt; [4,]    4   16
 #&gt; [5,]    5   17
 #&gt; [6,]    6   18
+#&gt; [7,]    1   13
 #&gt; 
 #&gt; [[2]]
 #&gt;      [,1] [,2]
@@ -237,6 +252,7 @@
 #&gt; [4,]   10   22
 #&gt; [5,]   11   23
 #&gt; [6,]   12   24
+#&gt; [7,]    7   19
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    </div><div class='input'>
@@ -255,6 +271,7 @@
 #&gt; [10,]   10   10
 #&gt; [11,]   11   11
 #&gt; [12,]   12   12
+#&gt; [13,]    1    1
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    </div><div class='input'><span class='fu'>sfg_polygon</span>( <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"id"</span> )</div><div class='output co'>#&gt; [[1]]
@@ -265,6 +282,7 @@
 #&gt; [4,]    4    4
 #&gt; [5,]    5    5
 #&gt; [6,]    6    6
+#&gt; [7,]    1    1
 #&gt; 
 #&gt; [[2]]
 #&gt;      [,1] [,2]
@@ -274,6 +292,7 @@
 #&gt; [4,]   10   10
 #&gt; [5,]   11   11
 #&gt; [6,]   12   12
+#&gt; [7,]    7    7
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    </div><div class='input'>
@@ -285,6 +304,7 @@
 #&gt; [4,]    4    4   16
 #&gt; [5,]    5    5   17
 #&gt; [6,]    6    6   18
+#&gt; [7,]    1    1   13
 #&gt; 
 #&gt; [[2]]
 #&gt;      [,1] [,2] [,3]
@@ -294,6 +314,7 @@
 #&gt; [4,]   10   10   22
 #&gt; [5,]   11   11   23
 #&gt; [6,]   12   12   24
+#&gt; [7,]    7    7   19
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    </div><div class='input'>
@@ -304,7 +325,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sfheaders</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -74,9 +74,6 @@
     <span class="fa fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/sfheaders.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -95,6 +92,9 @@
       <a href="../articles/examples.html">Examples</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -124,7 +124,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>sfc_polygon</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>close</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +157,16 @@
       <th>linestring_id</th>
       <td><p>column of ids for lines (within polygons)</p></td>
     </tr>
+    <tr>
+      <th>close</th>
+      <td><p>logical indicating whether polygons should be closed. If <code>TRUE</code>,
+all polygons will be checked and force closed if possible</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>sfc</code> object of POLYGON geometries</p>
     
     <h2 class="hasAnchor" id="notes"><a class="anchor" href="#notes"></a>notes</h2>
 
@@ -169,15 +178,17 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span> )
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span> )
 <span class='fu'>sfc_polygon</span>( <span class='no'>m</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;      [,1] [,2] [,3]
-#&gt; [1,]    0    0    1
-#&gt; [2,]    0    0    1
+#&gt;      [,1] [,2]
+#&gt; [1,]    0    0
+#&gt; [2,]    0    1
+#&gt; [3,]    0    1
+#&gt; [4,]    0    0
 #&gt; 
 #&gt; attr(,"class")
-#&gt; [1] "XYZ"     "POLYGON" "sfg"    
+#&gt; [1] "XY"      "POLYGON" "sfg"    
 #&gt; 
 #&gt; attr(,"n_empty")
 #&gt; [1] 0
@@ -196,12 +207,12 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    0    0 
+#&gt;    0    0    0    1 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
 #&gt; zmin zmax 
-#&gt;    1    1 
+#&gt;   NA   NA 
 #&gt; attr(,"class")
 #&gt; [1] "z_range"
 #&gt; attr(,"m_range")
@@ -209,7 +220,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt;   NA   NA 
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'>
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>m</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
 #&gt;      [,1] [,2] [,3]
@@ -218,6 +229,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [3,]    0    1    1
 #&gt; [4,]    1    2    2
 #&gt; [5,]    1    2    3
+#&gt; [6,]    1    3    2
+#&gt; [7,]    0    0    0
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    
@@ -239,7 +252,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    1    2 
+#&gt;    0    0    1    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -257,6 +270,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1,]    0    0
 #&gt; [2,]    0    1
 #&gt; [3,]    1    1
+#&gt; [4,]    0    0
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -266,6 +280,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt;      [,1] [,2]
 #&gt; [1,]    2    2
 #&gt; [2,]    2    3
+#&gt; [3,]    3    2
+#&gt; [4,]    2    2
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -287,7 +303,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
+#&gt;    0    0    3    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -305,11 +321,14 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1,]    0    0
 #&gt; [2,]    0    1
 #&gt; [3,]    1    1
+#&gt; [4,]    0    0
 #&gt; 
 #&gt; [[2]]
 #&gt;      [,1] [,2]
 #&gt; [1,]    2    2
 #&gt; [2,]    2    3
+#&gt; [3,]    3    2
+#&gt; [4,]    2    2
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -331,7 +350,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
+#&gt;    0    0    3    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -350,6 +369,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1,]    0    0
 #&gt; [2,]    0    1
 #&gt; [3,]    1    1
+#&gt; [4,]    0    0
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -359,6 +379,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt;      [,1] [,2]
 #&gt; [1,]    2    2
 #&gt; [2,]    2    3
+#&gt; [3,]    3    2
+#&gt; [4,]    2    2
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -380,7 +402,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
+#&gt;    0    0    3    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -401,6 +423,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [3,]    1    1
 #&gt; [4,]    2    2
 #&gt; [5,]    2    3
+#&gt; [6,]    3    2
+#&gt; [7,]    0    0
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -422,7 +446,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
+#&gt;    0    0    3    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -442,6 +466,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [3,]    0    1    1
 #&gt; [4,]    1    2    2
 #&gt; [5,]    1    2    3
+#&gt; [6,]    1    3    2
+#&gt; [7,]    0    0    0
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    
@@ -463,7 +489,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    1    2 
+#&gt;    0    0    1    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -481,6 +507,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1,]    0    0
 #&gt; [2,]    0    1
 #&gt; [3,]    1    1
+#&gt; [4,]    0    0
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -490,6 +517,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt;      [,1] [,2]
 #&gt; [1,]    2    2
 #&gt; [2,]    2    3
+#&gt; [3,]    3    2
+#&gt; [4,]    2    2
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -511,7 +540,7 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; [1] 0
 #&gt; attr(,"bbox")
 #&gt; xmin ymin xmax ymax 
-#&gt;    0    0    2    3 
+#&gt;    0    0    3    3 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -525,30 +554,33 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
-  <span class='kw'>ml_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
-  , <span class='kw'>l_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
-  , <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>13</span>)
-  , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>13</span>)
-  , <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>13</span>)
-  , <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>13</span>)
+  <span class='kw'>ml_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
+  , <span class='kw'>l_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>2</span>)
+  , <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>15</span>)
+  , <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>15</span>)
+  , <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>15</span>)
+  , <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>15</span>)
 )
 
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;              [,1]       [,2]
-#&gt;  [1,]  0.03849955  0.5176691
-#&gt;  [2,] -0.35638119 -0.1029087
-#&gt;  [3,]  0.78284410 -0.9740696
-#&gt;  [4,]  0.80441162  1.2706723
-#&gt;  [5,] -1.90006082  0.9608648
-#&gt;  [6,]  0.93578429  0.7687214
-#&gt;  [7,] -0.30905150  1.0359308
-#&gt;  [8,]  0.26306668 -0.4738871
-#&gt;  [9,] -1.79059186 -1.2753349
-#&gt; [10,] -0.78825884 -0.3056207
-#&gt; [11,] -1.13302167  2.2117695
-#&gt; [12,]  0.36365257 -1.0416684
-#&gt; [13,] -0.28588791 -1.1465239
+#&gt;              [,1]        [,2]
+#&gt;  [1,] -0.99843255 -1.68650474
+#&gt;  [2,]  1.23339006 -0.90281495
+#&gt;  [3,]  0.34042449  1.31763370
+#&gt;  [4,] -0.47270248  1.10018974
+#&gt;  [5,]  0.70875306  1.20376784
+#&gt;  [6,] -1.52895871 -1.43127078
+#&gt;  [7,]  0.23742535  1.38291086
+#&gt;  [8,] -1.31281425  0.00312594
+#&gt;  [9,]  0.74702859 -0.07788682
+#&gt; [10,] -1.56251843  0.44142823
+#&gt; [11,]  0.07105336  0.12892290
+#&gt; [12,] -0.63953477 -0.83021426
+#&gt; [13,] -0.84519574 -0.50359291
+#&gt; [14,]  0.67524470 -1.19364118
+#&gt; [15,]  1.15337579 -0.75172332
+#&gt; [16,] -0.99843255 -1.68650474
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -569,8 +601,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt; -1.562518 -1.686505  1.233390  1.382911 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -584,20 +616,23 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;              [,1]       [,2]       [,3]
-#&gt;  [1,]  0.03849955  0.5176691 -1.6753273
-#&gt;  [2,] -0.35638119 -0.1029087  1.5259387
-#&gt;  [3,]  0.78284410 -0.9740696  0.5541855
-#&gt;  [4,]  0.80441162  1.2706723  1.9931103
-#&gt;  [5,] -1.90006082  0.9608648 -0.1541207
-#&gt;  [6,]  0.93578429  0.7687214  2.5644083
-#&gt;  [7,] -0.30905150  1.0359308  1.0619991
-#&gt;  [8,]  0.26306668 -0.4738871  1.1426949
-#&gt;  [9,] -1.79059186 -1.2753349  1.1238388
-#&gt; [10,] -0.78825884 -0.3056207 -0.3970015
-#&gt; [11,] -1.13302167  2.2117695 -0.8232612
-#&gt; [12,]  0.36365257 -1.0416684 -0.5788846
-#&gt; [13,] -0.28588791 -1.1465239  1.7637894
+#&gt;              [,1]        [,2]        [,3]
+#&gt;  [1,] -0.99843255 -1.68650474  1.45584140
+#&gt;  [2,]  1.23339006 -0.90281495 -0.82860353
+#&gt;  [3,]  0.34042449  1.31763370  0.28977446
+#&gt;  [4,] -0.47270248  1.10018974 -0.48005348
+#&gt;  [5,]  0.70875306  1.20376784 -0.60482935
+#&gt;  [6,] -1.52895871 -1.43127078  1.46011018
+#&gt;  [7,]  0.23742535  1.38291086  0.14967935
+#&gt;  [8,] -1.31281425  0.00312594 -1.43332110
+#&gt;  [9,]  0.74702859 -0.07788682 -0.01030332
+#&gt; [10,] -1.56251843  0.44142823 -0.21223603
+#&gt; [11,]  0.07105336  0.12892290 -0.90634018
+#&gt; [12,] -0.63953477 -0.83021426 -2.10215248
+#&gt; [13,] -0.84519574 -0.50359291  1.89336046
+#&gt; [14,]  0.67524470 -1.19364118 -0.96812584
+#&gt; [15,]  1.15337579 -0.75172332 -0.10260304
+#&gt; [16,] -0.99843255 -1.68650474  1.45584140
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    
@@ -618,13 +653,13 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt; -1.562518 -1.686505  1.233390  1.382911 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
+#&gt;      zmin      zmax 
+#&gt; -2.102152  1.893360 
 #&gt; attr(,"class")
 #&gt; [1] "z_range"
 #&gt; attr(,"m_range")
@@ -633,20 +668,23 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='st'>"m"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;              [,1]       [,2]       [,3]        [,4]
-#&gt;  [1,]  0.03849955  0.5176691 -1.6753273  0.13299215
-#&gt;  [2,] -0.35638119 -0.1029087  1.5259387  0.37649933
-#&gt;  [3,]  0.78284410 -0.9740696  0.5541855  1.13870765
-#&gt;  [4,]  0.80441162  1.2706723  1.9931103  1.24126308
-#&gt;  [5,] -1.90006082  0.9608648 -0.1541207  0.61209094
-#&gt;  [6,]  0.93578429  0.7687214  2.5644083 -0.42938009
-#&gt;  [7,] -0.30905150  1.0359308  1.0619991  1.36046133
-#&gt;  [8,]  0.26306668 -0.4738871  1.1426949 -0.07085743
-#&gt;  [9,] -1.79059186 -1.2753349  1.1238388 -0.27215368
-#&gt; [10,] -0.78825884 -0.3056207 -0.3970015 -2.44668003
-#&gt; [11,] -1.13302167  2.2117695 -0.8232612  0.06548664
-#&gt; [12,]  0.36365257 -1.0416684 -0.5788846 -1.09850890
-#&gt; [13,] -0.28588791 -1.1465239  1.7637894 -0.63317818
+#&gt;              [,1]        [,2]        [,3]         [,4]
+#&gt;  [1,] -0.99843255 -1.68650474  1.45584140  0.239959572
+#&gt;  [2,]  1.23339006 -0.90281495 -0.82860353  0.060898893
+#&gt;  [3,]  0.34042449  1.31763370  0.28977446 -2.177576028
+#&gt;  [4,] -0.47270248  1.10018974 -0.48005348 -0.117860143
+#&gt;  [5,]  0.70875306  1.20376784 -0.60482935  0.112294787
+#&gt;  [6,] -1.52895871 -1.43127078  1.46011018  0.007886198
+#&gt;  [7,]  0.23742535  1.38291086  0.14967935  1.877743872
+#&gt;  [8,] -1.31281425  0.00312594 -1.43332110  2.158756554
+#&gt;  [9,]  0.74702859 -0.07788682 -0.01030332  0.709714522
+#&gt; [10,] -1.56251843  0.44142823 -0.21223603  0.766983379
+#&gt; [11,]  0.07105336  0.12892290 -0.90634018 -0.308211421
+#&gt; [12,] -0.63953477 -0.83021426 -2.10215248  1.012001849
+#&gt; [13,] -0.84519574 -0.50359291  1.89336046 -0.919051597
+#&gt; [14,]  0.67524470 -1.19364118 -0.96812584  0.563380077
+#&gt; [15,]  1.15337579 -0.75172332 -0.10260304  0.322482749
+#&gt; [16,] -0.99843255 -1.68650474  1.45584140  0.239959572
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -667,36 +705,39 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt; -1.562518 -1.686505  1.233390  1.382911 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   -2    1 
+#&gt;      zmin      zmax 
+#&gt; -2.102152  1.893360 
 #&gt; attr(,"class")
 #&gt; [1] "z_range"
 #&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   -2    1 
+#&gt;      mmin      mmax 
+#&gt; -2.177576  2.158757 
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       l_id           x
-#&gt;  [1,]    1  0.03849955
-#&gt;  [2,]    1 -0.35638119
-#&gt;  [3,]    1  0.78284410
-#&gt;  [4,]    2  0.80441162
-#&gt;  [5,]    2 -1.90006082
-#&gt;  [6,]    3  0.93578429
-#&gt;  [7,]    3 -0.30905150
-#&gt;  [8,]    3  0.26306668
-#&gt;  [9,]    1 -1.79059186
-#&gt; [10,]    1 -0.78825884
-#&gt; [11,]    1 -1.13302167
-#&gt; [12,]    2  0.36365257
-#&gt; [13,]    2 -0.28588791
+#&gt;       [,1]        [,2]
+#&gt;  [1,]    1 -0.99843255
+#&gt;  [2,]    1  1.23339006
+#&gt;  [3,]    1  0.34042449
+#&gt;  [4,]    2 -0.47270248
+#&gt;  [5,]    2  0.70875306
+#&gt;  [6,]    2 -1.52895871
+#&gt;  [7,]    3  0.23742535
+#&gt;  [8,]    3 -1.31281425
+#&gt;  [9,]    3  0.74702859
+#&gt; [10,]    1 -1.56251843
+#&gt; [11,]    1  0.07105336
+#&gt; [12,]    1 -0.63953477
+#&gt; [13,]    2 -0.84519574
+#&gt; [14,]    2  0.67524470
+#&gt; [15,]    2  1.15337579
+#&gt; [16,]    1 -0.99843255
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XY"      "POLYGON" "sfg"    
@@ -717,8 +758,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt;  1.0000000 -1.9000608  3.0000000  0.9357843 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt;  1.000000 -1.562518  3.000000  1.233390 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
@@ -732,20 +773,23 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       l_id           x          y
-#&gt;  [1,]    1  0.03849955  0.5176691
-#&gt;  [2,]    1 -0.35638119 -0.1029087
-#&gt;  [3,]    1  0.78284410 -0.9740696
-#&gt;  [4,]    2  0.80441162  1.2706723
-#&gt;  [5,]    2 -1.90006082  0.9608648
-#&gt;  [6,]    3  0.93578429  0.7687214
-#&gt;  [7,]    3 -0.30905150  1.0359308
-#&gt;  [8,]    3  0.26306668 -0.4738871
-#&gt;  [9,]    1 -1.79059186 -1.2753349
-#&gt; [10,]    1 -0.78825884 -0.3056207
-#&gt; [11,]    1 -1.13302167  2.2117695
-#&gt; [12,]    2  0.36365257 -1.0416684
-#&gt; [13,]    2 -0.28588791 -1.1465239
+#&gt;       [,1]        [,2]        [,3]
+#&gt;  [1,]    1 -0.99843255 -1.68650474
+#&gt;  [2,]    1  1.23339006 -0.90281495
+#&gt;  [3,]    1  0.34042449  1.31763370
+#&gt;  [4,]    2 -0.47270248  1.10018974
+#&gt;  [5,]    2  0.70875306  1.20376784
+#&gt;  [6,]    2 -1.52895871 -1.43127078
+#&gt;  [7,]    3  0.23742535  1.38291086
+#&gt;  [8,]    3 -1.31281425  0.00312594
+#&gt;  [9,]    3  0.74702859 -0.07788682
+#&gt; [10,]    1 -1.56251843  0.44142823
+#&gt; [11,]    1  0.07105336  0.12892290
+#&gt; [12,]    1 -0.63953477 -0.83021426
+#&gt; [13,]    2 -0.84519574 -0.50359291
+#&gt; [14,]    2  0.67524470 -1.19364118
+#&gt; [15,]    2  1.15337579 -0.75172332
+#&gt; [16,]    1 -0.99843255 -1.68650474
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZ"     "POLYGON" "sfg"    
@@ -766,13 +810,13 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt;  1.0000000 -1.9000608  3.0000000  0.9357843 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt;  1.000000 -1.562518  3.000000  1.233390 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   NA   NA 
+#&gt;      zmin      zmax 
+#&gt; -1.686505  1.382911 
 #&gt; attr(,"class")
 #&gt; [1] "z_range"
 #&gt; attr(,"m_range")
@@ -781,20 +825,23 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;       l_id           x          y          z
-#&gt;  [1,]    1  0.03849955  0.5176691 -1.6753273
-#&gt;  [2,]    1 -0.35638119 -0.1029087  1.5259387
-#&gt;  [3,]    1  0.78284410 -0.9740696  0.5541855
-#&gt;  [4,]    2  0.80441162  1.2706723  1.9931103
-#&gt;  [5,]    2 -1.90006082  0.9608648 -0.1541207
-#&gt;  [6,]    3  0.93578429  0.7687214  2.5644083
-#&gt;  [7,]    3 -0.30905150  1.0359308  1.0619991
-#&gt;  [8,]    3  0.26306668 -0.4738871  1.1426949
-#&gt;  [9,]    1 -1.79059186 -1.2753349  1.1238388
-#&gt; [10,]    1 -0.78825884 -0.3056207 -0.3970015
-#&gt; [11,]    1 -1.13302167  2.2117695 -0.8232612
-#&gt; [12,]    2  0.36365257 -1.0416684 -0.5788846
-#&gt; [13,]    2 -0.28588791 -1.1465239  1.7637894
+#&gt;       [,1]        [,2]        [,3]        [,4]
+#&gt;  [1,]    1 -0.99843255 -1.68650474  1.45584140
+#&gt;  [2,]    1  1.23339006 -0.90281495 -0.82860353
+#&gt;  [3,]    1  0.34042449  1.31763370  0.28977446
+#&gt;  [4,]    2 -0.47270248  1.10018974 -0.48005348
+#&gt;  [5,]    2  0.70875306  1.20376784 -0.60482935
+#&gt;  [6,]    2 -1.52895871 -1.43127078  1.46011018
+#&gt;  [7,]    3  0.23742535  1.38291086  0.14967935
+#&gt;  [8,]    3 -1.31281425  0.00312594 -1.43332110
+#&gt;  [9,]    3  0.74702859 -0.07788682 -0.01030332
+#&gt; [10,]    1 -1.56251843  0.44142823 -0.21223603
+#&gt; [11,]    1  0.07105336  0.12892290 -0.90634018
+#&gt; [12,]    1 -0.63953477 -0.83021426 -2.10215248
+#&gt; [13,]    2 -0.84519574 -0.50359291  1.89336046
+#&gt; [14,]    2  0.67524470 -1.19364118 -0.96812584
+#&gt; [15,]    2  1.15337579 -0.75172332 -0.10260304
+#&gt; [16,]    1 -0.99843255 -1.68650474  1.45584140
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -815,52 +862,59 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt;  1.0000000 -1.9000608  3.0000000  0.9357843 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt;  1.000000 -1.562518  3.000000  1.233390 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
 #&gt;      zmin      zmax 
-#&gt; -1.675327  2.564408 
+#&gt; -1.686505  1.382911 
 #&gt; attr(,"class")
 #&gt; [1] "z_range"
 #&gt; attr(,"m_range")
 #&gt;      mmin      mmax 
-#&gt; -1.675327  2.564408 
+#&gt; -2.102152  1.893360 
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'>
 <span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='st'>"ml_id"</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='st'>"l_id"</span> )</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]
-#&gt;             [,1]       [,2]       [,3]      [,4]
-#&gt; [1,]  0.03849955  0.5176691 -1.6753273 0.1329921
-#&gt; [2,] -0.35638119 -0.1029087  1.5259387 0.3764993
-#&gt; [3,]  0.78284410 -0.9740696  0.5541855 1.1387077
+#&gt;            [,1]       [,2]       [,3]        [,4]
+#&gt; [1,] -0.9984326 -1.6865047  1.4558414  0.23995957
+#&gt; [2,]  1.2333901 -0.9028149 -0.8286035  0.06089889
+#&gt; [3,]  0.3404245  1.3176337  0.2897745 -2.17757603
+#&gt; [4,] -0.9984326 -1.6865047  1.4558414  0.23995957
 #&gt; 
 #&gt; [[2]]
-#&gt;            [,1]      [,2]       [,3]      [,4]
-#&gt; [1,]  0.8044116 1.2706723  1.9931103 1.2412631
-#&gt; [2,] -1.9000608 0.9608648 -0.1541207 0.6120909
+#&gt;            [,1]      [,2]       [,3]         [,4]
+#&gt; [1,] -0.4727025  1.100190 -0.4800535 -0.117860143
+#&gt; [2,]  0.7087531  1.203768 -0.6048294  0.112294787
+#&gt; [3,] -1.5289587 -1.431271  1.4601102  0.007886198
+#&gt; [4,] -0.4727025  1.100190 -0.4800535 -0.117860143
 #&gt; 
 #&gt; [[3]]
-#&gt;            [,1]       [,2]     [,3]        [,4]
-#&gt; [1,]  0.9357843  0.7687214 2.564408 -0.42938009
-#&gt; [2,] -0.3090515  1.0359308 1.061999  1.36046133
-#&gt; [3,]  0.2630667 -0.4738871 1.142695 -0.07085743
+#&gt;            [,1]        [,2]        [,3]      [,4]
+#&gt; [1,]  0.2374253  1.38291086  0.14967935 1.8777439
+#&gt; [2,] -1.3128142  0.00312594 -1.43332110 2.1587566
+#&gt; [3,]  0.7470286 -0.07788682 -0.01030332 0.7097145
+#&gt; [4,]  0.2374253  1.38291086  0.14967935 1.8777439
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
 #&gt; 
 #&gt; [[2]]
 #&gt; [[1]]
-#&gt;            [,1]       [,2]       [,3]        [,4]
-#&gt; [1,] -1.7905919 -1.2753349  1.1238388 -0.27215368
-#&gt; [2,] -0.7882588 -0.3056207 -0.3970015 -2.44668003
-#&gt; [3,] -1.1330217  2.2117695 -0.8232612  0.06548664
+#&gt;             [,1]       [,2]       [,3]       [,4]
+#&gt; [1,] -1.56251843  0.4414282 -0.2122360  0.7669834
+#&gt; [2,]  0.07105336  0.1289229 -0.9063402 -0.3082114
+#&gt; [3,] -0.63953477 -0.8302143 -2.1021525  1.0120018
+#&gt; [4,] -1.56251843  0.4414282 -0.2122360  0.7669834
 #&gt; 
 #&gt; [[2]]
-#&gt;            [,1]      [,2]       [,3]       [,4]
-#&gt; [1,]  0.3636526 -1.041668 -0.5788846 -1.0985089
-#&gt; [2,] -0.2858879 -1.146524  1.7637894 -0.6331782
+#&gt;            [,1]       [,2]       [,3]       [,4]
+#&gt; [1,] -0.8451957 -0.5035929  1.8933605 -0.9190516
+#&gt; [2,]  0.6752447 -1.1936412 -0.9681258  0.5633801
+#&gt; [3,]  1.1533758 -0.7517233 -0.1026030  0.3224827
+#&gt; [4,] -0.8451957 -0.5035929  1.8933605 -0.9190516
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "XYZM"    "POLYGON" "sfg"    
@@ -881,83 +935,90 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
 #&gt; attr(,"precision")
 #&gt; [1] 0
 #&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
-#&gt; attr(,"class")
-#&gt; [1] "bbox"
-#&gt; attr(,"z_range")
-#&gt; zmin zmax 
-#&gt;   -2    1 
-#&gt; attr(,"class")
-#&gt; [1] "z_range"
-#&gt; attr(,"m_range")
-#&gt; mmin mmax 
-#&gt;   -2    1 
-#&gt; attr(,"class")
-#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>2</span> )</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]
-#&gt;             [,1]       [,2]       [,3]      [,4]
-#&gt; [1,]  0.03849955  0.5176691 -1.6753273 0.1329921
-#&gt; [2,] -0.35638119 -0.1029087  1.5259387 0.3764993
-#&gt; [3,]  0.78284410 -0.9740696  0.5541855 1.1387077
-#&gt; 
-#&gt; [[2]]
-#&gt;            [,1]      [,2]       [,3]      [,4]
-#&gt; [1,]  0.8044116 1.2706723  1.9931103 1.2412631
-#&gt; [2,] -1.9000608 0.9608648 -0.1541207 0.6120909
-#&gt; 
-#&gt; [[3]]
-#&gt;            [,1]       [,2]     [,3]        [,4]
-#&gt; [1,]  0.9357843  0.7687214 2.564408 -0.42938009
-#&gt; [2,] -0.3090515  1.0359308 1.061999  1.36046133
-#&gt; [3,]  0.2630667 -0.4738871 1.142695 -0.07085743
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XYZM"    "POLYGON" "sfg"    
-#&gt; 
-#&gt; [[2]]
-#&gt; [[1]]
-#&gt;            [,1]       [,2]       [,3]        [,4]
-#&gt; [1,] -1.7905919 -1.2753349  1.1238388 -0.27215368
-#&gt; [2,] -0.7882588 -0.3056207 -0.3970015 -2.44668003
-#&gt; [3,] -1.1330217  2.2117695 -0.8232612  0.06548664
-#&gt; 
-#&gt; [[2]]
-#&gt;            [,1]      [,2]       [,3]       [,4]
-#&gt; [1,]  0.3636526 -1.041668 -0.5788846 -1.0985089
-#&gt; [2,] -0.2858879 -1.146524  1.7637894 -0.6331782
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "XYZM"    "POLYGON" "sfg"    
-#&gt; 
-#&gt; attr(,"n_empty")
-#&gt; [1] 0
-#&gt; attr(,"crs")
-#&gt; $epsg
-#&gt; [1] NA
-#&gt; 
-#&gt; $proj4string
-#&gt; [1] NA
-#&gt; 
-#&gt; attr(,"class")
-#&gt; [1] "crs"
-#&gt; attr(,"class")
-#&gt; [1] "sfc_POLYGON" "sfc"        
-#&gt; attr(,"precision")
-#&gt; [1] 0
-#&gt; attr(,"bbox")
-#&gt;       xmin       ymin       xmax       ymax 
-#&gt; -1.9000608 -1.2753349  0.9357843  2.2117695 
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt; -1.562518 -1.686505  1.233390  1.382911 
 #&gt; attr(,"class")
 #&gt; [1] "bbox"
 #&gt; attr(,"z_range")
 #&gt;      zmin      zmax 
-#&gt; -2.446680  1.360461 
+#&gt; -2.102152  1.893360 
 #&gt; attr(,"class")
 #&gt; [1] "z_range"
 #&gt; attr(,"m_range")
 #&gt;      mmin      mmax 
-#&gt; -2.446680  1.360461 
+#&gt; -2.177576  2.158757 
+#&gt; attr(,"class")
+#&gt; [1] "m_range"</div><div class='input'><span class='fu'>sfc_polygon</span>( <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>polygon_id</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>linestring_id</span> <span class='kw'>=</span> <span class='fl'>2</span> )</div><div class='output co'>#&gt; [[1]]
+#&gt; [[1]]
+#&gt;            [,1]       [,2]       [,3]        [,4]
+#&gt; [1,] -0.9984326 -1.6865047  1.4558414  0.23995957
+#&gt; [2,]  1.2333901 -0.9028149 -0.8286035  0.06089889
+#&gt; [3,]  0.3404245  1.3176337  0.2897745 -2.17757603
+#&gt; [4,] -0.9984326 -1.6865047  1.4558414  0.23995957
+#&gt; 
+#&gt; [[2]]
+#&gt;            [,1]      [,2]       [,3]         [,4]
+#&gt; [1,] -0.4727025  1.100190 -0.4800535 -0.117860143
+#&gt; [2,]  0.7087531  1.203768 -0.6048294  0.112294787
+#&gt; [3,] -1.5289587 -1.431271  1.4601102  0.007886198
+#&gt; [4,] -0.4727025  1.100190 -0.4800535 -0.117860143
+#&gt; 
+#&gt; [[3]]
+#&gt;            [,1]        [,2]        [,3]      [,4]
+#&gt; [1,]  0.2374253  1.38291086  0.14967935 1.8777439
+#&gt; [2,] -1.3128142  0.00312594 -1.43332110 2.1587566
+#&gt; [3,]  0.7470286 -0.07788682 -0.01030332 0.7097145
+#&gt; [4,]  0.2374253  1.38291086  0.14967935 1.8777439
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "XYZM"    "POLYGON" "sfg"    
+#&gt; 
+#&gt; [[2]]
+#&gt; [[1]]
+#&gt;             [,1]       [,2]       [,3]       [,4]
+#&gt; [1,] -1.56251843  0.4414282 -0.2122360  0.7669834
+#&gt; [2,]  0.07105336  0.1289229 -0.9063402 -0.3082114
+#&gt; [3,] -0.63953477 -0.8302143 -2.1021525  1.0120018
+#&gt; [4,] -1.56251843  0.4414282 -0.2122360  0.7669834
+#&gt; 
+#&gt; [[2]]
+#&gt;            [,1]       [,2]       [,3]       [,4]
+#&gt; [1,] -0.8451957 -0.5035929  1.8933605 -0.9190516
+#&gt; [2,]  0.6752447 -1.1936412 -0.9681258  0.5633801
+#&gt; [3,]  1.1533758 -0.7517233 -0.1026030  0.3224827
+#&gt; [4,] -0.8451957 -0.5035929  1.8933605 -0.9190516
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "XYZM"    "POLYGON" "sfg"    
+#&gt; 
+#&gt; attr(,"n_empty")
+#&gt; [1] 0
+#&gt; attr(,"crs")
+#&gt; $epsg
+#&gt; [1] NA
+#&gt; 
+#&gt; $proj4string
+#&gt; [1] NA
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "crs"
+#&gt; attr(,"class")
+#&gt; [1] "sfc_POLYGON" "sfc"        
+#&gt; attr(,"precision")
+#&gt; [1] 0
+#&gt; attr(,"bbox")
+#&gt;      xmin      ymin      xmax      ymax 
+#&gt; -1.562518 -1.686505  1.233390  1.382911 
+#&gt; attr(,"class")
+#&gt; [1] "bbox"
+#&gt; attr(,"z_range")
+#&gt;      zmin      zmax 
+#&gt; -2.102152  1.893360 
+#&gt; attr(,"class")
+#&gt; [1] "z_range"
+#&gt; attr(,"m_range")
+#&gt;      mmin      mmax 
+#&gt; -2.177576  2.158757 
 #&gt; attr(,"class")
 #&gt; [1] "m_range"</div><div class='input'>
 
@@ -969,6 +1030,8 @@ Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attribute
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#notes">notes</a></li>
       
       <li><a href="#examples">Examples</a></li>

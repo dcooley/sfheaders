@@ -1,8 +1,7 @@
-pandoc: 2.7.2
+pandoc: '2.9'
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
   Cpp: Cpp.html
   examples: examples.html
-  sfheaders: sfheaders.html
 

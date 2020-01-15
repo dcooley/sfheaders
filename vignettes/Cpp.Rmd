@@ -41,7 +41,35 @@ The first option works, but is a bit pointless because if you're in R anyway you
 
 The second option is the whole reason I build this library!
 
-Having said that, here are some example `cppFunction()` calls you can use to make various sf objects
+
+### Linking to a package
+
+The reason all the C++ code is in header files in `inst/include` is so you can call this code from another library. To do so
+
+1. Set the `LinkingTo` 
+
+For example, here's the [Description](https://github.com/dcooley/gpx/blob/master/DESCRIPTION) file of the `gpx` package I'm working on.
+
+
+![LinkingTo](./images/gpx_description.png)
+
+
+2. Include the `sfheaders` header files you need in a .cpp file
+
+![include](./images/gpx_include.png)
+
+
+3. call the functions
+
+![functions](./images/gpx_functions.png)
+
+
+These screenshots are taken from my [gpx](https://github.com/dcooley/gpx/blob/master/inst/include/gpx/track/track.hpp) library. Feel free to have a look and see how I use them. 
+
+
+### Using cppFunction
+
+Here are some example `cppFunction()` calls you can use to make various sf objects
 
 #### sfg_POINT
 
@@ -129,25 +157,4 @@ a_linestring( x, c("x","y", "z"), "id" )
 
 ```
 
-### Linking to a package
-
-The reason all the C++ code is in header files in `inst/include` is so you can call this code from another library. To do so
-
-1. Set the `LinkingTo` 
-
-For example, here's the [Description](https://github.com/dcooley/gpx/blob/master/DESCRIPTION) file of the `gpx` package I'm working on.
-
-
-![LinkingTo](./images/gpx_description.png)
-
-2. Include the `sfheaders` header files you need in a .cpp file
-
-![include](./images/gpx_include.png)
-
-3. call the functions
-
-![functions](./images/gpx_functions.png)
-
-
-These screenshots are taken from my [gpx](https://github.com/dcooley/gpx/blob/master/inst/include/gpx/track/track.hpp) library. Feel free to have a look and see how I use them. 
 

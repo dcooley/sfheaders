@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sfheaders</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -41,9 +41,6 @@
     <span class="fa fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/sfheaders.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -63,6 +60,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -73,13 +73,13 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
+      </header><script src="examples_files/jquery-1.11.3/jquery.min.js"></script><script src="examples_files/elevate-section-attrs-2.0/elevate-section-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Examples</h1>
                         <h4 class="author">David Cooley</h4>
             
-            <h4 class="date">2019-09-08</h4>
+            <h4 class="date">2020-01-15</h4>
       
       
       <div class="hidden name"><code>examples.Rmd</code></div>
@@ -88,8 +88,8 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sfheaders)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf) <span class="co">## for nice printing</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sfheaders)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sf) <span class="co">## for nice printing</span></span></code></pre></div>
 <div id="r" class="section level3">
 <h3 class="hasAnchor">
 <a href="#r" class="anchor"></a>R</h3>
@@ -103,184 +103,298 @@
 <h4 class="hasAnchor">
 <a href="#sfg" class="anchor"></a>sfg</h4>
 <p>The <code>sfg_</code> group of functions assume the input is a single geometry.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/sfg_point.html">sfg_point</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">2</span> )</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">#  POINT (1 2)</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="../reference/sfg_point.html">sfg_point</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">3</span> )</a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co">#  POINT Z (1 2 3)</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="../reference/sfg_point.html">sfg_point</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">4</span> )</a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="co">#  POINT ZM (1 2 3 4)</span></a>
-<a class="sourceLine" id="cb2-8" title="8"></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="kw"><a href="../reference/sfg_linestring.html">sfg_linestring</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">4</span> )</a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="co">#  LINESTRING ZM (1 2 3 4)</span></a>
-<a class="sourceLine" id="cb2-11" title="11"></a>
-<a class="sourceLine" id="cb2-12" title="12">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</a>
-<a class="sourceLine" id="cb2-13" title="13">  <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-14" title="14">  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-15" title="15">)</a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="../reference/sfg_linestring.html">sfg_linestring</a></span>(df)</a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co">#  LINESTRING (1 1, 1 4, 4 4, 4 1, 1 1)</span></a>
-<a class="sourceLine" id="cb2-18" title="18"></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="kw"><a href="../reference/sfg_polygon.html">sfg_polygon</a></span>(df)</a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co">#  POLYGON ((1 1, 1 4, 4 4, 4 1, 1 1))</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="../reference/sfg_point.html">sfg_point</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">2</span> )</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#  POINT (1 2)</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="../reference/sfg_point.html">sfg_point</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">3</span> )</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#  POINT Z (1 2 3)</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="kw"><a href="../reference/sfg_point.html">sfg_point</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">4</span> )</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#  POINT ZM (1 2 3 4)</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="kw"><a href="../reference/sfg_linestring.html">sfg_linestring</a></span>( <span class="dv">1</span><span class="op">:</span><span class="dv">4</span> )</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#  LINESTRING ZM (1 2 3 4)</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb2-13"><a href="#cb2-13"></a>  <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</span>
+<span id="cb2-14"><a href="#cb2-14"></a>  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="kw"><a href="../reference/sfg_linestring.html">sfg_linestring</a></span>(df)</span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#  LINESTRING (1 1, 1 4, 4 4, 4 1, 1 1)</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="kw"><a href="../reference/sfg_polygon.html">sfg_polygon</a></span>(df)</span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#  POLYGON ((1 1, 1 4, 4 4, 4 1, 1 1))</span></span></code></pre></div>
 </div>
 <div id="sfc" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sfc" class="anchor"></a>sfc</h4>
 <p>The <code>sfc_</code> group of functions let you specify an ‘id’ value to identify individual geometries. (Except for <code><a href="../reference/sfc_point.html">sfc_point()</a></code>, in this case every row is an individual geometry).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
-<a class="sourceLine" id="cb3-2" title="2">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</a>
-<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4">  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-5" title="5">  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-6" title="6">)</a>
-<a class="sourceLine" id="cb3-7" title="7"></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="kw"><a href="../reference/sfc_point.html">sfc_point</a></span>( df )</a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">#  Geometry set for 5 features </span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">#  geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#  dimension:      XYZ</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">#  POINT Z (1 1 1)</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#  POINT Z (1 1 4)</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#  POINT Z (2 4 4)</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co">#  POINT Z (2 4 1)</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co">#  POINT Z (3 1 1)</span></a>
-<a class="sourceLine" id="cb3-20" title="20"></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="kw"><a href="../reference/sfc_multipoint.html">sfc_multipoint</a></span>( df, <span class="dt">multipoint_id =</span> <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co">#  Geometry set for 3 features </span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co">#  geometry type:  MULTIPOINT</span></a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co">#  dimension:      XY</span></a>
-<a class="sourceLine" id="cb3-25" title="25"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></a>
-<a class="sourceLine" id="cb3-26" title="26"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb3-27" title="27"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb3-28" title="28"><span class="co">#  MULTIPOINT (1 1, 1 4)</span></a>
-<a class="sourceLine" id="cb3-29" title="29"><span class="co">#  MULTIPOINT (4 4, 4 1)</span></a>
-<a class="sourceLine" id="cb3-30" title="30"><span class="co">#  MULTIPOINT (1 1)</span></a>
-<a class="sourceLine" id="cb3-31" title="31"></a>
-<a class="sourceLine" id="cb3-32" title="32"><span class="kw"><a href="../reference/sfc_linestring.html">sfc_linestring</a></span>( df, <span class="dt">linestring_id =</span> <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb3-33" title="33"><span class="co">#  Geometry set for 3 features </span></a>
-<a class="sourceLine" id="cb3-34" title="34"><span class="co">#  geometry type:  LINESTRING</span></a>
-<a class="sourceLine" id="cb3-35" title="35"><span class="co">#  dimension:      XY</span></a>
-<a class="sourceLine" id="cb3-36" title="36"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></a>
-<a class="sourceLine" id="cb3-37" title="37"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb3-38" title="38"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb3-39" title="39"><span class="co">#  LINESTRING (1 1, 1 4)</span></a>
-<a class="sourceLine" id="cb3-40" title="40"><span class="co">#  LINESTRING (4 4, 4 1)</span></a>
-<a class="sourceLine" id="cb3-41" title="41"><span class="co">#  LINESTRING (1 1)</span></a>
-<a class="sourceLine" id="cb3-42" title="42"></a>
-<a class="sourceLine" id="cb3-43" title="43"><span class="co">## leaving the 'id' field blank</span></a>
-<a class="sourceLine" id="cb3-44" title="44"><span class="kw"><a href="../reference/sfc_polygon.html">sfc_polygon</a></span>( df )</a>
-<a class="sourceLine" id="cb3-45" title="45"><span class="co">#  Geometry set for 1 feature </span></a>
-<a class="sourceLine" id="cb3-46" title="46"><span class="co">#  geometry type:  POLYGON</span></a>
-<a class="sourceLine" id="cb3-47" title="47"><span class="co">#  dimension:      XYZ</span></a>
-<a class="sourceLine" id="cb3-48" title="48"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></a>
-<a class="sourceLine" id="cb3-49" title="49"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb3-50" title="50"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb3-51" title="51"><span class="co">#  POLYGON Z ((1 1 1, 1 1 4, 2 4 4, 2 4 1, 3 1 1))</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="kw"><a href="../reference/sfc_point.html">sfc_point</a></span>( df )</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#  Geometry set for 5 features </span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#  geometry type:  POINT</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#  dimension:      XYZ</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#  z_range:        zmin: 1 zmax: 4</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#  POINT Z (1 1 1)</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#  POINT Z (1 1 4)</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#  POINT Z (2 4 4)</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#  POINT Z (2 4 1)</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#  POINT Z (3 1 1)</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="kw"><a href="../reference/sfc_multipoint.html">sfc_multipoint</a></span>( df, <span class="dt">multipoint_id =</span> <span class="st">"id"</span> )</span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co">#  Geometry set for 3 features </span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="co">#  geometry type:  MULTIPOINT</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="co">#  MULTIPOINT (1 1, 1 4)</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="co">#  MULTIPOINT (4 4, 4 1)</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="co">#  MULTIPOINT (1 1)</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="kw"><a href="../reference/sfc_linestring.html">sfc_linestring</a></span>( df, <span class="dt">linestring_id =</span> <span class="st">"id"</span> )</span>
+<span id="cb3-37"><a href="#cb3-37"></a><span class="co">#  Geometry set for 3 features </span></span>
+<span id="cb3-38"><a href="#cb3-38"></a><span class="co">#  geometry type:  LINESTRING</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb3-43"><a href="#cb3-43"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a><span class="co">#  LINESTRING (1 1, 1 4)</span></span>
+<span id="cb3-46"><a href="#cb3-46"></a><span class="co">#  LINESTRING (4 4, 4 1)</span></span>
+<span id="cb3-47"><a href="#cb3-47"></a><span class="co">#  LINESTRING (1 1)</span></span>
+<span id="cb3-48"><a href="#cb3-48"></a></span>
+<span id="cb3-49"><a href="#cb3-49"></a><span class="co">## leaving the 'id' field blank</span></span>
+<span id="cb3-50"><a href="#cb3-50"></a><span class="kw"><a href="../reference/sfc_polygon.html">sfc_polygon</a></span>( df )</span>
+<span id="cb3-51"><a href="#cb3-51"></a><span class="co">#  Geometry set for 1 feature </span></span>
+<span id="cb3-52"><a href="#cb3-52"></a><span class="co">#  geometry type:  POLYGON</span></span>
+<span id="cb3-53"><a href="#cb3-53"></a><span class="co">#  dimension:      XYZ</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></span>
+<span id="cb3-55"><a href="#cb3-55"></a><span class="co">#  z_range:        zmin: 1 zmax: 4</span></span>
+<span id="cb3-56"><a href="#cb3-56"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb3-57"><a href="#cb3-57"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a><span class="co">#  POLYGON Z ((1 1 1, 1 1 4, 2 4 4, 2 4 1, 3 1 1, ...</span></span></code></pre></div>
 </div>
 <div id="sf" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sf" class="anchor"></a>sf</h4>
 <p>The <code>sf_</code> functions also let you specify an ‘id’ value, but in this case the id is retained and kept on the object</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
-<a class="sourceLine" id="cb4-2" title="2">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</a>
-<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-4" title="4">  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-5" title="5">  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-6" title="6">)</a>
-<a class="sourceLine" id="cb4-7" title="7"></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="kw"><a href="../reference/sf_point.html">sf_point</a></span>( df )</a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#  Simple feature collection with 5 features and 0 fields</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#  geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">#  dimension:      XYZ</span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#           geometry</span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#  1 POINT Z (1 1 1)</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#  2 POINT Z (1 1 4)</span></a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="co">#  3 POINT Z (2 4 4)</span></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="co">#  4 POINT Z (2 4 1)</span></a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#  5 POINT Z (3 1 1)</span></a>
-<a class="sourceLine" id="cb4-21" title="21"></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="kw"><a href="../reference/sf_multipoint.html">sf_multipoint</a></span>( df, <span class="dt">multipoint_id =</span> <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb4-23" title="23"><span class="co">#  Simple feature collection with 3 features and 1 field</span></a>
-<a class="sourceLine" id="cb4-24" title="24"><span class="co">#  geometry type:  MULTIPOINT</span></a>
-<a class="sourceLine" id="cb4-25" title="25"><span class="co">#  dimension:      XY</span></a>
-<a class="sourceLine" id="cb4-26" title="26"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb4-29" title="29"><span class="co">#    id              geometry</span></a>
-<a class="sourceLine" id="cb4-30" title="30"><span class="co">#  1  1 MULTIPOINT (1 1, 1 4)</span></a>
-<a class="sourceLine" id="cb4-31" title="31"><span class="co">#  2  2 MULTIPOINT (4 4, 4 1)</span></a>
-<a class="sourceLine" id="cb4-32" title="32"><span class="co">#  3  3      MULTIPOINT (1 1)</span></a>
-<a class="sourceLine" id="cb4-33" title="33"></a>
-<a class="sourceLine" id="cb4-34" title="34"><span class="kw"><a href="../reference/sf_linestring.html">sf_linestring</a></span>( df, <span class="dt">linestring_id =</span> <span class="st">"id"</span> )</a>
-<a class="sourceLine" id="cb4-35" title="35"><span class="co">#  Simple feature collection with 3 features and 1 field</span></a>
-<a class="sourceLine" id="cb4-36" title="36"><span class="co">#  geometry type:  LINESTRING</span></a>
-<a class="sourceLine" id="cb4-37" title="37"><span class="co">#  dimension:      XY</span></a>
-<a class="sourceLine" id="cb4-38" title="38"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></a>
-<a class="sourceLine" id="cb4-39" title="39"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb4-40" title="40"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb4-41" title="41"><span class="co">#    id              geometry</span></a>
-<a class="sourceLine" id="cb4-42" title="42"><span class="co">#  1  1 LINESTRING (1 1, 1 4)</span></a>
-<a class="sourceLine" id="cb4-43" title="43"><span class="co">#  2  2 LINESTRING (4 4, 4 1)</span></a>
-<a class="sourceLine" id="cb4-44" title="44"><span class="co">#  3  3      LINESTRING (1 1)</span></a>
-<a class="sourceLine" id="cb4-45" title="45"></a>
-<a class="sourceLine" id="cb4-46" title="46"><span class="co">## leaving the 'id' field blank</span></a>
-<a class="sourceLine" id="cb4-47" title="47"><span class="kw"><a href="../reference/sf_polygon.html">sf_polygon</a></span>( df )</a>
-<a class="sourceLine" id="cb4-48" title="48"><span class="co">#  Simple feature collection with 1 feature and 1 field</span></a>
-<a class="sourceLine" id="cb4-49" title="49"><span class="co">#  geometry type:  POLYGON</span></a>
-<a class="sourceLine" id="cb4-50" title="50"><span class="co">#  dimension:      XYZ</span></a>
-<a class="sourceLine" id="cb4-51" title="51"><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></a>
-<a class="sourceLine" id="cb4-52" title="52"><span class="co">#  epsg (SRID):    NA</span></a>
-<a class="sourceLine" id="cb4-53" title="53"><span class="co">#  proj4string:    NA</span></a>
-<a class="sourceLine" id="cb4-54" title="54"><span class="co">#    id                       geometry</span></a>
-<a class="sourceLine" id="cb4-55" title="55"><span class="co">#  1  1 POLYGON Z ((1 1 1, 1 1 4, 2...</span></a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">n &lt;-<span class="st"> </span><span class="fl">1e5</span></a>
-<a class="sourceLine" id="cb5-2" title="2">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span>(n<span class="op">/</span><span class="dv">5</span>), <span class="dt">each =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb5-4" title="4">  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(n)</a>
-<a class="sourceLine" id="cb5-5" title="5">  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(n)</a>
-<a class="sourceLine" id="cb5-6" title="6">)</a>
-<a class="sourceLine" id="cb5-7" title="7"></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)</a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(microbenchmark)</a>
-<a class="sourceLine" id="cb5-10" title="10"></a>
-<a class="sourceLine" id="cb5-11" title="11">dt &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table</a></span>( df )</a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
-<a class="sourceLine" id="cb5-13" title="13"></a>
-<a class="sourceLine" id="cb5-14" title="14">  <span class="dt">dt =</span> {</a>
-<a class="sourceLine" id="cb5-15" title="15">    sf &lt;-<span class="st"> </span>dt[</a>
-<a class="sourceLine" id="cb5-16" title="16">      , {</a>
-<a class="sourceLine" id="cb5-17" title="17">        geometry &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st">st_linestring</a></span>( <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>( x, y ), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> T ))</a>
-<a class="sourceLine" id="cb5-18" title="18">        geometry &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sf">st_sf</a></span>( <span class="dt">geometry =</span> sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sfc">st_sfc</a></span>( geometry ) )</a>
-<a class="sourceLine" id="cb5-19" title="19">      }</a>
-<a class="sourceLine" id="cb5-20" title="20">      , by =<span class="st"> </span>id</a>
-<a class="sourceLine" id="cb5-21" title="21">    ]</a>
-<a class="sourceLine" id="cb5-22" title="22">    sf &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>( sf )</a>
-<a class="sourceLine" id="cb5-23" title="23">  },</a>
-<a class="sourceLine" id="cb5-24" title="24">  </a>
-<a class="sourceLine" id="cb5-25" title="25">  <span class="dt">sfheaders =</span> {</a>
-<a class="sourceLine" id="cb5-26" title="26">    sfh &lt;-<span class="st"> </span>sfheaders<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sfheaders/topics/sf_linestring">sf_linestring</a></span>(</a>
-<a class="sourceLine" id="cb5-27" title="27">      <span class="dt">obj =</span> df</a>
-<a class="sourceLine" id="cb5-28" title="28">      , <span class="dt">linestring_id =</span> <span class="st">"id"</span></a>
-<a class="sourceLine" id="cb5-29" title="29">    )</a>
-<a class="sourceLine" id="cb5-30" title="30">  },</a>
-<a class="sourceLine" id="cb5-31" title="31">  <span class="dt">times =</span> <span class="dv">5</span></a>
-<a class="sourceLine" id="cb5-32" title="32">)</a>
-<a class="sourceLine" id="cb5-33" title="33"></a>
-<a class="sourceLine" id="cb5-34" title="34"><span class="co"># Unit: milliseconds</span></a>
-<a class="sourceLine" id="cb5-35" title="35"><span class="co">#      expr        min         lq       mean     median         uq        max neval</span></a>
-<a class="sourceLine" id="cb5-36" title="36"><span class="co">#        dt 6599.67479 6654.12357 6779.23543 6750.19807 6833.46262 7058.71809     5</span></a>
-<a class="sourceLine" id="cb5-37" title="37"><span class="co"># sfheaders   21.07775   21.30438   23.20592   23.21665   25.06429   25.36654     5</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="kw"><a href="../reference/sf_point.html">sf_point</a></span>( df )</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#  Simple feature collection with 5 features and 0 fields</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#  geometry type:  POINT</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#  dimension:      XYZ</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#  z_range:        zmin: 1 zmax: 4</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#           geometry</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#  1 POINT Z (1 1 1)</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#  2 POINT Z (1 1 4)</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#  3 POINT Z (2 4 4)</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#  4 POINT Z (2 4 1)</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">#  5 POINT Z (3 1 1)</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="kw"><a href="../reference/sf_multipoint.html">sf_multipoint</a></span>( df, <span class="dt">multipoint_id =</span> <span class="st">"id"</span> )</span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="co">#  Simple feature collection with 3 features and 1 field</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co">#  geometry type:  MULTIPOINT</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="co">#    id              geometry</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a><span class="co">#  1  1 MULTIPOINT (1 1, 1 4)</span></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="co">#  2  2 MULTIPOINT (4 4, 4 1)</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="co">#  3  3      MULTIPOINT (1 1)</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a></span>
+<span id="cb4-38"><a href="#cb4-38"></a><span class="kw"><a href="../reference/sf_linestring.html">sf_linestring</a></span>( df, <span class="dt">linestring_id =</span> <span class="st">"id"</span> )</span>
+<span id="cb4-39"><a href="#cb4-39"></a><span class="co">#  Simple feature collection with 3 features and 1 field</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a><span class="co">#  geometry type:  LINESTRING</span></span>
+<span id="cb4-41"><a href="#cb4-41"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb4-45"><a href="#cb4-45"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb4-46"><a href="#cb4-46"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb4-47"><a href="#cb4-47"></a><span class="co">#    id              geometry</span></span>
+<span id="cb4-48"><a href="#cb4-48"></a><span class="co">#  1  1 LINESTRING (1 1, 1 4)</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a><span class="co">#  2  2 LINESTRING (4 4, 4 1)</span></span>
+<span id="cb4-50"><a href="#cb4-50"></a><span class="co">#  3  3      LINESTRING (1 1)</span></span>
+<span id="cb4-51"><a href="#cb4-51"></a></span>
+<span id="cb4-52"><a href="#cb4-52"></a><span class="co">## leaving the 'id' field blank</span></span>
+<span id="cb4-53"><a href="#cb4-53"></a><span class="kw"><a href="../reference/sf_polygon.html">sf_polygon</a></span>( df )</span>
+<span id="cb4-54"><a href="#cb4-54"></a><span class="co">#  Simple feature collection with 1 feature and 1 field</span></span>
+<span id="cb4-55"><a href="#cb4-55"></a><span class="co">#  geometry type:  POLYGON</span></span>
+<span id="cb4-56"><a href="#cb4-56"></a><span class="co">#  dimension:      XYZ</span></span>
+<span id="cb4-57"><a href="#cb4-57"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 3 ymax: 4</span></span>
+<span id="cb4-58"><a href="#cb4-58"></a><span class="co">#  z_range:        zmin: 1 zmax: 4</span></span>
+<span id="cb4-59"><a href="#cb4-59"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb4-60"><a href="#cb4-60"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb4-61"><a href="#cb4-61"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb4-62"><a href="#cb4-62"></a><span class="co">#    id                       geometry</span></span>
+<span id="cb4-63"><a href="#cb4-63"></a><span class="co">#  1  1 POLYGON Z ((1 1 1, 1 1 4, 2...</span></span></code></pre></div>
+<p>In all these examples I haven’t needed to specify the geometry columns, because other than the <code>id</code> field, all the other columns are used for the coordinates.</p>
+<p>If your data.frame has other, non-geometry and non-id columns, you must specify at least the <code>x</code> and <code>y</code> paramters</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a>df<span class="op">$</span>val &lt;-<span class="st"> </span>letters[ df<span class="op">$</span>id ]</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="kw"><a href="../reference/sf_point.html">sf_point</a></span>( df, <span class="dt">x =</span> <span class="st">"x"</span>, <span class="dt">y =</span> <span class="st">"y"</span> )</span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#  Simple feature collection with 5 features and 0 fields</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#  geometry type:  POINT</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#       geometry</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#  1 POINT (1 1)</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#  2 POINT (1 4)</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#  3 POINT (4 4)</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#  4 POINT (4 1)</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#  5 POINT (1 1)</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="kw"><a href="../reference/sf_linestring.html">sf_linestring</a></span>( df, <span class="dt">x =</span> <span class="st">"x"</span>, <span class="dt">y =</span> <span class="st">"y"</span>, <span class="dt">linestring_id =</span> <span class="st">"id"</span> )</span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#  Simple feature collection with 3 features and 1 field</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#  geometry type:  LINESTRING</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#    id              geometry</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#  1  1 LINESTRING (1 1, 1 4)</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#  2  2 LINESTRING (4 4, 4 1)</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="co">#  3  3      LINESTRING (1 1)</span></span></code></pre></div>
+<p>If you want to keep all the other columns, set <code>keep = TRUE</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="../reference/sf_linestring.html">sf_linestring</a></span>( df, <span class="dt">x =</span> <span class="st">"x"</span>, <span class="dt">y =</span> <span class="st">"y"</span>, <span class="dt">linestring_id =</span> <span class="st">"id"</span>, <span class="dt">keep =</span> <span class="ot">TRUE</span> )</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#  Simple feature collection with 3 features and 2 fields</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#  geometry type:  LINESTRING</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#  dimension:      XY</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#  bbox:           xmin: 1 ymin: 1 xmax: 4 ymax: 4</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#  z_range:        zmin: NA zmax: NA</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#  m_range:        mmin: NA mmax: NA</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#  epsg (SRID):    NA</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#  proj4string:    NA</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#    id val              geometry</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#  1  1   a LINESTRING (1 1, 1 4)</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#  2  2   b LINESTRING (4 4, 4 1)</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#  3  3   c      LINESTRING (1 1)</span></span></code></pre></div>
+</div>
+</div>
+<div id="converting-to-data-frames" class="section level2">
+<h2 class="hasAnchor">
+<a href="#converting-to-data-frames" class="anchor"></a>Converting to Data Frames</h2>
+<p>As of version 1.0 you can now convert from <code>sfg</code>, <code>sfc</code> and <code>sf</code> objects to <code>data.frames</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>df<span class="op">$</span>val &lt;-<span class="st"> </span>letters[ df<span class="op">$</span>id ]</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>sf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sf_linestring.html">sf_linestring</a></span>( df, <span class="dt">x =</span> <span class="st">"x"</span>, <span class="dt">y =</span> <span class="st">"y"</span>, <span class="dt">linestring_id =</span> <span class="st">"id"</span>, <span class="dt">keep =</span> <span class="ot">TRUE</span> )</span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="kw"><a href="../reference/sf_to_df.html">sf_to_df</a></span>( sf )</span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#    sfg_id linestring_id x y</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#  1      1             1 1 1</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#  2      1             1 1 4</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#  3      2             2 4 4</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#  4      2             2 4 1</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#  5      3             3 1 1</span></span></code></pre></div>
+<p>And if you want to keep all the other columns and fill them down each row of the data.frame, set <code>fill = TRUE</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw"><a href="../reference/sf_to_df.html">sf_to_df</a></span>( sf, <span class="dt">fill =</span> <span class="ot">TRUE</span> )</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#    id val sfg_id linestring_id x y</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#  1  1   a      1             1 1 1</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#  2  1   a      1             1 1 4</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#  3  2   b      2             2 4 4</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#  4  2   b      2             2 4 1</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#  5  3   c      3             3 1 1</span></span></code></pre></div>
+<div id="performance" class="section level3">
+<h3 class="hasAnchor">
+<a href="#performance" class="anchor"></a>Performance</h3>
+<p>Here’s a quick benchmark showing how well this library performs</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>n &lt;-<span class="st"> </span><span class="fl">1e5</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="dt">id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span>(n<span class="op">/</span><span class="dv">5</span>), <span class="dt">each =</span> <span class="dv">5</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  , <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(n)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  , <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(n)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)</span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(microbenchmark)</span>
+<span id="cb9-10"><a href="#cb9-10"></a></span>
+<span id="cb9-11"><a href="#cb9-11"></a>dt &lt;-<span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table</a></span>( df )</span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a>  <span class="dt">dt =</span> {</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    sf &lt;-<span class="st"> </span>dt[</span>
+<span id="cb9-16"><a href="#cb9-16"></a>      , {</span>
+<span id="cb9-17"><a href="#cb9-17"></a>        geometry &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st">st_linestring</a></span>( <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>( <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>( x, y ), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> T ))</span>
+<span id="cb9-18"><a href="#cb9-18"></a>        geometry &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sf">st_sf</a></span>( <span class="dt">geometry =</span> sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/sfc">st_sfc</a></span>( geometry ) )</span>
+<span id="cb9-19"><a href="#cb9-19"></a>      }</span>
+<span id="cb9-20"><a href="#cb9-20"></a>      , by =<span class="st"> </span>id</span>
+<span id="cb9-21"><a href="#cb9-21"></a>    ]</span>
+<span id="cb9-22"><a href="#cb9-22"></a>    sf &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>( sf )</span>
+<span id="cb9-23"><a href="#cb9-23"></a>  },</span>
+<span id="cb9-24"><a href="#cb9-24"></a>  </span>
+<span id="cb9-25"><a href="#cb9-25"></a>  <span class="dt">sfheaders =</span> {</span>
+<span id="cb9-26"><a href="#cb9-26"></a>    sfh &lt;-<span class="st"> </span>sfheaders<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sfheaders/topics/sf_linestring">sf_linestring</a></span>(</span>
+<span id="cb9-27"><a href="#cb9-27"></a>      <span class="dt">obj =</span> df</span>
+<span id="cb9-28"><a href="#cb9-28"></a>      , <span class="dt">linestring_id =</span> <span class="st">"id"</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a>    )</span>
+<span id="cb9-30"><a href="#cb9-30"></a>  },</span>
+<span id="cb9-31"><a href="#cb9-31"></a>  <span class="dt">times =</span> <span class="dv">5</span></span>
+<span id="cb9-32"><a href="#cb9-32"></a>)</span>
+<span id="cb9-33"><a href="#cb9-33"></a></span>
+<span id="cb9-34"><a href="#cb9-34"></a><span class="co"># Unit: milliseconds</span></span>
+<span id="cb9-35"><a href="#cb9-35"></a><span class="co">#      expr        min         lq       mean     median         uq        max neval</span></span>
+<span id="cb9-36"><a href="#cb9-36"></a><span class="co">#        dt 6599.67479 6654.12357 6779.23543 6750.19807 6833.46262 7058.71809     5</span></span>
+<span id="cb9-37"><a href="#cb9-37"></a><span class="co"># sfheaders   21.07775   21.30438   23.20592   23.21665   25.06429   25.36654     5</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#converting-to-data-frames">Converting to Data Frames</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
