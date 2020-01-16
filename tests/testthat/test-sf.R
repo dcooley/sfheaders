@@ -413,3 +413,24 @@ test_that("sf properties are kept",{
   expect_true( nrow( res ) == 1 )
 
 })
+
+test_that("geometry colums required when keep = TRUE",{
+
+  df <- data.frame(
+    multi_poly_id = rep(1,10)
+    , poly_id = c(1,1,1,1,1,1,1,2,2,2)
+    , line_id = rep(1,10)
+    , x = 1:10
+    , y = 1:10
+    , val = letters[1:10]
+  )
+
+  expect_error( sf_point(obj = df, keep = TRUE ) )
+  expect_error( sf_multipoint(obj = df, multipoint_id = "poly_id", keep = TRUE ) )
+  expect_error( sf_linestring(obj = df, linestring_id = "poly_id", keep = TRUE ) )
+  expect_error( sf_multilinestring(obj = df,  multilinestring_id = "poly_id", keep = TRUE ) )
+  expect_error( sf_polygon(obj = df, polygon_id = "poly_id", keep = TRUE ) )
+  expect_error(  sf_multipolygon(obj = df, multipolygon_id = "poly_id", keep = TRUE ) )
+
+})
+

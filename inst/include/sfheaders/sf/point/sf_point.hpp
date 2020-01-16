@@ -163,7 +163,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported point type");  // #nocov
     }
     }
 
@@ -196,7 +196,7 @@ namespace sf {
       return sf_point( x, sv_geometry_cols );
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");  // #nocov
+      Rcpp::stop("sfheaders - unsupported point type");  // #nocov
     }
     }
 
