@@ -1,7 +1,5 @@
 context("to_df")
 
-
-
 test_that("sfc_to_df constructs data.frames",{
 
   x <- matrix( c(11:16), ncol = 2 )
@@ -162,8 +160,10 @@ test_that("different data.frame columns supported",{
     , int = 1L
     , cplx = as.complex(1.0)
     , rw = as.raw(1.0)
+    , lgl = as.logical(T)
     , x = 1
     , y = 2
+    , stringsAsFactors = F
   )
 
   sf <- sfheaders::sf_point( obj = df, x = "x", y = "y" )
@@ -172,6 +172,11 @@ test_that("different data.frame columns supported",{
     x = sf
     , y = df[, setdiff(names(df), c("x","y"))]
     , by = "id"
+  )
+
+  expect_error(
+    sfheaders::sf_to_df( sf, fill = TRUE )
+    , "sfheaders - sf_column not found"
   )
 
   attr(sf, "class") <- c("sf", "data.frame")
