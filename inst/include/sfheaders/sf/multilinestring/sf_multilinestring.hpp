@@ -211,7 +211,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported multilinestring type"); // #nocov
     }
     }
 

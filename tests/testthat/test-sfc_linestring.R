@@ -148,7 +148,7 @@ test_that("various objects converted to sfc_LINESTRING",{
   m <- cbind(c(1L,1L), m)
   df <- as.data.frame( m )
   m <- as.matrix( df )
-  res <- sfheaders:::rcpp_sfc_linestring(df, c("V1","V2"), "V3")
+  res <- sfheaders:::rcpp_sfc_linestring(m, c("V1","V2"), "V3")
   expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
   expect_true( is_linestring( res ) )
 

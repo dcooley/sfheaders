@@ -745,8 +745,8 @@ namespace sfc {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {  // #nocov
       SEXP xc = Rcpp::clone( x ); // #nocov
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );  // #nocov
-      return sfc_linestring( im, geometry_cols, linestring_id );      // #nocov
+      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
+      return sfc_linestring( im, geometry_cols, linestring_id );
     // } else {
     //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
     //   return sfc_linestring( iv, geometry_cols, linestring_id );
