@@ -10,6 +10,9 @@ namespace utils {
   inline Rcpp::StringVector matrix_names(
       Rcpp::List m_attr
   ) {
+    if( m_attr.size() < 2 ) {
+      Rcpp::stop("sfheaders - could not find matrix names. Perhaps your matrix does not have names");
+    }
     Rcpp::StringVector matrix_names = m_attr[1];
     return matrix_names;
   }

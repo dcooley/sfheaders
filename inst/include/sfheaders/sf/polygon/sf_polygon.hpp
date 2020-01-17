@@ -184,7 +184,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
+      Rcpp::stop("sfheaders - unsupported polygon type"); // #nocov
     }
     }
 
@@ -222,7 +222,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported polygon type"); // #nocov
     }
     }
 

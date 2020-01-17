@@ -41,7 +41,7 @@ namespace sf {
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
-    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( df, geometry_cols, polygon_ids, line_ids, polygon_positions );
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( df, geometry_cols, polygon_ids, line_ids, polygon_positions, close );
     return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
 
