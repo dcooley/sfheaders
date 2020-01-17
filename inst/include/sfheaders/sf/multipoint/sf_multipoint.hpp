@@ -27,16 +27,13 @@ namespace sf {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
+      Rcpp::String& id_column,
       SEXP& line_ids
   ) {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
-
-    Rcpp::StringVector id_col_name = sfheaders::utils::other_columns( df_names, property_cols );
-    Rcpp::StringVector id_col_name2 = sfheaders::utils::other_columns( id_col_name, geometry_cols );
-    Rcpp::String id_column = id_col_name2[0];
 
     Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( df, geometry_cols, line_positions );
 
@@ -47,12 +44,14 @@ namespace sf {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
+      int& id_column,
       SEXP& line_ids
   ) {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::StringVector str_property_cols = df_names[ geometry_cols ];
-    return sf_multipoint( df, str_geometry_cols, str_property_cols, line_ids );
+    Rcpp::String str_id_col = df_names[ id_column ];
+    return sf_multipoint( df, str_geometry_cols, str_property_cols, str_id_col, line_ids );
   }
 
   inline SEXP sf_multipoint(
@@ -62,7 +61,7 @@ namespace sf {
       Rcpp::String& multipoint_id
   ) {
     SEXP line_ids = df[ multipoint_id ];
-    return sf_multipoint( df, geometry_cols, property_cols, line_ids );
+    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, line_ids );
   }
 
   inline SEXP sf_multipoint(

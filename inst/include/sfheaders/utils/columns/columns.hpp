@@ -9,39 +9,61 @@
 namespace sfheaders {
 namespace utils {
 
-  // if the line_id cols are supplied, but the geometry_cols are not
-  // we need to know the rest of the columns so we can supply them
+
   inline SEXP other_columns(
-      Rcpp::IntegerVector& other_cols,
+      Rcpp::IntegerVector& all_cols,
       Rcpp::IntegerVector& id_cols
   ) {
 
-    // Can't use SETDIFF because I need the order maintained
-    // Rcpp::IntegerVector iv = Rcpp::setdiff( other_cols, id_cols );
-    // return iv;
+    int n_id_cols = id_cols.size();
+    int n_other_cols = all_cols.size();
+    int i, j;
+    bool is_in = false;
 
-    int n_id_cols = id_cols.length();
-    int i;
-    for( i = (n_id_cols - 1); i >= 0; i-- ) {
-      int to_remove = id_cols[ i ];
-      other_cols.erase( to_remove );
+    for( i = 0; i < n_id_cols; i++ ) {
+      is_in = false;
+      int id_col = id_cols[i];
+      for( j = 0; j < n_other_cols; j++ ) {
+        int a_col = all_cols[j];
+        if( id_col == a_col ) {
+          // this column is one of the id ones, so we shouldn't keep it.
+          is_in = true;
+          break;
+        }
+      }
+      if( is_in ) {
+        all_cols.erase( j );
+      }
     }
-    return other_cols;
+    return all_cols;
   }
 
   inline SEXP other_columns(
-      Rcpp::NumericVector& other_cols,
+      Rcpp::NumericVector& all_cols,
       Rcpp::NumericVector& id_cols
   ) {
 
-    int n_id_cols = id_cols.length();
-    int i;
-    for( i = (n_id_cols - 1); i >= 0; i-- ) {
-      int to_remove = id_cols[ i ];
-      other_cols.erase( to_remove );
-    }
+    int n_id_cols = id_cols.size();
+    int n_other_cols = all_cols.size();
+    int i, j;
+    bool is_in = false;
 
-    return other_cols;
+    for( i = 0; i < n_id_cols; i++ ) {
+      is_in = false;
+      double id_col = id_cols[i];
+      for( j = 0; j < n_other_cols; j++ ) {
+        double a_col = all_cols[j];
+        if( id_col == a_col ) {
+          // this column is one of the id ones, so we shouldn't keep it.
+          is_in = true;
+          break;
+        }
+      }
+      if( is_in ) {
+        all_cols.erase( j );
+      }
+    }
+    return all_cols;
   }
 
 
@@ -54,7 +76,7 @@ namespace utils {
     int n_other_cols = all_cols.size();
     int i, j;
     bool is_in = false;
-    Rcpp::IntegerVector id_col_index( n_id_cols );
+
     for( i = 0; i < n_id_cols; i++ ) {
       is_in = false;
       Rcpp::String id_col = id_cols[i];

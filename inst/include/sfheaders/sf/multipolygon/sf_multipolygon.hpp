@@ -30,6 +30,7 @@ namespace sf {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
+      Rcpp::String& id_column,
       SEXP& multiline_ids,
       Rcpp::String& polygon_ids,
       Rcpp::String& line_ids,
@@ -40,10 +41,6 @@ namespace sf {
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
-    Rcpp::StringVector id_col_name = sfheaders::utils::other_columns( df_names, property_cols );
-    Rcpp::StringVector id_col_name2 = sfheaders::utils::other_columns( id_col_name, geometry_cols );
-    Rcpp::String id_column = id_col_name2[0];
-
     Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( df, geometry_cols, polygon_ids, line_ids, polygon_positions );
     return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
@@ -52,6 +49,7 @@ namespace sf {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
+      int& multipolygon_id,
       SEXP& multiline_ids,
       int& polygon_id,
       int& linestring_id,
@@ -62,10 +60,11 @@ namespace sf {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::StringVector str_property_cols = df_names[ property_cols ];
+    Rcpp::String str_id_column = df_names[ multipolygon_id ];
     Rcpp::String str_linestring_id = df_names[ linestring_id ];
     Rcpp::String str_polygon_id = df_names[ polygon_id ];
 
-    return sf_multipolygon( df, str_geometry_cols, str_property_cols, multiline_ids, str_polygon_id, str_linestring_id, close );
+    return sf_multipolygon( df, str_geometry_cols, str_property_cols, str_id_column, multiline_ids, str_polygon_id, str_linestring_id, close );
   }
 
   inline SEXP sf_multipolygon(
@@ -79,7 +78,7 @@ namespace sf {
   ) {
 
     SEXP multiline_ids = df[ multipolygon_id ];
-    return sf_multipolygon( df, geometry_cols, property_cols, multiline_ids, polygon_id, linestring_id, close );
+    return sf_multipolygon( df, geometry_cols, property_cols, multipolygon_id, multiline_ids, polygon_id, linestring_id, close );
   }
 
   inline SEXP sf_multipolygon(
@@ -140,15 +139,8 @@ namespace sf {
       bool close = true
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-
-    // Rcpp::StringVector df_names = df.names();
-    // Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
-    // Rcpp::StringVector cols2 = sfheaders::utils::concatenate_vectors( cols, polygon_id );
-    // Rcpp::StringVector cols3 = sfheaders::utils::concatenate_vectors( cols, multipolygon_id );
-    // Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols3 );
-
     SEXP multiline_ids = df[ multipolygon_id ];
-    return sf_multipolygon( df, geometry_cols, property_cols, multiline_ids, polygon_id, linestring_id, close );
+    return sf_multipolygon( df, geometry_cols, property_cols, multipolygon_id, multiline_ids, polygon_id, linestring_id, close );
   }
 
 
@@ -162,15 +154,8 @@ namespace sf {
       bool close = true
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-
-    // Rcpp::StringVector df_names = df.names();
-    // Rcpp::StringVector cols = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
-    // Rcpp::StringVector cols2 = sfheaders::utils::concatenate_vectors( cols, polygon_id );
-    // Rcpp::StringVector cols3 = sfheaders::utils::concatenate_vectors( cols, multipolygon_id );
-    // Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, cols3 );
-
     SEXP multiline_ids = df[ multipolygon_id ];
-    return sf_multipolygon( df, geometry_cols, property_cols, multiline_ids, polygon_id, linestring_id, close );
+    return sf_multipolygon( df, geometry_cols, property_cols, multipolygon_id, multiline_ids, polygon_id, linestring_id, close );
   }
 
 
