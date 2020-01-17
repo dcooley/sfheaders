@@ -148,7 +148,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
+      Rcpp::stop("sfheaders - unsupported multipoint type"); // #nocov
     }
     }
 
@@ -184,7 +184,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported multipoint type"); // #nocov
     }
     }
 
@@ -240,7 +240,7 @@ namespace sf {
         return sf_multipoint( x, sv_geometry_cols, sv_property_cols, s_multipoint_id_col );
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported linestring type");  // #nocov
+        Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
       }
       }
     }

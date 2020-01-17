@@ -41,7 +41,7 @@ namespace sf {
       return rv[ subset_index ];
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported column type using keep = TRUE");
+      Rcpp::stop("sfheaders - unsupported column type using keep = TRUE"); // #nocov
     }
     }
   }
@@ -161,7 +161,7 @@ namespace sf {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unknow column types");
+      Rcpp::stop("sfheaders - unknown column types"); // #nocov
     }
     }
 
@@ -195,7 +195,7 @@ namespace sf {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unknown type");
+      Rcpp::stop("sfheaders - unknown type"); // #nocov
     }
     }
     return create_sf( df, sfc, property_columns );

@@ -195,7 +195,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
+      Rcpp::stop("sfheaders - unsupported multipolygon type"); // #nocov
     }
     }
 
@@ -234,7 +234,7 @@ namespace sf {
     }
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported linestring type");
+      Rcpp::stop("sfheaders - unsupported multipolygon type"); // #nocov
     }
     }
 
@@ -392,7 +392,7 @@ namespace sf {
         return sf_multipolygon( x, sv_geometry_cols, sv_property_cols, s_multipolygon_id_col, s_polygon_id_col, s_linestring_id_col, close );
       }
       default: {
-        Rcpp::stop("sfheaders - unsupported polygon type");  // #nocov
+        Rcpp::stop("sfheaders - unsupported multipolygon type");  // #nocov
       }
       }
     }

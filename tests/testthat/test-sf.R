@@ -434,3 +434,37 @@ test_that("geometry colums required when keep = TRUE",{
 
 })
 
+test_that("different property types work",{
+
+  df <- data.frame(
+    x = 1:10
+    , y = 1:10
+    , str = letters[1:10]
+    , log = c(T,F)
+    , cplx = complex(10)
+    , raw = raw(10)
+    , stringsAsFactors = FALSE
+  )
+
+  res <- sf_linestring(obj = df, x = "x", y = "y", keep = TRUE)
+  expect_true( is.raw( res$raw ) )
+  expect_true( is.complex( res$cplx ) )
+  expect_true( is.logical( res$log ) )
+  expect_true( is.character( res$str ) )
+
+  df <- data.frame(
+    x = 1
+    , y = 1
+    , a = I(list(z = "a", m = 1:5))
+    , stringsAsFactors = F
+  )
+
+  # expect_error(
+  #   sf_point(obj = df, x = "x", y = "y", keep = TRUE )
+  #   , "sfheaders - unsupported column type using keep = TRUE"
+  # )
+  #
+  # df <- data.frame( x = 1, y = 2 )
+  # sf_point( obj = df[0, ], x = "x", y = "y", keep = TRUE )
+
+})
