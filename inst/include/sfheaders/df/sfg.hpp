@@ -72,7 +72,7 @@ namespace df {
     } else if ( dim == "XYZ" ) {
       columns[ Z_COLUMN ] = true;
     } else if ( dim == "XYM" ) {
-      columns[ M_COLUMN ] = true;
+      columns[ M_COLUMN ] = true;  // #nocov
     }
 
     columns[ X_COLUMN ] = true;
