@@ -118,7 +118,7 @@ namespace polygon_utils {
       case INTSXP: {
         Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );  // #nocov
         lst[i] = close_polygon( im, close ); // #nocov
-        break;
+        break; // #nocov
       }
       case REALSXP: {
         Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );

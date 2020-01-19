@@ -46,7 +46,6 @@ namespace sfc {
 
     for( i = 0; i < n_row; i++ ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
-
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
       }
