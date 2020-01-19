@@ -18,6 +18,7 @@ test_that("sfc_to_df constructs data.frames",{
   expect_equal( df_mpt$x, x[,1] )
   expect_equal( df_mpt$y, x[,2] )
 
+
   x <- data.frame( id = c(1,1,1,2,2), x = 1:5, y = 5:1 )
   ls <- sfc_linestring( x, linestring_id = "id" )
   df_ls <- sfheaders:::rcpp_sfc_to_df( ls )
@@ -174,6 +175,7 @@ test_that("different data.frame columns supported",{
     , by = "id"
   )
 
+  ## needs 'sf' unattached for this to work
   expect_error(
     sfheaders::sf_to_df( sf, fill = TRUE )
     , "sfheaders - sf_column not found"
@@ -199,5 +201,110 @@ test_that("different data.frame columns supported",{
     sf_to_df( sf, fill = TRUE )
     , "sfheaders - unsupported column type using fill = TRUE"
   )
+
+})
+
+
+test_that("different XYZM dimensions work",{
+
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_point( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_point( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multipoint( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multipoint( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_linestring( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_linestring( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multilinestring( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multilinestring( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 7 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_polygon( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_polygon( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 7 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multipolygon( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 7 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multipolygon( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 8 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
 
 })

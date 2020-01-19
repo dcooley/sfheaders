@@ -19,6 +19,16 @@ namespace sfg {
     return nv;
   }
 
+  inline SEXP sfg_point( Rcpp::IntegerVector& iv, Rcpp::IntegerVector& cols ) {
+    Rcpp::IntegerVector iv2 = iv[ cols ];
+    return sfg_point( iv2 );
+  }
+
+  inline SEXP sfg_point( Rcpp::NumericVector& nv, Rcpp::IntegerVector& cols ) {
+    Rcpp::NumericVector nv2 = nv[ cols ];
+    return sfg_point( nv2 );
+  }
+
   /*
    * assumes columns are in lon/lat/z/m order
    */
@@ -143,12 +153,22 @@ namespace sfg {
 
     switch( TYPEOF( xc ) ) {
     case INTSXP: {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-      return sfg_point( im, cols );
+      if( Rf_isMatrix( xc ) ) {
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
+        return sfg_point( im, cols );
+    } else {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( xc );
+      return sfg_point( iv, cols );
+    }
     }
     case REALSXP: {
+      if( Rf_isMatrix( xc ) ) {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
       return sfg_point( nm, cols );
+    } else {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( xc );
+      return sfg_point( nv, cols );
+    }
     }
     case VECSXP: {
       if ( Rf_inherits( x, "data.frame" ) ) {

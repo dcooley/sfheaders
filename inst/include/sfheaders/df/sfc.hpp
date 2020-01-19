@@ -11,7 +11,7 @@ namespace df {
 
   inline void column_index_check( Rcpp::IntegerVector& sfg_cols, R_xlen_t& n_col ) {
     if( sfg_cols.length() != n_col ) {
-      Rcpp::stop("sfheaders - column indexing error - please report this issue at github.com/dcooley/sfheaders");
+      Rcpp::stop("sfheaders - column indexing error - please report this issue, along with an example, at github.com/dcooley/sfheaders");  // #nocov
     }
   }
   inline Rcpp::List setup_result( R_xlen_t& total_coordinates ) {
@@ -47,7 +47,7 @@ namespace df {
   }
 
   inline void dim_error() {
-    Rcpp::stop("sfheaders - unknown geometry dimension");
+    Rcpp::stop("sfheaders - unknown geometry dimension");    // #nocov
   }
 
   inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
@@ -159,7 +159,7 @@ namespace df {
     }
     case VECSXP: {
       if( Rf_inherits( sfg, "data.frame" ) ) {
-        Rcpp::stop("sfheaders - unsupported coordinate type");
+        Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
       }
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       //if (lst.size() == 0 ) {
@@ -175,7 +175,7 @@ namespace df {
       break;
     }
     default: {
-      Rcpp::stop("sfheaders - unsupported coordinate type");
+      Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
     }
     }
 
@@ -258,7 +258,7 @@ namespace df {
     } else if ( sfg == "MULTIPOLYGON" ) {
       return SFG_MULTIPOLYGON;
     } else {
-      Rcpp::stop("sfheaders - unknown sfg type");
+      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
     }
   }
 
@@ -276,7 +276,7 @@ namespace df {
     } else if ( sfg == "MULTIPOLYGON" ) {
       return MULTIPOLYGON_COLUMN;
     } else {
-      Rcpp::stop("sfheaders - unknown sfg type");
+      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
     }
   }
 
