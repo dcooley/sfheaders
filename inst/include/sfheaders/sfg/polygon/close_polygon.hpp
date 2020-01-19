@@ -12,10 +12,6 @@ namespace polygon_utils {
     }
   }
 
-  // TODO
-  // close polygons (matrices, lists, data.frames)
-  // check if closed for 2-columns, 3-columns & 4-columns
-  // closed when first row == last row
   inline Rcpp::IntegerMatrix close_polygon(
     Rcpp::IntegerMatrix& im,
     bool close = true
@@ -56,8 +52,8 @@ namespace polygon_utils {
     }
 
     // it is closed
-    check_closed_rows( im.nrow() );
-    return im;
+    check_closed_rows( im.nrow() );  // #nocov
+    return im;  // #nocov
   }
 
   inline Rcpp::NumericMatrix close_polygon(
@@ -120,8 +116,8 @@ namespace polygon_utils {
       SEXP x = lst[i];
       switch( TYPEOF(x) ) {
       case INTSXP: {
-        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-        lst[i] = close_polygon( im, close );
+        Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );  // #nocov
+        lst[i] = close_polygon( im, close ); // #nocov
         break;
       }
       case REALSXP: {

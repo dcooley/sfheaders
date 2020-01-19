@@ -64,8 +64,8 @@ namespace utils {
       if (ISNAN( nv[0] ) || ISNAN( nv[1] ) ) {
         return true;
       }
-    } else if ( n == 0 ) {
-      return true;
+    } else if ( n == 0 ) { // #nocov
+      return true;         // #nocov
     }
     return false;
   }

@@ -48,7 +48,7 @@ namespace df {
     return res;
   }
 
-  inline void dim_error() {
+  inline void dim_error() { // #nocov
     Rcpp::stop("sfheaders - unknown geometry dimension");    // #nocov
   }
 
@@ -62,10 +62,10 @@ namespace df {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
     } else {
-      dim_error();
+      dim_error(); // #nocov
     }
     }
     case SFG_MULTIPOINT: {

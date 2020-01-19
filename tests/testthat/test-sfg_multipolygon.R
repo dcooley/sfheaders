@@ -20,6 +20,15 @@ test_that("sfg multipolygon",{
   m <- rbind(l1, l2)
   m <- rbind(m, l3)
 
+  mp <- sfheaders:::rcpp_sfg_multipolygon( m,  NULL, polygon_id = 0, line_id = 1, close = FALSE)
+  res <- attr( mp, "class" )
+  expect_equal( res, c("XY", "MULTIPOLYGON", "sfg") )
+  r_res <- sfg_multipolygon(mp)
+
+  expect_equal( mp[[1]][[1]], r_res[[1]][[1]] )
+  expect_equal( mp[[2]][[1]], r_res[[2]][[1]] )
+  expect_equal( mp[[2]][[2]], r_res[[2]][[2]] )
+
   mp <- sfheaders:::rcpp_sfg_multipolygon( m, c(2,3), polygon_id = 0, line_id = 1, close = FALSE)
   res <- attr( mp, "class" )
   expect_equal( res, c("XY", "MULTIPOLYGON", "sfg") )

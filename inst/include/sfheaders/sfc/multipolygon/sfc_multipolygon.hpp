@@ -327,8 +327,6 @@ inline SEXP sfc_multipolygon(
 
   R_xlen_t n_col = df.ncol();
 
-  Rcpp::Rcout << "geometry_cols" << geometry_cols << std::endl;
-
   sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 

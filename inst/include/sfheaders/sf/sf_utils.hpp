@@ -6,9 +6,6 @@
 namespace sfheaders {
 namespace sf {
 
-  // TODO
-  // - make_sf( Rcpp::List& sfc, Rcpp::List& data_cols ) {}
-
   // issue 41 - will subset a vector
   inline SEXP subset_properties(
       SEXP& v,

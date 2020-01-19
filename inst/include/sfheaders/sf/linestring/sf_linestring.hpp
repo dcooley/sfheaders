@@ -26,8 +26,6 @@ namespace sf {
     return sf;
   }
 
-  // TODO:
-  // need to have the id column index/name as a paramter
   inline SEXP sf_linestring(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
