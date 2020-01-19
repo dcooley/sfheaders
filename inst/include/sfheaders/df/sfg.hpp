@@ -51,7 +51,7 @@ namespace df {
       return sfgClass<VECSXP>( sfg );
     case INTSXP:
       return sfgClass<INTSXP>( sfg );
-    default: Rcpp::stop("unknown sf type");
+    default: Rcpp::stop("unknown sf type");   // #nocov
     }
     return Rcpp::CharacterVector();
   }
@@ -127,7 +127,7 @@ namespace df {
 
     // each list must have the same number of columns.
     if( lst.size() == 0 ) {
-      return lst;
+      return lst; // #nocov
     }
 
     // if the inner-list is another list, around we go.
@@ -152,7 +152,7 @@ namespace df {
       R_xlen_t n_col = inner_list.size();
 
       if( n_vectors - 1 != n_col ) {
-        Rcpp::stop("something's wrong here");
+        Rcpp::stop("sfheaders - unknown issue - please report this, along with an example, at www.github.com/dcooley/sfheaders/issues"); // #nocov
       }
 
       for( j = 0; j < n_col; ++j ) {
@@ -281,7 +281,7 @@ namespace df {
       res = sfg_multipolygon_coordinates( lst, sfg_rows );
 
     } else {
-      Rcpp::stop("sfheaders - unknown geometry type");
+      Rcpp::stop("sfheaders - unknown geometry type"); // #nocov
     }
 
     Rcpp::CharacterVector df_names = make_names( cls );
@@ -292,7 +292,7 @@ namespace df {
       Rcpp::IntegerVector rownames = Rcpp::seq( 1, sfg_rows );
       res.attr("row.names") = rownames;
     } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);
+      res.attr("row.names") = Rcpp::IntegerVector(0); // #nocov
     }
 
     res.attr("names") = df_names;

@@ -66,7 +66,7 @@ namespace df {
     Rcpp::List sfc_df = sfheaders::df::get_sfc_coordinates( sfc, total_coordinates );
 
     if( !fill ) {
-      return sfc_df;
+      return sfc_df;  // #nocov
     }
 
     R_xlen_t sfc_cols = sfc_df.length();
@@ -117,7 +117,7 @@ namespace df {
       Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
       res.attr("row.names") = rownames;
     } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);
+      res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
     }
 
     res.attr("names") = res_names;
