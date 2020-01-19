@@ -1,6 +1,5 @@
 
 * updates v0.0.2 to v0.1.0
-* three new functions and a bug fix
 
 ## Test environments
 

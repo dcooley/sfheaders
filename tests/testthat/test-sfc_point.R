@@ -134,6 +134,16 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
   expect_true( is_point( res ) )
 
+  m <- matrix(c(1.1,2), ncol = 2)
+  res <- sfc_point( m[0,], x = 1, y = 2 )
+  expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
+  expect_true( is_point( res ) )
+
+  m <- matrix(as.integer( c(1,2) ), ncol = 2)
+  res <- sfc_point( m[0,], x = 1, y = 2)
+  expect_equal( attr( res, "class" ), c("sfc_POINT", "sfc") )
+  expect_true( is_point( res ) )
+
 })
 
 test_that("vectorised version works",{

@@ -100,7 +100,16 @@ test_that("sfg objectse convereted to data.frames", {
     , m = c(1)
   )
 
-  mp <- sfg_multipolygon( df2, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id" )
+
+  mpz <- sfg_multipolygon(
+    df2, x = "x", y = "y", z = "z"
+    , polygon_id = "polygon_id", linestring_id = "line_id"
+  )
+
+  mpzm <- sfg_multipolygon(
+    df2, x = "x", y = "y", z = "z", m = "m"
+    , polygon_id = "polygon_id", linestring_id = "line_id"
+    )
 
   df_pt <- sfheaders::sfg_to_df( pt )
   expect_equal( df_pt$x, 1 )
@@ -122,9 +131,13 @@ test_that("sfg objectse convereted to data.frames", {
   expect_equal( df_p$x, m[,1] )
   expect_equal( df_p$y, m[,2] )
 
-  df_mp <- sfheaders::sfg_to_df( mp )
+  df_mp <- sfheaders::sfg_to_df( mpz )
   expect_equal( df_mp$x, df2$x )
   expect_equal( df_mp$y, df2$y )
+
+  df_mpzm <- sfheaders::sfg_to_df( mpzm )
+  expect_equal( df_mpzm$z, df2$z )
+  expect_equal( df_mpzm$m, df2$m )
 
   expect_true( inherits( df_pt, "data.frame") )
   expect_true( inherits( df_mpt, "data.frame") )
@@ -146,7 +159,7 @@ test_that("sfg objectse convereted to data.frames", {
     , linestring_id = "linestring_id"
     )
 
-  expect_equal( mp, res )
+  expect_equal( mpz, res )
 
 })
 
