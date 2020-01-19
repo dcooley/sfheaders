@@ -6,20 +6,21 @@
 
 #include <Rcpp.h>
 
-#define M_COLUMN                11
-#define Z_COLUMN                10
-#define Y_COLUMN                9
-#define X_COLUMN                8
-#define POINT_COLUMN            7
-#define MULTIPOINT_COLUMN       6
-#define LINESTRING_COLUMN       5
-#define MULTILINESTRING_COLUMN  4
-#define POLYGON_COLUMN          3
-#define MULTIPOLYGON_COLUMN     2
-#define SFG_COLUMN              1
-#define SFC_COLUMN              0
+#define M_COLUMN                  12
+#define Z_COLUMN                  11
+#define Y_COLUMN                  10
+#define X_COLUMN                  9
+#define POINT_COLUMN              8
+#define MULTIPOINT_COLUMN         7
+#define LINESTRING_COLUMN         6
+#define MULTILINESTRING_COLUMN    5
+#define POLYGON_COLUMN            4
+#define MULTIPOLYGON_COLUMN       3
+#define GEOMETRYCOLLECTION_COLUMN 2
+#define SFG_COLUMN                1
+#define SFC_COLUMN                0
 
-#define MAX_COLUMNS            12
+#define MAX_COLUMNS            13
 
 #define SFG_POINT               1
 #define SFG_MULTIPOINT          2
@@ -27,12 +28,13 @@
 #define SFG_MULTILINESTRING     4
 #define SFG_POLYGON             5
 #define SFG_MULTIPOLYGON        6
+#define SFG_GEOMETRYCOLLECTION  7
 
 namespace sfheaders {
 namespace df {
 
   const Rcpp::CharacterVector column_names = {
-    "sfc_id", "sfg_id", "multipolygon_id", "polygon_id", "multilinestring_id",
+    "sfc_id", "sfg_id", "geometrycollection_id", "multipolygon_id", "polygon_id", "multilinestring_id",
     "linestring_id", "multipoint_id", "point_id", "x","y","z","m"
   };
 

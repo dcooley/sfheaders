@@ -18,6 +18,7 @@ namespace df {
 
     Rcpp::NumericVector sfc_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
     Rcpp::NumericVector sfg_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector geometrycollection_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
     Rcpp::NumericVector multipolygon_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
     Rcpp::NumericVector polygon_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
     Rcpp::NumericVector multilinestring_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
@@ -32,6 +33,7 @@ namespace df {
     Rcpp::List res = Rcpp::List::create(
       Rcpp::_["sfc_id"] = sfc_id_res,
       Rcpp::_["sfg_id"] = sfg_id_res,
+      Rcpp::_["geometrycollection_id"] = geometrycollection_id_res,
       Rcpp::_["multipolygon_id"] = multipolygon_id_res,
       Rcpp::_["polygon_id"] = polygon_id_res,
       Rcpp::_["multilinestring_id"] = multilinestring_id_res,
@@ -73,10 +75,10 @@ namespace df {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });    // #nocov
     } else {
-      dim_error();
+      dim_error(); // #nocov
     }
     }
     case SFG_LINESTRING: {
@@ -86,10 +88,10 @@ namespace df {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN }); // #nocov
     } else {
-      dim_error();
+      dim_error();  // #nocov
     }
     }
     case SFG_MULTILINESTRING: {
@@ -99,10 +101,10 @@ namespace df {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
     } else {
-      dim_error();
+      dim_error();  // #nocov
     }
     }
     case SFG_POLYGON: {
@@ -112,10 +114,10 @@ namespace df {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
     } else {
-      dim_error();
+      dim_error();  // #nocov
     }
     }
     case SFG_MULTIPOLYGON: {
@@ -125,15 +127,15 @@ namespace df {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
     } else {
-      dim_error();
+      dim_error(); // #nocov
     }
 
     }
     default: {
-      Rcpp::stop("sfheaders - unknown geometry type");
+      Rcpp::stop("sfheaders - unknown geometry type");  // #nocov
     }
     }
 
@@ -238,7 +240,7 @@ namespace df {
       return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
     }
     default: {
-      Rcpp::stop("sfheaders - unknown sfg type");
+      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
     }
     }
     return Rcpp::List::create(); // #nocov never reaches
@@ -363,7 +365,7 @@ namespace df {
       Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
       res.attr("row.names") = rownames;
     } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);
+      res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
     }
 
     res.attr("names") = column_names[ columns ];
