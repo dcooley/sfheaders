@@ -135,7 +135,7 @@ namespace polygon_utils {
         break;
       }
       default: {
-        Rcpp::stop("sfheaders - closing polygons requires matrices");
+        Rcpp::stop("sfheaders - closing polygons requires matrices");  // #nocov
       }
       }
     }

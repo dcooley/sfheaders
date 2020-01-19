@@ -10,6 +10,21 @@ test_that("sfg_POINTS returned from various R objects from src", {
   r_pt <- sfg_point(x)
   expect_equal( pt, r_pt )
 
+  x <- c(1,2,3)
+  pt <- sfheaders:::rcpp_sfg_point(x, c(1,2) )
+  expect_true( pt[1] == x[2] )
+  expect_true( pt[2] == x[3] )
+
+  x <- as.integer( c(1,2,3) )
+  pt <- sfheaders:::rcpp_sfg_point(x, c(1,2) )
+  expect_true( pt[1] == x[2] )
+  expect_true( pt[2] == x[3] )
+
+  x <- c(1,2,3)
+  pt <- sfheaders:::rcpp_sfg_point(x, c(0,1) )
+  expect_true( pt[1] == x[1] )
+  expect_true( pt[2] == x[2] )
+
   x <- c(0,0,0)
   pt <- sfheaders:::rcpp_sfg_point( x, NULL )
   res <- attr( pt, "class" )

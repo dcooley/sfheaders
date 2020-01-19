@@ -128,12 +128,10 @@ namespace sfc {
 
     Rcpp::List sfc(n_row);
     for( i = 0; i < n_row; i++ ) {
-      // TODO: can't use the entire row, it has to be the subset according to 'cols'
-
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
-      // if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
-      //   n_empty++;
-      // }
+      if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
+        n_empty++;
+      }
       sfc[i] = sfheaders::sfg::sfg_point( this_point, cols );
     }
 
@@ -193,7 +191,7 @@ namespace sfc {
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
       }
-      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, cols );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );

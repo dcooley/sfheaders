@@ -51,7 +51,7 @@ namespace sf {
     df.attr("sf_column") = "geometry";
 
     if( n_row == 0 ) {
-      df.attr("row.names") = Rcpp::IntegerVector(0);;
+      df.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
     } else {
       Rcpp::IntegerVector rn = Rcpp::seq( 1, n_row );
       df.attr("row.names") = rn;

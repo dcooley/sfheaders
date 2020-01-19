@@ -48,6 +48,16 @@ test_that("sfg polygon", {
   r_res <- sfg_polygon(x, close = FALSE)
   expect_equal( res, r_res )
 
+  x <- matrix(c(1,2), ncol = 2)
+  expect_error(
+    sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, close = TRUE )
+    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    )
+
+  x <- matrix(c(1:8), ncol = 2)
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, close = TRUE )
+  expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
+
   x <- matrix(c(1:24), ncol = 3)
   res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), NULL )
   expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
