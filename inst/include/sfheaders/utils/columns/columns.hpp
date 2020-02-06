@@ -9,7 +9,6 @@
 namespace sfheaders {
 namespace utils {
 
-
   inline SEXP other_columns(
       Rcpp::IntegerVector& all_cols,
       Rcpp::IntegerVector& id_cols

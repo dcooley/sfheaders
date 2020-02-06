@@ -1,3 +1,7 @@
+# sfheaders 1.1.0
+
+* `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates
+
 # sfheaders 1.0.0
 
 * `keep = TRUE` argument to keep other data columns when converting to `sf`

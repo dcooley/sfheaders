@@ -2,11 +2,33 @@
 #define R_SFHEADERS_DF_SF_H
 
 #include "sfheaders/df/sfc.hpp"
+#include "sfheaders/utils/vectors/vectors.hpp"
 
 #include <Rcpp.h>
 
 namespace sfheaders {
 namespace df {
+
+  inline Rcpp::String unique_name( Rcpp::String this_name, Rcpp::StringVector& existing_names ) {
+    int is_in = sfheaders::utils::where_is( this_name, existing_names );
+    //Rcpp::Rcout << "is_in: " << is_in << std::endl;
+
+    if( is_in != -1 ) {
+      // the name already exists, so we need to uniqueify it
+      int counter = 1;
+      std::string new_name;
+      do {
+        std::ostringstream os;
+        os << this_name.get_cstring() << ".." << counter;
+        new_name = os.str();
+        is_in = sfheaders::utils::where_is( new_name, existing_names );
+        counter += 1;
+      } while ( is_in != -1 );
+      this_name = new_name;
+    }
+
+    return this_name;
+  }
 
   inline void expand_vector( Rcpp::List& res, SEXP& v, Rcpp::NumericVector& expanded_index, R_xlen_t& i ) {
     switch( TYPEOF( v ) ) {
@@ -57,6 +79,7 @@ namespace df {
 
     Rcpp::List sfc = sf[ geom_column ];
 
+
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
 
     R_xlen_t n_geometries = sfc_coordinates.nrow();
@@ -91,7 +114,12 @@ namespace df {
 
     Rcpp::CharacterVector res_names( n_col - 1 + sfc_cols );
 
+    // the 'non-geometry' names of the data.frame
     Rcpp::CharacterVector sf_names = sf.names();
+    //Rcpp::Rcout << "sf_names: " << sf_names << std::endl;
+    // iff these names are in res_names
+
+    //Rcpp::Rcout << "res_names: " << res_names << std::endl;
 
     R_xlen_t name_position = 0;
     for( i = 0; i < n_col; ++i ) {
@@ -106,12 +134,35 @@ namespace df {
     }
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
+    //Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
+
+    // in sfc.hpp I define geometry columns with names 'x','y','z','m'
+    // so I know these will be geometry columns
+    Rcpp::StringVector geometry_columns = {"x","y","z","m"};
+    Rcpp::LogicalVector keep_columns( sfc_df_names.length() );
+    // set true / false if the sfc_df_names are in sfc.hpp names
+    int is_in;
+
+    for( i = 0; i < sfc_df_names.length(); ++i ) {
+      Rcpp::String geom = sfc_df_names[ i ];
+      is_in = sfheaders::utils::where_is( geom, geometry_columns );
+      keep_columns[ i ] = is_in == -1 ? false : true;
+    }
+
+    //Rcpp::Rcout << "keep: " << keep_columns << std::endl;
+
     for( i = 0; i < sfc_cols; ++i ) {
-      res_names[ i + n_col - 1 ] = sfc_df_names[ i ];
+      Rcpp::String this_name = unique_name( sfc_df_names[ i ], res_names );
+      // unique-ify 'this_name;
+      //sfc_df_names[ i ] = unique_name( this_name, res_names );
+      sfc_df_names[ i ] = this_name; // use these names as sfc_columns attr
+
+      res_names[ i + n_col - 1 ] = this_name;
       res[ i + n_col - 1 ] = sfc_df[ i ];
     }
 
     res.attr("class") = Rcpp::CharacterVector("data.frame");
+    res.attr("sfc_columns") = sfc_df_names[ keep_columns ];
 
     if( total_coordinates > 0 ) {
       Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
@@ -122,7 +173,6 @@ namespace df {
 
     res.attr("names") = res_names;
     return res;
-
   }
 
 
