@@ -115,8 +115,8 @@ namespace sfc {
       Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      int& epsg,
-      Rcpp::String& proj4string,
+      Rcpp::String& crs_input,
+      Rcpp::String& crs_wkt,
       int n_empty = 0,
       double precision = 0.0
   ) {
@@ -128,8 +128,8 @@ namespace sfc {
 
     // attribute::crs
     Rcpp::List crs = Rcpp::List::create(
-      Rcpp::Named("epsg") = epsg,
-      Rcpp::Named("proj4string") = proj4string
+      Rcpp::Named("input") = crs_input,
+      Rcpp::Named("wkt") = crs_wkt
     );
 
     crs.attr("class") = Rcpp::CharacterVector::create("crs");
@@ -162,13 +162,13 @@ namespace sfc {
       Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      int& epsg,
-      Rcpp::String& proj4string,
+      Rcpp::String& crs_input,
+      Rcpp::String& crs_wkt,
       int n_empty = 0,
       double precision = 0.0
   ) {
     sfheaders::sfc::attach_sfc_attributes(
-      sfc, geom_type, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision
+      sfc, geom_type, geometry_types, bbox, z_range, m_range, crs_input, crs_wkt, n_empty, precision
     );
     return sfc;
   }
