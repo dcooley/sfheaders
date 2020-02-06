@@ -1,6 +1,7 @@
 # sfheaders 1.1.0
 
-* `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates
+* crs structure matches new `sf` definition [issue49](https://github.com/dcooley/sfheaders/issues/49)
+* `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates [issue50](https://github.com/dcooley/sfheaders/issues/50)
 
 # sfheaders 1.0.0
 
