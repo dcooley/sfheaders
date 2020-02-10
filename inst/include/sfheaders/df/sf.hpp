@@ -1,6 +1,7 @@
 #ifndef R_SFHEADERS_DF_SF_H
 #define R_SFHEADERS_DF_SF_H
 
+#include "sfheaders/df/utils.hpp"
 #include "sfheaders/df/sfc.hpp"
 #include "sfheaders/utils/vectors/vectors.hpp"
 
@@ -161,17 +162,10 @@ namespace df {
       res[ i + n_col - 1 ] = sfc_df[ i ];
     }
 
-    res.attr("class") = Rcpp::CharacterVector("data.frame");
+    sfheaders::utils::construct_df( res, res_names, total_coordinates );
+    // issue50 (related) - keep track of geometry columns
     res.attr("sfc_columns") = sfc_df_names[ keep_columns ];
 
-    if( total_coordinates > 0 ) {
-      Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
-      res.attr("row.names") = rownames;
-    } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
-    }
-
-    res.attr("names") = res_names;
     return res;
   }
 

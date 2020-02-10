@@ -1,0 +1,188 @@
+
+#ifndef R_SFHEADERS_COORDINATES_H
+#define R_SFHEADERS_COORDINATES_H
+
+#include <Rcpp.h>
+
+namespace sfheaders {
+namespace coordinates {
+
+  inline Rcpp::NumericVector fill_vector(
+      Rcpp::NumericVector& vec_1,
+      Rcpp::NumericVector& vec_2,
+      R_xlen_t& start_idx
+  ) {
+    // fills vec_1 with vec_2, starting at 'start_idx'
+    R_xlen_t i;
+    R_xlen_t n = vec_2.length();
+
+    for( i = 0; i < n; i++ ) {
+      vec_1[ i + start_idx ] = vec_2[ i ] ;
+    }
+    return vec_1;
+  }
+
+  template <int RTYPE>
+  inline Rcpp::CharacterVector sfgClass( Rcpp::Vector<RTYPE> v ) {
+    return v.attr("class");
+  }
+
+  inline Rcpp::CharacterVector getSfgClass( SEXP sfg ) {
+    switch( TYPEOF( sfg ) ) {
+    case REALSXP:
+      return sfgClass<REALSXP>( sfg );
+    case VECSXP:
+      return sfgClass<VECSXP>( sfg );
+    case INTSXP:
+      return sfgClass<INTSXP>( sfg );
+    default: Rcpp::stop("unknown sf type");   // #nocov
+    }
+    return Rcpp::CharacterVector();
+  }
+
+  inline Rcpp::List matrix_to_list( Rcpp::NumericMatrix& mat, R_xlen_t& sfg_rows ) {
+
+    R_xlen_t n_col = mat.ncol();
+    Rcpp::List res( n_col );
+    R_xlen_t i;
+    for( i = 0; i < n_col; ++i ) {
+      res[ i ] = mat( Rcpp::_, i );
+    }
+    sfg_rows = mat.nrow();
+    return res;
+  }
+
+  template< int RTYPE >
+  inline Rcpp::List vector_to_list( Rcpp::Vector< RTYPE >& v, R_xlen_t& sfg_rows ) {
+    R_xlen_t n = v.length();
+    Rcpp::List res( n );
+    R_xlen_t i;
+    for( i = 0; i < n; ++i ) {
+      res[ i ] = v[ i ];
+    }
+    sfg_rows = 1; // TODO??
+    return res;
+  }
+
+  // collapses a list of matrices only
+  inline Rcpp::List collapse_list( Rcpp::List& lst, R_xlen_t& total_rows ) {
+
+    // each list must have the same number of columns.
+    if( lst.size() == 0 ) {
+      return lst; // #nocov
+    }
+
+    // if the inner-list is another list, around we go.
+    R_xlen_t lst_size = lst.size();
+    R_xlen_t i;
+    R_xlen_t j;
+
+    Rcpp::List first_list = lst[ 0 ];
+    R_xlen_t n_vectors = first_list.length() + 1; // vector for each matrix column, and an id column
+
+    Rcpp::List lst_res( n_vectors );
+
+    for( i = 0; i < n_vectors; ++i ) {
+      lst_res[ i ] = Rcpp::NumericVector( total_rows, Rcpp::NumericVector::get_na() );
+    }
+
+    R_xlen_t row_counter = 0;
+    R_xlen_t vector_size = 0;
+
+    for( i = 0; i < lst_size; ++i ) {
+      Rcpp::List inner_list = lst[ i ];
+      R_xlen_t n_col = inner_list.size();
+
+      if( n_vectors - 1 != n_col ) {
+        Rcpp::stop("sfheaders - unknown issue - please report this, along with an example, at www.github.com/dcooley/sfheaders/issues"); // #nocov
+      }
+
+      for( j = 0; j < n_col; ++j ) {
+
+        SEXP s = inner_list[ j ];
+        Rcpp::NumericVector new_vector = Rcpp::as< Rcpp::NumericVector >( s );
+        vector_size = new_vector.length();
+
+        Rcpp::NumericVector current_vector = lst_res[ j + 1 ];
+        lst_res[ j + 1 ] = fill_vector( current_vector, new_vector, row_counter );;
+      }
+
+      // id column
+      double id = i + 1;
+      SEXP s2 = lst_res[ 0 ];
+      Rcpp::NumericVector current_id_vector = Rcpp::as< Rcpp::NumericVector >( s2 );
+      Rcpp::NumericVector new_id_vector = Rcpp::rep( id, vector_size );
+
+      lst_res[ 0 ] = fill_vector( current_id_vector, new_id_vector, row_counter );
+
+      row_counter = row_counter + vector_size;
+    }
+
+    return lst_res;
+  }
+
+  template < int RTYPE >
+  inline Rcpp::List sfg_point_coordinates( Rcpp::Vector< RTYPE >& sfg, R_xlen_t& sfg_rows ) {
+    Rcpp::List res = vector_to_list( sfg, sfg_rows );
+    return res;
+  }
+
+  inline Rcpp::List sfg_multipoint_coordinates( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows) {
+    Rcpp::List res = matrix_to_list( sfg, sfg_rows );
+    return res;
+  }
+
+  inline Rcpp::List sfg_linestring_coordinates( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows ) {
+    Rcpp::List res = matrix_to_list( sfg, sfg_rows );
+    return res;
+  }
+
+  inline Rcpp::List sfg_multilinestring_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
+    R_xlen_t i;
+    R_xlen_t n = sfg.size();
+    Rcpp::List res( n );
+    R_xlen_t total_rows = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::NumericMatrix mat = sfg[ i ];
+      total_rows = total_rows + mat.nrow();
+      res[ i ] = matrix_to_list( mat, sfg_rows );
+    }
+    sfg_rows = total_rows;
+    res = collapse_list( res, total_rows );
+    return res;
+  }
+
+  inline Rcpp::List sfg_polygon_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
+    return sfg_multilinestring_coordinates( sfg, sfg_rows );
+  }
+
+  inline Rcpp::List sfg_multipolygon_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
+    R_xlen_t i;
+
+    R_xlen_t n = sfg.size();
+    Rcpp::List res( n );
+    R_xlen_t total_rows = 0;
+    R_xlen_t inner_total_rows;
+
+    getSfgClass( sfg );
+
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List lst = sfg[ i ];
+
+      R_xlen_t n2 = lst.size();
+      inner_total_rows = 0;
+      Rcpp::List inner_res( n2 );
+
+      res[ i ] = sfg_polygon_coordinates( lst, inner_total_rows );
+      total_rows = total_rows + inner_total_rows;
+    }
+
+    sfg_rows = total_rows;
+    res = collapse_list( res, total_rows );
+    return res;
+  }
+
+} // coordinates
+} // sfheaders
+
+#endif

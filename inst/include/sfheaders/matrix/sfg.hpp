@@ -1,42 +1,27 @@
-#ifndef R_SFHEADERS_DF_SFG_H
-#define R_SFHEADERS_DF_SFG_H
+#ifndef R_SFHEADERS_MATRIX_SFG_H
+#define R_SFHEADERS_MATRIX_SFG_H
 
-#include "sfheaders/utils/sexp/sexp.hpp"
-#include "sfheaders/df/utils.hpp"
+// #include "sfheaders/utils/sexp/sexp.hpp"
+// #include "sfheaders/df/utils.hpp"
 #include "sfheaders/coordinates/coordinates.hpp"
-
 #include <Rcpp.h>
 
-#define M_COLUMN                  12
-#define Z_COLUMN                  11
-#define Y_COLUMN                  10
-#define X_COLUMN                  9
-#define POINT_COLUMN              8
-#define MULTIPOINT_COLUMN         7
-#define LINESTRING_COLUMN         6
-#define MULTILINESTRING_COLUMN    5
-#define POLYGON_COLUMN            4
-#define MULTIPOLYGON_COLUMN       3
-#define GEOMETRYCOLLECTION_COLUMN 2
-#define SFG_COLUMN                1
-#define SFC_COLUMN                0
 
-#define MAX_COLUMNS            13
+#define X_COLUMN      0
+#define Y_COLUMN      1
+#define Z_COLUMN      2
+#define M_COLUMN      3
+#define L1_COLUMN     4
+#define L2_COLUMN     5
+#define L3_COLUMN     6
 
-#define SFG_POINT               1
-#define SFG_MULTIPOINT          2
-#define SFG_LINESTRING          3
-#define SFG_MULTILINESTRING     4
-#define SFG_POLYGON             5
-#define SFG_MULTIPOLYGON        6
-#define SFG_GEOMETRYCOLLECTION  7
+#define MAX_COLUMNS   7
 
 namespace sfheaders {
-namespace df {
+namespace matrix {
 
   const Rcpp::CharacterVector column_names = {
-    "sfc_id", "sfg_id", "geometrycollection_id", "multipolygon_id", "polygon_id", "multilinestring_id",
-    "linestring_id", "multipoint_id", "point_id", "x","y","z","m"
+    "X","Y","Z","M","L1","L2","L3"
   };
 
   inline Rcpp::CharacterVector make_names( Rcpp::CharacterVector& cls ) {
@@ -62,26 +47,32 @@ namespace df {
     columns[ Y_COLUMN ] = true;
 
     if( geometry == "POINT" ) {
+
     } else if ( geometry == "MULTIPOINT" ) {
+      columns[ L1_COLUMN ] = true;
 
     } else if ( geometry == "LINESTRING" ) {
+      columns[ L1_COLUMN ] = true;
 
     } else if ( geometry == "MULTILINESTRING" ) {
-      columns[ LINESTRING_COLUMN ] = true;
+      columns[ L1_COLUMN ] = true;
+      columns[ L2_COLUMN ] = true;
 
     } else if ( geometry == "POLYGON" ) {
-      columns[ LINESTRING_COLUMN ] = true;
+      columns[ L1_COLUMN ] = true;
+      columns[ L2_COLUMN ] = true;
 
     } else if ( geometry == "MULTIPOLYGON" ) {
-      columns[ LINESTRING_COLUMN ] = true;
-      columns[ POLYGON_COLUMN ] = true;
+      columns[ L1_COLUMN ] = true;
+      columns[ L2_COLUMN ] = true;
+      columns[ L3_COLUMN ] = true;
+
     }
 
     return column_names[ columns ];
   }
 
-
-  inline Rcpp::List sfg_to_df( SEXP& sfg ) {
+  inline Rcpp::List sfg_to_matrix( SEXP& sfg ) {
 
     Rcpp::List res;
 
@@ -127,12 +118,12 @@ namespace df {
 
     Rcpp::CharacterVector df_names = make_names( cls );
 
-    sfheaders::utils::construct_df( res, df_names, sfg_rows );
+    sfheaders::utils::construct_matrix( res, df_names, sfg_rows );
     return res;
 
   }
 
-} // df
+} // matrix
 } // sfheaders
 
 #endif

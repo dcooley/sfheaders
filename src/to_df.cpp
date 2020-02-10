@@ -16,3 +16,18 @@ SEXP rcpp_sf_to_df( Rcpp::DataFrame sf, bool fill = false ) {
   return sfheaders::df::sf_to_df( sf, fill );
 }
 
+
+// // [[Rcpp::export]]
+// SEXP rcpp_sfg_coordinates( SEXP sfg ) {
+//
+// }
+//
+// [[Rcpp::export]]
+SEXP rcpp_sfc_coordinates( Rcpp::List sfc ) {
+  return sfheaders::df::sfc_coordinates( sfc );
+}
+//
+// // [[Rcpp::export]]
+// SEXP rcpp_sf_coordinates( Rcpp::DataFrame sf ) {
+//
+// }

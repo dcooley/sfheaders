@@ -5,19 +5,21 @@
 namespace sfheaders {
 namespace utils {
 
-  inline Rcpp::NumericVector fill_vector(
-      Rcpp::NumericVector& vec_1,
-      Rcpp::NumericVector& vec_2,
-      R_xlen_t& start_idx
+  inline void construct_df(
+      Rcpp::List& df,
+      Rcpp::StringVector& column_names,
+      R_xlen_t& n_rows
   ) {
-    // fills vec_1 with vec_2, starting at 'start_idx'
-    R_xlen_t i;
-    R_xlen_t n = vec_2.length();
+    df.attr("class") = Rcpp::CharacterVector("data.frame");
 
-    for( i = 0; i < n; i++ ) {
-      vec_1[ i + start_idx ] = vec_2[ i ] ;
+    if( n_rows > 0 ) {
+      Rcpp::IntegerVector rownames = Rcpp::seq( 1, n_rows );
+      df.attr("row.names") = rownames;
+    } else {
+      df.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
     }
-    return vec_1;
+
+    df.attr("names") = column_names;
   }
 
 } // utils

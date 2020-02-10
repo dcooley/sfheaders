@@ -41,6 +41,10 @@ rcpp_sf_to_df <- function(sf, fill = FALSE) {
     .Call(`_sfheaders_rcpp_sf_to_df`, sf, fill)
 }
 
+rcpp_sfc_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_coordinates`, sfc)
+}
+
 rcpp_sf_point <- function(x, cols, keep) {
     .Call(`_sfheaders_rcpp_sf_point`, x, cols, keep)
 }

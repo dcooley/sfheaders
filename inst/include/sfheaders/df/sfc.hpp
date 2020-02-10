@@ -1,6 +1,7 @@
 #ifndef R_SFHEADERS_DF_SFC_H
 #define R_SFHEADERS_DF_SFC_H
 
+#include "sfheaders/coordinates/coordinates.hpp"
 #include "sfheaders/df/sfg.hpp"
 #include "sfheaders/df/utils.hpp"
 
@@ -217,27 +218,27 @@ namespace df {
     switch( SFG_TYPE ) {
     case SFG_POINT: {
       Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfg );
-      return sfheaders::df::sfg_point_coordinates( vec, sfc_rows );
+      return sfheaders::coordinates::sfg_point_coordinates( vec, sfc_rows );
     }
     case SFG_MULTIPOINT: {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
-      return sfheaders::df::sfg_multipoint_coordinates( mat, sfc_rows );
+      return sfheaders::coordinates::sfg_multipoint_coordinates( mat, sfc_rows );
     }
     case SFG_LINESTRING: {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
-      return sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
+      return sfheaders::coordinates::sfg_linestring_coordinates( mat, sfc_rows );
     }
     case SFG_MULTILINESTRING: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_multilinestring_coordinates( lst, sfc_rows );
+      return sfheaders::coordinates::sfg_multilinestring_coordinates( lst, sfc_rows );
     }
     case SFG_POLYGON: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_polygon_coordinates( lst, sfc_rows );
+      return sfheaders::coordinates::sfg_polygon_coordinates( lst, sfc_rows );
     }
     case SFG_MULTIPOLYGON: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
+      return sfheaders::coordinates::sfg_multipolygon_coordinates( lst, sfc_rows );
     }
     default: {
       Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
@@ -282,7 +283,10 @@ namespace df {
     }
   }
 
-  inline Rcpp::List get_sfc_coordinates( Rcpp::List& sfc, R_xlen_t& total_coordinates ) {
+  inline Rcpp::List get_sfc_coordinates(
+      Rcpp::List& sfc,
+      R_xlen_t& total_coordinates
+  ) {
 
     Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
     columns[ X_COLUMN ] = true;
@@ -311,7 +315,7 @@ namespace df {
 
       SEXP sfci = sfc[ i ];
 
-      cls = sfheaders::df::getSfgClass( sfci );
+      cls = sfheaders::coordinates::getSfgClass( sfci );
 
       dim = cls[0];
 
@@ -339,18 +343,18 @@ namespace df {
         int col_idx = sfg_cols[ j ];
         columns[ col_idx ] = true;
         Rcpp::NumericVector current_values_vector = res[ col_idx ];
-        Rcpp::NumericVector result_vector = sfheaders::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
+        Rcpp::NumericVector result_vector = sfheaders::coordinates::fill_vector( current_values_vector, new_values_vector, total_rows );
         res[ col_idx ] = result_vector;
       }
 
       id = i + 1;
       Rcpp::NumericVector new_id_vector = Rcpp::rep( id, sfc_rows );
       Rcpp::NumericVector current_id_vector = res[ sfg_column_idx ];
-      Rcpp::NumericVector filled = sfheaders::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
+      Rcpp::NumericVector filled = sfheaders::coordinates::fill_vector( current_id_vector, new_id_vector, total_rows );
       res[ sfg_column_idx ] = filled;
 
       Rcpp::NumericVector current_sfg_id_vector = res[ SFG_COLUMN ];
-      filled = sfheaders::utils::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
+      filled = sfheaders::coordinates::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
 
       res[ SFG_COLUMN ] = filled;
 
@@ -359,16 +363,10 @@ namespace df {
 
     // make data.frame
     res = res[ columns ];
-    res.attr("class") = Rcpp::CharacterVector("data.frame");
+    Rcpp::StringVector res_names = column_names[ columns ];
 
-    if( total_coordinates > 0 ) {
-      Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
-      res.attr("row.names") = rownames;
-    } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
-    }
+    sfheaders::utils::construct_df( res, res_names, total_coordinates );
 
-    res.attr("names") = column_names[ columns ];
     return res;
   }
 
@@ -383,7 +381,6 @@ namespace df {
 
     return get_sfc_coordinates( sfc, total_coordinates );
   }
-
 
 } // df
 } // sfheaders
