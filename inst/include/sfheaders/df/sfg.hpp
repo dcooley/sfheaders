@@ -38,24 +38,6 @@ namespace df {
     "linestring_id", "multipoint_id", "point_id", "x","y","z","m"
   };
 
-  template <int RTYPE>
-  inline Rcpp::CharacterVector sfgClass( Rcpp::Vector<RTYPE> v ) {
-    return v.attr("class");
-  }
-
-  inline Rcpp::CharacterVector getSfgClass( SEXP sfg ) {
-    switch( TYPEOF( sfg ) ) {
-    case REALSXP:
-      return sfgClass<REALSXP>( sfg );
-    case VECSXP:
-      return sfgClass<VECSXP>( sfg );
-    case INTSXP:
-      return sfgClass<INTSXP>( sfg );
-    default: Rcpp::stop("unknown sf type");   // #nocov
-    }
-    return Rcpp::CharacterVector();
-  }
-
   inline Rcpp::CharacterVector make_names( Rcpp::CharacterVector& cls ) {
 
     std::string dim;
@@ -222,7 +204,7 @@ namespace df {
     R_xlen_t total_rows = 0;
     R_xlen_t inner_total_rows;
 
-    getSfgClass( sfg );
+    sfheaders::utils::getSfgClass( sfg );
 
     for( i = 0; i < n; ++i ) {
       Rcpp::List lst = sfg[ i ];
@@ -244,7 +226,7 @@ namespace df {
 
     Rcpp::List res;
 
-    Rcpp::CharacterVector cls = getSfgClass( sfg );
+    Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
 
     std::string dim;
     std::string geometry;

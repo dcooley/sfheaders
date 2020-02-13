@@ -56,30 +56,30 @@ namespace df {
 
     switch( geometry ) {
     case SFG_POINT: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    } else {
-      dim_error(); // #nocov
-    }
+    //   if( dim == "XY" ) {
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
+    // } else if( dim == "XYZM" ) {
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    // } else if ( dim == "XYZ" ) {
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
+    // } else if ( dim == "XYM" ) {  // #nocov
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+    // } else {
+    //   dim_error(); // #nocov
+    // }
     }
     case SFG_MULTIPOINT: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });    // #nocov
-    } else {
-      dim_error(); // #nocov
-    }
+    //   if( dim == "XY" ) {
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
+    // } else if( dim == "XYZM" ) {
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    // } else if ( dim == "XYZ" ) {
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
+    // } else if ( dim == "XYM" ) {  // #nocov
+    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });    // #nocov
+    // } else {
+    //   dim_error(); // #nocov
+    // }
     }
     case SFG_LINESTRING: {
       if( dim == "XY" ) {
@@ -95,17 +95,17 @@ namespace df {
     }
     }
     case SFG_MULTILINESTRING: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    } else {
-      dim_error();  // #nocov
-    }
+    //   if( dim == "XY" ) {
+    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
+    // } else if( dim == "XYZM" ) {
+    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    // } else if ( dim == "XYZ" ) {
+    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+    // } else if ( dim == "XYM" ) {  // #nocov
+    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+    // } else {
+    //   dim_error();  // #nocov
+    // }
     }
     case SFG_POLYGON: {
       if( dim == "XY" ) {
@@ -311,7 +311,7 @@ namespace df {
 
       SEXP sfci = sfc[ i ];
 
-      cls = sfheaders::df::getSfgClass( sfci );
+      cls = sfheaders::utils::getSfgClass( sfci );
 
       dim = cls[0];
 

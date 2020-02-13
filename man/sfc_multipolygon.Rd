@@ -4,17 +4,9 @@
 \alias{sfc_multipolygon}
 \title{sfc MULTIPOLYGON}
 \usage{
-sfc_multipolygon(
-  obj = NULL,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  m = NULL,
-  multipolygon_id = NULL,
-  polygon_id = NULL,
-  linestring_id = NULL,
-  close = TRUE
-)
+sfc_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
+  m = NULL, multipolygon_id = NULL, polygon_id = NULL,
+  linestring_id = NULL, close = TRUE)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}

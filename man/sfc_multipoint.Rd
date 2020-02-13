@@ -4,14 +4,8 @@
 \alias{sfc_multipoint}
 \title{sfc MULTIPOINT}
 \usage{
-sfc_multipoint(
-  obj,
-  x = NULL,
-  y = NULL,
-  z = NULL,
-  m = NULL,
-  multipoint_id = NULL
-)
+sfc_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL,
+  multipoint_id = NULL)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}

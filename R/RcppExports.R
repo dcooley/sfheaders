@@ -13,6 +13,14 @@ rcpp_calculate_m_range <- function(x) {
     .Call(`_sfheaders_rcpp_calculate_m_range`, x)
 }
 
+rcpp_sfg_cast_df <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_cast_df`, sfg)
+}
+
+rcpp_sfc_cast_df <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_cast_df`, sfc)
+}
+
 rcpp_sfg_dimension <- function(x) {
     .Call(`_sfheaders_rcpp_sfg_dimension`, x)
 }

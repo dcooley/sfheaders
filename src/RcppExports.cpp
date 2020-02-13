@@ -39,6 +39,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_sfg_cast_df
+SEXP rcpp_sfg_cast_df(SEXP sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_cast_df(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_cast_df(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_cast_df
+SEXP rcpp_sfc_cast_df(Rcpp::List sfc);
+RcppExport SEXP _sfheaders_rcpp_sfc_cast_df(SEXP sfcSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_cast_df(sfc));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sfg_dimension
 std::string rcpp_sfg_dimension(SEXP x);
 RcppExport SEXP _sfheaders_rcpp_sfg_dimension(SEXP xSEXP) {
@@ -611,6 +633,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 2},
     {"_sfheaders_rcpp_calculate_z_range", (DL_FUNC) &_sfheaders_rcpp_calculate_z_range, 1},
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
+    {"_sfheaders_rcpp_sfg_cast_df", (DL_FUNC) &_sfheaders_rcpp_sfg_cast_df, 1},
+    {"_sfheaders_rcpp_sfc_cast_df", (DL_FUNC) &_sfheaders_rcpp_sfc_cast_df, 1},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

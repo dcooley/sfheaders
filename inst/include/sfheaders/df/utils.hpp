@@ -20,6 +20,24 @@ namespace utils {
     return vec_1;
   }
 
+  template <int RTYPE>
+  inline Rcpp::CharacterVector sfgClass( Rcpp::Vector<RTYPE> v ) {
+    return v.attr("class");
+  }
+
+  inline Rcpp::CharacterVector getSfgClass( SEXP sfg ) {
+    switch( TYPEOF( sfg ) ) {
+    case REALSXP:
+      return sfgClass<REALSXP>( sfg );
+    case VECSXP:
+      return sfgClass<VECSXP>( sfg );
+    case INTSXP:
+      return sfgClass<INTSXP>( sfg );
+    default: Rcpp::stop("unknown sf type");   // #nocov
+    }
+    return Rcpp::CharacterVector();
+  }
+
 } // utils
 } // sfheaders
 
