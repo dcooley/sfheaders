@@ -4,8 +4,14 @@
 \alias{sfc_linestring}
 \title{sfc LINESTRING}
 \usage{
-sfc_linestring(obj = NULL, x = NULL, y = NULL, z = NULL,
-  m = NULL, linestring_id = NULL)
+sfc_linestring(
+  obj = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  linestring_id = NULL
+)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}

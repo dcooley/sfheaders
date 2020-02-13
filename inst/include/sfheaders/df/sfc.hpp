@@ -372,16 +372,21 @@ namespace df {
     return res;
   }
 
-  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
-
-    // seprated this so it's independant / not called twice from `sf_to_df()`
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
-
+  inline Rcpp::List sfc_to_df(
+      Rcpp::List& sfc,
+      Rcpp::NumericMatrix& sfc_coordinates
+  ) {
     R_xlen_t n_geometries = sfc_coordinates.nrow();
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
     total_coordinates = total_coordinates + 1;
 
     return get_sfc_coordinates( sfc, total_coordinates );
+  }
+
+  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
+    // seprated this so it's independant / not called twice from `sf_to_df()`
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    return sfc_to_df( sfc, sfc_coordinates );
   }
 
 

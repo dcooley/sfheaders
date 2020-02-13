@@ -69,18 +69,13 @@ namespace df {
     }
   }
 
-  inline Rcpp::List sf_to_df( Rcpp::DataFrame& sf, bool fill = false ) {
-
-    if( !sf.hasAttribute("sf_column") ) {
-      Rcpp::stop("sfheaders - sf_column not found");
-    }
-
-    std::string geom_column = sf.attr("sf_column");
-
-    Rcpp::List sfc = sf[ geom_column ];
-
-
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+  inline Rcpp::List sf_to_df(
+      Rcpp::DataFrame& sf,
+      Rcpp::List& sfc,
+      std::string& geom_column,
+      Rcpp::NumericMatrix& sfc_coordinates,
+      bool fill = false
+  ) {
 
     R_xlen_t n_geometries = sfc_coordinates.nrow();
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
@@ -173,6 +168,20 @@ namespace df {
 
     res.attr("names") = res_names;
     return res;
+  }
+
+  inline Rcpp::List sf_to_df(
+    Rcpp::DataFrame& sf,
+    bool fill = false
+  ) {
+    if( !sf.hasAttribute("sf_column") ) {
+      Rcpp::stop("sfheaders - sf_column not found");
+    }
+
+    std::string geom_column = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ geom_column ];
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
   }
 
 

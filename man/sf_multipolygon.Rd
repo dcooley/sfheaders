@@ -4,9 +4,18 @@
 \alias{sf_multipolygon}
 \title{sf MULTIPOLYGON}
 \usage{
-sf_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
-  m = NULL, multipolygon_id = NULL, polygon_id = NULL,
-  linestring_id = NULL, close = TRUE, keep = FALSE)
+sf_multipolygon(
+  obj = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  multipolygon_id = NULL,
+  polygon_id = NULL,
+  linestring_id = NULL,
+  close = TRUE,
+  keep = FALSE
+)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}

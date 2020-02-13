@@ -4,8 +4,14 @@
 \alias{sfg_multilinestring}
 \title{sfg multilinestring}
 \usage{
-sfg_multilinestring(obj, x = NULL, y = NULL, z = NULL, m = NULL,
-  linestring_id = NULL)
+sfg_multilinestring(
+  obj,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  linestring_id = NULL
+)
 }
 \arguments{
 \item{obj}{matrix or data.frame}
