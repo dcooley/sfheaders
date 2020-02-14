@@ -49,7 +49,6 @@ namespace cast {
     columns[ X_COLUMN_CAST ] = true;
     columns[ Y_COLUMN_CAST ] = true;
 
-
     if( geometry == "POINT" ) {
     } else if ( geometry == "MULTIPOINT" ) {
 
@@ -65,7 +64,6 @@ namespace cast {
       columns[ MATRIX_ID ] = true;
       columns[ LIST_MATRIX_ID ] = true;
     }
-
     return column_names[ columns ];
   }
 

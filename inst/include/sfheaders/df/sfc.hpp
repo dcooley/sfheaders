@@ -55,32 +55,8 @@ namespace df {
   inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
 
     switch( geometry ) {
-    case SFG_POINT: {
-    //   if( dim == "XY" ) {
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    // } else if( dim == "XYZM" ) {
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    // } else if ( dim == "XYZ" ) {
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    // } else if ( dim == "XYM" ) {  // #nocov
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    // } else {
-    //   dim_error(); // #nocov
-    // }
-    }
-    case SFG_MULTIPOINT: {
-    //   if( dim == "XY" ) {
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    // } else if( dim == "XYZM" ) {
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    // } else if ( dim == "XYZ" ) {
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    // } else if ( dim == "XYM" ) {  // #nocov
-    //   return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });    // #nocov
-    // } else {
-    //   dim_error(); // #nocov
-    // }
-    }
+    case SFG_POINT: {}
+    case SFG_MULTIPOINT: {}
     case SFG_LINESTRING: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
@@ -94,19 +70,7 @@ namespace df {
       dim_error();  // #nocov
     }
     }
-    case SFG_MULTILINESTRING: {
-    //   if( dim == "XY" ) {
-    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
-    // } else if( dim == "XYZM" ) {
-    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    // } else if ( dim == "XYZ" ) {
-    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    // } else if ( dim == "XYM" ) {  // #nocov
-    //   return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    // } else {
-    //   dim_error();  // #nocov
-    // }
-    }
+    case SFG_MULTILINESTRING: {}
     case SFG_POLYGON: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });

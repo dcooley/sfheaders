@@ -4,8 +4,15 @@
 \alias{sfg_polygon}
 \title{sfg polygon}
 \usage{
-sfg_polygon(obj, x = NULL, y = NULL, z = NULL, m = NULL,
-  linestring_id = NULL, close = TRUE)
+sfg_polygon(
+  obj,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  linestring_id = NULL,
+  close = TRUE
+)
 }
 \arguments{
 \item{obj}{matrix or data.frame}

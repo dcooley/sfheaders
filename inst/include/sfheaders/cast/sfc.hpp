@@ -16,6 +16,7 @@ inline void column_index_check( Rcpp::IntegerVector& sfg_cols, R_xlen_t& n_col )
     Rcpp::stop("sfheaders - column indexing error - please report this issue, along with an example, at github.com/dcooley/sfheaders");  // #nocov
   }
 }
+
 inline Rcpp::List setup_result( R_xlen_t& total_coordinates ) {
 
   Rcpp::NumericVector sfc_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
@@ -49,32 +50,8 @@ inline void dim_error() { // #nocov
 inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
 
   switch( geometry ) {
-  case SFG_POINT: {
-  //   if( dim == "XY" ) {
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST });
-  // } else if( dim == "XYZM" ) {
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST, M_COLUMN_CAST });
-  // } else if ( dim == "XYZ" ) {
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST });
-  // } else if ( dim == "XYM" ) {  // #nocov
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST, M_COLUMN_CAST });  // #nocov
-  // } else {
-  //   dim_error(); // #nocov
-  // }
-  }
-  case SFG_MULTIPOINT: {
-  //   if( dim == "XY" ) {
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST });
-  // } else if( dim == "XYZM" ) {
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST, M_COLUMN_CAST });
-  // } else if ( dim == "XYZ" ) {
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST });
-  // } else if ( dim == "XYM" ) {  // #nocov
-  //   return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST, M_COLUMN_CAST });    // #nocov
-  // } else {
-  //   dim_error(); // #nocov
-  // }
-  }
+  case SFG_POINT: {}
+  case SFG_MULTIPOINT: {}
   case SFG_LINESTRING: {
     if( dim == "XY" ) {
     return Rcpp::IntegerVector({ X_COLUMN_CAST, Y_COLUMN_CAST });
@@ -88,19 +65,7 @@ inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::str
     dim_error();  // #nocov
   }
   }
-  case SFG_MULTILINESTRING: {
-  //   if( dim == "XY" ) {
-  //   return Rcpp::IntegerVector({ MATRIX_ID, X_COLUMN_CAST, Y_COLUMN_CAST });
-  // } else if( dim == "XYZM" ) {
-  //   return Rcpp::IntegerVector({ MATRIX_ID, X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST, M_COLUMN_CAST });
-  // } else if ( dim == "XYZ" ) {
-  //   return Rcpp::IntegerVector({ MATRIX_ID, X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST });
-  // } else if ( dim == "XYM" ) {  // #nocov
-  //   return Rcpp::IntegerVector({ MATRIX_ID, X_COLUMN_CAST, Y_COLUMN_CAST, M_COLUMN_CAST });  // #nocov
-  // } else {
-  //   dim_error();  // #nocov
-  // }
-  }
+  case SFG_MULTILINESTRING: {}
   case SFG_POLYGON: {
     if( dim == "XY" ) {
     return Rcpp::IntegerVector({ MATRIX_ID, X_COLUMN_CAST, Y_COLUMN_CAST });
@@ -257,6 +222,12 @@ inline void sfg_n_coordinates(
 //     Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
 //   }
 // }
+
+// defines which column will store the unique counter
+// based on which geometry is being CAST TO
+inline
+
+
 
 inline int get_sfg_column_index( std::string& sfg ) {
   if( sfg == "POINT" ) {
