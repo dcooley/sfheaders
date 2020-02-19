@@ -17,12 +17,21 @@ namespace cast {
     }
   }
 
+  inline Rcpp::List mat_to_vec( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
+    // add an id to each row of the matrix
+    R_xlen_t n_row = sfg.nrow();
+    Rcpp::NumericMatrix id_mat( n_row, 1 );
+    std::fill( id_mat.begin(), id_mat.end(), id );
+    Rcpp::NumericMatrix mat =  Rcpp::cbind( id_mat, sfg );
+    Rcpp::List res = sfheaders::df::matrix_to_list( mat, n_row );
+    sfg_rows = n_row;
+    return res;
+  }
 
   inline Rcpp::List mat_to_mat( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
     // put an id column on and return it as a list
     return sfheaders::df::matrix_to_list( sfg, sfg_rows, id );
   }
-
 
   // e.g. polygon to linestring
   inline Rcpp::List listMat_to_mat( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
@@ -81,8 +90,6 @@ namespace cast {
       Rcpp::List inner_list = sfg[ i ];
       R_xlen_t inner_n = inner_list.size();
       R_xlen_t inner_total_rows = 0;
-      //Rcpp::List inner_res( inner_n );
-      // Rcpp::Rcout << "listMat_to_mat" << std::endl;
       res[ i ] = listMat_to_mat( inner_list, inner_total_rows, id );
       //++id; // increment id for inner matrices
       // the id is incremented by-reference inside matrix_to_list
