@@ -61,6 +61,61 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_vec_to_vec
+SEXP rcpp_vec_to_vec(Rcpp::NumericVector sfg);
+RcppExport SEXP _sfheaders_rcpp_vec_to_vec(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_vec(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_mat_to_vec
+SEXP rcpp_mat_to_vec(Rcpp::NumericMatrix sfg);
+RcppExport SEXP _sfheaders_rcpp_mat_to_vec(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_mat_to_vec(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_listMat_to_vec
+SEXP rcpp_listMat_to_vec(Rcpp::List sfg);
+RcppExport SEXP _sfheaders_rcpp_listMat_to_vec(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_listMat_to_vec(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_listListMat_to_vec
+SEXP rcpp_listListMat_to_vec(Rcpp::List sfg);
+RcppExport SEXP _sfheaders_rcpp_listListMat_to_vec(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_vec(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_vec_to_mat
+SEXP rcpp_vec_to_mat(Rcpp::NumericVector sfg);
+RcppExport SEXP _sfheaders_rcpp_vec_to_mat(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_mat(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_mat_to_mat
 SEXP rcpp_mat_to_mat(Rcpp::NumericMatrix sfg);
 RcppExport SEXP _sfheaders_rcpp_mat_to_mat(SEXP sfgSEXP) {
@@ -91,6 +146,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_mat(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_listMat_to_listMat
+SEXP rcpp_listMat_to_listMat(Rcpp::List sfg);
+RcppExport SEXP _sfheaders_rcpp_listMat_to_listMat(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_listMat_to_listMat(sfg));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -668,9 +734,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
     {"_sfheaders_rcpp_sfg_cast_df", (DL_FUNC) &_sfheaders_rcpp_sfg_cast_df, 1},
     {"_sfheaders_rcpp_sfc_cast_df", (DL_FUNC) &_sfheaders_rcpp_sfc_cast_df, 1},
+    {"_sfheaders_rcpp_vec_to_vec", (DL_FUNC) &_sfheaders_rcpp_vec_to_vec, 1},
+    {"_sfheaders_rcpp_mat_to_vec", (DL_FUNC) &_sfheaders_rcpp_mat_to_vec, 1},
+    {"_sfheaders_rcpp_listMat_to_vec", (DL_FUNC) &_sfheaders_rcpp_listMat_to_vec, 1},
+    {"_sfheaders_rcpp_listListMat_to_vec", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_vec, 1},
+    {"_sfheaders_rcpp_vec_to_mat", (DL_FUNC) &_sfheaders_rcpp_vec_to_mat, 1},
     {"_sfheaders_rcpp_mat_to_mat", (DL_FUNC) &_sfheaders_rcpp_mat_to_mat, 1},
     {"_sfheaders_rcpp_listMat_to_mat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_mat, 1},
     {"_sfheaders_rcpp_listListMat_to_mat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_mat, 1},
+    {"_sfheaders_rcpp_listMat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_listMat, 1},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

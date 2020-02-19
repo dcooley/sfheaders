@@ -21,6 +21,26 @@ rcpp_sfc_cast_df <- function(sfc) {
     .Call(`_sfheaders_rcpp_sfc_cast_df`, sfc)
 }
 
+rcpp_vec_to_vec <- function(sfg) {
+    .Call(`_sfheaders_rcpp_vec_to_vec`, sfg)
+}
+
+rcpp_mat_to_vec <- function(sfg) {
+    .Call(`_sfheaders_rcpp_mat_to_vec`, sfg)
+}
+
+rcpp_listMat_to_vec <- function(sfg) {
+    .Call(`_sfheaders_rcpp_listMat_to_vec`, sfg)
+}
+
+rcpp_listListMat_to_vec <- function(sfg) {
+    .Call(`_sfheaders_rcpp_listListMat_to_vec`, sfg)
+}
+
+rcpp_vec_to_mat <- function(sfg) {
+    .Call(`_sfheaders_rcpp_vec_to_mat`, sfg)
+}
+
 rcpp_mat_to_mat <- function(sfg) {
     .Call(`_sfheaders_rcpp_mat_to_mat`, sfg)
 }
@@ -31,6 +51,10 @@ rcpp_listMat_to_mat <- function(sfg) {
 
 rcpp_listListMat_to_mat <- function(sfg) {
     .Call(`_sfheaders_rcpp_listListMat_to_mat`, sfg)
+}
+
+rcpp_listMat_to_listMat <- function(sfg) {
+    .Call(`_sfheaders_rcpp_listMat_to_listMat`, sfg)
 }
 
 rcpp_sfg_dimension <- function(x) {

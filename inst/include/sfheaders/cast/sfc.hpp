@@ -17,20 +17,63 @@ namespace cast {
     }
   }
 
+  inline Rcpp::List vec_to_vec( Rcpp::NumericVector& sfg, R_xlen_t& sfg_rows, double& id ) {
+    return sfheaders::df::vector_to_list( sfg, sfg_rows, id );
+  }
+
   inline Rcpp::List mat_to_vec( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
     // add an id to each row of the matrix
-    // R_xlen_t n_row = sfg.nrow();
-    // Rcpp::NumericMatrix id_mat( n_row, 1 );
-    // Rcpp::NumericVector id_vec = Rcpp::seq( id, id + n_row );
-    // id_mat( Rcpp::_, 0 ) = id_vec;
-    // Rcpp::NumericMatrix mat =  Rcpp::cbind( id_mat, sfg );
-    // Rcpp::List res = sfheaders::df::matrix_to_list( mat, n_row );
-    // sfg_rows = n_row;
-    // return res;
+    R_xlen_t n_row = sfg.nrow();
+    Rcpp::NumericMatrix id_mat( n_row, 1 );
+    Rcpp::IntegerVector id_vec = Rcpp::seq( id, id + n_row );
+    id_mat( Rcpp::_, 0 ) = id_vec;
+    Rcpp::NumericMatrix mat =  Rcpp::cbind( id_mat, sfg );
+    Rcpp::List res = sfheaders::df::matrix_to_list( mat, n_row );
+    sfg_rows = n_row;
+    id = id + n_row;
+    return res;
   }
 
   inline Rcpp::List listMat_to_vec( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
+    // each matrix gets a sequential id
+    // then they get put into a list
+    // and the list collapsed
+    R_xlen_t n = sfg.size();
+    R_xlen_t i;
+    Rcpp::List res( n );
+    R_xlen_t total_rows = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( sfg [ i ] );
+      R_xlen_t n_row = nm.nrow();
+      total_rows = total_rows + n_row;
+      res[ i ] = mat_to_vec( nm, n_row, id );
+    }
+    sfg_rows = total_rows;
+    return sfheaders::df::collapse_list( res, total_rows );
+  }
 
+  inline Rcpp::List listListMat_to_vec( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
+
+    R_xlen_t n = sfg.size();
+    R_xlen_t i;
+    Rcpp::List res( n );
+    R_xlen_t total_rows = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List inner_list = sfg[ i ];
+      R_xlen_t inner_n = inner_list.size();
+      R_xlen_t inner_total_rows = 0;
+      res[ i ] = listMat_to_vec( inner_list, inner_total_rows, id );
+      //++id; // increment id for inner matrices
+      // the id is incremented by-reference inside matrix_to_list
+      total_rows = total_rows + inner_total_rows;
+    }
+
+    sfg_rows = total_rows;
+    return sfheaders::df::collapse_list( res, sfg_rows );
+  }
+
+  inline Rcpp::List vec_to_mat( Rcpp::NumericVector& sfg, R_xlen_t& sfg_rows, double& id ) {
+    return sfheaders::df::vector_to_list( sfg, sfg_rows, id );
   }
 
   inline Rcpp::List mat_to_mat( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
@@ -49,36 +92,16 @@ namespace cast {
     Rcpp::List res( n );
     R_xlen_t total_rows = 0;
 
-    //return sfheaders::df::matrix_to_list( sfg, total_rows );
-
     for( i = 0; i < n; ++i ) {
-      // Rcpp::Rcout << "a matrix?" << std::endl;
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( sfg[ i ] );
-      // Rcpp::Rcout << "yes" << std::endl;
       R_xlen_t n_row = nm.nrow();
-      // R_xlen_t n_col = nm.ncol();
       total_rows = total_rows + n_row;
-      // Rcpp::NumericMatrix id_mat( n_row, 1 );
-      // std::fill( id_mat.begin(), id_mat.end(), id );
-      // res[ i ] = Rcpp::cbind( id_mat, nm );
-
-      // TODO - write a new 'matrix_to_list()' which accepts an id as input
       res[i] = sfheaders::df::matrix_to_list( nm, n_row, id );
       ++id;
     }
 
     sfg_rows = total_rows;
-    // TODO
-    // - collapse list??
-    Rcpp::Rcout << "total_rows: " << total_rows << std::endl;
-    //Rcpp::List lst(1);
-    //lst[0] = res;
-    // collapsing the list will put an incremental 'id' on each list element.
-    // which we don't want, because we are putting an 'id' on during the 'to_matrix()' stage
-    // orr do we want it? how will the other objects work??
-    res = sfheaders::df::collapse_list( res, total_rows );
-    return res;
-
+    return sfheaders::df::collapse_list( res, total_rows );
   }
 
   // e.g. multipolygon to linestring
@@ -107,9 +130,25 @@ namespace cast {
   }
 
   // e.g. polygon to polygon
-  inline Rcpp::List listMat_to_listMat( Rcpp::List& sfg, double& id ) {
-    // do I need to add an ID?
+  inline Rcpp::List listMat_to_listMat( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
+    // each internal matrix needs an id
+    R_xlen_t n = sfg.size();
+    R_xlen_t i;
+    Rcpp::List res( n );
+    R_xlen_t total_rows = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::NumericMatrix nm = sfg[ i ];
+      R_xlen_t n_row = nm.nrow();
+      total_rows = total_rows + n_row;
+      res[ i ] = sfheaders::df::matrix_to_list( nm, n_row, id );
+      ++id;
+    }
+    sfg_rows = total_rows;
+    return sfheaders::df::collapse_list( res, total_rows );
 
+  }
+
+  inline Rcpp::List listListMat_to_listMat( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
 
   }
 

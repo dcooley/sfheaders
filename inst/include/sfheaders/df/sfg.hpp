@@ -97,7 +97,7 @@ namespace df {
     R_xlen_t n_row = mat.nrow();
     Rcpp::NumericVector id_vector = Rcpp::rep( id, n_row );
     Rcpp::List res( n_col + 1);  // for the id
-    res[0] = id_vector;
+    res[ 0 ] = id_vector;
 
     R_xlen_t i;
 
@@ -115,6 +115,21 @@ namespace df {
     R_xlen_t i;
     for( i = 0; i < n; ++i ) {
       res[ i ] = v[ i ];
+    }
+    sfg_rows = 1; // TODO??
+    return res;
+  }
+
+  template< int RTYPE >
+  inline Rcpp::List vector_to_list( Rcpp::Vector< RTYPE >& v, R_xlen_t& sfg_rows, double& id ) {
+    R_xlen_t n = v.length();
+    Rcpp::List res( n + 1 );
+    //Rcpp::NumericVector id_vector = Rcpp::seq( id, id + n );
+    res[ 0 ] = id;
+    ++id;
+    R_xlen_t i;
+    for( i = 0; i < n; ++i ) {
+      res[ i + 1 ] = v[ i ];
     }
     sfg_rows = 1; // TODO??
     return res;
