@@ -19,13 +19,18 @@ namespace cast {
 
   inline Rcpp::List mat_to_vec( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
     // add an id to each row of the matrix
-    R_xlen_t n_row = sfg.nrow();
-    Rcpp::NumericMatrix id_mat( n_row, 1 );
-    std::fill( id_mat.begin(), id_mat.end(), id );
-    Rcpp::NumericMatrix mat =  Rcpp::cbind( id_mat, sfg );
-    Rcpp::List res = sfheaders::df::matrix_to_list( mat, n_row );
-    sfg_rows = n_row;
-    return res;
+    // R_xlen_t n_row = sfg.nrow();
+    // Rcpp::NumericMatrix id_mat( n_row, 1 );
+    // Rcpp::NumericVector id_vec = Rcpp::seq( id, id + n_row );
+    // id_mat( Rcpp::_, 0 ) = id_vec;
+    // Rcpp::NumericMatrix mat =  Rcpp::cbind( id_mat, sfg );
+    // Rcpp::List res = sfheaders::df::matrix_to_list( mat, n_row );
+    // sfg_rows = n_row;
+    // return res;
+  }
+
+  inline Rcpp::List listMat_to_vec( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
+
   }
 
   inline Rcpp::List mat_to_mat( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
