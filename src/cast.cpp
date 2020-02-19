@@ -12,3 +12,27 @@ SEXP rcpp_sfg_cast_df( SEXP sfg ) {
 SEXP rcpp_sfc_cast_df( Rcpp::List sfc ) {
   return sfheaders::cast::sfc_to_cast_df( sfc );
 }
+
+// [[Rcpp::export]]
+SEXP rcpp_mat_to_mat( Rcpp::NumericMatrix sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::mat_to_mat( sfg, sfg_rows, id );
+}
+
+
+// [[Rcpp::export]]
+SEXP rcpp_listMat_to_mat( Rcpp::List sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::listMat_to_mat( sfg, sfg_rows, id );
+}
+
+
+// [[Rcpp::export]]
+SEXP rcpp_listListMat_to_mat( Rcpp::List sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::listListMat_to_mat( sfg, sfg_rows, id );
+}
+

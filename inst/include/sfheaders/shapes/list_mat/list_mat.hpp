@@ -9,7 +9,11 @@ namespace sfheaders {
 namespace shapes {
 
   // #nocov start
-
+/*
+ * get_listMat
+ *
+ * Converts various inputs into a list[[ matrix ]] structure
+ */
   inline SEXP get_listMat(
     Rcpp::IntegerMatrix& im
   ) {

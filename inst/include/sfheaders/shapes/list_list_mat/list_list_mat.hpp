@@ -10,7 +10,7 @@
 /*
  * get_listListMat
  *
- * - sfg_MULTIPOLYGON
+ * Converts various inputs into a list[[ list[[ matrix ]] ]] structure
  */
 
 namespace sfheaders {

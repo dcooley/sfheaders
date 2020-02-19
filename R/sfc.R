@@ -269,7 +269,7 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2" )
 #' sfc_multipolygon( df, polygon_id = "id1", linestring_id = "id2" )
 #' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
-#' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
+#' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2")
 #' sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
 #' sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
 #'

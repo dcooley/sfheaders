@@ -21,6 +21,18 @@ rcpp_sfc_cast_df <- function(sfc) {
     .Call(`_sfheaders_rcpp_sfc_cast_df`, sfc)
 }
 
+rcpp_mat_to_mat <- function(sfg) {
+    .Call(`_sfheaders_rcpp_mat_to_mat`, sfg)
+}
+
+rcpp_listMat_to_mat <- function(sfg) {
+    .Call(`_sfheaders_rcpp_listMat_to_mat`, sfg)
+}
+
+rcpp_listListMat_to_mat <- function(sfg) {
+    .Call(`_sfheaders_rcpp_listListMat_to_mat`, sfg)
+}
+
 rcpp_sfg_dimension <- function(x) {
     .Call(`_sfheaders_rcpp_sfg_dimension`, x)
 }

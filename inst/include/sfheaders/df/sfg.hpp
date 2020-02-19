@@ -79,7 +79,6 @@ namespace df {
     return column_names[ columns ];
   }
 
-
   inline Rcpp::List matrix_to_list( Rcpp::NumericMatrix& mat, R_xlen_t& sfg_rows ) {
 
     R_xlen_t n_col = mat.ncol();
@@ -87,6 +86,23 @@ namespace df {
     R_xlen_t i;
     for( i = 0; i < n_col; ++i ) {
       res[ i ] = mat( Rcpp::_, i );
+    }
+    sfg_rows = mat.nrow();
+    return res;
+  }
+
+  // this will put an 'id' directly onto the matrix
+  inline Rcpp::List matrix_to_list( Rcpp::NumericMatrix& mat, R_xlen_t& sfg_rows, double& id ) {
+    R_xlen_t n_col = mat.ncol();
+    R_xlen_t n_row = mat.nrow();
+    Rcpp::NumericVector id_vector = Rcpp::rep( id, n_row );
+    Rcpp::List res( n_col + 1);  // for the id
+    res[0] = id_vector;
+
+    R_xlen_t i;
+
+    for( i = 0; i < n_col; ++i ) {
+      res[ i + 1 ] = mat( Rcpp::_, i );
     }
     sfg_rows = mat.nrow();
     return res;
@@ -104,16 +120,33 @@ namespace df {
     return res;
   }
 
-  // collapses a list of matrices only
+
+  /*
+   * collapses a list of list of vectors
+   *
+   * list(
+   *   list(
+   *     x = c(),
+   *     y = c(),
+   *     z = c()
+   *   ),
+   *   list(
+   *     x = c(),
+   *     y = c(),
+   *     z = c()
+   *   )
+   * )
+   *
+   * and adds an 'id' column
+   */
   inline Rcpp::List collapse_list( Rcpp::List& lst, R_xlen_t& total_rows ) {
 
+    R_xlen_t lst_size = lst.size();
     // each list must have the same number of columns.
-    if( lst.size() == 0 ) {
+    if( lst_size == 0 ) {
       return lst; // #nocov
     }
 
-    // if the inner-list is another list, around we go.
-    R_xlen_t lst_size = lst.size();
     R_xlen_t i;
     R_xlen_t j;
 
@@ -157,7 +190,6 @@ namespace df {
 
       row_counter = row_counter + vector_size;
     }
-
     return lst_res;
   }
 
@@ -209,9 +241,9 @@ namespace df {
     for( i = 0; i < n; ++i ) {
       Rcpp::List lst = sfg[ i ];
 
-      R_xlen_t n2 = lst.size();
+      R_xlen_t inner_n = lst.size();
       inner_total_rows = 0;
-      Rcpp::List inner_res( n2 );
+      Rcpp::List inner_res( inner_n );
 
       res[ i ] = sfg_polygon_coordinates( lst, inner_total_rows );
       total_rows = total_rows + inner_total_rows;

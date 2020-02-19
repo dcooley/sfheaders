@@ -8,6 +8,16 @@ namespace sfheaders {
 namespace shapes {
 
   // #nocov start
+
+  // TODO
+  // add method for conerting list[[ list[[ mat ]] ]] into a mat
+  // which also adds an ID column
+
+  /*
+   * get_listMat
+   *
+   * Converts various inputs into a matrix structure
+   */
   inline SEXP get_mat(
     Rcpp::IntegerMatrix& im
   ) {
