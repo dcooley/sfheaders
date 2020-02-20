@@ -57,6 +57,10 @@ rcpp_listMat_to_listMat <- function(sfg) {
     .Call(`_sfheaders_rcpp_listMat_to_listMat`, sfg)
 }
 
+rcpp_listListMat_to_listMat <- function(sfg) {
+    .Call(`_sfheaders_rcpp_listListMat_to_listMat`, sfg)
+}
+
 rcpp_sfg_dimension <- function(x) {
     .Call(`_sfheaders_rcpp_sfg_dimension`, x)
 }

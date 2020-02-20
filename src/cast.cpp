@@ -78,3 +78,11 @@ SEXP rcpp_listMat_to_listMat( Rcpp::List sfg ) {
   R_xlen_t sfg_rows = 0;
   return sfheaders::cast::listMat_to_listMat( sfg, sfg_rows, id );
 }
+
+
+// [[Rcpp::export]]
+SEXP rcpp_listListMat_to_listMat( Rcpp::List sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::listListMat_to_listMat( sfg, sfg_rows, id );
+}

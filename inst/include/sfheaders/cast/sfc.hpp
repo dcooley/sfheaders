@@ -125,8 +125,7 @@ namespace cast {
     }
 
     sfg_rows = total_rows;
-    res = sfheaders::df::collapse_list( res, sfg_rows );
-    return res;
+    return sfheaders::df::collapse_list( res, sfg_rows );
   }
 
   // e.g. polygon to polygon
@@ -149,7 +148,23 @@ namespace cast {
   }
 
   inline Rcpp::List listListMat_to_listMat( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
-
+    R_xlen_t n = sfg.size();
+    R_xlen_t i;
+    Rcpp::List res( n );
+    R_xlen_t total_rows = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List inner_list = sfg[ i ];
+      R_xlen_t inner_n = inner_list.size();
+      R_xlen_t inner_total_rows = 0;
+      // the id shouldn't be incremented for each internal ring of each polygon
+      // They should all be under the same id and only increment each time we get a new
+      // polygon (inside the nultipolygon)
+      res[ i ] = listMat_to_listMat( inner_list, inner_total_rows, id );
+      total_rows = total_rows + inner_total_rows;
+      ++id;
+    }
+    sfg_rows = total_rows;
+    return sfheaders::df::collapse_list( res, sfg_rows );
   }
 
   // e.g. polygon to multipolygon
