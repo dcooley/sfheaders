@@ -7,24 +7,25 @@
 
 #include <Rcpp.h>
 
-#define M_COLUMN_CAST                8
-#define Z_COLUMN_CAST                7
-#define Y_COLUMN_CAST                6
-#define X_COLUMN_CAST                5
+#define M_COLUMN_CAST                9
+#define Z_COLUMN_CAST                8
+#define Y_COLUMN_CAST                7
+#define X_COLUMN_CAST                6
+#define VECTOR_ID                    5
 #define MATRIX_ID                    4
 #define LIST_MATRIX_ID               3
 #define LIST_LIST_MATRIX_ID          2
 #define SFG_COLUMN_CAST              1
 #define SFC_COLUMN_CAST              0
 
-#define MAX_COLUMNS_CAST             9
+#define MAX_COLUMNS_CAST             10
 
 namespace sfheaders {
 namespace cast {
 
 
   const Rcpp::CharacterVector column_names = {
-    "sfc_id", "sfg_id", "list_list_matrix_id", "list_matrix_id", "matrix_id",
+    "sfc_id", "sfg_id", "list_list_matrix_id", "list_matrix_id", "matrix_id", "vector_id",
     "x","y","z","m"
   };
 

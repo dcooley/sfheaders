@@ -30,7 +30,7 @@ namespace cast {
     Rcpp::NumericMatrix mat =  Rcpp::cbind( id_mat, sfg );
     Rcpp::List res = sfheaders::df::matrix_to_list( mat, n_row );
     sfg_rows = n_row;
-    id = id + n_row;
+    id = id + n_row;    // each vector (row of matrix) gets an incremented id
     return res;
   }
 
@@ -96,7 +96,7 @@ namespace cast {
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( sfg[ i ] );
       R_xlen_t n_row = nm.nrow();
       total_rows = total_rows + n_row;
-      res[i] = sfheaders::df::matrix_to_list( nm, n_row, id );
+      res[i] = sfheaders::df::matrix_to_list( nm, n_row, id );  // does not increment 'id'
       ++id;
     }
 
@@ -128,6 +128,25 @@ namespace cast {
     return sfheaders::df::collapse_list( res, sfg_rows );
   }
 
+  // every list-element has the id incremented
+  inline Rcpp::List mat_to_listMat( Rcpp::NumericMatrix& sfg, R_xlen_t& sfg_rows, double& id ) {
+    // does this need 2x id columns?
+    R_xlen_t n_row = sfg.nrow();
+    R_xlen_t n_col = sfg.ncol();
+    R_xlen_t i;
+    Rcpp::List res( n_col + 2 );  // MATRIX_ID + LIST_MAT_ID
+    Rcpp::NumericVector id_column = Rcpp::rep( id, n_row );
+    ++id;
+
+    res[ 0 ] = id_column;
+    res[ 1 ] = id_column;
+    for( i = 0; i < n_col; ++i ) {
+      res[ i + 2 ] = sfg( Rcpp::_, i );
+    }
+
+    return res;
+  }
+
   // e.g. polygon to polygon
   inline Rcpp::List listMat_to_listMat( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
     // each internal matrix needs an id
@@ -147,6 +166,8 @@ namespace cast {
 
   }
 
+  // don't call other cast functions inside any other cast function
+  // this way I can control when & where the 'id' is placed?
   inline Rcpp::List listListMat_to_listMat( Rcpp::List& sfg, R_xlen_t& sfg_rows, double& id ) {
     R_xlen_t n = sfg.size();
     R_xlen_t i;
@@ -161,10 +182,9 @@ namespace cast {
       // polygon (inside the nultipolygon)
       res[ i ] = listMat_to_listMat( inner_list, inner_total_rows, id );
       total_rows = total_rows + inner_total_rows;
-      ++id;
     }
     sfg_rows = total_rows;
-    return sfheaders::df::collapse_list( res, sfg_rows );
+    return sfheaders::df::collapse_list( res, total_rows );
   }
 
   // e.g. polygon to multipolygon
@@ -211,7 +231,19 @@ inline void dim_error() { // #nocov
 inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
 
   switch( geometry ) {
-  case SFG_POINT: {}
+  case SFG_POINT: {
+    if( dim == "XY" ) {
+    return Rcpp::IntegerVector({ VECTOR_ID, X_COLUMN_CAST, Y_COLUMN_CAST });
+  } else if( dim == "XYZM" ) {
+    return Rcpp::IntegerVector({ VECTOR_ID, X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST, M_COLUMN_CAST });
+  } else if ( dim == "XYZ" ) {
+    return Rcpp::IntegerVector({ VECTOR_ID, X_COLUMN_CAST, Y_COLUMN_CAST, Z_COLUMN_CAST });
+  } else if ( dim == "XYM" ) {  // #nocov
+    return Rcpp::IntegerVector({ VECTOR_ID, X_COLUMN_CAST, Y_COLUMN_CAST, M_COLUMN_CAST }); // #nocov
+  } else {
+    dim_error();  // #nocov
+  }
+  }
   case SFG_MULTIPOINT: {}
   case SFG_LINESTRING: {
     if( dim == "XY" ) {

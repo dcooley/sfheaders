@@ -30,8 +30,11 @@
 # sfheaders:::rcpp_listListMat_to_mat( sfg_multipoly ) ## adds three 'id' vectors. The inner-most is the unique-per-matrix one
 # ## and the outer-most is the polygon_id, and the second one is the line_id
 #
+# sfheaders:::rcpp_mat_to_listMat( sfg_line )
 # sfheaders:::rcpp_listMat_to_listMat( sfg_poly )
 # sfheaders:::rcpp_listListMat_to_listMat( sfg_multipoly )
+#
+#
 #
 # ## using this sort of id-ing we can use the MATRIX_ID, LIST_MATRIX_ID and LIST_LIST_MATRIX_ID columns
 # ## like what I've set up.

@@ -71,6 +71,12 @@ SEXP rcpp_listListMat_to_mat( Rcpp::List sfg ) {
   return sfheaders::cast::listListMat_to_mat( sfg, sfg_rows, id );
 }
 
+// [[Rcpp::export]]
+SEXP rcpp_mat_to_listMat( Rcpp::NumericMatrix sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::mat_to_listMat( sfg, sfg_rows, id );
+}
 
 // [[Rcpp::export]]
 SEXP rcpp_listMat_to_listMat( Rcpp::List sfg ) {

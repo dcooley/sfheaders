@@ -149,6 +149,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_mat_to_listMat
+SEXP rcpp_mat_to_listMat(Rcpp::NumericMatrix sfg);
+RcppExport SEXP _sfheaders_rcpp_mat_to_listMat(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_mat_to_listMat(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_listMat_to_listMat
 SEXP rcpp_listMat_to_listMat(Rcpp::List sfg);
 RcppExport SEXP _sfheaders_rcpp_listMat_to_listMat(SEXP sfgSEXP) {
@@ -753,6 +764,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_mat_to_mat", (DL_FUNC) &_sfheaders_rcpp_mat_to_mat, 1},
     {"_sfheaders_rcpp_listMat_to_mat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_mat, 1},
     {"_sfheaders_rcpp_listListMat_to_mat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_mat, 1},
+    {"_sfheaders_rcpp_mat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_mat_to_listMat, 1},
     {"_sfheaders_rcpp_listMat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_listMat, 1},
     {"_sfheaders_rcpp_listListMat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_listMat, 1},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
