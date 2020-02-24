@@ -72,6 +72,13 @@ SEXP rcpp_listListMat_to_mat( Rcpp::List sfg ) {
 }
 
 // [[Rcpp::export]]
+SEXP rcpp_vec_to_listMat( Rcpp::NumericVector sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::vec_to_listMat( sfg, sfg_rows, id );
+}
+
+// [[Rcpp::export]]
 SEXP rcpp_mat_to_listMat( Rcpp::NumericMatrix sfg ) {
   double id = 1;
   R_xlen_t sfg_rows = 0;
@@ -91,4 +98,32 @@ SEXP rcpp_listListMat_to_listMat( Rcpp::List sfg ) {
   double id = 1;
   R_xlen_t sfg_rows = 0;
   return sfheaders::cast::listListMat_to_listMat( sfg, sfg_rows, id );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_vec_to_listListMat( Rcpp::NumericVector sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::vec_to_listListMat( sfg, sfg_rows, id );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_mat_to_listListMat( Rcpp::NumericMatrix sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::mat_to_listListMat( sfg, sfg_rows, id );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_listMat_to_listListMat( Rcpp::List sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::listMat_to_listListMat( sfg, sfg_rows, id );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_listListMat_to_listListMat( Rcpp::List sfg ) {
+  double id = 1;
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::cast::listListMat_to_listListMat( sfg, sfg_rows, id );
 }
