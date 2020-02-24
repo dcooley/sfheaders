@@ -2,6 +2,7 @@
 #define R_SFHEADERS_DF_SFG_H
 
 #include "sfheaders/utils/sexp/sexp.hpp"
+#include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/df/utils.hpp"
 
 #include <Rcpp.h>
@@ -22,13 +23,13 @@
 
 #define MAX_COLUMNS            13
 
-#define SFG_POINT               1
-#define SFG_MULTIPOINT          2
-#define SFG_LINESTRING          3
-#define SFG_MULTILINESTRING     4
-#define SFG_POLYGON             5
-#define SFG_MULTIPOLYGON        6
-#define SFG_GEOMETRYCOLLECTION  7
+// #define SFG_POINT               1
+// #define SFG_MULTIPOINT          2
+// #define SFG_LINESTRING          3
+// #define SFG_MULTILINESTRING     4
+// #define SFG_POLYGON             5
+// #define SFG_MULTIPOLYGON        6
+// #define SFG_GEOMETRYCOLLECTION  7
 
 namespace sfheaders {
 namespace df {

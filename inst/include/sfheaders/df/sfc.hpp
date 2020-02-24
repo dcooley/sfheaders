@@ -55,9 +55,9 @@ namespace df {
   inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
 
     switch( geometry ) {
-    case SFG_POINT: {}
-    case SFG_MULTIPOINT: {}
-    case SFG_LINESTRING: {
+    case sfheaders::sfg::SFG_POINT: {}
+    case sfheaders::sfg::SFG_MULTIPOINT: {}
+    case sfheaders::sfg::SFG_LINESTRING: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
@@ -70,8 +70,8 @@ namespace df {
       dim_error();  // #nocov
     }
     }
-    case SFG_MULTILINESTRING: {}
-    case SFG_POLYGON: {
+    case sfheaders::sfg::SFG_MULTILINESTRING: {}
+    case sfheaders::sfg::SFG_POLYGON: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
@@ -84,7 +84,7 @@ namespace df {
       dim_error();  // #nocov
     }
     }
-    case SFG_MULTIPOLYGON: {
+    case sfheaders::sfg::SFG_MULTIPOLYGON: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
@@ -179,27 +179,27 @@ namespace df {
   inline Rcpp::List get_sfg_coordinates( SEXP& sfg, R_xlen_t& sfc_rows, int SFG_TYPE ) {
 
     switch( SFG_TYPE ) {
-    case SFG_POINT: {
+    case sfheaders::sfg::SFG_POINT: {
       Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfg );
       return sfheaders::df::sfg_point_coordinates( vec, sfc_rows );
     }
-    case SFG_MULTIPOINT: {
+    case sfheaders::sfg::SFG_MULTIPOINT: {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
       return sfheaders::df::sfg_multipoint_coordinates( mat, sfc_rows );
     }
-    case SFG_LINESTRING: {
+    case sfheaders::sfg::SFG_LINESTRING: {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
       return sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
     }
-    case SFG_MULTILINESTRING: {
+    case sfheaders::sfg::SFG_MULTILINESTRING: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_multilinestring_coordinates( lst, sfc_rows );
     }
-    case SFG_POLYGON: {
+    case sfheaders::sfg::SFG_POLYGON: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_polygon_coordinates( lst, sfc_rows );
     }
-    case SFG_MULTIPOLYGON: {
+    case sfheaders::sfg::SFG_MULTIPOLYGON: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
     }
@@ -212,17 +212,17 @@ namespace df {
 
   inline int get_sfg_type( std::string& sfg ) {
     if( sfg == "POINT" ) {
-      return SFG_POINT;
+      return sfheaders::sfg::SFG_POINT;
     } else if ( sfg == "MULTIPOINT" ) {
-      return SFG_MULTIPOINT;
+      return sfheaders::sfg::SFG_MULTIPOINT;
     } else if ( sfg == "LINESTRING" ) {
-      return SFG_LINESTRING;
+      return sfheaders::sfg::SFG_LINESTRING;
     } else if ( sfg == "MULTILINESTRING" ) {
-      return SFG_MULTILINESTRING;
+      return sfheaders::sfg::SFG_MULTILINESTRING;
     } else if ( sfg == "POLYGON" ) {
-      return SFG_POLYGON;
+      return sfheaders::sfg::SFG_POLYGON;
     } else if ( sfg == "MULTIPOLYGON" ) {
-      return SFG_MULTIPOLYGON;
+      return sfheaders::sfg::SFG_MULTIPOLYGON;
     } else {
       Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
     }

@@ -13,14 +13,6 @@ rcpp_calculate_m_range <- function(x) {
     .Call(`_sfheaders_rcpp_calculate_m_range`, x)
 }
 
-rcpp_sfg_cast_df <- function(sfg) {
-    .Call(`_sfheaders_rcpp_sfg_cast_df`, sfg)
-}
-
-rcpp_sfc_cast_df <- function(sfc) {
-    .Call(`_sfheaders_rcpp_sfc_cast_df`, sfc)
-}
-
 rcpp_vec_to_vec <- function(sfg) {
     .Call(`_sfheaders_rcpp_vec_to_vec`, sfg)
 }
@@ -83,6 +75,10 @@ rcpp_listMat_to_listListMat <- function(sfg) {
 
 rcpp_listListMat_to_listListMat <- function(sfg) {
     .Call(`_sfheaders_rcpp_listListMat_to_listListMat`, sfg)
+}
+
+rcpp_sfc_polygon_to_sfc_multipolygon <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon`, sfc)
 }
 
 rcpp_sfg_dimension <- function(x) {

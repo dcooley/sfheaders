@@ -39,28 +39,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_sfg_cast_df
-SEXP rcpp_sfg_cast_df(SEXP sfg);
-RcppExport SEXP _sfheaders_rcpp_sfg_cast_df(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_cast_df(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_sfc_cast_df
-SEXP rcpp_sfc_cast_df(Rcpp::List sfc);
-RcppExport SEXP _sfheaders_rcpp_sfc_cast_df(SEXP sfcSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_cast_df(sfc));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_vec_to_vec
 SEXP rcpp_vec_to_vec(Rcpp::NumericVector sfg);
 RcppExport SEXP _sfheaders_rcpp_vec_to_vec(SEXP sfgSEXP) {
@@ -234,6 +212,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_listListMat(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_polygon_to_sfc_multipolygon
+SEXP rcpp_sfc_polygon_to_sfc_multipolygon(Rcpp::List sfc);
+RcppExport SEXP _sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon(SEXP sfcSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygon_to_sfc_multipolygon(sfc));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -809,8 +798,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 2},
     {"_sfheaders_rcpp_calculate_z_range", (DL_FUNC) &_sfheaders_rcpp_calculate_z_range, 1},
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
-    {"_sfheaders_rcpp_sfg_cast_df", (DL_FUNC) &_sfheaders_rcpp_sfg_cast_df, 1},
-    {"_sfheaders_rcpp_sfc_cast_df", (DL_FUNC) &_sfheaders_rcpp_sfc_cast_df, 1},
     {"_sfheaders_rcpp_vec_to_vec", (DL_FUNC) &_sfheaders_rcpp_vec_to_vec, 1},
     {"_sfheaders_rcpp_mat_to_vec", (DL_FUNC) &_sfheaders_rcpp_mat_to_vec, 1},
     {"_sfheaders_rcpp_listMat_to_vec", (DL_FUNC) &_sfheaders_rcpp_listMat_to_vec, 1},
@@ -827,6 +814,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_mat_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_mat_to_listListMat, 1},
     {"_sfheaders_rcpp_listMat_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_listListMat, 1},
     {"_sfheaders_rcpp_listListMat_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_listListMat, 1},
+    {"_sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon, 1},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

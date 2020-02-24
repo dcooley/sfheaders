@@ -46,3 +46,44 @@
 # ## using this sort of id-ing we can use the MATRIX_ID, LIST_MATRIX_ID and LIST_LIST_MATRIX_ID columns
 # ## like what I've set up.
 #
+
+# df <- data.frame(
+#   ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+#   , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+#   , x = rnorm(15)
+#   , y = rnorm(15)
+#   , z = rnorm(15)
+#   , m = rnorm(15)
+# )
+#
+# sfc <- sfc_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
+
+# library(sf)
+#
+# nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
+#
+# sfc <- sf::st_cast( nc$geometry , "POLYGON" )
+
+# df <- data.frame(
+#   x = res[[5]]
+#   , y = res[[6]]
+#   , multipolygon_id = res[[2]]
+#   , polygon_id = res[[3]]
+#   , linestring_id = res[[4]]
+# )
+#
+
+#res <- sfheaders:::rcpp_sfc_polygon_to_sfc_multipolygon( sfc )
+
+# microbenchmark::microbenchmark(
+#
+#   sfh = {
+#     res <- sfheaders:::rcpp_sfc_polygon_to_sfc_multipolygon( sfc )
+#   },
+#   sf = {
+#     res <- sf::st_cast( sfc, "MULTIPOLYGON" )
+#   },
+#   times = 10
+# )
+
+
