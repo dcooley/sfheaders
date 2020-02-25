@@ -300,6 +300,14 @@ namespace cast {
     return res;
   }
 
+  inline Rcpp::List polygon_to_multipolygon( Rcpp::List& lst ) {
+    lst.attr("class") = R_NilValue;
+    Rcpp::List mpl(1);
+    mpl[0] = lst;
+    return lst;
+    return sfheaders::sfg::sfg_multipolygon( mpl );
+  }
+
   inline Rcpp::List multipolygon_to_multilinestring( Rcpp::List& lst ) {
     return sfheaders::sfg::sfg_multilinestrings( lst );
   }
@@ -351,6 +359,8 @@ namespace cast {
     } else if ( geometry == "LINESTRING" ) {
     } else if ( geometry == "MULTILINESTRING" ) {
     } else if ( geometry == "POLYGON" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return polygon_to_multipolygon( lst );
     } else if ( geometry == "MULTIPOLYGON" ) {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return lst;

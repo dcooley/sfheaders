@@ -352,23 +352,16 @@ namespace cast {
       // the value at n_results[ i ] tells us the size of the returning object
       R_xlen_t returned_size = n_results[ i ];
 
-      if( cast_to == "POLYGON" ) {
+      Rcpp::List new_res;
+
+      //if( cast_to == "POLYGON" ) {
         SEXP s = sfc[ i ];
-        Rcpp::List new_poly = sfheaders::cast::cast_to( s, cast_to );
+        new_res = sfheaders::cast::cast_to( s, cast_to );
+      //}
 
-        for( j = 0; j < returned_size; ++j ) {
-          res[ result_counter ] = new_poly[ j ];
-          ++result_counter;
-        }
-
-      } else if ( cast_to == "LINESTRING" ) {
-        SEXP s = sfc[ i ];
-        Rcpp::List new_poly = sfheaders::cast::cast_to( s, cast_to );
-
-        for( j = 0; j < returned_size; ++j ) {
-          res[ result_counter ] = new_poly[ j ];
-          ++result_counter;
-        }
+      for( j = 0; j < returned_size; ++j ) {
+        res[ result_counter ] = new_res[ j ];
+        ++result_counter;
       }
 
     }

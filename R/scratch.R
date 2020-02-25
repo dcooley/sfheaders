@@ -104,30 +104,32 @@
 
 #res <- sfheaders:::rcpp_sfc_polygon_to_sfc_multipolygon( sfc )
 
-# microbenchmark::microbenchmark(
-#
-#   sfh = {
-#     res <- sfheaders:::rcpp_sfc_polygon_to_sfc_multipolygon( sfc )
-#   },
-#   sf = {
-#     res <- sf::st_cast( sfc, "MULTIPOLYGON" )
-#   },
-#   times = 10
-# )
 
 
 # nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
 #
 # sfheaders:::rcpp_cast_sfc( nc$geometry, "POLYGON" )
 
+# nc <- rbind( nc, nc, nc, nc, nc )
+# nc <- rbind( nc )
+# nc <- rbind( nc, nc, nc, nc, nc, nc, nc, nc, nc, nc )
+# nc <- rbind( nc, nc, nc, nc, nc, nc, nc, nc, nc, nc )
 
+# ## 50,000 MULTIPOLYGONS
 # microbenchmark::microbenchmark(
 #   sfh = {
-#     sfh_res <- sfheaders:::rcpp_cast_sfc( nc$geometry, "LINESTRING" )
+#     sfh_res <- sfheaders:::rcpp_cast_sfc( nc$geometry, "POLYGON" )
 #   },
 #   sf = {
 #     temp <- sf::st_cast( nc$geometry, "POLYGON" )
-#     sf_res <- sf::st_cast( temp, "LINESTRING" )
+#     # sf_res <- sf::st_cast( temp, "LINESTRING" )
 #   },
 #   times = 10
 # )
+
+# Unit: milliseconds
+# expr        min        lq      mean    median        uq       max neval
+#  sfh   96.51165  102.3138  168.2939  121.3337  263.2627  280.1679    10
+#   sf 2971.71354 3094.8000 3217.7323 3143.0750 3386.4805 3523.9355    10
+
+
