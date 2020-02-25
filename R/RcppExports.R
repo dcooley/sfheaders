@@ -13,72 +13,16 @@ rcpp_calculate_m_range <- function(x) {
     .Call(`_sfheaders_rcpp_calculate_m_range`, x)
 }
 
-rcpp_vec_to_vec <- function(sfg) {
-    .Call(`_sfheaders_rcpp_vec_to_vec`, sfg)
+rcpp_count_new_objects <- function(sfg, cast_to) {
+    .Call(`_sfheaders_rcpp_count_new_objects`, sfg, cast_to)
 }
 
-rcpp_mat_to_vec <- function(sfg) {
-    .Call(`_sfheaders_rcpp_mat_to_vec`, sfg)
+rcpp_count_new_sfc_objects <- function(sfc, cast_to) {
+    .Call(`_sfheaders_rcpp_count_new_sfc_objects`, sfc, cast_to)
 }
 
-rcpp_listMat_to_vec <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listMat_to_vec`, sfg)
-}
-
-rcpp_listListMat_to_vec <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listListMat_to_vec`, sfg)
-}
-
-rcpp_vec_to_mat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_vec_to_mat`, sfg)
-}
-
-rcpp_mat_to_mat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_mat_to_mat`, sfg)
-}
-
-rcpp_listMat_to_mat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listMat_to_mat`, sfg)
-}
-
-rcpp_listListMat_to_mat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listListMat_to_mat`, sfg)
-}
-
-rcpp_vec_to_listMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_vec_to_listMat`, sfg)
-}
-
-rcpp_mat_to_listMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_mat_to_listMat`, sfg)
-}
-
-rcpp_listMat_to_listMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listMat_to_listMat`, sfg)
-}
-
-rcpp_listListMat_to_listMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listListMat_to_listMat`, sfg)
-}
-
-rcpp_vec_to_listListMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_vec_to_listListMat`, sfg)
-}
-
-rcpp_mat_to_listListMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_mat_to_listListMat`, sfg)
-}
-
-rcpp_listMat_to_listListMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listMat_to_listListMat`, sfg)
-}
-
-rcpp_listListMat_to_listListMat <- function(sfg) {
-    .Call(`_sfheaders_rcpp_listListMat_to_listListMat`, sfg)
-}
-
-rcpp_sfc_polygon_to_sfc_multipolygon <- function(sfc) {
-    .Call(`_sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon`, sfc)
+rcpp_cast_sfc <- function(sfc, cast_to) {
+    .Call(`_sfheaders_rcpp_cast_sfc`, sfc, cast_to)
 }
 
 rcpp_sfg_dimension <- function(x) {

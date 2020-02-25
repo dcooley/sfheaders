@@ -39,190 +39,39 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_vec_to_vec
-SEXP rcpp_vec_to_vec(Rcpp::NumericVector sfg);
-RcppExport SEXP _sfheaders_rcpp_vec_to_vec(SEXP sfgSEXP) {
+// rcpp_count_new_objects
+Rcpp::NumericVector rcpp_count_new_objects(SEXP sfg, std::string cast_to);
+RcppExport SEXP _sfheaders_rcpp_count_new_objects(SEXP sfgSEXP, SEXP cast_toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_vec(sfg));
+    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
+    Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_count_new_objects(sfg, cast_to));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_mat_to_vec
-SEXP rcpp_mat_to_vec(Rcpp::NumericMatrix sfg);
-RcppExport SEXP _sfheaders_rcpp_mat_to_vec(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_mat_to_vec(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listMat_to_vec
-SEXP rcpp_listMat_to_vec(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listMat_to_vec(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listMat_to_vec(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listListMat_to_vec
-SEXP rcpp_listListMat_to_vec(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listListMat_to_vec(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_vec(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_vec_to_mat
-SEXP rcpp_vec_to_mat(Rcpp::NumericVector sfg);
-RcppExport SEXP _sfheaders_rcpp_vec_to_mat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_mat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_mat_to_mat
-SEXP rcpp_mat_to_mat(Rcpp::NumericMatrix sfg);
-RcppExport SEXP _sfheaders_rcpp_mat_to_mat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_mat_to_mat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listMat_to_mat
-SEXP rcpp_listMat_to_mat(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listMat_to_mat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listMat_to_mat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listListMat_to_mat
-SEXP rcpp_listListMat_to_mat(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listListMat_to_mat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_mat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_vec_to_listMat
-SEXP rcpp_vec_to_listMat(Rcpp::NumericVector sfg);
-RcppExport SEXP _sfheaders_rcpp_vec_to_listMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_listMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_mat_to_listMat
-SEXP rcpp_mat_to_listMat(Rcpp::NumericMatrix sfg);
-RcppExport SEXP _sfheaders_rcpp_mat_to_listMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_mat_to_listMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listMat_to_listMat
-SEXP rcpp_listMat_to_listMat(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listMat_to_listMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listMat_to_listMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listListMat_to_listMat
-SEXP rcpp_listListMat_to_listMat(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listListMat_to_listMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_listMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_vec_to_listListMat
-SEXP rcpp_vec_to_listListMat(Rcpp::NumericVector sfg);
-RcppExport SEXP _sfheaders_rcpp_vec_to_listListMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_listListMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_mat_to_listListMat
-SEXP rcpp_mat_to_listListMat(Rcpp::NumericMatrix sfg);
-RcppExport SEXP _sfheaders_rcpp_mat_to_listListMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_mat_to_listListMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listMat_to_listListMat
-SEXP rcpp_listMat_to_listListMat(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listMat_to_listListMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listMat_to_listListMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_listListMat_to_listListMat
-SEXP rcpp_listListMat_to_listListMat(Rcpp::List sfg);
-RcppExport SEXP _sfheaders_rcpp_listListMat_to_listListMat(SEXP sfgSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfg(sfgSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_listListMat_to_listListMat(sfg));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_sfc_polygon_to_sfc_multipolygon
-SEXP rcpp_sfc_polygon_to_sfc_multipolygon(Rcpp::List sfc);
-RcppExport SEXP _sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon(SEXP sfcSEXP) {
+// rcpp_count_new_sfc_objects
+Rcpp::NumericVector rcpp_count_new_sfc_objects(Rcpp::List sfc, std::string cast_to);
+RcppExport SEXP _sfheaders_rcpp_count_new_sfc_objects(SEXP sfcSEXP, SEXP cast_toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygon_to_sfc_multipolygon(sfc));
+    Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_count_new_sfc_objects(sfc, cast_to));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_cast_sfc
+Rcpp::List rcpp_cast_sfc(Rcpp::List sfc, std::string cast_to);
+RcppExport SEXP _sfheaders_rcpp_cast_sfc(SEXP sfcSEXP, SEXP cast_toSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sfc(sfc, cast_to));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -798,23 +647,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 2},
     {"_sfheaders_rcpp_calculate_z_range", (DL_FUNC) &_sfheaders_rcpp_calculate_z_range, 1},
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
-    {"_sfheaders_rcpp_vec_to_vec", (DL_FUNC) &_sfheaders_rcpp_vec_to_vec, 1},
-    {"_sfheaders_rcpp_mat_to_vec", (DL_FUNC) &_sfheaders_rcpp_mat_to_vec, 1},
-    {"_sfheaders_rcpp_listMat_to_vec", (DL_FUNC) &_sfheaders_rcpp_listMat_to_vec, 1},
-    {"_sfheaders_rcpp_listListMat_to_vec", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_vec, 1},
-    {"_sfheaders_rcpp_vec_to_mat", (DL_FUNC) &_sfheaders_rcpp_vec_to_mat, 1},
-    {"_sfheaders_rcpp_mat_to_mat", (DL_FUNC) &_sfheaders_rcpp_mat_to_mat, 1},
-    {"_sfheaders_rcpp_listMat_to_mat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_mat, 1},
-    {"_sfheaders_rcpp_listListMat_to_mat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_mat, 1},
-    {"_sfheaders_rcpp_vec_to_listMat", (DL_FUNC) &_sfheaders_rcpp_vec_to_listMat, 1},
-    {"_sfheaders_rcpp_mat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_mat_to_listMat, 1},
-    {"_sfheaders_rcpp_listMat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_listMat, 1},
-    {"_sfheaders_rcpp_listListMat_to_listMat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_listMat, 1},
-    {"_sfheaders_rcpp_vec_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_vec_to_listListMat, 1},
-    {"_sfheaders_rcpp_mat_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_mat_to_listListMat, 1},
-    {"_sfheaders_rcpp_listMat_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_listMat_to_listListMat, 1},
-    {"_sfheaders_rcpp_listListMat_to_listListMat", (DL_FUNC) &_sfheaders_rcpp_listListMat_to_listListMat, 1},
-    {"_sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_polygon_to_sfc_multipolygon, 1},
+    {"_sfheaders_rcpp_count_new_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_objects, 2},
+    {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
+    {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 2},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

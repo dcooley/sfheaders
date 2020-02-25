@@ -388,12 +388,12 @@ namespace df {
 
     Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
 
-    std::string dim;
+    //std::string dim;
     std::string geometry;
 
     Rcpp::LogicalVector columns( column_names.length() );
 
-    dim = cls[0];
+    //dim = cls[0];
     geometry = cls[1];
 
     R_xlen_t sfg_rows = 0;

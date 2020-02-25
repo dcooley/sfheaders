@@ -19,6 +19,35 @@
 #   df, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
 # )
 #
+# sfheaders:::rcpp_count_new_objects( sfg_pt, cast_to = "POINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_pt, cast_to = "MULTIPOINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_pt, cast_to = "LINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_pt, cast_to = "MULTILINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_pt, cast_to = "POLYGON" )
+# sfheaders:::rcpp_count_new_objects( sfg_pt, cast_to = "MULTIPOLYGON" )
+#
+# sfheaders:::rcpp_count_new_objects( sfg_line, cast_to = "POINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_line, cast_to = "MULTIPOINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_line, cast_to = "LINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_line, cast_to = "MULTILINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_line, cast_to = "POLYGON" )
+# sfheaders:::rcpp_count_new_objects( sfg_line, cast_to = "MULTIPOLYGON" )
+#
+# sfheaders:::rcpp_count_new_objects( sfg_poly, cast_to = "POINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_poly, cast_to = "MULTIPOINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_poly, cast_to = "LINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_poly, cast_to = "MULTILINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_poly, cast_to = "POLYGON" )
+# sfheaders:::rcpp_count_new_objects( sfg_poly, cast_to = "MULTIPOLYGON" )
+#
+# sfheaders:::rcpp_count_new_objects( sfg_multipoly, cast_to = "POINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_multipoly, cast_to = "MULTIPOINT" )
+# sfheaders:::rcpp_count_new_objects( sfg_multipoly, cast_to = "LINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_multipoly, cast_to = "MULTILINESTRING" )
+# sfheaders:::rcpp_count_new_objects( sfg_multipoly, cast_to = "POLYGON" )
+# sfheaders:::rcpp_count_new_objects( sfg_multipoly, cast_to = "MULTIPOLYGON" )
+
+#
 # sfheaders:::rcpp_vec_to_vec( sfg_pt )
 # sfheaders:::rcpp_mat_to_vec( sfg_line )
 # sfheaders:::rcpp_listMat_to_vec( sfg_poly )
@@ -87,3 +116,18 @@
 # )
 
 
+# nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
+#
+# sfheaders:::rcpp_cast_sfc( nc$geometry, "POLYGON" )
+
+
+# microbenchmark::microbenchmark(
+#   sfh = {
+#     sfh_res <- sfheaders:::rcpp_cast_sfc( nc$geometry, "LINESTRING" )
+#   },
+#   sf = {
+#     temp <- sf::st_cast( nc$geometry, "POLYGON" )
+#     sf_res <- sf::st_cast( temp, "LINESTRING" )
+#   },
+#   times = 10
+# )
