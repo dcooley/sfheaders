@@ -275,6 +275,77 @@ namespace cast {
   //   }
   // }
 
+
+
+  inline Rcpp::List polygon_to_multipolygon( Rcpp::List& lst ) {
+    //lst.attr("class") = R_NilValue; // this will update the input by-reference
+    // not doing it will leave the sfg_POLYGON class on the inner-polygons of the MULTIPOLYGON
+    // not sure if this is an issue or note.
+
+    Rcpp::List mpl(1);
+    mpl[0] = lst;
+    Rcpp::List mpl2(1);
+    mpl2[0] = sfheaders::sfg::sfg_multipolygon( mpl );
+    return mpl2;
+  }
+
+  // any function which down-casts needs to use the pluralised version of the sfg_() code
+
+  inline Rcpp::List multipolygon_to_point( Rcpp::List& lst ) {
+    // will return more than 1 list
+    R_xlen_t n = lst.size();
+    Rcpp::List lines( n );
+    R_xlen_t n_linestrings = 0; // will update each iteration
+    R_xlen_t i, j;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List inner_lst = lst[ i ];
+      n_linestrings = n_linestrings + inner_lst.size();
+
+      // ned to go round again to do each row of each matrix!
+      // and also record n_coordinates for the inner matrice?
+
+
+      lines[ i ] = sfheaders::sfg::sfg_points( inner_lst );
+    }
+
+    // unpack
+    Rcpp::List res( n_linestrings );
+    R_xlen_t counter = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List sfg = lines[ i ];
+      for( j = 0; j < sfg.size(); ++j ) {
+        res[ counter ] = sfg[ j ];
+        ++counter;
+      }
+    }
+    return res;
+  }
+
+  inline Rcpp::List multipolygon_to_multipoint( Rcpp::List& lst ) {
+    // will return more than 1 list
+    R_xlen_t n = lst.size();
+    Rcpp::List lines( n );
+    R_xlen_t n_linestrings = 0; // will update each iteration
+    R_xlen_t i, j;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List inner_lst = lst[ i ];
+      n_linestrings = n_linestrings + inner_lst.size();
+      lines[ i ] = sfheaders::sfg::sfg_multipoints( inner_lst );
+    }
+
+    // unpack
+    Rcpp::List res( n_linestrings );
+    R_xlen_t counter = 0;
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List sfg = lines[ i ];
+      for( j = 0; j < sfg.size(); ++j ) {
+        res[ counter ] = sfg[ j ];
+        ++counter;
+      }
+    }
+    return res;
+  }
+
   inline Rcpp::List multipolygon_to_linestring( Rcpp::List& lst ) {
     // will return more than 1 list
     R_xlen_t n = lst.size();
@@ -300,13 +371,6 @@ namespace cast {
     return res;
   }
 
-  inline Rcpp::List polygon_to_multipolygon( Rcpp::List& lst ) {
-    lst.attr("class") = R_NilValue;
-    Rcpp::List mpl(1);
-    mpl[0] = lst;
-    return lst;
-    return sfheaders::sfg::sfg_multipolygon( mpl );
-  }
 
   inline Rcpp::List multipolygon_to_multilinestring( Rcpp::List& lst ) {
     return sfheaders::sfg::sfg_multilinestrings( lst );
@@ -314,6 +378,42 @@ namespace cast {
 
   inline Rcpp::List multipolygon_to_polygon( Rcpp::List& lst ) {
     return sfheaders::sfg::sfg_polygons( lst );
+  }
+
+  inline Rcpp::List cast_to_point( SEXP& sfg, std::string& geometry, std::string& cast_to ) {
+
+    if( geometry == "POINT") {
+
+    } else if ( geometry == "MULTIPOINT" ) {
+
+    } else if ( geometry == "LINESTRING" ) {
+
+    } else if ( geometry == "MULTILINESTRING" ) {
+    } else if ( geometry == "POLYGON" ) {
+    } else if ( geometry == "MULTIPOLYGON" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return multipolygon_to_point( lst );
+    } else {
+      Rcpp::stop("sfheaders - I don't know how to convert this objet to a MULTIPOINT");
+    }
+  }
+
+  inline Rcpp::List cast_to_multipoint( SEXP& sfg, std::string& geometry, std::string& cast_to ) {
+
+    if( geometry == "POINT") {
+
+    } else if ( geometry == "MULTIPOINT" ) {
+
+    } else if ( geometry == "LINESTRING" ) {
+
+    } else if ( geometry == "MULTILINESTRING" ) {
+    } else if ( geometry == "POLYGON" ) {
+    } else if ( geometry == "MULTIPOLYGON" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return multipolygon_to_multipoint( lst );
+    } else {
+      Rcpp::stop("sfheaders - I don't know how to convert this objet to a MULTIPOINT");
+    }
   }
 
   inline Rcpp::List cast_to_linestring( SEXP& sfg, std::string& geometry, std::string& cast_to ) {
@@ -331,7 +431,7 @@ namespace cast {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return multipolygon_to_linestring( lst );
     } else {
-      Rcpp::stop("sfheaders - I don't know how to convert this objet to a POLYGON");
+      Rcpp::stop("sfheaders - I don't know how to convert this objet to a LINESTRING");
     }
   }
 
@@ -359,13 +459,14 @@ namespace cast {
     } else if ( geometry == "LINESTRING" ) {
     } else if ( geometry == "MULTILINESTRING" ) {
     } else if ( geometry == "POLYGON" ) {
+      // Rcpp::Rcout << "casting polygon" << std::endl;
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return polygon_to_multipolygon( lst );
     } else if ( geometry == "MULTIPOLYGON" ) {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return lst;
     } else {
-      Rcpp::stop("sfheaders - I don't know how to convert this objet to a POLYGON");
+      Rcpp::stop("sfheaders - I don't know how to convert this objet to a MULTIPOLYGON");
     }
   }
 
@@ -376,9 +477,9 @@ namespace cast {
     geometry = cls[1];
 
     if( cast_to == "POINT" ) {
-      // return cast_to_point( sfg, geometry );
+      return cast_to_point( sfg, geometry, cast_to );
     } else if ( cast_to == "MULTIPOINT" ) {
-      // return cast_to_multipoint( sfg, geometry );
+      return cast_to_multipoint( sfg, geometry, cast_to );
     } else if ( cast_to == "LINESTRING" ) {
       return cast_to_linestring( sfg, geometry, cast_to );
     } else if ( cast_to == "MULTILINESTRING" ) {
@@ -388,7 +489,7 @@ namespace cast {
     } else if ( cast_to == "MULTIPOLYGON" ) {
       return cast_to_multipolygon( sfg, geometry, cast_to );
     } else {
-      Rcpp::stop("sfheaders - I don't know the type of object you're trying to cast to");
+      Rcpp::stop("sfheaders - I don't the type of object you're trying to cast to");
     }
 
   }

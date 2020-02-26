@@ -103,12 +103,21 @@
 #
 
 #res <- sfheaders:::rcpp_sfc_polygon_to_sfc_multipolygon( sfc )
-
-
-
-# nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
+# df <- data.frame(
+#   polygon_id = c(rep(1, 5), rep(2, 10))
+#   , line_id = c(rep(1, 10), rep(2, 5))
+#   , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
+#   , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
+#   , z = c(1)
+#   , m = c(1)
+# )
 #
-# sfheaders:::rcpp_cast_sfc( nc$geometry, "POLYGON" )
+# mpl <- sfg_multipolygon( df[, c("x","y") ] )
+#
+#
+# nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
+# res <- sfheaders:::rcpp_cast_sfc( nc$geometry, "POINT" )
+
 
 # nc <- rbind( nc, nc, nc, nc, nc )
 # nc <- rbind( nc )

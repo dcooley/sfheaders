@@ -341,6 +341,7 @@ namespace cast {
     R_xlen_t n = sfc.size();
     R_xlen_t i, j;
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
+    Rcpp::Rcout << "n_results: " << n_results << std::endl;
     R_xlen_t total_results = Rcpp::sum( n_results );
 
     Rcpp::List res( total_results );
