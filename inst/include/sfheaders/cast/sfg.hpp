@@ -293,27 +293,34 @@ namespace cast {
 
   inline Rcpp::List multipolygon_to_point( Rcpp::List& lst ) {
     // will return more than 1 list
-    R_xlen_t n = lst.size();
-    Rcpp::List lines( n );
+    R_xlen_t n_polygons = lst.size();
+    Rcpp::List lines( n_polygons );
     R_xlen_t n_linestrings = 0; // will update each iteration
-    R_xlen_t i, j;
-    for( i = 0; i < n; ++i ) {
-      Rcpp::List inner_lst = lst[ i ];
-      n_linestrings = n_linestrings + inner_lst.size();
-
+    R_xlen_t n_points = 0;
+    R_xlen_t i, j, k;
+    for( i = 0; i < n_polygons; ++i ) {
+      Rcpp::List polygon = lst[ i ];
+      n_linestrings = n_linestrings + polygon.size();
+      Rcpp::List points( n_linestrings );
       // ned to go round again to do each row of each matrix!
       // and also record n_coordinates for the inner matrice?
-
-
-      lines[ i ] = sfheaders::sfg::sfg_points( inner_lst );
+      for( j = 0; j < n_linestrings; ++j ) {
+        Rcpp::NumericMatrix nm = polygon[ j ];
+        n_points = n_points + nm.nrow();
+        points[ j ] = sfheaders::sfg::sfg_points( nm );
+      }
+      lines[ i ] = points;
     }
 
     // unpack
-    Rcpp::List res( n_linestrings );
+    Rcpp::List res( n_points );
     R_xlen_t counter = 0;
-    for( i = 0; i < n; ++i ) {
-      Rcpp::List sfg = lines[ i ];
-      for( j = 0; j < sfg.size(); ++j ) {
+
+    for( i = 0; i < n_polygons; ++i ) {
+
+      Rcpp::List sfg_lines = lines[ i ];
+
+      for( j = 0; j < sfg_lines.size(); ++j ) {
         res[ counter ] = sfg[ j ];
         ++counter;
       }
