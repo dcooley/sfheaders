@@ -685,9 +685,21 @@ inline SEXP sfg_multipolygon(
     return sfg_multipolygon( x, cols, close );
   }
 
+  // at this point one or both of polygon_id and line_id will not be null
+  //
+  if( Rf_isNull( cols ) ) {
+    // make them the other columns
+    SEXP other_cols = sfheaders::utils::other_columns(x, polygon_id, line_id );
+    return sfg_multipolygon( x, other_cols, polygon_id, line_id, close );
+  }
+
   if( Rf_isNull( polygon_id ) && !Rf_isNull( line_id ) ) {
     // in this case the multiolygon is made of one polygon
     // with one or more internal rings
+
+    // TODO: 'cols' may be null here
+
+
     Rcpp::List sfg(1);
     sfg[0] = sfheaders::shapes::get_listMat( x, cols, line_id );
     return sfg_multipolygon( sfg, close );
@@ -721,6 +733,7 @@ inline SEXP sfg_multipolygon(
 
     Rcpp::String sl = sv_line[0];
     Rcpp::String sp = sv_polygon[0];
+    //return Rcpp::List();
     return sfg_multipolygon( x, cols, sp, sl, close );
   }
   default: {
