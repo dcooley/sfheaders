@@ -338,20 +338,24 @@ namespace cast {
     int epsg = crs[0];
     Rcpp::String proj4string = crs[1];
 
-    R_xlen_t n = sfc.size();
     R_xlen_t i, j;
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
-    Rcpp::Rcout << "n_results: " << n_results << std::endl;
-    R_xlen_t total_results = Rcpp::sum( n_results );
+    // Rcpp::Rcout << "n_results: " << n_results << std::endl;
 
+    R_xlen_t total_results = Rcpp::sum( n_results );
     Rcpp::List res( total_results );
+
+    //return res;
 
     // loop over reach sfg and convert and fill teh resutl list
     R_xlen_t result_counter = 0;  // for indexing into the res( ) list
+    R_xlen_t n = sfc.size();
+
     for( i = 0; i < n; ++i ) {
 
       // the value at n_results[ i ] tells us the size of the returning object
       R_xlen_t returned_size = n_results[ i ];
+      // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
 
       Rcpp::List new_res;
 
@@ -360,9 +364,16 @@ namespace cast {
         new_res = sfheaders::cast::cast_to( s, cast_to );
       //}
 
+      // Rcpp::Rcout << "new_res.size() " << new_res.size() << std::endl;
+
+      // if( new_res.size() != returned_size ) {
+      //   Rcpp::stop("sfheaders - incompatible sizes");
+      // }
+
       for( j = 0; j < returned_size; ++j ) {
         res[ result_counter ] = new_res[ j ];
         ++result_counter;
+        // Rcpp::Rcout << "result_counter: " << result_counter << std::endl;
       }
 
     }

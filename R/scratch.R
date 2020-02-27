@@ -124,16 +124,19 @@
 # nc <- rbind( nc, nc, nc, nc, nc )
 # nc <- rbind( nc )
 # nc <- rbind( nc, nc, nc, nc, nc, nc, nc, nc, nc, nc )
-# nc <- rbind( nc, nc, nc, nc, nc, nc, nc, nc, nc, nc )
-
+# # nc <- rbind( nc, nc, nc, nc, nc, nc, nc, nc, nc, nc )
+#
 # ## 50,000 MULTIPOLYGONS
 # microbenchmark::microbenchmark(
 #   sfh = {
-#     sfh_res <- sfheaders:::rcpp_cast_sfc( nc$geometry, "POLYGON" )
+#     sfh_res <- sfheaders:::rcpp_cast_sfc( nc$geometry, "POINT" )
 #   },
 #   sf = {
-#     temp <- sf::st_cast( nc$geometry, "POLYGON" )
-#     # sf_res <- sf::st_cast( temp, "LINESTRING" )
+#     temp <- sf::st_cast( nc$geometry, "POINT" )
+#     # sf_res <- sf::st_cast( temp, "POINT" )
+#   },
+#   co = {
+#     res <- sf::st_coordinates( nc$geometry )
 #   },
 #   times = 10
 # )
