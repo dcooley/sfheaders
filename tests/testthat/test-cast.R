@@ -512,3 +512,28 @@ test_that("sf objects are casted",{
 
 
 })
+
+
+test_that("errors handled",{
+
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+    , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+    , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+    , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+  )
+
+  pt <- sf_point(obj = df, x = "x", y = "y")
+
+  expect_error(
+    sfc_cast( pt, "POINTY" )
+    , "sfheaders - I don't know the type of object you're trying to cast to"
+  )
+
+  expect_error(
+    sf_cast( df, "POINT" )
+    , "sfheaders - sf_column not found"
+  )
+
+})
+

@@ -340,7 +340,7 @@ namespace cast {
     } else if ( cast == "MULTIPOLYGON" ) {
       return sfheaders::sfg::LIST_LIST_MATRIX;
     } else {
-      Rcpp::stop("sfheders - unknown geometry type to cast to");
+      Rcpp::stop("sfheders - unknown geometry type to cast to");  // #nocov
     }
     return -1;
   }
