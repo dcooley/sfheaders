@@ -1,8 +1,10 @@
 #ifndef R_SFHEADERS_CAST_SFC_H
 #define R_SFHEADERS_CAST_SFC_H
 
-#include "sfheaders/df/sfc.hpp"
+#include "sfheaders/sf/sf_utils.hpp"
+#include "sfheaders/df/sf.hpp"
 #include "sfheaders/cast/sfg.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 //#include "sfheaders/df/sfg.hpp"
 //#include "sfheaders/df/utils.hpp"
@@ -346,7 +348,12 @@ namespace cast {
 
   // TODO: keep / calculate the bbox, z_range and m_range
   // these shouldn't change; because the coordinates aren't changing,right?
-  inline Rcpp::List cast_sfc( Rcpp::List& sfc, std::string& cast_to, bool close = true ) {
+  inline Rcpp::List cast_sfc(
+      Rcpp::List& sfc,
+      Rcpp::NumericVector& n_results,
+      std::string& cast_to,
+      bool close = true
+  ) {
 
     int casting_to = cast_type( cast_to );
 
@@ -354,8 +361,15 @@ namespace cast {
     Rcpp::List crs = sfc.attr("crs");
     double precision = sfc.attr("precision");
     Rcpp::NumericVector bbox = sfc.attr("bbox");
-    Rcpp::NumericVector z_range(2); // = sfc.attr("z_range");
-    Rcpp::NumericVector m_range(2); // = sfc.attr("m_range");
+
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range(); // = sfc.attr("z_range");
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range(); // = sfc.attr("m_range");
+
+    if( sfc.hasAttribute("z_range") ) {
+      z_range = sfc.attr("z_range");
+      m_range = sfc.attr("m_range");
+    }
+
     int n_empty = sfc.attr("n_empty");
     std::unordered_set< std::string > geometry_types{ cast_to };
 
@@ -365,7 +379,7 @@ namespace cast {
     std::string cast_from;
 
     R_xlen_t i, j;
-    Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
+
     // Rcpp::Rcout << "n_results: " << n_results << std::endl;
 
     R_xlen_t total_results = Rcpp::sum( n_results );
@@ -385,52 +399,23 @@ namespace cast {
 
       // the value at n_results[ i ] tells us the size of the returning object
       R_xlen_t returned_size = n_results[ i ];
-      // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
 
-      //Rcpp::List new_res;
+      SEXP sfg = sfc[ i ];
 
-      //if( cast_to == "POLYGON" ) {
-        SEXP sfg = sfc[ i ];
+      Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
+      cast_from = cls[1];
 
-        Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
-        cast_from = cls[1];
+      int casting_from = cast_type( cast_from );
 
-        int casting_from = cast_type( cast_from );
-
-        SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, close );
-
-      //}
-
-      //return new_res;
-
-      // Rcpp::Rcout << "new_res.size() " << new_res.size() << std::endl;
-
-      // if( new_res.size() != returned_size ) {
-      //   Rcpp::stop("sfheaders - incompatible sizes");
-      // }
-
-      // iff we're casting UP, we don't need to access the list element?
-      // iff we're casting DOWN, am I nesting the objevt oo deep
-
-      // Rcpp::Rcout << "from: " << casting_from << ", to: " << casting_to << std::endl;
-
+      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, close );
 
       if( casting_from <= casting_to ) {
-        // Rcpp::Rcout << "casting down: " << std::endl;
-        // Rcpp::Rcout << "typeof: " << TYPEOF( new_res ) << std::endl;
         res[ result_counter ] = new_res;
         ++result_counter;
       } else {
-        // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
         for( j = 0; j < returned_size; ++j ) {
-          //if( casting_to >= sfheaders::sfg::LIST_MATRIX ) {
-            Rcpp::List new_lst = Rcpp::as< Rcpp::List >( new_res );
-            res[ result_counter ] = new_lst[ j ];
-          //} else {
-          //  Rcpp::Rcout << "not a lsit" << std::endl;
-          //  res[ result_counter ] = new_res;
-          //}
-          // Rcpp::Rcout << "result_counter: " << result_counter << std::endl;
+          Rcpp::List new_lst = Rcpp::as< Rcpp::List >( new_res );
+          res[ result_counter ] = new_lst[ j ];
           ++result_counter;
         }
       }
@@ -440,6 +425,61 @@ namespace cast {
       res, cast_to, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision
       );
     return res;
+  }
+
+  Rcpp::List cast_sfc(
+      Rcpp::List& sfc,
+      std::string& cast_to,
+      bool close = true
+  ) {
+    Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
+    return cast_sfc( sfc, n_results, cast_to, close );
+  }
+
+
+  Rcpp::List cast_sf(
+      Rcpp::DataFrame& sf,
+      std::string& cast_to,
+      bool close = true
+  ) {
+    if( !sf.hasAttribute("sf_column") ) {
+      Rcpp::stop("sfheaders - sf_column not found");
+    }
+
+
+    Rcpp::StringVector df_names = sf.names();
+    R_xlen_t n_names = df_names.length();
+    R_xlen_t i;
+    R_xlen_t n_row = sf.nrow();
+
+    std::string geom_column = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ geom_column ];
+    Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
+
+    // other than the sfc column, expand all the other columsn by 'n_reuslts'
+    Rcpp::List casted_sfc = cast_sfc( sfc, n_results, cast_to, close );
+
+    Rcpp::List sf_res( n_names );
+    // loop over each of the df_names which aren't the geometry
+    // then add on the created_sfc;
+    R_xlen_t column_counter = 0;
+    for( i = 0; i < n_names; ++i ) {
+      // iff this_name != geom_column, expand the vector and doene.
+      Rcpp::String this_name = df_names[ i ];
+      std::string str_name = this_name;
+      if( str_name != geom_column ) {
+        Rcpp::Rcout << "this_name: " << str_name << std::endl;
+        SEXP v = sf[ i ];
+        sfheaders::df::expand_vector( sf_res, v, n_results, column_counter );
+        ++column_counter;
+      }
+    }
+
+    sf_res[ column_counter ] = casted_sfc;
+    sf_res.names() = df_names;
+    sfheaders::sf::attach_dataframe_attributes( sf_res, n_row, geom_column );
+    return sf_res;
+
   }
 
 

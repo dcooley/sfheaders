@@ -9,7 +9,7 @@ test_that("cast to sfc_POINT", {
     , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
   )
 
-  pt <- sfc_point(obj = df, x = "x", y = "y")
+  pt <- sfc_point(obj = df, x = "x", y = "y", z = "id1")
   mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
   ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
   mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")

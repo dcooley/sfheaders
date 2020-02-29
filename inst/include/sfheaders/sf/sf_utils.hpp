@@ -43,9 +43,13 @@ namespace sf {
     }
   }
 
-  inline void attach_dataframe_attributes( Rcpp::List& df, R_xlen_t& n_row ) {
+  inline void attach_dataframe_attributes(
+      Rcpp::List& df,
+      R_xlen_t& n_row,
+      std::string geometry_column = "geometry"
+  ) {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-    df.attr("sf_column") = "geometry";
+    df.attr("sf_column") = geometry_column;
 
     if( n_row == 0 ) {
       df.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov

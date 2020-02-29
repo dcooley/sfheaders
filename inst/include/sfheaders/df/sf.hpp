@@ -30,7 +30,12 @@ namespace df {
     return this_name;
   }
 
-  inline void expand_vector( Rcpp::List& res, SEXP& v, Rcpp::NumericVector& expanded_index, R_xlen_t& i ) {
+  inline void expand_vector(
+      Rcpp::List& res,
+      SEXP& v,
+      Rcpp::NumericVector& expanded_index,
+      R_xlen_t& i
+  ) {
     switch( TYPEOF( v ) ) {
     case LGLSXP: {
       Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
