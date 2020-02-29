@@ -118,12 +118,7 @@
 #
 #
 # nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
-# line <- sfheaders:::rcpp_cast_sfc( nc$geometry, "LINESTRING" )
-# mply <- sfheaders:::rcpp_cast_sfc( line, "MULTIPOLYGON" )
-# mpt <- sfheaders:::rcpp_cast_sfc( poly, "MULTIPOINT" )
-# pt <- sfheaders:::rcpp_cast_sfc( poly, "POINT" )
-# sfheaders:::rcpp_cast_sfc( poly, "POLYGON")
-
+#
 # nc <- rbind( nc, nc, nc, nc, nc )
 # nc <- rbind( nc )
 # nc <- rbind( nc, nc, nc, nc, nc, nc, nc, nc, nc, nc )
@@ -148,5 +143,8 @@
 # expr        min        lq      mean    median        uq       max neval
 #  sfh   96.51165  102.3138  168.2939  121.3337  263.2627  280.1679    10
 #   sf 2971.71354 3094.8000 3217.7323 3143.0750 3386.4805 3523.9355    10
+
+
+
 
 

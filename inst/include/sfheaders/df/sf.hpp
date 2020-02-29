@@ -36,6 +36,7 @@ namespace df {
       Rcpp::NumericVector& expanded_index,
       R_xlen_t& i
   ) {
+
     switch( TYPEOF( v ) ) {
     case LGLSXP: {
       Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );

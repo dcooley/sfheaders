@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "sfheaders/cast/sfg.hpp"
 #include "sfheaders/cast/sfc.hpp"
+#include "sfheaders/cast/sf.hpp"
 
 #include "sfheaders/sfc/sfc.hpp"
 
