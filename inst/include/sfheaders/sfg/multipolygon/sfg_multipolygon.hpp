@@ -61,7 +61,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::List& lst,
     bool close = true
 ) {
-  //Rcpp::List mp( 1 );
+
   lst = sfheaders::polygon_utils::close_polygon( lst, close );
   sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTIPOLYGON );
   return lst;
@@ -467,6 +467,7 @@ inline SEXP sfg_multipolygon(
     SEXP& x,
     bool close = true
 ) {
+
   switch ( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {

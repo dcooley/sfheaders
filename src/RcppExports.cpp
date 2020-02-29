@@ -64,14 +64,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_cast_sfc
-Rcpp::List rcpp_cast_sfc(Rcpp::List sfc, std::string cast_to);
-RcppExport SEXP _sfheaders_rcpp_cast_sfc(SEXP sfcSEXP, SEXP cast_toSEXP) {
+Rcpp::List rcpp_cast_sfc(Rcpp::List sfc, std::string cast_to, bool close);
+RcppExport SEXP _sfheaders_rcpp_cast_sfc(SEXP sfcSEXP, SEXP cast_toSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
     Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sfc(sfc, cast_to));
+    Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sfc(sfc, cast_to, close));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -649,7 +650,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
     {"_sfheaders_rcpp_count_new_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_objects, 2},
     {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
-    {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 2},
+    {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 3},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

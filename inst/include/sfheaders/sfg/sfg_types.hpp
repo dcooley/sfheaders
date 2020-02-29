@@ -16,6 +16,11 @@ namespace sfg {
   const int SFG_POLYGON         = 5;
   const int SFG_MULTIPOLYGON    = 6;
 
+  const int VECTOR              = 1;
+  const int MATRIX              = 2;
+  const int LIST_MATRIX         = 3;
+  const int LIST_LIST_MATRIX    = 4;
+
   inline std::string get_sfg_type( int sfg_type ) {
     switch( sfg_type ) {
     case SFG_POINT: { return "POINT"; }

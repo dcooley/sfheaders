@@ -21,8 +21,8 @@ rcpp_count_new_sfc_objects <- function(sfc, cast_to) {
     .Call(`_sfheaders_rcpp_count_new_sfc_objects`, sfc, cast_to)
 }
 
-rcpp_cast_sfc <- function(sfc, cast_to) {
-    .Call(`_sfheaders_rcpp_cast_sfc`, sfc, cast_to)
+rcpp_cast_sfc <- function(sfc, cast_to, close = TRUE) {
+    .Call(`_sfheaders_rcpp_cast_sfc`, sfc, cast_to, close)
 }
 
 rcpp_sfg_dimension <- function(x) {

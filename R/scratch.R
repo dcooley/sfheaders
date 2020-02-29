@@ -118,8 +118,11 @@
 #
 #
 # nc <- sf::st_read( system.file("./shape/nc.shp", package = "sf"))
-# res <- sfheaders:::rcpp_cast_sfc( nc[4,]$geometry, "POINT" )
-
+# line <- sfheaders:::rcpp_cast_sfc( nc$geometry, "LINESTRING" )
+# mply <- sfheaders:::rcpp_cast_sfc( line, "MULTIPOLYGON" )
+# mpt <- sfheaders:::rcpp_cast_sfc( poly, "MULTIPOINT" )
+# pt <- sfheaders:::rcpp_cast_sfc( poly, "POINT" )
+# sfheaders:::rcpp_cast_sfc( poly, "POLYGON")
 
 # nc <- rbind( nc, nc, nc, nc, nc )
 # nc <- rbind( nc )

@@ -321,10 +321,34 @@ namespace cast {
     return res;
   }
 
+  // returns CAST_UP or CAST_DOWN
+  // given the from & to
+  // casting to the same geometry will be counted as 'DOWN'
+  inline int cast_type( std::string& cast ) {
+    if( cast == "POINT" ) {
+      return sfheaders::sfg::VECTOR;
+    } else if ( cast == "MULTIPOINT" ) {
+      return sfheaders::sfg::MATRIX;
+    } else if ( cast == "LINESTRING" ) {
+      return sfheaders::sfg::MATRIX;
+    } else if ( cast == "MULTILINESTRING" ) {
+      return sfheaders::sfg::LIST_MATRIX;
+    } else if ( cast == "POLYGON" ) {
+      return sfheaders::sfg::LIST_MATRIX;
+    } else if ( cast == "MULTIPOLYGON" ) {
+      return sfheaders::sfg::LIST_LIST_MATRIX;
+    } else {
+      Rcpp::stop("sfheders - unknown geometry type to cast to");
+    }
+    return -1;
+  }
+
 
   // TODO: keep / calculate the bbox, z_range and m_range
   // these shouldn't change; because the coordinates aren't changing,right?
-  inline Rcpp::List cast_sfc( Rcpp::List& sfc, std::string& cast_to ) {
+  inline Rcpp::List cast_sfc( Rcpp::List& sfc, std::string& cast_to, bool close = true ) {
+
+    int casting_to = cast_type( cast_to );
 
     // get bbox, z_range, m_range;
     Rcpp::List crs = sfc.attr("crs");
@@ -338,6 +362,8 @@ namespace cast {
     int epsg = crs[0];
     Rcpp::String proj4string = crs[1];
 
+    std::string cast_from;
+
     R_xlen_t i, j;
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
     // Rcpp::Rcout << "n_results: " << n_results << std::endl;
@@ -349,6 +375,10 @@ namespace cast {
 
     // loop over reach sfg and convert and fill teh resutl list
     R_xlen_t result_counter = 0;  // for indexing into the res( ) list
+
+    // IFF the input is not a list, this loop won't work
+    // so only use this list loop iff the casting_from >= LIST_MATRIX !! done
+
     R_xlen_t n = sfc.size();
 
     for( i = 0; i < n; ++i ) {
@@ -357,12 +387,21 @@ namespace cast {
       R_xlen_t returned_size = n_results[ i ];
       // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
 
-      Rcpp::List new_res;
+      //Rcpp::List new_res;
 
       //if( cast_to == "POLYGON" ) {
-        SEXP s = sfc[ i ];
-        new_res = sfheaders::cast::cast_to( s, cast_to );
+        SEXP sfg = sfc[ i ];
+
+        Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
+        cast_from = cls[1];
+
+        int casting_from = cast_type( cast_from );
+
+        SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, close );
+
       //}
+
+      //return new_res;
 
       // Rcpp::Rcout << "new_res.size() " << new_res.size() << std::endl;
 
@@ -370,10 +409,30 @@ namespace cast {
       //   Rcpp::stop("sfheaders - incompatible sizes");
       // }
 
-      for( j = 0; j < returned_size; ++j ) {
-        res[ result_counter ] = new_res[ j ];
+      // iff we're casting UP, we don't need to access the list element?
+      // iff we're casting DOWN, am I nesting the objevt oo deep
+
+      // Rcpp::Rcout << "from: " << casting_from << ", to: " << casting_to << std::endl;
+
+
+      if( casting_from <= casting_to ) {
+        // Rcpp::Rcout << "casting down: " << std::endl;
+        // Rcpp::Rcout << "typeof: " << TYPEOF( new_res ) << std::endl;
+        res[ result_counter ] = new_res;
         ++result_counter;
-        // Rcpp::Rcout << "result_counter: " << result_counter << std::endl;
+      } else {
+        // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
+        for( j = 0; j < returned_size; ++j ) {
+          //if( casting_to >= sfheaders::sfg::LIST_MATRIX ) {
+            Rcpp::List new_lst = Rcpp::as< Rcpp::List >( new_res );
+            res[ result_counter ] = new_lst[ j ];
+          //} else {
+          //  Rcpp::Rcout << "not a lsit" << std::endl;
+          //  res[ result_counter ] = new_res;
+          //}
+          // Rcpp::Rcout << "result_counter: " << result_counter << std::endl;
+          ++result_counter;
+        }
       }
 
     }
