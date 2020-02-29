@@ -14,7 +14,7 @@ sf_cast(sf, to, close = TRUE)
 \item{close}{logical indicating if polygons should be closed}
 }
 \description{
-convert the input \code{sf} to a different geometry.
+convert the input \code{sf} to a different geometry
 }
 \examples{
 
@@ -29,8 +29,22 @@ pt <- sf_point(obj = df, x = "x", y = "y", z = "id1")
 mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
 ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
 mls <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
-p <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2", close = FALSE )
-mp <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "id1", linestring_id = "id2", close = FALSE )
+p <- sf_polygon(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , polygon_id = "id1"
+  , linestring_id = "id2"
+  , close = FALSE
+  )
+mp <- sf_multipolygon(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , multipolygon_id = "id1"
+  , linestring_id = "id2"
+  , close = FALSE
+  )
 
 sf_cast( pt, "LINESTRING" )
 sf_cast( mpt, "POLYGON" )

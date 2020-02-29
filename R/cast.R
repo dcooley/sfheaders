@@ -18,8 +18,22 @@
 #' mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
 #' ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
 #' mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
-#' p <- sfc_polygon(obj = df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2", close = FALSE )
-#' mp <- sfc_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "id1", linestring_id = "id2", close = FALSE )
+#' p <- sfc_polygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , polygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#' mp <- sfc_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#' )
 #'
 #' sfc_cast( pt, "LINESTRING" )
 #' sfc_cast( mpt, "POLYGON" )
@@ -55,8 +69,22 @@ sfc_cast <- function( sfc, to, close = TRUE ) {
 #' mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
 #' ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
 #' mls <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
-#' p <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2", close = FALSE )
-#' mp <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "id1", linestring_id = "id2", close = FALSE )
+#' p <- sf_polygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , polygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#' mp <- sf_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
 #'
 #' sf_cast( pt, "LINESTRING" )
 #' sf_cast( mpt, "POLYGON" )

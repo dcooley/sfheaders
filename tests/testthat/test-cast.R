@@ -452,7 +452,7 @@ test_that("mixed sfc_GEOMETRY is casted",{
     return( length( res ) == 1 & cast_to == res )
   }
 
-  has_round_tripped <- function( sfc, df_orig, df_res ) {
+  has_round_tripped <- function( df_orig, df_res ) {
     all( df_res[["x"]] == df_orig[["x"]] ) &
       all( df_res[["y"]] == df_orig[["y"]] )
   }
