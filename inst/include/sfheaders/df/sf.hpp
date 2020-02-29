@@ -17,7 +17,7 @@ namespace df {
       // the name already exists, so we need to uniqueify it
       int counter = 1;
       std::string new_name;
-      do {
+      do {                       // #nocov
         std::ostringstream os;
         os << this_name.get_cstring() << ".." << counter;
         new_name = os.str();

@@ -382,3 +382,7 @@ test_that("unique ids are retrieved from column",{
   expect_equal( sfheaders:::rcpp_get_ids( m, "V1" ), c(1.2,2) )
 
 })
+
+
+
+

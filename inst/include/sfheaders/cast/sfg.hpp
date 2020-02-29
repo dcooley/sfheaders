@@ -112,7 +112,7 @@ namespace cast {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return count_listListMatrices( lst );
     } else {
-      Rcpp::stop("sfheaders - I can't cast this type of object");
+      Rcpp::stop("sfheaders - I can't cast this type of object");  // #nocov
     }
   }
 
@@ -134,7 +134,7 @@ namespace cast {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return count_listListMatrices( lst );
     } else {
-      Rcpp::stop("sfheaders - I can't cast this type of object");
+      Rcpp::stop("sfheaders - I can't cast this type of object"); // #nocov
     }
   }
 

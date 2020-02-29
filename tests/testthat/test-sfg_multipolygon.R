@@ -180,7 +180,7 @@ test_that("issue 39 is fixed", {
 
 
 ## issue 57
-test_that("specifying one geometry column works", {
+test_that("specifying one or no geometry columns works", {
 
   df <- data.frame(
     polygon_id = c(rep(1, 5), rep(2, 10))
@@ -190,6 +190,18 @@ test_that("specifying one geometry column works", {
     , z = c(1)
     , m = c(1)
   )
+
+  res1 <- sfg_polygon(
+    obj = df[, c("x","y")]
+  )
+
+  res2 <- sfg_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+  )
+
+  expect_equal( res1, res2 )
 
   res1 <- sfg_polygon(
     df[, c("x","y","line_id")]

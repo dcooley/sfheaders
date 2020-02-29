@@ -537,3 +537,37 @@ test_that("errors handled",{
 
 })
 
+test_that("sfc objects counted correctly",{
+
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+    , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+    , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+    , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+  )
+
+  mpt <- sfg_multipoint(obj = df, x = "x", y = "y")
+  ls <- sfg_linestring(obj = df, x = "x", y = "y")
+  mls <- sfg_multilinestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+
+  expect_equal(
+    sfheaders:::rcpp_count_new_objects( mpt, "POINT" )
+    , nrow( df )
+  )
+
+  expect_equal(
+    sfheaders:::rcpp_count_new_objects( ls, "POINT" )
+    , nrow( df )
+  )
+
+  expect_equal(
+    sfheaders:::rcpp_count_new_objects( mls, "POINT" )
+    , nrow( df )
+  )
+
+  expect_equal(
+    sfheaders:::rcpp_count_new_objects( mpt, "MULTIPOLYGON" )
+    , 1
+  )
+
+})
