@@ -284,7 +284,8 @@ namespace cast {
   }
 
   inline SEXP multipoint_to_linestring( Rcpp::NumericMatrix& nm ) {
-    return sfheaders::sfg::sfg_linestring( nm );
+    Rcpp::NumericMatrix nm2 = Rcpp::clone( nm );
+    return sfheaders::sfg::sfg_linestring( nm2 );
   }
 
   inline SEXP multipoint_to_multilinestring( Rcpp::NumericMatrix& nm ) {
@@ -312,7 +313,8 @@ namespace cast {
   }
 
   inline SEXP linestring_to_multipoint( Rcpp::NumericMatrix& nm ) {
-    return sfheaders::sfg::sfg_multipoint( nm );
+    Rcpp::NumericMatrix nm2 = Rcpp::clone( nm );
+    return sfheaders::sfg::sfg_multipoint( nm2 );
   }
 
   inline SEXP linestring_to_multilinestring( Rcpp::NumericMatrix& nm ) {
@@ -376,12 +378,16 @@ namespace cast {
   }
 
   inline SEXP multilinestring_to_polygon( Rcpp::List& lst, bool close = true ) {
-    return sfheaders::sfg::sfg_polygon( lst, close );
+    Rcpp::List lst2 = Rcpp::clone( lst );
+    //Rcpp::List lst2(1);
+    //lst2[0] = lst[0];   // make a new object so it's not updated by-reference
+    return sfheaders::sfg::sfg_polygon( lst2, close );
   }
 
   inline SEXP multilinestring_to_multipolygon( Rcpp::List& lst, bool close = true ) {
+    Rcpp::List lst2 = Rcpp::clone( lst );
     Rcpp::List mpl(1);
-    mpl[0] = lst;
+    mpl[0] = lst2;
     return sfheaders::sfg::sfg_multipolygon( mpl, close );
   }
 
@@ -420,15 +426,17 @@ namespace cast {
   }
 
   inline SEXP polygon_to_multilinestring( Rcpp::List& lst ) {
-    return sfheaders::sfg::sfg_multilinestring( lst );
+    Rcpp::List lst2 = Rcpp::clone( lst );
+    return sfheaders::sfg::sfg_multilinestring( lst2 );
   }
 
   inline SEXP polygon_to_multipolygon( Rcpp::List& lst, bool close = true ) {
+    Rcpp::List lst2 = Rcpp::clone( lst );
     //lst.attr("class") = R_NilValue; // this will update the input by-reference
     // not doing it will leave the sfg_POLYGON class on the inner-polygons of the MULTIPOLYGON
     // not sure if this is an issue or note.
     Rcpp::List mpl(1);
-    mpl[0] = lst;
+    mpl[0] = lst2;
     return sfheaders::sfg::sfg_multipolygon( mpl, close );
   }
 
@@ -530,11 +538,13 @@ namespace cast {
 
 
   inline SEXP multipolygon_to_multilinestring( Rcpp::List& lst ) {
-    return sfheaders::sfg::sfg_multilinestrings( lst );
+    Rcpp::List lst2 = Rcpp::clone( lst );
+    return sfheaders::sfg::sfg_multilinestrings( lst2 );
   }
 
   inline SEXP multipolygon_to_polygon( Rcpp::List& lst, bool close = true ) {
-    return sfheaders::sfg::sfg_polygons( lst, close );
+    Rcpp::List lst2 = Rcpp::clone( lst );
+    return sfheaders::sfg::sfg_polygons( lst2, close );
   }
 
   inline SEXP cast_to_point( SEXP& sfg, std::string& geometry ) {

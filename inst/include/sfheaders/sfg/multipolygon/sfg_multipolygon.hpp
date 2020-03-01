@@ -617,6 +617,7 @@ inline SEXP sfg_multipolygon(
     bool close = true
 ) {
 
+  // #nocov start
   if( Rf_isNull( cols ) ) {
     Rcpp::IntegerVector id_cols( 2 );
     id_cols[0] = polygon_id;
@@ -624,6 +625,7 @@ inline SEXP sfg_multipolygon(
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, close );
   }
+  // #nocov end
 
   switch( TYPEOF( cols ) ) {
   case REALSXP: {}
@@ -649,6 +651,7 @@ inline SEXP sfg_multipolygon(
     bool close = true
 ) {
 
+  // #nocov start
   if( Rf_isNull( cols ) ) {
     Rcpp::StringVector id_cols( 2 );
     id_cols[0] = polygon_id;
@@ -656,6 +659,7 @@ inline SEXP sfg_multipolygon(
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, close );
   }
+  // #nocov end
 
   switch( TYPEOF( cols ) ) {
   // case REALSXP: {}
