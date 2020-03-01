@@ -140,13 +140,13 @@ namespace sfc {
   //
   //   R_xlen_t i, j;
   //
-  //   for( i = 0; i < n_polygons; i++ ) {
+  //   for( i = 0; i < n_polygons; ++i ) {
   //     Rcpp::List sfgs = lst[i];
   //     R_xlen_t n_linestrings = sfgs.size();
   //
   //     Rcpp::List ml( n_linestrings );
   //
-  //     for( j = 0; j < n_linestrings; j++ ) {
+  //     for( j = 0; j < n_linestrings; ++j ) {
   //
   //       SEXP this_linestring = sfgs[j];
   //
@@ -514,7 +514,7 @@ namespace sfc {
     int end;
     Rcpp::StringVector df_names = df.names();
 
-    for( i = 0; i < n_polygons; i++ ) {
+    for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
@@ -563,7 +563,7 @@ namespace sfc {
     int end;
     Rcpp::StringVector df_names = df.names();
 
-    for( i = 0; i < n_polygons; i++ ) {
+    for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
@@ -609,7 +609,7 @@ namespace sfc {
     int start;
     int end;
 
-    for( i = 0; i < n_polygons; i++ ) {
+    for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
       Rcpp::IntegerMatrix im2 = im( Rcpp::Range(start, end), Rcpp::_ );
@@ -655,7 +655,7 @@ namespace sfc {
     int start;
     int end;
 
-    for( i = 0; i < n_polygons; i++ ) {
+    for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
       Rcpp::NumericMatrix nm2 = nm( Rcpp::Range(start, end), Rcpp::_ );

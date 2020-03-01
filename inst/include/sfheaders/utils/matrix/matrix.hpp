@@ -39,7 +39,7 @@ namespace utils {
     int n_rows = df.rows();
     Rcpp::StringVector df_names = df.names();
     Rcpp::NumericMatrix nm( n_rows, n_cols );
-    for( i = 0; i < n_cols; i++ ) {
+    for( i = 0; i < n_cols; ++i ) {
       Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ i ] );
       nm( Rcpp::_, i ) = this_column;
     }
@@ -71,7 +71,7 @@ namespace utils {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector m_names( n_cols );
     Rcpp::NumericMatrix nm( n_rows, n_cols );
-    for( i = 0; i < n_cols; i++ ) {
+    for( i = 0; i < n_cols; ++i ) {
       int this_col = cols[i];
       m_names[i] = df_names[ this_col ];
       Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ this_col ] );
@@ -98,7 +98,7 @@ namespace utils {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector m_names( n_cols );
     Rcpp::NumericMatrix nm( n_rows, n_cols );
-    for( i = 0; i < n_cols; i++ ) {
+    for( i = 0; i < n_cols; ++i ) {
       Rcpp::String this_col = cols[ i ];
       m_names[i] = this_col;
       Rcpp::NumericVector this_column = Rcpp::as< Rcpp::NumericVector >( df[ this_col ] );

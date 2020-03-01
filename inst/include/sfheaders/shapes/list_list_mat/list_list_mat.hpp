@@ -59,7 +59,7 @@ namespace shapes {
     Rcpp::List mpl( n_lines );
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
 
@@ -91,7 +91,7 @@ namespace shapes {
     Rcpp::List mpl( n_lines );
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
 

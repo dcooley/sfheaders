@@ -14,7 +14,7 @@ namespace utils {
     R_xlen_t i;
     R_xlen_t n = vec_2.length();
 
-    for( i = 0; i < n; i++ ) {
+    for( i = 0; i < n; ++i ) {
       vec_1[ i + start_idx ] = vec_2[ i ] ;
     }
     return vec_1;

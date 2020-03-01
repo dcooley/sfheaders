@@ -43,7 +43,7 @@ namespace shapes {
     R_xlen_t n_col = geometry_cols.length();
     R_xlen_t i;
     Rcpp::IntegerVector iv( n_col );
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       int this_col = geometry_cols[ i ];
       iv[ i ] = im( 0, this_col );
     }
@@ -60,7 +60,7 @@ namespace shapes {
     R_xlen_t n_col = df.ncol();
     Rcpp::NumericVector nv( n_col );
     R_xlen_t i;
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       nv[i] = df[i];
     }
     return nv;
@@ -81,7 +81,7 @@ namespace shapes {
     }
     Rcpp::NumericVector nv( n_col );
     R_xlen_t i;
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       Rcpp::String this_col = geometry_cols[ i ];
       nv[i] = df[ this_col ];
     }
@@ -129,7 +129,7 @@ namespace shapes {
     R_xlen_t n_col = geometry_cols.length();
     R_xlen_t i;
     Rcpp::NumericVector nv( n_col );
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       int this_col = geometry_cols[ i ];
       nv[ i ] = nm( 0, this_col );
     }

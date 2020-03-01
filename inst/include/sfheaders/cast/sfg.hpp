@@ -27,54 +27,13 @@
 namespace sfheaders {
 namespace cast {
 
-
-  // count number of sfc objects will be returned from the CAST function
-  // only applies to donw-casting
-  // as up-casting the objects either stay as-is, or get wrapped in an outer-list
-  //
-  // will return a vector the same lenght as n_row( sf ) / length( sfc )
-  // the sum of this vector will allocate the result list
-  // and be used to index the `sf` so properties are repeated.
-  //
-  // the listMat_to_listListMat functions can stay. I will need to use them
-  // for down-casting (i.e. I need to use the id's.).
-  // - may need to update the `sfg_()` functions to accept lists?
-  //
-  //
-  // MULTIPOLYGON - to - POLYGON / MULTILINESTRING
-  // - n == number of inner lists
-  // MULTIPOLYGON - to - LINESTRING / MULTIPOING
-  // - n == number of inner of inner lists
-
-  // get_sfc_n_objects
-  // (rather than get_sfc_n_coordinates)
-  //
-
-  // if( geometry == "POINT" ) {
-  //   // going from POINT to POLYGON
-  //   // (does this even make sense?)
-  // } else if ( geometry == "MULTIPOINT") {
-  //
-  // } else if ( geometry == "LINESTRING" ) {
-  //
-  // } else if ( geometry == "MULTILINESTRING" ) {
-  //
-  // } else if ( geometry == "POLYGON" ) {
-  //
-  // } else if ( geometry == "MULTIPOLYGON" ) {
-  //
-  // } else {
-  //   Rcpp::stop("sfheaders - I can't cast this type of object");
-  // }
-
-
   inline R_xlen_t count_listMatrices( Rcpp::List& lst ) {
     return lst.size();
   }
 
   inline R_xlen_t count_listListMatrices( Rcpp::List& lst ) {
     // counts all the matrices inside a listList object
-    R_xlen_t i, j, n;
+    R_xlen_t i, n;
     R_xlen_t res = 0;
     n = lst.size();
     // Rcpp::Rcout << "n: " << n << std::endl;
@@ -235,13 +194,6 @@ namespace cast {
   //   // now un-pack the res[] list to a single-level list
   // }
 
-  // inline Rcpp::List listListMat_to_listMat( Rcpp::List& sfg, std::string& cast_to ) {
-  //   if( cast_to == "MULTILINESTRING" ) {
-  //     return sfheaders::sfg::sfg_multilinestrings( sfg );
-  //   } else if ( cast_to == "POLYGON" ) {
-  //     return sfheaders::sfg::sfg_polygons( sfg );
-  //   }
-  // }
 
   // inline Rcpp::List cast_to_linestring( SEXP& sfg, std::string& geometry, std::string& cast_to ) {
   //

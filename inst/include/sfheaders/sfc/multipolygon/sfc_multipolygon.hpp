@@ -139,13 +139,13 @@ namespace sfc {
   //
   //   R_xlen_t i, j, k;
   //
-  //   for( i = 0; i < n_multipolygons; i++ ) {
+  //   for( i = 0; i < n_multipolygons; ++i ) {
   //     Rcpp::List sfgs = lst[i];
   //     R_xlen_t n_polygons = sfgs.size();
   //
   //     Rcpp::List pl( n_polygons );
   //
-  //     for( j = 0; j < n_polygons; j++ ) {
+  //     for( j = 0; j < n_polygons; ++j ) {
   //
   //       Rcpp::List ls = sfgs[j];
   //       R_xlen_t n_linestrings = ls.size();
@@ -508,7 +508,7 @@ inline SEXP sfc_multipolygon(
   int end;
   Rcpp::StringVector df_names = df.names();
 
-  for( i = 0; i < n_multipolygons; i++ ) {
+  for( i = 0; i < n_multipolygons; ++i ) {
     start = multipolygon_positions( i, 0 );
     end = multipolygon_positions( i, 1 );
     Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
@@ -558,7 +558,7 @@ inline SEXP sfc_multipolygon(
   int end;
   Rcpp::StringVector df_names = df.names();
 
-  for( i = 0; i < n_multipolygons; i++ ) {
+  for( i = 0; i < n_multipolygons; ++i ) {
     start = multipolygon_positions( i, 0 );
     end = multipolygon_positions( i, 1 );
     Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
@@ -606,7 +606,7 @@ inline SEXP sfc_multipolygon(
   int start;
   int end;
 
-  for( i = 0; i < n_multipolygons; i++ ) {
+  for( i = 0; i < n_multipolygons; ++i ) {
     start = multipolygon_positions( i, 0 );
     end = multipolygon_positions( i, 1 );
     Rcpp::IntegerMatrix im2 = im( Rcpp::Range(start, end), Rcpp::_ );
@@ -654,7 +654,7 @@ inline SEXP sfc_multipolygon(
   int start;
   int end;
 
-  for( i = 0; i < n_multipolygons; i++ ) {
+  for( i = 0; i < n_multipolygons; ++i ) {
     start = multipolygon_positions( i, 0 );
     end = multipolygon_positions( i, 1 );
     Rcpp::NumericMatrix nm2 = nm( Rcpp::Range(start, end), Rcpp::_ );
