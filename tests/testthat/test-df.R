@@ -182,13 +182,12 @@ test_that("different data.frame columns supported",{
 
   sf <- sfheaders::sf_point( obj = df, x = "x", y = "y" )
   sf$id <- 1L
-  sf <- merge(
+  sf <- base::merge.data.frame(
     x = sf
     , y = df[, setdiff(names(df), c("x","y"))]
     , by = "id"
   )
 
-  ## needs 'sf' unattached for this to work
   expect_error(
     sfheaders::sf_to_df( sf, fill = TRUE )
     , "sfheaders - sf_column not found"

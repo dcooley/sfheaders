@@ -21,5 +21,6 @@ LinkingTo:
 Imports: 
     Rcpp
 Suggests:
-    testthat,
-    covr
+    covr,
+    sf,
+    testthat
