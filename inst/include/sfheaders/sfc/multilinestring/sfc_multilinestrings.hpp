@@ -19,7 +19,6 @@ namespace sfc {
     return sfcs;
   }
 
-
 } // sfc
 } // sfheaders
 

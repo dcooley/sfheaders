@@ -271,6 +271,10 @@ namespace df {
 
     Rcpp::List res = setup_result( total_coordinates );
 
+    // TODO: optimise here; iff sfc_CLASS is a geometry (rather than GEOMETRY / GEOMETRYCOLLECTION)
+    // we may not have to do any type-checking inside this loop
+    // and IFF it's a POINT I don't have to do all the fill_vector stuff
+
     for( i = 0; i < n_sfg; ++i ) {
 
       SEXP sfci = sfc[ i ];

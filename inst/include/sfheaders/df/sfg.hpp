@@ -21,15 +21,7 @@
 #define SFG_COLUMN                1
 #define SFC_COLUMN                0
 
-#define MAX_COLUMNS            13
-
-// #define SFG_POINT               1
-// #define SFG_MULTIPOINT          2
-// #define SFG_LINESTRING          3
-// #define SFG_MULTILINESTRING     4
-// #define SFG_POLYGON             5
-// #define SFG_MULTIPOLYGON        6
-// #define SFG_GEOMETRYCOLLECTION  7
+#define MAX_COLUMNS               13
 
 namespace sfheaders {
 namespace df {
@@ -76,7 +68,6 @@ namespace df {
       columns[ LINESTRING_COLUMN ] = true;
       columns[ POLYGON_COLUMN ] = true;
     }
-
     return column_names[ columns ];
   }
 
@@ -439,7 +430,6 @@ namespace df {
 
     res.attr("names") = df_names;
     return res;
-
   }
 
 } // df
