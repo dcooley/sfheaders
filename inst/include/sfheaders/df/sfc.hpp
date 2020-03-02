@@ -246,7 +246,11 @@ namespace df {
     }
   }
 
-  inline Rcpp::List get_sfc_coordinates( Rcpp::List& sfc, R_xlen_t& total_coordinates ) {
+
+  inline Rcpp::List get_sfc_geometry_coordinates(
+      Rcpp::List& sfc,
+      R_xlen_t& total_coordinates
+  ) {
 
     Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
     columns[ X_COLUMN ] = true;
@@ -327,28 +331,60 @@ namespace df {
 
     // make data.frame
     res = res[ columns ];
-    res.attr("class") = Rcpp::CharacterVector("data.frame");
+    Rcpp::StringVector res_names = column_names[ columns ];
+    return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
+  }
 
-    if( total_coordinates > 0 ) {
-      Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
-      res.attr("row.names") = rownames;
-    } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
+  inline Rcpp::List get_sfc_point_coordinates(
+      Rcpp::List& sfc,
+      R_xlen_t& total_coordinates
+  ) {
+
+    Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
+    columns[ X_COLUMN ] = true;
+    columns[ Y_COLUMN ] = true;
+    columns[ SFG_COLUMN ] = true;
+
+    R_xlen_t n_sfg = sfc.size();
+    R_xlen_t i;
+    R_xlen_t j;
+    R_xlen_t n_col;
+
+    Rcpp::NumericVector x( total_coordinates );
+    Rcpp::NumericVector y( total_coordinates );
+    Rcpp::NumericVector z( total_coordinates );
+    Rcpp::NumericVector m( total_coordinates );
+
+    for( i = 0; i < n_sfg; ++i ) {
+      Rcpp::List sfg = sfc[ i ];
+
     }
 
-    res.attr("names") = column_names[ columns ];
-    return res;
+    return Rcpp::List();
+
   }
 
   inline Rcpp::List sfc_to_df(
       Rcpp::List& sfc,
       Rcpp::NumericMatrix& sfc_coordinates
   ) {
+
+    Rcpp::CharacterVector sfc_class = sfc.attr("class");
+    std::string cls;
+    cls = sfc_class[1];
+
+    // switch on cls
+    if ( cls == "sfc_POINT" ) {
+
+    } else {
+    }
+
     R_xlen_t n_geometries = sfc_coordinates.nrow();
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
     total_coordinates = total_coordinates + 1;
 
-    return get_sfc_coordinates( sfc, total_coordinates );
+    return get_sfc_geometry_coordinates( sfc, total_coordinates );
+
   }
 
   inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
