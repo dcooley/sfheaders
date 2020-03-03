@@ -1,6 +1,8 @@
 #ifndef R_SFHEADERS_SFC_ATTRIBUTES_H
 #define R_SFHEADERS_SFC_ATTRIBUTES_H
 
+#include "sfheaders/sfc/bbox.hpp"
+
 #include <Rcpp.h>
 
 namespace sfheaders {
@@ -143,8 +145,7 @@ namespace sfc {
     sfc.attr("precision") = precision;
 
     // attribute::bbox
-    bbox.attr("class") = Rcpp::CharacterVector::create("bbox");
-    bbox.attr("names") = Rcpp::CharacterVector::create("xmin", "ymin", "xmax", "ymax");
+    sfheaders::bbox::attach_bbox_attributes( bbox );
     sfc.attr("bbox") = bbox;
 
     z_range.attr("class") = Rcpp::CharacterVector::create("z_range");

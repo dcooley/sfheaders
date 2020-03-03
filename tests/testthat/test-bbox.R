@@ -169,3 +169,28 @@ test_that("m_range correctly calculated", {
 
 })
 
+## issue 59
+test_that("bbox calculated on existing sfc",{
+
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+    , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+    , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+    , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+  )
+
+  pt <- sfc_point(obj = df, x = "x", y = "y", z = "id1")
+  mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+  ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+  mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+  p <- sfc_polygon(obj = df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2", close = FALSE )
+  mp <- sfc_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "id1", linestring_id = "id2", close = FALSE )
+
+  expect_equal(calculate_bbox( pt ), attr(pt, "bbox"))
+  expect_equal(calculate_bbox( mpt ), attr(mpt, "bbox"))
+  expect_equal(calculate_bbox( ls ), attr(ls, "bbox"))
+  expect_equal(calculate_bbox( mls ), attr(mls, "bbox"))
+  expect_equal(calculate_bbox( p ), attr(p, "bbox"))
+  expect_equal(calculate_bbox( mp ), attr(mp, "bbox"))
+
+})
