@@ -298,23 +298,37 @@ sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL
 #' Calculates the bounding box of a \code{sfc} object. This does not read the "bbox" attribute,
 #' it re-calculates the bounding box from the geometry coordinates
 #'
-#' @params sfc simple-feature collection \code{sfc} object.
+#' @param sfc simple-feature collection \code{sfc} object.
 #'
 #' @examples
 #'
 #' df <- data.frame(
-#' id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
-#' , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
-#' , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
-#' , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+#'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+#'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+#'  , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+#'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
 #' )
 #'
-#' pt <- sfc_point(obj = df, x = "x", y = "y", z = "id1")
-#' mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
-#' ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
-#' mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
-#' p <- sfc_polygon(obj = df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2", close = FALSE )
-#' mp <- sfc_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "id1", linestring_id = "id2", close = FALSE )
+#' pt <- sf_point(obj = df, x = "x", y = "y", z = "id1")
+#' mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+#' ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+#' mls <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+#' p <- sf_polygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , polygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#' mp <- sf_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
 #'
 #' calculate_bbox( pt )
 #' calculate_bbox( mpt )
