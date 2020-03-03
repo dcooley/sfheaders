@@ -162,11 +162,11 @@ namespace df {
       res[ i + n_col - 1 ] = sfc_df[ i ];
     }
 
-    Rcpp::StringVector df_names = sfc_df_names[ keep_columns ];
-    return sfheaders::utils::make_dataframe( res, total_coordinates, sfc_df_names );
+    res.attr("sfc_columns") = sfc_df_names[ keep_columns ];
+    return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
 
     // res.attr("class") = Rcpp::CharacterVector("data.frame");
-    // res.attr("sfc_columns") = sfc_df_names[ keep_columns ];
+    //
     //
     // if( total_coordinates > 0 ) {
     //   Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );

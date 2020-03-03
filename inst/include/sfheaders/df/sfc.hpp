@@ -247,6 +247,7 @@ namespace df {
   }
 
 
+  // used for any mixed geomtry, or non-POINT
   inline Rcpp::List get_sfc_geometry_coordinates(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
@@ -335,33 +336,89 @@ namespace df {
     return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
   }
 
+  // for POINT geometries we can simplify / optimise because the number of rows is fixed
   inline Rcpp::List get_sfc_point_coordinates(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
   ) {
 
-    Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
-    columns[ X_COLUMN ] = true;
-    columns[ Y_COLUMN ] = true;
-    columns[ SFG_COLUMN ] = true;
+    Rcpp::LogicalVector columns( 6 ); // keeping track of which to subset
+    columns[ 2 ] = true; // x
+    columns[ 3 ] = true; // y
+    columns[ 0 ] = true; // sfg_id
+    columns[ 1 ] = true; // point_id
 
     R_xlen_t n_sfg = sfc.size();
-    R_xlen_t i;
-    R_xlen_t j;
+    R_xlen_t i, j;
     R_xlen_t n_col;
 
-    Rcpp::NumericVector x( total_coordinates );
-    Rcpp::NumericVector y( total_coordinates );
-    Rcpp::NumericVector z( total_coordinates );
-    Rcpp::NumericVector m( total_coordinates );
+    Rcpp::CharacterVector cls;
+    std::string dim;
+
+    Rcpp::StringVector col_names = {"sfg_id","point_id","x","y","z","m"};
+
+    Rcpp::NumericVector x( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector y( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector z( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector m( total_coordinates, Rcpp::NumericVector::get_na() );
+
+    Rcpp::List res( 6 );
+    //Rcpp::List res = setup_result( total_coordinates );
 
     for( i = 0; i < n_sfg; ++i ) {
-      Rcpp::List sfg = sfc[ i ];
+      Rcpp::NumericVector sfg_point = sfc[ i ];
+      int n_col = sfg_point.size();
 
+      // cls = sfg_point.attr("class");
+      // dim = cls[0];
+
+      x[ i ] = sfg_point[ 0 ];
+      y[ i ] = sfg_point[ 1 ];
+
+      if( n_col == 4 ) {
+        columns[ 4 ] = true;
+        columns[ 5 ] = true;
+        z[ i ] = sfg_point[ 2 ];
+        m[ i ] = sfg_point[ 3 ];
+      } else if ( n_col == 3 ) {
+        columns[ 4 ] = true;
+        z[ i ] = sfg_point[ 2 ];
+      }
     }
 
-    return Rcpp::List();
+    // id columns "sfg_id" and "point_id", which will be 1:nrow(sfc);
+    Rcpp::IntegerVector point_id = Rcpp::seq( 1, total_coordinates );
+    Rcpp::IntegerVector sfg_id = Rcpp::seq( 1, total_coordinates );
+    res[ 0 ] = sfg_id;
+    res[ 1 ] = point_id;
+    res[ 2 ] = x;
+    res[ 3 ] = y;
+    res[ 4 ] = z;
+    res[ 5 ] = m;
 
+    //return res;
+
+    res = res[ columns ];
+    Rcpp::StringVector res_names = col_names[ columns ];
+    return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
+  }
+
+  inline Rcpp::List get_sfc_coordinates(
+    Rcpp::List& sfc,
+    R_xlen_t& total_coordinates
+  ) {
+
+    Rcpp::CharacterVector sfc_class = sfc.attr("class");
+    std::string cls;
+    cls = sfc_class[0];
+
+
+    // switch on cls
+    if ( cls == "sfc_POINT" ) {
+      return get_sfc_point_coordinates( sfc, total_coordinates );
+    }
+
+    return get_sfc_geometry_coordinates( sfc, total_coordinates );
   }
 
   inline Rcpp::List sfc_to_df(
@@ -369,25 +426,36 @@ namespace df {
       Rcpp::NumericMatrix& sfc_coordinates
   ) {
 
+    R_xlen_t n_geometries = sfc_coordinates.nrow();
+    //
+    // Rcpp::CharacterVector sfc_class = sfc.attr("class");
+    // std::string cls;
+    // cls = sfc_class[1];
+    //
+    // // switch on cls
+    // if ( cls == "sfc_POINT" ) {
+    //   return get_sfc_point_coordinates( sfc, n_geometries );
+    // }
+
+    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
+    total_coordinates = total_coordinates + 1;
+    return get_sfc_coordinates( sfc, total_coordinates );
+  }
+
+  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
+
+    // get teh sfc class here!
+    // so if it's a POINT, can go direct to get_sfc_point()
     Rcpp::CharacterVector sfc_class = sfc.attr("class");
     std::string cls;
     cls = sfc_class[1];
 
     // switch on cls
     if ( cls == "sfc_POINT" ) {
-
-    } else {
+      R_xlen_t n_geometries = sfc.size();
+      return get_sfc_point_coordinates( sfc, n_geometries );
     }
 
-    R_xlen_t n_geometries = sfc_coordinates.nrow();
-    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
-    total_coordinates = total_coordinates + 1;
-
-    return get_sfc_geometry_coordinates( sfc, total_coordinates );
-
-  }
-
-  inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
     // seprated this so it's independant / not called twice from `sf_to_df()`
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     return sfc_to_df( sfc, sfc_coordinates );
