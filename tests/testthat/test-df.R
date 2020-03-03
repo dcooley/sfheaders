@@ -193,6 +193,8 @@ test_that("different data.frame columns supported",{
     , "sfheaders - sf_column not found"
   )
 
+  sf$geometry <- sfheaders::sfc_point( df[, c("x","y")])
+
   attr(sf, "class") <- c("sf", "data.frame")
   attr(sf, "sf_column") <- "geometry"
 

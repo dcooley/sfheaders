@@ -11,7 +11,6 @@ namespace df {
 
   inline Rcpp::String unique_name( Rcpp::String this_name, Rcpp::StringVector& existing_names ) {
     int is_in = sfheaders::utils::where_is( this_name, existing_names );
-    //Rcpp::Rcout << "is_in: " << is_in << std::endl;
 
     if( is_in != -1 ) {
       // the name already exists, so we need to uniqueify it
@@ -117,10 +116,7 @@ namespace df {
 
     // the 'non-geometry' names of the data.frame
     Rcpp::CharacterVector sf_names = sf.names();
-    //Rcpp::Rcout << "sf_names: " << sf_names << std::endl;
     // iff these names are in res_names
-
-    //Rcpp::Rcout << "res_names: " << res_names << std::endl;
 
     R_xlen_t name_position = 0;
     for( i = 0; i < n_col; ++i ) {

@@ -247,7 +247,7 @@ namespace df {
   }
 
 
-  // used for any mixed geomtry, or non-POINT
+  // used for any mixed geomtry, or non-POINT, because the total number of rows is varaible
   inline Rcpp::List get_sfc_geometry_coordinates(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
@@ -275,10 +275,6 @@ namespace df {
     double id;
 
     Rcpp::List res = setup_result( total_coordinates );
-
-    // TODO: optimise here; iff sfc_CLASS is a geometry (rather than GEOMETRY / GEOMETRYCOLLECTION)
-    // we may not have to do any type-checking inside this loop
-    // and IFF it's a POINT I don't have to do all the fill_vector stuff
 
     for( i = 0; i < n_sfg; ++i ) {
 
@@ -349,8 +345,7 @@ namespace df {
     columns[ 1 ] = true; // point_id
 
     R_xlen_t n_sfg = sfc.size();
-    R_xlen_t i, j;
-    R_xlen_t n_col;
+    R_xlen_t i;
 
     Rcpp::CharacterVector cls;
     std::string dim;
@@ -363,14 +358,10 @@ namespace df {
     Rcpp::NumericVector m( total_coordinates, Rcpp::NumericVector::get_na() );
 
     Rcpp::List res( 6 );
-    //Rcpp::List res = setup_result( total_coordinates );
 
     for( i = 0; i < n_sfg; ++i ) {
       Rcpp::NumericVector sfg_point = sfc[ i ];
       int n_col = sfg_point.size();
-
-      // cls = sfg_point.attr("class");
-      // dim = cls[0];
 
       x[ i ] = sfg_point[ 0 ];
       y[ i ] = sfg_point[ 1 ];
@@ -396,8 +387,6 @@ namespace df {
     res[ 4 ] = z;
     res[ 5 ] = m;
 
-    //return res;
-
     res = res[ columns ];
     Rcpp::StringVector res_names = col_names[ columns ];
     return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
@@ -411,7 +400,6 @@ namespace df {
     Rcpp::CharacterVector sfc_class = sfc.attr("class");
     std::string cls;
     cls = sfc_class[0];
-
 
     // switch on cls
     if ( cls == "sfc_POINT" ) {
@@ -427,15 +415,6 @@ namespace df {
   ) {
 
     R_xlen_t n_geometries = sfc_coordinates.nrow();
-    //
-    // Rcpp::CharacterVector sfc_class = sfc.attr("class");
-    // std::string cls;
-    // cls = sfc_class[1];
-    //
-    // // switch on cls
-    // if ( cls == "sfc_POINT" ) {
-    //   return get_sfc_point_coordinates( sfc, n_geometries );
-    // }
 
     R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
     total_coordinates = total_coordinates + 1;
