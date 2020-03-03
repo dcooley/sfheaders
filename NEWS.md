@@ -1,5 +1,7 @@
 # sfheaders 1.1.0
 
+* `sf_cast()` functiosn for casting between geometry types
+* optimised converting `sfc_POINT`-only objects to data.frames
 * `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates
 
 # sfheaders 1.0.0
