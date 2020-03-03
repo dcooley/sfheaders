@@ -285,23 +285,25 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
 #' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
 #'
 #' @export
-sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
-                              multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL,
-                              close = TRUE ) {
+sfc_multipolygon <- function(
+  obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
+  multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL,
+  close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
   rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), close )
 }
 
 
-#' Calculate bbox
+#' sf bbox
 #'
-#' Calculates the bounding box of a \code{sfc} object. This does not read the "bbox" attribute,
+#' Calculates the bounding box of coordinates. This does not read the "bbox" attribute,
 #' it re-calculates the bounding box from the geometry coordinates
 #'
-#' @param sfc simple-feature collection \code{sfc} object.
+#' @param obj matrix, data.frame, \code{sfg}, \code{sfc} or \code{sf} object.
 #'
 #' @examples
 #'
+#' ## data.frame
 #' df <- data.frame(
 #'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
 #'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
@@ -309,6 +311,53 @@ sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL
 #'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
 #' )
 #'
+#' sf_bbox( obj = df, x = "x", y = "y" )
+#'
+#' ## sfg objects
+#' pt <- sfg_point(obj = df[1, ], x = "x", y = "y", z = "id1")
+#' mpt <- sfg_multipoint(obj = df, x = "x", y = "y")
+#' ls <- sfg_linestring(obj = df, x = "x", y = "y")
+#' mls <- sfg_multilinestring(obj = df, x = "x", y = "y")
+#' p <- sfg_polygon(obj = df, x = "x" , y = "y")
+#' mp <- sfg_multipolygon(obj = df, x = "x", y = "y", close = FALSE )
+#'
+#' sf_bbox( pt )
+#' sf_bbox( mpt )
+#' sf_bbox( ls )
+#' sf_bbox( mls )
+#' sf_bbox( p )
+#' sf_bbox( mp )
+#'
+#' ## sfc objects
+#' pt <- sfc_point(obj = df, x = "x", y = "y", z = "id1")
+#' mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+#' ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+#' mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+#' p <- sfc_polygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , polygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#' mp <- sfc_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#'
+#' sf_bbox( pt )
+#' sf_bbox( mpt )
+#' sf_bbox( ls )
+#' sf_bbox( mls )
+#' sf_bbox( p )
+#' sf_bbox( mp )
+#'
+#' ## sf objects
 #' pt <- sf_point(obj = df, x = "x", y = "y", z = "id1")
 #' mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
 #' ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
@@ -330,12 +379,12 @@ sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL
 #'   , close = FALSE
 #'   )
 #'
-#' calculate_bbox( pt )
-#' calculate_bbox( mpt )
-#' calculate_bbox( ls )
-#' calculate_bbox( mls )
-#' calculate_bbox( p )
-#' calculate_bbox( mp )
+#' sf_bbox( pt )
+#' sf_bbox( mpt )
+#' sf_bbox( ls )
+#' sf_bbox( mls )
+#' sf_bbox( p )
+#' sf_bbox( mp )
 #'
 #' ## you can use it to update a bounding-box if it gets corrupted
 #' attr( mpt, "bbox" ) <- c(1:5)
@@ -344,6 +393,17 @@ sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL
 #' mpt ## back to correct values
 #'
 #' @export
-calculate_bbox <- function( sfc ) {
-  return( rcpp_get_bbox( sfc ) )
+sf_bbox <- function( obj, x = NULL, y = NULL ) UseMethod("calculate_bbox")
+
+#' @export
+calculate_bbox.sf <- function( obj, x = NULL, y = NULL ) {
+  geom_column <- attr( obj, "sf_column" )
+  geometry_coords <- c(x,y)
+  return( rcpp_calculate_bbox( obj[[geom_column]], geometry_coords ) )
+}
+
+#' @export
+calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
+  geometry_coords <- c(x,y)
+  return( rcpp_calculate_bbox( obj, geometry_coords ) )
 }

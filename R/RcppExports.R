@@ -13,10 +13,6 @@ rcpp_calculate_m_range <- function(x) {
     .Call(`_sfheaders_rcpp_calculate_m_range`, x)
 }
 
-rcpp_get_bbox <- function(sfc) {
-    .Call(`_sfheaders_rcpp_get_bbox`, sfc)
-}
-
 rcpp_count_new_objects <- function(sfg, cast_to) {
     .Call(`_sfheaders_rcpp_count_new_objects`, sfg, cast_to)
 }

@@ -13,6 +13,7 @@
 SEXP rcpp_calculate_bbox( SEXP x, SEXP geometry_cols ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
   sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols );
+  sfheaders::bbox::attach_bbox_attributes( bbox );
   return bbox;
 }
 
@@ -30,9 +31,9 @@ SEXP rcpp_calculate_m_range( SEXP x ) {
   return m_range;
 }
 
-// [[Rcpp::export]]
-SEXP rcpp_get_bbox( Rcpp::List sfc ) {
-  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-  sfheaders::bbox::get_bbox( bbox, sfc );
-  return bbox;
-}
+// // [[Rcpp::export]]
+// SEXP rcpp_calculate_bbox( Rcpp::List sfc ) {
+//   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+//   sfheaders::bbox::calculate_bbox( bbox, sfc );
+//   return bbox;
+// }

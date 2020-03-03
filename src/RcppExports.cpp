@@ -39,17 +39,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_get_bbox
-SEXP rcpp_get_bbox(Rcpp::List sfc);
-RcppExport SEXP _sfheaders_rcpp_get_bbox(SEXP sfcSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_bbox(sfc));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_count_new_objects
 Rcpp::NumericVector rcpp_count_new_objects(SEXP sfg, std::string cast_to);
 RcppExport SEXP _sfheaders_rcpp_count_new_objects(SEXP sfgSEXP, SEXP cast_toSEXP) {
@@ -672,7 +661,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 2},
     {"_sfheaders_rcpp_calculate_z_range", (DL_FUNC) &_sfheaders_rcpp_calculate_z_range, 1},
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 1},
-    {"_sfheaders_rcpp_get_bbox", (DL_FUNC) &_sfheaders_rcpp_get_bbox, 1},
     {"_sfheaders_rcpp_count_new_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_objects, 2},
     {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
     {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 3},
