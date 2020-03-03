@@ -300,6 +300,8 @@ sfc_multipolygon <- function(
 #' it re-calculates the bounding box from the geometry coordinates
 #'
 #' @param obj matrix, data.frame, \code{sfg}, \code{sfc} or \code{sf} object.
+#' @param x x geometry column
+#' @param y y geometry column
 #'
 #' @examples
 #'
@@ -311,6 +313,7 @@ sfc_multipolygon <- function(
 #'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
 #' )
 #'
+#' sf_bbox( obj = df[, c("x","y")] )
 #' sf_bbox( obj = df, x = "x", y = "y" )
 #'
 #' ## sfg objects
@@ -389,11 +392,13 @@ sfc_multipolygon <- function(
 #' ## you can use it to update a bounding-box if it gets corrupted
 #' attr( mpt, "bbox" ) <- c(1:5)
 #' mpt ## incorrect values
-#' attr( mpt, "bbox" ) <- calculate_bbox( mpt )
+#' attr( mpt, "bbox" ) <- sf_bbox( mpt )
 #' mpt ## back to correct values
 #'
 #' @export
-sf_bbox <- function( obj, x = NULL, y = NULL ) UseMethod("calculate_bbox")
+sf_bbox <- function( obj, x = NULL, y = NULL ) calculate_bbox( obj, x, y )
+
+calculate_bbox <- function( obj, x = NULL, y = NULL ) UseMethod("calculate_bbox")
 
 #' @export
 calculate_bbox.sf <- function( obj, x = NULL, y = NULL ) {

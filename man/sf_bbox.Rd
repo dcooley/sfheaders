@@ -8,6 +8,10 @@ sf_bbox(obj, x = NULL, y = NULL)
 }
 \arguments{
 \item{obj}{matrix, data.frame, \code{sfg}, \code{sfc} or \code{sf} object.}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
 }
 \description{
 Calculates the bounding box of coordinates. This does not read the "bbox" attribute,
@@ -23,6 +27,7 @@ df <- data.frame(
  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
 )
 
+sf_bbox( obj = df[, c("x","y")] )
 sf_bbox( obj = df, x = "x", y = "y" )
 
 ## sfg objects
@@ -101,7 +106,7 @@ sf_bbox( mp )
 ## you can use it to update a bounding-box if it gets corrupted
 attr( mpt, "bbox" ) <- c(1:5)
 mpt ## incorrect values
-attr( mpt, "bbox" ) <- calculate_bbox( mpt )
+attr( mpt, "bbox" ) <- sf_bbox( mpt )
 mpt ## back to correct values
 
 }
