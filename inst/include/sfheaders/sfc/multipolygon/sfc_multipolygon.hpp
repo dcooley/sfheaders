@@ -12,6 +12,27 @@
 namespace sfheaders {
 namespace sfc {
 
+  // only keep the outer-linestring / ring / matrix
+  inline Rcpp::List remove_multipolygon_holes(
+      Rcpp::List& sfc
+  ) {
+    // loop over and only keep the first line
+    R_xlen_t i, j;
+    R_xlen_t n = sfc.size();
+    Rcpp::List res( n );
+
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List m_poly = sfc[ i ];
+      for( j = 0; j < m_poly.size(); ++j ) {
+        Rcpp::List poly = m_poly[ j ];
+        SEXP p = poly[ 0 ];
+        res[ i ] = sfheaders::sfg::sfg_multipolygon( p );
+      }
+
+    }
+    return res;
+  }
+
   // Requirs a list of sfg_MULTIPOLYGON, and the bbox / ranges
   // does not do any calculations; just makes the SFC structure
   inline SEXP sfc_multipolygon(

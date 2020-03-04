@@ -412,13 +412,24 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfc_remove_holds
-Rcpp::List rcpp_sfc_remove_holds(Rcpp::List lst);
-RcppExport SEXP _sfheaders_rcpp_sfc_remove_holds(SEXP lstSEXP) {
+Rcpp::List rcpp_sfc_remove_holds(Rcpp::List sfc);
+RcppExport SEXP _sfheaders_rcpp_sfc_remove_holds(SEXP sfcSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_remove_holds(lst));
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_remove_holds(sfc));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_get_sfc_attributes
+Rcpp::List rcpp_get_sfc_attributes(Rcpp::List sfc);
+RcppExport SEXP _sfheaders_rcpp_get_sfc_attributes(SEXP sfcSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_sfc_attributes(sfc));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -702,6 +713,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygon, 6},
     {"_sfheaders_rcpp_sfc_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygons, 2},
     {"_sfheaders_rcpp_sfc_remove_holds", (DL_FUNC) &_sfheaders_rcpp_sfc_remove_holds, 1},
+    {"_sfheaders_rcpp_get_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_get_sfc_attributes, 1},
     {"_sfheaders_rcpp_get_sfg_type", (DL_FUNC) &_sfheaders_rcpp_get_sfg_type, 1},
     {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 2},
     {"_sfheaders_rcpp_sfg_points", (DL_FUNC) &_sfheaders_rcpp_sfg_points, 1},

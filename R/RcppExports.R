@@ -129,8 +129,12 @@ rcpp_sfc_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfc_multipolygons`, lst, close)
 }
 
-rcpp_sfc_remove_holds <- function(lst) {
-    .Call(`_sfheaders_rcpp_sfc_remove_holds`, lst)
+rcpp_sfc_remove_holds <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_remove_holds`, sfc)
+}
+
+rcpp_get_sfc_attributes <- function(sfc) {
+    .Call(`_sfheaders_rcpp_get_sfc_attributes`, sfc)
 }
 
 rcpp_get_sfg_type <- function(sfg_type) {

@@ -64,7 +64,20 @@ SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close = true ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfc_remove_holds( Rcpp::List lst ) {
-  return sfheaders::sfc::remove_holes( lst );
+Rcpp::List rcpp_sfc_remove_holds( Rcpp::List sfc ) {
+
+  // TODO
+  // - only if it's a polygon or multipolygon
+  // - if multipolygon, need to go one level deeper
+  Rcpp::List attributes = sfheaders::sfc::get_sfc_attributes( sfc );
+  Rcpp::List res = sfheaders::sfc::remove_polygon_holes( sfc );
+  sfheaders::sfc::attach_sfc_attributes( res, attributes );
+  return res;
+}
+
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_get_sfc_attributes( Rcpp::List sfc ) {
+  return sfheaders::sfc::get_sfc_attributes( sfc );
 }
 

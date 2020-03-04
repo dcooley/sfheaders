@@ -346,15 +346,16 @@ test_that("list-columns get expanded",{
 
   df <- data.frame(
     x = c(1,2)
-    , l1 = l1
-    , l2 = l2
   )
 
+  df$l1 <- l1
+  df$l2 <- l2
+
   attr( df, "class" ) <- c("sf", "data.frame")
-  attr( df, "sf_column" ) <- c("geometry")
+  attr( df, "sf_column" ) <- c("l1")
 
   res <- sfheaders::sf_to_df( df, fill = TRUE )
-  sfc <- res$geometry.1
+  sfc <- res$l2
   expect_true( length( sfc ) == 4 )
   expect_equal( sfc[[1]], sfc[[2]] )
   expect_equal( sfc[[3]], sfc[[4]] )
