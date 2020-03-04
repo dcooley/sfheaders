@@ -29,6 +29,11 @@ namespace df {
     return this_name;
   }
 
+  /*
+   * Expand Vector
+   *
+   *
+   */
   inline void expand_vector(
       Rcpp::List& res,
       SEXP& v,
@@ -66,6 +71,11 @@ namespace df {
     case RAWSXP: {
       Rcpp::RawVector rv = Rcpp::as< Rcpp::RawVector >( v );
       res[ i ] = rv[ expanded_index ];
+      break;
+    }
+    case VECSXP: {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( v );
+      res[ i ] = lst[ expanded_index ];
       break;
     }
     default: {
