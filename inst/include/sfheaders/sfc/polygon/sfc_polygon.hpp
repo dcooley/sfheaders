@@ -969,6 +969,21 @@ namespace sfc {
     return Rcpp::List::create(); // ??
   }
 
+  inline Rcpp::List remove_holes(
+      Rcpp::List& sfc
+  ) {
+    // loop over and only keep the first line
+    R_xlen_t i;
+    R_xlen_t n = sfc.size();
+    Rcpp::List res( n );
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List poly = sfc[ i ];
+      SEXP p = poly[ 0 ];
+      res[ i ] = sfheaders::sfg::sfg_polygon( p );
+    }
+    return res;
+  }
+
 } // sfc
 } // sfheaders
 

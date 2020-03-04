@@ -63,4 +63,8 @@ SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close = true ) {
   return sfheaders::sfc::sfc_multipolygons( lst, close );
 }
 
+// [[Rcpp::export]]
+Rcpp::List rcpp_sfc_remove_holds( Rcpp::List lst ) {
+  return sfheaders::sfc::remove_holes( lst );
+}
 
