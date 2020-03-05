@@ -73,6 +73,15 @@ namespace utils {
     return sfheaders::utils::get_sexp_unique( iv );
   }
 
+  inline SEXP concatenate_vectors(
+    Rcpp::IntegerVector& iv,
+    int& i
+  ) {
+    Rcpp::IntegerVector iv2(1);
+    iv2[0] = i;
+    return concatenate_vectors(iv, iv2);
+  }
+
 
   inline SEXP concatenate_vectors(
     Rcpp::NumericVector& nv_1,

@@ -473,70 +473,6 @@ namespace sfc {
     return Rcpp::List::create();
   }
 
-  // Must have both polygon_id and linestring_id
-  // so the functions can be overloaded properly
-  // otherwise there will be ambiguous functions
-  // inline SEXP sfc_polygon(
-  //     SEXP& x,
-  //     SEXP& geometry_cols,
-  //     SEXP& polygon_id
-  // ) {
-  //
-  // }
-
-  // is the idea here to first get the vector of polygon_ids
-  // but keep the line_ids as a column reference
-  // then subset the df in teh outerloop by polygon_id
-  // then go in and get the sfg_polygon based on the line_ids?
-  inline SEXP sfc_polygon(
-    Rcpp::DataFrame& df,
-    Rcpp::IntegerVector& geometry_cols,
-    int& linestring_id,
-    Rcpp::IntegerMatrix& polygon_positions,
-    bool close = true
-  ) {
-
-    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
-    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
-
-    sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
-
-    R_xlen_t n_col = df.ncol();
-    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
-
-
-    R_xlen_t n_polygons = polygon_positions.nrow();
-    R_xlen_t i;
-    Rcpp::List sfc( n_polygons );
-
-    int start;
-    int end;
-    Rcpp::StringVector df_names = df.names();
-
-    for( i = 0; i < n_polygons; ++i ) {
-      start = polygon_positions( i, 0 );
-      end = polygon_positions( i, 1 );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
-      sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id, close );
-    }
-
-    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
-    return sfc;
-  }
-
-
-  inline SEXP sfc_polygon(
-      Rcpp::DataFrame& df,
-      Rcpp::IntegerVector& geometry_cols,
-      SEXP& polygon_ids,
-      int& linestring_id,
-      bool close = true
-  ) {
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids );
-    return sfc_polygon( df, geometry_cols, linestring_id, polygon_positions, close );
-  }
-
   inline SEXP sfc_polygon(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
@@ -560,27 +496,49 @@ namespace sfc {
 
     int start;
     int end;
-    //Rcpp::StringVector df_names = df.names();
 
-    // before going into this loop I only need the columns from `df` which will make the geometries
-    // so I can get rid of all teh others?
+    // issue 56 - no need to keep all the columns in the subset_dataframe
     Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
     Rcpp::DataFrame df_keep = df[ keep_columns ];
     Rcpp::StringVector df_names = df_keep.names();
 
-
     for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
-      // Rcpp::Rcout << "subsetting" << std::endl;
       Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
-      // Rcpp::Rcout << "subset" << std::endl;
       sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id, close );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
     return sfc;
   }
+
+  inline SEXP sfc_polygon(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      int& linestring_id,
+      Rcpp::IntegerMatrix& polygon_positions,
+      bool close = true
+  ) {
+
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
+    Rcpp::String str_linestring_id = df_names[ linestring_id ];
+    return sfc_polygon( df, str_geometry_cols, str_linestring_id, polygon_positions, close );
+
+  }
+
+  inline SEXP sfc_polygon(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      SEXP& polygon_ids,
+      int& linestring_id,
+      bool close = true
+  ) {
+    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids );
+    return sfc_polygon( df, geometry_cols, linestring_id, polygon_positions, close );
+  }
+
 
   inline SEXP sfc_polygon(
       Rcpp::DataFrame& df,
@@ -608,7 +566,6 @@ namespace sfc {
 
     R_xlen_t n_col = im.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, geometry_cols );
-
 
     R_xlen_t n_polygons = polygon_positions.nrow();
     R_xlen_t i;
