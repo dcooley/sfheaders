@@ -7,6 +7,11 @@
 namespace sfheaders {
 namespace zm {
 
+  inline void attach_z_range_attributes( Rcpp::NumericVector& z_range ) {
+    z_range.attr("class") = Rcpp::CharacterVector::create("z_range");
+    z_range.attr("names") = Rcpp::CharacterVector::create("zmin","zmax");
+  }
+
   inline Rcpp::NumericVector start_z_range() {
     Rcpp::NumericVector range(2);
     range(0) = range(1) = NA_REAL;

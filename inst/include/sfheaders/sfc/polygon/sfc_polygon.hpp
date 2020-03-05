@@ -968,7 +968,6 @@ namespace sfc {
     Rcpp::stop("sfheaders - polygon case not yet implemented");   // #nocov
     return Rcpp::List::create(); // ??
   }
-
 } // sfc
 } // sfheaders
 

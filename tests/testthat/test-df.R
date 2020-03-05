@@ -346,8 +346,6 @@ test_that("list-columns get expanded",{
 
   df <- data.frame(
     x = c(1,2)
-    # , l1 = l1
-    # , l2 = l2
   )
 
   df$l1 <- l1

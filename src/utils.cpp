@@ -64,4 +64,3 @@ SEXP rcpp_get_ids(
 ) {
   return sfheaders::utils::get_ids( x, id_col );
 }
-
