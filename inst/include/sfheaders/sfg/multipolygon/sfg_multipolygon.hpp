@@ -747,6 +747,22 @@ inline SEXP sfg_multipolygon(
   return Rcpp::List::create(); // never reaches
 }
 
+  // only keep the outer-linestring / ring / matrix
+  inline Rcpp::List remove_multipolygon_holes(
+      Rcpp::List& sfg_mp
+  ) {
+    // loop over and only keep the first line
+    R_xlen_t i;
+    R_xlen_t n = sfg_mp.size();
+    Rcpp::List res( n );
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List poly = sfg_mp[ i ];
+      res[ i ] = poly[ 0 ];
+    }
+    Rcpp::List mp(1);
+    mp[0] = res;
+    return sfg_multipolygon( mp );
+  }
 
 } // sfg
 } // sfheaders

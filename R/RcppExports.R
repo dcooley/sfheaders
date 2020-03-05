@@ -129,8 +129,8 @@ rcpp_sfc_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfc_multipolygons`, lst, close)
 }
 
-rcpp_sfc_remove_holds <- function(sfc) {
-    .Call(`_sfheaders_rcpp_sfc_remove_holds`, sfc)
+rcpp_sfc_remove_holes <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_remove_holes`, sfc)
 }
 
 rcpp_get_sfc_attributes <- function(sfc) {

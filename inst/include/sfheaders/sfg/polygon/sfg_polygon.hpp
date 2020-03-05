@@ -546,6 +546,14 @@ namespace sfg {
     return Rcpp::List::create(); // never reaches
   }
 
+  inline Rcpp::List remove_polygon_holes(
+      Rcpp::List& sfg_poly
+  ){
+    Rcpp::List res(1);
+    res[0] = sfg_poly[0];
+    return sfg_polygon( res );
+  }
+
 
 } // sfg
 } // sfheaders
