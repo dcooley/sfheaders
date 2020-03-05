@@ -758,11 +758,12 @@ inline SEXP sfg_multipolygon(
     Rcpp::List res( n );
     for( i = 0; i < n; ++i ) {
       Rcpp::List poly = sfg_mp[ i ];
-      res[ i ] = poly[ 0 ];
+      Rcpp::List new_poly(1);
+      new_poly[ 0 ] = poly[ 0 ];
+      res[ i ] = new_poly;
     }
-    Rcpp::List mp(1);
-    mp[0] = res;
-    return sfg_multipolygon( mp, close );
+    return sfg_multipolygon( res, close );
+
   }
 
 } // sfg

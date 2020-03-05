@@ -1,5 +1,6 @@
 # sfheaders 1.1.0
 
+* `sf_remove_holes()` removes holes from polygons
 * `calculate_bbox()` function for (re) calculating the bounding box of an `sfc` object
 * `sf_cast()` functiosn for casting between geometry types
 * optimised converting `sfc_POINT`-only objects to data.frames
