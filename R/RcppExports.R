@@ -189,6 +189,10 @@ rcpp_sfg_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfg_multipolygons`, lst, close)
 }
 
+rcpp_sfg_remove_holes <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_remove_holes`, sfg)
+}
+
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
     .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2, id_col3)
 }

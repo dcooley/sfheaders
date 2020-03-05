@@ -748,7 +748,7 @@ inline SEXP sfg_multipolygon(
 }
 
   // only keep the outer-linestring / ring / matrix
-  inline Rcpp::List remove_multipolygon_holes(
+  inline SEXP remove_multipolygon_holes(
       Rcpp::List& sfg_mp
   ) {
     // loop over and only keep the first line

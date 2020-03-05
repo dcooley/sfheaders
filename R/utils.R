@@ -7,3 +7,53 @@ index_correct <- function( geometry_columns ) {
   return( geometry_columns )
 }
 
+
+#' remove holes
+#'
+#' Removes holes from olygons and multipolygons. Points and linestrings are unaffected.
+#'
+#' @param obj sfg, sfc or sf object.
+#'
+#' @examples
+#' df <- data.frame(
+#'   ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+#'   , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+#'   , x = rnorm(15)
+#'   , y = rnorm(15)
+#'   , z = rnorm(15)
+#'   , m = rnorm(15)
+#' )
+#'
+#' sfg <- sfg_polygon( obj = df, x = "x", y = "y", linestring_id = "ml_id" )
+#' sfc <- sfc_polygon( obj = df, x = "x", y = "y", polygon_id = "ml_id", linestring_id = "l_id" )
+#' sf <- sf_polygon( obj = df, x = "x", y = "y", polygon_id = "ml_id", linestring_id = "l_id" )
+#'
+#' sf_remove_holes( sfg )
+#' sf_remove_holes( sfc )
+#' sf_remove_holes( sf )
+#'
+#' @export
+sf_remove_holes <- function( obj ) remove_holes( obj )
+
+remove_holes <- function( obj ) UseMethod("remove_holes")
+
+#' @export
+remove_holes.sfg <- function( obj ) {
+  return( rcpp_sfg_remove_holes( obj ) )
+}
+
+#' @export
+remove_holes.sfc <- function( obj ) {
+  return( rcpp_sfc_remove_holes( obj ) )
+}
+
+#' @export
+remove_holes.sf <- function( obj ) {
+  geom_col <- attr(obj, "sf_column")
+  obj[[ geom_col ]] <- remove_holes( obj[[ geom_col ]] )
+  return( obj )
+}
+
+#' @export
+remove_holes.default <- function( obj ) stop("only sfg, sfc and sf objects are supported")
+

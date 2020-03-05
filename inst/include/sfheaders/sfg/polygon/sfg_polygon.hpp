@@ -546,7 +546,7 @@ namespace sfg {
     return Rcpp::List::create(); // never reaches
   }
 
-  inline Rcpp::List remove_polygon_holes(
+  inline SEXP remove_polygon_holes(
       Rcpp::List& sfg_poly
   ){
     Rcpp::List res(1);
