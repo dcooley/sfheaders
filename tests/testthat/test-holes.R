@@ -11,6 +11,11 @@ test_that("holes are removed from polygons",{
     , m = rnorm(15)
   )
 
+  expect_error(
+    sf_remove_holes(df)
+    , "only sfg, sfc and sf objects are supported"
+  )
+
   sfg <- sfg_polygon( obj = df, x = "x", y = "y", linestring_id = "ml_id", close = FALSE)
   sfc <- sfc_polygon( obj = df, x = "x", y = "y", polygon_id = "ml_id", linestring_id = "l_id", close = FALSE)
   sf <- sf_polygon( obj = df, x = "x", y = "y", polygon_id = "ml_id", linestring_id = "l_id", close = FALSE )
