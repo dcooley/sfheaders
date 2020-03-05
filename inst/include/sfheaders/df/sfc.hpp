@@ -86,13 +86,13 @@ namespace df {
     }
     case sfheaders::sfg::SFG_MULTIPOLYGON: {
       if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN });
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
     } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
     } else {
       dim_error(); // #nocov
     }
@@ -329,6 +329,7 @@ namespace df {
     // make data.frame
     res = res[ columns ];
     Rcpp::StringVector res_names = column_names[ columns ];
+    //Rcpp::StringVector res_names = column_names;
     return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
   }
 

@@ -213,6 +213,33 @@ test_that("data.frame with non-numeric id columns work",{
 
 })
 
+## issue 61
+test_that("correct columsn returned - issue 61",{
+
+  df <- data.frame(
+    mp_id = c( rep(1, 14), rep(2, 5) )
+    , p_id = c( rep(1, 19 ) )
+    , l_id = c( rep(1, 8), rep(2, 6), rep(1, 5))
+    , x = c(0,0,0.75,1,0.5,0.8,0.69,0,0.2,0.5,0.5,0.3,0.2,0.2,0.69,0.8,1.1,1.23,0.69)
+    , y = c(0,1,1,0.8,0.7,0.6,0,0,0.2,0.2,0.4,0.6,0.4,0.2,0,0.6,0.63,0.3,0)
+  )
+
+  sf <- sf_multipolygon(
+    obj = df,
+    multipolygon_id = "mp_id",
+    polygon_id = "p_id",
+    linestring_id = "l_id",
+    x = "x",
+    y = "y"
+    )
+
+  res <- sf_to_df( sf )
+  expect_equal( res$multipolygon_id, df$mp_id )
+  expect_equal( res$polygon_id, df$p_id )
+  expect_equal( res$linestring_id, df$l_id )
+
+})
+
 
 test_that("vectorised version works",{
 
