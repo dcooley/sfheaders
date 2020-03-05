@@ -18,8 +18,13 @@ namespace sf {
       SEXP& linestring_id,
       bool close = true
   ) {
+
+    //Rcpp::Rcout << "dont keep " << std::endl;
+
     Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, close );
     SEXP ids = sfheaders::utils::get_ids( x, polygon_id );
+
+    //return sfc;
 
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
@@ -73,6 +78,7 @@ namespace sf {
       bool close = true
   ) {
 
+    // Rcpp::Rcout << "sf_polygon" << std::endl;
     Rcpp::StringVector df_names = df.names();
     SEXP multiline_ids = df[ polygon_id ];
     return sf_polygon( df, geometry_cols, property_cols, polygon_id, multiline_ids, linestring_id, close );

@@ -553,7 +553,6 @@ namespace sfc {
     R_xlen_t n_col = df.ncol();
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
 
-
     R_xlen_t n_polygons = polygon_positions.nrow();
 
     R_xlen_t i;
@@ -561,12 +560,21 @@ namespace sfc {
 
     int start;
     int end;
-    Rcpp::StringVector df_names = df.names();
+    //Rcpp::StringVector df_names = df.names();
+
+    // before going into this loop I only need the columns from `df` which will make the geometries
+    // so I can get rid of all teh others?
+    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+    Rcpp::DataFrame df_keep = df[ keep_columns ];
+    Rcpp::StringVector df_names = df_keep.names();
+
 
     for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
+      // Rcpp::Rcout << "subsetting" << std::endl;
+      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
+      // Rcpp::Rcout << "subset" << std::endl;
       sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id, close );
     }
 
