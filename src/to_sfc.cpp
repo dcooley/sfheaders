@@ -64,7 +64,7 @@ SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close = true ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc ) {
+Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, bool close ) {
 
   Rcpp::List attributes = sfheaders::sfc::get_sfc_attributes( sfc );
 
@@ -78,10 +78,10 @@ Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc ) {
     sfg_type = cls[1];
     if( sfg_type == "POLYGON" ) {
       Rcpp::List p = Rcpp::as< Rcpp::List >( sfg );
-      res[ i ] = sfheaders::sfg::remove_polygon_holes( p );
+      res[ i ] = sfheaders::sfg::remove_polygon_holes( p, close );
     } else if ( sfg_type == "MULTIPOLYGON" ) {
       Rcpp::List mp = Rcpp::as< Rcpp::List >( sfg );
-      res[ i ] = sfheaders::sfg::remove_multipolygon_holes( mp );
+      res[ i ] = sfheaders::sfg::remove_multipolygon_holes( mp, close );
     } else {
       res[ i ] = sfg;
     }

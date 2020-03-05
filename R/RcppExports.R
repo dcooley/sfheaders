@@ -129,8 +129,8 @@ rcpp_sfc_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfc_multipolygons`, lst, close)
 }
 
-rcpp_sfc_remove_holes <- function(sfc) {
-    .Call(`_sfheaders_rcpp_sfc_remove_holes`, sfc)
+rcpp_sfc_remove_holes <- function(sfc, close) {
+    .Call(`_sfheaders_rcpp_sfc_remove_holes`, sfc, close)
 }
 
 rcpp_get_sfc_attributes <- function(sfc) {
@@ -189,8 +189,8 @@ rcpp_sfg_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfg_multipolygons`, lst, close)
 }
 
-rcpp_sfg_remove_holes <- function(sfg) {
-    .Call(`_sfheaders_rcpp_sfg_remove_holes`, sfg)
+rcpp_sfg_remove_holes <- function(sfg, close) {
+    .Call(`_sfheaders_rcpp_sfg_remove_holes`, sfg, close)
 }
 
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
