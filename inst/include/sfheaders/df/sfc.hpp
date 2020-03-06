@@ -172,6 +172,26 @@ namespace df {
     return res;
   }
 
+  inline int get_sfg_column_index( std::string& sfg ) {
+    if( sfg == "POINT" ) {
+      return POINT_COLUMN;
+    } else if ( sfg == "MULTIPOINT" ) {
+      return MULTIPOINT_COLUMN;
+    } else if ( sfg == "LINESTRING" ) {
+      return LINESTRING_COLUMN;
+    } else if ( sfg == "MULTILINESTRING" ) {
+      return MULTILINESTRING_COLUMN;
+    } else if ( sfg == "POLYGON" ) {
+      return POLYGON_COLUMN;
+    } else if ( sfg == "MULTIPOLYGON" ) {
+      return MULTIPOLYGON_COLUMN;
+    } else if ( sfg == "GEOMETRYCOLLECTION" ) {
+      return GEOMETRYCOLLECTION_COLUMN;
+    } else {
+      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
+    }
+  }
+
   // sfcs are a list of sfgs.
   // they can be mixed, or individual.
   // if indiidual, loop over each one and extract the sfgs, list by list, then collapse the lists??
@@ -203,6 +223,10 @@ namespace df {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
     }
+    case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return sfheaders::df::sfg_geometrycollection_coordinates( lst, sfc_rows );
+    }
     default: {
       Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
     }
@@ -210,44 +234,15 @@ namespace df {
     return Rcpp::List::create(); // #nocov never reaches
   }
 
-  inline int get_sfg_type( std::string& sfg ) {
-    if( sfg == "POINT" ) {
-      return sfheaders::sfg::SFG_POINT;
-    } else if ( sfg == "MULTIPOINT" ) {
-      return sfheaders::sfg::SFG_MULTIPOINT;
-    } else if ( sfg == "LINESTRING" ) {
-      return sfheaders::sfg::SFG_LINESTRING;
-    } else if ( sfg == "MULTILINESTRING" ) {
-      return sfheaders::sfg::SFG_MULTILINESTRING;
-    } else if ( sfg == "POLYGON" ) {
-      return sfheaders::sfg::SFG_POLYGON;
-    } else if ( sfg == "MULTIPOLYGON" ) {
-      return sfheaders::sfg::SFG_MULTIPOLYGON;
-    } else {
-      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
-    }
-  }
-
-  inline int get_sfg_column_index( std::string& sfg ) {
-    if( sfg == "POINT" ) {
-      return POINT_COLUMN;
-    } else if ( sfg == "MULTIPOINT" ) {
-      return MULTIPOINT_COLUMN;
-    } else if ( sfg == "LINESTRING" ) {
-      return LINESTRING_COLUMN;
-    } else if ( sfg == "MULTILINESTRING" ) {
-      return MULTILINESTRING_COLUMN;
-    } else if ( sfg == "POLYGON" ) {
-      return POLYGON_COLUMN;
-    } else if ( sfg == "MULTIPOLYGON" ) {
-      return MULTIPOLYGON_COLUMN;
-    } else {
-      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
-    }
-  }
-
-
-  // used for any mixed geomtry, or non-POINT, because the total number of rows is varaible
+  /*
+   * get sfc geometry coordinates
+   *
+   * loops into every sfg inside the sfc and fills in the result list
+   * (from \code{setup_result}) for the correct columns, and
+   * at the appropriate row index
+   *
+   * used for any mixed geomtry, or non-POINT, because the total number of rows is varaible
+   */
   inline Rcpp::List get_sfc_geometry_coordinates(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
@@ -291,7 +286,7 @@ namespace df {
       }
 
       sfg_class = cls[1];
-      sfg_type = get_sfg_type( sfg_class );
+      sfg_type = sfheaders::sfg::get_sfg_type( sfg_class );
       sfg_column_idx = get_sfg_column_index( sfg_class );
       columns[ sfg_column_idx ] = true;
 

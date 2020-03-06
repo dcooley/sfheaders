@@ -373,6 +373,79 @@ namespace df {
     return res;
   }
 
+  inline Rcpp::List sfg_geometrycollection_coordinates( Rcpp::List& sfg, R_xlen_t& sfg_rows ) {
+
+    R_xlen_t n_sfgs = sfg.size();
+    R_xlen_t i;
+    Rcpp::List res( n_sfgs );
+
+    // need to fill res(),
+    // then collapse it...
+    // but it will be filled like an 'sfc' - a collection of geometries.
+    // ...
+    // to collapse_list, each list element must have the same number of columns
+    // so do I initialise all of them?
+
+    for( i = 0; i < n_sfgs; ++i ) {
+
+      SEXP s = sfg[ i ];
+      Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( s );
+      std::string geometry;
+      geometry = cls[1];
+      int sfg_type = sfheaders::sfg::get_sfg_type( geometry );
+
+      Rcpp::Rcout << "geometry: " << geometry << ", " << sfg_type << std::endl;
+
+      switch( sfg_type ) {
+      case sfheaders::sfg::SFG_POINT: {
+        Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( s );
+        res[i] = sfheaders::df::sfg_point_coordinates( vec, sfg_rows );
+        break;
+      }
+      case sfheaders::sfg::SFG_MULTIPOINT: {
+        Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( s );
+        Rcpp::Rcout << mat << std::endl;
+        res[i] = sfheaders::df::sfg_multipoint_coordinates( mat, sfg_rows );
+        break;
+      }
+      case sfheaders::sfg::SFG_LINESTRING: {
+        Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( s );
+        Rcpp::Rcout << mat << std::endl;
+        res[i] = sfheaders::df::sfg_linestring_coordinates( mat, sfg_rows );
+        break;
+      }
+      case sfheaders::sfg::SFG_MULTILINESTRING: {
+        Rcpp::List lst = Rcpp::as< Rcpp::List >( s );
+        res[i] = sfheaders::df::sfg_multilinestring_coordinates( lst, sfg_rows );
+        break;
+      }
+      case sfheaders::sfg::SFG_POLYGON: {
+        Rcpp::List lst = Rcpp::as< Rcpp::List >( s );
+        res[i] = sfheaders::df::sfg_polygon_coordinates( lst, sfg_rows );
+        break;
+      }
+      case sfheaders::sfg::SFG_MULTIPOLYGON: {
+        Rcpp::List lst = Rcpp::as< Rcpp::List >( s );
+        res[i] = sfheaders::df::sfg_multipolygon_coordinates( lst, sfg_rows );
+        break;
+      }
+      case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
+        Rcpp::List lst = Rcpp::as< Rcpp::List >( s );
+        res[i] = sfheaders::df::sfg_geometrycollection_coordinates( lst, sfg_rows );
+        break;
+      }
+      default: {
+        Rcpp::stop("sfheaders - unknown sfg type inside goemetrycollection");  // #nocov
+      }
+      }
+    }
+
+    return res;
+
+    Rcpp::stop("sfheaders - geometrycollection not implemented");
+    return Rcpp::List();
+  }
+
   inline Rcpp::List sfg_to_df( SEXP& sfg ) {
 
     Rcpp::List res;
@@ -418,18 +491,19 @@ namespace df {
     }
 
     Rcpp::CharacterVector df_names = make_names( cls );
+    return sfheaders::utils::make_dataframe(res, sfg_rows, df_names );
 
-    res.attr("class") = Rcpp::CharacterVector("data.frame");
-
-    if( sfg_rows > 0 ) {
-      Rcpp::IntegerVector rownames = Rcpp::seq( 1, sfg_rows );
-      res.attr("row.names") = rownames;
-    } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0); // #nocov
-    }
-
-    res.attr("names") = df_names;
-    return res;
+    // res.attr("class") = Rcpp::CharacterVector("data.frame");
+    //
+    // if( sfg_rows > 0 ) {
+    //   Rcpp::IntegerVector rownames = Rcpp::seq( 1, sfg_rows );
+    //   res.attr("row.names") = rownames;
+    // } else {
+    //   res.attr("row.names") = Rcpp::IntegerVector(0); // #nocov
+    // }
+    //
+    // res.attr("names") = df_names;
+    // return res;
   }
 
 } // df

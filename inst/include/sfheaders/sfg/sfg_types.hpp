@@ -9,12 +9,13 @@
 namespace sfheaders {
 namespace sfg {
 
-  const int SFG_POINT           = 1;
-  const int SFG_MULTIPOINT      = 2;
-  const int SFG_LINESTRING      = 3;
-  const int SFG_MULTILINESTRING = 4;
-  const int SFG_POLYGON         = 5;
-  const int SFG_MULTIPOLYGON    = 6;
+  const int SFG_POINT              = 1;
+  const int SFG_MULTIPOINT         = 2;
+  const int SFG_LINESTRING         = 3;
+  const int SFG_MULTILINESTRING    = 4;
+  const int SFG_POLYGON            = 5;
+  const int SFG_MULTIPOLYGON       = 6;
+  const int SFG_GEOMETRYCOLLECTION = 7;
 
   const int VECTOR              = 1;
   const int MATRIX              = 2;
@@ -34,6 +35,26 @@ namespace sfg {
     }
     }
     return ""; // never reaches
+  }
+
+  inline int get_sfg_type( std::string& sfg ) {
+    if( sfg == "POINT" ) {
+      return sfheaders::sfg::SFG_POINT;
+    } else if ( sfg == "MULTIPOINT" ) {
+      return sfheaders::sfg::SFG_MULTIPOINT;
+    } else if ( sfg == "LINESTRING" ) {
+      return sfheaders::sfg::SFG_LINESTRING;
+    } else if ( sfg == "MULTILINESTRING" ) {
+      return sfheaders::sfg::SFG_MULTILINESTRING;
+    } else if ( sfg == "POLYGON" ) {
+      return sfheaders::sfg::SFG_POLYGON;
+    } else if ( sfg == "MULTIPOLYGON" ) {
+      return sfheaders::sfg::SFG_MULTIPOLYGON;
+    } else if ( sfg == "GEOMETRYCOLLECTION" ) {
+      return sfheaders::sfg::SFG_GEOMETRYCOLLECTION;
+    } else {
+      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
+    }
   }
 
   inline void make_sfg(
