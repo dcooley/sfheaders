@@ -96,6 +96,19 @@ namespace df {
     } else {
       dim_error(); // #nocov
     }
+    }
+    case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
+      if( dim == "XY" ) {
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
+    } else if( dim == "XYZM" ) {
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    } else if ( dim == "XYZ" ) {
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+    } else {
+      dim_error(); // #nocov
+    }
 
     }
     default: {
@@ -295,6 +308,10 @@ namespace df {
       n_col = sfg.size();
 
       Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, sfg_type, dim );
+
+      Rcpp::Rcout << "sfg_cols: " << sfg_cols << std::endl;
+      Rcpp::Rcout << "n_col: " << n_col << std::endl;
+
       column_index_check( sfg_cols, n_col );
 
       for( j = 0; j < n_col; ++j ) {
