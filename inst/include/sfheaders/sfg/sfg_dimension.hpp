@@ -12,6 +12,15 @@ namespace sfg {
     }
   }
 
+  // re-write
+  // it can be XYM, and we'll know from R based on the x, y, m columns specified.
+  // but if none are specified, and just 3 columns, it will defualt to XYZ
+  //
+  // for c++ will need an overloaded function, or a flag, to say 'm-first',
+  // and R will use something similar after the x, y, m args are defined
+  // then enter teh appropriate C++ function.
+
+
   inline std::string sfg_dimension( R_xlen_t& n ) {
     dimension_check( n );
     std::string dim = "XY";
