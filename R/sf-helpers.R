@@ -78,7 +78,7 @@ name_matcher <- function(x, ...) {
 #' ## we trivially round-trip with sf_pt()
 #' sf_pt(sf_to_df(sfx, fill = TRUE), keep = TRUE)
 #' @export
-sf_pt <- function(obj, keep = FALSE, ...) {
+sf_pt <- function(obj, keep = FALSE) {
   stopifnot(all(c("x", "y") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
@@ -110,7 +110,7 @@ sf_pt <- function(obj, keep = FALSE, ...) {
 #' ## we trivially round-trip with sf_mpt()
 #' sf_mpt(sf_to_df(sfx))
 #' @export
-sf_mpt <- function(obj, keep = FALSE, ...) {
+sf_mpt <- function(obj, keep = FALSE) {
   stopifnot(all(c("x", "y", "multipoint_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
@@ -144,7 +144,7 @@ sf_mpt <- function(obj, keep = FALSE, ...) {
 #' sf_mpoly(df[c(6, 5, 3, 4, 1, 2)])
 #'
 #' @export
-sf_mpoly <- function(obj, close = FALSE, keep = FALSE, ...) {
+sf_mpoly <- function(obj, close = FALSE, keep = FALSE) {
   ## determine minimum names required
   stopifnot(all(c("x", "y", "multipolygon_id", "polygon_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
@@ -179,7 +179,7 @@ sf_mpoly <- function(obj, close = FALSE, keep = FALSE, ...) {
 #' sf_poly(df[c(5, 3, 4, 1, 2)])
 #'
 #' @export
-sf_poly <- function(obj, close = FALSE, keep = FALSE, ...) {
+sf_poly <- function(obj, close = FALSE, keep = FALSE) {
   stopifnot(all(c("x", "y", "polygon_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
@@ -214,13 +214,13 @@ sf_poly <- function(obj, close = FALSE, keep = FALSE, ...) {
 #' sf_mline( obj = df)
 #' sf_mline( obj = df[-6])
 #' ## this gives XYZ, not XYM see #64
-#' (sfx <- sf_mline( obj = df[-5])) ## not currently supported for XYM https://github.com/dcooley/sfheaders/blob/4f708f3ef560a5aaadb64d880ffec4113ca0f02b/inst/include/sfheaders/sfg/sfg_dimension.hpp#L19
+#' (sfx <- sf_mline( obj = df[-5]))
 #'
 #' ## we trivially round-trip with sf_mline()
 #' sf_mline(sf_to_df(sfx))
 #'
 #' @export
-sf_mline <- function(obj, keep = FALSE, ...) {
+sf_mline <- function(obj, keep = FALSE) {
   stopifnot(all(c("x", "y", "multilinestring_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
@@ -251,7 +251,7 @@ sf_mline <- function(obj, keep = FALSE, ...) {
 #' ## we trivially round-trip with sf_line()
 #' sf_line(sf_to_df(sfx))
 #' @export
-sf_line <- function(obj, keep = FALSE, ...) {
+sf_line <- function(obj, keep = FALSE) {
   stopifnot(all(c("x", "y", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)

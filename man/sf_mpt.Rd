@@ -4,7 +4,7 @@
 \alias{sf_mpt}
 \title{Helper for sf MULTIPOINT}
 \usage{
-sf_mpt(obj, keep = FALSE, ...)
+sf_mpt(obj, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}

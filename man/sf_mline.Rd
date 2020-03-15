@@ -4,7 +4,7 @@
 \alias{sf_mline}
 \title{Helper for sf MULTILINESTRING}
 \usage{
-sf_mline(obj, keep = FALSE, ...)
+sf_mline(obj, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}
@@ -91,7 +91,7 @@ df <- data.frame(
 sf_mline( obj = df)
 sf_mline( obj = df[-6])
 ## this gives XYZ, not XYM see #64
-(sfx <- sf_mline( obj = df[-5])) ## not currently supported for XYM https://github.com/dcooley/sfheaders/blob/4f708f3ef560a5aaadb64d880ffec4113ca0f02b/inst/include/sfheaders/sfg/sfg_dimension.hpp#L19
+(sfx <- sf_mline( obj = df[-5]))
 
 ## we trivially round-trip with sf_mline()
 sf_mline(sf_to_df(sfx))

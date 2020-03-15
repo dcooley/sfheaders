@@ -4,7 +4,7 @@
 \alias{sf_poly}
 \title{Helper for sf POLYGON}
 \usage{
-sf_poly(obj, close = FALSE, keep = FALSE, ...)
+sf_poly(obj, close = FALSE, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}

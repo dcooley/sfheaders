@@ -4,7 +4,7 @@
 \alias{sf_pt}
 \title{Helper for sf POINT}
 \usage{
-sf_pt(obj, keep = FALSE, ...)
+sf_pt(obj, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}

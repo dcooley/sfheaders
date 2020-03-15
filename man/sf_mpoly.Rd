@@ -4,7 +4,7 @@
 \alias{sf_mpoly}
 \title{Helper for sf MULTIPOLYGON}
 \usage{
-sf_mpoly(obj, close = FALSE, keep = FALSE, ...)
+sf_mpoly(obj, close = FALSE, keep = FALSE)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}
