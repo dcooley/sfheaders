@@ -14,8 +14,9 @@ name_matcher <- function(x, close = FALSE, keep = FALSE, ...) {
                close = close,
                keep = keep)
   ## return the list args that make sense for this data frame
-  args[base::intersect(names(x), names(args))]
+  args[base::intersect(colnames(x), names(args))]
 }
+
 
 #' Helper functions to make sf
 #'
@@ -30,7 +31,7 @@ name_matcher <- function(x, close = FALSE, keep = FALSE, ...) {
 sf_mpoly <- function(obj, close = FALSE, keep = FALSE, ...) {
   ## determine minimum names required
   ## multipolygon, polygon, linestring
-  stopifnot(all(c("x", "y", "multipolygon_id", "polygon_id", "linestring_id") %in% names(obj)))
+  stopifnot(all(c("x", "y", "multipolygon_id", "polygon_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[["obj"]] <- obj
   do.call(sfheaders::sf_multipolygon, call_args)
