@@ -25,7 +25,8 @@
 #' @export
 sfg_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfg_point( obj, index_correct( geometry_columns ) )
+  m_only <- is.null( z ) & !is.null( m )
+  rcpp_sfg_point( obj, index_correct( geometry_columns ), m_only )
 }
 
 

@@ -446,14 +446,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfg_point
-SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_point(x, geometry_columns));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_point(x, geometry_columns, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -728,7 +729,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfc_remove_holes, 2},
     {"_sfheaders_rcpp_get_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_get_sfc_attributes, 1},
     {"_sfheaders_rcpp_get_sfg_type", (DL_FUNC) &_sfheaders_rcpp_get_sfg_type, 1},
-    {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 2},
+    {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 3},
     {"_sfheaders_rcpp_sfg_points", (DL_FUNC) &_sfheaders_rcpp_sfg_points, 1},
     {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 2},
     {"_sfheaders_rcpp_sfg_multipoints", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoints, 1},

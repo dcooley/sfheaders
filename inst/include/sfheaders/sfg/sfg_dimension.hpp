@@ -21,13 +21,16 @@ namespace sfg {
   // then enter teh appropriate C++ function.
 
 
-  inline std::string sfg_dimension( R_xlen_t& n ) {
+  inline std::string sfg_dimension( R_xlen_t& n, bool m_only = false ) {
     dimension_check( n );
     std::string dim = "XY";
 
     // TODO: is "XYM" a valid dimension?
     switch ( n ) {
     case 3: {
+      if( m_only ) {
+        return "XYM";
+      }
       return "XYZ";
     }
     case 4: {
@@ -37,62 +40,62 @@ namespace sfg {
     return dim;
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerVector& iv ) {
+  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, bool m_only = false ) {
     R_xlen_t n = iv.size();
     return sfg_dimension( n );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericVector& nv ) {
+  inline std::string sfg_dimension( Rcpp::NumericVector& nv, bool m_only = false ) {
     R_xlen_t n = nv.size();
     return sfg_dimension( n );
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im ) {
+  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, bool m_only = false ) {
     R_xlen_t n_col = im.ncol();
     return sfg_dimension( n_col );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm ) {
+  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, bool m_only = false ) {
     R_xlen_t n_col = nm.ncol();
     return sfg_dimension( n_col );
   }
 
-  inline std::string sfg_dimension( Rcpp::DataFrame& df ) {
+  inline std::string sfg_dimension( Rcpp::DataFrame& df, bool m_only = false ) {
     R_xlen_t n_col = df.ncol();
     return sfg_dimension( n_col );
   }
 
-  inline std::string sfg_dimension( SEXP x ) {
+  inline std::string sfg_dimension( SEXP x, bool m_only = false ) {
 
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
     if( Rf_isMatrix( x ) ) {
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      return sfg_dimension( im );
+      return sfg_dimension( im, m_only );
     } else {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
-      return sfg_dimension( iv );
+      return sfg_dimension( iv, m_only );
     }
     }
     case REALSXP: {
     if( Rf_isMatrix( x ) ) {
       Rcpp::NumericMatrix im = Rcpp::as< Rcpp::NumericMatrix >( x );
-      return sfg_dimension( im );
+      return sfg_dimension( im, m_only );
     } else {
       Rcpp::NumericVector iv = Rcpp::as< Rcpp::NumericVector >( x );
-      return sfg_dimension( iv );
+      return sfg_dimension( iv, m_only );
     }
     }
     case VECSXP: { // data.frame && list?
     if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return sfg_dimension( df );
+      return sfg_dimension( df, m_only );
     } else if ( Rf_isNewList( x ) ) {
       // we can just get the first element, because by this point
       // all the elements should have been made correctly (?)
       Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
       SEXP list_element = lst[ 0 ];
-      return sfg_dimension( list_element );
+      return sfg_dimension( list_element, m_only );
     } // else default
 
 
