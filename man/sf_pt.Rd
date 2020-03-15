@@ -85,12 +85,10 @@ sf_pt( x )
 
 x <- setNames( as.data.frame( x ), c("x","y") )
 sf_pt( x )
-sf_pt( obj = x, x = "x", y = "y" )
-sf_pt( obj = x, x = "y", y = "x" )
 
 # keeping properties
 x$val <- letters[1:5]
-(sfx <- sf_pt( x, x = "x", y = "y", keep = TRUE ))
+(sfx <- sf_pt( x, keep = TRUE ))
 
 ## we trivially round-trip with sf_pt()
 sf_pt(sf_to_df(sfx, fill = TRUE), keep = TRUE)

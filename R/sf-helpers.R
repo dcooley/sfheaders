@@ -68,12 +68,10 @@ name_matcher <- function(x, ...) {
 #'
 #' x <- setNames( as.data.frame( x ), c("x","y") )
 #' sf_pt( x )
-#' sf_pt( obj = x, x = "x", y = "y" )
-#' sf_pt( obj = x, x = "y", y = "x" )
 #'
 #' # keeping properties
 #' x$val <- letters[1:5]
-#' (sfx <- sf_pt( x, x = "x", y = "y", keep = TRUE ))
+#' (sfx <- sf_pt( x, keep = TRUE ))
 #'
 #' ## we trivially round-trip with sf_pt()
 #' sf_pt(sf_to_df(sfx, fill = TRUE), keep = TRUE)
@@ -123,6 +121,7 @@ sf_mpt <- function(obj, keep = FALSE) {
 #'
 #' Constructs sf of MULTIPOLYGON objects, a helper for [sf_multipolygon()] with a simpler syntax.
 #'
+#' @inheritParams sf_multipolygon
 #' @inheritParams sf_point
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
@@ -158,6 +157,7 @@ sf_mpoly <- function(obj, close = FALSE, keep = FALSE) {
 #'
 #' Constructs sf of POLYGON objects, a helper for [sf_polygon()] with a simpler syntax.
 #'
+#' @inheritParams sf_multipolygon
 #' @inheritParams sf_point
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
