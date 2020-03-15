@@ -1,5 +1,5 @@
 
-name_matcher <- function(x, close = FALSE, keep = FALSE, ...) {
+name_matcher <- function(x, ...) {
   args <- list(obj = NULL,
                x = "x",
                y = "y",
@@ -10,9 +10,7 @@ name_matcher <- function(x, close = FALSE, keep = FALSE, ...) {
                multilinestring_id = "multilinestring_id",
                linestring_id = "linestring_id",
                multipoint_id = "multipoint_id",
-               point_id = "point_id",
-               close = close,
-               keep = keep)
+               point_id = "point_id")
   ## return the list args that make sense for this data frame
   args[base::intersect(colnames(x), names(args))]
 }
@@ -30,37 +28,52 @@ name_matcher <- function(x, close = FALSE, keep = FALSE, ...) {
 #' we don't allow partial name matching
 sf_mpoly <- function(obj, close = FALSE, keep = FALSE, ...) {
   ## determine minimum names required
-  ## multipolygon, polygon, linestring
   stopifnot(all(c("x", "y", "multipolygon_id", "polygon_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
-  call_args[["obj"]] <- obj
+  call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
+  ## needs rethinking
+  call_args[c("multipoint_id")] <- NULL
+
   do.call(sfheaders::sf_multipolygon, call_args)
 }
-sf_poly <- function(obj, ...) {
-  sfheaders::sf_polygon(x,
-                        x = "x", y = "y",
-                        linestring_id = "linestring_id",
-                        polygon_id = "polygon_id")
+sf_poly <- function(obj, close = FALSE, keep = FALSE, ...) {
+  stopifnot(all(c("x", "y", "polygon_id", "linestring_id") %in% colnames(obj)))
+  call_args <- name_matcher(obj)
+  call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
+  ## needs rethinking
+  call_args[c("multipolygon_id", "multilinestring_id", "multipoint_id")] <- NULL
+  do.call(sfheaders::sf_polygon, call_args)
 }
-sf_mline <- function(obj, ...) {
-  sfheaders::sf_multilinestring(x,
-                                x = "x", y = "y",
-                                linestring_id = "linestring_id",
-                                multilinestring_id = "multilinestring_id")
+sf_mline <- function(obj, keep = FALSE, ...) {
+  stopifnot(all(c("x", "y", "multilinestring_id", "linestring_id") %in% colnames(obj)))
+  call_args <- name_matcher(obj)
+  call_args[c("obj", "keep")] <- list(obj, keep)
+  ## needs rethinking
+  call_args[c("multipolygon_id", "polygon_id", "multipoint_id")] <- NULL
+  do.call(sfheaders::sf_multilinestring, call_args)
+
 }
-sf_line <- function(obj, ...) {
-  sfheaders::sf_linestring(x,
-                           x = "x", y = "y",
-                           linestring_id = "linestring_id")
+sf_line <- function(obj, keep = FALSE, ...) {
+  stopifnot(all(c("x", "y", "linestring_id") %in% colnames(obj)))
+  call_args <- name_matcher(obj)
+  call_args[c("obj", "keep")] <- list(obj, keep)
+  ## needs rethinking
+  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id", "multipoint_id")] <- NULL
+  do.call(sfheaders::sf_linestring, call_args)
 }
-sf_mpt <- function(obj, ...) {
-  sfheaders::sf_multipoint(x,
-                           x = "x", y = "y",
-                           point_id = "point_id",
-                           multipoint_id = "multipoint_id")
+sf_mpt <- function(obj, keep = FALSE, ...) {
+  stopifnot(all(c("x", "y", "multipoint_id") %in% colnames(obj)))
+  call_args <- name_matcher(obj)
+  call_args[c("obj", "keep")] <- list(obj, keep)
+  ## needs rethinking
+  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id", "linestring_id")] <- NULL
+  do.call(sfheaders::sf_multipoint, call_args)
 }
-sf_p <- function(obj, ...) {
-  sfheaders::sf_point(x,
-                      x = "x", y = "y",
-                      point_id = "point_id")
+sf_pt <- function(obj, keep = FALSE, ...) {
+  stopifnot(all(c("x", "y") %in% colnames(obj)))
+  call_args <- name_matcher(obj)
+  call_args[c("obj", "keep")] <- list(obj, keep)
+  ## needs rethinking
+  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id", "linestring_id", "multipoint_id")] <- NULL
+  do.call(sfheaders::sf_point, call_args)
 }
