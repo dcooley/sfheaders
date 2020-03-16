@@ -14,7 +14,8 @@ namespace zm {
       R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::IntegerVector& iv
+      Rcpp::IntegerVector& iv,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, iv );
@@ -29,7 +30,8 @@ namespace zm {
     R_xlen_t& n_col,
     Rcpp::NumericVector& z_range,
     Rcpp::NumericVector& m_range,
-    Rcpp::NumericVector& nv
+    Rcpp::NumericVector& nv,
+    bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, nv );
@@ -43,7 +45,8 @@ namespace zm {
       R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::IntegerMatrix& im
+      Rcpp::IntegerMatrix& im,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, im );
@@ -57,7 +60,8 @@ namespace zm {
       R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::NumericMatrix& nm
+      Rcpp::NumericMatrix& nm,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, nm );
@@ -71,7 +75,8 @@ namespace zm {
       R_xlen_t& n_col,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::DataFrame& df
+      Rcpp::DataFrame& df,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, df );
@@ -86,7 +91,8 @@ namespace zm {
     Rcpp::NumericVector& z_range,
     Rcpp::NumericVector& m_range,
     Rcpp::IntegerMatrix& im,
-    Rcpp::IntegerVector& geometry_cols
+    Rcpp::IntegerVector& geometry_cols,
+    bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, im, geometry_cols );
@@ -101,7 +107,8 @@ namespace zm {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& im,
-      Rcpp::IntegerVector& geometry_cols
+      Rcpp::IntegerVector& geometry_cols,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, im, geometry_cols );
@@ -116,7 +123,8 @@ namespace zm {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df,
-      Rcpp::IntegerVector& geometry_cols
+      Rcpp::IntegerVector& geometry_cols,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, df, geometry_cols );
@@ -131,7 +139,8 @@ namespace zm {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df,
-      Rcpp::StringVector& geometry_cols
+      Rcpp::StringVector& geometry_cols,
+      bool m_only = false
   ) {
     if( n_col > 2 ) {
       sfheaders::zm::calculate_z_range( z_range, df, geometry_cols );
@@ -146,7 +155,8 @@ namespace zm {
     Rcpp::NumericVector& z_range,
     Rcpp::NumericVector& m_range,
     Rcpp::IntegerMatrix& im,
-    SEXP& geometry_cols
+    SEXP& geometry_cols,
+    bool m_only = false
   ) {
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -172,7 +182,8 @@ namespace zm {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& nm,
-      SEXP& geometry_cols
+      SEXP& geometry_cols,
+      bool m_only = false
   ) {
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -198,7 +209,8 @@ namespace zm {
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
       Rcpp::DataFrame& df,
-      SEXP& geometry_cols
+      SEXP& geometry_cols,
+      bool m_only = false
   ) {
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}

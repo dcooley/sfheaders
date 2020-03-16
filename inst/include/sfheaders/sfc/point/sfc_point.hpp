@@ -18,14 +18,16 @@ namespace sfc {
       Rcpp::List& sfc,
       Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& z_range,
-      Rcpp::NumericVector& m_range
+      Rcpp::NumericVector& m_range,
+      bool m_only = false
   ) {
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
     return sfc;
   }
 
   inline SEXP sfc_point(
-    Rcpp::IntegerMatrix& im
+    Rcpp::IntegerMatrix& im,
+    bool m_only = false
   ) {
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -49,7 +51,7 @@ namespace sfc {
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
       }
-      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, m_only );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
@@ -57,7 +59,8 @@ namespace sfc {
   }
 
   inline SEXP sfc_point(
-    Rcpp::IntegerVector& iv
+    Rcpp::IntegerVector& iv,
+    bool m_only = false
   ) {
     int n_col = iv.size();
     Rcpp::IntegerMatrix im(1, n_col);
@@ -67,7 +70,8 @@ namespace sfc {
 
 
   inline SEXP sfc_point(
-      Rcpp::NumericMatrix& nm
+      Rcpp::NumericMatrix& nm,
+      bool m_only = false
   ) {
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -91,7 +95,7 @@ namespace sfc {
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
       }
-      sfc[i] = sfheaders::sfg::sfg_point( this_point );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, m_only );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
@@ -99,7 +103,8 @@ namespace sfc {
   }
 
   inline SEXP sfc_point(
-      Rcpp::NumericVector& iv
+      Rcpp::NumericVector& iv,
+      bool m_only = false
   ) {
     int n_col = iv.size();
     Rcpp::NumericMatrix nm(1, n_col);
@@ -110,7 +115,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       Rcpp::IntegerMatrix& im,
-      Rcpp::IntegerVector& cols
+      Rcpp::IntegerVector& cols,
+      bool m_only = false
   ) {
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -131,7 +137,7 @@ namespace sfc {
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;  // #nocov
       }
-      sfc[i] = sfheaders::sfg::sfg_point( this_point, cols );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, cols, m_only );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
@@ -140,7 +146,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       Rcpp::IntegerMatrix& im,
-      Rcpp::StringVector& cols
+      Rcpp::StringVector& cols,
+      bool m_only = false
   ) {
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -160,7 +167,7 @@ namespace sfc {
 
     for( i = 0; i < n_row; ++i ) {
       Rcpp::IntegerMatrix this_point = sfheaders::utils::matrix_row_to_matrix( im, i );
-      sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions, m_only );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
@@ -169,7 +176,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       Rcpp::NumericMatrix& nm,
-      Rcpp::IntegerVector& cols
+      Rcpp::IntegerVector& cols,
+      bool m_only = false
   ) {
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -190,7 +198,7 @@ namespace sfc {
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
       }
-      sfc[i] = sfheaders::sfg::sfg_point( this_point, cols );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, cols, m_only );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
@@ -199,7 +207,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       Rcpp::NumericMatrix& nm,
-      Rcpp::StringVector& cols
+      Rcpp::StringVector& cols,
+      bool m_only = false
   ) {
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
@@ -219,7 +228,7 @@ namespace sfc {
 
     for( i = 0; i < n_row; ++i ) {
       Rcpp::NumericMatrix this_point = sfheaders::utils::matrix_row_to_matrix( nm, i );
-      sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions );
+      sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions, m_only );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
@@ -227,7 +236,8 @@ namespace sfc {
   }
 
   inline SEXP sfc_point(
-      Rcpp::DataFrame& df
+      Rcpp::DataFrame& df,
+      bool m_only = false
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     return sfc_point( nm );
@@ -235,7 +245,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       Rcpp::DataFrame& df,
-      Rcpp::IntegerVector& cols
+      Rcpp::IntegerVector& cols,
+      bool m_only = false
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
     return sfc_point( nm );
@@ -243,14 +254,16 @@ namespace sfc {
 
   inline SEXP sfc_point(
       Rcpp::DataFrame& df,
-      Rcpp::StringVector& cols
+      Rcpp::StringVector& cols,
+      bool m_only = false
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
     return sfc_point( nm );
   }
 
   inline SEXP sfc_point(
-      SEXP& x
+      SEXP& x,
+      bool m_only = false
   ) {
 
     SEXP xc = Rcpp::clone( x );
@@ -291,7 +304,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       SEXP& x,
-      Rcpp::IntegerVector& cols
+      Rcpp::IntegerVector& cols,
+      bool m_only = false
   ) {
 
     SEXP xc = Rcpp::clone( x );
@@ -320,7 +334,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       SEXP& x,
-      Rcpp::StringVector& cols
+      Rcpp::StringVector& cols,
+      bool m_only = false
   ) {
 
     SEXP xc = Rcpp::clone( x );
@@ -359,7 +374,8 @@ namespace sfc {
 
   inline SEXP sfc_point(
       SEXP& x,
-      SEXP& cols
+      SEXP& cols,
+      bool m_only = false
   ) {
 
     if( Rf_isNull( cols ) ) {

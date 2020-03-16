@@ -81,8 +81,8 @@ rcpp_sf_multipolygon <- function(x, cols, multipolygon_id, polygon_id, linestrin
     .Call(`_sfheaders_rcpp_sf_multipolygon`, x, cols, multipolygon_id, polygon_id, linestring_id, close, keep)
 }
 
-rcpp_sfc_point <- function(x, cols) {
-    .Call(`_sfheaders_rcpp_sfc_point`, x, cols)
+rcpp_sfc_point <- function(x, cols, m_only = FALSE) {
+    .Call(`_sfheaders_rcpp_sfc_point`, x, cols, m_only)
 }
 
 rcpp_sfc_points <- function(lst) {

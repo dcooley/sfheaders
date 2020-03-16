@@ -2,8 +2,8 @@
 #include "sfheaders/sfc/sfc.hpp"
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_point( SEXP x, SEXP cols ) {
-  return sfheaders::sfc::sfc_point( x, cols );
+SEXP rcpp_sfc_point( SEXP x, SEXP cols, bool m_only = false ) {
+  return sfheaders::sfc::sfc_point( x, cols, m_only );
 }
 
 // [[Rcpp::export]]

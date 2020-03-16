@@ -33,7 +33,7 @@
 #' @export
 sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_point( obj, index_correct( geometry_columns ) )
+  rcpp_sfc_point( obj, index_correct( geometry_columns ), m_only(z, m) )
 }
 
 #' sfc MULTIPOINT
