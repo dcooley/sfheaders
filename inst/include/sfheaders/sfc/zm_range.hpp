@@ -17,11 +17,15 @@ namespace zm {
       Rcpp::IntegerVector& iv,
       bool m_only = false
   ) {
-    if( n_col > 2 ) {
-      sfheaders::zm::calculate_z_range( z_range, iv );
-      if( n_col > 3 ) {
+    if( n_col == 3 ) {
+      if ( m_only ) {
         sfheaders::zm::calculate_m_range( m_range, iv );
+      } else {
+        sfheaders::zm::calculate_z_range( z_range, iv );
       }
+    }
+    if( n_col == 4 ) {
+      sfheaders::zm::calculate_m_range( m_range, iv );
     }
   }
 
