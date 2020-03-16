@@ -9,22 +9,22 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline SEXP sfg_point( Rcpp::IntegerVector& iv, bool m_only = false ) {
+  inline SEXP sfg_point( Rcpp::IntegerVector& iv, bool m_only ) {
     sfheaders::sfg::make_sfg( iv, sfheaders::sfg::SFG_POINT, m_only );
     return iv;
   }
 
-  inline SEXP sfg_point( Rcpp::NumericVector& nv, bool m_only = false ) {
+  inline SEXP sfg_point( Rcpp::NumericVector& nv, bool m_only ) {
     sfheaders::sfg::make_sfg( nv, sfheaders::sfg::SFG_POINT, m_only );
     return nv;
   }
 
-  inline SEXP sfg_point( Rcpp::IntegerVector& iv, Rcpp::IntegerVector& cols, bool m_only = false ) {
+  inline SEXP sfg_point( Rcpp::IntegerVector& iv, Rcpp::IntegerVector& cols, bool m_only ) {
     Rcpp::IntegerVector iv2 = iv[ cols ];
     return sfg_point( iv2, m_only );
   }
 
-  inline SEXP sfg_point( Rcpp::NumericVector& nv, Rcpp::IntegerVector& cols, bool m_only = false ) {
+  inline SEXP sfg_point( Rcpp::NumericVector& nv, Rcpp::IntegerVector& cols, bool m_only ) {
     Rcpp::NumericVector nv2 = nv[ cols ];
     return sfg_point( nv2, m_only );
   }
@@ -34,7 +34,7 @@ namespace sfg {
    */
   inline SEXP sfg_point(
       Rcpp::IntegerMatrix& im,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerVector iv = sfheaders::shapes::get_vec( im );
     return sfg_point( iv, m_only );
@@ -42,7 +42,7 @@ namespace sfg {
 
   inline SEXP sfg_point(
       Rcpp::NumericMatrix& nm,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( nm );
     return sfg_point( nv, m_only );
@@ -51,7 +51,7 @@ namespace sfg {
   inline SEXP sfg_point(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerVector iv = sfheaders::shapes::get_vec( im, cols );
     return sfg_point( iv, m_only );
@@ -60,7 +60,7 @@ namespace sfg {
   inline SEXP sfg_point(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerVector iv = sfheaders::shapes::get_vec( im, cols );
     return sfg_point( iv, m_only );
@@ -69,7 +69,7 @@ namespace sfg {
   inline SEXP sfg_point(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( nm, cols );
     return sfg_point( nv, m_only );
@@ -78,7 +78,7 @@ namespace sfg {
   inline SEXP sfg_point(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( nm, cols );
     return sfg_point( nv, m_only );
@@ -87,7 +87,7 @@ namespace sfg {
   // expects only lon/lat/z/m columns in correct order
   inline SEXP sfg_point(
       Rcpp::DataFrame& df,
-      bool m_only = false
+      bool m_only
   ) {
     // expecting single-row data.frame
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df );
@@ -97,7 +97,7 @@ namespace sfg {
   inline SEXP sfg_point(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols,
-    bool m_only = false
+    bool m_only
   ) {
     //Rcpp::NumericMatrix nm = sfheaders::utils::df_sfg_matrix( df );
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df, cols );
@@ -107,7 +107,7 @@ namespace sfg {
   inline SEXP sfg_point(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& cols,
-    bool m_only = false
+    bool m_only
   ) {
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df, cols );
     return sfg_point( nv, m_only );
@@ -115,7 +115,7 @@ namespace sfg {
 
   inline SEXP sfg_point(
     SEXP& x,
-    bool m_only = false
+    bool m_only
   ) {
 
     SEXP xc = Rcpp::clone( x );
@@ -157,7 +157,7 @@ namespace sfg {
   inline SEXP sfg_point(
       SEXP& x,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
 
     SEXP xc = Rcpp::clone( x );
@@ -197,7 +197,7 @@ namespace sfg {
   inline SEXP sfg_point(
       SEXP& x,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     // with string columns it must be a data.frame(?)
 
@@ -213,11 +213,11 @@ namespace sfg {
   inline SEXP sfg_point(
     SEXP& x,
     SEXP& cols,
-    bool m_only = false
+    bool m_only
   ) {
 
     if( Rf_isNull( cols ) ) {
-      return sfg_point( x );
+      return sfg_point( x, m_only );
     }
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}

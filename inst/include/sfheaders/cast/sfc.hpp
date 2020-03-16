@@ -352,6 +352,7 @@ namespace cast {
       Rcpp::List& sfc,
       Rcpp::NumericVector& n_results,
       std::string& cast_to,
+      bool m_only,
       bool close = true
   ) {
 
@@ -366,6 +367,9 @@ namespace cast {
 
     if( sfc.hasAttribute("z_range") ) {
       z_range = sfc.attr("z_range");
+    }
+
+    if( sfc.hasAttribute("m_range") ) {
       m_range = sfc.attr("m_range");
     }
 
@@ -406,7 +410,7 @@ namespace cast {
 
       int casting_from = cast_type( cast_from );
 
-      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, close );
+      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, m_only, close );
 
       if( casting_from <= casting_to ) {
         res[ result_counter ] = new_res;
@@ -429,10 +433,11 @@ namespace cast {
   inline Rcpp::List cast_sfc(
       Rcpp::List& sfc,
       std::string& cast_to,
+      bool m_only,
       bool close = true
   ) {
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
-    return cast_sfc( sfc, n_results, cast_to, close );
+    return cast_sfc( sfc, n_results, cast_to, m_only, close );
   }
 
 

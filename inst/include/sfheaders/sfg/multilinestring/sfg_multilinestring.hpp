@@ -13,7 +13,7 @@ namespace sfg {
   // but can also be a single matrix
   inline SEXP sfg_multilinestring(
       Rcpp::IntegerMatrix& im,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List mls( 1 );
     mls[0] = im;
@@ -25,7 +25,7 @@ namespace sfg {
 
   inline SEXP sfg_multilinestring(
       Rcpp::IntegerVector& iv,
-      bool m_only = false
+      bool m_only
   ) {
     R_xlen_t n = iv.length();
     Rcpp::IntegerMatrix im( 1, n );
@@ -35,7 +35,7 @@ namespace sfg {
 
   inline SEXP sfg_multilinestring(
       Rcpp::NumericMatrix& nm,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List mls( 1 );
     mls[0] = nm;
@@ -46,7 +46,7 @@ namespace sfg {
 
   inline SEXP sfg_multilinestring(
       Rcpp::NumericVector& nv,
-      bool m_only = false
+      bool m_only
   ) {
     R_xlen_t n = nv.length();
     Rcpp::NumericMatrix nm( 1, n );
@@ -56,7 +56,7 @@ namespace sfg {
 
   inline SEXP sfg_multilinestring(
       Rcpp::DataFrame& df,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List mls( 1 );
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
@@ -68,7 +68,7 @@ namespace sfg {
 
   inline SEXP sfg_multilinestring(
     Rcpp::List& lst,
-    bool m_only = false
+    bool m_only
   ) {
     sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTILINESTRING, m_only );
     return lst;
@@ -78,7 +78,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return sfg_multilinestring( nm, m_only );
@@ -87,7 +87,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return sfg_multilinestring( nm, m_only );
@@ -96,7 +96,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return sfg_multilinestring( nm2, m_only );
@@ -105,7 +105,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return sfg_multilinestring( nm2, m_only );
@@ -114,7 +114,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return sfg_multilinestring( im2, m_only );
@@ -123,7 +123,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return sfg_multilinestring( im2, m_only );
@@ -135,7 +135,7 @@ namespace sfg {
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols,
     int& id_col,
-    bool m_only = false
+    bool m_only
   ) {
     Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
     return sfg_multilinestring( lst, m_only );
@@ -145,7 +145,7 @@ namespace sfg {
     Rcpp::DataFrame& df,
     Rcpp::StringVector& cols,
     Rcpp::String& id_col,
-    bool m_only = false
+    bool m_only
   ) {
     Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
     return sfg_multilinestring( lst, m_only );
@@ -155,7 +155,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols,
       int& id_col,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
     return sfg_multilinestring( lst, m_only );
@@ -165,7 +165,7 @@ namespace sfg {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols,
       Rcpp::String& id_col,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
     return sfg_multilinestring( lst, m_only );
@@ -175,7 +175,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols,
       int& id_col,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
     return sfg_multilinestring( lst, m_only );
@@ -186,7 +186,7 @@ namespace sfg {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols,
       Rcpp::String& id_col,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
     return sfg_multilinestring( lst, m_only );
@@ -196,7 +196,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       SEXP& x,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -233,7 +233,7 @@ namespace sfg {
       SEXP& x,
       Rcpp::IntegerVector& cols,
       int& line_id,
-      bool m_only = false
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -303,7 +303,7 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       SEXP& x,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -372,7 +372,7 @@ namespace sfg {
       SEXP& x,
       Rcpp::StringVector& cols,
       Rcpp::String& line_id,
-      bool m_only = false
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -406,7 +406,7 @@ namespace sfg {
 
   inline SEXP sfg_multilinestring(
       SEXP& x,
-      bool m_only = false
+      bool m_only
   ) {
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
@@ -445,10 +445,10 @@ namespace sfg {
   inline SEXP sfg_multilinestring(
       SEXP& x,
       SEXP& geometry_cols,
-      bool m_only = false
+      bool m_only
   ) {
     if( Rf_isNull( geometry_cols ) ) {
-      return sfg_multilinestring( x );   // #nocov
+      return sfg_multilinestring( x, m_only );   // #nocov
     }
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -472,7 +472,7 @@ namespace sfg {
       SEXP& x,
       SEXP& cols,
       Rcpp::String& line_id,
-      bool m_only = false
+      bool m_only
   ) {
     if( Rf_isNull( cols ) ) {
       // #nocov start
@@ -504,7 +504,7 @@ namespace sfg {
       SEXP& x,
       SEXP& cols,
       int& line_id,
-      bool m_only = false
+      bool m_only
   ) {
 
     if( Rf_isNull( cols ) ) {
@@ -536,7 +536,7 @@ namespace sfg {
       SEXP& x,
       SEXP& cols,
       SEXP& line_id,
-      bool m_only = false
+      bool m_only
   ) {
 
     if( Rf_isNull( cols ) && Rf_isNull( line_id ) ) {

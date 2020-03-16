@@ -7,7 +7,7 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline Rcpp::List sfg_linestrings( Rcpp::List& lst, bool m_only = false ) {
+  inline Rcpp::List sfg_linestrings( Rcpp::List& lst, bool m_only ) {
     R_xlen_t n = lst.size();
     // Rcpp::Rcout << "linestring sizes: " << n << std::endl;
     R_xlen_t i;

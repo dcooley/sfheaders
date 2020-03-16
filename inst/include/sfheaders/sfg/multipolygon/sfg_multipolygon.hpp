@@ -13,8 +13,8 @@ namespace sfg {
 // multipolygon is a list of list of linestrings (matrices)
 inline SEXP sfg_multipolygon(
     Rcpp::IntegerMatrix& im,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
@@ -28,8 +28,8 @@ inline SEXP sfg_multipolygon(
 
 inline SEXP sfg_multipolygon(
     Rcpp::NumericMatrix& nm,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
@@ -43,8 +43,8 @@ inline SEXP sfg_multipolygon(
 
 inline SEXP sfg_multipolygon(
     Rcpp::DataFrame& df,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
 
   Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
@@ -62,8 +62,8 @@ inline SEXP sfg_multipolygon(
 
 inline SEXP sfg_multipolygon(
     Rcpp::List& lst,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
 
   lst = sfheaders::polygon_utils::close_polygon( lst, close );
@@ -75,61 +75,61 @@ inline SEXP sfg_multipolygon(
 inline SEXP sfg_multipolygon(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
-  return sfg_multipolygon( nm, close, m_only);
+  return sfg_multipolygon( nm, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
-  return sfg_multipolygon( nm, close, m_only);
+  return sfg_multipolygon( nm, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::NumericMatrix& nm,
     Rcpp::IntegerVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
-  return sfg_multipolygon( nm2, close, m_only);
+  return sfg_multipolygon( nm2, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::NumericMatrix& nm,
     Rcpp::StringVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
-  return sfg_multipolygon( nm2, close, m_only);
+  return sfg_multipolygon( nm2, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::IntegerMatrix& im,
     Rcpp::IntegerVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
-  return sfg_multipolygon( im2, close, m_only);
+  return sfg_multipolygon( im2, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::IntegerMatrix& im,
     Rcpp::StringVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
-  return sfg_multipolygon( im2, close, m_only);
+  return sfg_multipolygon( im2, m_only, close);
 }
 
 // We're still on single sfg objects.
@@ -138,66 +138,66 @@ inline SEXP sfg_multipolygon(
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& cols,
     int& id_col,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
-  return sfg_multipolygon( lst, close, m_only);
+  return sfg_multipolygon( lst, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::DataFrame& df,
     Rcpp::StringVector& cols,
     Rcpp::String& id_col,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
-  return sfg_multipolygon( lst, close, m_only);
+  return sfg_multipolygon( lst, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::NumericMatrix& nm,
     Rcpp::IntegerVector& cols,
     int& id_col,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
-  return sfg_multipolygon( lst, close, m_only);
+  return sfg_multipolygon( lst, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::NumericMatrix& nm,
     Rcpp::StringVector& cols,
     Rcpp::String& id_col,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
-  return sfg_multipolygon( lst, close, m_only);
+  return sfg_multipolygon( lst, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::IntegerMatrix& im,
     Rcpp::IntegerVector& cols,
     int& id_col,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
-  return sfg_multipolygon( lst, close, m_only);
+  return sfg_multipolygon( lst, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
     Rcpp::IntegerMatrix& im,
     Rcpp::StringVector& cols,
     Rcpp::String& id_col,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
-  return sfg_multipolygon( lst, close, m_only);
+  return sfg_multipolygon( lst, m_only, close);
 }
 
   inline SEXP sfg_multipolygon(
@@ -205,11 +205,11 @@ inline SEXP sfg_multipolygon(
     Rcpp::IntegerVector& geometry_cols,
     int& polygon_id_column,
     int& line_id_column,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
   ) {
     Rcpp::List mp = sfheaders::shapes::get_listListMat( im, geometry_cols, polygon_id_column, line_id_column );
-    return sfg_multipolygon( mp, close, m_only);
+    return sfg_multipolygon( mp, m_only, close);
   }
 
   inline SEXP sfg_multipolygon(
@@ -217,11 +217,11 @@ inline SEXP sfg_multipolygon(
       Rcpp::StringVector& geometry_cols,
       Rcpp::String& polygon_id_column,
       Rcpp::String& line_id_column,
-      bool close = true,
-      bool m_only = false
+      bool m_only,
+      bool close = true
   ) {
     Rcpp::List mp = sfheaders::shapes::get_listListMat( im, geometry_cols, polygon_id_column, line_id_column );
-    return sfg_multipolygon( mp, close, m_only);
+    return sfg_multipolygon( mp, m_only, close);
   }
 
   inline SEXP sfg_multipolygon(
@@ -229,11 +229,11 @@ inline SEXP sfg_multipolygon(
       Rcpp::IntegerVector& geometry_cols,
       int& polygon_id_column,
       int& line_id_column,
-      bool close = true,
-      bool m_only = false
+      bool m_only,
+      bool close = true
   ) {
     Rcpp::List mp = sfheaders::shapes::get_listListMat( nm, geometry_cols, polygon_id_column, line_id_column );
-    return sfg_multipolygon( mp, close, m_only);
+    return sfg_multipolygon( mp, m_only, close);
   }
 
   inline SEXP sfg_multipolygon(
@@ -241,11 +241,11 @@ inline SEXP sfg_multipolygon(
       Rcpp::StringVector& geometry_cols,
       Rcpp::String& polygon_id_column,
       Rcpp::String& line_id_column,
-      bool close = true,
-      bool m_only = false
+      bool m_only,
+      bool close = true
   ) {
     Rcpp::List mp = sfheaders::shapes::get_listListMat( nm, geometry_cols, polygon_id_column, line_id_column );
-    return sfg_multipolygon( mp, close, m_only);
+    return sfg_multipolygon( mp, m_only, close);
   }
 
   inline SEXP sfg_multipolygon(
@@ -253,11 +253,11 @@ inline SEXP sfg_multipolygon(
       Rcpp::IntegerVector& geometry_cols,
       int& polygon_id_column,
       int& line_id_column,
-      bool close = true,
-      bool m_only = false
+      bool m_only,
+      bool close = true
   ) {
     Rcpp::List mp = sfheaders::shapes::get_listListMat( df, geometry_cols, polygon_id_column, line_id_column );
-    return sfg_multipolygon( mp, close, m_only);
+    return sfg_multipolygon( mp, m_only, close);
   }
 
 
@@ -266,19 +266,19 @@ inline SEXP sfg_multipolygon(
       Rcpp::StringVector& geometry_cols,
       Rcpp::String& polygon_id_column,
       Rcpp::String& line_id_column,
-      bool close = true,
-      bool m_only = false
+      bool m_only,
+      bool close = true
   ) {
     Rcpp::List mp = sfheaders::shapes::get_listListMat( df, geometry_cols, polygon_id_column, line_id_column );
-    return sfg_multipolygon( mp, close, m_only);
+    return sfg_multipolygon( mp, m_only, close);
   }
 
 
 inline SEXP sfg_multipolygon(
     SEXP& x,
     Rcpp::IntegerVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   switch( TYPEOF( x ) ) {
   case INTSXP: {
@@ -286,19 +286,19 @@ inline SEXP sfg_multipolygon(
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-    return sfg_multipolygon( im, cols, close, m_only);
+    return sfg_multipolygon( im, cols, m_only, close);
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-    return sfg_multipolygon( nm, cols, close, m_only);
+    return sfg_multipolygon( nm, cols, m_only, close);
   }
   case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfg_multipolygon( df, cols, close, m_only);
+    return sfg_multipolygon( df, cols, m_only, close);
   } // else default
   }
   default: {
@@ -315,8 +315,8 @@ inline SEXP sfg_multipolygon(
     SEXP& x,
     Rcpp::IntegerVector& cols,
     int& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   switch( TYPEOF( x ) ) {
   case INTSXP: {
@@ -324,19 +324,19 @@ inline SEXP sfg_multipolygon(
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-    return sfg_multipolygon( im, cols, line_id, close, m_only);
+    return sfg_multipolygon( im, cols, line_id, m_only, close);
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-    return sfg_multipolygon( nm, cols, line_id, close, m_only);
+    return sfg_multipolygon( nm, cols, line_id, m_only, close);
   }
   case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfg_multipolygon( df, cols, line_id, close, m_only);
+    return sfg_multipolygon( df, cols, line_id, m_only, close);
   } // else default
   }
   default: {
@@ -386,8 +386,8 @@ inline SEXP sfg_multipolygon(
 inline SEXP sfg_multipolygon(
     SEXP& x,
     Rcpp::StringVector& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   switch( TYPEOF( x ) ) {
   case INTSXP: {
@@ -395,19 +395,19 @@ inline SEXP sfg_multipolygon(
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-    return sfg_multipolygon( im, cols, close, m_only);
+    return sfg_multipolygon( im, cols, m_only, close);
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-    return sfg_multipolygon( nm, cols, close, m_only);
+    return sfg_multipolygon( nm, cols, m_only, close);
   }
   case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfg_multipolygon( df, cols, close, m_only);
+    return sfg_multipolygon( df, cols, m_only, close);
   } // else default
   }
   default: {
@@ -456,8 +456,8 @@ inline SEXP sfg_multipolygon(
     SEXP& x,
     Rcpp::StringVector& cols,
     Rcpp::String& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   switch( TYPEOF( x ) ) {
   case INTSXP: {
@@ -465,19 +465,19 @@ inline SEXP sfg_multipolygon(
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-    return sfg_multipolygon( im, cols, line_id, close, m_only);
+    return sfg_multipolygon( im, cols, line_id, m_only, close);
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-    return sfg_multipolygon( nm, cols, line_id, close, m_only);
+    return sfg_multipolygon( nm, cols, line_id, m_only, close);
   }
   case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfg_multipolygon( df, cols, line_id, close, m_only);
+    return sfg_multipolygon( df, cols, line_id, m_only, close);
   } // else default
   }
   default: {
@@ -491,8 +491,8 @@ inline SEXP sfg_multipolygon(
 
 inline SEXP sfg_multipolygon(
     SEXP& x,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
 
   switch ( TYPEOF( x ) ) {
@@ -501,22 +501,22 @@ inline SEXP sfg_multipolygon(
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-    return sfg_multipolygon( im, close, m_only);
+    return sfg_multipolygon( im, m_only, close);
   }
   case REALSXP: {
     if( !Rf_isMatrix( x ) ) {
     Rcpp::stop("sfheaders - expecting a matrix"); // #nocov
   }
     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-    return sfg_multipolygon( nm, close, m_only);
+    return sfg_multipolygon( nm, m_only, close);
   }
   case VECSXP: {
     if( Rf_inherits( x, "data.frame") ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    return sfg_multipolygon( df, close, m_only);
+    return sfg_multipolygon( df, m_only, close);
   } else {
     Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
-    return sfg_multipolygon( lst, close, m_only);
+    return sfg_multipolygon( lst, m_only, close);
   }
   }
   default: {
@@ -530,21 +530,21 @@ inline SEXP sfg_multipolygon(
 inline SEXP sfg_multipolygon(
     SEXP& x,
     SEXP& cols,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   if( Rf_isNull( cols ) ) {
-    return sfg_multipolygon( x, close, m_only);
+    return sfg_multipolygon( x, m_only, close);
   }
   switch( TYPEOF( cols ) ) {
   case REALSXP: {}
   case INTSXP: {
     Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
-    return sfg_multipolygon( x, iv, close, m_only);
+    return sfg_multipolygon( x, iv, m_only, close);
   }
   case STRSXP: {
     Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
-    return sfg_multipolygon( x, sv, close, m_only);
+    return sfg_multipolygon( x, sv, m_only, close);
   }
   default: {
     Rcpp::stop("sfheaders - unknown column types");  // #nocov
@@ -558,14 +558,14 @@ inline SEXP sfg_multipolygon(
     SEXP& x,
     SEXP& cols,
     Rcpp::String& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   if( Rf_isNull( cols ) ) {
     Rcpp::StringVector id_cols( 1 );
     id_cols[0] = line_id;
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
-    return sfg_multipolygon( x, other_cols, line_id, close, m_only);
+    return sfg_multipolygon( x, other_cols, line_id, m_only, close);
   }
   switch( TYPEOF( cols ) ) {
   // case REALSXP: {}
@@ -575,7 +575,7 @@ inline SEXP sfg_multipolygon(
   // }
   case STRSXP: {
     Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
-    return sfg_multipolygon( x, sv, line_id, close, m_only);
+    return sfg_multipolygon( x, sv, line_id, m_only, close);
   }
   default: {
     Rcpp::stop("sfheaders - unknown column types");
@@ -589,21 +589,21 @@ inline SEXP sfg_multipolygon(
     SEXP& x,
     SEXP& cols,
     int& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
 
   if( Rf_isNull( cols ) ) {
     Rcpp::IntegerVector id_cols( 1 );
     id_cols[0] = line_id;
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
-    return sfg_multipolygon( x, other_cols, line_id, close, m_only);
+    return sfg_multipolygon( x, other_cols, line_id, m_only, close);
   }
   switch( TYPEOF( cols ) ) {
   case REALSXP: {}
   case INTSXP: {
     Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( cols );
-    return sfg_multipolygon( x, iv, line_id, close, m_only);
+    return sfg_multipolygon( x, iv, line_id, m_only, close);
   }
   // case STRSXP: {
   //   Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( cols );
@@ -621,11 +621,11 @@ inline SEXP sfg_multipolygon(
   Rcpp::IntegerVector geometry_cols,
   int& polygon_id,
   int& line_id,
-  bool close = true,
-  bool m_only = false
+  bool m_only,
+  bool close = true
 ) {
   Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, polygon_id, line_id );
-  return sfg_multipolygon( mp, close, m_only);
+  return sfg_multipolygon( mp, m_only, close);
 }
 
 inline SEXP sfg_multipolygon(
@@ -633,11 +633,11 @@ inline SEXP sfg_multipolygon(
     Rcpp::StringVector geometry_cols,
     Rcpp::String& polygon_id,
     Rcpp::String& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, polygon_id, line_id );
-  return sfg_multipolygon( mp, close, m_only);
+  return sfg_multipolygon( mp, m_only, close);
 }
 
 
@@ -646,8 +646,8 @@ inline SEXP sfg_multipolygon(
     SEXP& cols,
     int& polygon_id,
     int& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
 
   // #nocov start
@@ -656,7 +656,7 @@ inline SEXP sfg_multipolygon(
     id_cols[0] = polygon_id;
     id_cols[1] = line_id;
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
-    return sfg_multipolygon( x, other_cols, polygon_id, line_id, close, m_only);
+    return sfg_multipolygon( x, other_cols, polygon_id, line_id, m_only, close);
   }
   // #nocov end
 
@@ -664,7 +664,7 @@ inline SEXP sfg_multipolygon(
   case REALSXP: {}
   case INTSXP: {
     Rcpp::IntegerVector geometry_cols = Rcpp::as< Rcpp::IntegerVector >( cols );
-    return sfg_multipolygon( x, geometry_cols, polygon_id, line_id, close, m_only);
+    return sfg_multipolygon( x, geometry_cols, polygon_id, line_id, m_only, close);
   }
   // case STRSXP: {
   //   Rcpp::StringVector geometry_cols = Rcpp::as< Rcpp::StringVector >( cols );
@@ -681,8 +681,8 @@ inline SEXP sfg_multipolygon(
     SEXP& cols,
     Rcpp::String& polygon_id,
     Rcpp::String& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
 
   // #nocov start
@@ -691,7 +691,7 @@ inline SEXP sfg_multipolygon(
     id_cols[0] = polygon_id;
     id_cols[1] = line_id;
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
-    return sfg_multipolygon( x, other_cols, polygon_id, line_id, close, m_only);
+    return sfg_multipolygon( x, other_cols, polygon_id, line_id, m_only, close);
   }
   // #nocov end
 
@@ -703,7 +703,7 @@ inline SEXP sfg_multipolygon(
   // }
   case STRSXP: {
     Rcpp::StringVector geometry_cols = Rcpp::as< Rcpp::StringVector >( cols );
-    return sfg_multipolygon( x, geometry_cols, polygon_id, line_id, close, m_only);
+    return sfg_multipolygon( x, geometry_cols, polygon_id, line_id, m_only, close);
   }
   default: {
     Rcpp::stop("sfheaders - unknown column types");
@@ -717,11 +717,11 @@ inline SEXP sfg_multipolygon(
     SEXP& cols,
     SEXP& polygon_id,
     SEXP& line_id,
-    bool close = true,
-    bool m_only = false
+    bool m_only,
+    bool close = true
 ) {
   if( Rf_isNull( polygon_id ) && Rf_isNull( line_id ) ) {
-    return sfg_multipolygon( x, cols, close, m_only);
+    return sfg_multipolygon( x, cols, m_only, close);
   }
 
   // at this point one or both of polygon_id and line_id will not be null
@@ -729,7 +729,7 @@ inline SEXP sfg_multipolygon(
   if( Rf_isNull( cols ) ) {
     // make them the other columns
     SEXP other_cols = sfheaders::utils::other_columns(x, polygon_id, line_id );
-    return sfg_multipolygon( x, other_cols, polygon_id, line_id, close, m_only);
+    return sfg_multipolygon( x, other_cols, polygon_id, line_id, m_only, close);
   }
 
   if( Rf_isNull( polygon_id ) && !Rf_isNull( line_id ) ) {
@@ -741,7 +741,7 @@ inline SEXP sfg_multipolygon(
 
     Rcpp::List sfg(1);
     sfg[0] = sfheaders::shapes::get_listMat( x, cols, line_id );
-    return sfg_multipolygon( sfg, close, m_only);
+    return sfg_multipolygon( sfg, m_only, close);
   }
 
   if( !Rf_isNull( polygon_id ) && Rf_isNull( line_id ) ) {
@@ -749,7 +749,7 @@ inline SEXP sfg_multipolygon(
     // with one or more polygons,
     // but each polygon has a single line
     SEXP line_id2 = polygon_id;
-    return sfg_multipolygon( x, cols, polygon_id, line_id2, close, m_only);
+    return sfg_multipolygon( x, cols, polygon_id, line_id2, m_only, close);
   }
 
   // otherwise they are both provided
@@ -764,7 +764,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::IntegerVector iv_polygon = Rcpp::as< Rcpp::IntegerVector >( polygon_id );
     int il = iv_line[0];
     int ip = iv_polygon[0];
-    return sfg_multipolygon( x, cols, ip, il, close, m_only);
+    return sfg_multipolygon( x, cols, ip, il, m_only, close);
   }
   case STRSXP: {
     Rcpp::StringVector sv_line = Rcpp::as< Rcpp::StringVector >( line_id );
@@ -773,7 +773,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::String sl = sv_line[0];
     Rcpp::String sp = sv_polygon[0];
     //return Rcpp::List();
-    return sfg_multipolygon( x, cols, sp, sl, close, m_only);
+    return sfg_multipolygon( x, cols, sp, sl, m_only, close);
   }
   default: {
     Rcpp::stop("sfheaders - unknown column types");  // #nocov
@@ -785,8 +785,8 @@ inline SEXP sfg_multipolygon(
   // only keep the outer-linestring / ring / matrix
   inline SEXP remove_multipolygon_holes(
       Rcpp::List& sfg_mp,
-      bool close = true,
-      bool m_only = false
+      bool m_only,
+      bool close = true
   ) {
     // loop over and only keep the first line
     R_xlen_t i;
@@ -798,7 +798,7 @@ inline SEXP sfg_multipolygon(
       new_poly[ 0 ] = poly[ 0 ];
       res[ i ] = new_poly;
     }
-    return sfg_multipolygon( res, close, m_only);
+    return sfg_multipolygon( res, m_only, close);
 
   }
 

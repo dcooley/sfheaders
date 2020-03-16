@@ -65,8 +65,7 @@ namespace zm {
 
   inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
-      double& val,
-      bool m_only,
+      double& val
   ) {
 
     //xmin, ymin, xmax, ymax
@@ -76,8 +75,7 @@ namespace zm {
 
   inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
-      int& val,
-      bool m_only
+      int& val
   ) {
     double d = static_cast< double >( val );
     calculate_m_range( m_range, d );
@@ -227,7 +225,7 @@ namespace zm {
       Rcpp::NumericVector& m_range,
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& geometry_cols,
-      bool m_only ;
+      bool m_only
   ) {
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );

@@ -52,38 +52,38 @@ namespace sfc {
   // }
 
 
-  inline SEXP to_sfc( SEXP& x, std::string geom_type ) {
+  inline SEXP to_sfc( SEXP& x, std::string geom_type, bool m_only ) {
     if( geom_type == "POINT" ) {
-      return sfheaders::sfc::sfc_point( x );
+      return sfheaders::sfc::sfc_point( x, m_only );
     } else if ( geom_type == "MULTIPOINT" ) {
-      return sfheaders::sfc::sfc_multipoint( x );
+      return sfheaders::sfc::sfc_multipoint( x, m_only );
     } else if ( geom_type == "LINESTRING" ) {
-      return sfheaders::sfc::sfc_linestring( x );
+      return sfheaders::sfc::sfc_linestring( x, m_only );
     } else if ( geom_type == "MULTIILNESTRING" ) {
-      return sfheaders::sfc::sfc_multilinestring( x );
+      return sfheaders::sfc::sfc_multilinestring( x, m_only );
     } else if ( geom_type == "POLYGON" ) {
-      return sfheaders::sfc::sfc_polygon( x );
+      return sfheaders::sfc::sfc_polygon( x, m_only );
     } else if ( geom_type == "MULTIPOLYGON" ) {
-      return sfheaders::sfc::sfc_multipolygon( x );
+      return sfheaders::sfc::sfc_multipolygon( x, m_only );
     }
 
     Rcpp::stop("sfheaders - unknown sfc geometry type");
     return Rcpp::List::create();
   }
 
-  inline SEXP to_sfc( SEXP& x, std::string geom_type, SEXP geometry_columns ) {
+  inline SEXP to_sfc( SEXP& x, std::string geom_type, SEXP geometry_columns, bool m_only ) {
     if( geom_type == "POINT" ) {
-      return sfheaders::sfc::sfc_point( x, geometry_columns );
+      return sfheaders::sfc::sfc_point( x, geometry_columns, m_only );
     } else if ( geom_type == "MULTIPOINT" ) {
-      return sfheaders::sfc::sfc_multipoint( x, geometry_columns );
+      return sfheaders::sfc::sfc_multipoint( x, geometry_columns, m_only );
     } else if ( geom_type == "LINESTRING" ) {
-      return sfheaders::sfc::sfc_linestring( x, geometry_columns );
+      return sfheaders::sfc::sfc_linestring( x, geometry_columns, m_only );
     } else if ( geom_type == "MULTIILNESTRING" ) {
-      return sfheaders::sfc::sfc_multilinestring( x, geometry_columns );
+      return sfheaders::sfc::sfc_multilinestring( x, geometry_columns, m_only );
     } else if ( geom_type == "POLYGON" ) {
-      return sfheaders::sfc::sfc_polygon( x, geometry_columns );
+      return sfheaders::sfc::sfc_polygon( x, geometry_columns, m_only );
     } else if ( geom_type == "MULTIPOLYGON" ) {
-      return sfheaders::sfc::sfc_multipolygon( x, geometry_columns );
+      return sfheaders::sfc::sfc_multipolygon( x, geometry_columns, m_only );
     }
 
     Rcpp::stop("sfheaders - unknown sfc geometry type");

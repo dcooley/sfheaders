@@ -21,7 +21,7 @@ namespace sfg {
   // then enter teh appropriate C++ function.
 
 
-  inline std::string sfg_dimension( R_xlen_t& n, bool m_only = false ) {
+  inline std::string sfg_dimension( R_xlen_t& n, bool m_only ) {
     dimension_check( n );
     std::string dim = "XY";
 
@@ -40,32 +40,32 @@ namespace sfg {
     return dim;
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, bool m_only = false ) {
+  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, bool m_only ) {
     R_xlen_t n = iv.size();
-    return sfg_dimension( n );
+    return sfg_dimension( n, m_only );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericVector& nv, bool m_only = false ) {
+  inline std::string sfg_dimension( Rcpp::NumericVector& nv, bool m_only ) {
     R_xlen_t n = nv.size();
-    return sfg_dimension( n );
+    return sfg_dimension( n, m_only );
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, bool m_only = false ) {
+  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, bool m_only ) {
     R_xlen_t n_col = im.ncol();
-    return sfg_dimension( n_col );
+    return sfg_dimension( n_col, m_only );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, bool m_only = false ) {
+  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, bool m_only ) {
     R_xlen_t n_col = nm.ncol();
-    return sfg_dimension( n_col );
+    return sfg_dimension( n_col, m_only );
   }
 
-  inline std::string sfg_dimension( Rcpp::DataFrame& df, bool m_only = false ) {
+  inline std::string sfg_dimension( Rcpp::DataFrame& df, bool m_only ) {
     R_xlen_t n_col = df.ncol();
-    return sfg_dimension( n_col );
+    return sfg_dimension( n_col, m_only );
   }
 
-  inline std::string sfg_dimension( SEXP x, bool m_only = false ) {
+  inline std::string sfg_dimension( SEXP x, bool m_only ) {
 
     switch ( TYPEOF( x ) ) {
     case INTSXP: {

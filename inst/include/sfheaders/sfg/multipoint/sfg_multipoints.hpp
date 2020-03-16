@@ -7,7 +7,7 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline Rcpp::List sfg_multipoints( Rcpp::List& lst, bool m_only = false ) {
+  inline Rcpp::List sfg_multipoints( Rcpp::List& lst, bool m_only ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs(n);

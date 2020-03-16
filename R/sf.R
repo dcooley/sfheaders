@@ -50,7 +50,7 @@ sf_point <- function(
   keep = FALSE
   ) {
   geometry_columns <- c(x,y,z,m)
-  return( rcpp_sf_point( obj, index_correct( geometry_columns ), keep ) )
+  return( rcpp_sf_point( obj, index_correct( geometry_columns ), keep, m_only(z, m) ) )
 }
 
 #' sf MULTIPOINT
@@ -91,6 +91,7 @@ sf_multipoint <- function(
     , index_correct( geometry_columns )
     , index_correct( multipoint_id )
     , keep
+    , m_only(z, m)
     )
   return( replace_id( res, multipoint_id ) )
 }
@@ -132,8 +133,9 @@ sf_linestring <- function(
   res <- rcpp_sf_linestring(
     obj
     , index_correct( geometry_columns )
-    ,  index_correct( linestring_id )
+    , index_correct( linestring_id )
     , keep
+    , m_only(z, m)
     )
   return( replace_id( res, linestring_id ) )
 }
@@ -208,6 +210,7 @@ sf_multilinestring <- function(
     , index_correct( multilinestring_id )
     , index_correct( linestring_id )
     , keep
+    , m_only(z, m)
   )
   return( replace_id( res, multilinestring_id ) )
 }
@@ -284,6 +287,7 @@ sf_polygon <- function(
     , index_correct( geometry_columns )
     , index_correct( polygon_id )
     , index_correct( linestring_id )
+    , m_only(z, m)
     , close
     , keep
     )
@@ -385,6 +389,7 @@ sf_multipolygon <- function(
     , index_correct( multipolygon_id )
     , index_correct( polygon_id )
     , index_correct( linestring_id )
+    , m_only(z, m)
     , close
     , keep
     )

@@ -61,7 +61,7 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' @export
 sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipoint_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipoint( obj, index_correct( geometry_columns ),  index_correct( multipoint_id ) )
+  rcpp_sfc_multipoint( obj, index_correct( geometry_columns ),  index_correct( multipoint_id ), m_only(z, m) )
 }
 
 
@@ -89,7 +89,7 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #' @export
 sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ) )
+  rcpp_sfc_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), m_only(z, m) )
 }
 
 
@@ -147,7 +147,7 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
                                  multilinestring_id = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multilinestring( obj, index_correct( geometry_columns ), index_correct( multilinestring_id ), index_correct( linestring_id ) )
+  rcpp_sfc_multilinestring( obj, index_correct( geometry_columns ), index_correct( multilinestring_id ), index_correct( linestring_id ), m_only(z, m) )
 }
 
 
@@ -207,7 +207,7 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
                          polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close )
+  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), m_only(z, m), close )
 }
 
 
@@ -290,7 +290,7 @@ sfc_multipolygon <- function(
   multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL,
   close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), close )
+  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), m_only(z, m), close )
 }
 
 

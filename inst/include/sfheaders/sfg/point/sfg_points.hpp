@@ -7,7 +7,7 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline Rcpp::List sfg_points( Rcpp::List& lst, bool m_only = false ) {
+  inline Rcpp::List sfg_points( Rcpp::List& lst, bool m_only ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs( n );
@@ -19,7 +19,7 @@ namespace sfg {
     return sfcs;
   }
 
-  inline Rcpp::List sfg_points( Rcpp::NumericMatrix& nm, bool m_only = false ) {
+  inline Rcpp::List sfg_points( Rcpp::NumericMatrix& nm, bool m_only ) {
     R_xlen_t n = nm.nrow();
     R_xlen_t i;
     Rcpp::List sfcs( n );

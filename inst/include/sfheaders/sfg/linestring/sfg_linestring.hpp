@@ -15,7 +15,7 @@ namespace sfg {
    */
   inline SEXP sfg_linestring(
       Rcpp::IntegerMatrix& im,
-      bool m_only = false
+      bool m_only
   ) {
     sfheaders::sfg::make_sfg( im, sfheaders::sfg::SFG_LINESTRING, m_only );
     return im;
@@ -23,7 +23,7 @@ namespace sfg {
 
   inline SEXP sfg_linestring(
       Rcpp::IntegerVector& iv,
-      bool m_only = false
+      bool m_only
   ) {
     R_xlen_t n = iv.length();
     Rcpp::IntegerMatrix im( 1, n );
@@ -35,7 +35,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return sfg_linestring( im2, m_only );
@@ -44,7 +44,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
     return sfg_linestring( im2, m_only );
@@ -52,7 +52,7 @@ namespace sfg {
 
   inline SEXP sfg_linestring(
       Rcpp::NumericMatrix& nm,
-      bool m_only = false
+      bool m_only
   ) {
     sfheaders::sfg::make_sfg( nm, sfheaders::sfg::SFG_LINESTRING, m_only );
     return nm;
@@ -60,7 +60,7 @@ namespace sfg {
 
   inline SEXP sfg_linestring(
       Rcpp::NumericVector& nv,
-      bool m_only = false
+      bool m_only
   ) {
     R_xlen_t n = nv.length();
     Rcpp::NumericMatrix nm( 1, n );
@@ -71,7 +71,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return sfg_linestring( nm2, m_only );
@@ -80,7 +80,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
     return sfg_linestring( nm2, m_only );
@@ -89,7 +89,7 @@ namespace sfg {
   // expects only lon/lat/z/m columns
   inline SEXP sfg_linestring(
       Rcpp::DataFrame& df,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
     return sfg_linestring( nm, m_only );
@@ -98,7 +98,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return sfg_linestring( nm, m_only );
@@ -107,7 +107,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
     return sfg_linestring( nm, m_only );
@@ -116,7 +116,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       SEXP& x,
       Rcpp::IntegerVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -152,7 +152,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       SEXP& x,
       Rcpp::StringVector& cols,
-      bool m_only = false
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -188,7 +188,7 @@ namespace sfg {
 
   inline SEXP sfg_linestring(
       SEXP& x,
-      bool m_only = false
+      bool m_only
   ) {
     // switch on type of x
     switch ( TYPEOF( x ) ) {
@@ -226,7 +226,7 @@ namespace sfg {
   inline SEXP sfg_linestring(
       SEXP& x,
       SEXP& cols,
-      bool m_only = false
+      bool m_only
   ) {
     if( Rf_isNull( cols ) ) {
       return sfg_linestring( x, m_only );

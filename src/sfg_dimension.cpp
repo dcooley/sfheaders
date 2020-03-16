@@ -4,7 +4,8 @@
 
 // [[Rcpp::export]]
 std::string rcpp_sfg_dimension(
-  SEXP x
+  SEXP x,
+  bool m_only
 ) {
-  return sfheaders::sfg::sfg_dimension( x );
+  return sfheaders::sfg::sfg_dimension( x, m_only );
 }

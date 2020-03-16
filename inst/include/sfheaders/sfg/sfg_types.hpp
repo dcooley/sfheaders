@@ -39,7 +39,7 @@ namespace sfg {
   inline void make_sfg(
     Rcpp::IntegerVector& iv,
     int sfg_type,
-    bool m_only = false
+    bool m_only
   ) {
     R_xlen_t n_col = iv.length();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
@@ -51,7 +51,7 @@ namespace sfg {
   inline void make_sfg(
       Rcpp::NumericVector& nv,
       int sfg_type,
-      bool m_only = false
+      bool m_only
   ) {
     R_xlen_t n_col = nv.length();
     std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
@@ -63,7 +63,7 @@ namespace sfg {
   inline void make_sfg(
     Rcpp::IntegerMatrix& im,
     int sfg_type,
-    bool m_only = false
+    bool m_only
   ) {
 
     R_xlen_t n_col = im.ncol();
@@ -76,7 +76,7 @@ namespace sfg {
   inline void make_sfg(
       Rcpp::NumericMatrix& nm,
       int sfg_type,
-      bool m_only = false
+      bool m_only
   ) {
 
     R_xlen_t n_col = nm.ncol();
@@ -89,7 +89,7 @@ namespace sfg {
   inline void make_sfg(
       Rcpp::List& lst,
       int sfg_type,
-      bool m_only = false
+      bool m_only
   ) {
     std::string dim = sfheaders::sfg::sfg_dimension( lst, m_only );
 
@@ -101,7 +101,7 @@ namespace sfg {
     Rcpp::List& lst,
     R_xlen_t n_col,
     int sfg_type,
-    bool m_only = false
+    bool m_only
   ) {
     std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
 

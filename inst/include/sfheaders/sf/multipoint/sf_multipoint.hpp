@@ -14,9 +14,10 @@ namespace sf {
   inline SEXP sf_multipoint(
       SEXP& x,
       SEXP& geometry_cols,
-      SEXP& multipoint_id
+      SEXP& multipoint_id,
+      bool m_only
   ) {
-    Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id );
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id, m_only );
 
     SEXP ids = sfheaders::utils::get_ids( x, multipoint_id );
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
@@ -28,14 +29,15 @@ namespace sf {
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
       Rcpp::String& id_column,
-      SEXP& line_ids
+      SEXP& line_ids,
+      bool m_only
   ) {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
-    Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( df, geometry_cols, line_positions );
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( df, geometry_cols, line_positions, m_only );
 
     return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
@@ -45,106 +47,114 @@ namespace sf {
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
       int& id_column,
-      SEXP& line_ids
+      SEXP& line_ids,
+      bool m_only
   ) {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::StringVector str_property_cols = df_names[ geometry_cols ];
     Rcpp::String str_id_col = df_names[ id_column ];
-    return sf_multipoint( df, str_geometry_cols, str_property_cols, str_id_col, line_ids );
+    return sf_multipoint( df, str_geometry_cols, str_property_cols, str_id_col, line_ids, m_only );
   }
 
   inline SEXP sf_multipoint(
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
-      Rcpp::String& multipoint_id
+      Rcpp::String& multipoint_id,
+      bool m_only
   ) {
     SEXP line_ids = df[ multipoint_id ];
-    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, line_ids );
+    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, line_ids, m_only );
   }
 
   inline SEXP sf_multipoint(
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
-      int& multipoint_id
+      int& multipoint_id,
+      bool m_only
   ) {
 
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::StringVector str_property_cols = df_names[ property_cols ];
     Rcpp::String line_id = df_names[ multipoint_id ];
-    return sf_multipoint( df, str_geometry_cols, str_property_cols, line_id );
+    return sf_multipoint( df, str_geometry_cols, str_property_cols, line_id, m_only );
   }
 
   inline SEXP sf_multipoint(
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
-      int& multipoint_id
+      int& multipoint_id,
+      bool m_only
   ) {
     sfheaders::utils::column_exists( im, multipoint_id );
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id );
+    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, m_only );
   }
 
   inline SEXP sf_multipoint(
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
-      int& multipoint_id
+      int& multipoint_id,
+      bool m_only
   ) {
     sfheaders::utils::column_exists( nm, multipoint_id );
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id );
+    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, m_only );
   }
 
   inline SEXP sf_multipoint(
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
-      Rcpp::String& multipoint_id
+      Rcpp::String& multipoint_id,
+      bool m_only
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id );
+    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, m_only );
   }
 
   inline SEXP sf_multipoint(
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
-      Rcpp::String& multipoint_id
+      Rcpp::String& multipoint_id,
+      bool m_only
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id );
+    return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, m_only );
   }
 
   inline SEXP sf_multipoint(
       SEXP& x,
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
-      int& multipoint_id
+      int& multipoint_id,
+      bool m_only
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-      return sf_multipoint( im, geometry_cols, property_cols, multipoint_id );
+      return sf_multipoint( im, geometry_cols, property_cols, multipoint_id, m_only );
     }
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
-      return sf_multipoint( nm, geometry_cols, property_cols, multipoint_id );
+      return sf_multipoint( nm, geometry_cols, property_cols, multipoint_id, m_only );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return sf_multipoint( df, geometry_cols, property_cols, multipoint_id );
+      return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, m_only );
     }
     }
     default: {
@@ -159,7 +169,8 @@ namespace sf {
       SEXP& x,
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
-      Rcpp::String& multipoint_id
+      Rcpp::String& multipoint_id,
+      bool m_only
   ) {
 
     switch( TYPEOF( x ) ) {
@@ -167,20 +178,20 @@ namespace sf {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-      return sf_multipoint( im, geometry_cols, property_cols, multipoint_id );
+      return sf_multipoint( im, geometry_cols, property_cols, multipoint_id, m_only );
     }
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
-      return sf_multipoint( nm, geometry_cols, property_cols, multipoint_id );
+      return sf_multipoint( nm, geometry_cols, property_cols, multipoint_id, m_only );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return sf_multipoint( df, geometry_cols, property_cols, multipoint_id );
+      return sf_multipoint( df, geometry_cols, property_cols, multipoint_id, m_only );
     }
     }
     default: {
@@ -195,11 +206,12 @@ namespace sf {
       SEXP& x,
       SEXP& geometry_cols,
       SEXP& multipoint_id,
-      bool& keep
+      bool& keep,
+      bool m_only
   ) {
 
     if( !keep ) {
-      return sf_multipoint( x, geometry_cols, multipoint_id );
+      return sf_multipoint( x, geometry_cols, multipoint_id, m_only );
     }
 
     if( Rf_isNull( geometry_cols ) ) {
@@ -208,7 +220,7 @@ namespace sf {
 
 
     if( Rf_isNull( multipoint_id ) ) {
-      Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id );
+      Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id, m_only );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
       return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
@@ -227,7 +239,7 @@ namespace sf {
         Rcpp::IntegerVector iv_property_cols = sfheaders::utils::other_columns( x, geom_cols );
 
         int i_multipoint_id_col = iv_multipoint_id_col[0];
-        return sf_multipoint( x, iv_geometry_cols, iv_property_cols, i_multipoint_id_col );
+        return sf_multipoint( x, iv_geometry_cols, iv_property_cols, i_multipoint_id_col, m_only );
       }
       case STRSXP: {
         Rcpp::StringVector sv_geometry_cols = Rcpp::as< Rcpp::StringVector >( geometry_cols );
@@ -237,7 +249,7 @@ namespace sf {
         Rcpp::StringVector sv_property_cols = sfheaders::utils::other_columns( x, geom_cols );
 
         Rcpp::String s_multipoint_id_col = sv_multipoint_id_col[0];
-        return sf_multipoint( x, sv_geometry_cols, sv_property_cols, s_multipoint_id_col );
+        return sf_multipoint( x, sv_geometry_cols, sv_property_cols, s_multipoint_id_col, m_only );
       }
       default: {
         Rcpp::stop("sfheaders - unsupported multipoint type");  // #nocov
