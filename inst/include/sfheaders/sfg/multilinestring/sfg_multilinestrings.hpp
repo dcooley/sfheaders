@@ -7,14 +7,14 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline Rcpp::List sfg_multilinestrings( Rcpp::List& lst ) {
+  inline Rcpp::List sfg_multilinestrings( Rcpp::List& lst, bool m_only = false ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfg::sfg_multilinestring( x );
+      sfcs[i] = sfheaders::sfg::sfg_multilinestring( x, m_only );
     }
     return sfcs;
   }

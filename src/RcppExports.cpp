@@ -459,89 +459,96 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfg_points
-Rcpp::List rcpp_sfg_points(Rcpp::List& lst);
-RcppExport SEXP _sfheaders_rcpp_sfg_points(SEXP lstSEXP) {
+Rcpp::List rcpp_sfg_points(Rcpp::List& lst, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_points(SEXP lstSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_points(lst));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_points(lst, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipoint
-SEXP rcpp_sfg_multipoint(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipoint(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+SEXP rcpp_sfg_multipoint(SEXP x, SEXP geometry_columns, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipoint(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoint(x, geometry_columns));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoint(x, geometry_columns, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipoints
-Rcpp::List rcpp_sfg_multipoints(Rcpp::List& lst);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipoints(SEXP lstSEXP) {
+Rcpp::List rcpp_sfg_multipoints(Rcpp::List& lst, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipoints(SEXP lstSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoints(lst));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoints(lst, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_linestring
-SEXP rcpp_sfg_linestring(SEXP x, SEXP geometry_columns);
-RcppExport SEXP _sfheaders_rcpp_sfg_linestring(SEXP xSEXP, SEXP geometry_columnsSEXP) {
+SEXP rcpp_sfg_linestring(SEXP x, SEXP geometry_columns, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_linestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestring(x, geometry_columns));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestring(x, geometry_columns, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_linestrings
-Rcpp::List rcpp_sfg_linestrings(Rcpp::List& lst);
-RcppExport SEXP _sfheaders_rcpp_sfg_linestrings(SEXP lstSEXP) {
+Rcpp::List rcpp_sfg_linestrings(Rcpp::List& lst, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_linestrings(SEXP lstSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestrings(lst));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestrings(lst, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multilinestring
-SEXP rcpp_sfg_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id);
-RcppExport SEXP _sfheaders_rcpp_sfg_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP) {
+SEXP rcpp_sfg_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestring(x, geometry_columns, line_id));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestring(x, geometry_columns, line_id, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multilinestrings
-Rcpp::List rcpp_sfg_multilinestrings(Rcpp::List& lst);
-RcppExport SEXP _sfheaders_rcpp_sfg_multilinestrings(SEXP lstSEXP) {
+Rcpp::List rcpp_sfg_multilinestrings(Rcpp::List& lst, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_multilinestrings(SEXP lstSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestrings(lst));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestrings(lst, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_polygon
-SEXP rcpp_sfg_polygon(SEXP x, SEXP geometry_columns, SEXP line_id, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP closeSEXP) {
+SEXP rcpp_sfg_polygon(SEXP x, SEXP geometry_columns, SEXP line_id, bool close, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP closeSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -549,25 +556,27 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygon(x, geometry_columns, line_id, close));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygon(x, geometry_columns, line_id, close, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_polygons
-Rcpp::List rcpp_sfg_polygons(Rcpp::List& lst, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_polygons(SEXP lstSEXP, SEXP closeSEXP) {
+Rcpp::List rcpp_sfg_polygons(Rcpp::List& lst, bool close, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_polygons(SEXP lstSEXP, SEXP closeSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygons(lst, close));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygons(lst, close, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipolygon
-SEXP rcpp_sfg_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP closeSEXP) {
+SEXP rcpp_sfg_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP closeSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -576,19 +585,21 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygon(x, geometry_columns, polygon_id, line_id, close));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygon(x, geometry_columns, polygon_id, line_id, close, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipolygons
-Rcpp::List rcpp_sfg_multipolygons(Rcpp::List& lst, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipolygons(SEXP lstSEXP, SEXP closeSEXP) {
+Rcpp::List rcpp_sfg_multipolygons(Rcpp::List& lst, bool close, bool m_only);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipolygons(SEXP lstSEXP, SEXP closeSEXP, SEXP m_onlySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygons(lst, close));
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygons(lst, close, m_only));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -730,17 +741,17 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_get_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_get_sfc_attributes, 1},
     {"_sfheaders_rcpp_get_sfg_type", (DL_FUNC) &_sfheaders_rcpp_get_sfg_type, 1},
     {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 3},
-    {"_sfheaders_rcpp_sfg_points", (DL_FUNC) &_sfheaders_rcpp_sfg_points, 1},
-    {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 2},
-    {"_sfheaders_rcpp_sfg_multipoints", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoints, 1},
-    {"_sfheaders_rcpp_sfg_linestring", (DL_FUNC) &_sfheaders_rcpp_sfg_linestring, 2},
-    {"_sfheaders_rcpp_sfg_linestrings", (DL_FUNC) &_sfheaders_rcpp_sfg_linestrings, 1},
-    {"_sfheaders_rcpp_sfg_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sfg_multilinestring, 3},
-    {"_sfheaders_rcpp_sfg_multilinestrings", (DL_FUNC) &_sfheaders_rcpp_sfg_multilinestrings, 1},
-    {"_sfheaders_rcpp_sfg_polygon", (DL_FUNC) &_sfheaders_rcpp_sfg_polygon, 4},
-    {"_sfheaders_rcpp_sfg_polygons", (DL_FUNC) &_sfheaders_rcpp_sfg_polygons, 2},
-    {"_sfheaders_rcpp_sfg_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygon, 5},
-    {"_sfheaders_rcpp_sfg_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygons, 2},
+    {"_sfheaders_rcpp_sfg_points", (DL_FUNC) &_sfheaders_rcpp_sfg_points, 2},
+    {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 3},
+    {"_sfheaders_rcpp_sfg_multipoints", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoints, 2},
+    {"_sfheaders_rcpp_sfg_linestring", (DL_FUNC) &_sfheaders_rcpp_sfg_linestring, 3},
+    {"_sfheaders_rcpp_sfg_linestrings", (DL_FUNC) &_sfheaders_rcpp_sfg_linestrings, 2},
+    {"_sfheaders_rcpp_sfg_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sfg_multilinestring, 4},
+    {"_sfheaders_rcpp_sfg_multilinestrings", (DL_FUNC) &_sfheaders_rcpp_sfg_multilinestrings, 2},
+    {"_sfheaders_rcpp_sfg_polygon", (DL_FUNC) &_sfheaders_rcpp_sfg_polygon, 5},
+    {"_sfheaders_rcpp_sfg_polygons", (DL_FUNC) &_sfheaders_rcpp_sfg_polygons, 3},
+    {"_sfheaders_rcpp_sfg_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygon, 6},
+    {"_sfheaders_rcpp_sfg_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygons, 3},
     {"_sfheaders_rcpp_sfg_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfg_remove_holes, 2},
     {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 4},
     {"_sfheaders_rcpp_id_positions", (DL_FUNC) &_sfheaders_rcpp_id_positions, 2},
