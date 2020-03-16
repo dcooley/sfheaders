@@ -65,30 +65,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_cast_sfc
-Rcpp::List rcpp_cast_sfc(Rcpp::List sfc, std::string cast_to, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_cast_sfc(SEXP sfcSEXP, SEXP cast_toSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+Rcpp::List rcpp_cast_sfc(Rcpp::List sfc, std::string cast_to, bool close);
+RcppExport SEXP _sfheaders_rcpp_cast_sfc(SEXP sfcSEXP, SEXP cast_toSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
     Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sfc(sfc, cast_to, m_only, close));
+    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sfc(sfc, cast_to, close));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_cast_sf
-Rcpp::DataFrame rcpp_cast_sf(Rcpp::DataFrame sf, std::string cast_to, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_cast_sf(SEXP sfSEXP, SEXP cast_toSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+Rcpp::DataFrame rcpp_cast_sf(Rcpp::DataFrame sf, std::string cast_to, bool close);
+RcppExport SEXP _sfheaders_rcpp_cast_sf(SEXP sfSEXP, SEXP cast_toSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type sf(sfSEXP);
     Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sf(sf, cast_to, m_only, close));
+    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sf(sf, cast_to, close));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -236,8 +234,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_polygon
-SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP keepSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool m_only, bool close, bool keep);
+RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP, SEXP keepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -245,16 +243,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_polygon(x, cols, polygon_id, linestring_id, close, keep, m_only));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_polygon(x, cols, polygon_id, linestring_id, m_only, close, keep));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_multipolygon
-SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP keepSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool m_only, bool close, bool keep);
+RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP, SEXP keepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -263,10 +261,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type multipolygon_id(multipolygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
+    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, close, keep, m_only));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, m_only, close, keep));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -732,8 +730,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_m_range", (DL_FUNC) &_sfheaders_rcpp_calculate_m_range, 2},
     {"_sfheaders_rcpp_count_new_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_objects, 2},
     {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
-    {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 4},
-    {"_sfheaders_rcpp_cast_sf", (DL_FUNC) &_sfheaders_rcpp_cast_sf, 4},
+    {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 3},
+    {"_sfheaders_rcpp_cast_sf", (DL_FUNC) &_sfheaders_rcpp_cast_sf, 3},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 2},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},

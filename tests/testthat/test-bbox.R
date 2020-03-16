@@ -128,7 +128,7 @@ test_that("m_range correctly calculated", {
 
 
   mr <- function( x ) {
-    sfheaders:::rcpp_calculate_m_range( x, false )
+    sfheaders:::rcpp_calculate_m_range( x, FALSE )
   }
 
   err <- "sfheaders - incorrect size of m_range"

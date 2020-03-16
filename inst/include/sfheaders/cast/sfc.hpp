@@ -352,7 +352,6 @@ namespace cast {
       Rcpp::List& sfc,
       Rcpp::NumericVector& n_results,
       std::string& cast_to,
-      bool m_only,
       bool close = true
   ) {
 
@@ -380,6 +379,7 @@ namespace cast {
     Rcpp::String proj4string = crs[1];
 
     std::string cast_from;
+    std::string dim;
 
     R_xlen_t i, j;
 
@@ -407,6 +407,8 @@ namespace cast {
 
       Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
       cast_from = cls[1];
+      dim = cls[0];
+      bool m_only = dim == "XYM" ? true : false;
 
       int casting_from = cast_type( cast_from );
 
@@ -433,11 +435,10 @@ namespace cast {
   inline Rcpp::List cast_sfc(
       Rcpp::List& sfc,
       std::string& cast_to,
-      bool m_only,
       bool close = true
   ) {
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
-    return cast_sfc( sfc, n_results, cast_to, m_only, close );
+    return cast_sfc( sfc, n_results, cast_to, close );
   }
 
 

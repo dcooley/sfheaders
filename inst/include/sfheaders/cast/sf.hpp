@@ -12,7 +12,6 @@ namespace cast {
   inline Rcpp::List cast_sf(
       Rcpp::DataFrame& sf,
       std::string& cast_to,
-      bool m_only,
       bool close = true
   ) {
     if( !sf.hasAttribute("sf_column") ) {
@@ -54,7 +53,7 @@ namespace cast {
     // Rcpp::Rcout << "n_results: " << n_results << std::endl;
 
     // other than the sfc column, expand all the other columsn by 'n_reuslts'
-    Rcpp::List casted_sfc = cast_sfc( sfc, n_results, cast_to, m_only, close );
+    Rcpp::List casted_sfc = cast_sfc( sfc, n_results, cast_to, close );
 
     // Rcpp::Rcout << "casted_sfc " << std::endl;
 
