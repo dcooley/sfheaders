@@ -13,41 +13,56 @@ name_matcher <- function(x, ...) {
   ## return the list args that make sense for this data frame
   args[base::intersect(colnames(x), names(args))]
 }
-
+## ensure constructor has access to all required columns for this type
+check_columns <- function(x, req_names, fun_name) {
+  found <- req_names %in% colnames(x)
+  if (sum(found) < length(req_names)) {
+    stop(sprintf("'%s()' requires columns:  %s", fun_name,
+                 paste(req_names, collapse = ", ")), call. = FALSE)
+  }
+  invisible(NULL)
+}
 
 #' Helper for sf POINT
 #'
-#' Constructs sf of POINT objects, a helper for [sf_point()] with a simpler syntax.
+#' Constructs sf of POINT objects, a helper for [sf_point()] with a simpler
+#' syntax.
 #'
 #' @section Helpers:
-#' These are simpler versions of the main functions [sf_point()], [sf_multipoint()],
-#' [sf_linestring()], [sf_multilinestring()], [sf_polygon()], and [sf_multipolygon()] for
-#' input data frame or matrix that contains columns appropriately of 'x', 'y', 'z', 'm',
-#' ' multipolygon_id', polygon_id', 'multilinestring_id', 'linestring_id', 'multipoint_id'.
+#' These are simpler versions of the main functions [sf_point()],
+#' [sf_multipoint()], [sf_linestring()], [sf_multilinestring()], [sf_polygon()],
+#' and [sf_multipolygon()] for input data frame or matrix that contains columns
+#' appropriately of 'x', 'y', 'z', 'm', ' multipolygon_id', polygon_id',
+#' 'multilinestring_id', 'linestring_id', 'multipoint_id'.
 #'
-#' This puts the onus of the naming and identification of entities onto the input data set, rather than
-#' when calling the creator function. This has pros and cons, so is not necessarily always 'simpler'.
-#' Please choose the appropriate constructor for the context you have. For examples a data frame
+#' This puts the onus of the naming and identification of entities onto the
+#' input data set, rather than when calling the creator function. This has pros
+#' and cons, so is not necessarily always 'simpler'. Please choose the
+#' appropriate constructor for the context you have. For examples a data frame
 #' from the real world with columns 'lon', 'lat', 'line' will be best used with
 #'
 #' `sf_linestring(df, x = "lon", y = "lat", linestring_id = "line")`
 #'
-#' whereas a heavy user of sfheaders might always create a data frame with 'x', 'y', 'linestring_id'
-#' precisely because they are expecting to call `sf_line(df)` and no further work is required. These
-#' are very different contexts and both equally valid. (FIXME: mdsumner to write a vignette
-#' on this).
+#' whereas a heavy user of sfheaders might always create a data frame with 'x',
+#' 'y', 'linestring_id' precisely because they are expecting to call
+#' `sf_line(df)` and no further work is required. These are very different
+#' contexts and both equally valid. (FIXME: mdsumner to write a vignette on
+#' this).
 #'
-#' Some columns are mandatory, such as 'x' and 'y' (always), while others depend on the output
-#' type where each column for that type is mandatory. The 'z' and/or 'm' values are included
-#' for 'XYZ', 'XYM', or 'XYZM' geometry types if and as they are present.
+#' Some columns are mandatory, such as 'x' and 'y' (always), while others depend
+#' on the output type where each column for that type is mandatory. The 'z'
+#' and/or 'm' values are included for 'XYZ', 'XYM', or 'XYZM' geometry types if
+#' and as they are present.
 #'
 #' In summary these helpers:
 #'
 #' * do not require arguments declaring column names.
-#' * use assumed default column names, with no variation or absence allowed for a given type.
+#' * use assumed default column names, with no variation or absence allowed for
+#'  a given type.
 #' * use `z`, and/or `m` if present.
 #' * use `close = FALSE` and `keep = FALSE` same as proper constructors.
-#' * unlike [sf_point()] [sf_pt()] does not accept a flat vector for a single point.
+#' * unlike [sf_point()] [sf_pt()] does not accept a flat vector for a single
+#'  point.
 #' * require a matrix or data frame with complete column names.
 #'
 #' None of the helpers allow partial name matching for column names.
@@ -76,17 +91,19 @@ name_matcher <- function(x, ...) {
 #' sf_pt(sf_to_df(sfx, fill = TRUE), keep = TRUE)
 #' @export
 sf_pt <- function(obj, keep = FALSE) {
-  stopifnot(all(c("x", "y") %in% colnames(obj)))
+  check_columns(obj, c("x", "y"), "sf_pt")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
   ## needs rethinking
-  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id", "linestring_id", "multipoint_id")] <- NULL
+  call_args[c("multipolygon_id", "polygon_id",
+              "multilinestring_id", "linestring_id", "multipoint_id")] <- NULL
   do.call(sfheaders::sf_point, call_args)
 }
 
 #' Helper for sf MULTIPOINT
 #'
-#' Constructs sf of MULTIPOINT objects, a helper for [sf_multipoint()] with a simpler syntax.
+#' Constructs sf of MULTIPOINT objects, a helper for [sf_multipoint()] with a
+#' simpler syntax.
 #'
 #' @inheritParams sf_point
 #' @inheritSection sf_pt Helpers
@@ -108,17 +125,19 @@ sf_pt <- function(obj, keep = FALSE) {
 #' sf_mpt(sf_to_df(sfx))
 #' @export
 sf_mpt <- function(obj, keep = FALSE) {
-  stopifnot(all(c("x", "y", "multipoint_id") %in% colnames(obj)))
+  check_columns(obj, c("x", "y", "multipoint_id"), "sf_mpt")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
   ## needs rethinking
-  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id", "linestring_id")] <- NULL
+  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
+              "linestring_id")] <- NULL
   do.call(sfheaders::sf_multipoint, call_args)
 }
 
 #' Helper for sf MULTIPOLYGON
 #'
-#' Constructs sf of MULTIPOLYGON objects, a helper for [sf_multipolygon()] with a simpler syntax.
+#' Constructs sf of MULTIPOLYGON objects, a helper for [sf_multipolygon()] with
+#' a simpler syntax.
 #'
 #' @inheritParams sf_multipolygon
 #' @inheritParams sf_point
@@ -143,8 +162,8 @@ sf_mpt <- function(obj, keep = FALSE) {
 #'
 #' @export
 sf_mpoly <- function(obj, close = TRUE, keep = FALSE) {
-  ## determine minimum names required
-  stopifnot(all(c("x", "y", "multipolygon_id", "polygon_id", "linestring_id") %in% colnames(obj)))
+  check_columns(obj, c("x", "y", "multipolygon_id",
+                  "polygon_id", "linestring_id"), "sf_mpoly")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
   ## needs rethinking
@@ -152,16 +171,17 @@ sf_mpoly <- function(obj, close = TRUE, keep = FALSE) {
 
   do.call(sfheaders::sf_multipolygon, call_args)
 }
-#' Helper for sf POLYGON
+#'Helper for sf POLYGON
 #'
-#' Constructs sf of POLYGON objects, a helper for [sf_polygon()] with a simpler syntax.
+#'Constructs sf of POLYGON objects, a helper for [sf_polygon()] with a simpler
+#'syntax.
 #'
-#' @inheritParams sf_multipolygon
-#' @inheritParams sf_point
-#' @inheritSection sf_pt Helpers
-#' @inheritSection sfc_point notes
-#' @inheritSection sf_point Keeping Properties
-#' @return \code{sf} object of POLYGON geometries
+#'@inheritParams sf_multipolygon
+#'@inheritParams sf_point
+#'@inheritSection sf_pt Helpers
+#'@inheritSection sfc_point notes
+#'@inheritSection sf_point Keeping Properties
+#'@return \code{sf} object of POLYGON geometries
 #'
 #'@examples
 #'
@@ -177,9 +197,9 @@ sf_mpoly <- function(obj, close = TRUE, keep = FALSE) {
 #' ## order doesn't matter, only the names are used
 #' sf_poly(df[c(5, 3, 4, 1, 2)])
 #'
-#' @export
+#'@export
 sf_poly <- function(obj, close = TRUE, keep = FALSE) {
-  stopifnot(all(c("x", "y", "polygon_id", "linestring_id") %in% colnames(obj)))
+  check_columns(obj, c("x", "y", "polygon_id", "linestring_id"), "sf_poly")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
   ## needs rethinking
@@ -189,7 +209,8 @@ sf_poly <- function(obj, close = TRUE, keep = FALSE) {
 
 #' Helper for sf MULTILINESTRING
 #'
-#' Constructs sf of MULTILINESTRING objects, a helper for [sf_multilinestring()] with a simpler syntax.
+#' Constructs sf of MULTILINESTRING objects, a helper for [sf_multilinestring()]
+#' with a simpler syntax.
 #'
 #' @inheritParams sf_point
 #' @inheritSection sf_pt Helpers
@@ -223,7 +244,8 @@ sf_poly <- function(obj, close = TRUE, keep = FALSE) {
 #'
 #' @export
 sf_mline <- function(obj, keep = FALSE) {
-  stopifnot(all(c("x", "y", "multilinestring_id", "linestring_id") %in% colnames(obj)))
+  check_columns(obj, c("x", "y", "multilinestring_id",
+                  "linestring_id"), "sf_mline")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
   ## needs rethinking
@@ -234,7 +256,8 @@ sf_mline <- function(obj, keep = FALSE) {
 
 #' Helper for sf LINESTRING
 #'
-#' Constructs sf of LINESTRING objects, a helper for [sf_linestring()] with a simpler syntax.
+#' Constructs sf of LINESTRING objects, a helper for [sf_linestring()] with a
+#' simpler syntax.
 #'
 #' @inheritParams sf_point
 #' @inheritSection sf_pt Helpers
@@ -253,12 +276,14 @@ sf_mline <- function(obj, keep = FALSE) {
 #' sf_line(sf_to_df(sfx))
 #' @export
 sf_line <- function(obj, keep = FALSE) {
-  stopifnot(all(c("x", "y", "linestring_id") %in% colnames(obj)))
+  check_columns(obj, c("x", "y", "linestring_id"), "sf_line")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
   ## needs rethinking
-  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id", "multipoint_id")] <- NULL
+  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
+              "multipoint_id")] <- NULL
   do.call(sfheaders::sf_linestring, call_args)
 }
+
 
 

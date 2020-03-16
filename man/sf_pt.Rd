@@ -17,39 +17,45 @@ each geometry is kept. See Keeping Properties.}
 \code{sf} object of POINT geometries
 }
 \description{
-Constructs sf of POINT objects, a helper for \code{\link[=sf_point]{sf_point()}} with a simpler syntax.
+Constructs sf of POINT objects, a helper for \code{\link[=sf_point]{sf_point()}} with a simpler
+syntax.
 }
 \section{Helpers}{
 
-These are simpler versions of the main functions \code{\link[=sf_point]{sf_point()}}, \code{\link[=sf_multipoint]{sf_multipoint()}},
-\code{\link[=sf_linestring]{sf_linestring()}}, \code{\link[=sf_multilinestring]{sf_multilinestring()}}, \code{\link[=sf_polygon]{sf_polygon()}}, and \code{\link[=sf_multipolygon]{sf_multipolygon()}} for
-input data frame or matrix that contains columns appropriately of 'x', 'y', 'z', 'm',
-' multipolygon_id', polygon_id', 'multilinestring_id', 'linestring_id', 'multipoint_id'.
+These are simpler versions of the main functions \code{\link[=sf_point]{sf_point()}},
+\code{\link[=sf_multipoint]{sf_multipoint()}}, \code{\link[=sf_linestring]{sf_linestring()}}, \code{\link[=sf_multilinestring]{sf_multilinestring()}}, \code{\link[=sf_polygon]{sf_polygon()}},
+and \code{\link[=sf_multipolygon]{sf_multipolygon()}} for input data frame or matrix that contains columns
+appropriately of 'x', 'y', 'z', 'm', ' multipolygon_id', polygon_id',
+'multilinestring_id', 'linestring_id', 'multipoint_id'.
 
-This puts the onus of the naming and identification of entities onto the input data set, rather than
-when calling the creator function. This has pros and cons, so is not necessarily always 'simpler'.
-Please choose the appropriate constructor for the context you have. For examples a data frame
+This puts the onus of the naming and identification of entities onto the
+input data set, rather than when calling the creator function. This has pros
+and cons, so is not necessarily always 'simpler'. Please choose the
+appropriate constructor for the context you have. For examples a data frame
 from the real world with columns 'lon', 'lat', 'line' will be best used with
 
 \code{sf_linestring(df, x = "lon", y = "lat", linestring_id = "line")}
 
-whereas a heavy user of sfheaders might always create a data frame with 'x', 'y', 'linestring_id'
-precisely because they are expecting to call \code{sf_line(df)} and no further work is required. These
-are very different contexts and both equally valid. (FIXME: mdsumner to write a vignette
-on this).
+whereas a heavy user of sfheaders might always create a data frame with 'x',
+'y', 'linestring_id' precisely because they are expecting to call
+\code{sf_line(df)} and no further work is required. These are very different
+contexts and both equally valid. (FIXME: mdsumner to write a vignette on
+this).
 
-Some columns are mandatory, such as 'x' and 'y' (always), while others depend on the output
-type where each column for that type is mandatory. The 'z' and/or 'm' values are included
-for 'XYZ', 'XYM', or 'XYZM' geometry types if and as they are present.
+Some columns are mandatory, such as 'x' and 'y' (always), while others depend
+on the output type where each column for that type is mandatory. The 'z'
+and/or 'm' values are included for 'XYZ', 'XYM', or 'XYZM' geometry types if
+and as they are present.
 
 In summary these helpers:
 \itemize{
 \item do not require arguments declaring column names.
-\item use assumed default column names, with no variation or absence allowed for a given type.
+\item use assumed default column names, with no variation or absence allowed for
+a given type.
 \item use \code{z}, and/or \code{m} if present.
-\item use \code{close = FALSE} as default.
-\item use \code{keep = FALSE} same as proper creators.
-\item unlike \code{\link[=sf_point]{sf_point()}} \code{\link[=sf_pt]{sf_pt()}} does not accept a flat vector for a single point.
+\item use \code{close = FALSE} and \code{keep = FALSE} same as proper constructors.
+\item unlike \code{\link[=sf_point]{sf_point()}} \code{\link[=sf_pt]{sf_pt()}} does not accept a flat vector for a single
+point.
 \item require a matrix or data frame with complete column names.
 }
 
