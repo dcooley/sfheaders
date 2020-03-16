@@ -46,10 +46,10 @@ name_matcher <- function(x, ...) {
 #' * do not require arguments declaring column names.
 #' * use assumed default column names, with no variation or absence allowed for a given type.
 #' * use `z`, and/or `m` if present.
-#' * use `close = FALSE` as default
-#' * use `keep = FALSE` same as proper creators
-#' * unlike [sf_point()] [sf_pt()] does not accept a flat vector
-#' * require a matrix or data frame with complete column names
+#' * use `close = FALSE` as default.
+#' * use `keep = FALSE` same as proper creators.
+#' * unlike [sf_point()] [sf_pt()] does not accept a flat vector for a single point.
+#' * require a matrix or data frame with complete column names.
 #'
 #' None of the helpers allow partial name matching for column names.
 #'
@@ -219,6 +219,9 @@ sf_poly <- function(obj, close = FALSE, keep = FALSE) {
 #' ## we trivially round-trip with sf_mline()
 #' sf_mline(sf_to_df(sfx))
 #'
+#' ## to round-trip with all fields use `fill`, then `keep`
+#' sf_mline(sf_to_df(sfx, fill = TRUE), keep = TRUE)
+#'
 #' @export
 sf_mline <- function(obj, keep = FALSE) {
   stopifnot(all(c("x", "y", "multilinestring_id", "linestring_id") %in% colnames(obj)))
@@ -226,7 +229,6 @@ sf_mline <- function(obj, keep = FALSE) {
   call_args[c("obj", "keep")] <- list(obj, keep)
   ## needs rethinking
   call_args[c("multipolygon_id", "polygon_id", "multipoint_id")] <- NULL
-  browser
   do.call(sfheaders::sf_multilinestring, call_args)
 
 }

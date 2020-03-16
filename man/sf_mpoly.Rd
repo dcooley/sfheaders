@@ -50,10 +50,10 @@ In summary these helpers:
 \item do not require arguments declaring column names.
 \item use assumed default column names, with no variation or absence allowed for a given type.
 \item use \code{z}, and/or \code{m} if present.
-\item use \code{close = FALSE} as default
-\item use \code{keep = FALSE} same as proper creators
-\item unlike \code{\link[=sf_point]{sf_point()}} \code{\link[=sf_pt]{sf_pt()}} does not accept a flat vector
-\item require a matrix or data frame with complete column names
+\item use \code{close = FALSE} as default.
+\item use \code{keep = FALSE} same as proper creators.
+\item unlike \code{\link[=sf_point]{sf_point()}} \code{\link[=sf_pt]{sf_pt()}} does not accept a flat vector for a single point.
+\item require a matrix or data frame with complete column names.
 }
 
 None of the helpers allow partial name matching for column names.

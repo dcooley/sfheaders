@@ -28,3 +28,36 @@ test_that("sf_mpoly works",{
   expect_equal(dim(kept2), c(1L, 7L))
 
 })
+
+mm <- structure(list(multipolygon_id = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2),
+                     polygon_id = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+                     linestring_id = c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1),
+                     x = c(0, 0, 0.75, 1, 0.5, 0.8, 0.69, 0, 0.2, 0.5, 0.5, 0.3, 0.2, 0.2, 0.69, 0.8, 1.1, 1.23, 0.69),
+                     y = c(0, 1, 1, 0.8, 0.7, 0.6, 0, 0, 0.2, 0.2, 0.4, 0.6, 0.4, 0.2, 0, 0.6, 0.63, 0.3, 0)),
+                class = "data.frame", row.names = c(NA, 19L))
+mm$multilinestring_id <- mm$multipoint_id <- mm$multipolygon_id
+
+test_that("various helpers work", {
+  expect_equal(sf_pt(mm), sf_point(mm, x = "x", y = "y"))
+  expect_equal(sf_mpt(mm), sf_multipoint(mm, x = "x", y = "y", multipoint_id = "multipoint_id"))
+  expect_equal(sf_mpt(mm, keep = TRUE), sf_multipoint(mm, x = "x", y = "y", multipoint_id = "multipoint_id", keep = TRUE))
+
+  mm_line <- mm[order(mm$linestring_id), ]
+  expect_equal(sf_line(mm_line), sf_linestring(mm_line, x = "x", y = "y", linestring_id = "linestring_id"))
+  expect_equal(sf_line(mm_line, keep = TRUE), sf_linestring(mm_line, x = "x", y = "y", linestring_id = "linestring_id", keep = TRUE))
+
+  expect_equal(sf_mline(mm), sf_multilinestring(mm, x = "x", y = "y",
+                                                multilinestring_id = "multilinestring_id",
+                                                linestring_id = "linestring_id"))
+  expect_equal(sf_mline(mm, keep = TRUE), sf_multilinestring(mm, x = "x", y = "y",
+                                                multilinestring_id = "multilinestring_id",
+                                                linestring_id = "linestring_id",
+                                                keep = TRUE))
+
+  ## for polygon, the polygon id did not change so we have to copy down the feature (mpoly) iD
+  mm_poly <- mm
+  mm_poly$polygon_id <- mm_poly$multipolygon_id
+ expect_equal(sf_poly(mm_poly),
+              sf_polygon(mm_poly, x = "x", y = "y", linestring_id =  "linestring_id", polygon_id = "polygon_id"))
+})
+
