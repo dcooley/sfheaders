@@ -61,3 +61,15 @@ test_that("various helpers work", {
               sf_polygon(mm_poly, x = "x", y = "y", linestring_id =  "linestring_id", polygon_id = "polygon_id"))
 })
 
+
+test_that("closing is the default, and succeeds", {
+  mm1 <- mm
+  mm1$polygon_id <- mm1$multipolygon_id
+  mm1 <- head(mm1, -1)
+  expect_equal(dim(sf_poly(mm1)$geometry[[2]][[1]]), c(5L, 2L))
+
+  expect_equal(dim(sf_poly(mm1, close = TRUE)$geometry[[2]][[1]]), c(5L, 2L))
+
+  expect_equal(dim(sf_poly(mm1, close = FALSE)$geometry[[2]][[1]]), c(4L, 2L))
+
+})

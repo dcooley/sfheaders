@@ -46,8 +46,7 @@ name_matcher <- function(x, ...) {
 #' * do not require arguments declaring column names.
 #' * use assumed default column names, with no variation or absence allowed for a given type.
 #' * use `z`, and/or `m` if present.
-#' * use `close = FALSE` as default.
-#' * use `keep = FALSE` same as proper creators.
+#' * use `close = FALSE` and `keep = FALSE` same as proper constructors.
 #' * unlike [sf_point()] [sf_pt()] does not accept a flat vector for a single point.
 #' * require a matrix or data frame with complete column names.
 #'
@@ -143,7 +142,7 @@ sf_mpt <- function(obj, keep = FALSE) {
 #' sf_mpoly(df[c(6, 5, 3, 4, 1, 2)])
 #'
 #' @export
-sf_mpoly <- function(obj, close = FALSE, keep = FALSE) {
+sf_mpoly <- function(obj, close = TRUE, keep = FALSE) {
   ## determine minimum names required
   stopifnot(all(c("x", "y", "multipolygon_id", "polygon_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
@@ -179,7 +178,7 @@ sf_mpoly <- function(obj, close = FALSE, keep = FALSE) {
 #' sf_poly(df[c(5, 3, 4, 1, 2)])
 #'
 #' @export
-sf_poly <- function(obj, close = FALSE, keep = FALSE) {
+sf_poly <- function(obj, close = TRUE, keep = FALSE) {
   stopifnot(all(c("x", "y", "polygon_id", "linestring_id") %in% colnames(obj)))
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
