@@ -1,4 +1,3 @@
-
 [![Travis build
 status](https://travis-ci.com/dcooley/sfheaders.svg?branch=master)](https://travis-ci.com/dcooley/sfheaders)
 [![Coverage
@@ -6,6 +5,8 @@ status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/sfheaders)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/sfheaders)](https://CRAN.R-project.org/package=sfheaders)
+
+<a href="https://www.buymeacoffee.com/davecooley" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 
 ## Another spatial library?
 
