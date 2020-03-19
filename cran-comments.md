@@ -1,7 +1,9 @@
 
 * updates v0.1.0 to v0.2.1
 * skipping over v0.2.0
-* added a couple of new functions
+
+
+
 
 ## Test environments
 

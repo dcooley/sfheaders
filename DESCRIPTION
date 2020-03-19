@@ -22,4 +22,5 @@ Imports:
     Rcpp
 Suggests:
     covr,
+    knitr,
     testthat

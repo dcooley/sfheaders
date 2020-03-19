@@ -147,14 +147,10 @@ namespace sf {
     Rcpp::StringVector str_property_columns;
 
     switch( TYPEOF( property_columns ) ) {
+    case REALSXP: {}
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( property_columns );
       str_property_columns = df_names[ iv ];
-      break;
-    }
-    case REALSXP: {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( property_columns );
-      str_property_columns = df_names[ nv ];
       break;
     }
     case STRSXP: {
