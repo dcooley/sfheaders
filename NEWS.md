@@ -1,4 +1,4 @@
-# sfheaders 0.2
+# sfheaders 0.2.1
 
 * `sf_remove_holes()` removes holes from polygons
 * `calculate_bbox()` function for (re) calculating the bounding box of an `sfc` object
