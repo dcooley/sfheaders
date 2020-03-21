@@ -11,7 +11,7 @@ index_correct <- function( geometry_columns ) {
 
 #' remove holes
 #'
-#' Removes holes from olygons and multipolygons. Points and linestrings are unaffected.
+#' Removes holes from polygons and multipolygons. Points and linestrings are unaffected.
 #'
 #' @param obj sfg, sfc or sf object.
 #' @inheritParams sfc_polygon
