@@ -1,4 +1,9 @@
-# sfheaders 0.2.1
+
+# v0.2.2
+
+* helper functions with easier syntax - thanks to @mdsumner
+
+# v 0.2.1
 
 * `sf_remove_holes()` removes holes from polygons
 * `calculate_bbox()` function for (re) calculating the bounding box of an `sfc` object
@@ -6,7 +11,7 @@
 * optimised converting `sfc_POINT`-only objects to data.frames
 * `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates
 
-# sfheaders 0.1
+# v 0.1
 
 * `keep = TRUE` argument to keep other data columns when converting to `sf`
 * `sf_to_df` functions for converting sf objects to data.frames
