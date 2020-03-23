@@ -90,6 +90,32 @@ test_that("sf with list columns are unlist",{
 
   sf$l <- list(letters[1:4])
 
-  sfheaders:::rcpp_sf_to_df_unlist( sf, "l", TRUE )
+  res <- sfheaders:::rcpp_sf_to_df_unlist( sf, "l", TRUE )
+
+  expect_true( nrow( res ) == 4 )
+  expect_equal( res$l, letters[1:4] )
+
+  df <- data.frame(
+    x = 1:4
+    , y = 1:4
+  )
+
+  sf <- sf_linestring(
+    obj = df
+  )
+
+  sf$l <- list(letters[1:5])
+
+  expect_error(
+    sfheaders:::rcpp_sf_to_df_unlist( sf, "l", TRUE )
+    , "sfheaders - unlisted column doesn't have the correct number of rows"
+  )
+
+  sf$l <- list(letters[1:3])
+
+  expect_error(
+    sfheaders:::rcpp_sf_to_df_unlist( sf, "l", TRUE )
+    , "sfheaders - unlisted column doesn't have the correct number of rows"
+  )
 
 })
