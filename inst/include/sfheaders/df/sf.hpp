@@ -3,6 +3,7 @@
 
 #include "sfheaders/df/sfc.hpp"
 #include "sfheaders/utils/vectors/vectors.hpp"
+#include "sfheaders/df/list.hpp"
 
 #include <Rcpp.h>
 
@@ -197,6 +198,52 @@ namespace df {
     Rcpp::List sfc = sf[ geom_column ];
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
+  }
+
+  inline Rcpp::List sf_to_df(
+      Rcpp::DataFrame& sf,
+      Rcpp::StringVector& unlist,
+      bool fill = false
+  ) {
+    if( !sf.hasAttribute("sf_column") ) {
+      Rcpp::stop("sfheaders - sf_column not found");
+    }
+
+    if( Rf_isNull( unlist ) ) {
+      return sf_to_df( sf, fill );
+    }
+
+    R_xlen_t n_unlist = unlist.size();
+    R_xlen_t i;
+    Rcpp::List to_unlist( n_unlist );
+
+    for( i = 0; i < n_unlist; ++i ) {
+      const char *s = unlist[ i ];
+      Rcpp::List lst = sf[ s ];
+      to_unlist[ i ] = sfheaders::df::unlist_list( lst );
+    }
+
+    to_unlist.names() = unlist;
+
+    std::string geom_column = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ geom_column ];
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    Rcpp::DataFrame res = sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
+
+    R_xlen_t n_row = res.nrow();
+
+    for( i = 0; i < n_unlist; ++i ) {
+      const char *s = unlist[ i ];
+      SEXP unlisted_col = to_unlist[ i ];
+      R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
+      if( n != n_row ) {
+        Rcpp::stop("sfheaders - unlisted column doesn't have the correct number of rows");
+      }
+      res[ s ] = to_unlist[ i ];
+    }
+
+    return res;
+
   }
 
 

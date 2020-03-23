@@ -53,6 +53,9 @@ sfc_to_df <- function( sfc ) return( rcpp_sfc_to_df( sfc ) )
 #' @param fill logical indicating if the resulting data.frame should be filled
 #' with the data columns from the sf object. If \code{TRUE}, each row of data will
 #' be replicated for every coordiante in every geometry.
+#' @param unlist string vector of columns to unlist. Each list element is equivalent
+#' to a row of the input object, and is expected to be the same
+#' length as the number of coordinates in the geometry.
 #'
 #' @examples
 #'
@@ -68,11 +71,32 @@ sfc_to_df <- function( sfc ) return( rcpp_sfc_to_df( sfc ) )
 #' sf <- sf_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
 #' df <- sf_to_df( sf )
 #'
-#' ## with associated ata
+#' ## with associated data
 #' sf$val1 <- c("a","b")
 #' sf$val2 <- c(1L, 2L)
 #'
 #' df <- sf_to_df( sf, fill = TRUE )
 #'
+#' ## Unlisting lsit columns
+#'
+#' df <- data.frame(
+#' l_id = c(1,1,1,2,2,2,3,3,3,3)
+#' , x = rnorm(10)
+#' , y = rnorm(10)
+#' )
+#'
+#' sf <- sf_linestring( obj = df, linestring_id = "l_id" , x = "x", y = "y")
+#'
+#' ## put on a list column
+#' sf$l <- list( c(1,2,3),c(3,2,1),c(10,11,12,13))
+#'
+#' sf_to_df( sf, unlist = "l" )
+#'
+#'
 #' @export
-sf_to_df <- function( sf, fill = FALSE ) return( rcpp_sf_to_df( sf, fill ) )
+sf_to_df <- function( sf, fill = FALSE, unlist = NULL ) {
+  if( is.null( unlist ) ) {
+    return( rcpp_sf_to_df( sf, fill ))
+  }
+  return( rcpp_sf_to_df_unlist( sf, unlist, fill ) )
+}
