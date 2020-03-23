@@ -94,7 +94,7 @@ sf_pt <- function(obj, keep = FALSE) {
   check_columns(obj, c("x", "y"), "sf_pt")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
-  ## needs rethinking
+
   call_args[c("multipolygon_id", "polygon_id",
               "multilinestring_id", "linestring_id", "multipoint_id")] <- NULL
   do.call(sfheaders::sf_point, call_args)
@@ -128,7 +128,7 @@ sf_mpt <- function(obj, keep = FALSE) {
   check_columns(obj, c("x", "y", "multipoint_id"), "sf_mpt")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
-  ## needs rethinking
+
   call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
               "linestring_id")] <- NULL
   do.call(sfheaders::sf_multipoint, call_args)
@@ -166,7 +166,7 @@ sf_mpoly <- function(obj, close = TRUE, keep = FALSE) {
                   "polygon_id", "linestring_id"), "sf_mpoly")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
-  ## needs rethinking
+
   call_args[c("multilinestring_id", "multipoint_id")] <- NULL
 
   do.call(sfheaders::sf_multipolygon, call_args)
@@ -202,7 +202,7 @@ sf_poly <- function(obj, close = TRUE, keep = FALSE) {
   check_columns(obj, c("x", "y", "polygon_id", "linestring_id"), "sf_poly")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
-  ## needs rethinking
+
   call_args[c("multipolygon_id", "multilinestring_id", "multipoint_id")] <- NULL
   do.call(sfheaders::sf_polygon, call_args)
 }
@@ -248,7 +248,7 @@ sf_mline <- function(obj, keep = FALSE) {
                   "linestring_id"), "sf_mline")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
-  ## needs rethinking
+
   call_args[c("multipolygon_id", "polygon_id", "multipoint_id")] <- NULL
   do.call(sfheaders::sf_multilinestring, call_args)
 
@@ -279,7 +279,7 @@ sf_line <- function(obj, keep = FALSE) {
   check_columns(obj, c("x", "y", "linestring_id"), "sf_line")
   call_args <- name_matcher(obj)
   call_args[c("obj", "keep")] <- list(obj, keep)
-  ## needs rethinking
+
   call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
               "multipoint_id")] <- NULL
   do.call(sfheaders::sf_linestring, call_args)
