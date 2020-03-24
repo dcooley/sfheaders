@@ -26,6 +26,10 @@ namespace api {
     bool& keep,
     const std::string sf_type
   ) {
+      // TODO - Make the id_columns the correct type
+      // then inside each if() condition, split it by polygon_id & linestring_id (for example)
+      // assume the 0th index is the outer-most geometry
+      // as this function will be called from R this is controllable.
 
     Rcpp::List sf;
     if( sf_type == "POINT" ) {
