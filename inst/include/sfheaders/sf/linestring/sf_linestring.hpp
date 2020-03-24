@@ -35,6 +35,14 @@ namespace sf {
   ) {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
+
+    // if we need to keep some list-columns, the row_idx is actually everything within line_positions start & end
+    // - i.e., we need to pass in 'line_positions' into the create_sf() function so the
+    // subset vector knows to make a Range object, subset the range, then make a list, then insert
+    // as the column. right.
+    // right.
+
+
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 

@@ -29,6 +29,22 @@ rcpp_cast_sf <- function(sf, cast_to, close = TRUE) {
     .Call(`_sfheaders_rcpp_cast_sf`, sf, cast_to, close)
 }
 
+rcpp_fill_list <- function(v, line_ids) {
+    .Call(`_sfheaders_rcpp_fill_list`, v, line_ids)
+}
+
+rcpp_list_sizes <- function(lst) {
+    .Call(`_sfheaders_rcpp_list_sizes`, lst)
+}
+
+rcpp_list_type <- function(lst) {
+    .Call(`_sfheaders_rcpp_list_type`, lst)
+}
+
+rcpp_unlist_list <- function(lst) {
+    .Call(`_sfheaders_rcpp_unlist_list`, lst)
+}
+
 rcpp_sfg_dimension <- function(x) {
     .Call(`_sfheaders_rcpp_sfg_dimension`, x)
 }
@@ -59,18 +75,6 @@ rcpp_sf_to_df <- function(sf, fill = FALSE) {
 
 rcpp_sf_to_df_unlist <- function(sf, unlist, fill = FALSE) {
     .Call(`_sfheaders_rcpp_sf_to_df_unlist`, sf, unlist, fill)
-}
-
-rcpp_list_sizes <- function(lst) {
-    .Call(`_sfheaders_rcpp_list_sizes`, lst)
-}
-
-rcpp_list_type <- function(lst) {
-    .Call(`_sfheaders_rcpp_list_type`, lst)
-}
-
-rcpp_unlist_list <- function(lst) {
-    .Call(`_sfheaders_rcpp_unlist_list`, lst)
 }
 
 rcpp_sf_point <- function(x, cols, keep) {

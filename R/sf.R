@@ -378,6 +378,7 @@ sf_multipolygon <- function(
   close = TRUE,
   keep = FALSE
   ) {
+
   geometry_columns <- c(x,y,z,m)
   res <- rcpp_sf_multipolygon(
     obj
@@ -390,6 +391,7 @@ sf_multipolygon <- function(
     )
   return( replace_id( res, multipolygon_id ) )
 }
+
 
 replace_id <- function( x, id ) {
   if( is.character( id ) ) {

@@ -82,6 +82,26 @@ namespace df {
     return res;
   }
 
+  // collapse a vector into a list
+  // where line_ids gives the start and end indexes of v to use
+  template < int RTYPE >
+  inline Rcpp::List fill_list(
+    Rcpp::Vector< RTYPE >& v,
+    Rcpp::IntegerMatrix& line_ids
+  ) {
+    R_xlen_t n = line_ids.nrow();  // nrow should also be the row of the final sf object we are creating
+    Rcpp::List res( n );
+    R_xlen_t i;
+
+    for( i = 0; i < n; ++i ) {
+      R_xlen_t start = line_ids(i, 0);
+      R_xlen_t end = line_ids(i, 1);
+      Rcpp::IntegerVector elements = Rcpp::seq( start, end );
+      res[ i ] = v[ elements ];
+    }
+    return res;
+  }
+
   /*
    * @param lst - the original input list
    * @param lst_sizes - the dimensions of the list

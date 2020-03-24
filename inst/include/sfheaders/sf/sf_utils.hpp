@@ -198,6 +198,15 @@ namespace sf {
     return create_sf( df, sfc, property_columns );
   }
 
+  // inline SEXP create_sf(
+  //   SEXP& x,
+  //   Rcpp::List& sfc,
+  //   SEXP& property_columns,
+  //   SEXP& list_columns
+  // ) {
+  //
+  // }
+
   inline SEXP make_sf( Rcpp::List& sfc ) {
 
     Rcpp::List df = Rcpp::List::create(

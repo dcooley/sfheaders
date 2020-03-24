@@ -89,6 +89,51 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_fill_list
+Rcpp::List rcpp_fill_list(Rcpp::NumericVector v, Rcpp::IntegerMatrix line_ids);
+RcppExport SEXP _sfheaders_rcpp_fill_list(SEXP vSEXP, SEXP line_idsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type line_ids(line_idsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_fill_list(v, line_ids));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_list_sizes
+Rcpp::List rcpp_list_sizes(Rcpp::List lst);
+RcppExport SEXP _sfheaders_rcpp_list_sizes(SEXP lstSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_list_sizes(lst));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_list_type
+int rcpp_list_type(Rcpp::List lst);
+RcppExport SEXP _sfheaders_rcpp_list_type(SEXP lstSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_list_type(lst));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_unlist_list
+SEXP rcpp_unlist_list(Rcpp::List lst);
+RcppExport SEXP _sfheaders_rcpp_unlist_list(SEXP lstSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_unlist_list(lst));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sfg_dimension
 std::string rcpp_sfg_dimension(SEXP x);
 RcppExport SEXP _sfheaders_rcpp_sfg_dimension(SEXP xSEXP) {
@@ -181,39 +226,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type unlist(unlistSEXP);
     Rcpp::traits::input_parameter< bool >::type fill(fillSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_df_unlist(sf, unlist, fill));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_list_sizes
-Rcpp::List rcpp_list_sizes(Rcpp::List lst);
-RcppExport SEXP _sfheaders_rcpp_list_sizes(SEXP lstSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_list_sizes(lst));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_list_type
-int rcpp_list_type(Rcpp::List lst);
-RcppExport SEXP _sfheaders_rcpp_list_type(SEXP lstSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_list_type(lst));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_unlist_list
-SEXP rcpp_unlist_list(Rcpp::List lst);
-RcppExport SEXP _sfheaders_rcpp_unlist_list(SEXP lstSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_unlist_list(lst));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -746,6 +758,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
     {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 3},
     {"_sfheaders_rcpp_cast_sf", (DL_FUNC) &_sfheaders_rcpp_cast_sf, 3},
+    {"_sfheaders_rcpp_fill_list", (DL_FUNC) &_sfheaders_rcpp_fill_list, 2},
+    {"_sfheaders_rcpp_list_sizes", (DL_FUNC) &_sfheaders_rcpp_list_sizes, 1},
+    {"_sfheaders_rcpp_list_type", (DL_FUNC) &_sfheaders_rcpp_list_type, 1},
+    {"_sfheaders_rcpp_unlist_list", (DL_FUNC) &_sfheaders_rcpp_unlist_list, 1},
     {"_sfheaders_rcpp_sfg_dimension", (DL_FUNC) &_sfheaders_rcpp_sfg_dimension, 1},
     {"_sfheaders_rcpp_get_vec", (DL_FUNC) &_sfheaders_rcpp_get_vec, 2},
     {"_sfheaders_rcpp_get_mat", (DL_FUNC) &_sfheaders_rcpp_get_mat, 2},
@@ -754,9 +770,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_to_df", (DL_FUNC) &_sfheaders_rcpp_sfc_to_df, 1},
     {"_sfheaders_rcpp_sf_to_df", (DL_FUNC) &_sfheaders_rcpp_sf_to_df, 2},
     {"_sfheaders_rcpp_sf_to_df_unlist", (DL_FUNC) &_sfheaders_rcpp_sf_to_df_unlist, 3},
-    {"_sfheaders_rcpp_list_sizes", (DL_FUNC) &_sfheaders_rcpp_list_sizes, 1},
-    {"_sfheaders_rcpp_list_type", (DL_FUNC) &_sfheaders_rcpp_list_type, 1},
-    {"_sfheaders_rcpp_unlist_list", (DL_FUNC) &_sfheaders_rcpp_unlist_list, 1},
     {"_sfheaders_rcpp_sf_point", (DL_FUNC) &_sfheaders_rcpp_sf_point, 3},
     {"_sfheaders_rcpp_sf_multipoint", (DL_FUNC) &_sfheaders_rcpp_sf_multipoint, 4},
     {"_sfheaders_rcpp_sf_linestring", (DL_FUNC) &_sfheaders_rcpp_sf_linestring, 4},
