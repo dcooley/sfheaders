@@ -55,33 +55,9 @@ namespace df {
   inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
 
     switch( geometry ) {
-    case SFG_POINT: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    } else {
-      dim_error(); // #nocov
-    }
-    }
-    case SFG_MULTIPOINT: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });    // #nocov
-    } else {
-      dim_error(); // #nocov
-    }
-    }
-    case SFG_LINESTRING: {
+    case sfheaders::sfg::SFG_POINT: {}
+    case sfheaders::sfg::SFG_MULTIPOINT: {}
+    case sfheaders::sfg::SFG_LINESTRING: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
@@ -94,7 +70,8 @@ namespace df {
       dim_error();  // #nocov
     }
     }
-    case SFG_MULTILINESTRING: {
+    case sfheaders::sfg::SFG_MULTILINESTRING: {}
+    case sfheaders::sfg::SFG_POLYGON: {
       if( dim == "XY" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
@@ -107,28 +84,15 @@ namespace df {
       dim_error();  // #nocov
     }
     }
-    case SFG_POLYGON: {
+    case sfheaders::sfg::SFG_MULTIPOLYGON: {
       if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
     } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
     } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    } else {
-      dim_error();  // #nocov
-    }
-    }
-    case SFG_MULTIPOLYGON: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, POLYGON_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
     } else {
       dim_error(); // #nocov
     }
@@ -215,27 +179,27 @@ namespace df {
   inline Rcpp::List get_sfg_coordinates( SEXP& sfg, R_xlen_t& sfc_rows, int SFG_TYPE ) {
 
     switch( SFG_TYPE ) {
-    case SFG_POINT: {
+    case sfheaders::sfg::SFG_POINT: {
       Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfg );
       return sfheaders::df::sfg_point_coordinates( vec, sfc_rows );
     }
-    case SFG_MULTIPOINT: {
+    case sfheaders::sfg::SFG_MULTIPOINT: {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
       return sfheaders::df::sfg_multipoint_coordinates( mat, sfc_rows );
     }
-    case SFG_LINESTRING: {
+    case sfheaders::sfg::SFG_LINESTRING: {
       Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
       return sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
     }
-    case SFG_MULTILINESTRING: {
+    case sfheaders::sfg::SFG_MULTILINESTRING: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_multilinestring_coordinates( lst, sfc_rows );
     }
-    case SFG_POLYGON: {
+    case sfheaders::sfg::SFG_POLYGON: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_polygon_coordinates( lst, sfc_rows );
     }
-    case SFG_MULTIPOLYGON: {
+    case sfheaders::sfg::SFG_MULTIPOLYGON: {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
     }
@@ -248,17 +212,17 @@ namespace df {
 
   inline int get_sfg_type( std::string& sfg ) {
     if( sfg == "POINT" ) {
-      return SFG_POINT;
+      return sfheaders::sfg::SFG_POINT;
     } else if ( sfg == "MULTIPOINT" ) {
-      return SFG_MULTIPOINT;
+      return sfheaders::sfg::SFG_MULTIPOINT;
     } else if ( sfg == "LINESTRING" ) {
-      return SFG_LINESTRING;
+      return sfheaders::sfg::SFG_LINESTRING;
     } else if ( sfg == "MULTILINESTRING" ) {
-      return SFG_MULTILINESTRING;
+      return sfheaders::sfg::SFG_MULTILINESTRING;
     } else if ( sfg == "POLYGON" ) {
-      return SFG_POLYGON;
+      return sfheaders::sfg::SFG_POLYGON;
     } else if ( sfg == "MULTIPOLYGON" ) {
-      return SFG_MULTIPOLYGON;
+      return sfheaders::sfg::SFG_MULTIPOLYGON;
     } else {
       Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
     }
@@ -282,7 +246,12 @@ namespace df {
     }
   }
 
-  inline Rcpp::List get_sfc_coordinates( Rcpp::List& sfc, R_xlen_t& total_coordinates ) {
+
+  // used for any mixed geomtry, or non-POINT, because the total number of rows is varaible
+  inline Rcpp::List get_sfc_geometry_coordinates(
+      Rcpp::List& sfc,
+      R_xlen_t& total_coordinates
+  ) {
 
     Rcpp::LogicalVector columns( MAX_COLUMNS ); // keeping track of which to subset
     columns[ X_COLUMN ] = true;
@@ -311,7 +280,7 @@ namespace df {
 
       SEXP sfci = sfc[ i ];
 
-      cls = sfheaders::df::getSfgClass( sfci );
+      cls = sfheaders::utils::getSfgClass( sfci );
 
       dim = cls[0];
 
@@ -359,29 +328,117 @@ namespace df {
 
     // make data.frame
     res = res[ columns ];
-    res.attr("class") = Rcpp::CharacterVector("data.frame");
+    Rcpp::StringVector res_names = column_names[ columns ];
+    //Rcpp::StringVector res_names = column_names;
+    return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
+  }
 
-    if( total_coordinates > 0 ) {
-      Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
-      res.attr("row.names") = rownames;
-    } else {
-      res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
+  // for POINT geometries we can simplify / optimise because the number of rows is fixed
+  inline Rcpp::List get_sfc_point_coordinates(
+      Rcpp::List& sfc,
+      R_xlen_t& total_coordinates
+  ) {
+
+    Rcpp::LogicalVector columns( 6 ); // keeping track of which to subset
+    columns[ 2 ] = true; // x
+    columns[ 3 ] = true; // y
+    columns[ 0 ] = true; // sfg_id
+    columns[ 1 ] = true; // point_id
+
+    R_xlen_t n_sfg = sfc.size();
+    R_xlen_t i;
+
+    Rcpp::CharacterVector cls;
+    std::string dim;
+
+    Rcpp::StringVector col_names = {"sfg_id","point_id","x","y","z","m"};
+
+    Rcpp::NumericVector x( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector y( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector z( total_coordinates, Rcpp::NumericVector::get_na() );
+    Rcpp::NumericVector m( total_coordinates, Rcpp::NumericVector::get_na() );
+
+    Rcpp::List res( 6 );
+
+    for( i = 0; i < n_sfg; ++i ) {
+      Rcpp::NumericVector sfg_point = sfc[ i ];
+      int n_col = sfg_point.size();
+
+      x[ i ] = sfg_point[ 0 ];
+      y[ i ] = sfg_point[ 1 ];
+
+      if( n_col == 4 ) {
+        columns[ 4 ] = true;
+        columns[ 5 ] = true;
+        z[ i ] = sfg_point[ 2 ];
+        m[ i ] = sfg_point[ 3 ];
+      } else if ( n_col == 3 ) {
+        columns[ 4 ] = true;
+        z[ i ] = sfg_point[ 2 ];
+      }
     }
 
-    res.attr("names") = column_names[ columns ];
-    return res;
+    // id columns "sfg_id" and "point_id", which will be 1:nrow(sfc);
+    Rcpp::IntegerVector point_id = Rcpp::seq( 1, total_coordinates );
+    Rcpp::IntegerVector sfg_id = Rcpp::seq( 1, total_coordinates );
+    res[ 0 ] = sfg_id;
+    res[ 1 ] = point_id;
+    res[ 2 ] = x;
+    res[ 3 ] = y;
+    res[ 4 ] = z;
+    res[ 5 ] = m;
+
+    res = res[ columns ];
+    Rcpp::StringVector res_names = col_names[ columns ];
+    return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
+  }
+
+  inline Rcpp::List get_sfc_coordinates(
+    Rcpp::List& sfc,
+    R_xlen_t& total_coordinates
+  ) {
+
+    Rcpp::CharacterVector sfc_class = sfc.attr("class");
+    std::string cls;
+    cls = sfc_class[0];
+
+    // switch on cls
+    if ( cls == "sfc_POINT" ) {
+      return get_sfc_point_coordinates( sfc, total_coordinates );
+    }
+
+    return get_sfc_geometry_coordinates( sfc, total_coordinates );
+  }
+
+  inline Rcpp::List sfc_to_df(
+      Rcpp::List& sfc,
+      Rcpp::NumericMatrix& sfc_coordinates
+  ) {
+
+    R_xlen_t n_geometries = sfc_coordinates.nrow();
+
+    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
+    total_coordinates = total_coordinates + 1;
+    return get_sfc_coordinates( sfc, total_coordinates );
   }
 
   inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
 
+    // get teh sfc class here!
+    // so if it's a POINT, can go direct to get_sfc_point()
+    Rcpp::CharacterVector sfc_class = sfc.attr("class");
+    std::string cls;
+    cls = sfc_class[1];
+
+    // switch on cls
+    if ( cls == "sfc_POINT" ) {
+      R_xlen_t n_geometries = sfc.size();
+      return get_sfc_point_coordinates( sfc, n_geometries );
+    }
+
     // seprated this so it's independant / not called twice from `sf_to_df()`
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
-
-    R_xlen_t n_geometries = sfc_coordinates.nrow();
-    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
-    total_coordinates = total_coordinates + 1;
-
-    return get_sfc_coordinates( sfc, total_coordinates );
+    return sfc_to_df( sfc, sfc_coordinates );
   }
 
 

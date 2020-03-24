@@ -30,7 +30,7 @@ namespace polygon_utils {
     Rcpp::IntegerVector first_row = im( 0, Rcpp::_ );
     Rcpp::IntegerVector last_row = im( n_row - 1, Rcpp::_ );
 
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       if( first_row[i] != last_row[i] ) {
         is_closed = false;
         break;
@@ -39,7 +39,7 @@ namespace polygon_utils {
 
     if( !is_closed ) {
       Rcpp::IntegerMatrix im2( n_row + 1, n_col );
-      for( i = 0; i < n_col; i++ ) {
+      for( i = 0; i < n_col; ++i ) {
         Rcpp::IntegerVector iv( n_row + 1);
         Rcpp::Range rng( 0, n_row - 1 );
 
@@ -74,7 +74,7 @@ namespace polygon_utils {
     Rcpp::NumericVector first_row = nm( 0, Rcpp::_ );
     Rcpp::NumericVector last_row = nm( n_row - 1, Rcpp::_ );
 
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       if( first_row[i] != last_row[i] ) {
         is_closed = false;
         break;
@@ -83,7 +83,7 @@ namespace polygon_utils {
 
     if( !is_closed ) {
       Rcpp::NumericMatrix nm2( n_row + 1, n_col );
-      for( i = 0; i < n_col; i++ ) {
+      for( i = 0; i < n_col; ++i ) {
         Rcpp::NumericVector nv( n_row + 1);
         Rcpp::Range rng( 0, n_row - 1 );
 
@@ -112,7 +112,7 @@ namespace polygon_utils {
     R_xlen_t n_items = lst.size();
     R_xlen_t i;
 
-    for( i = 0; i < n_items; i++ ) {
+    for( i = 0; i < n_items; ++i ) {
       SEXP x = lst[i];
       switch( TYPEOF(x) ) {
       case INTSXP: {

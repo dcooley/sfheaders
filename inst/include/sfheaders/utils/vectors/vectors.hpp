@@ -13,7 +13,7 @@ namespace utils {
       Rcpp::StringVector& sv ) {
     int n = sv.size();
     int i;
-    for( i = 0; i < n; i++ ) {
+    for( i = 0; i < n; ++i ) {
       if ( to_find == sv[i] ) {
         return i;
       }
@@ -28,7 +28,7 @@ namespace utils {
     int n = param_value.size();
     int i;
     Rcpp::IntegerVector res( n );
-    for ( i = 0; i < n; i++ ) {
+    for ( i = 0; i < n; ++i ) {
       Rcpp::String to_find = param_value[i];
       res[i] = where_is( to_find, data_names );
     }
@@ -50,7 +50,7 @@ namespace utils {
     if( n_1 == 1 ) {
       iv[0] = iv_1[0];
     } else {
-      for( i = 0; i < n_1; i++ ) {
+      for( i = 0; i < n_1; ++i ) {
         iv[i] = iv_1[i];
       }
     }
@@ -59,7 +59,7 @@ namespace utils {
       iv[ n_1 ] = iv_2[0];
     } else {
       int idx = 0;
-      for( i = n_1; i < n; i++ ) {
+      for( i = n_1; i < n; ++i ) {
         iv[i] = iv_2[ idx ];
         idx++;
       }
@@ -71,6 +71,15 @@ namespace utils {
     //}
     //return iv;
     return sfheaders::utils::get_sexp_unique( iv );
+  }
+
+  inline SEXP concatenate_vectors(
+    Rcpp::IntegerVector& iv,
+    int& i
+  ) {
+    Rcpp::IntegerVector iv2(1);
+    iv2[0] = i;
+    return concatenate_vectors(iv, iv2);
   }
 
 
@@ -89,7 +98,7 @@ namespace utils {
     if( n_1 == 1 ) {
       nv[0] = nv_1[0];
     } else {
-      for( i = 0; i < n_1; i++ ) {
+      for( i = 0; i < n_1; ++i ) {
         nv[i] = nv_1[i];
       }
     }
@@ -98,7 +107,7 @@ namespace utils {
       nv[ n_1 ] = nv_2[0];
     } else {
       int idx = 0;
-      for( i = n_1; i < n; i++ ) {
+      for( i = n_1; i < n; ++i ) {
         nv[i] = nv_2[ idx ];
         idx++;
       }
@@ -124,12 +133,12 @@ namespace utils {
 
     Rcpp::StringVector sv( n );
 
-    for( i = 0; i < n_1; i++ ) {
+    for( i = 0; i < n_1; ++i ) {
       sv[i] = sv_1[i];
     }
 
     int idx = 0;
-    for( i = n_1; i < n; i++ ) {
+    for( i = n_1; i < n; ++i ) {
       sv[i] = sv_2[ idx ];
       idx++;
     }

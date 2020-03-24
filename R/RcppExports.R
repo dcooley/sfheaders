@@ -13,6 +13,22 @@ rcpp_calculate_m_range <- function(x) {
     .Call(`_sfheaders_rcpp_calculate_m_range`, x)
 }
 
+rcpp_count_new_objects <- function(sfg, cast_to) {
+    .Call(`_sfheaders_rcpp_count_new_objects`, sfg, cast_to)
+}
+
+rcpp_count_new_sfc_objects <- function(sfc, cast_to) {
+    .Call(`_sfheaders_rcpp_count_new_sfc_objects`, sfc, cast_to)
+}
+
+rcpp_cast_sfc <- function(sfc, cast_to, close = TRUE) {
+    .Call(`_sfheaders_rcpp_cast_sfc`, sfc, cast_to, close)
+}
+
+rcpp_cast_sf <- function(sf, cast_to, close = TRUE) {
+    .Call(`_sfheaders_rcpp_cast_sf`, sf, cast_to, close)
+}
+
 rcpp_sfg_dimension <- function(x) {
     .Call(`_sfheaders_rcpp_sfg_dimension`, x)
 }
@@ -39,6 +55,22 @@ rcpp_sfc_to_df <- function(sfc) {
 
 rcpp_sf_to_df <- function(sf, fill = FALSE) {
     .Call(`_sfheaders_rcpp_sf_to_df`, sf, fill)
+}
+
+rcpp_sf_to_df_unlist <- function(sf, unlist, fill = FALSE) {
+    .Call(`_sfheaders_rcpp_sf_to_df_unlist`, sf, unlist, fill)
+}
+
+rcpp_list_sizes <- function(lst) {
+    .Call(`_sfheaders_rcpp_list_sizes`, lst)
+}
+
+rcpp_list_type <- function(lst) {
+    .Call(`_sfheaders_rcpp_list_type`, lst)
+}
+
+rcpp_unlist_list <- function(lst) {
+    .Call(`_sfheaders_rcpp_unlist_list`, lst)
 }
 
 rcpp_sf_point <- function(x, cols, keep) {
@@ -113,6 +145,14 @@ rcpp_sfc_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfc_multipolygons`, lst, close)
 }
 
+rcpp_sfc_remove_holes <- function(sfc, close) {
+    .Call(`_sfheaders_rcpp_sfc_remove_holes`, sfc, close)
+}
+
+rcpp_get_sfc_attributes <- function(sfc) {
+    .Call(`_sfheaders_rcpp_get_sfc_attributes`, sfc)
+}
+
 rcpp_get_sfg_type <- function(sfg_type) {
     .Call(`_sfheaders_rcpp_get_sfg_type`, sfg_type)
 }
@@ -163,6 +203,10 @@ rcpp_sfg_multipolygon <- function(x, geometry_columns, polygon_id, line_id, clos
 
 rcpp_sfg_multipolygons <- function(lst, close = TRUE) {
     .Call(`_sfheaders_rcpp_sfg_multipolygons`, lst, close)
+}
+
+rcpp_sfg_remove_holes <- function(sfg, close) {
+    .Call(`_sfheaders_rcpp_sfg_remove_holes`, sfg, close)
 }
 
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {

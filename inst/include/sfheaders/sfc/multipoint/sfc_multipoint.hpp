@@ -465,7 +465,7 @@ inline SEXP sfc_multipoint(
   } else {
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       start = line_positions(i, 0);
       end = line_positions(i, 1);
@@ -514,7 +514,7 @@ inline SEXP sfc_multipoint(
   } else {
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       start = line_positions(i, 0);
       end = line_positions(i, 1);
@@ -563,7 +563,7 @@ inline SEXP sfc_multipoint(
   } else {
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       start = line_positions(i, 0);
       end = line_positions(i, 1);
@@ -612,7 +612,7 @@ inline SEXP sfc_multipoint(
   } else {
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       start = line_positions(i, 0);
       end = line_positions(i, 1);

@@ -43,9 +43,13 @@ namespace sf {
     }
   }
 
-  inline void attach_dataframe_attributes( Rcpp::List& df, R_xlen_t& n_row ) {
+  inline void attach_dataframe_attributes(
+      Rcpp::List& df,
+      R_xlen_t& n_row,
+      std::string geometry_column = "geometry"
+  ) {
     df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-    df.attr("sf_column") = "geometry";
+    df.attr("sf_column") = geometry_column;
 
     if( n_row == 0 ) {
       df.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
@@ -143,14 +147,10 @@ namespace sf {
     Rcpp::StringVector str_property_columns;
 
     switch( TYPEOF( property_columns ) ) {
+    case REALSXP: {}
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( property_columns );
       str_property_columns = df_names[ iv ];
-      break;
-    }
-    case REALSXP: {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( property_columns );
-      str_property_columns = df_names[ nv ];
       break;
     }
     case STRSXP: {

@@ -1,6 +1,10 @@
 #ifndef R_SFHEADERS_SFC_ATTRIBUTES_H
 #define R_SFHEADERS_SFC_ATTRIBUTES_H
 
+#include "sfheaders/sfc/bbox.hpp"
+#include "sfheaders/sfc/z_range.hpp"
+#include "sfheaders/sfc/m_range.hpp"
+
 #include <Rcpp.h>
 
 namespace sfheaders {
@@ -69,6 +73,7 @@ namespace sfc {
   ) {
 
     std::string geometry_class;
+    int i;
 
     // handle no features
     // '{"type":"FeatureCollection","features":[]}'
@@ -84,7 +89,7 @@ namespace sfc {
         geometry_class = "GEOMETRY";
 
         Rcpp::StringVector sfc_classes = start_sfc_classes( sfc.size() );
-        for (int i = 0; i < sfc.size(); i++) {
+        for ( i = 0; i < sfc.size(); ++i ) {
           SEXP sfci = sfc[i];
           Rcpp::CharacterVector cls = getSfClass( sfci );
           sfc_classes[i] = cls[1];
@@ -103,11 +108,78 @@ namespace sfc {
   }
   // #nocov end
 
+  /*
+   * get sfc attributes
+   *
+   * extracts the attributes from an sfc object
+   */
+  inline Rcpp::List get_sfc_attributes(
+    Rcpp::List& sfc
+  ) {
+    Rcpp::List crs = sfc.attr("crs");
+    int n_empty = sfc.attr("n_empty");
+    Rcpp::CharacterVector sfc_class = sfc.attr("class");
+    double precision = sfc.attr("precision");
+    Rcpp::NumericVector bbox = sfc.attr("bbox");
+
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+    if( sfc.hasAttribute("z_range") ) {
+      z_range = sfc.attr("z_range");
+    }
+    if( sfc.hasAttribute("m_range") ) {
+      m_range = sfc.attr("m_range");
+    }
+
+    return Rcpp::List::create(
+      Rcpp::_["n_empty"] = n_empty,
+      Rcpp::_["crs"] = crs,
+      Rcpp::_["class"] = sfc_class,
+      Rcpp::_["precision"] = precision,
+      Rcpp::_["bbox"] = bbox,
+      Rcpp::_["z_range"] = z_range,
+      Rcpp::_["m_range"] = m_range
+    );
+  }
+
   /* Attach SFC attributes
    *
    * attaches the attributes required to make an sfc object
    *
    */
+  inline void attach_sfc_attributes(
+      Rcpp::List& sfc,
+      Rcpp::CharacterVector& sfc_class,
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      Rcpp::List& crs,
+      int n_empty = 0,
+      double precision = 0.0
+  ) {
+    // attribute::n_empty
+    sfc.attr("n_empty") = n_empty;
+
+    // attribute::crs
+    crs.attr("class") = Rcpp::CharacterVector::create("crs");
+    sfc.attr("crs") = crs;
+
+    sfc.attr("class") = sfc_class;
+
+    // attribute::precision
+    sfc.attr("precision") = precision;
+
+    // attribute::bbox
+    sfheaders::bbox::attach_bbox_attributes( bbox );
+    sfc.attr("bbox") = bbox;
+
+    sfheaders::zm::attach_z_range_attributes( z_range );
+    sfc.attr("z_range") = z_range;
+
+    sfheaders::zm::attach_m_range_attributes( m_range );
+    sfc.attr("m_range") = m_range;
+  }
+
   inline void attach_sfc_attributes(
       Rcpp::List& sfc,
       std::string& geom_type,
@@ -121,38 +193,41 @@ namespace sfc {
       double precision = 0.0
   ) {
 
-    // to enter this function, will the geometry type already be sorted?
+    std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
+    Rcpp::CharacterVector sfc_class = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
-    // attribute::n_empty
-    sfc.attr("n_empty") = n_empty;
-
-    // attribute::crs
     Rcpp::List crs = Rcpp::List::create(
       Rcpp::Named("input") = crs_input,
       Rcpp::Named("wkt") = crs_wkt
     );
 
     crs.attr("class") = Rcpp::CharacterVector::create("crs");
-    sfc.attr("crs") = crs;
 
-    std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
-    sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
+    attach_sfc_attributes(
+      sfc, sfc_class, bbox, z_range, m_range, crs, n_empty, precision
+    );
 
-    // attribute::precision
-    sfc.attr("precision") = precision;
+  }
 
-    // attribute::bbox
-    bbox.attr("class") = Rcpp::CharacterVector::create("bbox");
-    bbox.attr("names") = Rcpp::CharacterVector::create("xmin", "ymin", "xmax", "ymax");
-    sfc.attr("bbox") = bbox;
+  inline void attach_sfc_attributes(
+    Rcpp::List& sfc,
+    Rcpp::List& attributes
+  ) {
 
-    z_range.attr("class") = Rcpp::CharacterVector::create("z_range");
-    z_range.attr("names") = Rcpp::CharacterVector::create("zmin","zmax");
-    sfc.attr("z_range") = z_range;
+    // TODO
+    // - check the attributes object has the correct names before selecting them
+    int n_empty = attributes["n_empty"];
+    Rcpp::List crs = attributes["crs"];
+    Rcpp::CharacterVector sfc_class = attributes["class"];
+    double precision = attributes["precision"];
+    Rcpp::NumericVector bbox = attributes["bbox"];
+    Rcpp::NumericVector z_range = attributes["z_range"];
+    Rcpp::NumericVector m_range = attributes["m_range"];
 
-    m_range.attr("class") = Rcpp::CharacterVector::create("m_range");
-    m_range.attr("names") = Rcpp::CharacterVector::create("mmin","mmax");
-    sfc.attr("m_range") = m_range;
+    attach_sfc_attributes(
+      sfc, sfc_class, bbox, z_range, m_range, crs, n_empty, precision
+    );
+
   }
 
   inline SEXP create_sfc(

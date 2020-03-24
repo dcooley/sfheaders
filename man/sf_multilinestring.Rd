@@ -4,9 +4,16 @@
 \alias{sf_multilinestring}
 \title{sf MULTILINESTRING}
 \usage{
-sf_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
-  m = NULL, multilinestring_id = NULL, linestring_id = NULL,
-  keep = FALSE)
+sf_multilinestring(
+  obj = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  multilinestring_id = NULL,
+  linestring_id = NULL,
+  keep = FALSE
+)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}

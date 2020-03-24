@@ -121,7 +121,7 @@ namespace sfc {
   //   R_xlen_t n_linestrings = sfc.size();
   //   R_xlen_t i;
   //
-  //   for( i = 0; i < n_linestrings; i++ ) {
+  //   for( i = 0; i < n_linestrings; ++i ) {
   //     SEXP this_linestring = sfc[i];
   //
   //     // should each element only be allowed to be a matrix??
@@ -467,7 +467,7 @@ namespace sfc {
     } else {
 
       R_xlen_t i;
-      for( i = 0; i < n_lines; i++ ) {
+      for( i = 0; i < n_lines; ++i ) {
 
         start = line_positions(i, 0);
         end = line_positions(i, 1);
@@ -515,7 +515,7 @@ namespace sfc {
     } else {
 
       R_xlen_t i;
-      for( i = 0; i < n_lines; i++ ) {
+      for( i = 0; i < n_lines; ++i ) {
 
         start = line_positions(i, 0);
         end = line_positions(i, 1);
@@ -562,7 +562,7 @@ namespace sfc {
     } else {
 
       R_xlen_t i;
-      for( i = 0; i < n_lines; i++ ) {
+      for( i = 0; i < n_lines; ++i ) {
 
         start = line_positions(i, 0);
         end = line_positions(i, 1);
@@ -608,7 +608,7 @@ namespace sfc {
     } else {
 
       R_xlen_t i;
-      for( i = 0; i < n_lines; i++ ) {
+      for( i = 0; i < n_lines; ++i ) {
 
         start = line_positions(i, 0);
         end = line_positions(i, 1);

@@ -4,8 +4,15 @@
 \alias{sfc_multilinestring}
 \title{sfc MULTILINESTRING}
 \usage{
-sfc_multilinestring(obj = NULL, x = NULL, y = NULL, z = NULL,
-  m = NULL, multilinestring_id = NULL, linestring_id = NULL)
+sfc_multilinestring(
+  obj = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  multilinestring_id = NULL,
+  linestring_id = NULL
+)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
