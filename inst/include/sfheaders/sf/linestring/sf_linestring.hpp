@@ -18,6 +18,8 @@ namespace sf {
     SEXP& linestring_id
   ) {
 
+    Rcpp::Rcout << "sf_linestring1 " << std::endl;
+
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id );
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
@@ -33,20 +35,27 @@ namespace sf {
       Rcpp::String& id_column,
       SEXP& line_ids
   ) {
+
+    Rcpp::Rcout << "sf_linestring2 " << std::endl;
+
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
-
-    // if we need to keep some list-columns, the row_idx is actually everything within line_positions start & end
-    // - i.e., we need to pass in 'line_positions' into the create_sf() function so the
-    // subset vector knows to make a Range object, subset the range, then make a list, then insert
-    // as the column. right.
-    // right.
-
 
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions );
+
+    Rcpp::List res = Rcpp::List::create(
+      Rcpp::_["df"] = df,
+      Rcpp::_["sfc"] = sfc,
+      Rcpp::_["id_column"] = id_column,
+      Rcpp::_["property_cols"] = property_cols,
+      Rcpp::_["row_id"] = row_idx,
+      Rcpp::_["line_positions"] = line_positions
+    );
+
+    return res;
 
     return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
@@ -223,6 +232,8 @@ namespace sf {
     if( Rf_isNull( linestring_id ) ) {
       Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
+
+      // TODO: here it's also called create_sf()
       return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 

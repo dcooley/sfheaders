@@ -315,7 +315,6 @@ namespace sf {
     return Rcpp::List::create(); // ??
   }
 
-
 } // sf
 } // sfheaders
 
