@@ -361,3 +361,22 @@ test_that("list-columns get expanded",{
   expect_equal( sfc[[3]], sfc[[4]] )
 
 })
+
+test_that("subsetted sf object converts to df",{
+
+  sf <- sf_linestring(
+    obj = data.frame(
+      id = c(1,1,2,2)
+      , x = 1:4
+      , y = 4:1
+    )
+    , linestring_id = "id"
+  )
+
+  df1 <- sf_to_df( sf[1, ], fill = TRUE )
+  df2 <- sf_to_df( sf[2, ], fill = TRUE )
+
+  expect_true(all(df1$id == 1))
+  expect_true(all(df2$id == 2))
+
+})

@@ -39,8 +39,7 @@ from the real world with columns 'lon', 'lat', 'line' will be best used with
 whereas a heavy user of sfheaders might always create a data frame with 'x',
 'y', 'linestring_id' precisely because they are expecting to call
 \code{sf_line(df)} and no further work is required. These are very different
-contexts and both equally valid. (FIXME: mdsumner to write a vignette on
-this).
+contexts and both equally valid.
 
 Some columns are mandatory, such as 'x' and 'y' (always), while others depend
 on the output type where each column for that type is mandatory. The 'z'
