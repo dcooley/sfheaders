@@ -87,7 +87,8 @@ namespace api {
     Rcpp::IntegerVector row_idx = sf_objs["row_idx"];
     Rcpp::IntegerMatrix line_positions = sf_objs["line_positions"];
 
-    Rcpp::IntegerVector list_column_idx;
+    Rcpp::IntegerVector list_column_idx;  // TODO - initialise as -1 ?? so its' never NULL and we only
+    // need one 'create_sf()' function?
 
     if( !Rf_isNull( list_columns ) ) {
       Rcpp::Rcout << "is_not_null" << std::endl;
