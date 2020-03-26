@@ -42,6 +42,19 @@ namespace sf {
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
     Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( df, geometry_cols, polygon_ids, line_ids, polygon_positions, close );
+
+
+    Rcpp::List res = Rcpp::List::create(
+      Rcpp::_["df"] = df,
+      Rcpp::_["sfc"] = sfc,
+      Rcpp::_["id_column"] = id_column,
+      Rcpp::_["property_cols"] = property_cols,
+      Rcpp::_["row_idx"] = row_idx,
+      Rcpp::_["line_positions"] = polygon_positions
+    );
+
+    return res;
+
     return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
 
@@ -281,6 +294,15 @@ namespace sf {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id );
+
+      Rcpp::List res = Rcpp::List::create(
+        Rcpp::_["df"] = x,
+        Rcpp::_["sfc"] = sfc,
+        Rcpp::_["property_cols"] = property_columns
+      );
+
+      return res;
+
       return sfheaders::sf::create_sf( x, sfc, property_columns );
 
     }
@@ -293,6 +315,15 @@ namespace sf {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, linestring_id );
+
+      Rcpp::List res = Rcpp::List::create(
+        Rcpp::_["df"] = x,
+        Rcpp::_["sfc"] = sfc,
+        Rcpp::_["property_cols"] = property_columns
+      );
+
+      return res;
+
       return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
@@ -323,6 +354,15 @@ namespace sf {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id, linestring_id );
+
+      Rcpp::List res = Rcpp::List::create(
+        Rcpp::_["df"] = x,
+        Rcpp::_["sfc"] = sfc,
+        Rcpp::_["property_cols"] = property_columns
+      );
+
+      return res;
+
       return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
@@ -334,6 +374,15 @@ namespace sf {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
+
+      Rcpp::List res = Rcpp::List::create(
+        Rcpp::_["df"] = x,
+        Rcpp::_["sfc"] = sfc,
+        Rcpp::_["property_cols"] = property_columns
+      );
+
+      return res;
+
       return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 

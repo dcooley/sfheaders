@@ -111,7 +111,7 @@ namespace sf {
 
     // fill columns of properties
     for( i = 0; i < n_col; ++i ) {
-      int idx = property_idx[i];
+      int idx = property_idx[ i ];
       SEXP v = df[ idx ];
       sf[ i + 1 ] = subset_properties( v, row_idx );
       res_names[ i + 1 ] = property_cols[ i ];

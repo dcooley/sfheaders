@@ -229,6 +229,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_sf_to_df2
+SEXP rcpp_sf_to_df2(SEXP obj, SEXP geometry_columns, SEXP point_id, SEXP multipoint_id, SEXP linestring_id, SEXP multilinestring_id, SEXP polygon_id, SEXP multipolygon_id, SEXP list_columns, bool close, bool keep, const std::string sf_type);
+RcppExport SEXP _sfheaders_rcpp_sf_to_df2(SEXP objSEXP, SEXP geometry_columnsSEXP, SEXP point_idSEXP, SEXP multipoint_idSEXP, SEXP linestring_idSEXP, SEXP multilinestring_idSEXP, SEXP polygon_idSEXP, SEXP multipolygon_idSEXP, SEXP list_columnsSEXP, SEXP closeSEXP, SEXP keepSEXP, SEXP sf_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type obj(objSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type point_id(point_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multipoint_id(multipoint_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multilinestring_id(multilinestring_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multipolygon_id(multipolygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type list_columns(list_columnsSEXP);
+    Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
+    Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
+    Rcpp::traits::input_parameter< const std::string >::type sf_type(sf_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_df2(obj, geometry_columns, point_id, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, sf_type));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sf_point
 SEXP rcpp_sf_point(SEXP x, SEXP cols, bool keep);
 RcppExport SEXP _sfheaders_rcpp_sf_point(SEXP xSEXP, SEXP colsSEXP, SEXP keepSEXP) {
@@ -770,6 +792,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_to_df", (DL_FUNC) &_sfheaders_rcpp_sfc_to_df, 1},
     {"_sfheaders_rcpp_sf_to_df", (DL_FUNC) &_sfheaders_rcpp_sf_to_df, 2},
     {"_sfheaders_rcpp_sf_to_df_unlist", (DL_FUNC) &_sfheaders_rcpp_sf_to_df_unlist, 3},
+    {"_sfheaders_rcpp_sf_to_df2", (DL_FUNC) &_sfheaders_rcpp_sf_to_df2, 12},
     {"_sfheaders_rcpp_sf_point", (DL_FUNC) &_sfheaders_rcpp_sf_point, 3},
     {"_sfheaders_rcpp_sf_multipoint", (DL_FUNC) &_sfheaders_rcpp_sf_multipoint, 4},
     {"_sfheaders_rcpp_sf_linestring", (DL_FUNC) &_sfheaders_rcpp_sf_linestring, 4},

@@ -34,6 +34,17 @@ namespace sf {
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
     Rcpp::List sfc = sfheaders::sfc::sfc_point( df, geometry_cols );
 
+    Rcpp::List res = Rcpp::List::create(
+      Rcpp::_["df"] = df,
+      Rcpp::_["sfc"] = sfc,
+      //Rcpp::_["id_column"] = id_column,
+      Rcpp::_["property_cols"] = property_cols,
+      Rcpp::_["row_idx"] = row_idx
+      //Rcpp::_["line_positions"] = line_positions
+    );
+
+    return res;
+
     return sfheaders::sf::create_sf( df, sfc, property_cols, property_idx, row_idx );
   }
 
