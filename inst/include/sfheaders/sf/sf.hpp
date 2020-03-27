@@ -21,6 +21,7 @@ namespace api {
 
     if( !Rf_isNull( list_columns ) ) {
       switch( TYPEOF( list_columns ) ) {
+      case REALSXP: {}
       case INTSXP: {
         list_column_idx = Rcpp::as< Rcpp::IntegerVector >( list_columns );
         break;

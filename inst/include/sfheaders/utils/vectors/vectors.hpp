@@ -69,6 +69,7 @@ namespace utils {
     SEXP& x   // object, of which are names or indices
   ) {
     switch( TYPEOF( values_to_find ) ) {
+    case REALSXP: {}
     case INTSXP: {
       Rcpp::IntegerVector values = Rcpp::as< Rcpp::IntegerVector >( values_to_find );
       Rcpp::IntegerVector look_in = sfheaders::utils::get_sexp_length( x );

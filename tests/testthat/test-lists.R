@@ -91,7 +91,6 @@ test_that("sf with list columns are unlist",{
   sf$l <- list(letters[1:4])
 
   res <- sfheaders:::rcpp_sf_to_df_unlist( sf, TRUE, unlist = "l" )
-
   expect_true( nrow( res ) == 4 )
   expect_equal( res$l, letters[1:4] )
 
@@ -118,7 +117,45 @@ test_that("sf with list columns are unlist",{
     , "sfheaders - unlisted column doesn't have the correct number of rows"
   )
 
+  df <- data.frame(
+    id = c(1,1,2,2)
+    , x = 1:4
+    , y = 1:4
+  )
+
+  sf <- sf_linestring(
+    obj = df
+    , linestring_id = "id"
+  )
+
+  sf$l <- list(c("a","b"),c("d","e"))
+
+  res <- sf_to_df(sf = sf, unlist = "l")
+  expect_true(inherits( res , "data.frame" ) )
+  expect_equal( res$l, c("a","b","d","e"))
+
+  res <- sf_to_df(sf = sf, fill = TRUE)
+  expect_true(inherits( res , "data.frame" ) )
+  expect_equal( res$l, list(c("a","b"),c("a","b"),c("d","e"),c("d","e"))  )
+
+
 })
+
+# test_that("calling unlist on a non-list column doesn't error",{
+#
+#   df <- data.frame(
+#     x = 1:4
+#     , y = 1:4
+#   )
+#
+#   sf <- sf_linestring(
+#     obj = df
+#   )
+#
+#   sf_to_df( sf, fill = TRUE, unlist = "id" )
+#
+# })
+
 
 test_that("list_columns are kept",{
 
@@ -130,12 +167,124 @@ test_that("list_columns are kept",{
      , stringsAsFactors = FALSE
    )
 
+   df2 <- df
+   df2$val <- 1:26
+   m <- as.matrix(df2)
 
-   sf_mpt1 <- sf_multipoint(obj = df, x = "x", y = "y", keep = TRUE)
-   sf_mpt2 <- sf_multipoint(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   sf_mpt1 <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "line_id", keep = TRUE)
-   sf_mpt2 <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "line_id", keep = TRUE, list_columns = "val")
-   sf_ls <- sf_linestring(obj = df, x = "x", y = "y", keep = TRUE)
+   ## test list colum kept
+   l1 <- list(letters)
+   l2 <- list(letters[1:5], letters[6:10], letters[11:15], letters[16:20],letters[21:25], letters[26])
+   lm1 <- list(1:26)
+   lm2 <- list(c(1:5), c(6:10), c(11:15), c(16:20), c(21:25),26)
 
+   ## POINTs - nothing to do
+   sf <- sf_multipoint(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l1 )
+   sf <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "line_id", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l2 )
+   sf <- sf_multipoint(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l1 )
+   sf <- sf_multipoint(obj = df, x = 1, y = 2, multipoint_id = 4, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l2 )
+
+   sf <- sf_multipoint(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm1 )
+   sf <- sf_multipoint(obj = m, x = "x", y = "y", multipoint_id = "line_id", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm2 )
+   sf <- sf_multipoint(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm1 )
+   sf <- sf_multipoint(obj = m, x = 1, y = 2, multipoint_id = 4, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm2 )
+
+
+   sf <- sf_linestring(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l1 )
+   sf <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "line_id", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l2 )
+   sf <- sf_linestring(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l1 )
+   sf <- sf_linestring(obj = df, x = 1, y = 2, linestring_id = 4, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l2 )
+
+   sf <- sf_linestring(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm1 )
+   sf <- sf_linestring(obj = m, x = "x", y = "y", linestring_id = "line_id", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm2 )
+   sf <- sf_linestring(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm1 )
+   sf <- sf_linestring(obj = m, x = 1, y = 2, linestring_id = 4, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm2 )
+
+
+   sf <- sf_multilinestring(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l1 )
+   sf <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "line_id", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l2 )
+   sf <- sf_multilinestring(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l1 )
+   sf <- sf_multilinestring(obj = df, x = 1, y = 2, multilinestring_id = 4, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l2 )
+
+   sf <- sf_multilinestring(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm1 )
+   sf <- sf_multilinestring(obj = m, x = "x", y = "y", multilinestring_id = "line_id", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm2 )
+   sf <- sf_multilinestring(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm1 )
+   sf <- sf_multilinestring(obj = m, x = 1, y = 2, multilinestring_id = 4, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm2 )
+
+   sf <- sf_polygon(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l1 )
+   sf <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
+   expect_equal( sf$val, l2 )
+   sf <- sf_polygon(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l1 )
+   sf <- sf_polygon(obj = df, x = 1, y = 2, polygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
+   expect_equal( sf$val, l2 )
+
+   sf <- sf_polygon(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm1 )
+   sf <- sf_polygon(obj = m, x = "x", y = "y", polygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
+   expect_equal( sf$val, lm2 )
+   sf <- sf_polygon(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm1 )
+   sf <- sf_polygon(obj = m, x = 1, y = 2, polygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
+   expect_equal( sf$val, lm2 )
+
+
+   sf <- sf_multipolygon(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, l1 )
+   sf <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
+   expect_equal( sf$val, l2 )
+   sf <- sf_multipolygon(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, l1 )
+   sf <- sf_multipolygon(obj = df, x = 1, y = 2, multipolygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
+   expect_equal( sf$val, l2 )
+
+   sf <- sf_multipolygon(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   expect_equal( sf$val, lm1 )
+   sf <- sf_multipolygon(obj = m, x = "x", y = "y", multipolygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
+   expect_equal( sf$val, lm2 )
+   sf <- sf_multipolygon(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
+   expect_equal( sf$val, lm1 )
+   sf <- sf_multipolygon(obj = m, x = 1, y = 2, multipolygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
+
+
+   ## two id_columns
+   df <- data.frame(
+     x = 1:26
+     , y = 1:26
+     , val = letters
+     , poly_id = c(rep(1:2,each=12),3,3)
+     , line_id = c(rep(1:5,each=5),6)
+     , stringsAsFactors = FALSE
+   )
+
+   l2 <- list(letters[1:12], letters[13:24], letters[25:26])
+   sf <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "poly_id", linestring_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
+   expect_equal( sf$val, l2 )
+   sf <- sf_polygon(obj = df, x = 1, y = 2, polygon_id = 4, linestring_id = 5, keep = TRUE, list_columns = 3, close = FALSE)
+   expect_equal( sf$val, l2 )
 
 })

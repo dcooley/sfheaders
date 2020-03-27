@@ -276,9 +276,9 @@ namespace sf {
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, linestring_id );
 
       Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
-      Rcpp::IntegerMatrix line_positions(1,1);
+      Rcpp::IntegerMatrix line_positions(1,2);
       line_positions(0,0) = 0;
-      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
 
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
@@ -297,9 +297,9 @@ namespace sf {
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
 
       Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
-      Rcpp::IntegerMatrix line_positions(1,1);
+      Rcpp::IntegerMatrix line_positions(1,2);
       line_positions(0,0) = 0;
-      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
 
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,

@@ -69,9 +69,6 @@ namespace sf {
       Rcpp::IntegerVector& row_idx,
       Rcpp::IntegerMatrix& line_positions
   ) {
-
-    // Rcpp::Rcout << "create_sf(x)+" << std::endl;
-
     R_xlen_t n_col = property_idx.length();
     Rcpp::List sf( n_col + 1 );  // +1 == sfc
     Rcpp::StringVector res_names( n_col + 1 );
@@ -82,6 +79,7 @@ namespace sf {
       int idx = property_idx[i];
       bool is_in = ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
       SEXP v = df[ idx ];
+
       if( is_in ) {
         sf[ i ] = sfheaders::utils::fill_list( v, line_positions );
       } else {
@@ -126,6 +124,9 @@ namespace sf {
     for( i = 0; i < n_col; ++i ) {
       int idx = property_idx[ i ];
 
+      // Rcpp::Rcout << "idx: " << idx << std::endl;
+      // Rcpp::Rcout << "lst_columns: " << list_column_idx << std::endl;
+
       bool is_in = ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
       SEXP v = df[ idx ];
       if( is_in ) {
@@ -167,7 +168,7 @@ namespace sf {
       Rcpp::IntegerMatrix& line_positions
   ) {
 
-    // Rcpp::Rcout << "create_sf(df)" << std::endl;
+    //Rcpp::Rcout << "create_sf(df)" << std::endl;
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_property_columns;
 

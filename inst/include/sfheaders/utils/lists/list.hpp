@@ -93,10 +93,15 @@ namespace utils {
     Rcpp::List res( n );
     R_xlen_t i;
 
+    // Rcpp::Rcout << "n: " << n << std::endl;
+    // Rcpp::Rcout << "line_positions: " << line_positions << std::endl;
+
     for( i = 0; i < n; ++i ) {
+      //Rcpp::Rcout << "i: " << i << std::endl;
       R_xlen_t start = line_positions(i, 0);
       R_xlen_t end = line_positions(i, 1);
       Rcpp::IntegerVector elements = Rcpp::seq( start, end );
+      //Rcpp::Rcout << "elements: " << elements << std::endl;
       res[ i ] = v[ elements ];
     }
     return res;

@@ -30,6 +30,10 @@ namespace sf {
   ) {
 
     Rcpp::IntegerVector row_idx = Rcpp::seq( 0, df.nrow() - 1 );
+    Rcpp::IntegerMatrix line_positions( df.nrow(), 2 );
+    line_positions( Rcpp::_, 0 ) = row_idx;
+    line_positions( Rcpp::_, 1 ) = row_idx + 1;
+
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
     Rcpp::List sfc = sfheaders::sfc::sfc_point( df, geometry_cols );
@@ -40,8 +44,8 @@ namespace sf {
       //Rcpp::_["id_column"] = id_column,
       Rcpp::_["property_cols"] = property_cols,
       Rcpp::_["property_idx"] = property_idx,
-      Rcpp::_["row_idx"] = row_idx
-      //Rcpp::_["line_positions"] = line_positions
+      Rcpp::_["row_idx"] = row_idx,
+      Rcpp::_["line_positions"] = line_positions
     );
 
     return res;

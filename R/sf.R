@@ -112,6 +112,7 @@ sf_multipoint <- function(
   geometry_columns <- c(x,y,z,m)
   geometry_columns <- index_correct( geometry_columns )
   multipoint_id <- index_correct( multipoint_id )
+  list_columns <- index_correct( list_columns )
   res <- return(
     rcpp_to_sf(
       obj,
@@ -178,6 +179,7 @@ sf_linestring <- function(
   geometry_columns <- c(x,y,z,m)
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
+  list_columns <- index_correct( list_columns )
   res <- return(
     rcpp_to_sf(
       obj,
@@ -264,6 +266,7 @@ sf_multilinestring <- function(
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   multilinestring_id <- index_correct( multilinestring_id )
+  list_columns <- index_correct( list_columns )
   res <- return(
     rcpp_to_sf(
       obj,
@@ -388,6 +391,7 @@ sf_polygon <- function(
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   polygon_id <- index_correct( polygon_id )
+  list_columns <- index_correct( list_columns )
   res <- return(
     rcpp_to_sf(
       obj,
@@ -502,6 +506,7 @@ sf_multipolygon <- function(
   linestring_id <- index_correct( linestring_id )
   polygon_id <- index_correct( polygon_id )
   multipolygon_id <- index_correct( multipolygon_id )
+  list_columns <- index_correct( list_columns )
   res <- return(
     rcpp_to_sf(
       obj,

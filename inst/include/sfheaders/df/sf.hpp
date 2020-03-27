@@ -223,14 +223,15 @@ namespace df {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
       R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
+      //Rcpp::Rcout << "n: " << n << std::endl;
+      // TODO: iff n == 1, we can replicate it?
       if( n != n_row ) {
         Rcpp::stop("sfheaders - unlisted column doesn't have the correct number of rows");
       }
       res[ s ] = to_unlist[ i ];
     }
 
-    return res;
-
+    return sfheaders::utils::make_dataframe( res, n_row );
   }
 
 
