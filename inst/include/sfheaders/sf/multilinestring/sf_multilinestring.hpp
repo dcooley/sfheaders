@@ -256,15 +256,20 @@ namespace sf {
       Rcpp::List sfc = sfheaders::sfc::sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, linestring_id );
 
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,1);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
-        Rcpp::_["property_cols"] = property_columns
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
       );
 
       return res;
-
-      //return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
     if( Rf_isNull( multilinestring_id ) && Rf_isNull( linestring_id ) ) {
@@ -272,15 +277,20 @@ namespace sf {
       Rcpp::List sfc = sfheaders::sfc::sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
 
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,1);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
-        Rcpp::_["property_cols"] = property_columns
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
       );
 
       return res;
-
-      //return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
 

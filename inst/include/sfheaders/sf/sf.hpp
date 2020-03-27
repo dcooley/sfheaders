@@ -9,13 +9,36 @@
 #include "sfheaders/sf/polygon/sf_polygon.hpp"
 #include "sfheaders/sf/multipolygon/sf_multipolygon.hpp"
 
-// TODO
-// make an API entry point
-// and ONLY this function will call the create_df() function
-// or the make_sf() function
-
 namespace sfheaders {
 namespace api {
+
+  inline void get_list_column_index(
+      SEXP& list_columns,
+      Rcpp::IntegerVector& list_column_idx,
+      SEXP& property_cols,  // only needs to be stringified IFF list_columns is a string?
+      Rcpp::IntegerVector& property_idx
+  ) {
+
+    if( !Rf_isNull( list_columns ) ) {
+      switch( TYPEOF( list_columns ) ) {
+      case INTSXP: {
+        list_column_idx = Rcpp::as< Rcpp::IntegerVector >( list_columns );
+        break;
+      }
+      case STRSXP: {
+        Rcpp::StringVector str_list_columns = Rcpp::as< Rcpp::StringVector >( list_columns );
+        Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
+        Rcpp::IntegerVector idx = sfheaders::utils::where_is( str_list_columns, str_property_cols );
+        list_column_idx = property_idx[ idx ];
+        break;
+
+      }
+      default:{
+        Rcpp::stop("sfheaders - unknown list-column type");
+      }
+      }
+    }
+  }
 
   inline SEXP to_sf(
     SEXP& obj,
@@ -46,22 +69,16 @@ namespace api {
 
 
     if( sf_type == "POINT" ) {
-      // Rcpp::Rcout << "POINT" << std::endl;
       sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep );
     } else if ( sf_type == "MULTIPOINT" ) {
-      // Rcpp::Rcout << "MULTIPOINT" << std::endl;
       sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep );
     } else if ( sf_type == "LINESTRING" ) {
-      // Rcpp::Rcout << "LINESTRING" << std::endl;
       sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, keep );
     } else if ( sf_type == "MULTILINESTRING" ) {
-      // Rcpp::Rcout << "MULTILINESTRING" << std::endl;
       sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep );
     } else if ( sf_type == "POLYGON" ) {
-      // Rcpp::Rcout << "POLYGON" << std::endl;
       sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, close, keep );
     } else if ( sf_type == "MULTIPOLYGON" ) {
-      // Rcpp::Rcout << "MULTIPOLYGON" << std::endl;
       sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, close, keep );
     } else {
       Rcpp::stop("sfheaders - unknown sf type");
@@ -69,7 +86,6 @@ namespace api {
 
     // if sf_objs doesn't contain any elements, it means it went directly through make_sf()
     if( !sf_objs.containsElementNamed("df") && !sf_objs.containsElementNamed("x") ) {
-      // Rcpp::Rcout << "returning early" << std::endl;
       return sf_objs;
     }
     // sf_objs is an object of either
@@ -93,67 +109,33 @@ namespace api {
 
     SEXP property_cols = sf_objs[ "property_cols" ];
     Rcpp::List sfc = sf_objs["sfc"];
+    Rcpp::IntegerMatrix line_positions = Rcpp::as< Rcpp::IntegerMatrix >( sf_objs["line_positions"] );
+    Rcpp::IntegerVector property_idx = sf_objs[ "property_idx" ];
 
     Rcpp::String id_column;
-    Rcpp::IntegerVector property_idx;
     Rcpp::IntegerVector row_idx;
-    Rcpp::IntegerMatrix line_positions;
     Rcpp::IntegerVector list_column_idx;  // TODO - initialise as -1 ?? so its' never NULL and we only
     // need one 'create_sf()' function?
+    Rcpp::StringVector str_property_cols;
 
-    //
+
+
     // need to 'exit early' if some of the properties don't exist
-    // which means
     if( sf_objs.containsElementNamed("x") ) {
       SEXP x = sf_objs["x"];
+      get_list_column_index(
+        list_columns, list_column_idx, property_cols, property_idx
+      );
       return sfheaders::sf::create_sf( x, sfc, property_cols, list_column_idx, line_positions );
     }
 
-    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
 
-    property_idx = sf_objs[ "property_idx" ];
     row_idx = sf_objs["row_idx"];
 
-    Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
-
-
-    if( !sf_objs.containsElementNamed("id_column") ) {
-      return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
-    }
-
+    str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
 
     if( sf_objs.containsElementNamed("id_column") ) {
       id_column = Rcpp::as< Rcpp::String >( sf_objs["id_column"] );
-    }
-
-
-    if( sf_objs.containsElementNamed("line_positions") ) {
-      line_positions = Rcpp::as< Rcpp::IntegerMatrix >( sf_objs["line_positions"] );
-    }
-
-
-
-    if( !Rf_isNull( list_columns ) ) {
-      //Rcpp::Rcout << "is_not_null" << std::endl;
-      switch( TYPEOF( list_columns ) ) {
-      case INTSXP: {
-        list_column_idx = Rcpp::as< Rcpp::IntegerVector >( list_columns );
-        break;
-      }
-      case STRSXP: {
-        // find the locations of these within property cols
-        // then subset property_idx[] by these values
-        // to get teh list_column_idx;
-        Rcpp::StringVector str_list_columns = Rcpp::as< Rcpp::StringVector >( list_columns );
-        Rcpp::IntegerVector idx = sfheaders::utils::where_is( str_list_columns, str_property_cols );
-        list_column_idx = property_idx[ idx ];
-        break;
-
-      }
-      default:{
-        Rcpp::stop("sfheaders - unknown list-column type");
-      }
-      }
     }
 
     // this should give us list_column_idx, which is a subset (or all) of property_idx,
@@ -161,9 +143,19 @@ namespace api {
     // and checked iff property_idx %in% list_column_idx;
     // and if so, make it a list-column, rather than subset the first row.
     //Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
+    get_list_column_index(
+      list_columns, list_column_idx, property_cols, property_idx
+    );
 
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
 
-    return sfheaders::sf::create_sf(df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
+    if( !sf_objs.containsElementNamed("id_column") ) {
+      return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
+    }
+
+    return sfheaders::sf::create_sf(
+      df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx, line_positions
+      );
  }
 
   // TODO

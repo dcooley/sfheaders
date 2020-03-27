@@ -14,11 +14,17 @@
 #'
 #' @section Keeping Properties:
 #'
-#' Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
+#' Setting \code{keep = TRUE} will retain any columns not specified as a
 #' coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
+#'
+#' You can use \code{list_columns} to specify which of the properties will be turned into
+#' a list, thus keeping all the values in the column. For columns not specified in \code{list_columns},
+#' only the first row of the column is kept
 #'
 #' The \code{sf_*} functions assume the input \code{obj} is a long data.frame / matrix,
 #' where any properties are repeated down the table for the same geometry.
+#'
+#'
 #'
 #'
 #' @return \code{sf} object of POINT geometries
@@ -78,6 +84,7 @@ sf_point <- function(
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
 #' @param multipoint_id column of ids for multipoints
+#' @param list_columns vector of column names to turn into a list.
 #'
 #' @return \code{sf} object of MULTIPOINT geometries
 #' @examples
@@ -103,12 +110,6 @@ sf_multipoint <- function(
   list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  # res <- rcpp_sf_multipoint(
-  #   obj
-  #   , index_correct( geometry_columns )
-  #   , index_correct( multipoint_id )
-  #   , keep
-  #   )
   geometry_columns <- index_correct( geometry_columns )
   multipoint_id <- index_correct( multipoint_id )
   res <- return(
@@ -153,6 +154,16 @@ sf_multipoint <- function(
 #' sf_linestring( x, x = "y", y = "x" )
 #' sf_linestring( x, linestring_id = "id", x = "x", y = "y")
 #'
+#' ## keeping properties
+#' x <- data.frame( id = c(1,1,2,2), x = 1:4, y = 4:1, val = letters[1:4], stringsAsFactors = FALSE)
+#'
+#' ## first-row of 'val' is kept
+#' sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE )
+#'
+#' ## 'val' column converted to a list
+#' sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE, list_columns = "val" )
+#'
+#'
 #' @export
 sf_linestring <- function(
   obj = NULL,
@@ -165,12 +176,6 @@ sf_linestring <- function(
   list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  # res <- rcpp_sf_linestring(
-  #   obj
-  #   , index_correct( geometry_columns )
-  #   ,  index_correct( linestring_id )
-  #   , keep
-  #   )
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   res <- return(
@@ -256,13 +261,6 @@ sf_multilinestring <- function(
   list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  # res <- rcpp_sf_multilinestring(
-  #   obj
-  #   , index_correct( geometry_columns )
-  #   , index_correct( multilinestring_id )
-  #   , index_correct( linestring_id )
-  #   , keep
-  # )
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   multilinestring_id <- index_correct( multilinestring_id )
@@ -336,6 +334,41 @@ sf_multilinestring <- function(
 #' sf_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
 #' sf_polygon( obj = df, polygon_id = 1, linestring_id = 2 )
 #'
+#' ## keeping properties
+#' df <- data.frame(
+#'   ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+#'   , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+#'   , x = rnorm(15)
+#'   , y = rnorm(15)
+#'   , z = rnorm(15)
+#'   , m = rnorm(15)
+#'   , val = letters[1:15]
+#'   , stringsAsFactors = FALSE
+#' )
+#'
+#' ## using keep = TRUE means the first row of all non-geometries are kept
+#' sf_polygon(
+#'   obj = df
+#'   , polygon_id = "ml_id"
+#'   , linestring_id = "l_id"
+#'   , x = "x"
+#'   , y = "y"
+#'   , keep = TRUE
+#' )
+#'
+#' ## use 'list_column' to specify columns where you want to keep all the values
+#' sf_polygon(
+#'   obj = df
+#'   , polygon_id = "ml_id"
+#'   , linestring_id = "l_id"
+#'   , x = "x"
+#'   , y = "y"
+#'   , keep = TRUE
+#'   , list_columns = "val"
+#' )
+#'
+#'
+#'
 #'
 #'
 #' @export
@@ -352,15 +385,6 @@ sf_polygon <- function(
   list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  # res <- rcpp_sf_polygon(
-  #   obj
-  #   , index_correct( geometry_columns )
-  #   , index_correct( polygon_id )
-  #   , index_correct( linestring_id )
-  #   , close
-  #   , keep
-  #   )
-
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   polygon_id <- index_correct( polygon_id )
@@ -474,15 +498,6 @@ sf_multipolygon <- function(
   ) {
 
   geometry_columns <- c(x,y,z,m)
-  # res <- rcpp_sf_multipolygon(
-  #   obj
-  #   , index_correct( geometry_columns )
-  #   , index_correct( multipolygon_id )
-  #   , index_correct( polygon_id )
-  #   , index_correct( linestring_id )
-  #   , close
-  #   , keep
-  #   )
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   polygon_id <- index_correct( polygon_id )

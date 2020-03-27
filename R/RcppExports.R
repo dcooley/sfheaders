@@ -81,30 +81,6 @@ rcpp_to_sf <- function(obj, geometry_columns, multipoint_id, linestring_id, mult
     .Call(`_sfheaders_rcpp_to_sf`, obj, geometry_columns, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, sf_type)
 }
 
-rcpp_sf_point <- function(x, cols, keep) {
-    .Call(`_sfheaders_rcpp_sf_point`, x, cols, keep)
-}
-
-rcpp_sf_multipoint <- function(x, cols, multipoint_id, keep) {
-    .Call(`_sfheaders_rcpp_sf_multipoint`, x, cols, multipoint_id, keep)
-}
-
-rcpp_sf_linestring <- function(x, cols, linestring_id, keep) {
-    .Call(`_sfheaders_rcpp_sf_linestring`, x, cols, linestring_id, keep)
-}
-
-rcpp_sf_multilinestring <- function(x, cols, multilinestring_id, linestring_id, keep) {
-    .Call(`_sfheaders_rcpp_sf_multilinestring`, x, cols, multilinestring_id, linestring_id, keep)
-}
-
-rcpp_sf_polygon <- function(x, cols, polygon_id, linestring_id, close, keep) {
-    .Call(`_sfheaders_rcpp_sf_polygon`, x, cols, polygon_id, linestring_id, close, keep)
-}
-
-rcpp_sf_multipolygon <- function(x, cols, multipolygon_id, polygon_id, linestring_id, close, keep) {
-    .Call(`_sfheaders_rcpp_sf_multipolygon`, x, cols, multipolygon_id, polygon_id, linestring_id, close, keep)
-}
-
 rcpp_sfc_point <- function(x, cols) {
     .Call(`_sfheaders_rcpp_sfc_point`, x, cols)
 }

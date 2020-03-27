@@ -296,15 +296,20 @@ namespace sf {
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id );
 
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,1);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
-        Rcpp::_["property_cols"] = property_columns
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
       );
 
       return res;
-
-      //return sfheaders::sf::create_sf( x, sfc, property_columns );
 
     }
 
@@ -317,15 +322,20 @@ namespace sf {
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, linestring_id );
 
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,1);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
-        Rcpp::_["property_cols"] = property_columns
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
       );
 
       return res;
-
-      //return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
 
@@ -356,15 +366,20 @@ namespace sf {
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id, linestring_id );
 
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,1);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
-        Rcpp::_["property_cols"] = property_columns
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
       );
 
       return res;
-
-      //return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
     if(
@@ -376,10 +391,17 @@ namespace sf {
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, close );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
 
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,1);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::get_sexp_length( x );
+
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
-        Rcpp::_["property_cols"] = property_columns
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
       );
 
       return res;

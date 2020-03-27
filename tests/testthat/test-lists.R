@@ -119,3 +119,23 @@ test_that("sf with list columns are unlist",{
   )
 
 })
+
+test_that("list_columns are kept",{
+
+   df <- data.frame(
+     x = 1:26
+     , y = 1:26
+     , val = letters
+     , line_id = c(rep(1:5,each=5),6)
+     , stringsAsFactors = FALSE
+   )
+
+
+   sf_mpt1 <- sf_multipoint(obj = df, x = "x", y = "y", keep = TRUE)
+   sf_mpt2 <- sf_multipoint(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
+   sf_mpt1 <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "line_id", keep = TRUE)
+   sf_mpt2 <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "line_id", keep = TRUE, list_columns = "val")
+   sf_ls <- sf_linestring(obj = df, x = "x", y = "y", keep = TRUE)
+
+
+})
