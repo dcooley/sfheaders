@@ -64,8 +64,11 @@ namespace sf {
       Rcpp::List& sfc,
       Rcpp::StringVector& property_cols,
       Rcpp::IntegerVector& property_idx,
+      Rcpp::IntegerVector& list_column_idx,
       Rcpp::IntegerVector& row_idx
   ) {
+
+    // Rcpp::Rcout << "create_sf(x)+" << std::endl;
 
     R_xlen_t n_col = property_idx.length();
     Rcpp::List sf( n_col + 1 );  // +1 == sfc
@@ -101,9 +104,11 @@ namespace sf {
       Rcpp::String& id_column,
       Rcpp::StringVector& property_cols,
       Rcpp::IntegerVector& property_idx,
+      Rcpp::IntegerVector& list_column_idx,
       Rcpp::IntegerVector& row_idx
   ) {
 
+    // Rcpp::Rcout << "create_sf(df) + id " << std::endl;
     R_xlen_t n_col = property_idx.length();
     Rcpp::List sf( n_col + 2 );  // +1 == sfc, +1 == sf_id
     Rcpp::StringVector res_names( n_col + 2 );
@@ -140,9 +145,11 @@ namespace sf {
   inline SEXP create_sf(
       Rcpp::DataFrame& df,
       Rcpp::List& sfc,
-      SEXP& property_columns
+      SEXP& property_columns,
+      Rcpp::IntegerVector& list_column_idx
   ) {
 
+    // Rcpp::Rcout << "create_sf(df)" << std::endl;
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_property_columns;
 
@@ -167,14 +174,17 @@ namespace sf {
     row_idx[0] = 0;
 
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( str_property_columns, df_names );
-    return sfheaders::sf::create_sf( df, sfc, str_property_columns, property_idx, row_idx );
+    return sfheaders::sf::create_sf( df, sfc, str_property_columns, property_idx, list_column_idx, row_idx );
   }
 
   inline SEXP create_sf(
       SEXP& x,
       Rcpp::List& sfc,
-      SEXP& property_columns
+      SEXP& property_columns,
+      Rcpp::IntegerVector& list_column_idx
   ) {
+
+    Rcpp::Rcout << "create_sf(x)" << std::endl;
     Rcpp::DataFrame df;
     switch( TYPEOF( x ) ) {
     case INTSXP: {
@@ -195,7 +205,7 @@ namespace sf {
       Rcpp::stop("sfheaders - unknown type"); // #nocov
     }
     }
-    return create_sf( df, sfc, property_columns );
+    return create_sf( df, sfc, property_columns, list_column_idx );
   }
 
   // inline SEXP create_sf(

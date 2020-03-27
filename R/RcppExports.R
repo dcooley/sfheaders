@@ -77,8 +77,8 @@ rcpp_sf_to_df_unlist <- function(sf, unlist, fill = FALSE) {
     .Call(`_sfheaders_rcpp_sf_to_df_unlist`, sf, unlist, fill)
 }
 
-rcpp_sf_to_df2 <- function(obj, geometry_columns, point_id, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, sf_type) {
-    .Call(`_sfheaders_rcpp_sf_to_df2`, obj, geometry_columns, point_id, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, sf_type)
+rcpp_to_sf <- function(obj, geometry_columns, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, sf_type) {
+    .Call(`_sfheaders_rcpp_to_sf`, obj, geometry_columns, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, sf_type)
 }
 
 rcpp_sf_point <- function(x, cols, keep) {

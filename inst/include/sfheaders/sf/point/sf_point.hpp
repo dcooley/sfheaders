@@ -39,13 +39,14 @@ namespace sf {
       Rcpp::_["sfc"] = sfc,
       //Rcpp::_["id_column"] = id_column,
       Rcpp::_["property_cols"] = property_cols,
+      Rcpp::_["property_idx"] = property_idx,
       Rcpp::_["row_idx"] = row_idx
       //Rcpp::_["line_positions"] = line_positions
     );
 
     return res;
 
-    return sfheaders::sf::create_sf( df, sfc, property_cols, property_idx, row_idx );
+    //return sfheaders::sf::create_sf( df, sfc, property_cols, property_idx, row_idx );
   }
 
   inline SEXP sf_point(

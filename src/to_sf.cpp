@@ -22,10 +22,9 @@
 // }
 
 // [[Rcpp::export]]
-SEXP rcpp_sf_to_df2(
+SEXP rcpp_to_sf(
     SEXP obj,
     SEXP geometry_columns,
-    SEXP point_id,
     SEXP multipoint_id,
     SEXP linestring_id,
     SEXP multilinestring_id,
@@ -34,12 +33,11 @@ SEXP rcpp_sf_to_df2(
     SEXP list_columns,
     bool close,
     bool keep,
-    const std::string sf_type
+    std::string sf_type
 ) {
   return sfheaders::api::to_sf(
     obj,
     geometry_columns,
-    point_id,
     multipoint_id,
     linestring_id,
     multilinestring_id,

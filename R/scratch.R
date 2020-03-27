@@ -14,10 +14,9 @@
 #
 # res <- sf_linestring(df, x = "x", y = "y", keep = T, linestring_id = "id")
 #
-# res <- sfheaders:::rcpp_sf_to_df2(
+# res <- sfheaders:::rcpp_to_sf(
 #   df
 #   , c("x","y")
-#   , NULL
 #   , NULL
 #   , "id"
 #   , NULL

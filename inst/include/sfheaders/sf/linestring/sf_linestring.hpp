@@ -58,7 +58,7 @@ namespace sf {
 
     return res;
 
-    return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
+    //return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
 
   inline SEXP sf_linestring(
@@ -237,7 +237,7 @@ namespace sf {
       // TODO: here it's also called create_sf()
 
       Rcpp::List res = Rcpp::List::create(
-        Rcpp::_["df"] = x,
+        Rcpp::_["x"] = x,
         Rcpp::_["sfc"] = sfc,
         Rcpp::_["property_cols"] = property_columns
       );

@@ -17,10 +17,9 @@
 namespace sfheaders {
 namespace api {
 
-  inline Rcpp::DataFrame to_sf(
+  inline SEXP to_sf(
     SEXP& obj,
     SEXP& geometry_columns,
-    SEXP& point_id,
     SEXP& multipoint_id,
     SEXP& linestring_id,
     SEXP& multilinestring_id,
@@ -47,21 +46,32 @@ namespace api {
 
 
     if( sf_type == "POINT" ) {
+      // Rcpp::Rcout << "POINT" << std::endl;
       sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep );
     } else if ( sf_type == "MULTIPOINT" ) {
+      // Rcpp::Rcout << "MULTIPOINT" << std::endl;
       sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep );
     } else if ( sf_type == "LINESTRING" ) {
+      // Rcpp::Rcout << "LINESTRING" << std::endl;
       sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, keep );
     } else if ( sf_type == "MULTILINESTRING" ) {
+      // Rcpp::Rcout << "MULTILINESTRING" << std::endl;
       sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep );
     } else if ( sf_type == "POLYGON" ) {
+      // Rcpp::Rcout << "POLYGON" << std::endl;
       sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, close, keep );
     } else if ( sf_type == "MULTIPOLYGON" ) {
+      // Rcpp::Rcout << "MULTIPOLYGON" << std::endl;
       sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, close, keep );
     } else {
       Rcpp::stop("sfheaders - unknown sf type");
     }
 
+    // if sf_objs doesn't contain any elements, it means it went directly through make_sf()
+    if( !sf_objs.containsElementNamed("df") && !sf_objs.containsElementNamed("x") ) {
+      // Rcpp::Rcout << "returning early" << std::endl;
+      return sf_objs;
+    }
     // sf_objs is an object of either
     // 1. x, sfc, property_columns
     // 2. df, sfc, id_column, property_cols, row_idx, line_positions
@@ -79,16 +89,60 @@ namespace api {
     // integers HAVE to exist within property_idx (sf_objs[["property_idx"]] )
     // so IFF list_columns is an integerVector, then it corresponds
 
-    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
-    Rcpp::List sfc = sf_objs["sfc"];
-    Rcpp::String id_column = sf_objs["id_column"];
-    Rcpp::StringVector property_cols = sf_objs[ "property_cols" ];
-    Rcpp::IntegerVector property_idx = sf_objs[ "property_idx" ];
-    Rcpp::IntegerVector row_idx = sf_objs["row_idx"];
-    Rcpp::IntegerMatrix line_positions = sf_objs["line_positions"];
+    //SEXP x = sf_objs["df"];
 
+    SEXP property_cols = sf_objs[ "property_cols" ];
+    Rcpp::List sfc = sf_objs["sfc"];
+
+    Rcpp::String id_column;
+    Rcpp::IntegerVector property_idx;
+    Rcpp::IntegerVector row_idx;
+    Rcpp::IntegerMatrix line_positions;
     Rcpp::IntegerVector list_column_idx;  // TODO - initialise as -1 ?? so its' never NULL and we only
     // need one 'create_sf()' function?
+
+    //
+    // need to 'exit early' if some of the properties don't exist
+    // which means
+    if( sf_objs.containsElementNamed("x") ) {
+      // Rcpp::Rcout << "returning early again" << std::endl;
+      //return x;
+      //return sf_objs;
+      SEXP x = sf_objs["x"];
+      return sfheaders::sf::create_sf( x, sfc, property_cols, list_column_idx );
+    }
+
+    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
+
+    //if( sf_objs.containsElementNamed("property_idx") ) {
+      property_idx = sf_objs[ "property_idx" ];
+    //}
+
+    //if( sf_objs.containsElementNamed("row_idx") ) {
+      row_idx = sf_objs["row_idx"];
+    //}
+
+    Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
+
+
+    if( !sf_objs.containsElementNamed("id_column") ) {
+      // Rcpp::Rcout << "returning without id column" << std::endl;
+      //return x;
+      //return sf_objs;
+      return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx );
+    }
+
+
+    if( sf_objs.containsElementNamed("id_column") ) {
+      id_column = Rcpp::as< Rcpp::String >( sf_objs["id_column"] );
+    }
+
+
+    if( sf_objs.containsElementNamed("line_positions") ) {
+      line_positions = Rcpp::as< Rcpp::IntegerMatrix >( sf_objs["line_positions"] );
+    }
+
+
 
     if( !Rf_isNull( list_columns ) ) {
       Rcpp::Rcout << "is_not_null" << std::endl;
@@ -102,7 +156,7 @@ namespace api {
         // then subset property_idx[] by these values
         // to get teh list_column_idx;
         Rcpp::StringVector str_list_columns = Rcpp::as< Rcpp::StringVector >( list_columns );
-        Rcpp::IntegerVector idx = sfheaders::utils::where_is( str_list_columns, property_cols );
+        Rcpp::IntegerVector idx = sfheaders::utils::where_is( str_list_columns, str_property_cols );
         list_column_idx = property_idx[ idx ];
         break;
 
@@ -120,8 +174,8 @@ namespace api {
     Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
 
 
-    return sfheaders::sf::create_sf(df, sfc, id_column, property_cols, property_idx, row_idx);
-    return sf_objs;
+    return sfheaders::sf::create_sf(df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx);
+    //return sf_objs;
  }
 
 } // api

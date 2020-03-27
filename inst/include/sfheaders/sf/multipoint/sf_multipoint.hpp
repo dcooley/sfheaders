@@ -37,7 +37,19 @@ namespace sf {
 
     Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( df, geometry_cols, line_positions );
 
-    return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
+    Rcpp::List res = Rcpp::List::create(
+      Rcpp::_["df"] = df,
+      Rcpp::_["sfc"] = sfc,
+      Rcpp::_["id_column"] = id_column,
+      Rcpp::_["property_cols"] = property_cols,
+      Rcpp::_["property_idx"] = property_idx,
+      Rcpp::_["row_idx"] = row_idx,
+      Rcpp::_["line_positions"] = line_positions
+    );
+
+    return res;
+
+    //return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
 
   inline SEXP sf_multipoint(
@@ -210,7 +222,16 @@ namespace sf {
     if( Rf_isNull( multipoint_id ) ) {
       Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
-      return sfheaders::sf::create_sf( x, sfc, property_columns );
+
+      Rcpp::List res = Rcpp::List::create(
+        Rcpp::_["x"] = x,
+        Rcpp::_["sfc"] = sfc,
+        Rcpp::_["property_cols"] = property_columns
+      );
+
+      return res;
+
+      //return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
 
     if( !Rf_isNull( multipoint_id ) ) {
