@@ -26,8 +26,8 @@ namespace api {
     SEXP& polygon_id,
     SEXP& multipolygon_id,
     SEXP& list_columns,
-    bool& close,
-    bool& keep,
+    bool close,
+    bool keep,
     const std::string sf_type
   ) {
       // TODO - Make the id_columns the correct type
@@ -145,7 +145,7 @@ namespace api {
 
 
     if( !Rf_isNull( list_columns ) ) {
-      Rcpp::Rcout << "is_not_null" << std::endl;
+      //Rcpp::Rcout << "is_not_null" << std::endl;
       switch( TYPEOF( list_columns ) ) {
       case INTSXP: {
         list_column_idx = Rcpp::as< Rcpp::IntegerVector >( list_columns );
@@ -171,12 +171,39 @@ namespace api {
     // which can be passed into create_sf()
     // and checked iff property_idx %in% list_column_idx;
     // and if so, make it a list-column, rather than subset the first row.
-    Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
+    //Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
 
 
     return sfheaders::sf::create_sf(df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx);
     //return sf_objs;
  }
+
+  // TODO
+  // write each of the rcpp_sf_xxx functions here, so they appropriately call the to_sf() code
+  inline SEXP rcpp_sf_point( SEXP x, SEXP cols, bool keep ) {
+    return to_sf( x, cols, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, "POINT" );
+  }
+
+  inline SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id, bool keep ) {
+    return to_sf( x, cols, multipoint_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, "MULTIPOINT" );
+  }
+
+  inline SEXP rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, "LINESTRING" );
+  }
+
+  inline SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, multilinestring_id, R_NilValue, R_NilValue, R_NilValue, false, keep, "MULTILINESTRING" );
+  }
+
+  inline SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, R_NilValue, R_NilValue, close, keep, "POLYGON" );
+  }
+
+  inline SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, multipolygon_id, R_NilValue, close, keep, "MULTIPOLYGON" );
+  }
+
 
 } // api
 } // sfheaders

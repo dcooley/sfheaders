@@ -184,7 +184,7 @@ namespace sf {
       Rcpp::IntegerVector& list_column_idx
   ) {
 
-    Rcpp::Rcout << "create_sf(x)" << std::endl;
+    //Rcpp::Rcout << "create_sf(x)" << std::endl;
     Rcpp::DataFrame df;
     switch( TYPEOF( x ) ) {
     case INTSXP: {
