@@ -11,7 +11,8 @@ sf_multipoint(
   z = NULL,
   m = NULL,
   multipoint_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
 )
 }
 \arguments{

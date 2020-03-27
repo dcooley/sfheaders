@@ -105,31 +105,20 @@ namespace api {
     // need to 'exit early' if some of the properties don't exist
     // which means
     if( sf_objs.containsElementNamed("x") ) {
-      // Rcpp::Rcout << "returning early again" << std::endl;
-      //return x;
-      //return sf_objs;
       SEXP x = sf_objs["x"];
-      return sfheaders::sf::create_sf( x, sfc, property_cols, list_column_idx );
+      return sfheaders::sf::create_sf( x, sfc, property_cols, list_column_idx, line_positions );
     }
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
 
-    //if( sf_objs.containsElementNamed("property_idx") ) {
-      property_idx = sf_objs[ "property_idx" ];
-    //}
-
-    //if( sf_objs.containsElementNamed("row_idx") ) {
-      row_idx = sf_objs["row_idx"];
-    //}
+    property_idx = sf_objs[ "property_idx" ];
+    row_idx = sf_objs["row_idx"];
 
     Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
 
 
     if( !sf_objs.containsElementNamed("id_column") ) {
-      // Rcpp::Rcout << "returning without id column" << std::endl;
-      //return x;
-      //return sf_objs;
-      return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx );
+      return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
     }
 
 
@@ -174,8 +163,7 @@ namespace api {
     //Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
 
 
-    return sfheaders::sf::create_sf(df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx);
-    //return sf_objs;
+    return sfheaders::sf::create_sf(df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
  }
 
   // TODO

@@ -19,7 +19,7 @@
  */
 
 namespace sfheaders {
-namespace df {
+namespace utils {
 
   inline int vector_type( int new_type, int existing_type ) {
 
@@ -87,20 +87,50 @@ namespace df {
   template < int RTYPE >
   inline Rcpp::List fill_list(
     Rcpp::Vector< RTYPE >& v,
-    Rcpp::IntegerMatrix& line_ids
+    Rcpp::IntegerMatrix& line_positions
   ) {
-    R_xlen_t n = line_ids.nrow();  // nrow should also be the row of the final sf object we are creating
+    R_xlen_t n = line_positions.nrow();  // nrow should also be the row of the final sf object we are creating
     Rcpp::List res( n );
     R_xlen_t i;
 
     for( i = 0; i < n; ++i ) {
-      R_xlen_t start = line_ids(i, 0);
-      R_xlen_t end = line_ids(i, 1);
+      R_xlen_t start = line_positions(i, 0);
+      R_xlen_t end = line_positions(i, 1);
       Rcpp::IntegerVector elements = Rcpp::seq( start, end );
       res[ i ] = v[ elements ];
     }
     return res;
   }
+
+  // TODO - handle dates and factors??
+  inline Rcpp::List fill_list(
+    SEXP& v,
+    Rcpp::IntegerMatrix& line_positions
+  ) {
+    switch( TYPEOF( v ) ) {
+    case LGLSXP: {
+      Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
+      return fill_list( lv, line_positions );
+    }
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( v );
+      return fill_list( iv, line_positions );
+    }
+    case REALSXP: {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( v );
+      return fill_list( nv, line_positions );
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( v );
+      return fill_list( sv, line_positions );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column type");
+    }
+    }
+    return Rcpp::List::create(); // #nocov
+  }
+
 
   /*
    * @param lst - the original input list
@@ -232,27 +262,27 @@ namespace df {
     int total_size = 0;
     int existing_type = 10;
     int position = 0;
-    Rcpp::List lst_sizes = sfheaders::df::list_size( lst, total_size, existing_type );
+    Rcpp::List lst_sizes = list_size( lst, total_size, existing_type );
 
     switch( existing_type ) {
     case LGLSXP: {
       Rcpp::LogicalVector lv( total_size );
-      sfheaders::df::unlist_list( lst, lst_sizes, lv, position );
+      unlist_list( lst, lst_sizes, lv, position );
       return lv;
     }
     case INTSXP: {
       Rcpp::IntegerVector iv( total_size );
-      sfheaders::df::unlist_list( lst, lst_sizes, iv, position );
+      unlist_list( lst, lst_sizes, iv, position );
       return iv;
     }
     case REALSXP: {
       Rcpp::NumericVector nv( total_size );
-      sfheaders::df::unlist_list( lst, lst_sizes, nv, position );
+      unlist_list( lst, lst_sizes, nv, position );
       return nv;
     }
     default: {
       Rcpp::StringVector sv( total_size );
-      sfheaders::df::unlist_list( lst, lst_sizes, sv, position );
+      unlist_list( lst, lst_sizes, sv, position );
       return sv;
     }
     }
@@ -262,7 +292,7 @@ namespace df {
 
   }
 
-} // df
+} // utils
 } // sfheaders
 
 #endif

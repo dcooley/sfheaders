@@ -14,7 +14,8 @@ sf_multipolygon(
   polygon_id = NULL,
   linestring_id = NULL,
   close = TRUE,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
 )
 }
 \arguments{

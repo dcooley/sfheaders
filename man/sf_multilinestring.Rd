@@ -12,7 +12,8 @@ sf_multilinestring(
   m = NULL,
   multilinestring_id = NULL,
   linestring_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
 )
 }
 \arguments{

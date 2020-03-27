@@ -23,7 +23,8 @@ namespace utils {
 
   inline Rcpp::IntegerVector where_is(
       Rcpp::StringVector& param_value,
-      Rcpp::StringVector& data_names) {
+      Rcpp::StringVector& data_names
+  ) {
 
     int n = param_value.size();
     int i;

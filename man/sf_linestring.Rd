@@ -11,7 +11,8 @@ sf_linestring(
   z = NULL,
   m = NULL,
   linestring_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
 )
 }
 \arguments{

@@ -99,7 +99,8 @@ sf_multipoint <- function(
   z = NULL,
   m = NULL,
   multipoint_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
   # res <- rcpp_sf_multipoint(
@@ -119,7 +120,7 @@ sf_multipoint <- function(
       , NULL ## multilinestring_id
       , NULL ## polygon_id
       , NULL ## multipolygon_id
-      , NULL ## list_columns
+      , list_columns ## list_columns
       , FALSE ## close
       , keep ## keep
       , "MULTIPOINT"
@@ -160,7 +161,8 @@ sf_linestring <- function(
   z = NULL,
   m = NULL,
   linestring_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
   # res <- rcpp_sf_linestring(
@@ -180,7 +182,7 @@ sf_linestring <- function(
       , NULL ## multilinestring_id
       , NULL ## polygon_id
       , NULL ## multipolygon_id
-      , NULL ## list_columns
+      , list_columns ## list_columns
       , FALSE ## close
       , keep ## keep
       , "LINESTRING"
@@ -250,7 +252,8 @@ sf_multilinestring <- function(
   m = NULL,
   multilinestring_id = NULL,
   linestring_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
   # res <- rcpp_sf_multilinestring(
@@ -272,7 +275,7 @@ sf_multilinestring <- function(
       , multilinestring_id ## multilinestring_id
       , NULL ## polygon_id
       , NULL ## multipolygon_id
-      , NULL ## list_columns
+      , list_columns ## list_columns
       , FALSE ## Close
       , keep ## keep
       , "MULTILINESTRING"
@@ -345,7 +348,8 @@ sf_polygon <- function(
   polygon_id = NULL,
   linestring_id = NULL,
   close = TRUE,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
   # res <- rcpp_sf_polygon(
@@ -369,7 +373,7 @@ sf_polygon <- function(
       , NULL ## multilinestring_id
       , polygon_id ## polygon_id
       , NULL ## multipolygon_id
-      , NULL ## list_columns
+      , list_columns ## list_columns
       , close ## Close
       , keep ## keep
       , "POLYGON"
@@ -465,7 +469,8 @@ sf_multipolygon <- function(
   polygon_id = NULL,
   linestring_id = NULL,
   close = TRUE,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
 
   geometry_columns <- c(x,y,z,m)
@@ -491,7 +496,7 @@ sf_multipolygon <- function(
       , NULL ## multilinestring_id
       , polygon_id ## polygon_id
       , multipolygon_id ## multipolygon_id
-      , NULL ## list_columns
+      , list_columns ## list_columns
       , close ## Close
       , keep ## keep
       , "MULTIPOLYGON"
