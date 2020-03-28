@@ -189,6 +189,9 @@ namespace df {
 
   inline Rcpp::List sf_to_df(
       Rcpp::DataFrame& sf,
+      Rcpp::List& sfc,
+      std::string& geom_column,
+      Rcpp::NumericMatrix& sfc_coordinates,
       Rcpp::StringVector& unlist,
       bool fill = false
   ) {
@@ -212,9 +215,9 @@ namespace df {
 
     to_unlist.names() = unlist;
 
-    std::string geom_column = sf.attr("sf_column");
-    Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    // std::string geom_column = sf.attr("sf_column");
+    // Rcpp::List sfc = sf[ geom_column ];
+    // Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     Rcpp::DataFrame res = sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
 
     R_xlen_t n_row = res.nrow();
@@ -223,8 +226,6 @@ namespace df {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
       R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
-      //Rcpp::Rcout << "n: " << n << std::endl;
-      // TODO: iff n == 1, we can replicate it?
       if( n != n_row ) {
         Rcpp::stop("sfheaders - unlisted column doesn't have the correct number of rows");
       }
@@ -232,6 +233,18 @@ namespace df {
     }
 
     return sfheaders::utils::make_dataframe( res, n_row );
+  }
+
+  inline Rcpp::List sf_to_df(
+      Rcpp::DataFrame& sf,
+      Rcpp::StringVector& unlist,
+      bool fill = false
+  ) {
+    std::string geom_column = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ geom_column ];
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+
+    return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }
 
 
