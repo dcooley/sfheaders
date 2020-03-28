@@ -16,3 +16,7 @@ SEXP rcpp_sf_to_df( Rcpp::DataFrame sf, bool fill = false ) {
   return sfheaders::df::sf_to_df( sf, fill );
 }
 
+// [[Rcpp::export]]
+SEXP rcpp_sf_to_df_unlist( Rcpp::DataFrame sf, Rcpp::StringVector unlist, bool fill = false ) {
+  return sfheaders::df::sf_to_df( sf, unlist, fill );
+}

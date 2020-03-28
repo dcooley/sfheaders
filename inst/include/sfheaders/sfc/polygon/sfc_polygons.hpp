@@ -12,7 +12,7 @@ namespace sfc {
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
-    for( i = 0; i < n; i++ ) {
+    for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
       sfcs[i] = sfheaders::sfc::sfc_polygon( x, close );
     }

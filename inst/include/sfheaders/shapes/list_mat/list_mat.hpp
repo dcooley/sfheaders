@@ -9,7 +9,11 @@ namespace sfheaders {
 namespace shapes {
 
   // #nocov start
-
+/*
+ * get_listMat
+ *
+ * Converts various inputs into a list[[ matrix ]] structure
+ */
   inline SEXP get_listMat(
     Rcpp::IntegerMatrix& im
   ) {
@@ -46,7 +50,7 @@ namespace shapes {
 
     Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
 
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       Rcpp::String this_col = geometry_cols[ i ];
       Rcpp::NumericVector v = Rcpp::as< Rcpp::NumericVector >( df[ this_col ] );
       a_line( Rcpp::_, i ) = v[ Rcpp::Range(start, end) ];
@@ -67,7 +71,7 @@ namespace shapes {
     int line_rows = end - start + 1;
     Rcpp::NumericMatrix a_line( line_rows, ( n_col) );
 
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       int this_col = geometry_cols[ i ];
       Rcpp::NumericVector v = Rcpp::as< Rcpp::NumericVector >( df[ this_col ] );
       a_line( Rcpp::_, i ) = v[ Rcpp::Range(start, end) ];
@@ -167,7 +171,7 @@ namespace shapes {
 
     // now iterate through the data.frame and get the matrices of lines
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
@@ -191,7 +195,7 @@ namespace shapes {
 
     // now iterate through the data.frame and get the matrices of lines
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
@@ -224,7 +228,7 @@ namespace shapes {
 
     // now iterate through the data.frame and get the matrices of lines
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+    for( i = 0; i < n_lines; ++i ) {
 
       start = line_positions(i, 0);
       end = line_positions(i, 1);

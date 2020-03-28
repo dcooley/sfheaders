@@ -14,11 +14,17 @@
 #'
 #' @section Keeping Properties:
 #'
-#' Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
+#' Setting \code{keep = TRUE} will retain any columns not specified as a
 #' coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
+#'
+#' You can use \code{list_columns} to specify which of the properties will be turned into
+#' a list, thus keeping all the values in the column. For columns not specified in \code{list_columns},
+#' only the first row of the column is kept
 #'
 #' The \code{sf_*} functions assume the input \code{obj} is a long data.frame / matrix,
 #' where any properties are repeated down the table for the same geometry.
+#'
+#'
 #'
 #'
 #' @return \code{sf} object of POINT geometries
@@ -50,7 +56,23 @@ sf_point <- function(
   keep = FALSE
   ) {
   geometry_columns <- c(x,y,z,m)
-  return( rcpp_sf_point( obj, index_correct( geometry_columns ), keep ) )
+  geometry_columns <- index_correct( geometry_columns )
+  return(
+    rcpp_to_sf(
+      obj,
+      geometry_columns
+      , NULL ## multipoint_id
+      , NULL ## linestring_id
+      , NULL ## multilinestring_id
+      , NULL ## polygon_id
+      , NULL ## multipolygon_id
+      , NULL ## list_columns
+      , FALSE ## Close
+      , keep ## keep
+      , "POINT"
+    )
+  )
+  # return( rcpp_sf_point( obj, , keep ) )
 }
 
 #' sf MULTIPOINT
@@ -62,6 +84,7 @@ sf_point <- function(
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
 #' @param multipoint_id column of ids for multipoints
+#' @param list_columns vector of column names to turn into a list.
 #'
 #' @return \code{sf} object of MULTIPOINT geometries
 #' @examples
@@ -83,15 +106,29 @@ sf_multipoint <- function(
   z = NULL,
   m = NULL,
   multipoint_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  res <- rcpp_sf_multipoint(
-    obj
-    , index_correct( geometry_columns )
-    , index_correct( multipoint_id )
-    , keep
+  geometry_columns <- index_correct( geometry_columns )
+  multipoint_id <- index_correct( multipoint_id )
+  list_columns <- index_correct( list_columns )
+  res <- return(
+    rcpp_to_sf(
+      obj,
+      geometry_columns
+      , multipoint_id ## multipoint_id
+      , NULL ## linestring_id
+      , NULL ## multilinestring_id
+      , NULL ## polygon_id
+      , NULL ## multipolygon_id
+      , list_columns ## list_columns
+      , FALSE ## close
+      , keep ## keep
+      , "MULTIPOINT"
     )
+  )
+
   return( replace_id( res, multipoint_id ) )
 }
 
@@ -118,6 +155,16 @@ sf_multipoint <- function(
 #' sf_linestring( x, x = "y", y = "x" )
 #' sf_linestring( x, linestring_id = "id", x = "x", y = "y")
 #'
+#' ## keeping properties
+#' x <- data.frame( id = c(1,1,2,2), x = 1:4, y = 4:1, val = letters[1:4], stringsAsFactors = FALSE)
+#'
+#' ## first-row of 'val' is kept
+#' sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE )
+#'
+#' ## 'val' column converted to a list
+#' sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE, list_columns = "val" )
+#'
+#'
 #' @export
 sf_linestring <- function(
   obj = NULL,
@@ -126,15 +173,28 @@ sf_linestring <- function(
   z = NULL,
   m = NULL,
   linestring_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  res <- rcpp_sf_linestring(
-    obj
-    , index_correct( geometry_columns )
-    ,  index_correct( linestring_id )
-    , keep
+  geometry_columns <- index_correct( geometry_columns )
+  linestring_id <- index_correct( linestring_id )
+  list_columns <- index_correct( list_columns )
+  res <- return(
+    rcpp_to_sf(
+      obj,
+      geometry_columns
+      , NULL ## multipoint_id
+      , linestring_id ## linestring_id
+      , NULL ## multilinestring_id
+      , NULL ## polygon_id
+      , NULL ## multipolygon_id
+      , list_columns ## list_columns
+      , FALSE ## close
+      , keep ## keep
+      , "LINESTRING"
     )
+  )
   return( replace_id( res, linestring_id ) )
 }
 
@@ -199,15 +259,28 @@ sf_multilinestring <- function(
   m = NULL,
   multilinestring_id = NULL,
   linestring_id = NULL,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  res <- rcpp_sf_multilinestring(
-    obj
-    , index_correct( geometry_columns )
-    , index_correct( multilinestring_id )
-    , index_correct( linestring_id )
-    , keep
+  geometry_columns <- index_correct( geometry_columns )
+  linestring_id <- index_correct( linestring_id )
+  multilinestring_id <- index_correct( multilinestring_id )
+  list_columns <- index_correct( list_columns )
+  res <- return(
+    rcpp_to_sf(
+      obj,
+      geometry_columns
+      , NULL ## multipoint_id
+      , linestring_id ## linestring_id
+      , multilinestring_id ## multilinestring_id
+      , NULL ## polygon_id
+      , NULL ## multipolygon_id
+      , list_columns ## list_columns
+      , FALSE ## Close
+      , keep ## keep
+      , "MULTILINESTRING"
+    )
   )
   return( replace_id( res, multilinestring_id ) )
 }
@@ -264,6 +337,41 @@ sf_multilinestring <- function(
 #' sf_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
 #' sf_polygon( obj = df, polygon_id = 1, linestring_id = 2 )
 #'
+#' ## keeping properties
+#' df <- data.frame(
+#'   ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+#'   , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+#'   , x = rnorm(15)
+#'   , y = rnorm(15)
+#'   , z = rnorm(15)
+#'   , m = rnorm(15)
+#'   , val = letters[1:15]
+#'   , stringsAsFactors = FALSE
+#' )
+#'
+#' ## using keep = TRUE means the first row of all non-geometries are kept
+#' sf_polygon(
+#'   obj = df
+#'   , polygon_id = "ml_id"
+#'   , linestring_id = "l_id"
+#'   , x = "x"
+#'   , y = "y"
+#'   , keep = TRUE
+#' )
+#'
+#' ## use 'list_column' to specify columns where you want to keep all the values
+#' sf_polygon(
+#'   obj = df
+#'   , polygon_id = "ml_id"
+#'   , linestring_id = "l_id"
+#'   , x = "x"
+#'   , y = "y"
+#'   , keep = TRUE
+#'   , list_columns = "val"
+#' )
+#'
+#'
+#'
 #'
 #'
 #' @export
@@ -276,17 +384,30 @@ sf_polygon <- function(
   polygon_id = NULL,
   linestring_id = NULL,
   close = TRUE,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
   geometry_columns <- c(x,y,z,m)
-  res <- rcpp_sf_polygon(
-    obj
-    , index_correct( geometry_columns )
-    , index_correct( polygon_id )
-    , index_correct( linestring_id )
-    , close
-    , keep
+  geometry_columns <- index_correct( geometry_columns )
+  linestring_id <- index_correct( linestring_id )
+  polygon_id <- index_correct( polygon_id )
+  list_columns <- index_correct( list_columns )
+  res <- return(
+    rcpp_to_sf(
+      obj,
+      geometry_columns
+      , NULL ## multipoint_id
+      , linestring_id ## linestring_id
+      , NULL ## multilinestring_id
+      , polygon_id ## polygon_id
+      , NULL ## multipolygon_id
+      , list_columns ## list_columns
+      , close ## Close
+      , keep ## keep
+      , "POLYGON"
     )
+  )
+
   return( replace_id( res, polygon_id ) )
 }
 
@@ -376,20 +497,34 @@ sf_multipolygon <- function(
   polygon_id = NULL,
   linestring_id = NULL,
   close = TRUE,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
   ) {
+
   geometry_columns <- c(x,y,z,m)
-  res <- rcpp_sf_multipolygon(
-    obj
-    , index_correct( geometry_columns )
-    , index_correct( multipolygon_id )
-    , index_correct( polygon_id )
-    , index_correct( linestring_id )
-    , close
-    , keep
+  geometry_columns <- index_correct( geometry_columns )
+  linestring_id <- index_correct( linestring_id )
+  polygon_id <- index_correct( polygon_id )
+  multipolygon_id <- index_correct( multipolygon_id )
+  list_columns <- index_correct( list_columns )
+  res <- return(
+    rcpp_to_sf(
+      obj,
+      geometry_columns
+      , NULL ## multipoint_id
+      , linestring_id ## linestring_id
+      , NULL ## multilinestring_id
+      , polygon_id ## polygon_id
+      , multipolygon_id ## multipolygon_id
+      , list_columns ## list_columns
+      , close ## Close
+      , keep ## keep
+      , "MULTIPOLYGON"
     )
+  )
   return( replace_id( res, multipolygon_id ) )
 }
+
 
 replace_id <- function( x, id ) {
   if( is.character( id ) ) {

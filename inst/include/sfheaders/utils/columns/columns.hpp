@@ -19,10 +19,10 @@ namespace utils {
     int i, j;
     bool is_in = false;
 
-    for( i = 0; i < n_id_cols; i++ ) {
+    for( i = 0; i < n_id_cols; ++i ) {
       is_in = false;
       int id_col = id_cols[i];
-      for( j = 0; j < n_other_cols; j++ ) {
+      for( j = 0; j < n_other_cols; ++j ) {
         int a_col = all_cols[j];
         if( id_col == a_col ) {
           // this column is one of the id ones, so we shouldn't keep it.
@@ -47,10 +47,10 @@ namespace utils {
     int i, j;
     bool is_in = false;
 
-    for( i = 0; i < n_id_cols; i++ ) {
+    for( i = 0; i < n_id_cols; ++i ) {
       is_in = false;
       double id_col = id_cols[i];
-      for( j = 0; j < n_other_cols; j++ ) {
+      for( j = 0; j < n_other_cols; ++j ) {
         double a_col = all_cols[j];
         if( id_col == a_col ) {
           // this column is one of the id ones, so we shouldn't keep it.
@@ -76,10 +76,10 @@ namespace utils {
     int i, j;
     bool is_in = false;
 
-    for( i = 0; i < n_id_cols; i++ ) {
+    for( i = 0; i < n_id_cols; ++i ) {
       is_in = false;
       Rcpp::String id_col = id_cols[i];
-      for( j = 0; j < n_other_cols; j++ ) {
+      for( j = 0; j < n_other_cols; ++j ) {
         Rcpp::String a_col = all_cols[j];
         if( id_col == a_col ) {
           // this column is one of the id ones, so we shouldn't keep it.
@@ -417,7 +417,7 @@ namespace utils {
 
     Rcpp::IntegerVector iv( n_col );
     R_xlen_t i;
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       Rcpp::String this_col = cols[i];
       iv[ i ] = sfheaders::utils::where_is( this_col, m_names );
     }
@@ -434,7 +434,7 @@ namespace utils {
 
     Rcpp::IntegerVector iv( n_col );
     R_xlen_t i;
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       Rcpp::String this_col = cols[i];
       iv[ i ] = sfheaders::utils::where_is( this_col, m_names );
     }
@@ -457,7 +457,7 @@ namespace utils {
 
     Rcpp::IntegerVector iv( n_col );
     R_xlen_t i;
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       Rcpp::String this_col = cols[i];
       iv[ i ] = sfheaders::utils::where_is( this_col, m_names );
     }

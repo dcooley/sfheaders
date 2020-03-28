@@ -4,7 +4,7 @@ test_that("bounding box correctly calculated", {
 
 
   bb <- function( x, cols = NULL ) {
-    sfheaders:::rcpp_calculate_bbox( x, cols )
+    unname( unclass( sfheaders:::rcpp_calculate_bbox( x, cols ) ) )
   }
 
   expect_error( bb( 1L ), "sfheaders - incorrect size of bounding box")
@@ -169,3 +169,89 @@ test_that("m_range correctly calculated", {
 
 })
 
+## issue 59
+test_that("bbox calculated on data.frame, sfg, sfc, sf", {
+
+  df <- data.frame(
+   id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+   , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+   , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+   , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+  )
+
+  expect_equal(unclass(unname(sf_bbox( df, x = "x", y = "y" ))), c(0,0,4,4))
+
+  ## sfg objects
+  pt <- sfg_point(obj = df[1, ], x = "x", y = "y", z = "id1")
+  mpt <- sfg_multipoint(obj = df, x = "x", y = "y")
+  ls <- sfg_linestring(obj = df, x = "x", y = "y")
+  mls <- sfg_multilinestring(obj = df, x = "x", y = "y")
+  p <- sfg_polygon(obj = df, x = "x" , y = "y")
+  mp <- sfg_multipolygon(obj = df, x = "x", y = "y", close = FALSE )
+
+  expect_equal(unclass(unname(sf_bbox( pt ))), c(0,0,0,0))
+  expect_equal(unclass(unname(sf_bbox( mpt ))), c(0,0,4,4) )
+  expect_equal(unclass(unname(sf_bbox( ls ))), c(0,0,4,4) )
+  expect_equal(unclass(unname(sf_bbox( mls ))), c(0,0,4,4) )
+  expect_equal(unclass(unname(sf_bbox( p ))), c(0,0,4,4) )
+  expect_equal(unclass(unname(sf_bbox( mp ))), c(0,0,4,4) )
+
+  ## sfc objects
+  pt <- sfc_point(obj = df, x = "x", y = "y", z = "id1")
+  mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+  ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+  mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+  p <- sfc_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , polygon_id = "id1"
+    , linestring_id = "id2"
+    , close = FALSE
+    )
+  mp <- sfc_multipolygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , multipolygon_id = "id1"
+    , linestring_id = "id2"
+    , close = FALSE
+    )
+
+  expect_equal(sf_bbox( pt ), attr(pt, "bbox"))
+  expect_equal(sf_bbox( mpt ), attr(mpt, "bbox"))
+  expect_equal(sf_bbox( ls ), attr(ls, "bbox"))
+  expect_equal(sf_bbox( mls ), attr(mls, "bbox"))
+  expect_equal(sf_bbox( p ), attr(p, "bbox"))
+  expect_equal(sf_bbox( mp ), attr(mp, "bbox"))
+
+  ## sf objects
+  pt <- sf_point(obj = df, x = "x", y = "y", z = "id1")
+  mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+  ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+  mls <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+  p <- sf_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , polygon_id = "id1"
+    , linestring_id = "id2"
+    , close = FALSE
+    )
+  mp <- sf_multipolygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , multipolygon_id = "id1"
+    , linestring_id = "id2"
+    , close = FALSE
+    )
+
+  expect_equal(sf_bbox( pt ), attr(pt$geometry, "bbox"))
+  expect_equal(sf_bbox( mpt ), attr(mpt$geometry, "bbox"))
+  expect_equal(sf_bbox( ls ), attr(ls$geometry, "bbox"))
+  expect_equal(sf_bbox( mls ), attr(mls$geometry, "bbox"))
+  expect_equal(sf_bbox( p ), attr(p$geometry, "bbox"))
+  expect_equal(sf_bbox( mp ), attr(mp$geometry, "bbox"))
+
+})

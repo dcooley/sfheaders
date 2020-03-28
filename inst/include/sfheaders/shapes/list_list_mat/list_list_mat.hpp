@@ -10,7 +10,7 @@
 /*
  * get_listListMat
  *
- * - sfg_MULTIPOLYGON
+ * Converts various inputs into a list[[ list[[ matrix ]] ]] structure
  */
 
 namespace sfheaders {
@@ -49,22 +49,26 @@ namespace shapes {
   ) {
 
     SEXP group_ids = df[ group_id_col_1 ];
-    Rcpp::StringVector df_names = df.names();
 
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids );
-
     R_xlen_t n_lines = line_positions.nrow();
-
 
     Rcpp::List mpl( n_lines );
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+
+    // issue 56 - no need to keep all the columns in the subset_dataframe
+    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, group_id_col_1 );
+    keep_columns = sfheaders::utils::concatenate_vectors( keep_columns, group_id_col_2 );
+    Rcpp::DataFrame df_keep = df[ keep_columns ];
+    Rcpp::StringVector df_names = df_keep.names();
+
+    for( i = 0; i < n_lines; ++i ) {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
 
       Rcpp::Range rng( start, end );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
+      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
 
       mpl[ i ] = sfheaders::shapes::get_listMat( df_subset, geometry_cols, group_id_col_2 );
     }
@@ -82,21 +86,26 @@ namespace shapes {
   ) {
 
     SEXP group_ids = df[ group_id_col_1 ];
-    Rcpp::StringVector df_names = df.names();
 
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids );
-
     R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mpl( n_lines );
 
     R_xlen_t i;
-    for( i = 0; i < n_lines; i++ ) {
+
+    // issue 56 - no need to keep all the columns in the subset_dataframe
+    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, group_id_col_1 );
+    keep_columns = sfheaders::utils::concatenate_vectors( keep_columns, group_id_col_2 );
+    Rcpp::DataFrame df_keep = df[ keep_columns ];
+    Rcpp::StringVector df_names = df_keep.names();
+
+    for( i = 0; i < n_lines; ++i ) {
       int start = line_positions(i, 0);
       int end = line_positions(i, 1);
 
       Rcpp::Range rng( start, end );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
+      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
 
       mpl[ i ] = sfheaders::shapes::get_listListMat( df_subset, geometry_cols, group_id_col_2, group_id_col_3 );
     }

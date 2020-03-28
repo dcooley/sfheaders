@@ -140,7 +140,7 @@ namespace sfc {
 //
 //     Rcpp::List ml( n_linestrings );
 //
-//     for( j = 0; j < n_linestrings; j++ ) {
+//     for( j = 0; j < n_linestrings; ++j ) {
 //
 //       SEXP this_linestring = sfgs[j];
 //
@@ -471,52 +471,6 @@ namespace sfc {
 
   inline SEXP sfc_multilinestring(
     Rcpp::DataFrame& df,
-    Rcpp::IntegerVector& geometry_cols,
-    int& linestring_id,
-    Rcpp::IntegerMatrix& multilinestring_positions
-  ) {
-
-    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
-    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
-
-    sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
-
-    R_xlen_t n_col = df.ncol();
-    sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, df, geometry_cols );
-
-    R_xlen_t n_multilinestrings = multilinestring_positions.nrow();
-
-    R_xlen_t i;
-    Rcpp::List sfc( n_multilinestrings );
-
-    int start;
-    int end;
-    Rcpp::StringVector df_names = df.names();
-
-    for( i = 0; i < n_multilinestrings; i++ ) {
-      start = multilinestring_positions( i, 0 );
-      end = multilinestring_positions( i, 1 );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
-      sfc( i ) = sfheaders::sfg::sfg_multilinestring( df_subset, geometry_cols, linestring_id );
-    }
-
-    sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTILINESTRING, bbox, z_range, m_range );
-    return sfc;
-  }
-
-  inline SEXP sfc_multilinestring(
-      Rcpp::DataFrame& df,
-      Rcpp::IntegerVector& geometry_cols,
-      SEXP& multilinestring_ids,
-      int& linestring_id
-  ) {
-    Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
-    return sfc_multilinestring( df, geometry_cols, linestring_id, multilinestring_positions );
-  }
-
-  inline SEXP sfc_multilinestring(
-    Rcpp::DataFrame& df,
     Rcpp::StringVector& geometry_cols,
     Rcpp::String& linestring_id,
     Rcpp::IntegerMatrix& multilinestring_positions
@@ -537,17 +491,45 @@ namespace sfc {
 
     int start;
     int end;
-    Rcpp::StringVector df_names = df.names();
 
-    for( i = 0; i < n_multilinestrings; i++ ) {
+    // issue 56 - no need to keep all the columns in the subset_dataframe
+    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+    Rcpp::DataFrame df_keep = df[ keep_columns ];
+    Rcpp::StringVector df_names = df_keep.names();
+
+    for( i = 0; i < n_multilinestrings; ++i ) {
       start = multilinestring_positions( i, 0 );
       end = multilinestring_positions( i, 1 );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df, df_names, start, end );
+      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
       sfc( i ) = sfheaders::sfg::sfg_multilinestring( df_subset, geometry_cols, linestring_id );
     }
 
     sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTILINESTRING, bbox, z_range, m_range );
     return sfc;
+  }
+
+  inline SEXP sfc_multilinestring(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      int& linestring_id,
+      Rcpp::IntegerMatrix& multilinestring_positions
+  ) {
+
+    // get the string-values of the data.frame names
+    Rcpp::StringVector df_names = df.names();
+    Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
+    Rcpp::String str_linestring_id = df_names[ linestring_id ];
+    return sfc_multilinestring( df, str_geometry_cols, str_linestring_id, multilinestring_positions );
+  }
+
+  inline SEXP sfc_multilinestring(
+      Rcpp::DataFrame& df,
+      Rcpp::IntegerVector& geometry_cols,
+      SEXP& multilinestring_ids,
+      int& linestring_id
+  ) {
+    Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+    return sfc_multilinestring( df, geometry_cols, linestring_id, multilinestring_positions );
   }
 
   inline SEXP sfc_multilinestring(
@@ -583,7 +565,7 @@ namespace sfc {
     int start;
     int end;
 
-    for( i = 0; i < n_multilinestrings; i++ ) {
+    for( i = 0; i < n_multilinestrings; ++i ) {
       start = multilinestring_positions( i, 0 );
       end = multilinestring_positions( i, 1 );
       Rcpp::IntegerMatrix im2 = im( Rcpp::Range(start, end), Rcpp::_ );
@@ -627,7 +609,7 @@ namespace sfc {
     int start;
     int end;
 
-    for( i = 0; i < n_multilinestrings; i++ ) {
+    for( i = 0; i < n_multilinestrings; ++i ) {
       start = multilinestring_positions( i, 0 );
       end = multilinestring_positions( i, 1 );
       Rcpp::NumericMatrix nm2 = nm( Rcpp::Range(start, end), Rcpp::_ );

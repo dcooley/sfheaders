@@ -177,3 +177,63 @@ test_that("issue 39 is fixed", {
 
 
 })
+
+
+## issue 57
+test_that("specifying one or no geometry columns works", {
+
+  df <- data.frame(
+    polygon_id = c(rep(1, 5), rep(2, 10))
+    , line_id = c(rep(1, 10), rep(2, 5))
+    , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
+    , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
+    , z = c(1)
+    , m = c(1)
+  )
+
+  res1 <- sfg_polygon(
+    obj = df[, c("x","y")]
+  )
+
+  res2 <- sfg_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+  )
+
+  expect_equal( res1, res2 )
+
+  res1 <- sfg_polygon(
+    df[, c("x","y","line_id")]
+    #, polygon_id = "line_id"
+    , x = "x"
+    , y = "y"
+    , linestring_id = "line_id"
+  )
+
+  res2 <- sfg_polygon(
+    df[, c("x","y","line_id")]
+    #, polygon_id = "line_id"
+    #, x = "x"
+    #, y = "y"
+    , linestring_id = "line_id"
+  )
+
+  expect_equal( res1, res2 )
+
+
+  res1 <- sfg_multipolygon(
+    df[, c("x","y","line_id")]
+    , polygon_id = "line_id"
+    , linestring_id = "line_id"
+  )
+
+  res2 <- sfg_multipolygon(
+    df[, c("x","y","line_id")]
+    , polygon_id = "line_id"
+    #, linestring_id = "line_id"
+  )
+
+  expect_equal( res1, res2 )
+
+})

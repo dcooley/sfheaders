@@ -4,9 +4,17 @@
 \alias{sfc_multipolygon}
 \title{sfc MULTIPOLYGON}
 \usage{
-sfc_multipolygon(obj = NULL, x = NULL, y = NULL, z = NULL,
-  m = NULL, multipolygon_id = NULL, polygon_id = NULL,
-  linestring_id = NULL, close = TRUE)
+sfc_multipolygon(
+  obj = NULL,
+  x = NULL,
+  y = NULL,
+  z = NULL,
+  m = NULL,
+  multipolygon_id = NULL,
+  polygon_id = NULL,
+  linestring_id = NULL,
+  close = TRUE
+)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
@@ -91,7 +99,7 @@ df <- data.frame(
 sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2" )
 sfc_multipolygon( df, polygon_id = "id1", linestring_id = "id2" )
 sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
-sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
+sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2")
 sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
 sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
 

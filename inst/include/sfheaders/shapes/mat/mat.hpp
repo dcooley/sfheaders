@@ -8,6 +8,16 @@ namespace sfheaders {
 namespace shapes {
 
   // #nocov start
+
+  // TODO
+  // add method for conerting list[[ list[[ mat ]] ]] into a mat
+  // which also adds an ID column
+
+  /*
+   * get_listMat
+   *
+   * Converts various inputs into a matrix structure
+   */
   inline SEXP get_mat(
     Rcpp::IntegerMatrix& im
   ) {
@@ -36,7 +46,7 @@ namespace shapes {
     R_xlen_t n_col = geometry_cols.size();
     R_xlen_t i;
     Rcpp::IntegerMatrix im2( n_row, n_col );
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       int this_col = geometry_cols[ i ];
       im2( Rcpp::_, i ) = im( Rcpp::_, this_col );
     }
@@ -53,7 +63,7 @@ namespace shapes {
     R_xlen_t n_col = geometry_cols.size();
     R_xlen_t i;
     Rcpp::NumericMatrix nm2( n_row, n_col );
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       int this_col = geometry_cols[ i ];
       nm2( Rcpp::_, i ) = nm( Rcpp::_, this_col );
     }
@@ -73,7 +83,7 @@ namespace shapes {
     Rcpp::NumericMatrix nm( n_row, n_col );
     R_xlen_t i;
 
-    for( i = 0; i < n_col; i++ ) {
+    for( i = 0; i < n_col; ++i ) {
       Rcpp::String this_col = geometry_cols[i];
       Rcpp::NumericVector this_vec = df[ this_col ];
       nm( Rcpp::_, i ) = this_vec;

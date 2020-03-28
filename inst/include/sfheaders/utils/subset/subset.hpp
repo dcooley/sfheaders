@@ -73,15 +73,15 @@ namespace utils {
   ) {
 
     R_xlen_t n_cols = cols.size();
-    Rcpp::StringVector df_names = df.names();
+    //Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector row_names = Rcpp::seq( start + 1, end + 1 );
     R_xlen_t i;
     Rcpp::List df_subset( n_cols );
-    for( i = 0; i < n_cols; i++ ) {
+    for( i = 0; i < n_cols; ++i ) {
       Rcpp::String this_col = cols[i];
 
       SEXP this_vec = df[ this_col ];
-      df_subset[i] = sfheaders::utils::subset_vector( this_vec, start, end );
+      df_subset[ i ] = sfheaders::utils::subset_vector( this_vec, start, end );
     }
     df_subset.names() = cols;
     return df_subset;

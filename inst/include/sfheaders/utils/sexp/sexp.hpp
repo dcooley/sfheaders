@@ -22,8 +22,14 @@ namespace utils {
     case REALSXP: {
       return sexp_col_names< REALSXP >( m );
     }
+    case VECSXP: {
+    if( Rf_inherits( m, "data.frame") ) {
+      Rcpp::StringVector attr({"names"});
+      return Rf_getAttrib( m, attr ) ;
+    }
+    }
     default: {
-      Rcpp::stop("sfheaders - expecting a matrix when trying to get colnames");
+      Rcpp::stop("sfheaders - expecting a data.frame or matrix when trying to get colnames");
     }
     }
   }

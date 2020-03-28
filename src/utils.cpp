@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
 
-
 // [[Rcpp::export]]
 SEXP rcpp_other_columns(
   SEXP x,
@@ -65,5 +64,3 @@ SEXP rcpp_get_ids(
 ) {
   return sfheaders::utils::get_ids( x, id_col );
 }
-
-

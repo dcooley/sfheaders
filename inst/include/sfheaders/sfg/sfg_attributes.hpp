@@ -6,6 +6,25 @@
 namespace sfheaders {
 namespace sfg {
 
+  template <int RTYPE>
+  inline Rcpp::CharacterVector sfgClass( Rcpp::Vector<RTYPE> v ) {
+    return v.attr("class");
+  }
+
+  inline Rcpp::CharacterVector getSfgClass( SEXP sf ) {
+
+    switch( TYPEOF(sf) ) {
+    case REALSXP:
+      return sfgClass<REALSXP>( sf );
+    case VECSXP:
+      return sfgClass<VECSXP>( sf );
+    case INTSXP:
+      return sfgClass<INTSXP>( sf );
+    default: Rcpp::stop("unknown sf type");
+    }
+    return "";
+  }
+
   inline Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_type ) {
     return Rcpp::CharacterVector::create( dimension, geom_type, "sfg" );
   }

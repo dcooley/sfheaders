@@ -44,7 +44,7 @@ namespace sfc {
     R_xlen_t i;
     Rcpp::List sfc( n_row );
 
-    for( i = 0; i < n_row; i++ ) {
+    for( i = 0; i < n_row; ++i ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
@@ -86,7 +86,7 @@ namespace sfc {
     R_xlen_t i;
     Rcpp::List sfc( n_row );
 
-    for( i = 0; i < n_row; i++ ) {
+    for( i = 0; i < n_row; ++i ) {
       Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
@@ -126,7 +126,7 @@ namespace sfc {
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, im, cols );
 
     Rcpp::List sfc(n_row);
-    for( i = 0; i < n_row; i++ ) {
+    for( i = 0; i < n_row; ++i ) {
       Rcpp::IntegerVector this_point = im( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;  // #nocov
@@ -158,7 +158,7 @@ namespace sfc {
 
     Rcpp::List sfc(n_row);
 
-    for( i = 0; i < n_row; i++ ) {
+    for( i = 0; i < n_row; ++i ) {
       Rcpp::IntegerMatrix this_point = sfheaders::utils::matrix_row_to_matrix( im, i );
       sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions );
     }
@@ -185,7 +185,7 @@ namespace sfc {
     sfheaders::zm::calculate_zm_ranges( n_col, z_range, m_range, nm, cols );
 
     Rcpp::List sfc( n_row );
-    for( i = 0; i < n_row; i++ ) {
+    for( i = 0; i < n_row; ++i ) {
       Rcpp::NumericVector this_point = nm( i, Rcpp::_ );
       if( sfheaders::utils::is_null_geometry( this_point, "POINT" ) ) {
         n_empty++;
@@ -217,7 +217,7 @@ namespace sfc {
 
     Rcpp::List sfc(n_row);
 
-    for( i = 0; i < n_row; i++ ) {
+    for( i = 0; i < n_row; ++i ) {
       Rcpp::NumericMatrix this_point = sfheaders::utils::matrix_row_to_matrix( nm, i );
       sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions );
     }

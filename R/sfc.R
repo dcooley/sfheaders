@@ -144,7 +144,8 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 #'
 #'
 #' @export
-sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multilinestring_id = NULL, linestring_id = NULL ) {
+sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
+                                 multilinestring_id = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
   rcpp_sfc_multilinestring( obj, index_correct( geometry_columns ), index_correct( multilinestring_id ), index_correct( linestring_id ) )
 }
@@ -203,7 +204,8 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 #'
 #'
 #' @export
-sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
+sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
+                         polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
   rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close )
 }
@@ -269,7 +271,7 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' sfc_multipolygon( df, multipolygon_id = "id1", polygon_id = "id2" )
 #' sfc_multipolygon( df, polygon_id = "id1", linestring_id = "id2" )
 #' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
-#' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id =)
+#' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2")
 #' sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id1")
 #' sfc_multipolygon( df, x = "x", y = "y", linestring_id = "id2")
 #'
@@ -283,7 +285,130 @@ sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, pol
 #' sfc_multipolygon( df, x = "x", y = "y", polygon_id = "id1")
 #'
 #' @export
-sfc_multipolygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
+sfc_multipolygon <- function(
+  obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
+  multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL,
+  close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
   rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), close )
+}
+
+
+#' sf bbox
+#'
+#' Calculates the bounding box of coordinates. This does not read the "bbox" attribute,
+#' it re-calculates the bounding box from the geometry coordinates
+#'
+#' @param obj matrix, data.frame, \code{sfg}, \code{sfc} or \code{sf} object.
+#' @param x x geometry column
+#' @param y y geometry column
+#'
+#' @examples
+#'
+#' ## data.frame
+#' df <- data.frame(
+#'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+#'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+#'  , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+#'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+#' )
+#'
+#' sf_bbox( obj = df[, c("x","y")] )
+#' sf_bbox( obj = df, x = "x", y = "y" )
+#'
+#' ## sfg objects
+#' pt <- sfg_point(obj = df[1, ], x = "x", y = "y", z = "id1")
+#' mpt <- sfg_multipoint(obj = df, x = "x", y = "y")
+#' ls <- sfg_linestring(obj = df, x = "x", y = "y")
+#' mls <- sfg_multilinestring(obj = df, x = "x", y = "y")
+#' p <- sfg_polygon(obj = df, x = "x" , y = "y")
+#' mp <- sfg_multipolygon(obj = df, x = "x", y = "y", close = FALSE )
+#'
+#' sf_bbox( pt )
+#' sf_bbox( mpt )
+#' sf_bbox( ls )
+#' sf_bbox( mls )
+#' sf_bbox( p )
+#' sf_bbox( mp )
+#'
+#' ## sfc objects
+#' pt <- sfc_point(obj = df, x = "x", y = "y", z = "id1")
+#' mpt <- sfc_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+#' ls <- sfc_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+#' mls <- sfc_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+#' p <- sfc_polygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , polygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#' mp <- sfc_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#'
+#' sf_bbox( pt )
+#' sf_bbox( mpt )
+#' sf_bbox( ls )
+#' sf_bbox( mls )
+#' sf_bbox( p )
+#' sf_bbox( mp )
+#'
+#' ## sf objects
+#' pt <- sf_point(obj = df, x = "x", y = "y", z = "id1")
+#' mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1")
+#' ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1")
+#' mls <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1")
+#' p <- sf_polygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , polygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#' mp <- sf_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , close = FALSE
+#'   )
+#'
+#' sf_bbox( pt )
+#' sf_bbox( mpt )
+#' sf_bbox( ls )
+#' sf_bbox( mls )
+#' sf_bbox( p )
+#' sf_bbox( mp )
+#'
+#' ## you can use it to update a bounding-box if it gets corrupted
+#' attr( mpt, "bbox" ) <- c(1:5)
+#' mpt ## incorrect values
+#' attr( mpt, "bbox" ) <- sf_bbox( mpt )
+#' mpt ## back to correct values
+#'
+#' @export
+sf_bbox <- function( obj, x = NULL, y = NULL ) calculate_bbox( obj, x, y )
+
+calculate_bbox <- function( obj, x = NULL, y = NULL ) UseMethod("calculate_bbox")
+
+#' @export
+calculate_bbox.sf <- function( obj, x = NULL, y = NULL ) {
+  geom_column <- attr( obj, "sf_column" )
+  geometry_coords <- c(x,y)
+  return( rcpp_calculate_bbox( obj[[geom_column]], geometry_coords ) )
+}
+
+#' @export
+calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
+  geometry_coords <- c(x,y)
+  return( rcpp_calculate_bbox( obj, geometry_coords ) )
 }

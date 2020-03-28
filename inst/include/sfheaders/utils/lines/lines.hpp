@@ -41,7 +41,7 @@ namespace utils {
 
     int idx = 0;
     int this_id;
-    for( i = 0; i < n; i++ ) {
+    for( i = 0; i < n; ++i ) {
       //go through line_ids and find where ids change
       if( i == 0 ) {
         this_id = line_ids[ i ];
@@ -98,7 +98,7 @@ namespace utils {
 
     int idx = 0;
     double this_id;
-    for( i = 0; i < n; i++ ) {
+    for( i = 0; i < n; ++i ) {
 
       //go through line_ids and find where ids change
       if( i == 0 ) {
@@ -158,7 +158,7 @@ namespace utils {
 
     int idx = 0;
     Rcpp::String this_id;
-    for( i = 0; i < n; i++ ) {
+    for( i = 0; i < n; ++i ) {
       //go through line_ids and find where ids change
       if( i == 0 ) {
         this_id = line_ids[ i ];

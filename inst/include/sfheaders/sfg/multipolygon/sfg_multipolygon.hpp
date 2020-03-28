@@ -61,9 +61,8 @@ inline SEXP sfg_multipolygon(
     Rcpp::List& lst,
     bool close = true
 ) {
-  Rcpp::List mp( 1 );
-  mp[0] = sfheaders::polygon_utils::close_polygon( lst, close );
-  // each list element must be a matrix
+
+  lst = sfheaders::polygon_utils::close_polygon( lst, close );
   sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTIPOLYGON );
   return lst;
 }
@@ -468,6 +467,7 @@ inline SEXP sfg_multipolygon(
     SEXP& x,
     bool close = true
 ) {
+
   switch ( TYPEOF( x ) ) {
   case INTSXP: {
     if( !Rf_isMatrix( x ) ) {
@@ -617,6 +617,7 @@ inline SEXP sfg_multipolygon(
     bool close = true
 ) {
 
+  // #nocov start
   if( Rf_isNull( cols ) ) {
     Rcpp::IntegerVector id_cols( 2 );
     id_cols[0] = polygon_id;
@@ -624,6 +625,7 @@ inline SEXP sfg_multipolygon(
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, close );
   }
+  // #nocov end
 
   switch( TYPEOF( cols ) ) {
   case REALSXP: {}
@@ -649,6 +651,7 @@ inline SEXP sfg_multipolygon(
     bool close = true
 ) {
 
+  // #nocov start
   if( Rf_isNull( cols ) ) {
     Rcpp::StringVector id_cols( 2 );
     id_cols[0] = polygon_id;
@@ -656,6 +659,7 @@ inline SEXP sfg_multipolygon(
     SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, close );
   }
+  // #nocov end
 
   switch( TYPEOF( cols ) ) {
   // case REALSXP: {}
@@ -685,9 +689,21 @@ inline SEXP sfg_multipolygon(
     return sfg_multipolygon( x, cols, close );
   }
 
+  // at this point one or both of polygon_id and line_id will not be null
+  //
+  if( Rf_isNull( cols ) ) {
+    // make them the other columns
+    SEXP other_cols = sfheaders::utils::other_columns(x, polygon_id, line_id );
+    return sfg_multipolygon( x, other_cols, polygon_id, line_id, close );
+  }
+
   if( Rf_isNull( polygon_id ) && !Rf_isNull( line_id ) ) {
     // in this case the multiolygon is made of one polygon
     // with one or more internal rings
+
+    // TODO: 'cols' may be null here
+
+
     Rcpp::List sfg(1);
     sfg[0] = sfheaders::shapes::get_listMat( x, cols, line_id );
     return sfg_multipolygon( sfg, close );
@@ -721,6 +737,7 @@ inline SEXP sfg_multipolygon(
 
     Rcpp::String sl = sv_line[0];
     Rcpp::String sp = sv_polygon[0];
+    //return Rcpp::List();
     return sfg_multipolygon( x, cols, sp, sl, close );
   }
   default: {
@@ -730,6 +747,24 @@ inline SEXP sfg_multipolygon(
   return Rcpp::List::create(); // never reaches
 }
 
+  // only keep the outer-linestring / ring / matrix
+  inline SEXP remove_multipolygon_holes(
+      Rcpp::List& sfg_mp,
+      bool close = true
+  ) {
+    // loop over and only keep the first line
+    R_xlen_t i;
+    R_xlen_t n = sfg_mp.size();
+    Rcpp::List res( n );
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List poly = sfg_mp[ i ];
+      Rcpp::List new_poly(1);
+      new_poly[ 0 ] = poly[ 0 ];
+      res[ i ] = new_poly;
+    }
+    return sfg_multipolygon( res, close );
+
+  }
 
 } // sfg
 } // sfheaders

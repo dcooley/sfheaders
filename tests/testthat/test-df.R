@@ -182,17 +182,18 @@ test_that("different data.frame columns supported",{
 
   sf <- sfheaders::sf_point( obj = df, x = "x", y = "y" )
   sf$id <- 1L
-  sf <- merge(
+  sf <- base::merge.data.frame(
     x = sf
     , y = df[, setdiff(names(df), c("x","y"))]
     , by = "id"
   )
 
-  ## needs 'sf' unattached for this to work
   expect_error(
     sfheaders::sf_to_df( sf, fill = TRUE )
     , "sfheaders - sf_column not found"
   )
+
+  sf$geometry <- sfheaders::sfc_point( df[, c("x","y")])
 
   attr(sf, "class") <- c("sf", "data.frame")
   attr(sf, "sf_column") <- "geometry"
@@ -205,16 +206,6 @@ test_that("different data.frame columns supported",{
     res[, test_cols ]
     , df[, test_cols ]
   )
-
-  sf <- sf_point( obj = 1:2 )
-  sf$id <- 1L
-  sf$geometry2 <- sfc_point( obj = 3:4 )
-
-  expect_error(
-    sf_to_df( sf, fill = TRUE )
-    , "sfheaders - unsupported column type using fill = TRUE"
-  )
-
 })
 
 
@@ -338,5 +329,54 @@ test_that("different XYZM dimensions work",{
   expect_true( ncol( res ) == 8 )
   expect_true( "z" %in% names(res) )
   expect_true( "m" %in% names(res) )
+
+})
+
+## issue 58
+test_that("list-columns get expanded",{
+
+  df <- data.frame(
+    id = c(1,1,2,2)
+    , x = 1:4
+    , y = 4:1
+  )
+
+  l1 <- sfheaders::sfc_linestring( df, linestring_id = "id" )
+  l2 <- sfheaders::sfc_linestring( df, linestring_id = "id" )
+
+  df <- data.frame(
+    x = c(1,2)
+  )
+
+  df$l1 <- l1
+  df$l2 <- l2
+
+  attr( df, "class" ) <- c("sf", "data.frame")
+  attr( df, "sf_column" ) <- c("l1")
+
+  res <- sfheaders::sf_to_df( df, fill = TRUE )
+  sfc <- res$l2
+  expect_true( length( sfc ) == 4 )
+  expect_equal( sfc[[1]], sfc[[2]] )
+  expect_equal( sfc[[3]], sfc[[4]] )
+
+})
+
+test_that("subsetted sf object converts to df",{
+
+  sf <- sf_linestring(
+    obj = data.frame(
+      id = c(1,1,2,2)
+      , x = 1:4
+      , y = 4:1
+    )
+    , linestring_id = "id"
+  )
+
+  df1 <- sf_to_df( sf[1, ], fill = TRUE )
+  df2 <- sf_to_df( sf[2, ], fill = TRUE )
+
+  expect_true(all(df1$id == 1))
+  expect_true(all(df2$id == 2))
 
 })

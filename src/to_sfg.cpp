@@ -66,3 +66,21 @@ SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP
 Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst, bool close = true ) {
   return sfheaders::sfg::sfg_multipolygons( lst, close );
 }
+
+
+// [[Rcpp::export]]
+SEXP rcpp_sfg_remove_holes( SEXP sfg, bool close ) {
+
+  Rcpp::CharacterVector cls = sfheaders::sfg::getSfgClass( sfg );
+  std::string sfg_type;
+  sfg_type = cls[1];
+
+  if( sfg_type == "POLYGON" ) {
+    Rcpp::List p = Rcpp::as< Rcpp::List >( sfg );
+    return sfheaders::sfg::remove_polygon_holes( p, close );
+  } else if ( sfg_type == "MULTIPOLYGON" ) {
+    Rcpp::List mp = Rcpp::as< Rcpp::List >( sfg );
+    return sfheaders::sfg::remove_multipolygon_holes( mp, close );
+  }
+   return sfg;
+}
