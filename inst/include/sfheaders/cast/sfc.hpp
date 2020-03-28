@@ -358,6 +358,10 @@ namespace cast {
     int casting_to = cast_type( cast_to );
 
     Rcpp::List crs = sfc.attr("crs");
+
+    Rcpp::String input = crs[0];
+    Rcpp::String wkt = crs[1];
+
     double precision = sfc.attr("precision");
     Rcpp::NumericVector bbox = sfc.attr("bbox");
 
@@ -372,9 +376,12 @@ namespace cast {
     int n_empty = sfc.attr("n_empty");
     std::unordered_set< std::string > geometry_types{ cast_to };
 
+<<<<<<< HEAD
     Rcpp::String crs_input = crs[0];
     Rcpp::String crs_wkt = crs[1];
 
+=======
+>>>>>>> 9c8918ab53c843714b569168d69ecad68aa0a526
     std::string cast_from;
 
     R_xlen_t i, j;
@@ -421,7 +428,11 @@ namespace cast {
 
     }
     sfheaders::sfc::attach_sfc_attributes(
+<<<<<<< HEAD
       res, cast_to, geometry_types, bbox, z_range, m_range, crs_input, crs_wkt, n_empty, precision
+=======
+      res, cast_to, geometry_types, bbox, z_range, m_range, input, wkt, n_empty, precision
+>>>>>>> 9c8918ab53c843714b569168d69ecad68aa0a526
       );
     return res;
   }

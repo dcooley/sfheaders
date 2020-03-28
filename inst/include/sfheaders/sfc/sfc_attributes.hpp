@@ -153,7 +153,7 @@ namespace sfc {
       Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::List crs,
+      Rcpp::List& crs,
       int n_empty = 0,
       double precision = 0.0
   ) {
@@ -200,6 +200,7 @@ namespace sfc {
       Rcpp::Named("input") = crs_input,
       Rcpp::Named("wkt") = crs_wkt
     );
+
     crs.attr("class") = Rcpp::CharacterVector::create("crs");
 
     attach_sfc_attributes(
