@@ -7,6 +7,26 @@ index_correct <- function( geometry_columns ) {
   return( geometry_columns )
 }
 
+xyzm <- function(x,y,z,m) {
+  if(is.null(x) & is.null(y) & is.null(z) & is.null(m)) {
+    return("") ## TODO: need to 'guess' what this is when in C++
+  }
+  if(!is.null(x) & !is.null(y) & is.null(z) & is.null(m) ) {
+    return("XY")
+  }
+  if(!is.null(x) & !is.null(y) & !is.null(z) & is.null(m) ) {
+    return("XYZ")
+  }
+  if(!is.null(x) & !is.null(y) & is.null(z) & !is.null(m) ) {
+    return("XYM")
+  }
+  if(!is.null(x) & !is.null(y) & !is.null(z) & !is.null(m) ) {
+    return("XYZM")
+  }
+  stop("sfheaders - unknown combination of x, y, z and m arguments")
+}
+
+
 #' remove holes
 #'
 #' Removes holes from olygons and multipolygons. Points and linestrings are unaffected.

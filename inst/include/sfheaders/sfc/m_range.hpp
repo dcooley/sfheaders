@@ -20,42 +20,42 @@ namespace zm {
 
 
   inline void m_range_size_check( Rcpp::IntegerVector& point, std::string xyzm ) {
-    int size_required = xyzm == "XYZM" ? 4 : 3;
+    int size_required = xyzm == "XYM" ? 3 : 4;
     if( point.length() < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }
   }
 
   inline void m_range_size_check( Rcpp::NumericVector& point, std::string xyzm ) {
-    int size_required = xyzm == "XYZM" ? 4 : 3;
+    int size_required = xyzm == "XYM" ? 3 : 4;
     if( point.length() < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }
   }
 
   inline void m_range_size_check( Rcpp::IntegerMatrix& im, std::string xyzm ) {
-    int size_required = xyzm == "XYZM" ? 4 : 3;
+    int size_required = xyzm == "XYM" ? 3 : 4;
     if( im.ncol() < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }
   }
 
   inline void m_range_size_check( Rcpp::NumericMatrix& nm, std::string xyzm ) {
-    int size_required = xyzm == "XYZM" ? 4 : 3;
+    int size_required = xyzm == "XYM" ? 3 : 4;
     if( nm.ncol() < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }
   }
 
   inline void m_range_size_check( Rcpp::DataFrame& df, std::string xyzm ) {
-    int size_required = xyzm == "XYZM" ? 4 : 3;
+    int size_required = xyzm == "XYM" ? 3 : 4;
     if( df.ncol() < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }
   }
 
   inline void m_range_size_check( SEXP& x, std::string xyzm ) {
-    int size_required = xyzm == "XYZM" ? 4 : 3;
+    int size_required = xyzm == "XYM" ? 3 : 4;
     R_xlen_t n_col = sfheaders::utils::get_sexp_n_col( x );
     if( n_col < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
@@ -89,7 +89,7 @@ namespace zm {
   ) {
     m_range_size_check( point, xyzm );
 
-    double d = xyzm == "XYZM" ? point[3] : point[2];
+    double d = xyzm == "XYM" ? point[2] : point[3];
     //xmin, ymin, xmax, ymax
     m_range[0] = std::min( d, m_range[0] );
     m_range[1] = std::max( d, m_range[1] );
@@ -102,7 +102,7 @@ namespace zm {
   ) {
     m_range_size_check( point, xyzm );
 
-    int i = xyzm == "XYZM" ? point[3] : point[2];
+    int i = xyzm == "XYM" ? point[2] : point[3];
 
     double d = static_cast< double >( i );
     calculate_m_range( m_range, d );
@@ -116,7 +116,7 @@ namespace zm {
 
     m_range_size_check( im, xyzm );
 
-    Rcpp::IntegerVector m = xyzm == "XYZM" ? im( Rcpp::_, 3 ) : im( Rcpp::_, 2 );
+    Rcpp::IntegerVector m = xyzm == "XYM" ? im( Rcpp::_, 2 ) : im( Rcpp::_, 3 );
 
     double zmin = Rcpp::min( m );
     double zmax = Rcpp::max( m );
@@ -134,7 +134,7 @@ namespace zm {
 
     m_range_size_check( nm, xyzm );
 
-    Rcpp::NumericVector m = xyzm == "XYZM" ? nm( Rcpp::_, 3 ) : nm( Rcpp::_, 2 );
+    Rcpp::NumericVector m = xyzm == "XYM" ? nm( Rcpp::_, 2 ) : nm( Rcpp::_, 3 );
 
     double zmin = Rcpp::min( m );
     double zmax = Rcpp::max( m );
@@ -152,7 +152,7 @@ namespace zm {
     // assumes 'x' & 'y' column vectors
     m_range_size_check( df, xyzm );
 
-    Rcpp::NumericVector m = xyzm == "XYZM" ? df[3] : df[2];
+    Rcpp::NumericVector m = xyzm == "XYM" ? df[2] : df[3];
 
     double zmin = Rcpp::min( m );
     double zmax = Rcpp::max( m );
@@ -210,7 +210,7 @@ namespace zm {
       std::string xyzm
   ) {
 
-    int index_required = xyzm == "XYZM" ? 3 : 2;
+    int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
@@ -232,7 +232,7 @@ namespace zm {
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
 
-    int index_required = xyzm == "XYZM" ? 3 : 2;
+    int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       Rcpp::String idx = geometry_cols[ index_required ];
@@ -253,7 +253,7 @@ namespace zm {
       std::string xyzm
   ) {
 
-    int index_required = xyzm == "XYZM" ? 3 : 2;
+    int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
@@ -275,7 +275,7 @@ namespace zm {
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
 
-    int index_required = xyzm == "XYZM" ? 3 : 2;
+    int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       Rcpp::String idx = geometry_cols[ index_required ];
@@ -297,7 +297,7 @@ namespace zm {
       std::string xyzm
   ) {
 
-    int index_required = xyzm == "XYZM" ? 3 : 2;
+    int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
@@ -317,7 +317,11 @@ namespace zm {
       std::string xyzm
   ) {
 
-    int index_required = xyzm == "XYZM" ? 3 : 2;
+    // if( xyzm.empty() ) {
+    //   // it needs to be something for this function to work
+    //
+    // }
+    int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       Rcpp::String idx = geometry_cols[ index_required ];

@@ -9,6 +9,17 @@
 namespace sfheaders {
 namespace zm {
 
+  inline std::string guess_xyzm( R_xlen_t n_col ) {
+
+    switch( n_col ) {
+    case 2: { return "XY"; }
+    case 3: { return "XYZ"; }
+    case 4: { return "XYZM"; }
+    default: { Rcpp::stop("sfheaders - can't work out the dimension"); }
+    }
+    return ""; // #nocov - never reaches
+  }
+
   // #nocov start
   inline void calculate_zm_ranges(
       Rcpp::NumericVector& z_range,
@@ -16,6 +27,11 @@ namespace zm {
       Rcpp::IntegerVector& iv,
       std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( iv.length() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, iv, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -33,6 +49,11 @@ namespace zm {
     Rcpp::NumericVector& nv,
     std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( nv.length() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, nv, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -49,6 +70,11 @@ namespace zm {
       Rcpp::IntegerMatrix& im,
       std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( im.ncol() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, im, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -65,6 +91,11 @@ namespace zm {
       Rcpp::NumericMatrix& nm,
       std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( nm.ncol() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, nm, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -81,6 +112,11 @@ namespace zm {
       Rcpp::DataFrame& df,
       std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( df.ncol() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, df, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -98,6 +134,10 @@ namespace zm {
     Rcpp::IntegerVector& geometry_cols,
     std::string xyzm
   ) {
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( geometry_cols.size() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, im, geometry_cols, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -115,6 +155,10 @@ namespace zm {
       Rcpp::IntegerVector& geometry_cols,
       std::string xyzm
   ) {
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( geometry_cols.size() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, nm, geometry_cols, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -132,6 +176,11 @@ namespace zm {
       Rcpp::IntegerVector& geometry_cols,
       std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( geometry_cols.size() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, df, geometry_cols, xyzm );
     } else if ( xyzm == "XYZ" ) {
@@ -149,6 +198,11 @@ namespace zm {
       Rcpp::StringVector& geometry_cols,
       std::string xyzm
   ) {
+
+    if( xyzm.empty() ) {
+      xyzm = guess_xyzm( geometry_cols.size() );
+    }
+
     if ( xyzm ==  "XYM" ) {
       sfheaders::zm::calculate_m_range( m_range, df, geometry_cols, xyzm );
     } else if ( xyzm == "XYZ" ) {

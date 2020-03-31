@@ -127,15 +127,17 @@ test_that("z_range correctly calculated", {
 test_that("m_range correctly calculated", {
 
 
-  mr <- function( x ) {
-    sfheaders:::rcpp_calculate_m_range( x, FALSE )
+  mr <- function( x, xyzm = "") {
+    sfheaders:::rcpp_calculate_m_range( x, xyzm )
   }
 
   err <- "sfheaders - incorrect size of m_range"
 
-  expect_error( mr( 1:2 ), err )
+  expect_error( mr( 1:2, "XY" ), err )
+  expect_error( mr( 1:2, "XYM" ), err )
+  expect_error( mr( 1:2, "XYZ" ), err )
   expect_error( mr( c(1.2,2.2) ), err )
-  expect_error( mr( 1:3 ), err )
+  # expect_error( mr( 1:3 ), err )
 
   expect_equal( mr(1:4), c(4,4) )
 

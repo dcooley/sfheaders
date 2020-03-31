@@ -64,7 +64,7 @@ SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, std::string xyzm, bool close ) {
+Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, bool close ) {
 
   Rcpp::List attributes = sfheaders::sfc::get_sfc_attributes( sfc );
 
@@ -76,6 +76,8 @@ Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, std::string xyzm, bool close )
     Rcpp::CharacterVector cls = sfheaders::sfc::getSfClass( sfg );
     std::string sfg_type;
     sfg_type = cls[1];
+    std::string xyzm;
+    xyzm = cls[0];
     if( sfg_type == "POLYGON" ) {
       Rcpp::List p = Rcpp::as< Rcpp::List >( sfg );
       res[ i ] = sfheaders::sfg::remove_polygon_holes( p, xyzm, close );
