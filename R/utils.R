@@ -7,8 +7,6 @@ index_correct <- function( geometry_columns ) {
   return( geometry_columns )
 }
 
-m_only <- function(z, m) is.null( z ) & !is.null( m )
-
 #' remove holes
 #'
 #' Removes holes from olygons and multipolygons. Points and linestrings are unaffected.

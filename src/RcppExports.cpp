@@ -29,14 +29,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_calculate_m_range
-SEXP rcpp_calculate_m_range(SEXP x, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_calculate_m_range(SEXP xSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_calculate_m_range(SEXP x, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_calculate_m_range(SEXP xSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_m_range(x, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calculate_m_range(x, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -91,14 +91,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfg_dimension
-std::string rcpp_sfg_dimension(SEXP x, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_dimension(SEXP xSEXP, SEXP m_onlySEXP) {
+std::string rcpp_sfg_dimension(SEXP x, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_dimension(SEXP xSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_dimension(x, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_dimension(x, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -174,22 +174,22 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_point
-SEXP rcpp_sf_point(SEXP x, SEXP cols, bool keep, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sf_point(SEXP xSEXP, SEXP colsSEXP, SEXP keepSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sf_point(SEXP x, SEXP cols, bool keep, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sf_point(SEXP xSEXP, SEXP colsSEXP, SEXP keepSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_point(x, cols, keep, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_point(x, cols, keep, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_multipoint
-SEXP rcpp_sf_multipoint(SEXP x, SEXP cols, SEXP multipoint_id, bool keep, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sf_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP multipoint_idSEXP, SEXP keepSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sf_multipoint(SEXP x, SEXP cols, SEXP multipoint_id, bool keep, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sf_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP multipoint_idSEXP, SEXP keepSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -197,14 +197,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type multipoint_id(multipoint_idSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipoint(x, cols, multipoint_id, keep, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipoint(x, cols, multipoint_id, keep, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_linestring
-SEXP rcpp_sf_linestring(SEXP x, SEXP cols, SEXP linestring_id, bool keep, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sf_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP linestring_idSEXP, SEXP keepSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sf_linestring(SEXP x, SEXP cols, SEXP linestring_id, bool keep, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sf_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP linestring_idSEXP, SEXP keepSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -212,14 +212,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_linestring(x, cols, linestring_id, keep, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_linestring(x, cols, linestring_id, keep, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_multilinestring
-SEXP rcpp_sf_multilinestring(SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sf_multilinestring(SEXP xSEXP, SEXP colsSEXP, SEXP multilinestring_idSEXP, SEXP linestring_idSEXP, SEXP keepSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sf_multilinestring(SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sf_multilinestring(SEXP xSEXP, SEXP colsSEXP, SEXP multilinestring_idSEXP, SEXP linestring_idSEXP, SEXP keepSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -228,14 +228,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type multilinestring_id(multilinestring_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multilinestring(x, cols, multilinestring_id, linestring_id, keep, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multilinestring(x, cols, multilinestring_id, linestring_id, keep, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_polygon
-SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool m_only, bool close, bool keep);
-RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP, SEXP keepSEXP) {
+SEXP rcpp_sf_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sf_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP keepSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -243,16 +243,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_polygon(x, cols, polygon_id, linestring_id, m_only, close, keep));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_polygon(x, cols, polygon_id, linestring_id, close, keep, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_multipolygon
-SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool m_only, bool close, bool keep);
-RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP, SEXP keepSEXP) {
+SEXP rcpp_sf_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sf_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP keepSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -261,93 +261,93 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type multipolygon_id(multipolygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
     Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, m_only, close, keep));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, close, keep, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_point
-SEXP rcpp_sfc_point(SEXP x, SEXP cols, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_point(SEXP xSEXP, SEXP colsSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_point(SEXP x, SEXP cols, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_point(SEXP xSEXP, SEXP colsSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_point(x, cols, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_point(x, cols, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_points
-SEXP rcpp_sfc_points(Rcpp::List lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_points(SEXP lstSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_points(Rcpp::List lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_points(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_points(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_points(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_multipoint
-SEXP rcpp_sfc_multipoint(SEXP x, SEXP cols, SEXP id_col, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_multipoint(SEXP x, SEXP cols, SEXP id_col, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipoint(x, cols, id_col, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipoint(x, cols, id_col, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_multipoints
-SEXP rcpp_sfc_multipoints(Rcpp::List lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_multipoints(SEXP lstSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_multipoints(Rcpp::List lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipoints(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipoints(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipoints(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_linestring
-SEXP rcpp_sfc_linestring(SEXP x, SEXP cols, SEXP id_col, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_linestring(SEXP x, SEXP cols, SEXP id_col, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_linestring(x, cols, id_col, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_linestring(x, cols, id_col, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_linestrings
-SEXP rcpp_sfc_linestrings(Rcpp::List lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_linestrings(SEXP lstSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_linestrings(Rcpp::List lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_linestrings(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_linestrings(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_linestrings(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_multilinestring
-SEXP rcpp_sfc_multilinestring(SEXP x, SEXP cols, SEXP multiline_id, SEXP line_id, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_multilinestring(SEXP xSEXP, SEXP colsSEXP, SEXP multiline_idSEXP, SEXP line_idSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_multilinestring(SEXP x, SEXP cols, SEXP multiline_id, SEXP line_id, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multilinestring(SEXP xSEXP, SEXP colsSEXP, SEXP multiline_idSEXP, SEXP line_idSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -355,26 +355,26 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type multiline_id(multiline_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multilinestring(x, cols, multiline_id, line_id, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multilinestring(x, cols, multiline_id, line_id, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_multilinestrings
-SEXP rcpp_sfc_multilinestrings(Rcpp::List lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfc_multilinestrings(SEXP lstSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfc_multilinestrings(Rcpp::List lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multilinestrings(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multilinestrings(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multilinestrings(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_polygon
-SEXP rcpp_sfc_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfc_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+SEXP rcpp_sfc_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -382,28 +382,28 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygon(x, cols, polygon_id, line_id, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygon(x, cols, polygon_id, line_id, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_polygons
-SEXP rcpp_sfc_polygons(Rcpp::List lst, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfc_polygons(SEXP lstSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+SEXP rcpp_sfc_polygons(Rcpp::List lst, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_polygons(SEXP lstSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygons(lst, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygons(lst, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_multipolygon
-SEXP rcpp_sfc_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfc_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+SEXP rcpp_sfc_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -412,34 +412,35 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type multipolygon_id(multipolygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_multipolygons
-SEXP rcpp_sfc_multipolygons(Rcpp::List lst, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfc_multipolygons(SEXP lstSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+SEXP rcpp_sfc_multipolygons(Rcpp::List lst, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipolygons(SEXP lstSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipolygons(lst, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipolygons(lst, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfc_remove_holes
-Rcpp::List rcpp_sfc_remove_holes(Rcpp::List sfc, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfc_remove_holes(SEXP sfcSEXP, SEXP closeSEXP) {
+Rcpp::List rcpp_sfc_remove_holes(Rcpp::List sfc, std::string xyzm, bool close);
+RcppExport SEXP _sfheaders_rcpp_sfc_remove_holes(SEXP sfcSEXP, SEXP xyzmSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_remove_holes(sfc, close));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_remove_holes(sfc, xyzm, close));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -466,137 +467,137 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfg_point
-SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfg_point(SEXP x, SEXP geometry_columns, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_point(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_point(x, geometry_columns, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_point(x, geometry_columns, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_points
-Rcpp::List rcpp_sfg_points(Rcpp::List& lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_points(SEXP lstSEXP, SEXP m_onlySEXP) {
+Rcpp::List rcpp_sfg_points(Rcpp::List& lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_points(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_points(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_points(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipoint
-SEXP rcpp_sfg_multipoint(SEXP x, SEXP geometry_columns, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipoint(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfg_multipoint(SEXP x, SEXP geometry_columns, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipoint(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoint(x, geometry_columns, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoint(x, geometry_columns, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipoints
-Rcpp::List rcpp_sfg_multipoints(Rcpp::List& lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipoints(SEXP lstSEXP, SEXP m_onlySEXP) {
+Rcpp::List rcpp_sfg_multipoints(Rcpp::List& lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipoints(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoints(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipoints(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_linestring
-SEXP rcpp_sfg_linestring(SEXP x, SEXP geometry_columns, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_linestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfg_linestring(SEXP x, SEXP geometry_columns, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_linestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestring(x, geometry_columns, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestring(x, geometry_columns, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_linestrings
-Rcpp::List rcpp_sfg_linestrings(Rcpp::List& lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_linestrings(SEXP lstSEXP, SEXP m_onlySEXP) {
+Rcpp::List rcpp_sfg_linestrings(Rcpp::List& lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_linestrings(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestrings(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_linestrings(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multilinestring
-SEXP rcpp_sfg_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP m_onlySEXP) {
+SEXP rcpp_sfg_multilinestring(SEXP x, SEXP geometry_columns, SEXP line_id, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_multilinestring(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestring(x, geometry_columns, line_id, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestring(x, geometry_columns, line_id, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multilinestrings
-Rcpp::List rcpp_sfg_multilinestrings(Rcpp::List& lst, bool m_only);
-RcppExport SEXP _sfheaders_rcpp_sfg_multilinestrings(SEXP lstSEXP, SEXP m_onlySEXP) {
+Rcpp::List rcpp_sfg_multilinestrings(Rcpp::List& lst, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_multilinestrings(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestrings(lst, m_only));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multilinestrings(lst, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_polygon
-SEXP rcpp_sfg_polygon(SEXP x, SEXP geometry_columns, SEXP line_id, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+SEXP rcpp_sfg_polygon(SEXP x, SEXP geometry_columns, SEXP line_id, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_polygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP line_idSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygon(x, geometry_columns, line_id, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygon(x, geometry_columns, line_id, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_polygons
-Rcpp::List rcpp_sfg_polygons(Rcpp::List& lst, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_polygons(SEXP lstSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+Rcpp::List rcpp_sfg_polygons(Rcpp::List& lst, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_polygons(SEXP lstSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygons(lst, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_polygons(lst, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipolygon
-SEXP rcpp_sfg_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+SEXP rcpp_sfg_multipolygon(SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipolygon(SEXP xSEXP, SEXP geometry_columnsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -604,34 +605,35 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygon(x, geometry_columns, polygon_id, line_id, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygon(x, geometry_columns, polygon_id, line_id, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_multipolygons
-Rcpp::List rcpp_sfg_multipolygons(Rcpp::List& lst, bool m_only, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_multipolygons(SEXP lstSEXP, SEXP m_onlySEXP, SEXP closeSEXP) {
+Rcpp::List rcpp_sfg_multipolygons(Rcpp::List& lst, bool close, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfg_multipolygons(SEXP lstSEXP, SEXP closeSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
-    Rcpp::traits::input_parameter< bool >::type m_only(m_onlySEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygons(lst, m_only, close));
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_multipolygons(lst, close, xyzm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sfg_remove_holes
-SEXP rcpp_sfg_remove_holes(SEXP sfg, bool close);
-RcppExport SEXP _sfheaders_rcpp_sfg_remove_holes(SEXP sfgSEXP, SEXP closeSEXP) {
+SEXP rcpp_sfg_remove_holes(SEXP sfg, std::string xyzm, bool close);
+RcppExport SEXP _sfheaders_rcpp_sfg_remove_holes(SEXP sfgSEXP, SEXP xyzmSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_remove_holes(sfg, close));
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_remove_holes(sfg, xyzm, close));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -757,7 +759,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_polygons", (DL_FUNC) &_sfheaders_rcpp_sfc_polygons, 3},
     {"_sfheaders_rcpp_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygon, 7},
     {"_sfheaders_rcpp_sfc_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygons, 3},
-    {"_sfheaders_rcpp_sfc_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfc_remove_holes, 2},
+    {"_sfheaders_rcpp_sfc_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfc_remove_holes, 3},
     {"_sfheaders_rcpp_get_sfc_attributes", (DL_FUNC) &_sfheaders_rcpp_get_sfc_attributes, 1},
     {"_sfheaders_rcpp_get_sfg_type", (DL_FUNC) &_sfheaders_rcpp_get_sfg_type, 1},
     {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 3},
@@ -772,7 +774,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfg_polygons", (DL_FUNC) &_sfheaders_rcpp_sfg_polygons, 3},
     {"_sfheaders_rcpp_sfg_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygon, 6},
     {"_sfheaders_rcpp_sfg_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygons, 3},
-    {"_sfheaders_rcpp_sfg_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfg_remove_holes, 2},
+    {"_sfheaders_rcpp_sfg_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfg_remove_holes, 3},
     {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 4},
     {"_sfheaders_rcpp_id_positions", (DL_FUNC) &_sfheaders_rcpp_id_positions, 2},
     {"_sfheaders_rcpp_subset_dataframe", (DL_FUNC) &_sfheaders_rcpp_subset_dataframe, 4},

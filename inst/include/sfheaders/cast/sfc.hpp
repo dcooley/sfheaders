@@ -379,7 +379,7 @@ namespace cast {
     Rcpp::String proj4string = crs[1];
 
     std::string cast_from;
-    std::string dim;
+    std::string xyzm;
 
     R_xlen_t i, j;
 
@@ -407,12 +407,11 @@ namespace cast {
 
       Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
       cast_from = cls[1];
-      dim = cls[0];
-      bool m_only = dim == "XYM" ? true : false;
+      xyzm = cls[0];
 
       int casting_from = cast_type( cast_from );
 
-      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, m_only, close );
+      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
 
       if( casting_from <= casting_to ) {
         res[ result_counter ] = new_res;

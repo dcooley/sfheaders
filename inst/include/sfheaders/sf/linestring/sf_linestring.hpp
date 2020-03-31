@@ -16,10 +16,10 @@ namespace sf {
     SEXP& x,
     SEXP& geometry_cols,
     SEXP& linestring_id,
-    bool m_only
+    std::string xyzm
   ) {
 
-    Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id, m_only );
+    Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id, xyzm );
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
     SEXP ids = sfheaders::utils::get_ids( x, linestring_id );
@@ -33,14 +33,14 @@ namespace sf {
       Rcpp::StringVector& property_cols,
       Rcpp::String& id_column,
       SEXP& line_ids,
-      bool m_only
+      std::string xyzm
   ) {
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
-    Rcpp::List sfc = sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions, m_only );
+    Rcpp::List sfc = sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions, xyzm );
 
     return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
@@ -51,7 +51,7 @@ namespace sf {
       Rcpp::IntegerVector& property_cols,
       int id_column,
       SEXP& line_ids,
-      bool m_only
+      std::string xyzm
   ) {
 
     // get the property cols as a string_vector so we get the column names
@@ -59,7 +59,7 @@ namespace sf {
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::StringVector str_property_cols = df_names[ property_cols ];
     Rcpp::String str_id_column = df_names[ id_column ];
-    return sf_linestring( df, str_geometry_cols, str_property_cols, str_id_column, line_ids, m_only );
+    return sf_linestring( df, str_geometry_cols, str_property_cols, str_id_column, line_ids, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -67,10 +67,10 @@ namespace sf {
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
       Rcpp::String& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     SEXP line_ids = df[ linestring_id ];
-    return sf_linestring( df, geometry_cols, property_cols, linestring_id, line_ids, m_only );
+    return sf_linestring( df, geometry_cols, property_cols, linestring_id, line_ids, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -78,14 +78,14 @@ namespace sf {
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
       int& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     Rcpp::StringVector df_names = df.names();
     Rcpp::StringVector str_geometry_cols = df_names[ geometry_cols ];
     Rcpp::StringVector str_property_cols = df_names[ property_cols ];
     Rcpp::String line_id = df_names[ linestring_id ];
 
-    return sf_linestring( df, str_geometry_cols, str_property_cols, line_id, m_only );
+    return sf_linestring( df, str_geometry_cols, str_property_cols, line_id, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -93,11 +93,11 @@ namespace sf {
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
       int& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     sfheaders::utils::column_exists( im, linestring_id );
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return sf_linestring( df, geometry_cols, property_cols, linestring_id, m_only );
+    return sf_linestring( df, geometry_cols, property_cols, linestring_id, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -105,11 +105,11 @@ namespace sf {
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
       int& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     sfheaders::utils::column_exists( nm, linestring_id );
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return sf_linestring( df, geometry_cols, property_cols, linestring_id, m_only );
+    return sf_linestring( df, geometry_cols, property_cols, linestring_id, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -117,10 +117,10 @@ namespace sf {
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
       Rcpp::String& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
-    return sf_linestring( df, geometry_cols, property_cols, linestring_id, m_only );
+    return sf_linestring( df, geometry_cols, property_cols, linestring_id, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -128,10 +128,10 @@ namespace sf {
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
       Rcpp::String& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
-    return sf_linestring( df, geometry_cols, property_cols, linestring_id, m_only );
+    return sf_linestring( df, geometry_cols, property_cols, linestring_id, xyzm );
   }
 
   inline SEXP sf_linestring(
@@ -139,27 +139,27 @@ namespace sf {
       Rcpp::IntegerVector& geometry_cols,
       Rcpp::IntegerVector& property_cols,
       int& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
     switch( TYPEOF( x ) ) {
     case INTSXP: {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-      return sf_linestring( im, geometry_cols, property_cols, linestring_id, m_only );
+      return sf_linestring( im, geometry_cols, property_cols, linestring_id, xyzm );
     }
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
-      return sf_linestring( nm, geometry_cols, property_cols, linestring_id, m_only );
+      return sf_linestring( nm, geometry_cols, property_cols, linestring_id, xyzm );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return sf_linestring( df, geometry_cols, property_cols, linestring_id, m_only );
+      return sf_linestring( df, geometry_cols, property_cols, linestring_id, xyzm );
     }
     }
     default: {
@@ -175,7 +175,7 @@ namespace sf {
       Rcpp::StringVector& geometry_cols,
       Rcpp::StringVector& property_cols,
       Rcpp::String& linestring_id,
-      bool m_only
+      std::string xyzm
   ) {
 
     switch( TYPEOF( x ) ) {
@@ -183,20 +183,20 @@ namespace sf {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-      return sf_linestring( im, geometry_cols, property_cols, linestring_id, m_only );
+      return sf_linestring( im, geometry_cols, property_cols, linestring_id, xyzm );
     }
     }
     case REALSXP: {
       if( Rf_isMatrix( x ) ) {
       SEXP xc = Rcpp::clone( x );
       Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
-      return sf_linestring( nm, geometry_cols, property_cols, linestring_id, m_only );
+      return sf_linestring( nm, geometry_cols, property_cols, linestring_id, xyzm );
     }
     }
     case VECSXP: {
       if( Rf_inherits( x, "data.frame" ) ) {
       Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      return sf_linestring( df, geometry_cols, property_cols, linestring_id, m_only );
+      return sf_linestring( df, geometry_cols, property_cols, linestring_id, xyzm );
     }
     }
     default: {
@@ -212,11 +212,11 @@ namespace sf {
     SEXP& geometry_cols,
     SEXP& linestring_id,
     bool& keep,
-    bool m_only
+    std::string xyzm
   ) {
 
     if( !keep ) {
-      return sf_linestring( x, geometry_cols, linestring_id, m_only );
+      return sf_linestring( x, geometry_cols, linestring_id, xyzm );
     }
 
     if( Rf_isNull( geometry_cols ) ) {
@@ -225,7 +225,7 @@ namespace sf {
 
 
     if( Rf_isNull( linestring_id ) ) {
-      Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id, m_only );
+      Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id, xyzm );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
       return sfheaders::sf::create_sf( x, sfc, property_columns );
     }
@@ -244,7 +244,7 @@ namespace sf {
         Rcpp::IntegerVector iv_property_cols = sfheaders::utils::other_columns( x, geom_cols );
         int i_linestring_id_col = iv_linestring_id_col[0];
 
-        return sf_linestring( x, iv_geometry_cols, iv_property_cols, i_linestring_id_col, m_only );
+        return sf_linestring( x, iv_geometry_cols, iv_property_cols, i_linestring_id_col, xyzm );
       }
       case STRSXP: {
         Rcpp::StringVector sv_geometry_cols = Rcpp::as< Rcpp::StringVector >( geometry_cols );
@@ -254,7 +254,7 @@ namespace sf {
         Rcpp::StringVector sv_property_cols = sfheaders::utils::other_columns( x, geom_cols );
 
         Rcpp::String s_linestring_id_col = sv_linestring_id_col[0];
-        return sf_linestring( x, sv_geometry_cols, sv_property_cols, s_linestring_id_col, m_only );
+        return sf_linestring( x, sv_geometry_cols, sv_property_cols, s_linestring_id_col, xyzm );
       }
       default: {
         Rcpp::stop("sfheaders - unsupported linestring type");  // #nocov

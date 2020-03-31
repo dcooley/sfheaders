@@ -39,10 +39,10 @@ namespace sfg {
   inline void make_sfg(
     Rcpp::IntegerVector& iv,
     int sfg_type,
-    bool m_only
+    std::string& xyzm
   ) {
     R_xlen_t n_col = iv.length();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
 
     std::string geom_type = get_sfg_type( sfg_type );
     iv.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
@@ -51,10 +51,10 @@ namespace sfg {
   inline void make_sfg(
       Rcpp::NumericVector& nv,
       int sfg_type,
-      bool m_only
+      std::string& xyzm
   ) {
     R_xlen_t n_col = nv.length();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
 
     std::string geom_type = get_sfg_type( sfg_type );
     nv.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
@@ -63,11 +63,11 @@ namespace sfg {
   inline void make_sfg(
     Rcpp::IntegerMatrix& im,
     int sfg_type,
-    bool m_only
+    std::string& xyzm
   ) {
 
     R_xlen_t n_col = im.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
 
     std::string geom_type = get_sfg_type( sfg_type );
     im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
@@ -76,11 +76,11 @@ namespace sfg {
   inline void make_sfg(
       Rcpp::NumericMatrix& nm,
       int sfg_type,
-      bool m_only
+      std::string& xyzm
   ) {
 
     R_xlen_t n_col = nm.ncol();
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
 
     std::string geom_type = get_sfg_type( sfg_type );
     nm.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
@@ -89,9 +89,9 @@ namespace sfg {
   inline void make_sfg(
       Rcpp::List& lst,
       int sfg_type,
-      bool m_only
+      std::string& xyzm
   ) {
-    std::string dim = sfheaders::sfg::sfg_dimension( lst, m_only );
+    std::string dim = sfheaders::sfg::sfg_dimension( lst, xyzm );
 
     std::string geom_type = get_sfg_type( sfg_type );
     lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
@@ -101,9 +101,9 @@ namespace sfg {
     Rcpp::List& lst,
     R_xlen_t n_col,
     int sfg_type,
-    bool m_only
+    std::string& xyzm
   ) {
-    std::string dim = sfheaders::sfg::sfg_dimension( n_col, m_only );
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
 
     std::string geom_type = get_sfg_type( sfg_type );
     lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );

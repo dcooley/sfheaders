@@ -7,14 +7,14 @@
 namespace sfheaders {
 namespace sfc {
 
-  inline Rcpp::List sfc_multilinestrings( Rcpp::List& lst, bool m_only ) {
+  inline Rcpp::List sfc_multilinestrings( Rcpp::List& lst, std::string xyzm ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfc::sfc_multilinestring( x, m_only );
+      sfcs[i] = sfheaders::sfc::sfc_multilinestring( x, xyzm );
     }
     return sfcs;
   }
