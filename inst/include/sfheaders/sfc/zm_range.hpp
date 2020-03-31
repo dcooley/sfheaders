@@ -290,6 +290,18 @@ namespace zm {
     }
   }
   // #nocov end
+
+  // overloads for revedeps (geojsonsf)
+  inline void calculate_zm_ranges(
+    R_xlen_t n_col,
+    Rcpp::NumericVector z_range,
+    Rcpp::NumericVector m_range,
+    Rcpp::NumericVector nv
+  ) {
+    std::string xyzm;
+    calculate_zm_ranges( z_range, m_range, nv, xyzm );
+  }
+
 } // zm
 } // sfheaders
 

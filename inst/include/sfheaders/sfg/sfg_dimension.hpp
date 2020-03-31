@@ -23,7 +23,7 @@ namespace sfg {
 
   inline std::string sfg_dimension(
       R_xlen_t& n,
-      std::string xyzm
+      std::string xyzm = ""
   ) {
 
     if( !xyzm.empty() ) {
@@ -35,7 +35,7 @@ namespace sfg {
 
     switch ( n ) {
     case 3: {
-      return "XYZ";  // defautl to XYZ if dimension is not provided, and n == 3
+      return "XYZ";  // default to XYZ if dimension is not provided, and n == 3
     }
     case 4: {
       return "XYZM";
@@ -44,32 +44,32 @@ namespace sfg {
     return dim;
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, std::string xyzm ) {
+  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, std::string xyzm = "" ) {
     R_xlen_t n = iv.size();
     return sfg_dimension( n, xyzm );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericVector& nv, std::string xyzm ) {
+  inline std::string sfg_dimension( Rcpp::NumericVector& nv, std::string xyzm = "" ) {
     R_xlen_t n = nv.size();
     return sfg_dimension( n, xyzm );
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, std::string xyzm ) {
+  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, std::string xyzm = "" ) {
     R_xlen_t n_col = im.ncol();
     return sfg_dimension( n_col, xyzm );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, std::string xyzm ) {
+  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, std::string xyzm = "" ) {
     R_xlen_t n_col = nm.ncol();
     return sfg_dimension( n_col, xyzm );
   }
 
-  inline std::string sfg_dimension( Rcpp::DataFrame& df, std::string xyzm ) {
+  inline std::string sfg_dimension( Rcpp::DataFrame& df, std::string xyzm = "" ) {
     R_xlen_t n_col = df.ncol();
     return sfg_dimension( n_col, xyzm );
   }
 
-  inline std::string sfg_dimension( SEXP x, std::string xyzm ) {
+  inline std::string sfg_dimension( SEXP x, std::string xyzm = "" ) {
 
     switch ( TYPEOF( x ) ) {
     case INTSXP: {
