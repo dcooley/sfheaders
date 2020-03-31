@@ -118,16 +118,141 @@ test_that("R-API supplying x, y, z, m columns gives correct dimension",{
     , val = 1:4
   )
 
+  ## sfg
+  res <- sfg_point(obj = df[1, ], x = "x", y = "y", z = "m")
+  expect_true( attr(res, "class")[1] == "XYZ" )
+  res <- sfg_point(obj = df[1, ], x = "x", y = "y", m = "m")
+  expect_true( attr(res, "class")[1] == "XYM" )
+  res <- sfg_point(obj = df[1, ], x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res, "class")[1] == "XYZM" )
+
+  res <- sfg_multipoint(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res, "class")[1] == "XYZ" )
+  res <- sfg_multipoint(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res, "class")[1] == "XYM" )
+  res <- sfg_multipoint(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res, "class")[1] == "XYZM" )
+
   res <- sfg_linestring(obj = df, x = "x", y = "y", z = "m")
   expect_true( attr(res, "class")[1] == "XYZ" )
-
   res <- sfg_linestring(obj = df, x = "x", y = "y", m = "m")
   expect_true( attr(res, "class")[1] == "XYM" )
-
   res <- sfg_linestring(obj = df, x = "x", y = "y", z = "z", m = "m")
   expect_true( attr(res, "class")[1] == "XYZM" )
 
+  res <- sfg_multilinestring(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res, "class")[1] == "XYZ" )
+  res <- sfg_multilinestring(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res, "class")[1] == "XYM" )
+  res <- sfg_multilinestring(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res, "class")[1] == "XYZM" )
+
+  res <- sfg_polygon(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res, "class")[1] == "XYZ" )
+  res <- sfg_polygon(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res, "class")[1] == "XYM" )
+  res <- sfg_polygon(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res, "class")[1] == "XYZM" )
+
+  res <- sfg_multipolygon(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res, "class")[1] == "XYZ" )
+  res <- sfg_multipolygon(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res, "class")[1] == "XYM" )
+  res <- sfg_multipolygon(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res, "class")[1] == "XYZM" )
+
+
+  ## sfc
+  res <- sfc_point(obj = df[1, ], x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZ" )
+  res <- sfc_point(obj = df[1, ], x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYM" )
+  res <- sfc_point(obj = df[1, ], x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZM" )
+
+  res <- sfc_multipoint(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZ" )
+  res <- sfc_multipoint(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYM" )
+  res <- sfc_multipoint(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZM" )
+
+  res <- sfc_linestring(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZ" )
+  res <- sfc_linestring(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYM" )
+  res <- sfc_linestring(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZM" )
+
+  res <- sfc_multilinestring(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZ" )
+  res <- sfc_multilinestring(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYM" )
+  res <- sfc_multilinestring(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZM" )
+
+  res <- sfc_polygon(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZ" )
+  res <- sfc_polygon(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYM" )
+  res <- sfc_polygon(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZM" )
+
+  res <- sfc_multipolygon(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZ" )
+  res <- sfc_multipolygon(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYM" )
+  res <- sfc_multipolygon(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]], "class")[1] == "XYZM" )
+
+  ## sf
+  res <- sf_point(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res[[1]][[1]], "class")[1] == "XYZ" )
+  res <- sf_point(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res[[1]][[1]], "class")[1] == "XYM" )
+  res <- sf_point(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res[[1]][[1]], "class")[1] == "XYZM" )
+
+  res <- sf_multipoint(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZ" )
+  res <- sf_multipoint(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYM" )
+  res <- sf_multipoint(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZM" )
+
+  res <- sf_linestring(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZ" )
+  res <- sf_linestring(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYM" )
+  res <- sf_linestring(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZM" )
+
+  res <- sf_multilinestring(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZ" )
+  res <- sf_multilinestring(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYM" )
+  res <- sf_multilinestring(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZM" )
+
+  res <- sf_polygon(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZ" )
+  res <- sf_polygon(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYM" )
+  res <- sf_polygon(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZM" )
+
+  res <- sf_multipolygon(obj = df, x = "x", y = "y", z = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZ" )
+  res <- sf_multipolygon(obj = df, x = "x", y = "y", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYM" )
+  res <- sf_multipolygon(obj = df, x = "x", y = "y", z = "z", m = "m")
+  expect_true( attr(res$geometry[[1]], "class")[1] == "XYZM" )
 
 
 })
+
+
+
+
+
 

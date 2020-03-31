@@ -1,0 +1,369 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(eixport)
+> 
+> test_check("eixport")
+trying URL 'https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/v432_AP/CO/TRO/v432_CO_2012_IPCC_1A3b.zip'
+Content type 'application/zip' length 2994724 bytes (2.9 MB)
+==================================================
+downloaded 2.9 MB
+
+trying URL 'https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/v432_AP/CO/TRO/v432_CO_2012_IPCC_1A3b.0.1x0.1.zip'
+Content type 'application/zip' length 1926864 bytes (1.8 MB)
+==================================================
+downloaded 1.8 MB
+
+writing emissions: E_CO weight 1 on file /var/folders/l7/tnxgxkfn6k9dq415v6k2zpxh0000gn/T//Rtmp1e1q31/wrfchemi_d02_2011-08-02_00:00:00 
+writing emissions: E_CO weight 1 on file /var/folders/l7/tnxgxkfn6k9dq415v6k2zpxh0000gn/T//Rtmp1e1q31/wrfchemi_d02_2011-08-02_00_00_00 
+File /var/folders/l7/tnxgxkfn6k9dq415v6k2zpxh0000gn/T//Rtmp1e1q31/EMISS/wrfchemi_d02_2011-08-01_00:00:00 (NC_FORMAT_CLASSIC):
+
+     39 variables (excluding dimension variables):
+        char Times[DateStrLen,Time]   
+        float XLAT[west_east,south_north]   
+            MemoryOrder: XY
+            description: LATITUDE, SOUTH IS NEGATIVE
+            units: degree north
+            stagger: 
+            FieldType: 104
+        float XLONG[west_east,south_north]   
+            MemoryOrder: XY
+            description: LONGITUDE, WEST IS NEGATIVE
+            units: degree east
+            stagger: 
+            FieldType: 104
+        float E_ALD[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_C2H5OH[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_CH3OH[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_CO[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_CSL[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_ECC[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_ECI[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_ECJ[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_ETH[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_HC3[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_HC5[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_HC8[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_HCHO[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_ISO[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_KET[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_NH3[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_NO[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_NO2[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_NO3C[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_NO3I[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_NO3J[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_OL2[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_OLI[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_OLT[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_ORA2[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_ORGC[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_ORGI[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_ORGJ[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_PM25I[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_PM25J[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_SO2[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_SO4C[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_SO4I[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_SO4J[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: ug m^-2 s^-1
+            stagger: Z
+            FieldType: 104
+        float E_TOL[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+        float E_XYL[west_east,south_north,emissions_zdim_stag,Time]   
+            MemoryOrder: XYZ
+            description: EMISSIONS
+            units: mol km^-2 hr^-1
+            stagger: Z
+            FieldType: 104
+
+     5 dimensions:
+        DateStrLen  Size:19
+        Time  Size:1   *** is unlimited ***
+        west_east  Size:63
+        south_north  Size:51
+        emissions_zdim_stag  Size:1
+
+    79 global attributes:
+        TITLE: Anthropogenic emissions for WRF V4.0
+        History: created on 2020-04-01 at 06:15
+        Author: R package eixport v0.4.5
+        WEST-EAST_GRID_DIMENSION: 64
+        SOUTH-NORTH_GRID_DIMENSION: 52
+        BOTTOM-TOP_GRID_DIMENSION: 35
+        DX: 3000
+        DY: 3000
+        GRIDTYPE: C
+        DIFF_OPT: 1
+        KM_OPT: 4
+        DAMP_OPT: 3
+        DAMPCOEF: 0.200000002980232
+        KHDIF: 0
+        KVDIF: 0
+        MP_PHYSICS: 10
+        RA_LW_PHYSICS: 4
+        RA_SW_PHYSICS: 4
+        SF_SFCLAY_PHYSICS: 1
+        SF_SURFACE_PHYSICS: 2
+        BL_PBL_PHYSICS: 1
+        CU_PHYSICS: 0
+        SF_LAKE_PHYSICS: 0
+        SURFACE_INPUT_SOURCE: 1
+        SST_UPDATE: 0
+        GRID_FDDA: 0
+        GFDDA_INTERVAL_M: 0
+        GFDDA_END_H: 0
+        GRID_SFDDA: 0
+        SGFDDA_INTERVAL_M: 0
+        SGFDDA_END_H: 0
+        HYPSOMETRIC_OPT: 2
+        USE_THETA_M: 0
+        USE_MAXW_LEVEL: 0
+        USE_TROP_LEVEL: 0
+        GWD_OPT: 0
+        SF_URBAN_PHYSICS: 1
+        SF_OCEAN_PHYSICS: 0
+        SIMULATION_INITIALIZATION_TYPE: REAL-DATA CASE
+        WEST-EAST_PATCH_START_UNSTAG: 1
+        WEST-EAST_PATCH_END_UNSTAG: 63
+        WEST-EAST_PATCH_START_STAG: 1
+        WEST-EAST_PATCH_END_STAG: 64
+        SOUTH-NORTH_PATCH_START_UNSTAG: 1
+        SOUTH-NORTH_PATCH_END_UNSTAG: 51
+        SOUTH-NORTH_PATCH_START_STAG: 1
+        SOUTH-NORTH_PATCH_END_STAG: 52
+        BOTTOM-TOP_PATCH_START_UNSTAG: 1
+        BOTTOM-TOP_PATCH_END_UNSTAG: 34
+        BOTTOM-TOP_PATCH_START_STAG: 1
+        BOTTOM-TOP_PATCH_END_STAG: 35
+        GRID_ID: 2
+        PARENT_ID: 1
+        I_PARENT_START: 48
+        J_PARENT_START: 40
+        PARENT_GRID_RATIO: 3
+        DT: 15
+        CEN_LAT: -23.7047119140625
+        CEN_LON: -46.5030517578125
+        TRUELAT1: -23
+        TRUELAT2: -24
+        MOAD_CEN_LAT: -23.5499954223633
+        STAND_LON: -45
+        POLE_LAT: 90
+        POLE_LON: 0
+        GMT: 0
+        JULYR: 2011
+        JULDAY: 213
+        MAP_PROJ: 1
+        MAP_PROJ_CHAR: Lambert Conformal
+        MMINLU: MODIFIED_IGBP_MODIS_NOAH
+        NUM_LAND_CAT: 21
+        ISWATER: 17
+        ISLAKE: 21
+        ISICE: 15
+        ISURBAN: 13
+        ISOILWATER: 14
+        HYBRID_OPT: -1
+        ETAC: 0
+using grid info from: /Users/dave/Documents/github/sfheaders/revdep/checks.noindex/eixport/new/eixport.Rcheck/eixport/extdata/wrfinput_d02 
+Number of lat points 51
+Number of lon points 63
+using grid info from: /Users/dave/Documents/github/sfheaders/revdep/checks.noindex/eixport/new/eixport.Rcheck/eixport/extdata/wrfinput_d02 
+Number of lat points 51
+Number of lon points 63
+writing emissions: E_CO weight 1 on file /var/folders/l7/tnxgxkfn6k9dq415v6k2zpxh0000gn/T//Rtmp1e1q31/wrfchemi_d02_2011-08-02_00:00:00 
+writing emissions: E_CO weight 1 on file /var/folders/l7/tnxgxkfn6k9dq415v6k2zpxh0000gn/T//Rtmp1e1q31/wrfchemi_d02_2011-08-02_00_00_00 
+2011-08-02 00:00:00
+Weekday: Tuesday - Activity intensity: 0.17556734
+══ testthat results  ═══════════════════════════════════════════════════════════════════════════════════════
+[ OK: 19 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
+> 
+> proc.time()
+   user  system elapsed 
+ 12.319   1.410  25.275 

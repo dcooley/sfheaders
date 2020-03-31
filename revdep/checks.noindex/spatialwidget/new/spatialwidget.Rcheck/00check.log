@@ -1,0 +1,17 @@
+* using log directory ‘/Users/dave/Documents/github/sfheaders/revdep/checks.noindex/spatialwidget/new/spatialwidget.Rcheck’
+* using R version 3.6.1 (2019-07-05)
+* using platform: x86_64-apple-darwin15.6.0 (64-bit)
+* using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
+* checking for file ‘spatialwidget/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘spatialwidget’ version ‘0.2.2’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required and available but unsuitable version: ‘sfheaders’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR

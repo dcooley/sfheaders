@@ -1,0 +1,28 @@
+Package: sfheaders
+Type: Package
+Title: Converts Between R Objects and Simple Feature Objects
+Date: 2020-01-20
+Version: 0.1.0005
+Authors@R: c(
+    person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre"))
+    )
+Description: Converts between R and Simple Feature 'sf' objects, without depending
+  on the Simple Feature library. Conversion functions are available at both the R level, 
+  and through 'Rcpp'.
+License: GPL-3
+URL: https://dcooley.github.io/sfheaders/
+BugReports: https://github.com/dcooley/sfheaders/issues
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+SystemRequirements: C++11
+LinkingTo: Rcpp
+Imports: Rcpp
+Suggests: covr, testthat
+RemoteType: local
+RemoteUrl: /Users/dave/Documents/github/sfheaders
+NeedsCompilation: yes
+Packaged: 2020-03-31 19:07:05 UTC; dave
+Author: David Cooley [aut, cre]
+Maintainer: David Cooley <david.cooley.au@gmail.com>
+Built: R 3.6.1; x86_64-apple-darwin15.6.0; 2020-03-31 19:07:07 UTC; unix

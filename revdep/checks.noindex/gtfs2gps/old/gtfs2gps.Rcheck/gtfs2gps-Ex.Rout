@@ -1,0 +1,342 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "gtfs2gps"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('gtfs2gps')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("filter_by_agency_id")
+> ### * filter_by_agency_id
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filter_by_agency_id
+> ### Title: Filter GTFS data by agency ids
+> ### Aliases: filter_by_agency_id
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> result <- filter_by_agency_id(poa, "EPTC")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("filter_by_shape_id")
+> ### * filter_by_shape_id
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filter_by_shape_id
+> ### Title: Filter GTFS data by shape ids
+> ### Aliases: filter_by_shape_id
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> subset <- filter_by_shape_id(poa, "T2-1")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("filter_day_period")
+> ### * filter_day_period
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filter_day_period
+> ### Title: Filter GTFS data within a period of the day
+> ### Aliases: filter_day_period
+> 
+> ### ** Examples
+> 
+> # read gtfs data
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> # filter gtfs data
+> poa_f <- filter_day_period(poa, period_start = "10:00", period_end = "10:20")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("filter_single_trip")
+> ### * filter_single_trip
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filter_single_trip
+> ### Title: Filter GTFS trips in order to have one trip per shape_id
+> ### Aliases: filter_single_trip
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> subset <- filter_single_trip(poa)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("filter_valid_stop_times")
+> ### * filter_valid_stop_times
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filter_valid_stop_times
+> ### Title: Filter GTFS data using valid stop times
+> ### Aliases: filter_valid_stop_times
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> subset <- filter_valid_stop_times(poa)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("filter_week_days")
+> ### * filter_week_days
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: filter_week_days
+> ### Title: Filter GTFS trips operating on week days
+> ### Aliases: filter_week_days
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> subset <- filter_week_days(poa)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("gps_as_sf")
+> ### * gps_as_sf
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gps_as_sf
+> ### Title: Convert GPS-like data.table to a Simple Feature object
+> ### Aliases: gps_as_sf
+> 
+> ### ** Examples
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> subset <- filter_by_shape_id(poa, "T2-1") %>%
++   filter_single_trip()
+> 
+> poa_gps <- gtfs2gps(subset)
+Converting shapes to sf objects
+Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
+Using 1 CPU core
+Processing the data
+  |                                                          |                                                  |   0%  |                                                          |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
+> poa_gps_sf <- gps_as_sf(poa_gps)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sf’, ‘package:dplyr’
+
+> nameEx("gtfs2gps")
+> ### * gtfs2gps
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gtfs2gps
+> ### Title: Convert GTFS to GPS-like data given a spatial resolution
+> ### Aliases: gtfs2gps
+> 
+> ### ** Examples
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> poa <- read_gtfs(system.file("extdata/poa.zip", package="gtfs2gps"))
+> subset <- filter_by_shape_id(poa, "T2-1") %>%
++   filter_single_trip()
+> 
+> poa_gps <- gtfs2gps(subset)
+Converting shapes to sf objects
+Using 1 CPU core
+Processing the data
+  |                                                          |                                                  |   0%  |                                                          |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’
+
+> nameEx("gtfs_shapes_as_sf")
+> ### * gtfs_shapes_as_sf
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gtfs_shapes_as_sf
+> ### Title: Convert GTFS shapes to simple feature object
+> ### Aliases: gtfs_shapes_as_sf
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/saopaulo.zip", package = "gtfs2gps"))
+> poa_sf <- gtfs_shapes_as_sf(poa)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("gtfs_stops_as_sf")
+> ### * gtfs_stops_as_sf
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gtfs_stops_as_sf
+> ### Title: Convert GTFS stops to simple feature object
+> ### Aliases: gtfs_stops_as_sf
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> poa_shapes <- gtfs_shapes_as_sf(poa)
+> poa_stops <- gtfs_stops_as_sf(poa)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("read_gtfs")
+> ### * read_gtfs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: read_gtfs
+> ### Title: Read GTFS data into a list of data.tables
+> ### Aliases: read_gtfs
+> 
+> ### ** Examples
+> 
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("test_gtfs_freq")
+> ### * test_gtfs_freq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: test_gtfs_freq
+> ### Title: Test whether a GTFS feed is frequency based
+> ### Aliases: test_gtfs_freq
+> 
+> ### ** Examples
+> 
+> # read a gtfs.zip to memory
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps"))
+> 
+> # Test whether a GTFS feed is frequency based
+> test_gtfs_freq(poa)
+[1] "simple"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("write_gtfs")
+> ### * write_gtfs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: write_gtfs
+> ### Title: Write GTFS data into a zip file
+> ### Aliases: write_gtfs
+> 
+> ### ** Examples
+> 
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> 
+> # read a gtfs.zip to memory
+> poa <- read_gtfs(system.file("extdata/poa.zip", package = "gtfs2gps")) %>%
++   filter_by_shape_id("T2-1") %>%
++   filter_single_trip()
+> 
+> # write GTFS data into a zip file
+> write_gtfs(poa, paste0(tempdir(), "/mypoa.zip"))
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:dplyr’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  5.892 1.151 5.767 0.046 0.009 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
