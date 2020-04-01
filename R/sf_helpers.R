@@ -108,6 +108,7 @@ sf_pt <- function(obj, keep = FALSE) {
 #' simpler syntax.
 #'
 #' @inheritParams sf_point
+#' @inheritParams sf_multipoint
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
@@ -144,7 +145,7 @@ sf_mpt <- function(obj, keep = FALSE, list_columns = NULL) {
 #' Constructs sf of LINESTRING objects, a helper for [sf_linestring()] with a
 #' simpler syntax.
 #'
-#' @inheritParams sf_point
+#' @inheritParams sf_linestring
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
@@ -176,7 +177,7 @@ sf_line <- function(obj, keep = FALSE, list_columns = NULL ) {
 #' Constructs sf of MULTILINESTRING objects, a helper for [sf_multilinestring()]
 #' with a simpler syntax.
 #'
-#' @inheritParams sf_point
+#' @inheritParams sf_line
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
@@ -223,8 +224,7 @@ sf_mline <- function(obj, keep = FALSE, list_columns = NULL ) {
 #'Constructs sf of POLYGON objects, a helper for [sf_polygon()] with a simpler
 #'syntax.
 #'
-#'@inheritParams sf_multipolygon
-#'@inheritParams sf_point
+#'@inheritParams sf_polygon
 #'@inheritSection sf_pt Helpers
 #'@inheritSection sfc_point notes
 #'@inheritSection sf_point Keeping Properties
@@ -260,8 +260,7 @@ sf_poly <- function(obj, close = TRUE, keep = FALSE, list_columns = NULL ) {
 #' Constructs sf of MULTIPOLYGON objects, a helper for [sf_multipolygon()] with
 #' a simpler syntax.
 #'
-#' @inheritParams sf_multipolygon
-#' @inheritParams sf_point
+#' @inheritParams sf_polygon
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties

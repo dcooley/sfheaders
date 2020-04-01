@@ -202,9 +202,13 @@ namespace df {
     }
 
     if( Rf_isNull( unlist ) ) {
-      // Rcpp::Rcout << "not unlisting: " << std::endl;
       return sf_to_df( sf, fill );
     }
+
+    // issue 75 - ignore undefined 'unlist' columns
+    Rcpp::StringVector sf_names = sf.names();
+    Rcpp::IntegerVector unlist_idx = sfheaders::utils::where_is( unlist, sf_names );
+    unlist = unlist[ unlist_idx >= 0 ];
 
     R_xlen_t n_unlist = unlist.size();
     R_xlen_t i;
@@ -218,9 +222,6 @@ namespace df {
 
     to_unlist.names() = unlist;
 
-    // std::string geom_column = sf.attr("sf_column");
-    // Rcpp::List sfc = sf[ geom_column ];
-    // Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     Rcpp::DataFrame res = sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
 
     R_xlen_t n_row = res.nrow();

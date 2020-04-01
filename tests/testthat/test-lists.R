@@ -286,5 +286,25 @@ test_that("list_columns are kept",{
    expect_equal( sf$val, l2 )
    sf <- sf_polygon(obj = df, x = 1, y = 2, polygon_id = 4, linestring_id = 5, keep = TRUE, list_columns = 3, close = FALSE)
    expect_equal( sf$val, l2 )
+})
+
+
+test_that("non-existant list-columns are ignored",{
+
+   df <- data.frame(
+      x = 1:4
+      , y = 1:4
+      , val = 1:4
+   )
+
+   sf <- sf_linestring(
+      obj = df
+      , x = "x"
+      , y = "y"
+   )
+
+   res <- sf_to_df(sf = sf, unlist = "val")
+   expect_true( !"val" %in% names(res))
 
 })
+
