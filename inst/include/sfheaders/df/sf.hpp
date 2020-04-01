@@ -142,7 +142,7 @@ namespace df {
     }
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
-    //Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
+    // Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
 
     // in sfc.hpp I define geometry columns with names 'x','y','z','m'
     // so I know these will be geometry columns
@@ -181,6 +181,8 @@ namespace df {
       Rcpp::stop("sfheaders - sf_column not found");
     }
 
+    // Rcpp::Rcout << "sf_to_df" << std::endl;
+
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
@@ -200,6 +202,7 @@ namespace df {
     }
 
     if( Rf_isNull( unlist ) ) {
+      // Rcpp::Rcout << "not unlisting: " << std::endl;
       return sf_to_df( sf, fill );
     }
 

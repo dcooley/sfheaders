@@ -127,15 +127,17 @@ test_that("z_range correctly calculated", {
 test_that("m_range correctly calculated", {
 
 
-  mr <- function( x ) {
-    sfheaders:::rcpp_calculate_m_range( x )
+  mr <- function( x, xyzm = "") {
+    sfheaders:::rcpp_calculate_m_range( x, xyzm )
   }
 
   err <- "sfheaders - incorrect size of m_range"
 
-  expect_error( mr( 1:2 ), err )
+  expect_error( mr( 1:2, "XY" ), err )
+  expect_error( mr( 1:2, "XYM" ), err )
+  expect_error( mr( 1:2, "XYZ" ), err )
   expect_error( mr( c(1.2,2.2) ), err )
-  expect_error( mr( 1:3 ), err )
+  # expect_error( mr( 1:3 ), err )
 
   expect_equal( mr(1:4), c(4,4) )
 
@@ -255,3 +257,197 @@ test_that("bbox calculated on data.frame, sfg, sfc, sf", {
   expect_equal(sf_bbox( mp ), attr(mp$geometry, "bbox"))
 
 })
+
+
+test_that("z and m range correctly reported",{
+
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+    , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+    , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+    , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+    , z = 1:12
+    , m = 20:9
+  )
+
+
+
+
+  pt <- sf_point(obj = df, x = "x", y = "y", z = "z")
+  mpt <- sf_multipoint(obj = df, x = "x", y = "y", z = "z", multipoint_id = "id1")
+  ls <- sf_linestring(obj = df, x = "x", y = "y", z = "z", linestring_id = "id1")
+  mls <- sf_multilinestring(obj = df, x = "x", y = "y", z = "z", multilinestring_id = "id1")
+  p <- sf_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , z = "z"
+    , polygon_id = "id1"
+    , linestring_id = "id2"
+    , close = FALSE
+  )
+  mp <- sf_multipolygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , z = "z"
+    , multipolygon_id = "id1"
+    , linestring_id = "id2"
+    , close = FALSE
+  )
+
+ expect_true( all( attr( pt$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( mpt$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( ls$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( mls$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( p$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( mp$geometry, "z_range" ) == c(1,12) ) )
+
+ expect_true( is.na( attr( pt$geometry, "m_range" )[1] ) )
+ expect_true( is.na( attr( pt$geometry, "m_range" )[2] ) )
+ expect_true( is.na( attr( mp$geometry, "m_range" )[1] ) )
+ expect_true( is.na( attr( mp$geometry, "m_range" )[2] ) )
+ expect_true( is.na( attr( ls$geometry, "m_range" )[1] ) )
+ expect_true( is.na( attr( ls$geometry, "m_range" )[2] ) )
+ expect_true( is.na( attr( mls$geometry, "m_range" )[1] ) )
+ expect_true( is.na( attr( mls$geometry, "m_range" )[2] ) )
+ expect_true( is.na( attr( p$geometry, "m_range" )[1] ) )
+ expect_true( is.na( attr( p$geometry, "m_range" )[2] ) )
+ expect_true( is.na( attr( mp$geometry, "m_range" )[1] ) )
+ expect_true( is.na( attr( mp$geometry, "m_range" )[2] ) )
+
+
+ pt <- sf_point(obj = df, x = "x", y = "y", m = "m")
+ mpt <- sf_multipoint(obj = df, x = "x", y = "y", m = "m", multipoint_id = "id1")
+ ls <- sf_linestring(obj = df, x = "x", y = "y",  m = "m", linestring_id = "id1")
+ mls <- sf_multilinestring(obj = df, x = "x", y = "y", m = "m", multilinestring_id = "id1")
+ p <- sf_polygon(
+   obj = df
+   , x = "x"
+   , y = "y"
+   , m = "m"
+   , polygon_id = "id1"
+   , linestring_id = "id2"
+   , close = FALSE
+ )
+ mp <- sf_multipolygon(
+   obj = df
+   , x = "x"
+   , y = "y"
+   , m = "m"
+   , multipolygon_id = "id1"
+   , linestring_id = "id2"
+   , close = FALSE
+ )
+
+ expect_true( all( attr( pt$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( mpt$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( ls$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( mls$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( p$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( mp$geometry, "m_range" ) == c(9,20) ) )
+
+ expect_true( is.na( attr( pt$geometry, "z_range" )[1] ) )
+ expect_true( is.na( attr( pt$geometry, "z_range" )[2] ) )
+ expect_true( is.na( attr( mp$geometry, "z_range" )[1] ) )
+ expect_true( is.na( attr( mp$geometry, "z_range" )[2] ) )
+ expect_true( is.na( attr( ls$geometry, "z_range" )[1] ) )
+ expect_true( is.na( attr( ls$geometry, "z_range" )[2] ) )
+ expect_true( is.na( attr( mls$geometry, "z_range" )[1] ) )
+ expect_true( is.na( attr( mls$geometry, "z_range" )[2] ) )
+ expect_true( is.na( attr( p$geometry, "z_range" )[1] ) )
+ expect_true( is.na( attr( p$geometry, "z_range" )[2] ) )
+ expect_true( is.na( attr( mp$geometry, "z_range" )[1] ) )
+ expect_true( is.na( attr( mp$geometry, "z_range" )[2] ) )
+
+
+ pt <- sf_point(obj = df, x = "x", y = "y", z = "z", m = "m")
+ mpt <- sf_multipoint(obj = df, x = "x", y = "y", z = "z", m = "m", multipoint_id = "id1")
+ ls <- sf_linestring(obj = df, x = "x", y = "y", z = "z", m = "m", linestring_id = "id1")
+ mls <- sf_multilinestring(obj = df, x = "x", y = "y", z = "z", m = "m", multilinestring_id = "id1")
+ p <- sf_polygon(
+   obj = df
+   , x = "x"
+   , y = "y"
+   , z = "z"
+   , m = "m"
+   , polygon_id = "id1"
+   , linestring_id = "id2"
+   , close = FALSE
+ )
+ mp <- sf_multipolygon(
+   obj = df
+   , x = "x"
+   , y = "y"
+   , z = "z"
+   , m = "m"
+   , multipolygon_id = "id1"
+   , linestring_id = "id2"
+   , close = FALSE
+ )
+
+ expect_true( all( attr( pt$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( mpt$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( ls$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( mls$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( p$geometry, "z_range" ) == c(1,12) ) )
+ expect_true( all( attr( mp$geometry, "z_range" ) == c(1,12) ) )
+
+ expect_true( all( attr( pt$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( mpt$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( ls$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( mls$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( p$geometry, "m_range" ) == c(9,20) ) )
+ expect_true( all( attr( mp$geometry, "m_range" ) == c(9,20) ) )
+
+})
+
+test_that("C++ functions correctly 'guess' the dimension", {
+  ## i.e. when xyzm == ""
+  df <- data.frame(x = 1, y = 2)
+
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XY" )
+
+  df <- data.frame(x = 1, y = 2, z = 3)
+
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","z")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZ" )
+
+
+  ## Going into the C++ API, with defining 'xyzm', it has to 'guess' what the dimension is
+  df <- data.frame(x = 1, y = 2, m = 3)
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","m")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZ" )
+
+  df <- data.frame(x = 1, y = 2, z = 3, m = 4)
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","m")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZ" )
+
+  df <- data.frame(x = 1, y = 2, z = 3, m = 4)
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","z", "m")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZM" )
+
+
+})
+

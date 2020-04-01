@@ -7,25 +7,25 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline Rcpp::List sfg_points( Rcpp::List& lst ) {
+  inline Rcpp::List sfg_points( Rcpp::List& lst, std::string xyzm ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs( n );
 
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[ i ];
-      sfcs[ i ] = sfheaders::sfg::sfg_point( x );
+      sfcs[ i ] = sfheaders::sfg::sfg_point( x, xyzm );
     }
     return sfcs;
   }
 
-  inline Rcpp::List sfg_points( Rcpp::NumericMatrix& nm ) {
+  inline Rcpp::List sfg_points( Rcpp::NumericMatrix& nm, std::string xyzm ) {
     R_xlen_t n = nm.nrow();
     R_xlen_t i;
     Rcpp::List sfcs( n );
     for( i = 0; i < n; ++i ) {
       Rcpp::NumericVector nv = nm( i, Rcpp::_ );
-      sfcs[ i ] = sfheaders::sfg::sfg_point( nv );
+      sfcs[ i ] = sfheaders::sfg::sfg_point( nv, xyzm );
     }
     return sfcs;
   }

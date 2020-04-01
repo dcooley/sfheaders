@@ -7,14 +7,14 @@
 namespace sfheaders {
 namespace sfg {
 
-  inline Rcpp::List sfg_multipolygons( Rcpp::List& lst, bool close = true ) {
+  inline Rcpp::List sfg_multipolygons( Rcpp::List& lst, std::string xyzm, bool close = true ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfg::sfg_multipolygon( x, close );
+      sfcs[i] = sfheaders::sfg::sfg_multipolygon( x, xyzm, close );
     }
     return sfcs;
   }

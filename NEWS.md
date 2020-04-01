@@ -1,6 +1,7 @@
 
 # v0.2.2
 
+* `XYM` dimensions correctly handled
 * `unlist` argument in `sf_to_df()` to specify columns you want to unlist when converted to data.frame
 * helper functions with easier syntax - thanks to @mdsumner
 

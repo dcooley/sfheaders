@@ -366,6 +366,9 @@ namespace cast {
 
     if( sfc.hasAttribute("z_range") ) {
       z_range = sfc.attr("z_range");
+    }
+
+    if( sfc.hasAttribute("m_range") ) {
       m_range = sfc.attr("m_range");
     }
 
@@ -376,6 +379,7 @@ namespace cast {
     Rcpp::String proj4string = crs[1];
 
     std::string cast_from;
+    std::string xyzm;
 
     R_xlen_t i, j;
 
@@ -403,10 +407,11 @@ namespace cast {
 
       Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
       cast_from = cls[1];
+      xyzm = cls[0];
 
       int casting_from = cast_type( cast_from );
 
-      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, close );
+      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
 
       if( casting_from <= casting_to ) {
         res[ result_counter ] = new_res;

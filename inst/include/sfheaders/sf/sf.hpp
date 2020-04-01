@@ -52,6 +52,7 @@ namespace api {
     SEXP& list_columns,
     bool close,
     bool keep,
+    std::string xyzm,
     const std::string sf_type
   ) {
       // TODO - Make the id_columns the correct type
@@ -70,17 +71,17 @@ namespace api {
 
 
     if( sf_type == "POINT" ) {
-      sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep );
+      sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep, xyzm );
     } else if ( sf_type == "MULTIPOINT" ) {
-      sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep );
+      sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep, xyzm );
     } else if ( sf_type == "LINESTRING" ) {
-      sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, keep );
+      sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, keep, xyzm );
     } else if ( sf_type == "MULTILINESTRING" ) {
-      sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep );
+      sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep, xyzm );
     } else if ( sf_type == "POLYGON" ) {
-      sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, close, keep );
+      sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, xyzm, close, keep );
     } else if ( sf_type == "MULTIPOLYGON" ) {
-      sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, close, keep );
+      sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, xyzm, close, keep );
     } else {
       Rcpp::stop("sfheaders - unknown sf type");
     }
@@ -161,28 +162,28 @@ namespace api {
 
   // TODO
   // write each of the rcpp_sf_xxx functions here, so they appropriately call the to_sf() code
-  inline SEXP rcpp_sf_point( SEXP x, SEXP cols, bool keep ) {
-    return to_sf( x, cols, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, "POINT" );
+  inline SEXP rcpp_sf_point( SEXP x, SEXP cols, bool keep, std::string xyzm ) {
+    return to_sf( x, cols, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "POINT" );
   }
 
-  inline SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id, bool keep ) {
-    return to_sf( x, cols, multipoint_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, "MULTIPOINT" );
+  inline SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id, bool keep, std::string xyzm ) {
+    return to_sf( x, cols, multipoint_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "MULTIPOINT" );
   }
 
-  inline SEXP rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, "LINESTRING" );
+  inline SEXP rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep, std::string xyzm ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "LINESTRING" );
   }
 
-  inline SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, multilinestring_id, R_NilValue, R_NilValue, R_NilValue, false, keep, "MULTILINESTRING" );
+  inline SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep, std::string xyzm ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, multilinestring_id, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "MULTILINESTRING" );
   }
 
-  inline SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, R_NilValue, R_NilValue, close, keep, "POLYGON" );
+  inline SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, std::string xyzm ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, R_NilValue, R_NilValue, close, keep, xyzm, "POLYGON" );
   }
 
-  inline SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, multipolygon_id, R_NilValue, close, keep, "MULTIPOLYGON" );
+  inline SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, std::string xyzm ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, multipolygon_id, R_NilValue, close, keep, xyzm, "MULTIPOLYGON" );
   }
 
 
