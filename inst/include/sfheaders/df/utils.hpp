@@ -57,6 +57,14 @@ namespace utils {
     return res;
   }
 
+  inline Rcpp::List make_dataframe(
+    Rcpp::List& res,
+    R_xlen_t& total_rows
+  ) {
+    Rcpp::StringVector res_names = res.names();
+    return make_dataframe( res, total_rows, res_names );
+  }
+
 } // utils
 } // sfheaders
 

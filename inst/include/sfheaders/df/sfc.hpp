@@ -393,13 +393,16 @@ namespace df {
     R_xlen_t& total_coordinates
   ) {
 
-    Rcpp::CharacterVector sfc_class = sfc.attr("class");
-    std::string cls;
-    cls = sfc_class[0];
+    // issue 71
+    if( !Rf_isNull( sfc.attr("class") ) ) {
+      Rcpp::CharacterVector sfc_class = sfc.attr("class");
+      std::string cls;
+      cls = sfc_class[0];
 
-    // switch on cls
-    if ( cls == "sfc_POINT" ) {
-      return get_sfc_point_coordinates( sfc, total_coordinates );
+      // switch on cls
+      if ( cls == "sfc_POINT" ) {
+        return get_sfc_point_coordinates( sfc, total_coordinates );
+      }
     }
 
     return get_sfc_geometry_coordinates( sfc, total_coordinates );
@@ -419,16 +422,19 @@ namespace df {
 
   inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
 
-    // get teh sfc class here!
-    // so if it's a POINT, can go direct to get_sfc_point()
-    Rcpp::CharacterVector sfc_class = sfc.attr("class");
-    std::string cls;
-    cls = sfc_class[1];
+    // issue 71
+    if( !Rf_isNull( sfc.attr("class") ) ) {
+      // get teh sfc class here!
+      // so if it's a POINT, can go direct to get_sfc_point()
+      Rcpp::CharacterVector sfc_class = sfc.attr("class");
+      std::string cls;
+      cls = sfc_class[1];
 
-    // switch on cls
-    if ( cls == "sfc_POINT" ) {
-      R_xlen_t n_geometries = sfc.size();
-      return get_sfc_point_coordinates( sfc, n_geometries );
+      // switch on cls
+      if ( cls == "sfc_POINT" ) {
+        R_xlen_t n_geometries = sfc.size();
+        return get_sfc_point_coordinates( sfc, n_geometries );
+      }
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`

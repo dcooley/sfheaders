@@ -1,8 +1,8 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2020-01-20
-Version: 0.1.0005
+Date: 2020-03-19
+Version: 0.2.1002
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre"))
     )
@@ -14,7 +14,7 @@ URL: https://dcooley.github.io/sfheaders/
 BugReports: https://github.com/dcooley/sfheaders/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 SystemRequirements: C++11
 LinkingTo: 
     Rcpp
@@ -22,4 +22,6 @@ Imports:
     Rcpp
 Suggests:
     covr,
+    knitr,
     testthat
+Roxygen: list(markdown = TRUE)

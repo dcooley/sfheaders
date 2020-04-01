@@ -5,6 +5,7 @@ test_that("various objects converted to sf_multipoint",{
   m <- matrix(1:4, ncol = 2)
   m <- cbind(c(1L,1L), m)
   res <- sfheaders:::rcpp_sf_multipoint(m, c(1L,2L), 0L, TRUE)
+  expect_true( !is.null( attr( res, "class" ) ) )
   expect_true( all( attr(res, "class") == c("sf", "data.frame") ) )
 
   m <- matrix(1:4, ncol = 2)
