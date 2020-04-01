@@ -31,9 +31,3 @@ SEXP rcpp_calculate_m_range( SEXP x, std::string xyzm ) {
   return m_range;
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_calculate_bbox( Rcpp::List sfc ) {
-//   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-//   sfheaders::bbox::calculate_bbox( bbox, sfc );
-//   return bbox;
-// }

@@ -402,5 +402,52 @@ test_that("z and m range correctly reported",{
 
 })
 
+test_that("C++ functions correctly 'guess' the dimension", {
+  ## i.e. when xyzm == ""
+  df <- data.frame(x = 1, y = 2)
 
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XY" )
+
+  df <- data.frame(x = 1, y = 2, z = 3)
+
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","z")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZ" )
+
+
+  ## Going into the C++ API, with defining 'xyzm', it has to 'guess' what the dimension is
+  df <- data.frame(x = 1, y = 2, m = 3)
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","m")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZ" )
+
+  df <- data.frame(x = 1, y = 2, z = 3, m = 4)
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","m")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZ" )
+
+  df <- data.frame(x = 1, y = 2, z = 3, m = 4)
+  res <- sfheaders:::rcpp_sfg_linestring(
+    x = df
+    , geometry_columns = c("x","y","z", "m")
+    , xyzm = ""
+  )
+  expect_true( attr( res , "class" )[1] == "XYZM" )
+
+
+})
 
