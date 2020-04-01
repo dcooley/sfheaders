@@ -3,7 +3,8 @@
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_to_df( SEXP sfg ) {
-  return sfheaders::df::sfg_to_df( sfg );
+  R_xlen_t sfg_rows = 0;
+  return sfheaders::df::sfg_to_df( sfg, sfg_rows );
 }
 
 // [[Rcpp::export]]

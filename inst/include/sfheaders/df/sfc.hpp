@@ -48,77 +48,6 @@ namespace df {
     return res;
   }
 
-  inline void dim_error() { // #nocov
-    Rcpp::stop("sfheaders - unknown geometry dimension");    // #nocov
-  }
-
-  inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
-
-    switch( geometry ) {
-    case sfheaders::sfg::SFG_POINT: {}
-    case sfheaders::sfg::SFG_MULTIPOINT: {}
-    case sfheaders::sfg::SFG_LINESTRING: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });
-    } else {
-      dim_error();  // #nocov
-    }
-    }
-    case sfheaders::sfg::SFG_MULTILINESTRING: {}
-    case sfheaders::sfg::SFG_POLYGON: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
-    } else {
-      dim_error();  // #nocov
-    }
-    }
-    case sfheaders::sfg::SFG_MULTIPOLYGON: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {
-      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
-    } else {
-      dim_error(); // #nocov
-    }
-    }
-    case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
-      if( dim == "XY" ) {
-      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
-    } else if( dim == "XYZM" ) {
-      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
-    } else if ( dim == "XYZ" ) {
-      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
-    } else {
-      dim_error(); // #nocov
-    }
-
-    }
-    default: {
-      Rcpp::stop("sfheaders - unknown geometry type");  // #nocov
-    }
-    }
-
-    return Rcpp::IntegerVector(); // #nocov never reached
-  }
-
   inline void sfg_n_coordinates(
       SEXP& sfg,
       R_xlen_t& sfg_count
@@ -205,48 +134,6 @@ namespace df {
     }
   }
 
-  // sfcs are a list of sfgs.
-  // they can be mixed, or individual.
-  // if indiidual, loop over each one and extract the sfgs, list by list, then collapse the lists??
-
-  inline Rcpp::List get_sfg_coordinates( SEXP& sfg, R_xlen_t& sfc_rows, int SFG_TYPE ) {
-
-    switch( SFG_TYPE ) {
-    case sfheaders::sfg::SFG_POINT: {
-      Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfg );
-      return sfheaders::df::sfg_point_coordinates( vec, sfc_rows );
-    }
-    case sfheaders::sfg::SFG_MULTIPOINT: {
-      Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
-      return sfheaders::df::sfg_multipoint_coordinates( mat, sfc_rows );
-    }
-    case sfheaders::sfg::SFG_LINESTRING: {
-      Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
-      return sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
-    }
-    case sfheaders::sfg::SFG_MULTILINESTRING: {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_multilinestring_coordinates( lst, sfc_rows );
-    }
-    case sfheaders::sfg::SFG_POLYGON: {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_polygon_coordinates( lst, sfc_rows );
-    }
-    case sfheaders::sfg::SFG_MULTIPOLYGON: {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
-    }
-    case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return sfheaders::df::sfg_geometrycollection_coordinates( lst, sfc_rows );
-    }
-    default: {
-      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
-    }
-    }
-    return Rcpp::List::create(); // #nocov never reaches
-  }
-
   /*
    * get sfc geometry coordinates
    *
@@ -286,9 +173,13 @@ namespace df {
 
     for( i = 0; i < n_sfg; ++i ) {
 
+      Rcpp::Rcout << "i: " << i << std::endl;
+
       SEXP sfci = sfc[ i ];
 
       cls = sfheaders::utils::getSfgClass( sfci );
+
+      Rcpp::Rcout << "cls: " << cls << std::endl;
 
       dim = cls[0];
 
@@ -309,17 +200,28 @@ namespace df {
       sfg_column_idx = get_sfg_column_index( sfg_class );
       columns[ sfg_column_idx ] = true;
 
-      Rcpp::List sfg = get_sfg_coordinates( sfci, sfc_rows, sfg_type );
+      Rcpp::List sfg = sfheaders::df::get_sfg_coordinates( sfci, sfc_rows, sfg_type );
 
+      // for any other 'sfg', this size is the length of the list
+      // because it goes through the various 'matrix_to_list' / 'vector_to_list'
+      // functions
+      // so a GEOMETRYCOLLECTION needs to be collapsed to this list
+      // (and)
       n_col = sfg.size();
 
-      Rcpp::IntegerVector sfg_cols = get_sfg_cols( n_col, sfg_type, dim );
+      Rcpp::IntegerVector sfg_cols = sfheaders::df::get_sfg_cols( n_col, sfg_type, dim );
 
       Rcpp::Rcout << "sfg_cols: " << sfg_cols << std::endl;
       Rcpp::Rcout << "n_col: " << n_col << std::endl;
 
-      column_index_check( sfg_cols, n_col );
+      //return sfg;
 
+      //column_index_check( sfg_cols, n_col );
+
+      Rcpp::Rcout << "index checked" << std::endl;
+
+      // for GEOMETRYCOLLECTIONS this needs to loop over each geometry?
+      // or should the 'sfg' be collapsed before it gets here??
       for( j = 0; j < n_col; ++j ) {
 
         Rcpp::NumericVector new_values_vector = sfg[ j ];

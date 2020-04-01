@@ -26,6 +26,77 @@
 namespace sfheaders {
 namespace df {
 
+  inline void dim_error() { // #nocov
+    Rcpp::stop("sfheaders - unknown geometry dimension");    // #nocov
+  }
+
+  inline Rcpp::IntegerVector get_sfg_cols( R_xlen_t& n_col, int geometry, std::string& dim ) {
+
+    switch( geometry ) {
+    case sfheaders::sfg::SFG_POINT: {}
+    case sfheaders::sfg::SFG_MULTIPOINT: {}
+    case sfheaders::sfg::SFG_LINESTRING: {
+      if( dim == "XY" ) {
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN });
+    } else if( dim == "XYZM" ) {
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    } else if ( dim == "XYZ" ) {
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
+    } else if ( dim == "XYM" ) {
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else {
+      dim_error();  // #nocov
+    }
+    }
+    case sfheaders::sfg::SFG_MULTILINESTRING: {}
+    case sfheaders::sfg::SFG_POLYGON: {
+      if( dim == "XY" ) {
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
+    } else if( dim == "XYZM" ) {
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    } else if ( dim == "XYZ" ) {
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+    } else if ( dim == "XYM" ) {
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else {
+      dim_error();  // #nocov
+    }
+    }
+    case sfheaders::sfg::SFG_MULTIPOLYGON: {
+      if( dim == "XY" ) {
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
+    } else if( dim == "XYZM" ) {
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    } else if ( dim == "XYZ" ) {
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+    } else if ( dim == "XYM" ) {
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
+    } else {
+      dim_error(); // #nocov
+    }
+    }
+    case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
+      if( dim == "XY" ) {
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN });
+    } else if( dim == "XYZM" ) {
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
+    } else if ( dim == "XYZ" ) {
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
+    } else if ( dim == "XYM" ) {  // #nocov
+      return Rcpp::IntegerVector({ MULTIPOLYGON_COLUMN, POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+    } else {
+      dim_error(); // #nocov
+    }
+
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown geometry type");  // #nocov
+    }
+    }
+
+    return Rcpp::IntegerVector(); // #nocov never reached
+  }
+
   const Rcpp::CharacterVector column_names = {
     "sfc_id", "sfg_id", "geometrycollection_id", "multipolygon_id", "polygon_id", "multilinestring_id",
     "linestring_id", "multipoint_id", "point_id", "x","y","z","m"
@@ -67,6 +138,8 @@ namespace df {
     } else if ( geometry == "MULTIPOLYGON" ) {
       columns[ LINESTRING_COLUMN ] = true;
       columns[ POLYGON_COLUMN ] = true;
+    // } else if ( geometry == "GEOMETRYCOLLECTION" ) {
+    //   columns[ GEOMETRYCOLLECTION_COLUMN ] = true;
     }
     return column_names[ columns ];
   }
@@ -379,6 +452,8 @@ namespace df {
     R_xlen_t i;
     Rcpp::List res( n_sfgs );
 
+    R_xlen_t total_rows = 0;
+
     // need to fill res(),
     // then collapse it...
     // but it will be filled like an 'sfc' - a collection of geometries.
@@ -432,6 +507,8 @@ namespace df {
       case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
         Rcpp::List lst = Rcpp::as< Rcpp::List >( s );
         res[i] = sfheaders::df::sfg_geometrycollection_coordinates( lst, sfg_rows );
+        Rcpp::Rcout << "getting gc coords - sfg_rows: " << sfg_rows << std::endl;
+        //res = collapse_list( res, sfg_rows );
         break;
       }
       default: {
@@ -440,13 +517,55 @@ namespace df {
       }
     }
 
+    Rcpp::Rcout << "sfg_rows: " << sfg_rows << std::endl;
+
+    // res = collapse_list( res, sfg_rows );
+
     return res;
 
     Rcpp::stop("sfheaders - geometrycollection not implemented");
     return Rcpp::List();
   }
 
-  inline Rcpp::List sfg_to_df( SEXP& sfg ) {
+  inline Rcpp::List get_sfg_coordinates( SEXP& sfg, R_xlen_t& sfc_rows, int SFG_TYPE ) {
+
+    switch( SFG_TYPE ) {
+    case sfheaders::sfg::SFG_POINT: {
+      Rcpp::NumericVector vec = Rcpp::as< Rcpp::NumericVector >( sfg );
+      return sfheaders::df::sfg_point_coordinates( vec, sfc_rows );
+    }
+    case sfheaders::sfg::SFG_MULTIPOINT: {
+      Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
+      return sfheaders::df::sfg_multipoint_coordinates( mat, sfc_rows );
+    }
+    case sfheaders::sfg::SFG_LINESTRING: {
+      Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( sfg );
+      return sfheaders::df::sfg_linestring_coordinates( mat, sfc_rows );
+    }
+    case sfheaders::sfg::SFG_MULTILINESTRING: {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return sfheaders::df::sfg_multilinestring_coordinates( lst, sfc_rows );
+    }
+    case sfheaders::sfg::SFG_POLYGON: {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return sfheaders::df::sfg_polygon_coordinates( lst, sfc_rows );
+    }
+    case sfheaders::sfg::SFG_MULTIPOLYGON: {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return sfheaders::df::sfg_multipolygon_coordinates( lst, sfc_rows );
+    }
+    case sfheaders::sfg::SFG_GEOMETRYCOLLECTION: {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      return sfheaders::df::sfg_geometrycollection_coordinates( lst, sfc_rows );
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown sfg type");  // #nocov
+    }
+    }
+    return Rcpp::List::create(); // #nocov never reaches
+  }
+
+  inline Rcpp::List sfg_to_df( SEXP& sfg, R_xlen_t& sfg_rows ) {
 
     Rcpp::List res;
 
@@ -460,7 +579,7 @@ namespace df {
     //dim = cls[0];
     geometry = cls[1];
 
-    R_xlen_t sfg_rows = 0;
+    //R_xlen_t sfg_rows = 0;
 
     if( geometry == "POINT" ) {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
@@ -486,24 +605,34 @@ namespace df {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       res = sfg_multipolygon_coordinates( lst, sfg_rows );
 
+    } else if (geometry == "GEOMETRYCOLLECTION" ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
+      R_xlen_t n = lst.size();
+      R_xlen_t i;
+      //R_xlen_t total_rows;
+      R_xlen_t inner_rows = 0;
+      Rcpp::List inner_res( n );
+      for( i = 0; i < n; ++i ) {
+        Rcpp::Rcout << "loopy" << std::endl;
+        SEXP sfgi = lst[ i ];
+        inner_res[ i ] =  sfg_to_df( sfgi, inner_rows );
+        Rcpp::Rcout << "inner_rows: " << inner_rows << std::endl;
+        //total_rows = total_rows + inner_rows;
+        //Rcpp::Rcout << "total_rows: " << total_rows << std::endl;
+        sfg_rows = sfg_rows + inner_rows;
+      }
+      Rcpp::Rcout << "total_sfg_rows: " << sfg_rows << std::endl;
+      //res = collapse_list( inner_res, sfg_rows );
+      //res = sfg_geometrycollection_coordinates( lst, sfg_rows );
+      return inner_res;
+
     } else {
       Rcpp::stop("sfheaders - unknown geometry type"); // #nocov
     }
 
     Rcpp::CharacterVector df_names = make_names( cls );
+    Rcpp::Rcout << "cls: " << cls << ", df_names: " << df_names << std::endl;
     return sfheaders::utils::make_dataframe(res, sfg_rows, df_names );
-
-    // res.attr("class") = Rcpp::CharacterVector("data.frame");
-    //
-    // if( sfg_rows > 0 ) {
-    //   Rcpp::IntegerVector rownames = Rcpp::seq( 1, sfg_rows );
-    //   res.attr("row.names") = rownames;
-    // } else {
-    //   res.attr("row.names") = Rcpp::IntegerVector(0); // #nocov
-    // }
-    //
-    // res.attr("names") = df_names;
-    // return res;
   }
 
 } // df

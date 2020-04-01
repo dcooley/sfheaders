@@ -14,11 +14,11 @@
 namespace sfheaders {
 namespace cast {
 
-  inline void column_index_check( Rcpp::IntegerVector& sfg_cols, R_xlen_t& n_col ) {
-    if( sfg_cols.length() != n_col ) {
-      Rcpp::stop("sfheaders - column indexing error - please report this issue, along with an example, at github.com/dcooley/sfheaders");  // #nocov
-    }
-  }
+  // inline void column_index_check( Rcpp::IntegerVector& sfg_cols, R_xlen_t& n_col ) {
+  //   if( sfg_cols.length() != n_col ) {
+  //     Rcpp::stop("sfheaders - column indexing error - please report this issue, along with an example, at github.com/dcooley/sfheaders");  // #nocov
+  //   }
+  // }
 
   // inline Rcpp::List vec_to_vec( Rcpp::NumericVector& sfg, R_xlen_t& sfg_rows, double& id ) {
   //   return sfheaders::df::vector_to_list( sfg, sfg_rows, id );
