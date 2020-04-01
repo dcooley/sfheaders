@@ -1,6 +1,7 @@
 context("sf_creator-helpers")
 
 test_that("sf_mpoly works",{
+
   m <- matrix(c(0, 0, 1, 1, 0,
               0, 1, 1, 0, 0), ncol = 2, dimnames = list(NULL, c("x", "y")))
   mat <- cbind(m, multipolygon_id = 1, polygon_id = 1,
@@ -71,5 +72,53 @@ test_that("closing is the default, and succeeds", {
   expect_equal(dim(sf_poly(mm1, close = TRUE)$geometry[[2]][[1]]), c(5L, 2L))
 
   expect_equal(dim(sf_poly(mm1, close = FALSE)$geometry[[2]][[1]]), c(4L, 2L))
+
+})
+
+test_that("list-columns kept",{
+
+  df <- data.frame(
+    x = 1:26
+    , y = 1:26
+    , val = letters
+    , polygon_id = c(rep(1:2,each=12),3,3)
+    , linestring_id = c(rep(1:5,each=5),6)
+    , stringsAsFactors = FALSE
+  )
+
+
+  res1 <- sf_line(
+    obj = df
+    , list_columns = c("val")
+  )
+
+  res2 <- sf_linestring(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , linestring_id = "linestring_id"
+    , list_columns = "val"
+  )
+
+  expect_equal( res1, res2 )
+
+
+  res1 <- sf_poly(
+    obj = df
+    , close = FALSE
+    , list_columns = c("val")
+  )
+
+  res2 <- sf_polygon(
+    obj = df
+    , x = "x"
+    , y = "y"
+    , polygon_id = "polygon_id"
+    , linestring_id = "linestring_id"
+    , list_columns = "val"
+    , close = FALSE
+  )
+
+  expect_equal( res1, res2 )
 
 })

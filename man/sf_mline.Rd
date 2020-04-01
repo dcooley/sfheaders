@@ -4,7 +4,7 @@
 \alias{sf_mline}
 \title{Helper for sf MULTILINESTRING}
 \usage{
-sf_mline(obj, keep = FALSE)
+sf_mline(obj, keep = FALSE, list_columns = NULL)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}

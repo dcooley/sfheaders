@@ -4,7 +4,7 @@
 \alias{sf_line}
 \title{Helper for sf LINESTRING}
 \usage{
-sf_line(obj, keep = FALSE)
+sf_line(obj, keep = FALSE, list_columns = NULL)
 }
 \arguments{
 \item{obj}{sorted vector, matrix or data.frame}

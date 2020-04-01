@@ -4,7 +4,7 @@
 \alias{sf_mpoly}
 \title{Helper for sf MULTIPOLYGON}
 \usage{
-sf_mpoly(obj, close = TRUE, keep = FALSE)
+sf_mpoly(obj, close = TRUE, keep = FALSE, list_columns = NULL)
 }
 \arguments{
 \item{obj}{sorted matrix or data.frame}
@@ -15,6 +15,8 @@ all polygons will be checked and force closed if possible}
 \item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
 if TRUE you must supply the geometry and id columns, and only the first row of
 each geometry is kept. See Keeping Properties.}
+
+\item{list_columns}{vector of column names to turn into a list.}
 }
 \value{
 \code{sf} object of MULTIPOLYGON geometries
