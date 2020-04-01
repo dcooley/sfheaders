@@ -3,6 +3,7 @@
 
 #include "sfheaders/df/sfc.hpp"
 #include "sfheaders/utils/vectors/vectors.hpp"
+#include "sfheaders/utils/lists/list.hpp"
 
 #include <Rcpp.h>
 
@@ -141,7 +142,7 @@ namespace df {
     }
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
-    //Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
+    // Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
 
     // in sfc.hpp I define geometry columns with names 'x','y','z','m'
     // so I know these will be geometry columns
@@ -156,7 +157,6 @@ namespace df {
       keep_columns[ i ] = is_in == -1 ? false : true;
     }
 
-    //Rcpp::Rcout << "keep: " << keep_columns << std::endl;
 
     for( i = 0; i < sfc_cols; ++i ) {
       Rcpp::String this_name = unique_name( sfc_df_names[ i ], res_names );
@@ -171,18 +171,6 @@ namespace df {
     res.attr("sfc_columns") = sfc_df_names[ keep_columns ];
     return sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
 
-    // res.attr("class") = Rcpp::CharacterVector("data.frame");
-    //
-    //
-    // if( total_coordinates > 0 ) {
-    //   Rcpp::IntegerVector rownames = Rcpp::seq( 1, total_coordinates );
-    //   res.attr("row.names") = rownames;
-    // } else {
-    //   res.attr("row.names") = Rcpp::IntegerVector(0);  // #nocov
-    // }
-    //
-    // res.attr("names") = res_names;
-    // return res;
   }
 
   inline Rcpp::List sf_to_df(
@@ -193,10 +181,73 @@ namespace df {
       Rcpp::stop("sfheaders - sf_column not found");
     }
 
+    // Rcpp::Rcout << "sf_to_df" << std::endl;
+
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
+  }
+
+  inline Rcpp::List sf_to_df(
+      Rcpp::DataFrame& sf,
+      Rcpp::List& sfc,
+      std::string& geom_column,
+      Rcpp::NumericMatrix& sfc_coordinates,
+      Rcpp::StringVector& unlist,
+      bool fill = false
+  ) {
+    if( !sf.hasAttribute("sf_column") ) {
+      Rcpp::stop("sfheaders - sf_column not found");
+    }
+
+    if( Rf_isNull( unlist ) ) {
+      // Rcpp::Rcout << "not unlisting: " << std::endl;
+      return sf_to_df( sf, fill );
+    }
+
+    R_xlen_t n_unlist = unlist.size();
+    R_xlen_t i;
+    Rcpp::List to_unlist( n_unlist );
+
+    for( i = 0; i < n_unlist; ++i ) {
+      const char *s = unlist[ i ];
+      Rcpp::List lst = sf[ s ];
+      to_unlist[ i ] = sfheaders::utils::unlist_list( lst );
+    }
+
+    to_unlist.names() = unlist;
+
+    // std::string geom_column = sf.attr("sf_column");
+    // Rcpp::List sfc = sf[ geom_column ];
+    // Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    Rcpp::DataFrame res = sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
+
+    R_xlen_t n_row = res.nrow();
+
+    for( i = 0; i < n_unlist; ++i ) {
+      const char *s = unlist[ i ];
+      SEXP unlisted_col = to_unlist[ i ];
+      R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
+      if( n != n_row ) {
+        Rcpp::stop("sfheaders - unlisted column doesn't have the correct number of rows");
+      }
+      res[ s ] = to_unlist[ i ];
+    }
+
+    return sfheaders::utils::make_dataframe( res, n_row );
+  }
+
+  inline Rcpp::List sf_to_df(
+      Rcpp::DataFrame& sf,
+      Rcpp::StringVector& unlist,
+      bool fill = false
+  ) {
+    std::string geom_column = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ geom_column ];
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+
+    return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }
 
 

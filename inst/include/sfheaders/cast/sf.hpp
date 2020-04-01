@@ -69,16 +69,18 @@ namespace cast {
       Rcpp::String this_name = df_names[ i ];
       std::string str_name = this_name;
       if( str_name != geom_column ) {
-        // Rcpp::Rcout << "this_name: " << str_name << std::endl;
         SEXP v = sf[ i ];
+        //Rcpp::Rcout << "this_name: " << str_name << std::endl;
         sfheaders::df::expand_vector( sf_res, v, expanded_index, column_counter );
-        res_names[ i ] = str_name;
+        res_names[ column_counter ] = str_name;
         ++column_counter;
       }
     }
 
+    // Rcpp::Rcout << "res_names: " << res_names << std::endl;
     // append 'geom_column' to res_columns;
     res_names[ column_counter ] = geom_column;
+    // Rcpp::Rcout << "res_names: " << res_names << std::endl;
 
     sf_res[ column_counter ] = casted_sfc;
     sf_res.names() = res_names;

@@ -1,29 +1,0 @@
-
-R version 3.6.1 (2019-07-05) -- "Action of the Toes"
-Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-> library(testthat)
-> library(gtfs2gps)
-> 
-> test_check("gtfs2gps")
-  |                                                          |                                                  |   0%  |                                                          |++++++++++++                                      |  25%  |                                                          |+++++++++++++++++++++++++                         |  50%  |                                                          |++++++++++++++++++++++++++++++++++++++            |  75%  |                                                          |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-  |                                                          |                                                  |   0%  |                                                          |+++                                               |   5%  |                                                          |+++++                                             |  11%  |                                                          |++++++++                                          |  16%  |                                                          |+++++++++++                                       |  21%  |                                                          |+++++++++++++                                     |  26%  |                                                          |++++++++++++++++                                  |  32%  |                                                          |++++++++++++++++++                                |  37%  |                                                          |+++++++++++++++++++++                             |  42%  |                                                          |++++++++++++++++++++++++                          |  47%  |                                                          |++++++++++++++++++++++++++                        |  53%  |                                                          |+++++++++++++++++++++++++++++                     |  58%  |                                                          |++++++++++++++++++++++++++++++++                  |  63%  |                                                          |++++++++++++++++++++++++++++++++++                |  68%  |                                                          |+++++++++++++++++++++++++++++++++++++             |  74%  |                                                          |+++++++++++++++++++++++++++++++++++++++           |  79%  |                                                          |++++++++++++++++++++++++++++++++++++++++++        |  84%  |                                                          |+++++++++++++++++++++++++++++++++++++++++++++     |  89%  |                                                          |+++++++++++++++++++++++++++++++++++++++++++++++   |  95%  |                                                          |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%
-══ testthat results  ═══════════════════════════════════════════════════════════════════════════════════════
-[ OK: 108 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
-> 
-> proc.time()
-   user  system elapsed 
-164.118   8.325 103.965 

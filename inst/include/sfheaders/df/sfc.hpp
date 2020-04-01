@@ -64,8 +64,8 @@ namespace df {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN }); // #nocov
+    } else if ( dim == "XYM" ) {
+      return Rcpp::IntegerVector({ X_COLUMN, Y_COLUMN, M_COLUMN });
     } else {
       dim_error();  // #nocov
     }
@@ -78,8 +78,8 @@ namespace df {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+    } else if ( dim == "XYM" ) {
+      return Rcpp::IntegerVector({ LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
     } else {
       dim_error();  // #nocov
     }
@@ -91,8 +91,8 @@ namespace df {
       return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN, M_COLUMN });
     } else if ( dim == "XYZ" ) {
       return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, Z_COLUMN });
-    } else if ( dim == "XYM" ) {  // #nocov
-      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });  // #nocov
+    } else if ( dim == "XYM" ) {
+      return Rcpp::IntegerVector({ POLYGON_COLUMN, LINESTRING_COLUMN, X_COLUMN, Y_COLUMN, M_COLUMN });
     } else {
       dim_error(); // #nocov
     }
@@ -284,11 +284,17 @@ namespace df {
 
       dim = cls[0];
 
-      if( dim == "XYZ" ) {
+      if ( dim == "XYZM" ) {
         columns[ Z_COLUMN ] = true;
-      } else if ( dim == "XYZM" ) {
+        columns[ M_COLUMN ] = true;
+      } else if ( dim == "XYZ" ) {
+        columns[ Z_COLUMN ] = true;
+      } else if ( dim == "XYM" ) {
         columns[ M_COLUMN ] = true;
       }
+
+      // Rcpp::Rcout << "dim: " << dim << std::endl;
+      // Rcpp::Rcout << "columns: " << columns << std::endl;
 
       sfg_class = cls[1];
       sfg_type = get_sfg_type( sfg_class );
@@ -348,9 +354,10 @@ namespace df {
     R_xlen_t n_sfg = sfc.size();
     R_xlen_t i;
 
-    Rcpp::CharacterVector cls;
     std::string dim;
 
+    // TODO: change this
+    // needs to be dependant on 'dim'
     Rcpp::StringVector col_names = {"sfg_id","point_id","x","y","z","m"};
 
     Rcpp::NumericVector x( total_coordinates, Rcpp::NumericVector::get_na() );
@@ -362,17 +369,23 @@ namespace df {
 
     for( i = 0; i < n_sfg; ++i ) {
       Rcpp::NumericVector sfg_point = sfc[ i ];
-      int n_col = sfg_point.size();
+
+      Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg_point );
+      dim = cls[0];
+
 
       x[ i ] = sfg_point[ 0 ];
       y[ i ] = sfg_point[ 1 ];
 
-      if( n_col == 4 ) {
+      if( dim == "XYZM" ) {
         columns[ 4 ] = true;
         columns[ 5 ] = true;
         z[ i ] = sfg_point[ 2 ];
         m[ i ] = sfg_point[ 3 ];
-      } else if ( n_col == 3 ) {
+      } else if ( dim == "XYM" ) {
+        columns[ 5 ] = true;
+        m[ i ] = sfg_point[ 2 ];
+      } else if ( dim == "XYZ" ) {
         columns[ 4 ] = true;
         z[ i ] = sfg_point[ 2 ];
       }
@@ -398,13 +411,16 @@ namespace df {
     R_xlen_t& total_coordinates
   ) {
 
-    Rcpp::CharacterVector sfc_class = sfc.attr("class");
-    std::string cls;
-    cls = sfc_class[0];
+    // issue 71
+    if( !Rf_isNull( sfc.attr("class") ) ) {
+      Rcpp::CharacterVector sfc_class = sfc.attr("class");
+      std::string cls;
+      cls = sfc_class[0];
 
-    // switch on cls
-    if ( cls == "sfc_POINT" ) {
-      return get_sfc_point_coordinates( sfc, total_coordinates );
+      // switch on cls
+      if ( cls == "sfc_POINT" ) {
+        return get_sfc_point_coordinates( sfc, total_coordinates );
+      }
     }
 
     return get_sfc_geometry_coordinates( sfc, total_coordinates );
@@ -424,16 +440,21 @@ namespace df {
 
   inline Rcpp::List sfc_to_df( Rcpp::List& sfc ) {
 
-    // get teh sfc class here!
-    // so if it's a POINT, can go direct to get_sfc_point()
-    Rcpp::CharacterVector sfc_class = sfc.attr("class");
-    std::string cls;
-    cls = sfc_class[1];
+    // issue 71
+    if( !Rf_isNull( sfc.attr("class") ) ) {
+      // get teh sfc class here!
+      // so if it's a POINT, can go direct to get_sfc_point()
+      Rcpp::CharacterVector sfc_class = sfc.attr("class");
+      std::string cls;
+      cls = sfc_class[1];
 
-    // switch on cls
-    if ( cls == "sfc_POINT" ) {
-      R_xlen_t n_geometries = sfc.size();
-      return get_sfc_point_coordinates( sfc, n_geometries );
+      // Rcpp::Rcout << "cls: " << cls << std::endl;
+
+      // switch on cls
+      if ( cls == "sfc_POINT" ) {
+        R_xlen_t n_geometries = sfc.size();
+        return get_sfc_point_coordinates( sfc, n_geometries );
+      }
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`

@@ -13,7 +13,7 @@ sf_remove_holes(obj, close = TRUE)
 all polygons will be checked and force closed if possible}
 }
 \description{
-Removes holes from olygons and multipolygons. Points and linestrings are unaffected.
+Removes holes from polygons and multipolygons. Points and linestrings are unaffected.
 }
 \examples{
 df <- data.frame(

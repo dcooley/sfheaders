@@ -332,6 +332,106 @@ test_that("different XYZM dimensions work",{
 
 })
 
+
+test_that("XYM dimension works",{
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_point( x, x = 1, y = 2, m = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_false( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_point( x, x = 1, y = 2, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+
+  x <- matrix( c(1:16), ncol = 3 )
+  x[1,1] <- 1.1
+  sfc <- sfc_point( x, x = 1, y = 2, m = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  x[1,1] <- 1.1
+  sfc <- sfc_point( x, x = 1, y = 2, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multipoint( x, x = 1, y = 2, m = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_linestring( x, x = 1, y = 2, z = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 5 )
+  expect_true( "z" %in% names(res) )
+  expect_false( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_linestring( x, x = 1, y = 2, z = 3, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( "z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multilinestring( x, x = 1, y = 2, m = 3 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multilinestring( x, x = 1, y = 2, m = 4 )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_polygon( x, x = 1, y = 2, m = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 6 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+  x <- matrix( c(1:16), ncol = 4 )
+  sfc <- sfc_multipolygon( x, x = 1, y = 2, m = 3  )
+  res <- sfheaders:::rcpp_sfc_to_df( sfc )
+
+  expect_true( ncol( res ) == 7 )
+  expect_true( !"z" %in% names(res) )
+  expect_true( "m" %in% names(res) )
+
+})
+
+
+
 ## issue 58
 test_that("list-columns get expanded",{
 
@@ -359,5 +459,24 @@ test_that("list-columns get expanded",{
   expect_true( length( sfc ) == 4 )
   expect_equal( sfc[[1]], sfc[[2]] )
   expect_equal( sfc[[3]], sfc[[4]] )
+
+})
+
+test_that("subsetted sf object converts to df",{
+
+  sf <- sf_linestring(
+    obj = data.frame(
+      id = c(1,1,2,2)
+      , x = 1:4
+      , y = 4:1
+    )
+    , linestring_id = "id"
+  )
+
+  df1 <- sf_to_df( sf[1, ], fill = TRUE )
+  df2 <- sf_to_df( sf[2, ], fill = TRUE )
+
+  expect_true(all(df1$id == 1))
+  expect_true(all(df2$id == 2))
 
 })

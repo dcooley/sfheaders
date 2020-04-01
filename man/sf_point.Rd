@@ -30,8 +30,12 @@ constructs sf of POINT objects
 \section{Keeping Properties}{
 
 
-Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
+Setting \code{keep = TRUE} will retain any columns not specified as a
 coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
+
+You can use \code{list_columns} to specify which of the properties will be turned into
+a list, thus keeping all the values in the column. For columns not specified in \code{list_columns},
+only the first row of the column is kept
 
 The \code{sf_*} functions assume the input \code{obj} is a long data.frame / matrix,
 where any properties are repeated down the table for the same geometry.

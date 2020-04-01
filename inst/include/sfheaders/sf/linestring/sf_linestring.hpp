@@ -35,14 +35,30 @@ namespace sf {
       SEXP& line_ids,
       std::string xyzm
   ) {
+
+    // Rcpp::Rcout << "sf_linestring2 " << std::endl;
+
     Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
     Rcpp::IntegerVector row_idx = line_positions( Rcpp::_, 0 );
+
     Rcpp::StringVector df_names = df.names();
     Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
 
     Rcpp::List sfc = sfheaders::sfc::sfc_linestring( df, geometry_cols, line_positions, xyzm );
 
-    return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
+    Rcpp::List res = Rcpp::List::create(
+      Rcpp::_["df"] = df,
+      Rcpp::_["sfc"] = sfc,
+      Rcpp::_["id_column"] = id_column,
+      Rcpp::_["property_cols"] = property_cols,
+      Rcpp::_["property_idx"] = property_idx,
+      Rcpp::_["row_idx"] = row_idx,
+      Rcpp::_["line_positions"] = line_positions
+    );
+
+    return res;
+
+    //return sfheaders::sf::create_sf( df, sfc, id_column, property_cols, property_idx, row_idx );
   }
 
   inline SEXP sf_linestring(
@@ -227,7 +243,21 @@ namespace sf {
     if( Rf_isNull( linestring_id ) ) {
       Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id, xyzm );
       SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
-      return sfheaders::sf::create_sf( x, sfc, property_columns );
+
+      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerMatrix line_positions(1,2);
+      line_positions(0,0) = 0;
+      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
+
+      Rcpp::List res = Rcpp::List::create(
+        Rcpp::_["x"] = x,
+        Rcpp::_["sfc"] = sfc,
+        Rcpp::_["property_cols"] = property_columns,
+        Rcpp::_["property_idx"] = property_idx,
+        Rcpp::_["line_positions"] = line_positions
+      );
+
+      return res;
     }
 
     if( !Rf_isNull( linestring_id ) ) {

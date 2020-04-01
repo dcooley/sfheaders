@@ -13,7 +13,8 @@ sf_polygon(
   polygon_id = NULL,
   linestring_id = NULL,
   close = TRUE,
-  keep = FALSE
+  keep = FALSE,
+  list_columns = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ all polygons will be checked and force closed if possible}
 \item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
 if TRUE you must supply the geometry and id columns, and only the first row of
 each geometry is kept. See Keeping Properties.}
+
+\item{list_columns}{vector of column names to turn into a list.}
 }
 \value{
 \code{sf} object of POLYGON geometries
@@ -55,8 +58,12 @@ The data.frame and matrices you send into the sfheader functions must be ordered
 \section{Keeping Properties}{
 
 
-Setting \code{keep = TRUE} will retain the first row of any columns not specified as a
+Setting \code{keep = TRUE} will retain any columns not specified as a
 coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
+
+You can use \code{list_columns} to specify which of the properties will be turned into
+a list, thus keeping all the values in the column. For columns not specified in \code{list_columns},
+only the first row of the column is kept
 
 The \code{sf_*} functions assume the input \code{obj} is a long data.frame / matrix,
 where any properties are repeated down the table for the same geometry.
@@ -97,6 +104,41 @@ sf_polygon( obj = df, x = 2, y = 3, z = 4, m = 5)
 
 sf_polygon( obj = df, polygon_id = "ml_id", linestring_id = "l_id" )
 sf_polygon( obj = df, polygon_id = 1, linestring_id = 2 )
+
+## keeping properties
+df <- data.frame(
+  ml_id = c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2)
+  , l_id = c(1,1,1,2,2,2,3,3,3,1,1,1,2,2,2)
+  , x = rnorm(15)
+  , y = rnorm(15)
+  , z = rnorm(15)
+  , m = rnorm(15)
+  , val = letters[1:15]
+  , stringsAsFactors = FALSE
+)
+
+## using keep = TRUE means the first row of all non-geometries are kept
+sf_polygon(
+  obj = df
+  , polygon_id = "ml_id"
+  , linestring_id = "l_id"
+  , x = "x"
+  , y = "y"
+  , keep = TRUE
+)
+
+## use 'list_column' to specify columns where you want to keep all the values
+sf_polygon(
+  obj = df
+  , polygon_id = "ml_id"
+  , linestring_id = "l_id"
+  , x = "x"
+  , y = "y"
+  , keep = TRUE
+  , list_columns = "val"
+)
+
+
 
 
 

@@ -9,6 +9,19 @@ namespace sfheaders {
 namespace utils {
 
   inline int where_is(
+      int to_find,
+      Rcpp::IntegerVector& iv ) {
+    int n = iv.size();
+    int i;
+    for( i = 0; i < n; ++i ) {
+      if ( to_find == iv[i] ) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  inline int where_is(
       Rcpp::String to_find,
       Rcpp::StringVector& sv ) {
     int n = sv.size();
@@ -22,17 +35,57 @@ namespace utils {
   }
 
   inline Rcpp::IntegerVector where_is(
-      Rcpp::StringVector& param_value,
-      Rcpp::StringVector& data_names) {
+      Rcpp::IntegerVector& values_to_find,
+      Rcpp::IntegerVector& vector_to_look_in
+  ) {
 
-    int n = param_value.size();
+    int n = values_to_find.size();
     int i;
     Rcpp::IntegerVector res( n );
     for ( i = 0; i < n; ++i ) {
-      Rcpp::String to_find = param_value[i];
-      res[i] = where_is( to_find, data_names );
+      int to_find = values_to_find[ i ];
+      res[ i ] = where_is( to_find, vector_to_look_in );
     }
     return res;
+  }
+
+  inline Rcpp::IntegerVector where_is(
+      Rcpp::StringVector& values_to_find,
+      Rcpp::StringVector& vector_to_look_in
+  ) {
+
+    int n = values_to_find.size();
+    int i;
+    Rcpp::IntegerVector res( n );
+    for ( i = 0; i < n; ++i ) {
+      Rcpp::String to_find = values_to_find[ i ];
+      res[ i ] = where_is( to_find, vector_to_look_in );
+    }
+    return res;
+  }
+
+  inline Rcpp::IntegerVector where_is(
+    SEXP& values_to_find,
+    SEXP& x   // object, of which are names or indices
+  ) {
+    switch( TYPEOF( values_to_find ) ) {
+    case REALSXP: {}
+    case INTSXP: {
+      Rcpp::IntegerVector values = Rcpp::as< Rcpp::IntegerVector >( values_to_find );
+      Rcpp::IntegerVector look_in = sfheaders::utils::get_sexp_length( x );
+      return where_is( values, look_in );
+    }
+    case STRSXP: {
+      Rcpp::StringVector values = Rcpp::as< Rcpp::StringVector >( values_to_find );
+      //Rcpp::StringVector look_in = Rcpp::as< Rcpp::StringVector >( vector_to_look_in );
+      Rcpp::StringVector look_in = sfheaders::utils::get_sexp_col_names( x );
+      return where_is( values, look_in );
+    }
+    default: {
+      Rcpp::stop("sfheaders - error trying to find values in a vector");
+    }
+    }
+    return Rcpp::IntegerVector::create(); // #nocov // never reaches
   }
 
   inline SEXP concatenate_vectors(
