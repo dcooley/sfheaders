@@ -218,6 +218,8 @@ namespace df {
       const char *s = unlist[ i ];
       Rcpp::List lst = sf[ s ];
       to_unlist[ i ] = sfheaders::utils::unlist_list( lst );
+      // iff total_size == sf.nrow();
+      // then it's not a list column.
     }
 
     to_unlist.names() = unlist;
@@ -230,6 +232,9 @@ namespace df {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
       R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
+      if( n == sf.nrow() ) {
+        continue; // issue 76
+      }
       if( n != n_row ) {
         Rcpp::stop("sfheaders - unlisted column doesn't have the correct number of rows");
       }

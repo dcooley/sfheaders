@@ -288,7 +288,7 @@ test_that("list_columns are kept",{
    expect_equal( sf$val, l2 )
 })
 
-
+## issue 75
 test_that("non-existant list-columns are ignored",{
 
    df <- data.frame(
@@ -308,3 +308,27 @@ test_that("non-existant list-columns are ignored",{
 
 })
 
+## issue 76
+test_that("ignore unlist columns if they aren't lists",{
+
+   ## waht if we try to unlist a column which isn't a list?
+
+   df <- data.frame(
+      x = 1:4
+      , y = 1:4
+      , val = 1:4
+      , ix = c(1,1,2,2)
+   )
+
+   sf <- sf_linestring(
+      obj = df
+      , x = "x"
+      , y = "y"
+      , linestring_id = "ix"
+      , keep = T
+   )
+
+   res <- sf_to_df( sf = sf, fill = TRUE, unlist = "val")
+   expect_equal( res$val, c(1,1,3,3) )#sf$val )
+
+})
