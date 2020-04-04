@@ -1,6 +1,4 @@
 
-[![Travis build
-status](https://travis-ci.com/dcooley/sfheaders.svg?branch=master)](https://travis-ci.com/dcooley/sfheaders)
 [![R build
 status](https://github.com/dcooley/sfheaders/workflows/R-CMD-check/badge.svg)](https://github.com/dcooley/sfheaders/actions)
 [![Coverage
