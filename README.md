@@ -1,12 +1,13 @@
+
 [![Travis build
 status](https://travis-ci.com/dcooley/sfheaders.svg?branch=master)](https://travis-ci.com/dcooley/sfheaders)
+[![R build
+status](https://github.com/dcooley/sfheaders/workflows/R-CMD-check/badge.svg)](https://github.com/dcooley/sfheaders/actions)
 [![Coverage
 status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://codecov.io/github/dcooley/sfheaders?branch=master)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/sfheaders)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/sfheaders)](https://CRAN.R-project.org/package=sfheaders)
-
-<a href="https://www.buymeacoffee.com/davecooley" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 
 ## Another spatial library?
 
@@ -22,7 +23,7 @@ they are.
 
 ## Does it really make `sf` objects?
 
-Yes and No. 
+Yes and No.
 
 These functions do not perform any validity checks on the geometries.
 Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision

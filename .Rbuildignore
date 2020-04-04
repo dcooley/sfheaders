@@ -10,3 +10,4 @@
 ^Vignettes/examples*
 ^vignettes/images/*
 ^Vignettes*
+^\.github$
