@@ -7,6 +7,8 @@ status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/sfheaders)](https://CRAN.R-project.org/package=sfheaders)
 
+<a href="https://www.buymeacoffee.com/davecooley" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
+
 ## Another spatial library?
 
 Yep. In a few of my other libraries I’ve made use of `sf` objects, but
