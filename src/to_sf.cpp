@@ -84,4 +84,3 @@ SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon
   return sfheaders::sf::sf_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, xyzm, close, keep );
 }
 
-

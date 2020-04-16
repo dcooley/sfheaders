@@ -161,6 +161,14 @@ rcpp_get_sfc_attributes <- function(sfc) {
     .Call(`_sfheaders_rcpp_get_sfc_attributes`, sfc)
 }
 
+rcpp_sfg_boxes <- function(sfg) {
+    .Call(`_sfheaders_rcpp_sfg_boxes`, sfg)
+}
+
+rcpp_sfc_boxes <- function(sfc) {
+    .Call(`_sfheaders_rcpp_sfc_boxes`, sfc)
+}
+
 rcpp_get_sfg_type <- function(sfg_type) {
     .Call(`_sfheaders_rcpp_get_sfg_type`, sfg_type)
 }

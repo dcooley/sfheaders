@@ -1,6 +1,7 @@
 
 # v0.2.2
 
+* 
 * crs structure matches new `sf` definition [issue49](https://github.com/dcooley/sfheaders/issues/49)
 * `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates [issue50](https://github.com/dcooley/sfheaders/issues/50)
 * `XYM` dimensions correctly handled

@@ -414,4 +414,30 @@ calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
 }
 
 
+#' sf boxes
+#'
+#' returns the bounding box of each geometry
+#'
+#' @params obj sf, sfc or sfg object
+#'
+#' @export
+sf_boxes <- function( obj ) calculate_boxes( obj )
+
+
+calculate_boxes <- function( obj ) UseMethod("calculate_boxes")
+
+#' @export
+calculate_boxes.sf <- function( obj ) {
+  geom_column <- attr( obj, "sf_column" )
+  obj[[geom_column]] <- rcpp_sfc_boxes( obj[[geom_column]] )
+  return( obj )
+}
+
+#' @export
+calculate_boxes.sfc <- function( obj ) {
+  return( rcpp_sfc_boxes( obj ) )
+}
+
+#' @export
+calculate_boxes.sfg <- function( obj ) return( rcpp_sfg_boxes( obj ) )
 
