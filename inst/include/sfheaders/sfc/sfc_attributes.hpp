@@ -108,6 +108,20 @@ namespace sfc {
   }
   // #nocov end
 
+  // issue 49
+  // fix crs
+  inline void update_crs( Rcpp::List& crs ) {
+    if( !crs.containsElementNamed("input") ) {
+      Rcpp::String input = NA_STRING;
+      crs["input"] = input;
+    }
+
+    if( !crs.containsElementNamed("wkt") ) {
+      Rcpp::String wkt = NA_STRING;
+      crs["wkt"] = wkt;
+    }
+  }
+
   /*
    * get sfc attributes
    *
@@ -117,6 +131,8 @@ namespace sfc {
     Rcpp::List& sfc
   ) {
     Rcpp::List crs = sfc.attr("crs");
+    update_crs( crs );
+
     int n_empty = sfc.attr("n_empty");
     Rcpp::CharacterVector sfc_class = sfc.attr("class");
     double precision = sfc.attr("precision");
@@ -217,8 +233,9 @@ namespace sfc {
     std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
     Rcpp::CharacterVector sfc_class = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
-    Rcpp::String input;
-    Rcpp::String wkt;
+    Rcpp::String input = NA_STRING;
+    Rcpp::String wkt = NA_STRING;
+
     Rcpp::List crs = Rcpp::List::create(
       Rcpp::_["input"] = input,
       Rcpp::_["wkt"] = wkt,
@@ -245,6 +262,8 @@ namespace sfc {
     Rcpp::NumericVector bbox = attributes["bbox"];
     Rcpp::NumericVector z_range = attributes["z_range"];
     Rcpp::NumericVector m_range = attributes["m_range"];
+
+
 
     attach_sfc_attributes(
       sfc, sfc_class, bbox, z_range, m_range, crs, n_empty, precision

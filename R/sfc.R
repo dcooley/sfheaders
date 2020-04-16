@@ -412,3 +412,6 @@ calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
   geometry_coords <- c(x,y)
   return( rcpp_calculate_bbox( obj, geometry_coords ) )
 }
+
+
+

@@ -358,27 +358,7 @@ namespace cast {
     int casting_to = cast_type( cast_to );
 
     Rcpp::List crs = sfc.attr("crs");
-
-    // Rcpp::String crs_input;
-    // Rcpp::String crs_wkt;
-    // int crs_epsg;
-    // Rcpp::String crs_proj4string;
-    //
-    // if ( crs.hasElementNamed("input")  ) {
-    //   crs_input = crs["input"];
-    // }
-    //
-    // if( crs.hasElementNamed("wkt") ) {
-    //   crs_wkt = crs["wkt"];
-    // }
-    //
-    // if( crs.hasElementNamed("epsg") ) {
-    //   crs_epsg = crs["epsg"];
-    // }
-    //
-    // if( crs.hasElementNamed("proj4string") ) {
-    //   crs_proj4string = crs["proj4string"]
-    // }
+    sfheaders::sfc::update_crs( crs );
 
     double precision = sfc.attr("precision");
     Rcpp::NumericVector bbox = sfc.attr("bbox");
@@ -397,20 +377,13 @@ namespace cast {
     int n_empty = sfc.attr("n_empty");
     std::unordered_set< std::string > geometry_types{ cast_to };
 
-    //Rcpp::String crs_input = crs[0];
-    //Rcpp::String crs_wkt = crs[1];
-
     std::string cast_from;
     std::string xyzm;
 
     R_xlen_t i, j;
 
-    // Rcpp::Rcout << "n_results: " << n_results << std::endl;
-
     R_xlen_t total_results = Rcpp::sum( n_results );
     Rcpp::List res( total_results );
-
-    //return res;
 
     // loop over reach sfg and convert and fill teh resutl list
     R_xlen_t result_counter = 0;  // for indexing into the res( ) list

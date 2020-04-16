@@ -37,6 +37,7 @@ namespace sfc {
 
     Rcpp::String crs_input = NA_STRING;
     Rcpp::String crs_wkt = NA_STRING;
+
     Rcpp::List crs = Rcpp::List::create(
       Rcpp::_["input"] = crs_input,
       Rcpp::_["wkt"] = crs_wkt
