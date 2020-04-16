@@ -359,8 +359,26 @@ namespace cast {
 
     Rcpp::List crs = sfc.attr("crs");
 
-    Rcpp::String input = crs[0];
-    Rcpp::String wkt = crs[1];
+    // Rcpp::String crs_input;
+    // Rcpp::String crs_wkt;
+    // int crs_epsg;
+    // Rcpp::String crs_proj4string;
+    //
+    // if ( crs.hasElementNamed("input")  ) {
+    //   crs_input = crs["input"];
+    // }
+    //
+    // if( crs.hasElementNamed("wkt") ) {
+    //   crs_wkt = crs["wkt"];
+    // }
+    //
+    // if( crs.hasElementNamed("epsg") ) {
+    //   crs_epsg = crs["epsg"];
+    // }
+    //
+    // if( crs.hasElementNamed("proj4string") ) {
+    //   crs_proj4string = crs["proj4string"]
+    // }
 
     double precision = sfc.attr("precision");
     Rcpp::NumericVector bbox = sfc.attr("bbox");
@@ -370,19 +388,20 @@ namespace cast {
 
     if( sfc.hasAttribute("z_range") ) {
       z_range = sfc.attr("z_range");
+    }
+
+    if( sfc.hasAttribute("m_range") ) {
       m_range = sfc.attr("m_range");
     }
 
     int n_empty = sfc.attr("n_empty");
     std::unordered_set< std::string > geometry_types{ cast_to };
 
-<<<<<<< HEAD
-    Rcpp::String crs_input = crs[0];
-    Rcpp::String crs_wkt = crs[1];
+    //Rcpp::String crs_input = crs[0];
+    //Rcpp::String crs_wkt = crs[1];
 
-=======
->>>>>>> 9c8918ab53c843714b569168d69ecad68aa0a526
     std::string cast_from;
+    std::string xyzm;
 
     R_xlen_t i, j;
 
@@ -410,10 +429,11 @@ namespace cast {
 
       Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
       cast_from = cls[1];
+      xyzm = cls[0];
 
       int casting_from = cast_type( cast_from );
 
-      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, close );
+      SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
 
       if( casting_from <= casting_to ) {
         res[ result_counter ] = new_res;
@@ -428,11 +448,7 @@ namespace cast {
 
     }
     sfheaders::sfc::attach_sfc_attributes(
-<<<<<<< HEAD
-      res, cast_to, geometry_types, bbox, z_range, m_range, crs_input, crs_wkt, n_empty, precision
-=======
-      res, cast_to, geometry_types, bbox, z_range, m_range, input, wkt, n_empty, precision
->>>>>>> 9c8918ab53c843714b569168d69ecad68aa0a526
+      res, cast_to, geometry_types, bbox, z_range, m_range, crs, n_empty, precision
       );
     return res;
   }

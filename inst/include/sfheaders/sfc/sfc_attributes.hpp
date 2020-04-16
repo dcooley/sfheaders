@@ -187,8 +187,7 @@ namespace sfc {
       Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::String& crs_input,
-      Rcpp::String& crs_wkt,
+      Rcpp::List& crs,
       int n_empty = 0,
       double precision = 0.0
   ) {
@@ -196,17 +195,40 @@ namespace sfc {
     std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
     Rcpp::CharacterVector sfc_class = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
-    Rcpp::List crs = Rcpp::List::create(
-      Rcpp::Named("input") = crs_input,
-      Rcpp::Named("wkt") = crs_wkt
+    attach_sfc_attributes(
+      sfc, sfc_class, bbox, z_range, m_range, crs, n_empty, precision
     );
+  }
 
-    crs.attr("class") = Rcpp::CharacterVector::create("crs");
+  // backwards compatibility (e.g. geojsonsf 1.3.3.)
+  inline void attach_sfc_attributes(
+      Rcpp::List& sfc,
+      std::string& geom_type,
+      std::unordered_set< std::string >& geometry_types,
+      Rcpp::NumericVector& bbox,
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      int& epsg,
+      Rcpp::String proj4string,
+      int n_empty = 0,
+      double precision = 0.0
+  ) {
+
+    std::string geometry_class = sfc_class( sfc, geom_type, geometry_types );
+    Rcpp::CharacterVector sfc_class = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
+
+    Rcpp::String input;
+    Rcpp::String wkt;
+    Rcpp::List crs = Rcpp::List::create(
+      Rcpp::_["input"] = input,
+      Rcpp::_["wkt"] = wkt,
+      Rcpp::_("epsg") = epsg,
+      Rcpp::_("proj4string") = proj4string
+    );
 
     attach_sfc_attributes(
       sfc, sfc_class, bbox, z_range, m_range, crs, n_empty, precision
     );
-
   }
 
   inline void attach_sfc_attributes(
@@ -237,13 +259,12 @@ namespace sfc {
       Rcpp::NumericVector& bbox,
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
-      Rcpp::String& crs_input,
-      Rcpp::String& crs_wkt,
+      Rcpp::List& crs,
       int n_empty = 0,
       double precision = 0.0
   ) {
     sfheaders::sfc::attach_sfc_attributes(
-      sfc, geom_type, geometry_types, bbox, z_range, m_range, crs_input, crs_wkt, n_empty, precision
+      sfc, geom_type, geometry_types, bbox, z_range, m_range, crs, n_empty, precision
     );
     return sfc;
   }

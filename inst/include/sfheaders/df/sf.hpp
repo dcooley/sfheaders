@@ -142,7 +142,7 @@ namespace df {
     }
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
-    //Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
+    // Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
 
     // in sfc.hpp I define geometry columns with names 'x','y','z','m'
     // so I know these will be geometry columns
@@ -181,6 +181,8 @@ namespace df {
       Rcpp::stop("sfheaders - sf_column not found");
     }
 
+    // Rcpp::Rcout << "sf_to_df" << std::endl;
+
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
     Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
@@ -189,6 +191,9 @@ namespace df {
 
   inline Rcpp::List sf_to_df(
       Rcpp::DataFrame& sf,
+      Rcpp::List& sfc,
+      std::string& geom_column,
+      Rcpp::NumericMatrix& sfc_coordinates,
       Rcpp::StringVector& unlist,
       bool fill = false
   ) {
@@ -200,6 +205,11 @@ namespace df {
       return sf_to_df( sf, fill );
     }
 
+    // issue 75 - ignore undefined 'unlist' columns
+    Rcpp::StringVector sf_names = sf.names();
+    Rcpp::IntegerVector unlist_idx = sfheaders::utils::where_is( unlist, sf_names );
+    unlist = unlist[ unlist_idx >= 0 ];
+
     R_xlen_t n_unlist = unlist.size();
     R_xlen_t i;
     Rcpp::List to_unlist( n_unlist );
@@ -208,13 +218,12 @@ namespace df {
       const char *s = unlist[ i ];
       Rcpp::List lst = sf[ s ];
       to_unlist[ i ] = sfheaders::utils::unlist_list( lst );
+      // iff total_size == sf.nrow();
+      // then it's not a list column.
     }
 
     to_unlist.names() = unlist;
 
-    std::string geom_column = sf.attr("sf_column");
-    Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     Rcpp::DataFrame res = sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
 
     R_xlen_t n_row = res.nrow();
@@ -223,8 +232,9 @@ namespace df {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
       R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
-      //Rcpp::Rcout << "n: " << n << std::endl;
-      // TODO: iff n == 1, we can replicate it?
+      if( n == sf.nrow() ) {
+        continue; // issue 76
+      }
       if( n != n_row ) {
         Rcpp::stop("sfheaders - unlisted column doesn't have the correct number of rows");
       }
@@ -232,6 +242,18 @@ namespace df {
     }
 
     return sfheaders::utils::make_dataframe( res, n_row );
+  }
+
+  inline Rcpp::List sf_to_df(
+      Rcpp::DataFrame& sf,
+      Rcpp::StringVector& unlist,
+      bool fill = false
+  ) {
+    std::string geom_column = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ geom_column ];
+    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+
+    return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }
 
 

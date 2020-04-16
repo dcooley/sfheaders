@@ -25,15 +25,9 @@ SEXP rcpp_calculate_z_range( SEXP x ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_calculate_m_range( SEXP x ) {
+SEXP rcpp_calculate_m_range( SEXP x, std::string xyzm ) {
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
-  sfheaders::zm::calculate_m_range( m_range, x );
+  sfheaders::zm::calculate_m_range( m_range, x, xyzm );
   return m_range;
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_calculate_bbox( Rcpp::List sfc ) {
-//   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-//   sfheaders::bbox::calculate_bbox( bbox, sfc );
-//   return bbox;
-// }

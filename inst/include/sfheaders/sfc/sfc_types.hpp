@@ -37,11 +37,15 @@ namespace sfc {
 
     Rcpp::String crs_input = NA_STRING;
     Rcpp::String crs_wkt = NA_STRING;
+    Rcpp::List crs = Rcpp::List::create(
+      Rcpp::_["input"] = crs_input,
+      Rcpp::_["wkt"] = crs_wkt
+    );
     //int n_empty = 0;
     double precision = 0.0;
 
     return sfheaders::sfc::create_sfc(
-      sfc, geom, geometry_types, bbox, z_range, m_range, crs_input, crs_wkt, n_empty, precision
+      sfc, geom, geometry_types, bbox, z_range, m_range, crs, n_empty, precision
       );
   }
 

@@ -83,27 +83,6 @@ namespace utils {
     return false;
   }
 
-  inline std::string make_dimension( R_xlen_t n ) {
-    switch( n ) {
-    case 2: {
-      return "XY";
-      break;
-    }
-    case 3: {
-      return "XYZ";
-      break;
-    }
-    case 4: {
-      return "XYZM";
-      break;
-    }
-    default: {
-      Rcpp::stop("unknown dimension attribute");
-    }
-    }
-    return "XY"; // never reached
-  }
-
 } // namespace utils
 } // namespace sfheaders
 

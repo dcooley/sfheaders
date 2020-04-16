@@ -3,6 +3,7 @@
 
 * crs structure matches new `sf` definition [issue49](https://github.com/dcooley/sfheaders/issues/49)
 * `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates [issue50](https://github.com/dcooley/sfheaders/issues/50)
+* `XYM` dimensions correctly handled
 * `unlist` argument in `sf_to_df()` to specify columns you want to unlist when converted to data.frame
 * helper functions with easier syntax - thanks to @mdsumner
 * `list_columns` argument in `sf_` functions to specify which columns should be filled with all the values in a list

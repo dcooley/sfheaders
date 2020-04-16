@@ -7,14 +7,14 @@
 namespace sfheaders {
 namespace sfc {
 
-  inline Rcpp::List sfc_polygons( Rcpp::List& lst, bool close = true ) {
+  inline Rcpp::List sfc_polygons( Rcpp::List& lst, std::string xyzm, bool close = true ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfc::sfc_polygon( x, close );
+      sfcs[i] = sfheaders::sfc::sfc_polygon( x, xyzm, close );
     }
     return sfcs;
   }

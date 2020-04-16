@@ -69,10 +69,10 @@ sf_point <- function(
       , NULL ## list_columns
       , FALSE ## Close
       , keep ## keep
+      , xyzm(x,y,z,m)
       , "POINT"
     )
   )
-  # return( rcpp_sf_point( obj, , keep ) )
 }
 
 #' sf MULTIPOINT
@@ -125,6 +125,7 @@ sf_multipoint <- function(
       , list_columns ## list_columns
       , FALSE ## close
       , keep ## keep
+      , xyzm(x,y,z,m)
       , "MULTIPOINT"
     )
   )
@@ -192,6 +193,7 @@ sf_linestring <- function(
       , list_columns ## list_columns
       , FALSE ## close
       , keep ## keep
+      , xyzm(x,y,z,m)
       , "LINESTRING"
     )
   )
@@ -279,6 +281,7 @@ sf_multilinestring <- function(
       , list_columns ## list_columns
       , FALSE ## Close
       , keep ## keep
+      , xyzm(x,y,z,m)
       , "MULTILINESTRING"
     )
   )
@@ -404,6 +407,7 @@ sf_polygon <- function(
       , list_columns ## list_columns
       , close ## Close
       , keep ## keep
+      , xyzm(x,y,z,m)
       , "POLYGON"
     )
   )
@@ -519,6 +523,7 @@ sf_multipolygon <- function(
       , list_columns ## list_columns
       , close ## Close
       , keep ## keep
+      , xyzm(x,y,z,m)
       , "MULTIPOLYGON"
     )
   )
