@@ -9,3 +9,22 @@ sf_boxes(obj)
 \description{
 returns the bounding box of each geometry
 }
+\examples{
+
+df <- data.frame(
+ id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+ , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+ , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+ , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+)
+
+sf_line <- sfheaders::sf_linestring(
+  obj = df
+  , x = "x"
+  , y = "y"
+  , linestring_id = "id1"
+)
+
+sf_boxes( sf_line )
+
+}
