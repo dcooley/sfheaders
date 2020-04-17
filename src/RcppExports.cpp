@@ -90,6 +90,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_n_coordinates
+Rcpp::IntegerVector rcpp_n_coordinates(Rcpp::List sfc);
+RcppExport SEXP _sfheaders_rcpp_n_coordinates(SEXP sfcSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_n_coordinates(sfc));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_fill_list
 Rcpp::List rcpp_fill_list(Rcpp::NumericVector v, Rcpp::IntegerMatrix line_ids);
 RcppExport SEXP _sfheaders_rcpp_fill_list(SEXP vSEXP, SEXP line_idsSEXP) {
@@ -834,6 +845,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
     {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 3},
     {"_sfheaders_rcpp_cast_sf", (DL_FUNC) &_sfheaders_rcpp_cast_sf, 3},
+    {"_sfheaders_rcpp_n_coordinates", (DL_FUNC) &_sfheaders_rcpp_n_coordinates, 1},
     {"_sfheaders_rcpp_fill_list", (DL_FUNC) &_sfheaders_rcpp_fill_list, 2},
     {"_sfheaders_rcpp_list_sizes", (DL_FUNC) &_sfheaders_rcpp_list_sizes, 1},
     {"_sfheaders_rcpp_list_type", (DL_FUNC) &_sfheaders_rcpp_list_type, 1},

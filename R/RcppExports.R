@@ -29,6 +29,10 @@ rcpp_cast_sf <- function(sf, cast_to, close = TRUE) {
     .Call(`_sfheaders_rcpp_cast_sf`, sf, cast_to, close)
 }
 
+rcpp_n_coordinates <- function(sfc) {
+    .Call(`_sfheaders_rcpp_n_coordinates`, sfc)
+}
+
 rcpp_fill_list <- function(v, line_ids) {
     .Call(`_sfheaders_rcpp_fill_list`, v, line_ids)
 }

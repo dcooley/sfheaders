@@ -448,8 +448,6 @@ namespace df {
       std::string cls;
       cls = sfc_class[1];
 
-      // Rcpp::Rcout << "cls: " << cls << std::endl;
-
       // switch on cls
       if ( cls == "sfc_POINT" ) {
         R_xlen_t n_geometries = sfc.size();
