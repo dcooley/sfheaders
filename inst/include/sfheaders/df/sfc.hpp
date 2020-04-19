@@ -293,9 +293,6 @@ namespace df {
         columns[ M_COLUMN ] = true;
       }
 
-      // Rcpp::Rcout << "dim: " << dim << std::endl;
-      // Rcpp::Rcout << "columns: " << columns << std::endl;
-
       sfg_class = cls[1];
       sfg_type = get_sfg_type( sfg_class );
       sfg_column_idx = get_sfg_column_index( sfg_class );
@@ -355,9 +352,6 @@ namespace df {
     R_xlen_t i;
 
     std::string dim;
-
-    // TODO: change this
-    // needs to be dependant on 'dim'
     Rcpp::StringVector col_names = {"sfg_id","point_id","x","y","z","m"};
 
     Rcpp::NumericVector x( total_coordinates, Rcpp::NumericVector::get_na() );
