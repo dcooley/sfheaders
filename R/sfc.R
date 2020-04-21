@@ -418,7 +418,7 @@ calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
 #'
 #' returns the bounding box of each geometry
 #'
-#' @params obj sf, sfc or sfg object
+#' @param obj sf, sfc or sfg object
 #'
 #' @examples
 #'

@@ -6,6 +6,9 @@
 \usage{
 sf_boxes(obj)
 }
+\arguments{
+\item{obj}{sf, sfc or sfg object}
+}
 \description{
 returns the bounding box of each geometry
 }
