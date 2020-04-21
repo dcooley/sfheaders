@@ -431,6 +431,7 @@ namespace cast {
       std::string& cast_to,
       bool close = true
   ) {
+
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
     return cast_sfc( sfc, n_results, cast_to, close );
   }
