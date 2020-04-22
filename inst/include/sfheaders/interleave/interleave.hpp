@@ -84,7 +84,7 @@ namespace interleave {
 
     int stride = ( dim_expected == "XYZ" || dim_expected == "XYM" ? 3 : ( dim_expected == "XYZM" ? 4 : 2 ) );
 
-    R_xlen_t coordinate_counter = 0;
+    R_xlen_t total_coordinates = 0;
     Rcpp::List res_list( sfc.size() );
     Rcpp::List res_indices( sfc.size() );
 
@@ -108,13 +108,29 @@ namespace interleave {
       R_xlen_t n_coordinates = coords( n_geometries - 1, 1 );
       n_coordinates = n_coordinates + 1;
       Rcpp::IntegerVector start_indices = coords( Rcpp::_, 0 );
-      start_indices = start_indices + coordinate_counter;
+      start_indices = start_indices + total_coordinates;
 
       res_indices[ i ] = start_indices;
       res_list[ i ] = sfheaders::interleave::interleave( sfg );
 
-      coordinate_counter = coordinate_counter + n_coordinates;
+      total_coordinates = total_coordinates + n_coordinates;
     }
+
+    // TODO: expand the property columns
+    // Rcpp::NumericVector expanded_index( total_coordinates );
+    // R_xlen_t n_col = sf.ncol();
+    // Rcpp::CharacterVector sf_names = sf.names();
+    // R_xlen_t name_position = 0;
+    // for( i = 0; i < n_col; ++i ) {
+    //
+    //   if( sf_names[ i ] != geom_column ) {
+    //
+    //     res_names[ name_position ] = sf_names[ i ];
+    //     SEXP v = sf[ i ];
+    //     expand_vector( res, v, expanded_index, name_position );
+    //     name_position += 1;
+    //   }
+    // }
 
     return Rcpp::List::create(
       Rcpp::_["coordinates"] = sfheaders::utils::unlist_list( res_list ),
