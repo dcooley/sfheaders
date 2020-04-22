@@ -123,6 +123,16 @@ namespace interleave {
     );
   }
 
+
+  // interleaves an `sf` object
+  inline Rcpp::List interleave( Rcpp::DataFrame& sf ) {
+    // and expand rows
+    std::string sfc_col = sf.attr("sf_column");
+    Rcpp::List sfc = sf[ sfc_col ];
+
+
+  }
+
 } // interleave
 } // sfheaders
 
