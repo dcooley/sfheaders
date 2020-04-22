@@ -89,7 +89,7 @@ namespace df {
       Rcpp::DataFrame& sf,
       Rcpp::List& sfc,
       std::string& geom_column,
-      Rcpp::NumericMatrix& sfc_coordinates,
+      Rcpp::IntegerMatrix& sfc_coordinates,
       bool fill = false
   ) {
 
@@ -185,7 +185,7 @@ namespace df {
 
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
   }
 
@@ -193,7 +193,7 @@ namespace df {
       Rcpp::DataFrame& sf,
       Rcpp::List& sfc,
       std::string& geom_column,
-      Rcpp::NumericMatrix& sfc_coordinates,
+      Rcpp::IntegerMatrix& sfc_coordinates,
       Rcpp::StringVector& unlist,
       bool fill = false
   ) {
@@ -251,7 +251,7 @@ namespace df {
   ) {
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = sfc_n_coordinates( sfc );
 
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }

@@ -154,12 +154,12 @@ namespace df {
   // if I make this cumulative, it gives me a vector where the last element
   // is the size of any result, and each element
   // is the row index where a new element starts
-  inline Rcpp::NumericMatrix sfc_n_coordinates(
+  inline Rcpp::IntegerMatrix sfc_n_coordinates(
       Rcpp::List& sfc
   ) {
     R_xlen_t cumulative_coords = 0;
     R_xlen_t n = sfc.size();
-    Rcpp::NumericMatrix res( n, 2 );
+    Rcpp::IntegerMatrix res( n, 2 );
     R_xlen_t i;
 
     for( i = 0; i < n; ++i ) {
@@ -174,18 +174,20 @@ namespace df {
     return res;
   }
 
-  inline Rcpp::NumericMatrix sfg_n_coordinates(
+  inline Rcpp::IntegerMatrix sfg_n_coordinates(
       SEXP& sfg
   ) {
 
     switch( TYPEOF( sfg ) ) {
     case INTSXP: {}
     case REALSXP: {
-      Rcpp::NumericMatrix res(1,1); // starts filled with 0, so we only need to assign the second column
+      Rcpp::IntegerMatrix res(1,2); // starts filled with 0, so we only need to assign the second column
+      // Rcpp::Rcout << "res matrix: " << res << std::endl;
       if( Rf_isMatrix( sfg ) ) {
-        res(0, 0) = sfheaders::utils::sexp_n_row( sfg );
+        // Rcpp::Rcout << "it's a matrix" << std::endl;
+        res(0, 1) = sfheaders::utils::sexp_n_row( sfg );
       } else {
-        res(0, 0) = sfheaders::utils::get_sexp_length( sfg );
+        res(0, 1) = sfheaders::utils::get_sexp_length( sfg );
       }
       return res;
     }
@@ -199,7 +201,7 @@ namespace df {
       Rcpp::stop("sfheaders - unknown sfg type");
     }
     }
-    Rcpp::NumericMatrix res; // #nocov
+    Rcpp::IntegerMatrix res; // #nocov
     return res;  // #nocov
   }
 
@@ -453,7 +455,7 @@ namespace df {
 
   inline Rcpp::List sfc_to_df(
       Rcpp::List& sfc,
-      Rcpp::NumericMatrix& sfc_coordinates
+      Rcpp::IntegerMatrix& sfc_coordinates
   ) {
 
     R_xlen_t n_geometries = sfc_coordinates.nrow();
@@ -483,7 +485,7 @@ namespace df {
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = sfc_n_coordinates( sfc );
     return sfc_to_df( sfc, sfc_coordinates );
   }
 

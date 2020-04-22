@@ -24,19 +24,6 @@ namespace interleave {
     return res;
   }
 
-  // templated version with a vector you want to fill with the result of interleaving
-  // requires knowing the start index.
-  // template < int RTYPE >
-  // inline SEXP interleave(
-  //     Rcpp::Matrix< RTYPE >& mat,
-  //     Rcpp::Matrix< RTYPE >& to_fill,
-  //     R_xlen_t& start_index
-  //   ) {
-  //   Rcpp::Vector< RTYPE > interleaved = interleave( mat );
-  //   sfheaders::utils::fill_vector( to_fill, interleaved, start_index );
-  //   return to_fill;
-  // }
-
   inline SEXP interleave( SEXP& sfg ) {
 
     switch( TYPEOF ( sfg ) ) {
@@ -59,28 +46,16 @@ namespace interleave {
     case VECSXP: {
     if( Rf_isNewList( sfg ) ) {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      // iterate through until we get a matrix
-      // which can be interleaved
       R_xlen_t n = lst.size();
       R_xlen_t i;
       Rcpp::List res( n ); // store interleaved vectors in the same nested-list structure
 
-      //R_xlen_t coordinate_counter = 0;
-
-      // Rcpp::NumericMatrix coords = sfheaders::df::sfc_n_coordinates( lst );
-      // Rcpp::Rcout << "sfg_coordinates: " << coords << std::endl;
-
-      Rcpp::Rcout << "n: " << n << std::endl;
       for( i = 0; i < n; ++i ) {
-        Rcpp::Rcout << "i: " << i << std::endl;
         SEXP sfg = lst[ i ];
-        // Rcpp::NumericMatrix coords = sfheaders::df::sfg_n_coordinates( sfg );
-        // Rcpp::Rcout << "sfg_coordinates: " << coords << std::endl;
         res[ i ] = interleave( sfg );
       }
 
       return sfheaders::utils::unlist_list( res );
-      //return res;
     }
     }
     default: {
@@ -88,6 +63,64 @@ namespace interleave {
     }
     }
     return Rcpp::List::create();
+  }
+
+
+  inline SEXP interleave( Rcpp::List& sfc ) {
+
+    // the input will be a long data.frame
+    // or an sf object
+    // if it's a data.frame, it needs id columns and geometry columns
+    // can probably do this one later?
+    // and focus on the 'sf', because it doesn't need any extra headers / thought / logic
+
+    // the STRIDE depends on the dimension being the same for every pair of coordinates
+    Rcpp::CharacterVector cls;
+    std::string dim_expected;
+    std::string dim;
+
+    R_xlen_t n = sfc.length();
+    R_xlen_t i;
+
+    int stride = ( dim_expected == "XYZ" || dim_expected == "XYM" ? 3 : ( dim_expected == "XYZM" ? 4 : 2 ) );
+
+    R_xlen_t coordinate_counter = 0;
+    Rcpp::List res_list( sfc.size() );
+    Rcpp::List res_indices( sfc.size() );
+
+    for( i = 0; i < n; ++i ) {
+
+      SEXP sfg = sfc[ i ];
+
+      cls = sfheaders::utils::getSfgClass( sfg );
+      if( i == 0 ) {
+        dim_expected = cls[0];
+      } else {
+        dim = cls[0];
+        if ( dim != dim_expected ) {
+          Rcpp::stop("sfheaders - interleaving only works when all geometries have the same dimension (XY(Z(M)))");
+        }
+      }
+
+      Rcpp::IntegerMatrix coords = sfheaders::df::sfg_n_coordinates( sfg );
+
+      R_xlen_t n_geometries = coords.nrow();
+      R_xlen_t n_coordinates = coords( n_geometries - 1, 1 );
+      n_coordinates = n_coordinates + 1;
+      Rcpp::IntegerVector start_indices = coords( Rcpp::_, 0 );
+      start_indices = start_indices + coordinate_counter;
+
+      res_indices[ i ] = start_indices;
+      res_list[ i ] = sfheaders::interleave::interleave( sfg );
+
+      coordinate_counter = coordinate_counter + n_coordinates;
+    }
+
+    return Rcpp::List::create(
+      Rcpp::_["coordinates"] = sfheaders::utils::unlist_list( res_list ),
+      Rcpp::_["start_indices"] = sfheaders::utils::unlist_list( res_indices ),
+      Rcpp::_["stride"] = stride
+    );
   }
 
 } // interleave
