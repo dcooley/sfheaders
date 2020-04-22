@@ -106,6 +106,11 @@ namespace df {
     return Rcpp::IntegerVector(); // #nocov never reached
   }
 
+  /*
+   * sfg_n_coordinates
+   *
+   * iterates through all matrices in the sfg and sums the count of coordinates
+   */
   inline void sfg_n_coordinates(
       SEXP& sfg,
       R_xlen_t& sfg_count
@@ -133,7 +138,7 @@ namespace df {
       //}
       R_xlen_t n = lst.size();
       R_xlen_t i;
-      Rcpp::IntegerVector res( n );
+      //Rcpp::IntegerVector res( n );
       for( i = 0; i < n; ++i ) {
         SEXP tmp_sfg = lst[i];
         sfg_n_coordinates( tmp_sfg, sfg_count );  // recurse
@@ -144,8 +149,6 @@ namespace df {
       Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
     }
     }
-
-    //return sfg_count;
   }
 
   // if I make this cumulative, it gives me a vector where the last element
@@ -154,7 +157,6 @@ namespace df {
   inline Rcpp::NumericMatrix sfc_n_coordinates(
       Rcpp::List& sfc
   ) {
-
     R_xlen_t cumulative_coords = 0;
     R_xlen_t n = sfc.size();
     Rcpp::NumericMatrix res( n, 2 );
@@ -170,6 +172,35 @@ namespace df {
       res( i, 1 ) = cumulative_coords - 1;
     }
     return res;
+  }
+
+  inline Rcpp::NumericMatrix sfg_n_coordinates(
+      SEXP& sfg
+  ) {
+
+    switch( TYPEOF( sfg ) ) {
+    case INTSXP: {}
+    case REALSXP: {
+      Rcpp::NumericMatrix res(1,1); // starts filled with 0, so we only need to assign the second column
+      if( Rf_isMatrix( sfg ) ) {
+        res(0, 0) = sfheaders::utils::sexp_n_row( sfg );
+      } else {
+        res(0, 0) = sfheaders::utils::get_sexp_length( sfg );
+      }
+      return res;
+    }
+    case VECSXP: {
+      if ( Rf_isNewList( sfg ) ) {
+        Rcpp::List lst = Rcpp::as< Rcpp::List > ( sfg );
+        return sfc_n_coordinates( lst );
+      }
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown sfg type");
+    }
+    }
+    Rcpp::NumericMatrix res; // #nocov
+    return res;  // #nocov
   }
 
   // sfcs are a list of sfgs.

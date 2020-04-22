@@ -1,8 +1,9 @@
 #ifndef R_SFHEADERS_INTERLEAVE_H
 #define R_SFHEADERS_INTERLEAVE_H
 
-#include "sfheaders/df/sfc.hpp"
 #include <Rcpp.h>
+#include "sfheaders/df/sfc.hpp"
+#include "sfheaders/utils/lists/list.hpp"
 
 namespace sfheaders {
 namespace interleave {
@@ -13,34 +14,31 @@ namespace interleave {
     R_xlen_t n_row = mat.nrow();
     Rcpp::Vector< RTYPE > res( n_col * n_row );
     R_xlen_t i, j;
+    R_xlen_t position_counter = 0;
     for( i = 0; i < n_row; ++i ) {
       for( j = 0; j < n_col; ++j ) {
-        res[ j ] = mat( i, j );
+        res[ position_counter ] = mat( i, j );
+        position_counter = position_counter + 1;
       }
     }
     return res;
   }
 
-  inline SEXP interleave( Rcpp::List& lst) {
-    R_xlen_t i;
-    R_xlen_t n = lst.length();
-
-
-    Rcpp::NumericMatrix sfc_coordinates = sfheaders::df::sfc_n_coordinates( lst );
-    R_xlen_t n_geometries = sfc_coordinates.nrow();
-    R_xlen_t total_coordinates = sfc_coordinates( n_geometries - 1 , 1 );
-    total_coordinates = total_coordinates + 1;
-
-    //Rcpp::Rcout << "sfc_coordinates: " << sfc_coordinates << std::endl;
-
-    for( i = 0; i < n; ++i ) {
-      //SEXP sfg = sfc[ i ];
-
-    }
-    return Rcpp::List::create();
-  }
+  // templated version with a vector you want to fill with the result of interleaving
+  // requires knowing the start index.
+  // template < int RTYPE >
+  // inline SEXP interleave(
+  //     Rcpp::Matrix< RTYPE >& mat,
+  //     Rcpp::Matrix< RTYPE >& to_fill,
+  //     R_xlen_t& start_index
+  //   ) {
+  //   Rcpp::Vector< RTYPE > interleaved = interleave( mat );
+  //   sfheaders::utils::fill_vector( to_fill, interleaved, start_index );
+  //   return to_fill;
+  // }
 
   inline SEXP interleave( SEXP& sfg ) {
+
     switch( TYPEOF ( sfg ) ) {
     case INTSXP: {
     if( Rf_isMatrix( sfg ) ) {
@@ -61,7 +59,28 @@ namespace interleave {
     case VECSXP: {
     if( Rf_isNewList( sfg ) ) {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      return interleave( lst );
+      // iterate through until we get a matrix
+      // which can be interleaved
+      R_xlen_t n = lst.size();
+      R_xlen_t i;
+      Rcpp::List res( n ); // store interleaved vectors in the same nested-list structure
+
+      //R_xlen_t coordinate_counter = 0;
+
+      // Rcpp::NumericMatrix coords = sfheaders::df::sfc_n_coordinates( lst );
+      // Rcpp::Rcout << "sfg_coordinates: " << coords << std::endl;
+
+      Rcpp::Rcout << "n: " << n << std::endl;
+      for( i = 0; i < n; ++i ) {
+        Rcpp::Rcout << "i: " << i << std::endl;
+        SEXP sfg = lst[ i ];
+        // Rcpp::NumericMatrix coords = sfheaders::df::sfg_n_coordinates( sfg );
+        // Rcpp::Rcout << "sfg_coordinates: " << coords << std::endl;
+        res[ i ] = interleave( sfg );
+      }
+
+      return sfheaders::utils::unlist_list( res );
+      //return res;
     }
     }
     default: {
