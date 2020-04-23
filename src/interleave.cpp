@@ -7,6 +7,15 @@ void interleave_geometry(SEXP& sfg, Rcpp::NumericVector& res, R_xlen_t& coordina
 
 }
 
+// [[Rcpp::export]]
+SEXP rcpp_interleave_sfc( Rcpp::List sfc ) {
+  return sfheaders::interleave::interleave( sfc );
+}
+
+// [[Rcpp::export]]
+SEXP rcpp_interleave_sf( Rcpp::DataFrame sf ) {
+  return sfheaders::interleave::interleave( sf );
+}
 
 // SEXP rcpp_interleave( Rcpp::List sfc ) {
 //
