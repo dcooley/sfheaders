@@ -11,16 +11,27 @@ namespace interleave {
 
   template < int RTYPE >
   inline SEXP interleave( Rcpp::Matrix< RTYPE >& mat ) {
-    R_xlen_t n_col = mat.ncol();
-    R_xlen_t n_row = mat.nrow();
-    Rcpp::Vector< RTYPE > res( n_col * n_row );
+    // R_xlen_t n_col = mat.ncol();
+    // R_xlen_t n_row = mat.nrow();
+    // Rcpp::Vector< RTYPE > res( n_col * n_row );
+    // R_xlen_t i, j;
+    // R_xlen_t position_counter = 0;
+    // for( i = 0; i < n_row; ++i ) {
+    //   for( j = 0; j < n_col; ++j ) {
+    //     res[ position_counter ] = mat( i, j );
+    //     position_counter = position_counter + 1;
+    //   }
+    // }
+    // return res;
+
+    R_xlen_t nrow = mat.nrow(), ncol = mat.ncol();
+    R_xlen_t len = nrow * ncol;
+    R_xlen_t len2 = len - 1;
+    Rcpp::Vector< RTYPE > res( len );
     R_xlen_t i, j;
-    R_xlen_t position_counter = 0;
-    for( i = 0; i < n_row; ++i ) {
-      for( j = 0; j < n_col; ++j ) {
-        res[ position_counter ] = mat( i, j );
-        position_counter = position_counter + 1;
-      }
+    for( i = 0, j = 0; i < len; ++i, j += nrow ) {
+      if (j > len2) j -= len2;
+      res[i] = mat[j];
     }
     return res;
   }
@@ -66,18 +77,10 @@ namespace interleave {
     return Rcpp::List::create();
   }
 
-
-  // TODO: unlist - to unlist some columns (like 'stroke_colour')
   inline SEXP interleave(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
     ) {
-
-    // the input will be a long data.frame
-    // or an sf object
-    // if it's a data.frame, it needs id columns and geometry columns
-    // can probably do this one later?
-    // and focus on the 'sf', because it doesn't need any extra headers / thought / logic
 
     // the STRIDE depends on the dimension being the same for every pair of coordinates
     Rcpp::CharacterVector cls;
