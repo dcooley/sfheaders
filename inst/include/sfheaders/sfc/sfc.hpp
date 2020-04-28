@@ -16,7 +16,7 @@
 #include "sfheaders/sfc/multipolygon/sfc_multipolygons.hpp"
 
 #include "sfheaders/sfc/sfc_types.hpp"
-#include "sfheaders/sfc/bbox.hpp"
+#include "geometries/bbox/bbox.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
 
 namespace sfheaders {

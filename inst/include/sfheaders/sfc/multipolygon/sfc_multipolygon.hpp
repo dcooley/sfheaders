@@ -5,9 +5,11 @@
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
-#include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
 #include "sfheaders/shapes/shapes.hpp"
+
+#include "sfheaders/sfc/bbox.hpp"
+#include "geometries/bbox/bbox.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -37,7 +39,7 @@ namespace sfc {
 
     Rcpp::List sfc( 1 );
 
-    sfheaders::bbox::calculate_bbox( bbox, im );
+    geometries::bbox::calculate_bbox( bbox, im );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, im, xyzm );
 
     Rcpp::List mp = sfheaders::sfg::sfg_multipolygon( im, xyzm, close );
@@ -60,7 +62,7 @@ namespace sfc {
 
     Rcpp::List sfc( 1 );
 
-    sfheaders::bbox::calculate_bbox( bbox, nm );
+    geometries::bbox::calculate_bbox( bbox, nm );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, nm, xyzm );
 
     Rcpp::List mp = sfheaders::sfg::sfg_multipolygon( nm, xyzm, close );
@@ -82,7 +84,7 @@ namespace sfc {
 
     Rcpp::List sfc( 1 );
 
-    sfheaders::bbox::calculate_bbox( bbox, df );
+    geometries::bbox::calculate_bbox( bbox, df );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, df, xyzm );
 
     Rcpp::List mp = sfheaders::sfg::sfg_multipolygon( df, xyzm, close );
@@ -160,7 +162,7 @@ namespace sfc {
   //           Rcpp::stop("sfheaders - expecting a matrix for polygons");
   //         } else {
   //           Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( this_linestring );
-  //           sfheaders::bbox::calculate_bbox( bbox, im );
+  //           geometries::bbox::calculate_bbox( bbox, im );
   //
   //           R_xlen_t n_col = im.ncol();
   //           if( n_col > 2 ) {
@@ -179,7 +181,7 @@ namespace sfc {
   //           Rcpp::stop("sfheaders - expecting a matrix for polygons");
   //         } else {
   //           Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( this_linestring );
-  //           sfheaders::bbox::calculate_bbox( bbox, nm );
+  //           geometries::bbox::calculate_bbox( bbox, nm );
   //
   //           R_xlen_t n_col = nm.ncol();
   //           if( n_col > 2 ) {
@@ -259,7 +261,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
+    geometries::bbox::calculate_bbox( bbox, im, geometry_cols );
 
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, im, geometry_cols, xyzm );
 
@@ -282,7 +284,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, df, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
 
   Rcpp::List sfc( 1 );
@@ -302,7 +304,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, nm, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, nm, geometry_cols, xyzm );
 
   Rcpp::List sfc( 1 );
@@ -324,7 +326,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, df, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, df, geometry_cols , xyzm);
 
   Rcpp::List sfc( 1 );
@@ -344,7 +346,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, df, geometry_cols );
 
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
 
@@ -366,7 +368,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, df, geometry_cols );
 
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
 
@@ -494,7 +496,7 @@ inline SEXP sfc_multipolygon(
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    sfheaders::bbox::calculate_bbox( bbox, df, geometry_cols );
+    geometries::bbox::calculate_bbox( bbox, df, geometry_cols );
 
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
 
@@ -580,7 +582,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, im, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, im, geometry_cols );
 
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, im, geometry_cols, xyzm );
 
@@ -629,7 +631,7 @@ inline SEXP sfc_multipolygon(
   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-  sfheaders::bbox::calculate_bbox( bbox, nm, geometry_cols );
+  geometries::bbox::calculate_bbox( bbox, nm, geometry_cols );
 
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, nm, geometry_cols , xyzm);
 
@@ -878,7 +880,7 @@ inline SEXP sfc_multipolygon(
       Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
       Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-      sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols );
+      geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
 
       Rcpp::List sfc(1);
 
@@ -952,7 +954,7 @@ inline SEXP sfc_multipolygon(
       Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
       Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-      sfheaders::bbox::calculate_bbox( bbox, x, geometry_cols );
+      geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
 
       Rcpp::List sfc(1);
 

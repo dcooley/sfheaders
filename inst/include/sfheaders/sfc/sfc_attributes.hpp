@@ -1,9 +1,11 @@
 #ifndef R_SFHEADERS_SFC_ATTRIBUTES_H
 #define R_SFHEADERS_SFC_ATTRIBUTES_H
 
-#include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/z_range.hpp"
 #include "sfheaders/sfc/m_range.hpp"
+
+#include "sfheaders/sfc/bbox.hpp"
+//#include "geometries/bbox/bbox.hpp"
 
 #include <Rcpp.h>
 

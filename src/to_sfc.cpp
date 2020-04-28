@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "geometries/bbox/bbox.hpp"
 #include "sfheaders/sfc/sfc.hpp"
 
 // [[Rcpp::export]]
@@ -101,7 +102,7 @@ Rcpp::List rcpp_get_sfc_attributes( Rcpp::List sfc ) {
 // [[Rcpp::export]]
 SEXP rcpp_sfg_boxes( SEXP sfg ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-  sfheaders::bbox::calculate_bbox( bbox, sfg );
+  geometries::bbox::calculate_bbox( bbox, sfg );
   return sfheaders::sfg::sfg_box( bbox );
 }
 
@@ -117,9 +118,9 @@ SEXP rcpp_sfc_boxes( Rcpp::List sfc ) {
   for( i = 0; i < n; ++i ) {
     SEXP sfg = sfc[ i ];
     Rcpp::NumericVector box = sfheaders::bbox::start_bbox();
-    sfheaders::bbox::calculate_bbox( box, sfg );
+    geometries::bbox::calculate_bbox( box, sfg );
     Rcpp::List p = sfheaders::sfg::sfg_box( box );
-    sfheaders::bbox::calculate_bbox( bbox, sfg );
+    geometries::bbox::calculate_bbox( bbox, sfg );
     res[ i ] = p;
   }
 

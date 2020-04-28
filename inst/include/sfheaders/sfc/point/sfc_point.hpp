@@ -5,9 +5,11 @@
 #include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/point/sfg_point.hpp"
-#include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
 #include "sfheaders/shapes/shapes.hpp"
+
+#include "sfheaders/sfc/bbox.hpp"
+#include "geometries/bbox/bbox.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -38,7 +40,7 @@ namespace sfc {
     // then an sfc of all other points
     R_xlen_t n_row = im.nrow();
 
-    sfheaders::bbox::calculate_bbox( bbox, im );
+    geometries::bbox::calculate_bbox( bbox, im );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, im, xyzm );
 
     R_xlen_t i;
@@ -81,7 +83,7 @@ namespace sfc {
     // then an sfc of all other points
     R_xlen_t n_row = nm.nrow();
 
-    sfheaders::bbox::calculate_bbox( bbox, nm );
+    geometries::bbox::calculate_bbox( bbox, nm );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, nm, xyzm );
 
     R_xlen_t i;
@@ -124,7 +126,7 @@ namespace sfc {
     R_xlen_t n_row = im.nrow();
     R_xlen_t i;
 
-    sfheaders::bbox::calculate_bbox( bbox, im, cols );
+    geometries::bbox::calculate_bbox( bbox, im, cols );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, im, cols, xyzm );
 
     Rcpp::List sfc(n_row);
@@ -155,7 +157,7 @@ namespace sfc {
     R_xlen_t i;
     R_xlen_t n_row = im.nrow();
 
-    sfheaders::bbox::calculate_bbox( bbox, im );
+    geometries::bbox::calculate_bbox( bbox, im );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, im, xyzm );
 
     Rcpp::List sfc(n_row);
@@ -183,7 +185,7 @@ namespace sfc {
     R_xlen_t n_row = nm.nrow();
     R_xlen_t i;
 
-    sfheaders::bbox::calculate_bbox( bbox, nm, cols );
+    geometries::bbox::calculate_bbox( bbox, nm, cols );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, nm, cols, xyzm );
 
     Rcpp::List sfc( n_row );
@@ -214,7 +216,7 @@ namespace sfc {
     R_xlen_t i;
     R_xlen_t n_row = nm.nrow();
 
-    sfheaders::bbox::calculate_bbox( bbox, nm );
+    geometries::bbox::calculate_bbox( bbox, nm );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, nm, xyzm );
 
     Rcpp::List sfc(n_row);
