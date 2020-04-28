@@ -150,7 +150,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( im, cols );
+    Rcpp::IntegerVector column_positions = geometries::utils::column_positions( im, cols );
 
     R_xlen_t i;
     R_xlen_t n_row = im.nrow();
@@ -161,7 +161,7 @@ namespace sfc {
     Rcpp::List sfc(n_row);
 
     for( i = 0; i < n_row; ++i ) {
-      Rcpp::IntegerMatrix this_point = sfheaders::utils::matrix_row_to_matrix( im, i );
+      Rcpp::IntegerMatrix this_point = geometries::utils::matrix_row_to_matrix( im, i );
       sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions, xyzm );
     }
 
@@ -209,7 +209,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    Rcpp::IntegerVector column_positions = sfheaders::utils::column_positions( nm, cols );
+    Rcpp::IntegerVector column_positions = geometries::utils::column_positions( nm, cols );
 
     R_xlen_t i;
     R_xlen_t n_row = nm.nrow();
@@ -220,7 +220,7 @@ namespace sfc {
     Rcpp::List sfc(n_row);
 
     for( i = 0; i < n_row; ++i ) {
-      Rcpp::NumericMatrix this_point = sfheaders::utils::matrix_row_to_matrix( nm, i );
+      Rcpp::NumericMatrix this_point = geometries::utils::matrix_row_to_matrix( nm, i );
       sfc[i] = sfheaders::sfg::sfg_point( this_point, column_positions, xyzm );
     }
 
@@ -232,7 +232,7 @@ namespace sfc {
       Rcpp::DataFrame& df,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df );
     return sfc_point( nm, xyzm );
   }
 
@@ -241,7 +241,7 @@ namespace sfc {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df, cols );
     return sfc_point( nm, xyzm );
   }
 
@@ -250,7 +250,7 @@ namespace sfc {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, cols );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df, cols );
     return sfc_point( nm, xyzm );
   }
 
@@ -374,7 +374,7 @@ namespace sfc {
     if( Rf_isNull( cols ) ) {
       return sfc_point( x, xyzm );
     }
-    sfheaders::utils::geometry_column_check( cols );
+    geometries::utils::geometry_column_check( cols );
 
     switch( TYPEOF( cols ) ) {
     case REALSXP: {}
@@ -413,7 +413,7 @@ namespace sfc {
   //   }
   //
   //   if( !Rf_isNull( point_id ) && Rf_isNull( geometry_cols ) ) {
-  //     SEXP geometry_cols2 = sfheaders::utils::other_columns( x, point_id );
+  //     SEXP geometry_cols2 = geometries::utils::other_columns( x, point_id );
   //     return sfc_point( x, geometry_cols, point_id ); // send back in
   //   }
   //
@@ -421,7 +421,7 @@ namespace sfc {
   //     Rcpp::stop("sfheaders - point columns types are different");
   //   }
   //
-  //   sfheaders::utils::geometry_column_check( geometry_cols );
+  //   geometries::utils::geometry_column_check( geometry_cols );
   //
   //   switch( TYPEOF( geometry_cols ) ) {
   //   case REALSXP: {}

@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SFG_MULTIPOINT_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 
@@ -89,7 +89,7 @@ namespace sfg {
       Rcpp::DataFrame& df,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df );
     return sfg_multipoint( nm, xyzm );
   }
 

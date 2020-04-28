@@ -9,7 +9,7 @@ test_that("various objects converted to sfc_polygon",{
   }
 
   v <- 1:3
-  expect_error( sfheaders:::rcpp_sfc_polygon(v, NULL, NULL, NULL, close = FALSE, ""), "sfheaders - unsupported object")
+  expect_error( sfheaders:::rcpp_sfc_polygon(v, NULL, NULL, NULL, close = FALSE, ""), "geometries - unsupported object")
 
   m <- matrix(1:4, ncol = 2)
   res <- sfheaders:::rcpp_sfc_polygon(m, NULL, NULL, NULL, close = FALSE, "")
@@ -209,7 +209,7 @@ test_that("various objects converted to sfc_polygon",{
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
 
   m <- matrix(1:4, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfc_polygon(m, NULL, 0, NULL, close = FALSE, ""), "sfheaders - incorrect number of geometry columns")
+  expect_error( sfheaders:::rcpp_sfc_polygon(m, NULL, 0, NULL, close = FALSE, ""), "geometries - incorrect number of geometry columns")
 
 })
 

@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SFG_MULTILINESTRING_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 
@@ -59,7 +59,7 @@ namespace sfg {
       std::string xyzm
   ) {
     Rcpp::List mls( 1 );
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df );
     mls[0] = nm;
     R_xlen_t n_col = nm.ncol();
     sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_MULTILINESTRING, xyzm );
@@ -478,7 +478,7 @@ namespace sfg {
       // #nocov start
       Rcpp::StringVector id_cols( 1 );
       id_cols[0] = line_id;
-      SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+      SEXP other_cols = geometries::utils::other_columns( x, id_cols );
       return sfg_multilinestring( x, other_cols, line_id, xyzm );
       // #nocov end
     }
@@ -511,7 +511,7 @@ namespace sfg {
       // #nocov start
       Rcpp::IntegerVector id_cols( 1 );
       id_cols[0] = line_id;
-      SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+      SEXP other_cols = geometries::utils::other_columns( x, id_cols );
       return sfg_multilinestring( x, other_cols, line_id, xyzm );
       // #nocov end
     }
@@ -544,7 +544,7 @@ namespace sfg {
     }
 
     if( !Rf_isNull( line_id ) && Rf_isNull( cols ) ) {
-      SEXP other_cols = sfheaders::utils::other_columns( x, line_id );
+      SEXP other_cols = geometries::utils::other_columns( x, line_id );
       return sfg_multilinestring( x, other_cols, line_id, xyzm );
     }
 

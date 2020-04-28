@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SHAPES_MAT_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 
 namespace sfheaders {
 namespace shapes {
@@ -33,7 +33,7 @@ namespace shapes {
   inline SEXP get_mat(
     Rcpp::DataFrame& df
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df );
     return nm;
   }
 
@@ -41,7 +41,7 @@ namespace shapes {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( im, geometry_cols );
+    geometries::utils::column_check( im, geometry_cols );
     R_xlen_t n_row = im.nrow();
     R_xlen_t n_col = geometry_cols.size();
     R_xlen_t i;
@@ -58,7 +58,7 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( nm, geometry_cols );
+    geometries::utils::column_check( nm, geometry_cols );
     R_xlen_t n_row = nm.nrow();
     R_xlen_t n_col = geometry_cols.size();
     R_xlen_t i;
@@ -74,7 +74,7 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     R_xlen_t n_col = geometry_cols.size();
     if( df.ncol() < n_col ) {
       Rcpp::stop("sfheaders - incorrect number of columns");
@@ -111,7 +111,7 @@ namespace shapes {
     Rcpp::DataFrame& df,
     Rcpp::IntegerVector& geometry_cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, geometry_cols );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df, geometry_cols );
     return get_mat( nm );
   }
 

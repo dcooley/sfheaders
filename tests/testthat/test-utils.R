@@ -8,7 +8,7 @@ test_that("index_correct works",{
 
 })
 
-test_that("sfheaders::utils::subset subsets a data.frame",{
+test_that("geometries::utils::subset subsets a data.frame",{
 
   x <- data.frame(
     id = c(1,1,1,2,2,2)
@@ -33,7 +33,7 @@ test_that("sfheaders::utils::subset subsets a data.frame",{
 })
 
 
-test_that("sfheaders::utils::id_positions returns correct positions",{
+test_that("geometries::utils::id_positions returns correct positions",{
 
   line_ids <- c(1,1,1,1,1)
   unique_ids <- sort( unique( line_ids ) )
@@ -67,17 +67,17 @@ test_that("sfheaders::utils::id_positions returns correct positions",{
 
   line_ids <- as.integer( c(1,1,1,1,2,2,1,3) )
   unique_ids <- as.integer( sort( unique( line_ids ) ) )
-  expect_error( sfheaders:::rcpp_id_positions( line_ids, unique_ids ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?")
+  expect_error( sfheaders:::rcpp_id_positions( line_ids, unique_ids ), "geometries - error indexing lines, perhaps caused by un-ordered data?")
 
   line_ids <- c(1.1,1.1,1.1,2,2,1.1,3.1)
   unique_ids <- sort( unique( line_ids ) )
-  expect_error( sfheaders:::rcpp_id_positions( line_ids, unique_ids ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?")
+  expect_error( sfheaders:::rcpp_id_positions( line_ids, unique_ids ), "geometries - error indexing lines, perhaps caused by un-ordered data?")
 
 
 
 })
 
-test_that("sfheaders::utils::other_columns works for various data types",{
+test_that("geometries::utils::other_columns works for various data types",{
 
   df <- data.frame(x = 1:2, y = 3:4, z = 5:6 )
   other_cols <- sfheaders:::rcpp_other_columns( df, NULL, NULL, NULL )
@@ -323,7 +323,7 @@ test_that("concatenate_vectors works",{
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1,5), c(1,5))
   expect_equal( sfheaders:::rcpp_concatenate_vectors(1.2,5), c(1.2,5))
   expect_equal( sfheaders:::rcpp_concatenate_vectors("a","b"), c("a","b"))
-  expect_error( sfheaders:::rcpp_concatenate_vectors(1,"a"), "sfheaders - different vector types found")
+  expect_error( sfheaders:::rcpp_concatenate_vectors(1,"a"), "geometries - different vector types found")
 
   expect_equal( sfheaders:::rcpp_concatenate_vectors(c(1L,2L), c(3L)), c(1L:3L))
   expect_equal( sfheaders:::rcpp_concatenate_vectors(c(1L,2L), c(3L,4L)), c(1L:4L))

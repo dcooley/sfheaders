@@ -119,7 +119,7 @@ namespace df {
       // it's a vector, right?
       sfg_count += 1;
     } else {
-      sfg_count += sfheaders::utils::sexp_n_row( sfg );
+      sfg_count += geometries::utils::sexp_n_row( sfg );
     }
     break;
     }

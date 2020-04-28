@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SFG_MULTIPOLYGON_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/sfg/polygon/close_polygon.hpp"
@@ -47,7 +47,7 @@ inline SEXP sfg_multipolygon(
     bool close = true
 ) {
 
-  Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+  Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df );
   Rcpp::List p( 1 );
   Rcpp::List mp( 1 );
   p[0] = sfheaders::polygon_utils::close_polygon( nm, close );;
@@ -564,7 +564,7 @@ inline SEXP sfg_multipolygon(
   if( Rf_isNull( cols ) ) {
     Rcpp::StringVector id_cols( 1 );
     id_cols[0] = line_id;
-    SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+    SEXP other_cols = geometries::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, line_id, xyzm, close);
   }
   switch( TYPEOF( cols ) ) {
@@ -596,7 +596,7 @@ inline SEXP sfg_multipolygon(
   if( Rf_isNull( cols ) ) {
     Rcpp::IntegerVector id_cols( 1 );
     id_cols[0] = line_id;
-    SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+    SEXP other_cols = geometries::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, line_id, xyzm, close);
   }
   switch( TYPEOF( cols ) ) {
@@ -655,7 +655,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::IntegerVector id_cols( 2 );
     id_cols[0] = polygon_id;
     id_cols[1] = line_id;
-    SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+    SEXP other_cols = geometries::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, xyzm, close);
   }
   // #nocov end
@@ -690,7 +690,7 @@ inline SEXP sfg_multipolygon(
     Rcpp::StringVector id_cols( 2 );
     id_cols[0] = polygon_id;
     id_cols[1] = line_id;
-    SEXP other_cols = sfheaders::utils::other_columns( x, id_cols );
+    SEXP other_cols = geometries::utils::other_columns( x, id_cols );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, xyzm, close);
   }
   // #nocov end
@@ -728,7 +728,7 @@ inline SEXP sfg_multipolygon(
   //
   if( Rf_isNull( cols ) ) {
     // make them the other columns
-    SEXP other_cols = sfheaders::utils::other_columns(x, polygon_id, line_id );
+    SEXP other_cols = geometries::utils::other_columns(x, polygon_id, line_id );
     return sfg_multipolygon( x, other_cols, polygon_id, line_id, xyzm, close);
   }
 

@@ -2,8 +2,8 @@
 #define R_SFHEADERS_DF_SF_H
 
 #include "sfheaders/df/sfc.hpp"
-#include "sfheaders/utils/vectors/vectors.hpp"
-#include "sfheaders/utils/lists/list.hpp"
+#include "geometries/utils/vectors/vectors.hpp"
+#include "geometries/utils/lists/list.hpp"
 
 #include <Rcpp.h>
 
@@ -11,7 +11,7 @@ namespace sfheaders {
 namespace df {
 
   inline Rcpp::String unique_name( Rcpp::String this_name, Rcpp::StringVector& existing_names ) {
-    int is_in = sfheaders::utils::where_is( this_name, existing_names );
+    int is_in = geometries::utils::where_is( this_name, existing_names );
 
     if( is_in != -1 ) {
       // the name already exists, so we need to uniqueify it
@@ -21,7 +21,7 @@ namespace df {
         std::ostringstream os;
         os << this_name.get_cstring() << ".." << counter;
         new_name = os.str();
-        is_in = sfheaders::utils::where_is( new_name, existing_names );
+        is_in = geometries::utils::where_is( new_name, existing_names );
         counter += 1;
       } while ( is_in != -1 );
       this_name = new_name;
@@ -153,7 +153,7 @@ namespace df {
 
     for( i = 0; i < sfc_df_names.length(); ++i ) {
       Rcpp::String geom = sfc_df_names[ i ];
-      is_in = sfheaders::utils::where_is( geom, geometry_columns );
+      is_in = geometries::utils::where_is( geom, geometry_columns );
       keep_columns[ i ] = is_in == -1 ? false : true;
     }
 
@@ -207,7 +207,7 @@ namespace df {
 
     // issue 75 - ignore undefined 'unlist' columns
     Rcpp::StringVector sf_names = sf.names();
-    Rcpp::IntegerVector unlist_idx = sfheaders::utils::where_is( unlist, sf_names );
+    Rcpp::IntegerVector unlist_idx = geometries::utils::where_is( unlist, sf_names );
     unlist = unlist[ unlist_idx >= 0 ];
 
     R_xlen_t n_unlist = unlist.size();
@@ -217,7 +217,7 @@ namespace df {
     for( i = 0; i < n_unlist; ++i ) {
       const char *s = unlist[ i ];
       Rcpp::List lst = sf[ s ];
-      to_unlist[ i ] = sfheaders::utils::unlist_list( lst );
+      to_unlist[ i ] = geometries::utils::unlist_list( lst );
       // iff total_size == sf.nrow();
       // then it's not a list column.
     }
@@ -231,7 +231,7 @@ namespace df {
     for( i = 0; i < n_unlist; ++i ) {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
-      R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
+      R_xlen_t n = geometries::utils::get_sexp_length( unlisted_col );
       if( n == sf.nrow() ) {
         continue; // issue 76
       }

@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SHAPES_VEC_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 
 namespace sfheaders {
 namespace shapes {
@@ -35,7 +35,7 @@ namespace shapes {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( im, geometry_cols );
+    geometries::utils::column_check( im, geometry_cols );
     R_xlen_t n_row = im.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
@@ -70,7 +70,7 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     R_xlen_t n_col = geometry_cols.length();
     if( df.ncol() < n_col ) {
       Rcpp::stop("sfheaders - incorrect number of columns");
@@ -121,7 +121,7 @@ namespace shapes {
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( nm, geometry_cols );
+    geometries::utils::column_check( nm, geometry_cols );
     R_xlen_t n_row = nm.nrow();
     if( n_row != 1 ) {
       Rcpp::stop("sfheaders - expecting single-row matrix");
@@ -140,7 +140,7 @@ namespace shapes {
       Rcpp::DataFrame& df,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df, geometry_cols );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df, geometry_cols );
     return get_vec( nm );
   }
 

@@ -10,7 +10,7 @@ test_that("various objects converted to sfc_multilinestring",{
   }
 
   v <- 1:3
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(v, NULL, NULL, NULL, ""), "sfheaders - unsupported object")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(v, NULL, NULL, NULL, ""), "geometries - unsupported object")
 
   m <- matrix(1:4, ncol = 2)
   res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, NULL, NULL, "")
@@ -214,7 +214,7 @@ test_that("various objects converted to sfc_multilinestring",{
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
 
   m <- matrix(1:4, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, NULL, 0, NULL, ""), "sfheaders - incorrect number of geometry columns")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, NULL, 0, NULL, ""), "geometries - incorrect number of geometry columns")
 
 })
 

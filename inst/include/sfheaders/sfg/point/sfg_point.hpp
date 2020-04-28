@@ -3,6 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 
@@ -99,7 +100,7 @@ namespace sfg {
     Rcpp::IntegerVector& cols,
     std::string xyzm
   ) {
-    //Rcpp::NumericMatrix nm = sfheaders::utils::df_sfg_matrix( df );
+    //Rcpp::NumericMatrix nm = geometries::utils::df_sfg_matrix( df );
     Rcpp::NumericVector nv = sfheaders::shapes::get_vec( df, cols );
     return sfg_point( nv, xyzm );
   }

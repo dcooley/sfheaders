@@ -1,8 +1,8 @@
 #ifndef R_SFHEADERS_SF_UTILS_H
 #define R_SFHEADERS_SF_UTILS_H
 
-#include "sfheaders/utils/vectors/vectors.hpp"
-#include "sfheaders/utils/lists/list.hpp"
+#include "geometries/utils/vectors/vectors.hpp"
+#include "geometries/utils/lists/list.hpp"
 
 namespace sfheaders {
 namespace sf {
@@ -81,7 +81,7 @@ namespace sf {
       SEXP v = df[ idx ];
 
       if( is_in ) {
-        sf[ i ] = sfheaders::utils::fill_list( v, line_positions );
+        sf[ i ] = geometries::utils::fill_list( v, line_positions );
       } else {
         sf[ i ] = subset_properties( v, row_idx );
       }
@@ -130,7 +130,7 @@ namespace sf {
       bool is_in = ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
       SEXP v = df[ idx ];
       if( is_in ) {
-        sf[ i + 1 ] = sfheaders::utils::fill_list( v, line_positions );
+        sf[ i + 1 ] = geometries::utils::fill_list( v, line_positions );
       } else {
         sf[ i + 1 ] = subset_properties( v, row_idx );
       }
@@ -192,7 +192,7 @@ namespace sf {
     Rcpp::IntegerVector row_idx(1);
     row_idx[0] = 0;
 
-    Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( str_property_columns, df_names );
+    Rcpp::IntegerVector property_idx = geometries::utils::where_is( str_property_columns, df_names );
     return sfheaders::sf::create_sf( df, sfc, str_property_columns, property_idx, list_column_idx, row_idx, line_positions );
   }
 

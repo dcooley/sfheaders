@@ -437,7 +437,7 @@ namespace sfc {
       SEXP& geometry_cols,
       std::string xyzm
   ) {
-    sfheaders::utils::geometry_column_check( geometry_cols );
+    geometries::utils::geometry_column_check( geometry_cols );
 
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -493,14 +493,14 @@ namespace sfc {
     int end;
 
     // issue 56 - no need to keep all the columns in the subset_dataframe
-    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+    Rcpp::StringVector keep_columns = geometries::utils::concatenate_vectors( geometry_cols, linestring_id );
     Rcpp::DataFrame df_keep = df[ keep_columns ];
     Rcpp::StringVector df_names = df_keep.names();
 
     for( i = 0; i < n_multilinestrings; ++i ) {
       start = multilinestring_positions( i, 0 );
       end = multilinestring_positions( i, 1 );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
+      Rcpp::DataFrame df_subset = geometries::utils::subset_dataframe( df_keep, df_names, start, end );
       sfc( i ) = sfheaders::sfg::sfg_multilinestring( df_subset, geometry_cols, linestring_id, xyzm );
     }
 
@@ -530,7 +530,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+    Rcpp::IntegerMatrix multilinestring_positions = geometries::utils::id_positions( multilinestring_ids );
     return sfc_multilinestring( df, geometry_cols, linestring_id, multilinestring_positions, xyzm );
   }
 
@@ -541,7 +541,7 @@ namespace sfc {
       Rcpp::String& linestring_id,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+    Rcpp::IntegerMatrix multilinestring_positions = geometries::utils::id_positions( multilinestring_ids );
     return sfc_multilinestring(df, geometry_cols, linestring_id, multilinestring_positions, xyzm );
   }
 
@@ -586,7 +586,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+    Rcpp::IntegerMatrix multilinestring_positions = geometries::utils::id_positions( multilinestring_ids );
     return sfc_multilinestring( im, geometry_cols, linestring_id, multilinestring_positions, xyzm );
   }
 
@@ -631,7 +631,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix multilinestring_positions = sfheaders::utils::id_positions( multilinestring_ids );
+    Rcpp::IntegerMatrix multilinestring_positions = geometries::utils::id_positions( multilinestring_ids );
     return sfc_multilinestring( nm, geometry_cols, linestring_id, multilinestring_positions, xyzm );
   }
 
@@ -642,7 +642,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    sfheaders::utils::column_exists( im, multilinestring_id );
+    geometries::utils::column_exists( im, multilinestring_id );
     Rcpp::IntegerVector multilinestring_ids = im( Rcpp::_, multilinestring_id );
     return sfc_multilinestring( im, geometry_cols, multilinestring_ids, linestring_id, xyzm );
   }
@@ -654,7 +654,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    sfheaders::utils::column_exists( nm, multilinestring_id );
+    geometries::utils::column_exists( nm, multilinestring_id );
     Rcpp::NumericVector multilinestring_ids = nm( Rcpp::_, multilinestring_id );
     return sfc_multilinestring( nm, geometry_cols, multilinestring_ids, linestring_id, xyzm );
   }
@@ -677,7 +677,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    sfheaders::utils::column_exists( df, multilinestring_id );
+    geometries::utils::column_exists( df, multilinestring_id );
     SEXP multilinestring_ids = df[ multilinestring_id ];
     return sfc_multilinestring( df, geometry_cols, multilinestring_ids, linestring_id, xyzm );
   }
@@ -794,7 +794,7 @@ namespace sfc {
 
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
-      SEXP geometry_cols2 = sfheaders::utils::other_columns( x, multilinestring_id, linestring_id );
+      SEXP geometry_cols2 = geometries::utils::other_columns( x, multilinestring_id, linestring_id );
       return sfc_multilinestring( x, geometry_cols2, multilinestring_id, linestring_id, xyzm );
     }
 
@@ -888,7 +888,7 @@ namespace sfc {
         !Rf_isNull( linestring_id )
     ) {
 
-      sfheaders::utils::geometry_column_check( geometry_cols );
+      geometries::utils::geometry_column_check( geometry_cols );
 
       if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
            TYPEOF( geometry_cols ) != TYPEOF( multilinestring_id ) ) {

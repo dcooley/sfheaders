@@ -2,7 +2,7 @@
 #define R_SFHEADERS_SHAPES_LIST_MAT_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 #include "sfheaders/shapes/mat/mat.hpp"
 
 namespace sfheaders {
@@ -33,7 +33,7 @@ namespace shapes {
   inline SEXP get_listMat(
     Rcpp::DataFrame& df
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::utils::df_to_matrix( df );
+    Rcpp::NumericMatrix nm = geometries::utils::df_to_matrix( df );
     return get_listMat( nm );
   }
 
@@ -43,7 +43,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     R_xlen_t i;
     R_xlen_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
@@ -65,7 +65,7 @@ namespace shapes {
       int& end
   ) {
 
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     R_xlen_t i;
     R_xlen_t n_col = geometry_cols.length();
     int line_rows = end - start + 1;
@@ -89,7 +89,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
-    sfheaders::utils::column_check( nm, geometry_cols );
+    geometries::utils::column_check( nm, geometry_cols );
     R_xlen_t n_col = geometry_cols.length();
     // matrix can just be subset by cols and rows
     Rcpp::Range rows = Rcpp::Range( start, end );
@@ -115,7 +115,7 @@ namespace shapes {
       int& start,
       int& end
   ) {
-    sfheaders::utils::column_check( im, geometry_cols );
+    geometries::utils::column_check( im, geometry_cols );
     R_xlen_t n_col = geometry_cols.length();
 
     if( n_col <= 1 ) {
@@ -163,7 +163,7 @@ namespace shapes {
       SEXP& line_ids
   ) {
 
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
 
     R_xlen_t n_lines = line_positions.nrow();
 
@@ -187,7 +187,7 @@ namespace shapes {
       SEXP& line_ids
   ) {
 
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
 
     R_xlen_t n_lines = line_positions.nrow();
 
@@ -211,7 +211,7 @@ namespace shapes {
       Rcpp::NumericVector& line_ids
   ) {
 
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
 
     R_xlen_t n_lines = line_positions.nrow();
 
@@ -246,7 +246,7 @@ namespace shapes {
     Rcpp::IntegerVector& cols,
     int& id_col
   ) {
-    sfheaders::utils::column_exists( df, id_col );
+    geometries::utils::column_exists( df, id_col );
 
     SEXP line_ids = df[ id_col ];
     return get_listMat( df, cols, line_ids );

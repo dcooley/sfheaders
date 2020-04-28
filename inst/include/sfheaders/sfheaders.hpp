@@ -3,7 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/shapes/shapes.hpp"
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 
 #include "sfheaders/sfg/sfg.hpp"
 #include "sfheaders/sfc/sfc.hpp"

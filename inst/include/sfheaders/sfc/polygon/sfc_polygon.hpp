@@ -454,7 +454,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    sfheaders::utils::geometry_column_check( geometry_cols );
+    geometries::utils::geometry_column_check( geometry_cols );
 
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -498,14 +498,14 @@ namespace sfc {
     int end;
 
     // issue 56 - no need to keep all the columns in the subset_dataframe
-    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, linestring_id );
+    Rcpp::StringVector keep_columns = geometries::utils::concatenate_vectors( geometry_cols, linestring_id );
     Rcpp::DataFrame df_keep = df[ keep_columns ];
     Rcpp::StringVector df_names = df_keep.names();
 
     for( i = 0; i < n_polygons; ++i ) {
       start = polygon_positions( i, 0 );
       end = polygon_positions( i, 1 );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
+      Rcpp::DataFrame df_subset = geometries::utils::subset_dataframe( df_keep, df_names, start, end );
       sfc( i ) = sfheaders::sfg::sfg_polygon( df_subset, geometry_cols, linestring_id, xyzm, close );
     }
 
@@ -537,7 +537,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = geometries::utils::id_positions( polygon_ids );
     return sfc_polygon( df, geometry_cols, linestring_id, polygon_positions, xyzm, close );
   }
 
@@ -550,7 +550,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = geometries::utils::id_positions( polygon_ids );
     return sfc_polygon( df, geometry_cols, linestring_id, polygon_positions, xyzm, close );
   }
 
@@ -596,7 +596,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = geometries::utils::id_positions( polygon_ids );
     return sfc_polygon( im, geometry_cols, linestring_id, polygon_positions, xyzm, close );
   }
 
@@ -643,7 +643,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( polygon_ids );
+    Rcpp::IntegerMatrix polygon_positions = geometries::utils::id_positions( polygon_ids );
     return sfc_polygon( nm, geometry_cols, linestring_id, polygon_positions, xyzm, close );
   }
 
@@ -655,7 +655,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    sfheaders::utils::column_exists( im, polygon_id );
+    geometries::utils::column_exists( im, polygon_id );
     Rcpp::IntegerVector polygon_ids = im( Rcpp::_, polygon_id );
     return sfc_polygon( im, geometry_cols, polygon_ids, linestring_id, xyzm, close );
   }
@@ -668,7 +668,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    sfheaders::utils::column_exists( nm, polygon_id );
+    geometries::utils::column_exists( nm, polygon_id );
     Rcpp::NumericVector polygon_ids = nm( Rcpp::_, polygon_id );
     return sfc_polygon( nm, geometry_cols, polygon_ids, linestring_id, xyzm, close );
   }
@@ -693,7 +693,7 @@ namespace sfc {
       std::string xyzm,
       bool close = true
   ) {
-    sfheaders::utils::column_exists( df, polygon_id );
+    geometries::utils::column_exists( df, polygon_id );
     SEXP polygon_ids = df[ polygon_id ];
     return sfc_polygon( df, geometry_cols, polygon_ids, linestring_id, xyzm, close );
   }
@@ -815,7 +815,7 @@ namespace sfc {
 
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
-      SEXP geometry_cols2 = sfheaders::utils::other_columns( x, polygon_id, linestring_id );
+      SEXP geometry_cols2 = geometries::utils::other_columns( x, polygon_id, linestring_id );
       return sfc_polygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
     }
 
@@ -909,7 +909,7 @@ namespace sfc {
         !Rf_isNull( linestring_id )
         ) {
 
-      sfheaders::utils::geometry_column_check( geometry_cols );
+      geometries::utils::geometry_column_check( geometry_cols );
 
       if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
            TYPEOF( geometry_cols ) != TYPEOF( polygon_id ) ) {

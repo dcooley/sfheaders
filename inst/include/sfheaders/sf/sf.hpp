@@ -29,7 +29,7 @@ namespace api {
       case STRSXP: {
         Rcpp::StringVector str_list_columns = Rcpp::as< Rcpp::StringVector >( list_columns );
         Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
-        Rcpp::IntegerVector idx = sfheaders::utils::where_is( str_list_columns, str_property_cols );
+        Rcpp::IntegerVector idx = geometries::utils::where_is( str_list_columns, str_property_cols );
         list_column_idx = property_idx[ idx ];
         break;
 

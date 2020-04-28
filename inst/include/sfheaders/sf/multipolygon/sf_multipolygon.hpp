@@ -2,10 +2,10 @@
 #define R_SFHEADERS_SF_MULTIPOLYGON_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/sexp/sexp.hpp"
+#include "geometries/utils/sexp/sexp.hpp"
 #include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/sfc/multipolygon/sfc_multipolygon.hpp"
-#include "sfheaders/utils/unique/unique_ids.hpp"
+#include "geometries/utils/unique/unique_ids.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 
 namespace sfheaders {
@@ -22,7 +22,7 @@ namespace sf {
   ) {
     Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
 
-    SEXP ids = sfheaders::utils::get_ids( x, multipolygon_id );
+    SEXP ids = geometries::utils::get_ids( x, multipolygon_id );
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
@@ -38,10 +38,10 @@ namespace sf {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix polygon_positions = sfheaders::utils::id_positions( multiline_ids );
+    Rcpp::IntegerMatrix polygon_positions = geometries::utils::id_positions( multiline_ids );
     Rcpp::IntegerVector row_idx = polygon_positions( Rcpp::_, 0 );
     Rcpp::StringVector df_names = df.names();
-    Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
+    Rcpp::IntegerVector property_idx = geometries::utils::where_is( property_cols, df_names );
 
     Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( df, geometry_cols, polygon_ids, line_ids, polygon_positions, xyzm, close );
 
@@ -128,7 +128,7 @@ namespace sf {
       bool close = true
   ) {
 
-    sfheaders::utils::column_exists( im, polygon_id );
+    geometries::utils::column_exists( im, polygon_id );
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
     return sf_multipolygon( df, geometry_cols, property_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
   }
@@ -303,12 +303,12 @@ namespace sf {
     ) {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
-      SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id );
+      SEXP property_columns = geometries::utils::other_columns( x, geometry_cols, polygon_id );
 
-      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerVector property_idx = geometries::utils::where_is( property_columns, x );
       Rcpp::IntegerMatrix line_positions(1,2);
       line_positions(0,0) = 0;
-      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
+      line_positions(0,1) = geometries::utils::sexp_n_row( x ) - 1;
 
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
@@ -329,12 +329,12 @@ namespace sf {
     ) {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
-      SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, linestring_id );
+      SEXP property_columns = geometries::utils::other_columns( x, geometry_cols, linestring_id );
 
-      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerVector property_idx = geometries::utils::where_is( property_columns, x );
       Rcpp::IntegerMatrix line_positions(1,2);
       line_positions(0,0) = 0;
-      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
+      line_positions(0,1) = geometries::utils::sexp_n_row( x ) - 1;
 
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
@@ -373,12 +373,12 @@ namespace sf {
     ) {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
-      SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols, polygon_id, linestring_id );
+      SEXP property_columns = geometries::utils::other_columns( x, geometry_cols, polygon_id, linestring_id );
 
-      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerVector property_idx = geometries::utils::where_is( property_columns, x );
       Rcpp::IntegerMatrix line_positions(1,2);
       line_positions(0,0) = 0;
-      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
+      line_positions(0,1) = geometries::utils::sexp_n_row( x ) - 1;
 
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
@@ -398,12 +398,12 @@ namespace sf {
     ) {
       // the entire object is one multipolygon
       Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
-      SEXP property_columns = sfheaders::utils::other_columns( x, geometry_cols );
+      SEXP property_columns = geometries::utils::other_columns( x, geometry_cols );
 
-      Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_columns, x );
+      Rcpp::IntegerVector property_idx = geometries::utils::where_is( property_columns, x );
       Rcpp::IntegerMatrix line_positions(1,2);
       line_positions(0,0) = 0;
-      line_positions(0,1) = sfheaders::utils::sexp_n_row( x ) - 1;
+      line_positions(0,1) = geometries::utils::sexp_n_row( x ) - 1;
 
       Rcpp::List res = Rcpp::List::create(
         Rcpp::_["x"] = x,
@@ -426,7 +426,7 @@ namespace sf {
     ) {
 
 
-      sfheaders::utils::geometry_column_check( geometry_cols );
+      geometries::utils::geometry_column_check( geometry_cols );
       //
       // if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ||
       //      TYPEOF( geometry_cols ) != TYPEOF( polygon_id ) ||
@@ -442,11 +442,11 @@ namespace sf {
         Rcpp::IntegerVector iv_polygon_id_col = Rcpp::as< Rcpp::IntegerVector >( polygon_id );
         Rcpp::IntegerVector iv_linestring_id_col = Rcpp::as< Rcpp::IntegerVector >( linestring_id );
 
-        Rcpp::IntegerVector geom_cols = sfheaders::utils::concatenate_vectors( iv_multipolygon_id_col, iv_polygon_id_col);
-        Rcpp::IntegerVector geom_cols2 = sfheaders::utils::concatenate_vectors( geom_cols, iv_linestring_id_col );
-        Rcpp::IntegerVector geom_cols3 = sfheaders::utils::concatenate_vectors( geom_cols2, iv_geometry_cols );
+        Rcpp::IntegerVector geom_cols = geometries::utils::concatenate_vectors( iv_multipolygon_id_col, iv_polygon_id_col);
+        Rcpp::IntegerVector geom_cols2 = geometries::utils::concatenate_vectors( geom_cols, iv_linestring_id_col );
+        Rcpp::IntegerVector geom_cols3 = geometries::utils::concatenate_vectors( geom_cols2, iv_geometry_cols );
 
-        Rcpp::IntegerVector iv_property_cols = sfheaders::utils::other_columns( x, geom_cols3 );
+        Rcpp::IntegerVector iv_property_cols = geometries::utils::other_columns( x, geom_cols3 );
 
         int i_multipolygon_id_col = iv_multipolygon_id_col[0];
         int i_polygon_id_col = iv_polygon_id_col[0];
@@ -460,11 +460,11 @@ namespace sf {
         Rcpp::StringVector sv_polygon_id_col = Rcpp::as< Rcpp::StringVector >( polygon_id );
         Rcpp::StringVector sv_linestring_id_col = Rcpp::as< Rcpp::StringVector >( linestring_id );
 
-        Rcpp::StringVector geom_cols = sfheaders::utils::concatenate_vectors( sv_multipolygon_id_col, sv_polygon_id_col);
-        Rcpp::StringVector geom_cols2 = sfheaders::utils::concatenate_vectors( geom_cols, sv_linestring_id_col );
-        Rcpp::StringVector geom_cols3 = sfheaders::utils::concatenate_vectors( geom_cols2, sv_geometry_cols );
+        Rcpp::StringVector geom_cols = geometries::utils::concatenate_vectors( sv_multipolygon_id_col, sv_polygon_id_col);
+        Rcpp::StringVector geom_cols2 = geometries::utils::concatenate_vectors( geom_cols, sv_linestring_id_col );
+        Rcpp::StringVector geom_cols3 = geometries::utils::concatenate_vectors( geom_cols2, sv_geometry_cols );
 
-        Rcpp::StringVector sv_property_cols = sfheaders::utils::other_columns( x, geom_cols3 );
+        Rcpp::StringVector sv_property_cols = geometries::utils::other_columns( x, geom_cols3 );
 
         Rcpp::String s_multipolygon_id_col = sv_multipolygon_id_col[0];
         Rcpp::String s_polygon_id_col = sv_polygon_id_col[0];

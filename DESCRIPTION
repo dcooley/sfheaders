@@ -18,6 +18,7 @@ LazyData: true
 RoxygenNote: 7.1.0
 SystemRequirements: C++11
 LinkingTo: 
+    geometries,
     Rcpp
 Imports: 
     Rcpp

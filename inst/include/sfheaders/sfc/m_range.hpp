@@ -2,7 +2,7 @@
 #define R_SFHEADERS_M_RANGE_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/sexp/sexp.hpp"
+#include "geometries/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
 namespace zm {
@@ -56,7 +56,7 @@ namespace zm {
 
   inline void m_range_size_check( SEXP& x, std::string xyzm ) {
     int size_required = xyzm == "XYM" ? 3 : 4;
-    R_xlen_t n_col = sfheaders::utils::get_sexp_n_col( x );
+    R_xlen_t n_col = geometries::utils::get_sexp_n_col( x );
     if( n_col < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }

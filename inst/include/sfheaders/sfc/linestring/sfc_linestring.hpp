@@ -422,7 +422,7 @@ namespace sfc {
       SEXP& geometry_cols,
       std::string xyzm
   ) {
-    sfheaders::utils::geometry_column_check( geometry_cols );
+    geometries::utils::geometry_column_check( geometry_cols );
 
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
@@ -487,7 +487,7 @@ namespace sfc {
       Rcpp::IntegerVector& line_ids,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
     return sfc_linestring( im, geometry_cols, line_positions, xyzm );
   }
 
@@ -536,7 +536,7 @@ namespace sfc {
     Rcpp::NumericVector& line_ids,
     std::string xyzm
   ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
     return sfc_linestring( nm, geometry_cols, line_positions, xyzm );
   }
 
@@ -583,7 +583,7 @@ namespace sfc {
       SEXP& line_ids,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
     return sfc_linestring( df, geometry_cols, line_positions, xyzm );
   }
 
@@ -632,7 +632,7 @@ namespace sfc {
       SEXP& line_ids,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
     return sfc_linestring( df, geometry_cols, line_positions, xyzm );
   }
 
@@ -643,7 +643,7 @@ namespace sfc {
       std::string xyzm
   ) {
 
-    sfheaders::utils::column_exists( im, linestring_id );
+    geometries::utils::column_exists( im, linestring_id );
     Rcpp::IntegerVector line_ids = im( Rcpp::_, linestring_id );
     return sfc_linestring( im, geometry_cols, line_ids, xyzm );
   }
@@ -654,7 +654,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    sfheaders::utils::column_exists( nm, linestring_id );
+    geometries::utils::column_exists( nm, linestring_id );
     Rcpp::NumericVector line_ids = nm( Rcpp::_, linestring_id );
     return sfc_linestring( nm, geometry_cols, line_ids, xyzm );
   }
@@ -700,7 +700,7 @@ namespace sfc {
       int& linestring_id,
       std::string xyzm
   ) {
-    sfheaders::utils::column_exists( df, linestring_id );
+    geometries::utils::column_exists( df, linestring_id );
     SEXP line_ids = df[ linestring_id ];
     return sfc_linestring( df, geometry_cols, line_ids, xyzm );
   }
@@ -807,14 +807,14 @@ namespace sfc {
 
     } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
 
-      SEXP other_cols = sfheaders::utils::other_columns( x, linestring_id );
-      sfheaders::utils::geometry_column_check( other_cols );
+      SEXP other_cols = geometries::utils::other_columns( x, linestring_id );
+      geometries::utils::geometry_column_check( other_cols );
 
       return sfc_linestring( x, other_cols, linestring_id, xyzm );
 
     } else {
       // we have all the columns sorted, so we can now get their types, calcaulte ranges/bbox etc
-      sfheaders::utils::geometry_column_check( geometry_cols );
+      geometries::utils::geometry_column_check( geometry_cols );
 
       if ( TYPEOF( geometry_cols ) != TYPEOF( linestring_id ) ) {
         Rcpp::stop("sfheaders - linestring columns types are different");

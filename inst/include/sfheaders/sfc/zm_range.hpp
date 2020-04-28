@@ -2,7 +2,7 @@
 #define R_SFHEADERS_ZM_RANGE_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/columns/columns.hpp"
+#include "geometries/utils/columns/columns.hpp"
 #include "sfheaders/sfc/m_range.hpp"
 #include "sfheaders/sfc/z_range.hpp"
 
@@ -229,7 +229,7 @@ namespace zm {
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( geometry_cols );
-      Rcpp::IntegerVector iv = sfheaders::utils::column_positions( im, sv );
+      Rcpp::IntegerVector iv = geometries::utils::column_positions( im, sv );
       calculate_zm_ranges( z_range, m_range, im, iv, xyzm );
       break;
     }
@@ -255,7 +255,7 @@ namespace zm {
     }
     case STRSXP: {
       Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( geometry_cols );
-      Rcpp::IntegerVector iv = sfheaders::utils::column_positions( nm, sv );
+      Rcpp::IntegerVector iv = geometries::utils::column_positions( nm, sv );
       calculate_zm_ranges( z_range, m_range, nm, iv, xyzm );
       break;
     }

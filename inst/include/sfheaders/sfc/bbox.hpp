@@ -2,7 +2,7 @@
 #define R_SFHEADERS_BBOX_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
 
 namespace sfheaders {
 namespace bbox {
@@ -159,7 +159,7 @@ namespace bbox {
       Rcpp::IntegerVector& geometry_cols
   ) {
 
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::NumericVector x = df[ geometry_cols[0] ];
@@ -173,7 +173,7 @@ namespace bbox {
       Rcpp::DataFrame& df,
       Rcpp::NumericVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::NumericVector x = df[ geometry_cols[0] ];
@@ -187,7 +187,7 @@ namespace bbox {
       Rcpp::DataFrame& df,
       Rcpp::StringVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::String x_col = geometry_cols[0];
@@ -203,7 +203,7 @@ namespace bbox {
       Rcpp::IntegerMatrix& im,
       Rcpp::StringVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( im, geometry_cols );
+    geometries::utils::column_check( im, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( im );
@@ -215,7 +215,7 @@ namespace bbox {
       Rcpp::IntegerMatrix& im,
       Rcpp::IntegerVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( im, geometry_cols );
+    geometries::utils::column_check( im, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::IntegerVector x = im( Rcpp::_, geometry_cols[0] );
@@ -233,7 +233,7 @@ namespace bbox {
       Rcpp::NumericMatrix& nm,
       Rcpp::StringVector& geometry_cols
   ) {
-    sfheaders::utils::column_check( nm, geometry_cols );
+    geometries::utils::column_check( nm, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( nm );
@@ -246,7 +246,7 @@ namespace bbox {
       Rcpp::IntegerVector& geometry_cols
   ) {
 
-    sfheaders::utils::column_check( nm, geometry_cols );
+    geometries::utils::column_check( nm, geometry_cols );
     bbox_size_check( geometry_cols );
 
     Rcpp::NumericVector x = nm( Rcpp::_, geometry_cols[0] );

@@ -105,7 +105,7 @@ test_that("issue 47 is fixed",{
   m <- cbind(m, c(1,1,1))
   expect_error(
     sfheaders:::rcpp_sf_multipolygon( m , c("V1", "V2"), "V3","V4","V5", close = FALSE, keep = TRUE, xyzm = "" )
-    , "sfheaders - could not find matrix names. Perhaps your matrix does not have names"
+    , "geometries - could not find matrix names. Perhaps your matrix does not have names"
   )
 
 })

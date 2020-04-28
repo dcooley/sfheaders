@@ -146,8 +146,8 @@ test_that("ID order maintained",{
     , m = 1:10
   )
 
-  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = FALSE, keep = FALSE, "" ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, keep = FALSE, "" ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
+  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = FALSE, keep = FALSE, "" ), "geometries - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, keep = FALSE, "" ), "geometries - error indexing lines, perhaps caused by un-ordered data?" )
   expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0, keep = FALSE, "" ), "sfheaders - linestring columns types are different")
 
 })

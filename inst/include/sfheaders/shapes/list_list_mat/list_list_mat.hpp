@@ -2,8 +2,8 @@
 #define R_SFHEADERS_SHAPES_LIST_LIST_MAT_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/utils.hpp"
-#include "sfheaders/utils/subset/subset.hpp"
+#include "geometries/utils/utils.hpp"
+#include "geometries/utils/subset/subset.hpp"
 #include "sfheaders/shapes/mat/mat.hpp"
 #include "sfheaders/shapes/list_mat/list_mat.hpp"
 
@@ -50,7 +50,7 @@ namespace shapes {
 
     SEXP group_ids = df[ group_id_col_1 ];
 
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( group_ids );
     R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mpl( n_lines );
@@ -58,8 +58,8 @@ namespace shapes {
     R_xlen_t i;
 
     // issue 56 - no need to keep all the columns in the subset_dataframe
-    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, group_id_col_1 );
-    keep_columns = sfheaders::utils::concatenate_vectors( keep_columns, group_id_col_2 );
+    Rcpp::StringVector keep_columns = geometries::utils::concatenate_vectors( geometry_cols, group_id_col_1 );
+    keep_columns = geometries::utils::concatenate_vectors( keep_columns, group_id_col_2 );
     Rcpp::DataFrame df_keep = df[ keep_columns ];
     Rcpp::StringVector df_names = df_keep.names();
 
@@ -68,7 +68,7 @@ namespace shapes {
       int end = line_positions(i, 1);
 
       Rcpp::Range rng( start, end );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
+      Rcpp::DataFrame df_subset = geometries::utils::subset_dataframe( df_keep, df_names, start, end );
 
       mpl[ i ] = sfheaders::shapes::get_listMat( df_subset, geometry_cols, group_id_col_2 );
     }
@@ -87,7 +87,7 @@ namespace shapes {
 
     SEXP group_ids = df[ group_id_col_1 ];
 
-    Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( group_ids );
+    Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( group_ids );
     R_xlen_t n_lines = line_positions.nrow();
 
     Rcpp::List mpl( n_lines );
@@ -95,8 +95,8 @@ namespace shapes {
     R_xlen_t i;
 
     // issue 56 - no need to keep all the columns in the subset_dataframe
-    Rcpp::StringVector keep_columns = sfheaders::utils::concatenate_vectors( geometry_cols, group_id_col_1 );
-    keep_columns = sfheaders::utils::concatenate_vectors( keep_columns, group_id_col_2 );
+    Rcpp::StringVector keep_columns = geometries::utils::concatenate_vectors( geometry_cols, group_id_col_1 );
+    keep_columns = geometries::utils::concatenate_vectors( keep_columns, group_id_col_2 );
     Rcpp::DataFrame df_keep = df[ keep_columns ];
     Rcpp::StringVector df_names = df_keep.names();
 
@@ -105,7 +105,7 @@ namespace shapes {
       int end = line_positions(i, 1);
 
       Rcpp::Range rng( start, end );
-      Rcpp::DataFrame df_subset = sfheaders::utils::subset_dataframe( df_keep, df_names, start, end );
+      Rcpp::DataFrame df_subset = geometries::utils::subset_dataframe( df_keep, df_names, start, end );
 
       mpl[ i ] = sfheaders::shapes::get_listListMat( df_subset, geometry_cols, group_id_col_2, group_id_col_3 );
     }
@@ -120,9 +120,9 @@ namespace shapes {
       int& group_id_col_2
   ) {
 
-    sfheaders::utils::column_exists( df, group_id_col_1 );
-    sfheaders::utils::column_exists( df, group_id_col_2 );
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_exists( df, group_id_col_1 );
+    geometries::utils::column_exists( df, group_id_col_2 );
+    geometries::utils::column_check( df, geometry_cols );
 
     // given polygon & line ids, collapse and matricise and listify
     Rcpp::StringVector df_names = df.names();
@@ -144,11 +144,11 @@ namespace shapes {
       int& group_id_col_3
   ) {
 
-    sfheaders::utils::column_exists( df, group_id_col_1 );
-    sfheaders::utils::column_exists( df, group_id_col_2 );
-    sfheaders::utils::column_exists( df, group_id_col_3 );
+    geometries::utils::column_exists( df, group_id_col_1 );
+    geometries::utils::column_exists( df, group_id_col_2 );
+    geometries::utils::column_exists( df, group_id_col_3 );
 
-    sfheaders::utils::column_check( df, geometry_cols );
+    geometries::utils::column_check( df, geometry_cols );
 
     // given polygon & line ids, collapse and matricise and listify
     Rcpp::StringVector df_names = df.names();

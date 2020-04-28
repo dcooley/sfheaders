@@ -422,7 +422,7 @@ inline SEXP sfc_multipoint(
     SEXP& geometry_cols,
     std::string xyzm
 ) {
-  sfheaders::utils::geometry_column_check( geometry_cols );
+  geometries::utils::geometry_column_check( geometry_cols );
 
   switch( TYPEOF( geometry_cols ) ) {
   case REALSXP: {}
@@ -487,7 +487,7 @@ inline SEXP sfc_multipoint(
     Rcpp::IntegerVector& line_ids,
     std::string xyzm
 ) {
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+  Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
   return sfc_multipoint( im, geometry_cols, line_positions, xyzm );
 }
 
@@ -536,7 +536,7 @@ inline SEXP sfc_multipoint(
     Rcpp::NumericVector& line_ids,
     std::string xyzm
 ) {
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+  Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
   return sfc_multipoint( nm, geometry_cols, line_positions, xyzm );
 }
 
@@ -586,7 +586,7 @@ inline SEXP sfc_multipoint(
     SEXP& line_ids,
     std::string xyzm
 ) {
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+  Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
   return sfc_multipoint( df, geometry_cols, line_positions, xyzm );
 }
 
@@ -635,7 +635,7 @@ inline SEXP sfc_multipoint(
     SEXP& line_ids,
     std::string xyzm
 ) {
-  Rcpp::IntegerMatrix line_positions = sfheaders::utils::id_positions( line_ids );
+  Rcpp::IntegerMatrix line_positions = geometries::utils::id_positions( line_ids );
   return sfc_multipoint( df, geometry_cols, line_positions, xyzm );
 }
 
@@ -645,7 +645,7 @@ inline SEXP sfc_multipoint(
     int& multipoint_id,
     std::string xyzm
 ) {
-  sfheaders::utils::column_exists( im, multipoint_id );
+  geometries::utils::column_exists( im, multipoint_id );
   Rcpp::IntegerVector line_ids = im( Rcpp::_, multipoint_id );
   return sfc_multipoint( im, geometry_cols, line_ids, xyzm );
 }
@@ -656,7 +656,7 @@ inline SEXP sfc_multipoint(
     int& multipoint_id,
     std::string xyzm
 ) {
-  sfheaders::utils::column_exists( nm, multipoint_id );
+  geometries::utils::column_exists( nm, multipoint_id );
   Rcpp::NumericVector line_ids = nm( Rcpp::_, multipoint_id );
   return sfc_multipoint( nm, geometry_cols, line_ids, xyzm );
 }
@@ -701,7 +701,7 @@ inline SEXP sfc_multipoint(
     int& multipoint_id,
     std::string xyzm
 ) {
-  sfheaders::utils::column_exists( df, multipoint_id );
+  geometries::utils::column_exists( df, multipoint_id );
   SEXP line_ids = df[ multipoint_id ];
   return sfc_multipoint( df, geometry_cols, line_ids, xyzm );
 }
@@ -811,14 +811,14 @@ inline SEXP sfc_multipoint(
 
   } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( multipoint_id ) ) {
 
-    SEXP other_cols = sfheaders::utils::other_columns( x, multipoint_id );
-    sfheaders::utils::geometry_column_check( other_cols );
+    SEXP other_cols = geometries::utils::other_columns( x, multipoint_id );
+    geometries::utils::geometry_column_check( other_cols );
 
     return sfc_multipoint( x, other_cols, multipoint_id, xyzm );
 
   } else {
     // we have all the columns sorted, so we can now get their types, calcaulte ranges/bbox etc
-    sfheaders::utils::geometry_column_check( geometry_cols );
+    geometries::utils::geometry_column_check( geometry_cols );
 
     if ( TYPEOF( geometry_cols ) != TYPEOF( multipoint_id ) ) {
       Rcpp::stop("sfheaders - multipoint columns types are different");    // #nocov

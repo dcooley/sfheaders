@@ -191,7 +191,7 @@ test_that("various objects converted to sfc_LINESTRING",{
   expect_equal( attr( res, "class" ), c("sfc_LINESTRING", "sfc") )
 
   m <- matrix(1:4, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfc_linestring(m, NULL, 0, ""), "sfheaders - incorrect number of geometry columns")
+  expect_error( sfheaders:::rcpp_sfc_linestring(m, NULL, 0, ""), "geometries - incorrect number of geometry columns")
 
 })
 

@@ -2,10 +2,10 @@
 #define R_SFHEADERS_SF_POINT_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/sexp/sexp.hpp"
+#include "geometries/utils/sexp/sexp.hpp"
 #include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/sfc/point/sfc_point.hpp"
-#include "sfheaders/utils/unique/unique_ids.hpp"
+#include "geometries/utils/unique/unique_ids.hpp"
 #include "sfheaders/shapes/shapes.hpp"
 
 namespace sfheaders {
@@ -37,7 +37,7 @@ namespace sf {
     line_positions( Rcpp::_, 1 ) = row_idx + 1;
 
     Rcpp::StringVector df_names = df.names();
-    Rcpp::IntegerVector property_idx = sfheaders::utils::where_is( property_cols, df_names );
+    Rcpp::IntegerVector property_idx = geometries::utils::where_is( property_cols, df_names );
     Rcpp::List sfc = sfheaders::sfc::sfc_point( df, geometry_cols, xyzm );
 
     Rcpp::List res = Rcpp::List::create(
@@ -76,7 +76,7 @@ namespace sf {
   ) {
 
     Rcpp::StringVector df_names = df.names();
-    Rcpp::StringVector property_cols = sfheaders::utils::other_columns( df_names, geometry_cols );
+    Rcpp::StringVector property_cols = geometries::utils::other_columns( df_names, geometry_cols );
     return sf_point( df, geometry_cols, property_cols, xyzm );
   }
 
@@ -211,7 +211,7 @@ namespace sf {
       Rcpp::stop("sfheaders - please specify the geometry columns x, y (z, (m)) when keep = TRUE");
     }
 
-    sfheaders::utils::geometry_column_check( geometry_cols );
+    geometries::utils::geometry_column_check( geometry_cols );
 
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}

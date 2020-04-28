@@ -2,7 +2,7 @@
 #define R_SFHEADERS_Z_RANGE_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/sexp/sexp.hpp"
+#include "geometries/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
 namespace zm {

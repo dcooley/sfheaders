@@ -1,7 +1,7 @@
 #ifndef R_SFHEADERS_DF_SFG_H
 #define R_SFHEADERS_DF_SFG_H
 
-#include "sfheaders/utils/sexp/sexp.hpp"
+#include "geometries/utils/sexp/sexp.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/df/utils.hpp"
 
