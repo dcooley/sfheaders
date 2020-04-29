@@ -4,6 +4,8 @@
 #include "sfheaders/df/sfg.hpp"
 #include "sfheaders/df/utils.hpp"
 
+#include "geometries/geometries/coordinates.hpp"
+
 #include <Rcpp.h>
 
 namespace sfheaders {
@@ -106,72 +108,6 @@ namespace df {
     return Rcpp::IntegerVector(); // #nocov never reached
   }
 
-  inline void sfg_n_coordinates(
-      SEXP& sfg,
-      R_xlen_t& sfg_count
-  ) {
-
-    switch( TYPEOF( sfg ) ) {
-    case INTSXP: {}
-    case REALSXP: {
-      if( !Rf_isMatrix( sfg ) ) {
-      //Rcpp::stop("sfheaders - unsupported coordinate type");
-      // it's a vector, right?
-      sfg_count += 1;
-    } else {
-      sfg_count += geometries::utils::sexp_n_row( sfg );
-    }
-    break;
-    }
-    case VECSXP: {
-      if( Rf_inherits( sfg, "data.frame" ) ) {
-        Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
-      }
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      //if (lst.size() == 0 ) {
-      //return 0; // ?
-      //}
-      R_xlen_t n = lst.size();
-      R_xlen_t i;
-      Rcpp::IntegerVector res( n );
-      for( i = 0; i < n; ++i ) {
-        SEXP tmp_sfg = lst[i];
-        sfg_n_coordinates( tmp_sfg, sfg_count );  // recurse
-      }
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
-    }
-    }
-
-    //return sfg_count;
-  }
-
-  // if I make this cumulative, it gives me a vector where the last element
-  // is the size of any result, and each element
-  // is the row index where a new element starts
-  inline Rcpp::NumericMatrix sfc_n_coordinates(
-      Rcpp::List& sfc
-  ) {
-
-    R_xlen_t cumulative_coords = 0;
-    R_xlen_t n = sfc.size();
-    Rcpp::NumericMatrix res( n, 2 );
-    R_xlen_t i;
-
-    for( i = 0; i < n; ++i ) {
-      R_xlen_t sfg_counter = 0;
-      SEXP sfg = sfc[i];
-      sfg_n_coordinates( sfg, sfg_counter );
-
-      res( i, 0 ) = cumulative_coords;
-      cumulative_coords += sfg_counter;
-      res( i, 1 ) = cumulative_coords - 1;
-    }
-    return res;
-  }
-
   // sfcs are a list of sfgs.
   // they can be mixed, or individual.
   // if indiidual, loop over each one and extract the sfgs, list by list, then collapse the lists??
@@ -247,7 +183,7 @@ namespace df {
   }
 
 
-  // used for any mixed geomtry, or non-POINT, because the total number of rows is varaible
+  // used for any mixed geomtry, or non-POINT, because the total number of rows is variable
   inline Rcpp::List get_sfc_geometry_coordinates(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
@@ -428,7 +364,7 @@ namespace df {
 
   inline Rcpp::List sfc_to_df(
       Rcpp::List& sfc,
-      Rcpp::NumericMatrix& sfc_coordinates
+      Rcpp::IntegerMatrix& sfc_coordinates
   ) {
 
     R_xlen_t n_geometries = sfc_coordinates.nrow();
@@ -458,7 +394,7 @@ namespace df {
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::coordinate_indices( sfc );
     return sfc_to_df( sfc, sfc_coordinates );
   }
 

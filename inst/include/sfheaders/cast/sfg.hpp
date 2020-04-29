@@ -48,7 +48,7 @@ namespace cast {
 
   inline R_xlen_t count_new_point_objects( SEXP& sfg, std::string& geometry ) {
     R_xlen_t n_coords = 0;
-    sfheaders::df::sfg_n_coordinates( sfg, n_coords );
+    geometries::coordinates::count_coordinates( sfg, n_coords );
     return n_coords;
   }
 
