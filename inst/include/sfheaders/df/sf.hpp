@@ -11,26 +11,6 @@
 namespace sfheaders {
 namespace df {
 
-  inline Rcpp::String unique_name( Rcpp::String this_name, Rcpp::StringVector& existing_names ) {
-    int is_in = geometries::utils::where_is( this_name, existing_names );
-
-    if( is_in != -1 ) {
-      // the name already exists, so we need to uniqueify it
-      int counter = 1;
-      std::string new_name;
-      do {                       // #nocov
-        std::ostringstream os;
-        os << this_name.get_cstring() << ".." << counter;
-        new_name = os.str();
-        is_in = geometries::utils::where_is( new_name, existing_names );
-        counter += 1;
-      } while ( is_in != -1 );
-      this_name = new_name;
-    }
-
-    return this_name;
-  }
-
   /*
    * Expand Vector
    *
@@ -160,7 +140,7 @@ namespace df {
 
 
     for( i = 0; i < sfc_cols; ++i ) {
-      Rcpp::String this_name = unique_name( sfc_df_names[ i ], res_names );
+      Rcpp::String this_name = sfheaders::utils::unique_name( sfc_df_names[ i ], res_names );
       // unique-ify 'this_name;
       //sfc_df_names[ i ] = unique_name( this_name, res_names );
       sfc_df_names[ i ] = this_name; // use these names as sfc_columns attr

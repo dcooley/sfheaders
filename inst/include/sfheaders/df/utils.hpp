@@ -2,8 +2,30 @@
 #ifndef R_SFHEADERS_DF_UTILS_H
 #define R_SFHEADERS_DF_UTILS_H
 
+#include "geometries/utils/vectors/vectors.hpp"
+
 namespace sfheaders {
 namespace utils {
+
+  inline Rcpp::String unique_name( Rcpp::String this_name, Rcpp::StringVector& existing_names ) {
+    int is_in = geometries::utils::where_is( this_name, existing_names );
+
+    if( is_in != -1 ) {
+      // the name already exists, so we need to uniqueify it
+      int counter = 1;
+      std::string new_name;
+      do {                       // #nocov
+        std::ostringstream os;
+        os << this_name.get_cstring() << ".." << counter;
+        new_name = os.str();
+        is_in = geometries::utils::where_is( new_name, existing_names );
+        counter += 1;
+      } while ( is_in != -1 );
+      this_name = new_name;
+    }
+
+    return this_name;
+  }
 
   inline Rcpp::NumericVector fill_vector(
       Rcpp::NumericVector& vec_1,
