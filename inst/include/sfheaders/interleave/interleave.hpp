@@ -79,7 +79,7 @@ namespace interleave {
 
   inline SEXP interleave(
       Rcpp::List& sfc,
-      R_xlen_t& total_coordinates
+      R_xlen_t& total_coordinates  // needs to be sent in because it's a recursive function
     ) {
 
     // the STRIDE depends on the dimension being the same for every pair of coordinates
@@ -133,7 +133,7 @@ namespace interleave {
     return Rcpp::List::create(
       Rcpp::_["coordinates"] = sfheaders::utils::unlist_list( res_list ),
       Rcpp::_["start_indices"] = sfheaders::utils::unlist_list( res_indices ),
-      Rcpp::_["n_coordinates"] = sfg_coordinates,
+      Rcpp::_["n_coordinates"] = sfg_coordinates,       // vector containing the number of coordinates PER geometry
       Rcpp::_["total_coordinates"] = total_coordinates,
       Rcpp::_["stride"] = stride
     );
@@ -154,43 +154,9 @@ namespace interleave {
     R_xlen_t n_col = sf.ncol();
     R_xlen_t n_geometries = sf.nrow();
     R_xlen_t i;
-    //R_xlen_t j;
 
-    R_xlen_t total_coordinates = 0;
-    Rcpp::List interleaved = interleave( sfc, total_coordinates );
+    Rcpp::List interleaved = interleave( sfc );
     Rcpp::IntegerVector n_coordinates = interleaved["n_coordinates"];
-
-    // Rcpp::NumericVector expanded_index( total_coordinates );
-    // R_xlen_t counter = 0;
-    //
-    // for( i = 0; i < n_geometries; ++i ) {
-    //   R_xlen_t expand_by = n_coordinates[ i ];
-    //
-    //   for( j = 0; j < expand_by; ++j ) {
-    //     expanded_index[ counter + j ] = i;
-    //   }
-    //   counter = counter + expand_by;
-    // }
-    //
-    // Rcpp::List res( n_col - 1 );
-    // Rcpp::StringVector res_names( n_col - 1 );
-    //
-    // R_xlen_t name_position = 0;
-    //
-    // for( i = 0; i < n_col; ++i ) {
-    //
-    //   if( sf_names[ i ] != geom_column ) {
-    //
-    //     res_names[ name_position ] = sf_names[ i ];
-    //     SEXP v = sf[ i ];
-    //     sfheaders::df::expand_vector( res, v, expanded_index, name_position );
-    //     name_position += 1;
-    //   }
-    // }
-
-    //res.names() = res_names;
-    //Rcpp::DataFrame df = sfheaders::utils::make_dataframe( res, total_coordinates, res_names );
-
 
     // put all the 'other' columns onto interleaved
     // can use 'n_coordinates' to 'exapnd' any of the data columns (e.g. colours when using spatialwidget)
