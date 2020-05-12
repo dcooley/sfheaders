@@ -11,61 +11,6 @@
 namespace sfheaders {
 namespace df {
 
-  /*
-   * Expand Vector
-   *
-   *
-   */
-  inline void expand_vector(
-      Rcpp::List& res,
-      SEXP& v,
-      Rcpp::NumericVector& expanded_index,
-      R_xlen_t& i
-  ) {
-
-    switch( TYPEOF( v ) ) {
-    case LGLSXP: {
-      Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
-      res[ i ] = lv[ expanded_index ];
-      break;
-    }
-    case INTSXP: {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( v );
-      res[ i ] = iv[ expanded_index ];
-      break;
-    }
-    case REALSXP: {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( v );
-      Rcpp::NumericVector res_nv = nv[ expanded_index ];
-      res[ i ] = res_nv;
-      break;
-    }
-    case STRSXP: {
-      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( v );
-      res[ i ] = sv[ expanded_index ];
-      break;
-    }
-    case CPLXSXP: {
-      Rcpp::ComplexVector cv = Rcpp::as< Rcpp::ComplexVector >( v );
-      res[ i ] = cv[ expanded_index ];
-      break;
-    }
-    case RAWSXP: {
-      Rcpp::RawVector rv = Rcpp::as< Rcpp::RawVector >( v );
-      res[ i ] = rv[ expanded_index ];
-      break;
-    }
-    case VECSXP: {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( v );
-      res[ i ] = lst[ expanded_index ];
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unsupported column type using fill = TRUE");
-    }
-    }
-  }
-
   inline Rcpp::List sf_to_df(
       Rcpp::DataFrame& sf,
       Rcpp::List& sfc,
@@ -117,7 +62,7 @@ namespace df {
 
         res_names[ name_position ] = sf_names[ i ];
         SEXP v = sf[ i ];
-        expand_vector( res, v, expanded_index, name_position );
+        geometries::utils::expand_vector( res, v, expanded_index, name_position );
         name_position += 1;
       }
     }

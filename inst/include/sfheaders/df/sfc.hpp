@@ -5,6 +5,7 @@
 #include "sfheaders/df/utils.hpp"
 
 #include "geometries/coordinates/coordinates.hpp"
+#include "geometries/utils/lists/collapse.hpp"
 
 #include <Rcpp.h>
 
@@ -250,18 +251,18 @@ namespace df {
         int col_idx = sfg_cols[ j ];
         columns[ col_idx ] = true;
         Rcpp::NumericVector current_values_vector = res[ col_idx ];
-        Rcpp::NumericVector result_vector = sfheaders::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
+        Rcpp::NumericVector result_vector = geometries::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
         res[ col_idx ] = result_vector;
       }
 
       id = i + 1;
       Rcpp::NumericVector new_id_vector = Rcpp::rep( id, sfc_rows );
       Rcpp::NumericVector current_id_vector = res[ sfg_column_idx ];
-      Rcpp::NumericVector filled = sfheaders::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
+      Rcpp::NumericVector filled = geometries::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
       res[ sfg_column_idx ] = filled;
 
       Rcpp::NumericVector current_sfg_id_vector = res[ SFG_COLUMN ];
-      filled = sfheaders::utils::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
+      filled = geometries::utils::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
 
       res[ SFG_COLUMN ] = filled;
 

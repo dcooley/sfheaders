@@ -8,7 +8,7 @@ Rcpp::List rcpp_fill_list( Rcpp::NumericVector v, Rcpp::IntegerMatrix line_ids )
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_list_sizes( Rcpp::List lst ) {
-  int total_size = 0;
+  R_xlen_t total_size = 0;
   int existing_type = 10;
   Rcpp::List lst_sizes = geometries::utils::list_size( lst, total_size, existing_type );
   return Rcpp::List::create(
@@ -19,7 +19,7 @@ Rcpp::List rcpp_list_sizes( Rcpp::List lst ) {
 
 // [[Rcpp::export]]
 int rcpp_list_type( Rcpp::List lst ) {
-  int total_size = 0;
+  R_xlen_t total_size = 0;
   int existing_type = 10;
   Rcpp::List lst_sizes = geometries::utils::list_size( lst, total_size, existing_type );
   return existing_type;
@@ -27,9 +27,9 @@ int rcpp_list_type( Rcpp::List lst ) {
 
 // [[Rcpp::export]]
 SEXP rcpp_unlist_list( Rcpp::List lst ) {
-  int total_size = 0;
+  R_xlen_t total_size = 0;
   int existing_type = 10;
-  int position = 0;
+  R_xlen_t position = 0;
   Rcpp::List lst_sizes = geometries::utils::list_size( lst, total_size, existing_type );
   switch( existing_type ) {
   case LGLSXP: {

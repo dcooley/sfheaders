@@ -4,6 +4,8 @@
 #include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/cast/sfc.hpp"
 
+#include "geometries/utils/vectors/vectors.hpp"
+
 #include <Rcpp.h>
 
 namespace sfheaders {
@@ -71,7 +73,7 @@ namespace cast {
       if( str_name != geom_column ) {
         SEXP v = sf[ i ];
         //Rcpp::Rcout << "this_name: " << str_name << std::endl;
-        sfheaders::df::expand_vector( sf_res, v, expanded_index, column_counter );
+        geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
         res_names[ column_counter ] = str_name;
         ++column_counter;
       }
