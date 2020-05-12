@@ -6,7 +6,7 @@ test_that("line matrices returend from various R objects",{
   x <- c(1:4)
   expect_error(
     sfheaders:::rcpp_get_mat( x , NULL )
-    , "sfheaders - lines need to be matrices or data.frames"
+    , "geometries - lines need to be matrices or data.frames"
   )
 
   x <- matrix(c(1L:4L), ncol = 2)

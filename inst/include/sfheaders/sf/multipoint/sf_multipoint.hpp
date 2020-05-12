@@ -5,8 +5,7 @@
 #include "geometries/utils/sexp/sexp.hpp"
 #include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/sfc/multipoint/sfc_multipoint.hpp"
-#include "geometries/utils/unique/unique_ids.hpp"
-#include "sfheaders/shapes/shapes.hpp"
+#include "geometries/utils/unique/unique.hpp"
 
 namespace sfheaders {
 namespace sf {

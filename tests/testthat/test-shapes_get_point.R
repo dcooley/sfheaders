@@ -79,13 +79,13 @@ test_that("points extracted from different objects", {
   df <- data.frame( x = 1:2, y = 1:2 )
   expect_error(
     sfheaders:::rcpp_get_vec( df, NULL )
-    , "sfheaders - expecting single-row data.frame"
+    , "geometries - expecting single-row data.frame"
   )
 
   m <- as.matrix( df )
   expect_error(
     sfheaders:::rcpp_get_vec( m, NULL )
-    , "sfheaders - expecting single-row matrix"
+    , "geometries - expecting single-row matrix"
   )
 
 

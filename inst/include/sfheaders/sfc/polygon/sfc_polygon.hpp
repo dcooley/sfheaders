@@ -6,7 +6,6 @@
 #include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfg/polygon/sfg_polygon.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 
 #include "sfheaders/sfc/bbox.hpp"
 #include "geometries/bbox/bbox.hpp"

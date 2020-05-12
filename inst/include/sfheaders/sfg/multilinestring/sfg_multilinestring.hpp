@@ -3,8 +3,10 @@
 
 #include <Rcpp.h>
 #include "geometries/utils/utils.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
+
+#include "geometries/shapes/mat/to_mat.hpp"
+#include "geometries/shapes/list_mat/to_list_mat.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -80,7 +82,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+    Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
     return sfg_multilinestring( nm, xyzm );
   }
 
@@ -89,7 +91,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+    Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
     return sfg_multilinestring( nm, xyzm );
   }
 
@@ -98,7 +100,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+    Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
     return sfg_multilinestring( nm2, xyzm );
   }
 
@@ -107,7 +109,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+    Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
     return sfg_multilinestring( nm2, xyzm );
   }
 
@@ -116,7 +118,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+    Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
     return sfg_multilinestring( im2, xyzm );
   }
 
@@ -125,7 +127,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+    Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
     return sfg_multilinestring( im2, xyzm );
   }
 
@@ -137,7 +139,7 @@ namespace sfg {
     int& id_col,
     std::string xyzm
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( df, cols, id_col );
     return sfg_multilinestring( lst, xyzm );
   }
 
@@ -147,7 +149,7 @@ namespace sfg {
     Rcpp::String& id_col,
     std::string xyzm
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( df, cols, id_col );
     return sfg_multilinestring( lst, xyzm );
   }
 
@@ -157,7 +159,7 @@ namespace sfg {
       int& id_col,
       std::string xyzm
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( nm, cols, id_col );
     return sfg_multilinestring( lst, xyzm );
   }
 
@@ -167,7 +169,7 @@ namespace sfg {
       Rcpp::String& id_col,
       std::string xyzm
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( nm, cols, id_col );
     return sfg_multilinestring( lst, xyzm );
   }
 
@@ -177,7 +179,7 @@ namespace sfg {
       int& id_col,
       std::string xyzm
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( im, cols, id_col );
     return sfg_multilinestring( lst, xyzm );
   }
 
@@ -188,7 +190,7 @@ namespace sfg {
       Rcpp::String& id_col,
       std::string xyzm
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( im, cols, id_col );
     return sfg_multilinestring( lst, xyzm );
   }
   // #nocov end

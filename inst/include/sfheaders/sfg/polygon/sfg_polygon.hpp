@@ -4,8 +4,10 @@
 #include <Rcpp.h>
 #include "geometries/utils/utils.hpp"
 #include "sfheaders/sfg/polygon/close_polygon.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
+
+#include "geometries/shapes/mat/to_mat.hpp"
+#include "geometries/shapes/list_mat/to_list_mat.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -73,7 +75,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+    Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
     return sfg_polygon( nm, xyzm, close );
   }
 
@@ -83,7 +85,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+    Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
     return sfg_polygon( nm, xyzm, close );
   }
 
@@ -93,7 +95,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+    Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
     return sfg_polygon( nm2, xyzm, close );
   }
 
@@ -103,7 +105,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+    Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
     return sfg_polygon( nm2, xyzm, close );
   }
 
@@ -113,7 +115,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+    Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
     return sfg_polygon( im2, xyzm, close );
   }
 
@@ -123,7 +125,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+    Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
     return sfg_polygon( im2, xyzm, close );
   }
 
@@ -136,7 +138,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( df, cols, id_col );
     return sfg_polygon( lst, xyzm, close );
   }
 
@@ -147,7 +149,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( df, cols, id_col );
     return sfg_polygon( lst, xyzm, close );
   }
 
@@ -158,7 +160,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( nm, cols, id_col );
     return sfg_polygon( lst, xyzm, close );
   }
 
@@ -169,7 +171,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( nm, cols, id_col );
     return sfg_polygon( lst, xyzm, close );
   }
 
@@ -180,7 +182,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( im, cols, id_col );
     return sfg_polygon( lst, xyzm, close );
   }
 
@@ -191,7 +193,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
+    Rcpp::List lst = geometries::shapes::to_listMat( im, cols, id_col );
     return sfg_polygon( lst, xyzm, close );
   }
 

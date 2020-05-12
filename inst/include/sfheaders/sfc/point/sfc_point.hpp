@@ -6,7 +6,6 @@
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/point/sfg_point.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 
 #include "sfheaders/sfc/bbox.hpp"
 #include "geometries/bbox/bbox.hpp"

@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "sfheaders/shapes/shapes.hpp"
+#include "geometries/shapes/shapes.hpp"
 
 
 // POINTS -----------
@@ -8,7 +8,7 @@ SEXP rcpp_get_vec(
   SEXP x,
   SEXP cols
 ) {
-  return sfheaders::shapes::get_vec( x, cols );
+  return geometries::shapes::to_vec( x, cols );
 }
 
 // LINE ----------
@@ -17,7 +17,7 @@ SEXP rcpp_get_mat(
   SEXP x,
   SEXP cols
 ) {
-  return sfheaders::shapes::get_mat( x, cols );
+  return geometries::shapes::to_mat( x, cols );
 }
 
 // LINES -----------
@@ -27,5 +27,5 @@ SEXP rcpp_get_list_mat(
   SEXP cols,
   SEXP id
 ) {
-  return sfheaders::shapes::get_listMat( x, cols, id );
+  return geometries::shapes::to_listMat( x, cols, id );
 }

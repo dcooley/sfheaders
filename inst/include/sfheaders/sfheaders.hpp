@@ -2,7 +2,7 @@
 #define R_SFHEADERS_H
 
 #include <Rcpp.h>
-#include "sfheaders/shapes/shapes.hpp"
+
 #include "geometries/utils/utils.hpp"
 
 #include "sfheaders/sfg/sfg.hpp"

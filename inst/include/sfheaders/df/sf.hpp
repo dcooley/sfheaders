@@ -4,7 +4,7 @@
 #include "sfheaders/df/sfc.hpp"
 #include "geometries/utils/vectors/vectors.hpp"
 #include "geometries/utils/lists/list.hpp"
-#include "geometries/geometries/coordinates.hpp"
+#include "geometries/coordinates/coordinates.hpp"
 
 #include <Rcpp.h>
 

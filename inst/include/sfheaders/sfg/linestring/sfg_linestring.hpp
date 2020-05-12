@@ -4,8 +4,7 @@
 #include <Rcpp.h>
 #include "sfheaders/sfg/sfg_types.hpp"
 #include "geometries/utils/utils.hpp"
-#include "sfheaders/shapes/shapes.hpp"
-
+#include "geometries/shapes/mat/to_mat.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -37,7 +36,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+    Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
     return sfg_linestring( im2, xyzm );
   }
 
@@ -46,7 +45,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+    Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
     return sfg_linestring( im2, xyzm );
   }
 
@@ -73,7 +72,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+    Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
     return sfg_linestring( nm2, xyzm );
   }
 
@@ -82,7 +81,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+    Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
     return sfg_linestring( nm2, xyzm );
   }
 
@@ -100,7 +99,7 @@ namespace sfg {
       Rcpp::StringVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+    Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
     return sfg_linestring( nm, xyzm );
   }
 
@@ -109,7 +108,7 @@ namespace sfg {
       Rcpp::IntegerVector& cols,
       std::string xyzm
   ) {
-    Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+    Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
     return sfg_linestring( nm, xyzm );
   }
 

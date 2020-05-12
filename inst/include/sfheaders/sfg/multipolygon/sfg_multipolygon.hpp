@@ -3,9 +3,12 @@
 
 #include <Rcpp.h>
 #include "geometries/utils/utils.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/sfg/polygon/close_polygon.hpp"
+
+#include "geometries/shapes/mat/to_mat.hpp"
+#include "geometries/shapes/list_list_mat/to_list_list_mat.hpp"
+#include "geometries/shapes/list_mat/to_list_mat.hpp"
 
 namespace sfheaders {
 namespace sfg {
@@ -78,7 +81,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+  Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
   return sfg_multipolygon( nm, xyzm, close);
 }
 
@@ -88,7 +91,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::NumericMatrix nm = sfheaders::shapes::get_mat( df, cols );
+  Rcpp::NumericMatrix nm = geometries::shapes::to_mat( df, cols );
   return sfg_multipolygon( nm, xyzm, close);
 }
 
@@ -98,7 +101,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+  Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
   return sfg_multipolygon( nm2, xyzm, close);
 }
 
@@ -108,7 +111,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::NumericMatrix nm2 = sfheaders::shapes::get_mat( nm, cols );
+  Rcpp::NumericMatrix nm2 = geometries::shapes::to_mat( nm, cols );
   return sfg_multipolygon( nm2, xyzm, close);
 }
 
@@ -118,7 +121,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+  Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
   return sfg_multipolygon( im2, xyzm, close);
 }
 
@@ -128,7 +131,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::IntegerMatrix im2 = sfheaders::shapes::get_mat( im, cols );
+  Rcpp::IntegerMatrix im2 = geometries::shapes::to_mat( im, cols );
   return sfg_multipolygon( im2, xyzm, close);
 }
 
@@ -141,7 +144,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
+  Rcpp::List lst = geometries::shapes::to_listMat( df, cols, id_col );
   return sfg_multipolygon( lst, xyzm, close);
 }
 
@@ -152,7 +155,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List lst = sfheaders::shapes::get_listMat( df, cols, id_col );
+  Rcpp::List lst = geometries::shapes::to_listMat( df, cols, id_col );
   return sfg_multipolygon( lst, xyzm, close);
 }
 
@@ -163,7 +166,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
+  Rcpp::List lst = geometries::shapes::to_listMat( nm, cols, id_col );
   return sfg_multipolygon( lst, xyzm, close);
 }
 
@@ -174,7 +177,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List lst = sfheaders::shapes::get_listMat( nm, cols, id_col );
+  Rcpp::List lst = geometries::shapes::to_listMat( nm, cols, id_col );
   return sfg_multipolygon( lst, xyzm, close);
 }
 
@@ -185,7 +188,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
+  Rcpp::List lst = geometries::shapes::to_listMat( im, cols, id_col );
   return sfg_multipolygon( lst, xyzm, close);
 }
 
@@ -196,7 +199,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List lst = sfheaders::shapes::get_listMat( im, cols, id_col );
+  Rcpp::List lst = geometries::shapes::to_listMat( im, cols, id_col );
   return sfg_multipolygon( lst, xyzm, close);
 }
 
@@ -208,7 +211,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
   ) {
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( im, geometry_cols, polygon_id_column, line_id_column );
+    Rcpp::List mp = geometries::shapes::to_listListMat( im, geometry_cols, polygon_id_column, line_id_column );
     return sfg_multipolygon( mp, xyzm, close);
   }
 
@@ -220,7 +223,7 @@ inline SEXP sfg_multipolygon(
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( im, geometry_cols, polygon_id_column, line_id_column );
+    Rcpp::List mp = geometries::shapes::to_listListMat( im, geometry_cols, polygon_id_column, line_id_column );
     return sfg_multipolygon( mp, xyzm, close);
   }
 
@@ -232,7 +235,7 @@ inline SEXP sfg_multipolygon(
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( nm, geometry_cols, polygon_id_column, line_id_column );
+    Rcpp::List mp = geometries::shapes::to_listListMat( nm, geometry_cols, polygon_id_column, line_id_column );
     return sfg_multipolygon( mp, xyzm, close);
   }
 
@@ -244,7 +247,7 @@ inline SEXP sfg_multipolygon(
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( nm, geometry_cols, polygon_id_column, line_id_column );
+    Rcpp::List mp = geometries::shapes::to_listListMat( nm, geometry_cols, polygon_id_column, line_id_column );
     return sfg_multipolygon( mp, xyzm, close);
   }
 
@@ -256,7 +259,7 @@ inline SEXP sfg_multipolygon(
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( df, geometry_cols, polygon_id_column, line_id_column );
+    Rcpp::List mp = geometries::shapes::to_listListMat( df, geometry_cols, polygon_id_column, line_id_column );
     return sfg_multipolygon( mp, xyzm, close);
   }
 
@@ -269,7 +272,7 @@ inline SEXP sfg_multipolygon(
       std::string xyzm,
       bool close = true
   ) {
-    Rcpp::List mp = sfheaders::shapes::get_listListMat( df, geometry_cols, polygon_id_column, line_id_column );
+    Rcpp::List mp = geometries::shapes::to_listListMat( df, geometry_cols, polygon_id_column, line_id_column );
     return sfg_multipolygon( mp, xyzm, close);
   }
 
@@ -624,7 +627,7 @@ inline SEXP sfg_multipolygon(
   std::string xyzm,
   bool close = true
 ) {
-  Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, polygon_id, line_id );
+  Rcpp::List mp = geometries::shapes::to_listListMat( x, geometry_cols, polygon_id, line_id );
   return sfg_multipolygon( mp, xyzm, close);
 }
 
@@ -636,7 +639,7 @@ inline SEXP sfg_multipolygon(
     std::string xyzm,
     bool close = true
 ) {
-  Rcpp::List mp = sfheaders::shapes::get_listListMat( x, geometry_cols, polygon_id, line_id );
+  Rcpp::List mp = geometries::shapes::to_listListMat( x, geometry_cols, polygon_id, line_id );
   return sfg_multipolygon( mp, xyzm, close);
 }
 
@@ -740,7 +743,7 @@ inline SEXP sfg_multipolygon(
 
 
     Rcpp::List sfg(1);
-    sfg[0] = sfheaders::shapes::get_listMat( x, cols, line_id );
+    sfg[0] = geometries::shapes::to_listMat( x, cols, line_id );
     return sfg_multipolygon( sfg, xyzm, close);
   }
 

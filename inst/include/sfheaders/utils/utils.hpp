@@ -1,5 +1,5 @@
-#ifndef R_SFHEADERS_UTILS_UTILS_H
-#define R_SFHEADERS_UTILS_UTILS_H
+#ifndef R_SFHEADERS_UTILS_H
+#define R_SFHEADERS_UTILS_H
 
 #include <Rcpp.h>
 #include "geometries/utils/sexp/sexp.hpp"

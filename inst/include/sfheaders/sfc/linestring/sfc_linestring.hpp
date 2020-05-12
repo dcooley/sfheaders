@@ -6,9 +6,9 @@
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
-#include "sfheaders/shapes/shapes.hpp"
 
 #include "sfheaders/sfc/bbox.hpp"
+#include "geometries/shapes/list_mat/to_list_mat.hpp"
 #include "geometries/bbox/bbox.hpp"
 
 namespace sfheaders {
@@ -474,7 +474,7 @@ namespace sfc {
         start = line_positions(i, 0);
         end = line_positions(i, 1);
 
-        Rcpp::NumericMatrix m = sfheaders::shapes::get_listMat( im, geometry_cols, start, end );  // returns a matrix
+        Rcpp::NumericMatrix m = geometries::shapes::to_listMat( im, geometry_cols, start, end );  // returns a matrix
         sfc( i ) = sfheaders::sfg::sfg_linestring( m, xyzm );
       }
     }
@@ -523,7 +523,7 @@ namespace sfc {
         start = line_positions(i, 0);
         end = line_positions(i, 1);
 
-        Rcpp::NumericMatrix m = sfheaders::shapes::get_listMat( nm, geometry_cols, start, end );  // returns a matrix
+        Rcpp::NumericMatrix m = geometries::shapes::to_listMat( nm, geometry_cols, start, end );  // returns a matrix
         sfc( i ) = sfheaders::sfg::sfg_linestring( m, xyzm );
       }
     }
@@ -571,7 +571,7 @@ namespace sfc {
         start = line_positions(i, 0);
         end = line_positions(i, 1);
 
-        Rcpp::NumericMatrix m = sfheaders::shapes::get_listMat( df, geometry_cols, start, end );  // returns a matrix
+        Rcpp::NumericMatrix m = geometries::shapes::to_listMat( df, geometry_cols, start, end );  // returns a matrix
         sfc( i ) = sfheaders::sfg::sfg_linestring( m, xyzm );
       }
     }
@@ -618,7 +618,7 @@ namespace sfc {
         start = line_positions(i, 0);
         end = line_positions(i, 1);
 
-        Rcpp::NumericMatrix m = sfheaders::shapes::get_listMat( df, geometry_cols, start, end );  // returns a matrix
+        Rcpp::NumericMatrix m = geometries::shapes::to_listMat( df, geometry_cols, start, end );  // returns a matrix
         sfc( i ) = sfheaders::sfg::sfg_linestring( m, xyzm );
       }
     }
