@@ -4,7 +4,7 @@
 #include "sfheaders/df/sfc.hpp"
 #include "geometries/utils/vectors/vectors.hpp"
 #include "geometries/utils/lists/list.hpp"
-#include "geometries/coordinates/coordinates.hpp"
+#include "geometries/coordinates/dimensions.hpp"
 
 #include <Rcpp.h>
 
@@ -111,7 +111,7 @@ namespace df {
 
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::coordinate_indices( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
   }
 
@@ -177,7 +177,7 @@ namespace df {
   ) {
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::coordinate_indices( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
 
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }

@@ -4,7 +4,7 @@
 #include "sfheaders/df/sfg.hpp"
 #include "sfheaders/df/utils.hpp"
 
-#include "geometries/coordinates/coordinates.hpp"
+#include "geometries/coordinates/dimensions.hpp"
 #include "geometries/utils/lists/collapse.hpp"
 
 #include <Rcpp.h>
@@ -395,7 +395,7 @@ namespace df {
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`
-    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::coordinate_indices( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
     return sfc_to_df( sfc, sfc_coordinates );
   }
 

@@ -46,14 +46,19 @@ namespace cast {
     return res;
   }
 
-  inline R_xlen_t count_new_point_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_point_objects(
+      SEXP& sfg
+  ) {
     R_xlen_t n_coords = 0;
-    geometries::coordinates::count_coordinates( sfg, n_coords );
+    geometries::coordinates::geometry_dimension( sfg, n_coords );
     return n_coords;
   }
 
 
-  inline R_xlen_t count_new_multipoint_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_multipoint_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     if( geometry == "POINT" ) {
       return 1;
     } else if ( geometry == "MULTIPOINT") {
@@ -75,7 +80,10 @@ namespace cast {
     }
   }
 
-  inline R_xlen_t count_new_linestring_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_linestring_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     if( geometry == "POINT" ) {
       return 1;
     } else if ( geometry == "MULTIPOINT") {
@@ -97,7 +105,10 @@ namespace cast {
     }
   }
 
-  inline R_xlen_t count_new_multilinestring_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_multilinestring_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     // going to polygon
 
     if( geometry == "POINT" ) {
@@ -121,7 +132,10 @@ namespace cast {
     }
   }
 
-  inline R_xlen_t count_new_polygon_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_polygon_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     // going to polygon
 
     if( geometry == "POINT" ) {
@@ -158,7 +172,7 @@ namespace cast {
     geometry = cls[1];
 
     if( cast_to == "POINT" ) {
-      return count_new_point_objects( sfg, geometry );
+      return count_new_point_objects( sfg );
     } else if ( cast_to == "MULTIPOINT" ) {
       return count_new_multipoint_objects( sfg, geometry );
     } else if ( cast_to == "LINESTRING" ) {
