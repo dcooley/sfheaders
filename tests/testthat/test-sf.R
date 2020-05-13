@@ -468,3 +468,22 @@ test_that("different property types work",{
   # sf_point( obj = df[0, ], x = "x", y = "y", keep = TRUE )
 
 })
+
+test_that("ids returned correctly - issue 83",{
+
+  df <- data.frame(
+    x = 1:5
+    , y = 1:5
+    , my_id = 1
+  )
+
+  expect_true( all( names( sf_multipoint(df, multipoint_id = "my_id") ) == c("my_id", "geometry") ) )
+  expect_true( all( names( sf_linestring(df, linestring_id = "my_id") ) == c("my_id", "geometry") ) )
+  expect_true( all( names( sf_polygon(df, polygon_id = "my_id") ) == c("my_id", "geometry") ) )
+  expect_true( all( names( sf_multipolygon(df, multipolygon_id = "my_id") ) == c("my_id", "geometry") ) )
+
+})
+
+
+
+
