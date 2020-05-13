@@ -113,8 +113,7 @@ sf_multipoint <- function(
   geometry_columns <- index_correct( geometry_columns )
   multipoint_id <- index_correct( multipoint_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , multipoint_id ## multipoint_id
@@ -127,9 +126,7 @@ sf_multipoint <- function(
       , keep ## keep
       , xyzm(x,y,z,m)
       , "MULTIPOINT"
-    )
   )
-
   return( replace_id( res, multipoint_id ) )
 }
 
@@ -181,8 +178,7 @@ sf_linestring <- function(
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -195,8 +191,7 @@ sf_linestring <- function(
       , keep ## keep
       , xyzm(x,y,z,m)
       , "LINESTRING"
-    )
-  )
+      )
   return( replace_id( res, linestring_id ) )
 }
 
@@ -269,8 +264,7 @@ sf_multilinestring <- function(
   linestring_id <- index_correct( linestring_id )
   multilinestring_id <- index_correct( multilinestring_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -284,7 +278,6 @@ sf_multilinestring <- function(
       , xyzm(x,y,z,m)
       , "MULTILINESTRING"
     )
-  )
   return( replace_id( res, multilinestring_id ) )
 }
 
@@ -395,8 +388,7 @@ sf_polygon <- function(
   linestring_id <- index_correct( linestring_id )
   polygon_id <- index_correct( polygon_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -410,7 +402,6 @@ sf_polygon <- function(
       , xyzm(x,y,z,m)
       , "POLYGON"
     )
-  )
 
   return( replace_id( res, polygon_id ) )
 }
@@ -511,8 +502,7 @@ sf_multipolygon <- function(
   polygon_id <- index_correct( polygon_id )
   multipolygon_id <- index_correct( multipolygon_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -526,7 +516,6 @@ sf_multipolygon <- function(
       , xyzm(x,y,z,m)
       , "MULTIPOLYGON"
     )
-  )
   return( replace_id( res, multipolygon_id ) )
 }
 
