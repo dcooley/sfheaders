@@ -50,28 +50,6 @@ each geometry is kept. See Keeping Properties.}
 \description{
 constructs an sf of MULTIPOLYGON objects
 }
-\section{notes}{
-
-sfheaders functions do not perform any validity checks on the geometries.
-Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
-
-The data.frame and matrices you send into the sfheader functions must be ordered.
-}
-
-\section{Keeping Properties}{
-
-
-Setting \code{keep = TRUE} will retain any columns not specified as a
-coordinate (x, y, z, m) or an id (e.g., linestring_id, polygon_id) of the input \code{obj}.
-
-You can use \code{list_columns} to specify which of the properties will be turned into
-a list, thus keeping all the values in the column. For columns not specified in \code{list_columns},
-only the first row of the column is kept
-
-The \code{sf_*} functions assume the input \code{obj} is a long data.frame / matrix,
-where any properties are repeated down the table for the same geometry.
-}
-
 \examples{
 
 m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE )
