@@ -5,15 +5,15 @@
 #include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
-//#include "sfheaders/sfc/zm_range.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
 
-#include "sfheaders/sfc/bbox.hpp"
+//#include "sfheaders/sfc/bbox.hpp"
 //#include "geometries/shapes/list_mat/to_list_mat.hpp"
 
 #include "geometries/bbox/bbox.hpp"
 
 #include "geometries/geometries.hpp"
-
+#include "geometries/nest/nest.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -723,41 +723,16 @@ namespace sfc {
     Rcpp::IntegerVector id_cols(1);
     id_cols[0] = linestring_id;
 
-    return geometries::make_geometries( x, id_cols, geometry_cols, class_attribute );
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    // switch( TYPEOF( x ) ) {
-    // case INTSXP: {
-    // if( Rf_isMatrix( x ) ) {
-    //   SEXP xc = Rcpp::clone( x );
-    //   Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-    //   return sfc_linestring( im, geometry_cols, linestring_id, xyzm );
-    // // } else {
-    // // Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
-    // // return sfc_linestring( iv, geometry_cols, linestring_id );
-    // }
-    // }
-    // case REALSXP: {
-    // if( Rf_isMatrix( x ) ) {
-    //   SEXP xc = Rcpp::clone( x );
-    //   Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
-    //   return sfc_linestring( nm, geometry_cols, linestring_id, xyzm );
-    // // } else {
-    // //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
-    // //   return sfc_linestring( nv, geometry_cols, linestring_id );
-    // }
-    // }
-    // case VECSXP: {
-    // if( Rf_inherits( x, "data.frame" ) ) {
-    //   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    //   return sfc_linestring( df, geometry_cols, linestring_id, xyzm );
-    // }
-    // }
-    // default: {
-    //   Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
-    // }
-    // }
+    geometries::bbox::calculate_bbox( bbox, x );
+    sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
 
-    return Rcpp::List::create();
+    Rcpp::List sfc = geometries::make_geometries( x, id_cols, geometry_cols, class_attribute );
+
+    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
 
   }
 
@@ -773,41 +748,16 @@ namespace sfc {
     Rcpp::StringVector id_cols(1);
     id_cols[0] = linestring_id.get_cstring();
 
-    return geometries::make_geometries( x, id_cols, geometry_cols, class_attribute );
+    Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+    Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+    Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    // switch( TYPEOF( x ) ) {
-    // case INTSXP: {
-    // if( Rf_isMatrix( x ) ) {  // #nocov
-    //   SEXP xc = Rcpp::clone( x ); // #nocov
-    //   Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( xc );
-    //   return sfc_linestring( im, geometry_cols, linestring_id, xyzm );
-    // // } else {
-    // //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
-    // //   return sfc_linestring( iv, geometry_cols, linestring_id );
-    // }
-    // }
-    // case REALSXP: {
-    // if( Rf_isMatrix( x ) ) {
-    //   SEXP xc = Rcpp::clone( x );
-    //   Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( xc );
-    //   return sfc_linestring( nm, geometry_cols, linestring_id, xyzm );
-    // // } else {
-    // //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
-    // //   return sfc_linestring( nv, geometry_cols, linestring_id );
-    // }
-    // }
-    // case VECSXP: {
-    // if( Rf_inherits( x, "data.frame" ) ) {
-    //   Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-    //   return sfc_linestring( df, geometry_cols, linestring_id, xyzm );
-    // }
-    // }
-    // default: {
-    //   Rcpp::stop("sfheaders - unsupported linestring type"); // #nocov
-    // }
-    // }
+    geometries::bbox::calculate_bbox( bbox, x );
+    sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
 
-    return Rcpp::List::create();
+    Rcpp::List sfc = geometries::make_geometries( x, id_cols, geometry_cols, class_attribute );
+
+    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
   }
 
 
@@ -827,6 +777,10 @@ namespace sfc {
 
       // make the geometry cols all the other columns??
       //return sfc_linestring( x, geometry_cols, xyzm );
+
+      // TODO - nest which switches on x and can subset columns
+      //geometries::nest::nest( x, 1 );
+
 
     } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
 

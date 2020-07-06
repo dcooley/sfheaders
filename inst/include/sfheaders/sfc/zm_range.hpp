@@ -289,6 +289,52 @@ namespace zm {
     }
     }
   }
+
+  inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      SEXP& x,
+      Rcpp::StringVector& geometry_cols,
+      std::string xyzm
+  ) {
+    if( Rf_inherits( x, "data.frame") ) {
+
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
+
+    // } else if ( Rf_isMatrix( x ) ) {
+
+      // Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( x );
+      // calculate_zm_ranges( z_range, m_range, mat, geometry_cols, xyzm );
+
+    } else {
+      Rcpp::stop("sfheaders - expecting data.frame or matrix");
+    }
+
+  }
+
+  inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      SEXP& x,
+      Rcpp::IntegerVector& geometry_cols,
+      std::string xyzm
+  ) {
+    if( Rf_inherits( x, "data.frame") ) {
+
+      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+      calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
+
+    } else if ( Rf_isMatrix( x ) ) {
+
+      Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( x );
+      calculate_zm_ranges( z_range, m_range, mat, geometry_cols, xyzm );
+
+    } else {
+      Rcpp::stop("sfheaders - expecting data.frame or matrix");
+    }
+
+  }
   // #nocov end
 
   // overloads for revedeps (geojsonsf)
