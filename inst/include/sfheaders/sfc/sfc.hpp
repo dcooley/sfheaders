@@ -8,7 +8,7 @@
 // #include "sfheaders/sfc/multipoint/sfc_multipoints.hpp"
 #include "sfheaders/sfc/linestring/sfc_linestring.hpp"
 // #include "sfheaders/sfc/linestring/sfc_linestrings.hpp"
-// #include "sfheaders/sfc/multilinestring/sfc_multilinestring.hpp"
+#include "sfheaders/sfc/multilinestring/sfc_multilinestring.hpp"
 // #include "sfheaders/sfc/multilinestring/sfc_multilinestrings.hpp"
 // #include "sfheaders/sfc/polygon/sfc_polygon.hpp"
 // #include "sfheaders/sfc/polygon/sfc_polygons.hpp"

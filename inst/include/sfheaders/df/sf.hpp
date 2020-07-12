@@ -157,7 +157,7 @@ namespace df {
     for( i = 0; i < n_unlist; ++i ) {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
-      R_xlen_t n = geometries::utils::get_sexp_length( unlisted_col );
+      R_xlen_t n = geometries::utils::sexp_length( unlisted_col );
       if( n == sf.nrow() ) {
         continue; // issue 76
       }

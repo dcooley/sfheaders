@@ -53,6 +53,10 @@ rcpp_sfc_linestring <- function(x, cols, id_col, xyzm) {
     .Call(`_sfheaders_rcpp_sfc_linestring`, x, cols, id_col, xyzm)
 }
 
+rcpp_sfc_multilinestring <- function(x, cols, multiline_id, line_id, xyzm) {
+    .Call(`_sfheaders_rcpp_sfc_multilinestring`, x, cols, multiline_id, line_id, xyzm)
+}
+
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
     .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2, id_col3)
 }

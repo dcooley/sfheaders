@@ -33,10 +33,10 @@ namespace utils {
   }
 
   inline bool is_null_geometry( SEXP& sfg, std::string geom_type ) {
-    int n = geometries::utils::get_sexp_length( sfg );
+    R_xlen_t n = geometries::utils::sexp_length( sfg );
     if( geom_type == "POINT" ) {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
-      if (ISNAN( nv[0] ) ) {
+      if ( ISNAN( nv[0] ) ) {
         return true;
       }
     } else if ( n == 0 ) {   // #nocov

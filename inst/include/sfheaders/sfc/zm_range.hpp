@@ -335,6 +335,32 @@ namespace zm {
     }
 
   }
+
+
+  inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      SEXP& x,
+      SEXP& geometry_cols,
+      std::string xyzm
+  ) {
+    switch( TYPEOF( geometry_cols ) ) {
+    case INTSXP: {
+      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
+      calculate_zm_ranges( z_range, m_range, x, iv, xyzm );
+      break;
+    }
+    case STRSXP: {
+      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( geometry_cols );
+      calculate_zm_ranges( z_range, m_range, x, sv, xyzm );
+      break;
+    }
+    default: {
+      Rcpp::stop("sfheaders - unknown column type");
+    }
+    }
+  }
+
   // #nocov end
 
   // overloads for revedeps (geojsonsf)

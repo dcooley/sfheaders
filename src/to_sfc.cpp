@@ -33,10 +33,10 @@ SEXP rcpp_sfc_linestring( SEXP x, SEXP cols, SEXP id_col, std::string xyzm ) {
 //   return sfheaders::sfc::sfc_linestrings( lst, xyzm );
 // }
 //
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_multilinestring( SEXP x, SEXP cols, SEXP multiline_id, SEXP line_id, std::string xyzm) {
-//   return sfheaders::sfc::sfc_multilinestring( x, cols, multiline_id, line_id, xyzm );
-// }
+// [[Rcpp::export]]
+SEXP rcpp_sfc_multilinestring( SEXP x, SEXP cols, SEXP multiline_id, SEXP line_id, std::string xyzm) {
+  return sfheaders::sfc::sfc_multilinestring( x, cols, multiline_id, line_id, xyzm );
+}
 //
 // // [[Rcpp::export]]
 // SEXP rcpp_sfc_multilinestrings( Rcpp::List lst, std::string xyzm ) {
