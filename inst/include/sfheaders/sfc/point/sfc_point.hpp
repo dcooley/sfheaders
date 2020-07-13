@@ -11,7 +11,6 @@
 #include "geometries/bbox/bbox.hpp"
 #include "geometries/utils/columns/columns.hpp"
 #include "geometries/geometries.hpp"
-#include "geometries/nest/nest.hpp"
 
 namespace sfheaders {
 namespace sfc {
@@ -25,9 +24,9 @@ inline SEXP sfc_point(
   // TODO:
   // if the input is a single vector
   // if( Rf_isVector( x ) ) {
-  //   Rcpp::NumericMatrix nm( 1, Rf_length( x ) );
-  //   nm( 0, Rcpp::_ ) = Rcpp::as< Rcpp::NumericVector >( x );
-  //   return sfc_point( nm, geometry_cols, xyzm );
+  //   // Rcpp::NumericMatrix nm( 1, Rf_length( x ) );
+  //   // nm( 0, Rcpp::_ ) = Rcpp::as< Rcpp::NumericVector >( x );
+  //   // return sfc_point( nm, geometry_cols, xyzm );
   // }
 
   if( Rf_isNull( geometry_cols ) ) {

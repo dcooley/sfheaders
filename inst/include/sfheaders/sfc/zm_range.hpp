@@ -2,23 +2,15 @@
 #define R_SFHEADERS_ZM_RANGE_H
 
 #include <Rcpp.h>
+
 #include "geometries/utils/columns/columns.hpp"
+
+#include "sfheaders/sfg/sfg_dimension.hpp"
 #include "sfheaders/sfc/m_range.hpp"
 #include "sfheaders/sfc/z_range.hpp"
 
 namespace sfheaders {
 namespace zm {
-
-  inline std::string guess_xyzm( R_xlen_t n_col ) {
-
-    switch( n_col ) {
-    case 2: { return "XY"; }
-    case 3: { return "XYZ"; }
-    case 4: { return "XYZM"; }
-    default: { Rcpp::stop("sfheaders - can't work out the dimension"); }
-    }
-    return ""; // #nocov - never reaches
-  }
 
   // #nocov start
   inline void calculate_zm_ranges(
@@ -29,7 +21,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( iv.length() );
+      xyzm =  sfheaders::sfg::guess_xyzm( iv.length() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -51,7 +43,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( nv.length() );
+      xyzm = sfheaders::sfg::guess_xyzm( nv.length() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -72,7 +64,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( im.ncol() );
+      xyzm = sfheaders::sfg::guess_xyzm( im.ncol() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -93,7 +85,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( nm.ncol() );
+      xyzm = sfheaders::sfg::guess_xyzm( nm.ncol() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -114,7 +106,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( df.ncol() );
+      xyzm = sfheaders::sfg::guess_xyzm( df.ncol() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -135,7 +127,7 @@ namespace zm {
     std::string xyzm
   ) {
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( geometry_cols.size() );
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -156,7 +148,7 @@ namespace zm {
       std::string xyzm
   ) {
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( geometry_cols.size() );
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -178,7 +170,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( geometry_cols.size() );
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
 
     if ( xyzm ==  "XYM" ) {
@@ -200,7 +192,7 @@ namespace zm {
   ) {
 
     if( xyzm.empty() ) {
-      xyzm = guess_xyzm( geometry_cols.size() );
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
 
     if ( xyzm ==  "XYM" ) {

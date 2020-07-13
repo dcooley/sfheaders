@@ -32,6 +32,7 @@
 #'
 #' @export
 sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  if( is.vector( obj ) ) obj <- matrix( obj, ncol = length( obj ) )
   geometry_columns <- c(x,y,z,m)
   rcpp_sfc_point(
     obj

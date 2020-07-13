@@ -1,5 +1,5 @@
 // #include <Rcpp.h>
-// #include "sfheaders/sfg/sfg.hpp"
+#include "sfheaders/sfg/sfg.hpp"
 //
 // // [[Rcpp::export]]
 // std::string rcpp_get_sfg_type( int sfg_type ) {
@@ -16,20 +16,20 @@
 //   return sfheaders::sfg::sfg_points( lst, xyzm );
 // }
 //
-// // [[Rcpp::export]]
-// SEXP rcpp_sfg_multipoint( SEXP x, SEXP geometry_columns, std::string xyzm ) {
-//   return sfheaders::sfg::sfg_multipoint( x, geometry_columns, xyzm );
-// }
-//
+// [[Rcpp::export]]
+SEXP rcpp_sfg_multipoint( SEXP x, SEXP geometry_columns, std::string xyzm ) {
+  return sfheaders::sfg::sfg_multipoint( x, geometry_columns, xyzm );
+}
+
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_sfg_multipoints( Rcpp::List& lst, std::string xyzm ) {
 //   return sfheaders::sfg::sfg_multipoints( lst, xyzm );
 // }
-//
-// // [[Rcpp::export]]
-// SEXP rcpp_sfg_linestring( SEXP x, SEXP geometry_columns, std::string xyzm ) {
-//   return sfheaders::sfg::sfg_linestring( x, geometry_columns, xyzm );
-// }
+
+// [[Rcpp::export]]
+SEXP rcpp_sfg_linestring( SEXP x, SEXP geometry_columns, std::string xyzm ) {
+  return sfheaders::sfg::sfg_linestring( x, geometry_columns, xyzm );
+}
 //
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_sfg_linestrings( Rcpp::List& lst, std::string xyzm ) {

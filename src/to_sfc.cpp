@@ -7,62 +7,62 @@ SEXP rcpp_sfc_point( SEXP x, SEXP cols, std::string xyzm ) {
   return sfheaders::sfc::sfc_point( x, cols, xyzm );
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_points( Rcpp::List lst, std::string xyzm ) {
-//   return sfheaders::sfc::sfc_points( lst, xyzm );
-// }
+// [[Rcpp::export]]
+SEXP rcpp_sfc_points( Rcpp::List lst, std::string xyzm ) {
+  return sfheaders::sfc::sfc_points( lst, xyzm );
+}
 
 // [[Rcpp::export]]
 SEXP rcpp_sfc_multipoint( SEXP x, SEXP cols, SEXP id_col, std::string xyzm ) {
   return sfheaders::sfc::sfc_multipoint( x, cols, id_col, xyzm );
 }
-//
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_multipoints( Rcpp::List lst, std::string xyzm ) {
-//   return sfheaders::sfc::sfc_multipoints( lst, xyzm );
-// }
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_multipoints( Rcpp::List lst, std::string xyzm ) {
+  return sfheaders::sfc::sfc_multipoints( lst, xyzm );
+}
 
 // [[Rcpp::export]]
 SEXP rcpp_sfc_linestring( SEXP x, SEXP cols, SEXP id_col, std::string xyzm ) {
   return sfheaders::sfc::sfc_linestring( x, cols, id_col, xyzm );
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_linestrings( Rcpp::List lst, std::string xyzm ) {
-//   return sfheaders::sfc::sfc_linestrings( lst, xyzm );
-// }
-//
+// [[Rcpp::export]]
+SEXP rcpp_sfc_linestrings( Rcpp::List lst, std::string xyzm ) {
+  return sfheaders::sfc::sfc_linestrings( lst, xyzm );
+}
+
 // [[Rcpp::export]]
 SEXP rcpp_sfc_multilinestring( SEXP x, SEXP cols, SEXP multiline_id, SEXP line_id, std::string xyzm) {
   return sfheaders::sfc::sfc_multilinestring( x, cols, multiline_id, line_id, xyzm );
 }
-//
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_multilinestrings( Rcpp::List lst, std::string xyzm ) {
-//   return sfheaders::sfc::sfc_multilinestrings( lst, xyzm );
-// }
-//
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_multilinestrings( Rcpp::List lst, std::string xyzm ) {
+  return sfheaders::sfc::sfc_multilinestrings( lst, xyzm );
+}
+
 // [[Rcpp::export]]
 SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_polygon( x, cols, polygon_id, line_id, xyzm, close );
 }
-//
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_polygons( Rcpp::List lst, bool close, std::string xyzm ) {
-//   return sfheaders::sfc::sfc_polygons( lst, xyzm, close );
-// }
-//
+
+// [[Rcpp::export]]
+SEXP rcpp_sfc_polygons( Rcpp::List lst, bool close, std::string xyzm ) {
+  return sfheaders::sfc::sfc_polygons( lst, xyzm, close );
+}
+
 
 // [[Rcpp::export]]
 SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
 }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
-//   return sfheaders::sfc::sfc_multipolygons( lst, xyzm, close );
-// }
-//
+// [[Rcpp::export]]
+SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
+  return sfheaders::sfc::sfc_multipolygons( lst, xyzm, close );
+}
+
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, bool close ) {
 //

@@ -2,6 +2,7 @@
 #define R_SFHEADERS_UTILS_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfg/sfg_dimension.hpp"
 #include "geometries/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
@@ -40,7 +41,7 @@ namespace utils {
   inline std::string validate_xyzm( std::string xyzm, R_xlen_t n_col ) {
     std::string chk = "";
     if( strcmp( xyzm.c_str(), chk.c_str() ) == 0 ) {
-      return sfheaders::zm::guess_xyzm( n_col );
+      return sfheaders::sfg::guess_xyzm( n_col );
     }
     return xyzm;
   }

@@ -27,73 +27,82 @@
 #'   geometry_columns <- c(x,y,z,m)
 #'   rcpp_sfg_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
 #' }
+
+
+#' sfg multipoint
+#'
+#' constructs sfg MULTIPOINT object
+#'
+#' @inheritParams sfg_point
+#' @return \code{sfg} object of MULTIPOINT geometry
+#' @examples
+#'
+#' sfg_multipoint( 1:2 )
+#' sfg_multipoint( 1:3 )
+#' sfg_multipoint( 1:4 )
+#'
+#' sfg_multipoint( matrix( 1:3, ncol = 3 ) )
+#' sfg_multipoint( data.frame( x = 1, y = 2, z = 3 )  )
+#'
+#' sfg_multipoint( matrix( 1:4, ncol = 2 ) )
+#' sfg_multipoint( matrix( 1:24, ncol = 2, byrow = TRUE ) )
+#' sfg_multipoint( matrix( 1:24, ncol = 3, byrow = TRUE ) )
+#' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ) )
+#'
+#' sfg_multipoint( data.frame( x = 1:5, y = 1:5 ) )
+#'
+#' ## using columns
+#'
+#' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 1, y = 2 )
+#' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 1, y = 2, z = 3 )
+#' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 3, y = 4 )
+#'
+#' df <- data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 )
+#' sfg_multipoint( df, x = "x", y = "y" )
+#' sfg_multipoint( df, x = "x", y = "y", z = "z" )
+#' sfg_multipoint( df, x = "x", y = "y", z = "z", m = "m" )
+#'
+#' @export
+sfg_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfg_multipoint(
+    obj
+    , index_correct( geometry_columns )
+    , xyzm(x,y,z,m)
+    )
+}
+
+
+#' sfg linestring
+#'
+#' constructs sfg LINESTRING object
+#'
+#' @inheritParams sfg_point
+#' @return \code{sfg} object of LINESTRING geometry
+#'
+#' @examples
+#'
+#' sfg_linestring( matrix( 1:24, ncol = 2 ) )
+#' sfg_linestring( matrix( 1:24, ncol = 3 ) )
+#' sfg_linestring( matrix( 1:24, ncol = 4 ) )
+#'
+#' sfg_linestring( matrix( 1:24, ncol = 4 ), x = 3, y = 2, z = 3)
+#'
+#' sfg_linestring( data.frame( x = 1:10, y = 11:20 ) )
+#' sfg_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ) )
+#' sfg_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ), x = "x", y = "z" )
 #'
 #'
-#' #' sfg multipoint
-#' #'
-#' #' constructs sfg MULTIPOINT object
-#' #'
-#' #' @inheritParams sfg_point
-#' #' @return \code{sfg} object of MULTIPOINT geometry
-#' #' @examples
-#' #'
-#' #' sfg_multipoint( 1:2 )
-#' #' sfg_multipoint( 1:3 )
-#' #' sfg_multipoint( 1:4 )
-#' #'
-#' #' sfg_multipoint( matrix( 1:3, ncol = 3 ) )
-#' #' sfg_multipoint( data.frame( x = 1, y = 2, z = 3 )  )
-#' #'
-#' #' sfg_multipoint( matrix( 1:4, ncol = 2 ) )
-#' #' sfg_multipoint( matrix( 1:24, ncol = 2, byrow = TRUE ) )
-#' #' sfg_multipoint( matrix( 1:24, ncol = 3, byrow = TRUE ) )
-#' #' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ) )
-#' #'
-#' #' sfg_multipoint( data.frame( x = 1:5, y = 1:5 ) )
-#' #'
-#' #' ## using columns
-#' #'
-#' #' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 1, y = 2 )
-#' #' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 1, y = 2, z = 3 )
-#' #' sfg_multipoint( matrix( 1:24, ncol = 4, byrow = TRUE ), x = 3, y = 4 )
-#' #'
-#' #' df <- data.frame( x = 1:5, y = 1:5, z = 11:15, m = 11:15 )
-#' #' sfg_multipoint( df, x = "x", y = "y" )
-#' #' sfg_multipoint( df, x = "x", y = "y", z = "z" )
-#' #' sfg_multipoint( df, x = "x", y = "y", z = "z", m = "m" )
-#' #'
-#' #' @export
-#' sfg_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
-#'   geometry_columns <- c(x,y,z,m)
-#'   rcpp_sfg_multipoint( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
-#' }
-#'
-#' #' sfg linestring
-#' #'
-#' #' constructs sfg LINESTRING object
-#' #'
-#' #' @inheritParams sfg_point
-#' #' @return \code{sfg} object of LINESTRING geometry
-#' #'
-#' #' @examples
-#' #'
-#' #' sfg_linestring( matrix( 1:24, ncol = 2 ) )
-#' #' sfg_linestring( matrix( 1:24, ncol = 3 ) )
-#' #' sfg_linestring( matrix( 1:24, ncol = 4 ) )
-#' #'
-#' #' sfg_linestring( matrix( 1:24, ncol = 4 ), x = 3, y = 2, z = 3)
-#' #'
-#' #' sfg_linestring( data.frame( x = 1:10, y = 11:20 ) )
-#' #' sfg_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ) )
-#' #' sfg_linestring( data.frame( x = 1:10, y = 11:20, z = 21:30 ), x = "x", y = "z" )
-#' #'
-#' #'
-#' #' @export
-#' sfg_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
-#'   geometry_columns <- c(x,y,z,m)
-#'   rcpp_sfg_linestring( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
-#' }
-#'
+#' @export
+sfg_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfg_linestring(
+    obj
+    , index_correct( geometry_columns )
+    , xyzm(x,y,z,m)
+    )
+}
+
 #' #' sfg multilinestring
 #' #'
 #' #' constructs sfg MULTILINESTRING object

@@ -12,6 +12,17 @@ namespace sfg {
     }
   }
 
+  inline std::string guess_xyzm( R_xlen_t n_col ) {
+
+    switch( n_col ) {
+    case 2: { return "XY"; }
+    case 3: { return "XYZ"; }
+    case 4: { return "XYZM"; }
+    default: { Rcpp::stop("sfheaders - can't work out the dimension"); }
+    }
+    return ""; // #nocov - never reaches
+  }
+
   // re-write
   // it can be XYM, and we'll know from R based on the x, y, m columns specified.
   // but if none are specified, and just 3 columns, it will defualt to XYZ

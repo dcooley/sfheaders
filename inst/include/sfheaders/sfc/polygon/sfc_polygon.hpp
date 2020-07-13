@@ -11,7 +11,6 @@
 #include "geometries/bbox/bbox.hpp"
 #include "geometries/utils/columns/columns.hpp"
 #include "geometries/geometries.hpp"
-#include "geometries/nest/nest.hpp"
 
 namespace sfheaders {
 namespace sfc {
