@@ -41,6 +41,14 @@ The \code{sf_*} functions assume the input \code{obj} is a long data.frame / mat
 where any properties are repeated down the table for the same geometry.
 }
 
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
+
+The data.frame and matrices you send into the sfheader functions must be ordered.
+}
+
 \examples{
 
 x <- c(1:3)

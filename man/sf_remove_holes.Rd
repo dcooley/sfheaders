@@ -8,6 +8,9 @@ sf_remove_holes(obj, close = TRUE)
 }
 \arguments{
 \item{obj}{sfg, sfc or sf object.}
+
+\item{close}{logical indicating whether polygons should be closed. If \code{TRUE},
+all polygons will be checked and force closed if possible}
 }
 \description{
 Removes holes from polygons and multipolygons. Points and linestrings are unaffected.

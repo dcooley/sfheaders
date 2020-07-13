@@ -2,10 +2,11 @@
 #define R_SFHEADERS_SFC_LINESTRING_H
 
 #include <Rcpp.h>
-#include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
-#include "sfheaders/sfg/linestring/sfg_linestring.hpp"
+#include "sfheaders/sfc/sfc_types.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
+
+#include "sfheaders/utils/utils.hpp"
 
 #include "geometries/bbox/bbox.hpp"
 #include "geometries/utils/columns/columns.hpp"
@@ -22,50 +23,49 @@ namespace sfc {
       std::string xyzm
   ) {
 
-    Rcpp::StringVector class_attribute = {xyzm.c_str(), "LINESTRING","sfg"};
+    if( Rf_isNull( geometry_cols ) ) {
+      // make this all the other columns, then send back in
+      SEXP geometry_cols2 = geometries::utils::other_columns( x, linestring_id );
+      return sfc_linestring( x, geometry_cols2, linestring_id, xyzm );
+    }
+
+    int n_id_cols = 1;
+    R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
+
+    // After subset_geometries we have moved the geometry columns
+    // into the 0:(n_geometry-1) positions
+    Rcpp::IntegerVector int_geometry_cols = Rcpp::seq( 0, ( col_counter - 1 ) );
+
+    xyzm = sfheaders::utils::validate_xyzm( xyzm, col_counter );
+
+    Rcpp::StringVector class_attribute = { xyzm.c_str(), "LINESTRING","sfg" };
+    Rcpp::List attributes = Rcpp::List::create(
+      Rcpp::_["class"] = class_attribute
+    );
+
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+    geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
+    sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
 
-    geometries::bbox::calculate_bbox( bbox, x );
+    R_xlen_t required_cols = col_counter + n_id_cols;
 
-    if( Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) ) {
+    Rcpp::IntegerVector geometry_cols_int = geometries::utils::sexp_col_int( x, geometry_cols );
 
-      // all columns are geometries
-      SEXP geom_cols = geometries::utils::other_columns( x );
-      return sfc_linestring( x, geom_cols, linestring_id, xyzm );
+    Rcpp::List lst = geometries::utils::as_list( x );
+    Rcpp::List res( required_cols );
 
-    } else if ( !Rf_isNull( geometry_cols ) && Rf_isNull( linestring_id ) ) {
+    sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
+    Rcpp::IntegerVector int_linestring_id(1);
 
-      // without id column we only need to subset by columns and then 'nest'
-      Rcpp::NumericMatrix sfg = geometries::matrix::to_matrix( x, geometry_cols );
-      sfheaders::sfg::make_sfg( sfg, sfheaders::sfg::SFG_LINESTRING, xyzm );
+    sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
 
-      Rcpp::List sfc = geometries::nest::nest( sfg, 1 );
+    Rcpp::List sfc = geometries::make_geometries( res, int_linestring_id, int_geometry_cols, attributes );
+    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
 
-      sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
-      return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
-
-    } else if ( Rf_isNull( geometry_cols ) && !Rf_isNull( linestring_id ) ) {
-
-      SEXP other_cols = geometries::utils::other_columns( x, linestring_id );
-      geometries::utils::geometry_column_check( other_cols );
-
-
-      return sfc_linestring( x, other_cols, linestring_id, xyzm );
-
-    } else {
-      // we have all the columns sorted, so we can now get their types, calcaulte ranges/bbox etc
-      geometries::utils::geometry_column_check( geometry_cols );
-      Rcpp::List sfc = geometries::make_geometries( x, linestring_id, geometry_cols, class_attribute );
-
-      sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
-      return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
-    }
-
-    return Rcpp::List::create(); // ??
   }
 
 } // sfc

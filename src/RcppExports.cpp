@@ -144,6 +144,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_sfc_point
+SEXP rcpp_sfc_point(SEXP x, SEXP cols, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_point(SEXP xSEXP, SEXP colsSEXP, SEXP xyzmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_point(x, cols, xyzm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_multipoint
+SEXP rcpp_sfc_multipoint(SEXP x, SEXP cols, SEXP id_col, std::string xyzm);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipoint(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP, SEXP xyzmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipoint(x, cols, id_col, xyzm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sfc_linestring
 SEXP rcpp_sfc_linestring(SEXP x, SEXP cols, SEXP id_col, std::string xyzm);
 RcppExport SEXP _sfheaders_rcpp_sfc_linestring(SEXP xSEXP, SEXP colsSEXP, SEXP id_colSEXP, SEXP xyzmSEXP) {
@@ -170,6 +197,39 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
     Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multilinestring(x, cols, multiline_id, line_id, xyzm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_polygon
+SEXP rcpp_sfc_polygon(SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, std::string xyzm, bool close);
+RcppExport SEXP _sfheaders_rcpp_sfc_polygon(SEXP xSEXP, SEXP colsSEXP, SEXP polygon_idSEXP, SEXP line_idSEXP, SEXP xyzmSEXP, SEXP closeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type line_id(line_idSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_polygon(x, cols, polygon_id, line_id, xyzm, close));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_multipolygon
+SEXP rcpp_sfc_multipolygon(SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, std::string xyzm, bool close);
+RcppExport SEXP _sfheaders_rcpp_sfc_multipolygon(SEXP xSEXP, SEXP colsSEXP, SEXP multipolygon_idSEXP, SEXP polygon_idSEXP, SEXP linestring_idSEXP, SEXP xyzmSEXP, SEXP closeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multipolygon_id(multipolygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipolygon(x, cols, multipolygon_id, polygon_id, linestring_id, xyzm, close));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -275,8 +335,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_to_df", (DL_FUNC) &_sfheaders_rcpp_sfc_to_df, 1},
     {"_sfheaders_rcpp_sf_to_df", (DL_FUNC) &_sfheaders_rcpp_sf_to_df, 2},
     {"_sfheaders_rcpp_sf_to_df_unlist", (DL_FUNC) &_sfheaders_rcpp_sf_to_df_unlist, 3},
+    {"_sfheaders_rcpp_sfc_point", (DL_FUNC) &_sfheaders_rcpp_sfc_point, 3},
+    {"_sfheaders_rcpp_sfc_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfc_multipoint, 4},
     {"_sfheaders_rcpp_sfc_linestring", (DL_FUNC) &_sfheaders_rcpp_sfc_linestring, 4},
     {"_sfheaders_rcpp_sfc_multilinestring", (DL_FUNC) &_sfheaders_rcpp_sfc_multilinestring, 5},
+    {"_sfheaders_rcpp_sfc_polygon", (DL_FUNC) &_sfheaders_rcpp_sfc_polygon, 6},
+    {"_sfheaders_rcpp_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygon, 7},
     {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 4},
     {"_sfheaders_rcpp_id_positions", (DL_FUNC) &_sfheaders_rcpp_id_positions, 2},
     {"_sfheaders_rcpp_subset_dataframe", (DL_FUNC) &_sfheaders_rcpp_subset_dataframe, 4},

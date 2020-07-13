@@ -15,6 +15,16 @@ sfc_multilinestring(
 )
 }
 \arguments{
+\item{obj}{sorted matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
 \item{multilinestring_id}{column of ids for multilinestrings}
 
 \item{linestring_id}{column of ids for linestrings (within multilinestrings)}
@@ -25,6 +35,14 @@ sfc_multilinestring(
 \description{
 constructs an sfc of MULTILINESTRING objects
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
+
+The data.frame and matrices you send into the sfheader functions must be ordered.
+}
+
 \examples{
 
 m <- matrix(c(0,0,0,0,1,1), ncol = 3 )

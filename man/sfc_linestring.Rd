@@ -2,42 +2,7 @@
 % Please edit documentation in R/sfc.R
 \name{sfc_linestring}
 \alias{sfc_linestring}
-\title{#' sfc POINT
-#'
-#' constructs sfc of POINT objects
-#'
-#' @param obj sorted vector, matrix or data.frame
-#' @param x x geometry column
-#' @param y y geometry column
-#' @param z z geometry column
-#' @param m m geometry column
-#'
-#' @section notes:
-#' sfheaders functions do not perform any validity checks on the geometries.
-#' Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
-#'
-#' The data.frame and matrices you send into the sfheader functions must be ordered.
-#'
-#' @return \code{sfc} object of POINT geometries
-#'
-#' @examples
-#'
-#' x <- c(1:3)
-#' sfc_point( x )
-#'
-#' x <- matrix( c(1:10) , ncol = 2 )
-#' sfc_point( x )
-#'
-#' x <- setNames( as.data.frame( x ), c("x","y") )
-#' sfc_point( x )
-#' sfc_point( obj = x, x = "x", y = "y" )
-#' sfc_point( obj = x, x = "y", y = "x" )
-#'
-#' @export
-sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
-geometry_columns <- c(x,y,z,m)
-rcpp_sfc_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
-}}
+\title{sfc LINESTRING}
 \usage{
 sfc_linestring(
   obj = NULL,
@@ -49,45 +14,32 @@ sfc_linestring(
 )
 }
 \arguments{
+\item{obj}{sorted matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+
 \item{linestring_id}{column of ids for linestrings}
 }
 \value{
 \code{sfc} object of LINESTRING geometries
 }
 \description{
-#' sfc MULTIPOINT
-#'
-#' constructs sfc of MULTIPOINT objects
-#'
-#' @inheritParams sfc_point
-#' @param obj sorted matrix or data.frame
-#' @inheritSection sfc_point notes
-#' @param multipoint_id column of ids for multipoints
-#'
-#' @return \code{sfc} object of MULTIPOINT geometries
-#'
-#' @examples
-#'
-#' x <- matrix( c(1:4), ncol = 2 )
-#' sfc_multipoint( x )
-#'
-#' x <- data.frame( id = 1:2, x = 1:2, y = 2:1 )
-#' sfc_multipoint( x )
-#' sfc_multipoint( x, x = "x", y = "y" )
-#' sfc_multipoint( x, x = "y", y = "x" )
-#' sfc_multipoint( x, multipoint_id = "id", x = "x", y = "y")
-#'
-#' @export
-sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipoint_id = NULL ) {
-geometry_columns <- c(x,y,z,m)
-rcpp_sfc_multipoint( obj, index_correct( geometry_columns ),  index_correct( multipoint_id ), xyzm(x,y,z,m) )
-}
-}
-\details{
-sfc LINESTRING
-
 constructs sfc of MULTIPOINT objects
 }
+\section{notes}{
+
+sfheaders functions do not perform any validity checks on the geometries.
+Nor do they set Coordinate Reference Systems, EPSG, PROJ4 or precision attributes.
+
+The data.frame and matrices you send into the sfheader functions must be ordered.
+}
+
 \examples{
 
 x <- matrix( c(1:4), ncol = 2 )
