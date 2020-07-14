@@ -1,32 +1,32 @@
-#' #' sfg point
-#' #'
-#' #' constructs sfg POINT object
-#' #'
-#' #' @param obj matrix or data.frame
-#' #' @param x x geometry column
-#' #' @param y y geometry column
-#' #' @param z z geometry column
-#' #' @param m m geometry column
-#' #'
-#' #' @return \code{sfg} object of POINT geometry
-#' #'
-#' #' @examples
-#' #'
-#' #' sfg_point( 1:2 )
-#' #' sfg_point( 1:3 )
-#' #' sfg_point( 1:4 )
-#' #'
-#' #' sfg_point( matrix( 1:3, ncol = 3 ) )
-#' #' sfg_point( data.frame( x = 1, y = 2, z = 3 )  )
-#' #'
-#' #' sfg_point( data.frame( x = 1, y = 2, z = 3 ), x = "x", y = "y" )
-#' #' sfg_point( data.frame( x = 1, y = 2, z = 3 ), x = 1, y = 3  )
-#' #'
-#' #' @export
-#' sfg_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
-#'   geometry_columns <- c(x,y,z,m)
-#'   rcpp_sfg_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
-#' }
+#' sfg point
+#'
+#' constructs sfg POINT object
+#'
+#' @param obj matrix or data.frame
+#' @param x x geometry column
+#' @param y y geometry column
+#' @param z z geometry column
+#' @param m m geometry column
+#'
+#' @return \code{sfg} object of POINT geometry
+#'
+#' @examples
+#'
+#' sfg_point( 1:2 )
+#' sfg_point( 1:3 )
+#' sfg_point( 1:4 )
+#'
+#' sfg_point( matrix( 1:3, ncol = 3 ) )
+#' sfg_point( data.frame( x = 1, y = 2, z = 3 )  )
+#'
+#' sfg_point( data.frame( x = 1, y = 2, z = 3 ), x = "x", y = "y" )
+#' sfg_point( data.frame( x = 1, y = 2, z = 3 ), x = 1, y = 3  )
+#'
+#' @export
+sfg_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfg_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
+}
 
 
 #' sfg multipoint
@@ -82,6 +82,10 @@ sfg_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #'
 #' @examples
 #'
+#' sfg_linestring( 1:2 )
+#' sfg_linestring( 1:3 )
+#' sfg_linestring( 1:4 )
+#'
 #' sfg_linestring( matrix( 1:24, ncol = 2 ) )
 #' sfg_linestring( matrix( 1:24, ncol = 3 ) )
 #' sfg_linestring( matrix( 1:24, ncol = 4 ) )
@@ -103,41 +107,41 @@ sfg_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
     )
 }
 
-#' #' sfg multilinestring
-#' #'
-#' #' constructs sfg MULTILINESTRING object
-#' #'
-#' #' @inheritParams sfg_point
-#' #' @param linestring_id column of ids for lines
-#' #'
-#' #' @return \code{sfg} object of MULTILINESTRING geometry
-#' #'
-#' #' @examples
-#' #'
-#' #' sfg_multilinestring( matrix( 1:24, ncol = 2 ) )
-#' #' sfg_multilinestring( matrix( 1:24, ncol = 3 ) )
-#' #' sfg_multilinestring( matrix( 1:24, ncol = 4 ) )
-#' #'
-#' #' ## different lines
-#' #' m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
-#' #' sfg_multilinestring( obj = m, x = 1, y = 2, linestring_id = 3 )
-#' #'
-#' #' ## just specifying linestring_id will use all others as the geometries
-#' #' sfg_multilinestring( obj = m, linestring_id = 3 )
-#' #'
-#' #' df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
-#' #' sfg_multilinestring( df, x = "x", y = "y" )
-#' #' sfg_multilinestring( df, x = "x", y = "y", linestring_id = "id" )
-#' #'
-#' #' sfg_multilinestring( df, linestring_id = "id" )
-#' #'
-#' #'
-#' #' @export
-#' sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
-#'   geometry_columns <- c(x,y,z,m)
-#'   rcpp_sfg_multilinestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), xyzm(x,y,z,m) )
-#' }
+#' sfg multilinestring
 #'
+#' constructs sfg MULTILINESTRING object
+#'
+#' @inheritParams sfg_point
+#' @param linestring_id column of ids for lines
+#'
+#' @return \code{sfg} object of MULTILINESTRING geometry
+#'
+#' @examples
+#'
+#' sfg_multilinestring( matrix( 1:24, ncol = 2 ) )
+#' sfg_multilinestring( matrix( 1:24, ncol = 3 ) )
+#' sfg_multilinestring( matrix( 1:24, ncol = 4 ) )
+#'
+#' ## different lines
+#' m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+#' sfg_multilinestring( obj = m, x = 1, y = 2, linestring_id = 3 )
+#'
+#' ## just specifying linestring_id will use all others as the geometries
+#' sfg_multilinestring( obj = m, linestring_id = 3 )
+#'
+#' df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
+#' sfg_multilinestring( df, x = "x", y = "y" )
+#' sfg_multilinestring( df, x = "x", y = "y", linestring_id = "id" )
+#'
+#' sfg_multilinestring( df, linestring_id = "id" )
+#'
+#'
+#' @export
+sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfg_multilinestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), xyzm(x,y,z,m) )
+}
+
 #'
 #' #' sfg polygon
 #' #'

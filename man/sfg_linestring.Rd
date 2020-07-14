@@ -6,6 +6,17 @@
 \usage{
 sfg_linestring(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 }
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
+}
 \value{
 \code{sfg} object of LINESTRING geometry
 }
@@ -13,6 +24,10 @@ sfg_linestring(obj, x = NULL, y = NULL, z = NULL, m = NULL)
 constructs sfg LINESTRING object
 }
 \examples{
+
+sfg_linestring( 1:2 )
+sfg_linestring( 1:3 )
+sfg_linestring( 1:4 )
 
 sfg_linestring( matrix( 1:24, ncol = 2 ) )
 sfg_linestring( matrix( 1:24, ncol = 3 ) )

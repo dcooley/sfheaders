@@ -5,11 +5,29 @@
 #include "sfheaders/utils/utils.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 
-//#include "geometries/shapes/vec/to_vec.hpp"
-#include "geometries/utils/utils.hpp"
+#include "geometries/utils/columns/columns.hpp"
+#include "geometries/geometries.hpp"
+#include "geometries/nest/nest.hpp"
 
 namespace sfheaders {
 namespace sfg {
+
+  inline SEXP sfg_point(
+      SEXP& x,
+      SEXP& geometry_cols,
+      std::string xyzm
+  ) {
+
+    SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+    R_xlen_t n_row = geometries::utils::sexp_n_row( x );
+    if( n_row > 1 ) {
+      Rcpp::stop("sfheaders - points can only be one row");
+    }
+    R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
+    xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
+    sfheaders::sfg::make_sfg( geometry_mat, sfheaders::sfg::SFG_POINT, xyzm );
+    return geometry_mat;
+  }
 
   // inline SEXP sfg_point( Rcpp::IntegerVector& iv, std::string xyzm ) {
   //   sfheaders::sfg::make_sfg( iv, sfheaders::sfg::SFG_POINT, xyzm );

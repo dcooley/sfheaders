@@ -20,8 +20,9 @@ namespace sfg {
       std::string xyzm
   ) {
 
-    Rcpp::NumericMatrix geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
-    xyzm = sfheaders::utils::validate_xyzm( xyzm, geometry_mat.ncol() );
+    SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+    R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
+    xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
     sfheaders::sfg::make_sfg( geometry_mat, sfheaders::sfg::SFG_MULTIPOINT, xyzm );
     return geometry_mat;
   }

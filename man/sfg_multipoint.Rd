@@ -2,38 +2,20 @@
 % Please edit documentation in R/sfg.R
 \name{sfg_multipoint}
 \alias{sfg_multipoint}
-\title{#' sfg point
-#'
-#' constructs sfg POINT object
-#'
-#' @param obj matrix or data.frame
-#' @param x x geometry column
-#' @param y y geometry column
-#' @param z z geometry column
-#' @param m m geometry column
-#'
-#' @return \code{sfg} object of POINT geometry
-#'
-#' @examples
-#'
-#' sfg_point( 1:2 )
-#' sfg_point( 1:3 )
-#' sfg_point( 1:4 )
-#'
-#' sfg_point( matrix( 1:3, ncol = 3 ) )
-#' sfg_point( data.frame( x = 1, y = 2, z = 3 )  )
-#'
-#' sfg_point( data.frame( x = 1, y = 2, z = 3 ), x = "x", y = "y" )
-#' sfg_point( data.frame( x = 1, y = 2, z = 3 ), x = 1, y = 3  )
-#'
-#' @export
-sfg_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
-geometry_columns <- c(x,y,z,m)
-rcpp_sfg_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
-}
-sfg multipoint}
+\title{sfg multipoint}
 \usage{
 sfg_multipoint(obj, x = NULL, y = NULL, z = NULL, m = NULL)
+}
+\arguments{
+\item{obj}{matrix or data.frame}
+
+\item{x}{x geometry column}
+
+\item{y}{y geometry column}
+
+\item{z}{z geometry column}
+
+\item{m}{m geometry column}
 }
 \value{
 \code{sfg} object of MULTIPOINT geometry

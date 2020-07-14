@@ -97,12 +97,20 @@ rcpp_sfc_multipolygons <- function(lst, close, xyzm) {
     .Call(`_sfheaders_rcpp_sfc_multipolygons`, lst, close, xyzm)
 }
 
+rcpp_sfg_point <- function(x, geometry_columns, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_point`, x, geometry_columns, xyzm)
+}
+
 rcpp_sfg_multipoint <- function(x, geometry_columns, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_multipoint`, x, geometry_columns, xyzm)
 }
 
 rcpp_sfg_linestring <- function(x, geometry_columns, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_linestring`, x, geometry_columns, xyzm)
+}
+
+rcpp_sfg_multilinestring <- function(x, geometry_columns, line_id, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_multilinestring`, x, geometry_columns, line_id, xyzm)
 }
 
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {

@@ -2,14 +2,78 @@
 #define R_SFHEADERS_SFG_MULTILINESTRING_H
 
 #include <Rcpp.h>
-#include "geometries/utils/utils.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
+#include "sfheaders/utils/utils.hpp"
 
-//#include "geometries/shapes/mat/to_mat.hpp"
-//#include "geometries/shapes/list_mat/to_list_mat.hpp"
+#include "geometries/utils/utils.hpp"
+#include "geometries/geometries.hpp"
 
 namespace sfheaders {
 namespace sfg {
+
+inline SEXP sfg_multilinestring(
+    SEXP& x,
+    SEXP& geometry_cols,
+    SEXP& linestring_id,
+    std::string xyzm
+) {
+
+  // needs to go through the make_geoemtries()
+  // but attributes are assigned at the end
+
+  if( Rf_isNull( geometry_cols ) ) {
+    // make this all the other columns, then send back in
+    SEXP geometry_cols2 = geometries::utils::other_columns( x, linestring_id );
+    return sfg_multilinestring( x, geometry_cols2, linestring_id, xyzm );
+  }
+
+  int n_id_cols = 1;
+  R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
+
+  // After subset_geometries we have moved the geometry columns
+  // into the 0:(n_geometry-1) positions
+  Rcpp::IntegerVector int_geometry_cols = Rcpp::seq( 0, ( col_counter - 1 ) );
+
+  xyzm = sfheaders::utils::validate_xyzm( xyzm, col_counter );
+
+  R_xlen_t required_cols = col_counter + n_id_cols;
+
+  Rcpp::IntegerVector geometry_cols_int = geometries::utils::sexp_col_int( x, geometry_cols );
+
+  Rcpp::List lst = geometries::utils::as_list( x );
+  Rcpp::List res( required_cols );
+
+  sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
+
+  Rcpp::IntegerVector int_linestring_id(1);
+
+  sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
+
+  Rcpp::List attributes = Rcpp::List::create();
+  Rcpp::List sfg = geometries::make_geometries( res, int_linestring_id, int_geometry_cols, attributes );
+
+
+  Rcpp::StringVector class_attribute = { xyzm.c_str(), "MULTILINESTRING","sfg" };
+  Rcpp::List atts = Rcpp::List::create(
+    Rcpp::_["class"] = class_attribute
+  );
+  geometries::utils::attach_attributes( sfg, atts );
+
+  return sfg;
+
+  //sfheaders::sfg::make_sfg( sfg, sfheaders::sfg::SFG_LINESTRING, xyzm );
+
+  //return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+
+  // SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+  // R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
+  // xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
+  // sfheaders::sfg::make_sfg( geometry_mat, n_col, sfheaders::sfg::SFG_LINESTRING, xyzm );
+  // return geometry_mat;
+
+  return Rcpp::List::create();
+
+}
 
   // // multilinestring is a list of linestrings (matrices)
   // // but can also be a single matrix

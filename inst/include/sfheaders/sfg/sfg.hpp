@@ -1,10 +1,10 @@
 #ifndef R_SFHEADERS_SFG_H
 #define R_SFHEADERS_SFG_H
 
-// #include "sfheaders/sfg/point/sfg_point.hpp"
+#include "sfheaders/sfg/point/sfg_point.hpp"
 #include "sfheaders/sfg/multipoint/sfg_multipoint.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
-// #include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
+#include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
 // #include "sfheaders/sfg/polygon/sfg_polygon.hpp"
 // #include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
 //

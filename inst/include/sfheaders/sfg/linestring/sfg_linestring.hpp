@@ -13,19 +13,15 @@
 namespace sfheaders {
 namespace sfg {
 
-  // SFG is a single geometry
-  // for ones with id columns
-  // it needs to go through the RLEID code
-  // otherwise it just needs nesting
-
   inline SEXP sfg_linestring(
     SEXP& x,
     SEXP& geometry_cols,
     std::string xyzm
   ) {
-    Rcpp::NumericMatrix geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
-    xyzm = sfheaders::utils::validate_xyzm( xyzm, geometry_mat.ncol() );
-    sfheaders::sfg::make_sfg( geometry_mat, sfheaders::sfg::SFG_LINESTRING, xyzm );
+    SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+    R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
+    xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
+    sfheaders::sfg::make_sfg( geometry_mat, n_col, sfheaders::sfg::SFG_LINESTRING, xyzm );
     return geometry_mat;
   }
 
