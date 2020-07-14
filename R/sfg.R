@@ -142,99 +142,112 @@ sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, li
   rcpp_sfg_multilinestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), xyzm(x,y,z,m) )
 }
 
+
+#' sfg polygon
 #'
-#' #' sfg polygon
-#' #'
-#' #' constructs sfg POLYGON object
-#' #'
-#' #' @inheritParams sfg_linestring
-#' #' @param linestring_id column of ids for lines (within polygons)
-#' #' @param close logical indicating whether polygons should be closed. If \code{TRUE},
-#' #' all polygons will be checked and force closed if possible
-#' #' @return \code{sfg} object of POLYGON geometry
-#' #'
-#' #' @examples
-#' #'
-#' #' sfg_polygon( matrix( 1:24, ncol = 2 ) )
-#' #' sfg_polygon( matrix( 1:24, ncol = 3 ) )
-#' #' sfg_polygon( matrix( 1:24, ncol = 4 ) )
-#' #'
-#' #' ## different lines
-#' #' m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
-#' #' sfg_polygon( obj = m, x = 1, y = 2, linestring_id = 3 )
-#' #'
-#' #' ## just specifying linestring_id will use all others as the geometries
-#' #' sfg_polygon( obj = m, linestring_id = 3 )
-#' #'
-#' #' df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
-#' #' sfg_polygon( df, x = "x", y = "y" )
-#' #' sfg_polygon( df, x = "x", y = "y", linestring_id = "id" )
-#' #'
-#' #' sfg_polygon( df, linestring_id = "id" )
-#' #'
-#' #'
-#' #' @export
-#' sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL, close = TRUE ) {
-#'   geometry_columns <- c(x,y,z,m)
-#'   rcpp_sfg_polygon( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), close, xyzm(x,y,z,m) )
-#' }
+#' constructs sfg POLYGON object
+#'
+#' @inheritParams sfg_linestring
+#' @param linestring_id column of ids for lines (within polygons)
+#' @param close logical indicating whether polygons should be closed. If \code{TRUE},
+#' all polygons will be checked and force closed if possible
+#' @return \code{sfg} object of POLYGON geometry
+#'
+#' @examples
+#'
+#' sfg_polygon( matrix( 1:24, ncol = 2 ) )
+#' sfg_polygon( matrix( 1:24, ncol = 3 ) )
+#' sfg_polygon( matrix( 1:24, ncol = 4 ) )
+#'
+#' ## different lines
+#' m <- cbind( matrix( 1:24, ncol = 2 ), c(rep(1, 6), rep(2, 6) ) )
+#' sfg_polygon( obj = m, x = 1, y = 2, linestring_id = 3 )
+#'
+#' ## just specifying linestring_id will use all others as the geometries
+#' sfg_polygon( obj = m, linestring_id = 3 )
+#'
+#' df <- data.frame( x = 1:12, y = 1:12, z = 13:24, id = c(rep(1,6), rep(2,6)))
+#' sfg_polygon( df, x = "x", y = "y" )
+#' sfg_polygon( df, x = "x", y = "y", linestring_id = "id" )
+#'
+#' sfg_polygon( df, linestring_id = "id" )
 #'
 #'
-#' #' sfg multipolygon
-#' #'
-#' #' constructs sfg MULTIPOLYGON object
-#' #'
-#' #' @inheritParams sfg_polygon
-#' #' @param polygon_id column of ids for polygons (within the multipolygon)
-#' #'
-#' #' @return \code{sfg} object of MULTIPOLYGON geometry
-#' #'
-#' #' @examples
-#' #'
-#' #' df <- data.frame(
-#' #'   polygon_id = c(rep(1, 5), rep(2, 10))
-#' #'   , line_id = c(rep(1, 10), rep(2, 5))
-#' #'   , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
-#' #'   , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
-#' #'   , z = c(1)
-#' #'   , m = c(1)
-#' #' )
-#' #'
-#' #' m <- as.matrix( df )
-#' #'
-#' #' sfg_multipolygon( df[, c("x","y") ] )
-#' #'
-#' #' sfg_multipolygon(
-#' #'   df, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
-#' #'   )
-#' #' sfg_multipolygon(
-#' #'   df, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id"
-#' #'   )
-#' #' sfg_multipolygon(
-#' #'   df, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", linestring_id = "line_id"
-#' #'   )
-#' #'
-#' #'
-#' #' sfg_multipolygon( m[, c("x","y") ] )
-#' #'
-#' #' sfg_multipolygon(
-#' #'   m, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
-#' #'   )
-#' #' sfg_multipolygon(
-#' #'   m, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id"
-#' #'   )
-#' #' sfg_multipolygon(
-#' #'   m, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", linestring_id = "line_id"
-#' #'   )
-#' #'
-#' #' @export
-#' sfg_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
-#'   geometry_columns <- c(x,y,z,m)
-#'   rcpp_sfg_multipolygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close, xyzm(x,y,z,m) )
-#' }
+#' @export
+sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL, close = TRUE ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfg_polygon(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( linestring_id )
+    , close
+    , xyzm(x,y,z,m)
+    )
+}
+
+
+#' sfg multipolygon
+#'
+#' constructs sfg MULTIPOLYGON object
+#'
+#' @inheritParams sfg_polygon
+#' @param polygon_id column of ids for polygons (within the multipolygon)
+#'
+#' @return \code{sfg} object of MULTIPOLYGON geometry
+#'
+#' @examples
+#'
+#' df <- data.frame(
+#'   polygon_id = c(rep(1, 5), rep(2, 10))
+#'   , line_id = c(rep(1, 10), rep(2, 5))
+#'   , x = c(0,0,1,1,0,2,2,5,5,2,3,3,4,4,3)
+#'   , y = c(0,1,1,0,0,2,5,5,2,2,3,4,4,3,3)
+#'   , z = c(1)
+#'   , m = c(1)
+#' )
+#'
+#' m <- as.matrix( df )
+#'
+#' sfg_multipolygon( df[, c("x","y") ] )
+#'
+#' sfg_multipolygon(
+#'   df, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
+#'   )
+#' sfg_multipolygon(
+#'   df, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id"
+#'   )
+#' sfg_multipolygon(
+#'   df, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", linestring_id = "line_id"
+#'   )
 #'
 #'
+#' sfg_multipolygon( m[, c("x","y") ] )
 #'
+#' sfg_multipolygon(
+#'   m, x = "x", y = "y", polygon_id = "polygon_id", linestring_id = "line_id"
+#'   )
+#' sfg_multipolygon(
+#'   m, x = "x", y = "y", z = "z", polygon_id = "polygon_id", linestring_id = "line_id"
+#'   )
+#' sfg_multipolygon(
+#'   m, x = "x", y = "y", z = "z", m = "m", polygon_id = "polygon_id", linestring_id = "line_id"
+#'   )
 #'
-#'
-#'
+#' @export
+sfg_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
+  geometry_columns <- c(x,y,z,m)
+  rcpp_sfg_multipolygon(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( polygon_id )
+    , index_correct( linestring_id )
+    , close
+    , xyzm(x,y,z,m)
+    )
+}
+
+
+
+
+
+

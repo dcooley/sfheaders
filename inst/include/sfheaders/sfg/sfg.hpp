@@ -5,15 +5,15 @@
 #include "sfheaders/sfg/multipoint/sfg_multipoint.hpp"
 #include "sfheaders/sfg/linestring/sfg_linestring.hpp"
 #include "sfheaders/sfg/multilinestring/sfg_multilinestring.hpp"
-// #include "sfheaders/sfg/polygon/sfg_polygon.hpp"
-// #include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
-//
-// #include "sfheaders/sfg/point/sfg_points.hpp"
-// #include "sfheaders/sfg/multipoint/sfg_multipoints.hpp"
-// #include "sfheaders/sfg/linestring/sfg_linestrings.hpp"
-// #include "sfheaders/sfg/multilinestring/sfg_multilinestrings.hpp"
-// #include "sfheaders/sfg/polygon/sfg_polygons.hpp"
-// #include "sfheaders/sfg/multipolygon/sfg_multipolygons.hpp"
+#include "sfheaders/sfg/polygon/sfg_polygon.hpp"
+#include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
+
+#include "sfheaders/sfg/point/sfg_points.hpp"
+#include "sfheaders/sfg/multipoint/sfg_multipoints.hpp"
+#include "sfheaders/sfg/linestring/sfg_linestrings.hpp"
+#include "sfheaders/sfg/multilinestring/sfg_multilinestrings.hpp"
+#include "sfheaders/sfg/polygon/sfg_polygons.hpp"
+#include "sfheaders/sfg/multipolygon/sfg_multipolygons.hpp"
 
 #include "sfheaders/sfg/sfg_types.hpp"
 
