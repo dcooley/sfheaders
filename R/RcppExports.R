@@ -113,6 +113,14 @@ rcpp_sfg_multilinestring <- function(x, geometry_columns, line_id, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_multilinestring`, x, geometry_columns, line_id, xyzm)
 }
 
+rcpp_sfg_polygon <- function(x, geometry_columns, line_id, close, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_polygon`, x, geometry_columns, line_id, close, xyzm)
+}
+
+rcpp_sfg_multipolygon <- function(x, geometry_columns, polygon_id, line_id, close, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_multipolygon`, x, geometry_columns, polygon_id, line_id, close, xyzm)
+}
+
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
     .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2, id_col3)
 }

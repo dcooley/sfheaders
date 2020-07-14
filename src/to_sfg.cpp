@@ -46,22 +46,22 @@ SEXP rcpp_sfg_multilinestring( SEXP x, SEXP geometry_columns, SEXP line_id, std:
 // Rcpp::List rcpp_sfg_multilinestrings( Rcpp::List& lst, std::string xyzm ) {
 //   return sfheaders::sfg::sfg_multilinestrings( lst, xyzm );
 // }
-//
-// // [[Rcpp::export]]
-// SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id, bool close, std::string xyzm ) {
-//   return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id, xyzm, close );
-// }
-//
+
+// [[Rcpp::export]]
+SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id, bool close, std::string xyzm ) {
+  return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id, xyzm, close );
+}
+
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_sfg_polygons( Rcpp::List& lst, bool close, std::string xyzm ) {
 //   return sfheaders::sfg::sfg_polygons( lst, xyzm, close );
 // }
-//
-// // [[Rcpp::export]]
-// SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close, std::string xyzm ) {
-//   return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, polygon_id, line_id, xyzm, close );
-// }
-//
+
+// [[Rcpp::export]]
+SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close, std::string xyzm ) {
+  return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, polygon_id, line_id, xyzm, close );
+}
+
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst, bool close, std::string xyzm ) {
 //   return sfheaders::sfg::sfg_multipolygons( lst, xyzm, close );
