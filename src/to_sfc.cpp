@@ -91,21 +91,21 @@ SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
 //   sfheaders::sfc::attach_sfc_attributes( res, attributes );
 //   return res;
 // }
-//
-//
+
+
 // // [[Rcpp::export]]
 // Rcpp::List rcpp_get_sfc_attributes( Rcpp::List sfc ) {
 //   return sfheaders::sfc::get_sfc_attributes( sfc );
 // }
-//
+
 // // [[Rcpp::export]]
 // SEXP rcpp_sfg_boxes( SEXP sfg ) {
 //   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
 //   geometries::bbox::calculate_bbox( bbox, sfg );
 //   return sfheaders::sfg::sfg_box( bbox );
 // }
-//
-//
+
+
 // // [[Rcpp::export]]
 // SEXP rcpp_sfc_boxes( Rcpp::List sfc ) {
 //   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();

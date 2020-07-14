@@ -71,7 +71,6 @@ namespace sfg {
   ) {
     SEXP geometry_cols = R_NilValue;
     SEXP id_cols = R_NilValue;
-
     return sfg_polygon( sfg_poly, geometry_cols, id_cols, xyzm, close );
   }
 
@@ -80,41 +79,45 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-    //Rcpp::List res(1);
-    //res[0] = sfg_poly[0];
     SEXP res = sfg_poly[0];
     return sfg_polygon( res, xyzm, close );
   }
 
 
-//   // sfg_box will convert a bounding-box 4-value vector into a polygon
-//   template< int RTYPE >
-//   inline SEXP sfg_box( Rcpp::Vector< RTYPE > x ) {
-//     if ( x.length() != 4 ) {
-//       Rcpp::stop("sfheaders - box requires a 4-value vector");
-//     }
-//
-//     Rcpp::Matrix< RTYPE > mat( 5, 2 );
-//     Rcpp::IntegerVector bl = {0,1};
-//     Rcpp::IntegerVector br = {2,1};
-//     Rcpp::IntegerVector tr = {2,3};
-//     Rcpp::IntegerVector tl = {0,3};
-//
-//     Rcpp::Vector< RTYPE > blv = x[ bl ];
-//     Rcpp::Vector< RTYPE > brv = x[ br ];
-//     Rcpp::Vector< RTYPE > trv = x[ tr ];
-//     Rcpp::Vector< RTYPE > tlv = x[ tl ];
-//
-//     mat( 0, Rcpp::_ ) = blv;
-//     mat( 1, Rcpp::_ ) = brv;
-//     mat( 2, Rcpp::_ ) = trv;
-//     mat( 3, Rcpp::_ ) = tlv;
-//     mat( 4, Rcpp::_ ) = blv;
-//
-//     std::string xyzm = "XY";
-//     bool close = false;
-//     return sfg_polygon( mat, xyzm, close );
-//   }
+  // sfg_box will convert a bounding-box 4-value vector into a polygon
+  template< int RTYPE >
+  inline SEXP sfg_box( Rcpp::Vector< RTYPE > x ) {
+    if ( x.length() != 4 ) {
+      Rcpp::stop("sfheaders - box requires a 4-value vector");
+    }
+
+    Rcpp::Matrix< RTYPE > mat( 5, 2 );
+    Rcpp::IntegerVector bl = {0,1};
+    Rcpp::IntegerVector br = {2,1};
+    Rcpp::IntegerVector tr = {2,3};
+    Rcpp::IntegerVector tl = {0,3};
+
+    Rcpp::Vector< RTYPE > blv = x[ bl ];
+    Rcpp::Vector< RTYPE > brv = x[ br ];
+    Rcpp::Vector< RTYPE > trv = x[ tr ];
+    Rcpp::Vector< RTYPE > tlv = x[ tl ];
+
+    mat( 0, Rcpp::_ ) = blv;
+    mat( 1, Rcpp::_ ) = brv;
+    mat( 2, Rcpp::_ ) = trv;
+    mat( 3, Rcpp::_ ) = tlv;
+    mat( 4, Rcpp::_ ) = blv;
+
+    std::string xyzm = "XY";
+
+    Rcpp::StringVector class_attribute = { "XY", "POLYGON","sfg" };
+    Rcpp::List atts = Rcpp::List::create(
+      Rcpp::_["class"] = class_attribute
+    );
+
+    geometries::utils::attach_attributes( mat, atts );
+    return mat;
+  }
 
 } // sfg
 } // sfheaders

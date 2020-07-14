@@ -70,26 +70,43 @@ namespace sfg {
 
   }
 
-//
-//   // only keep the outer-linestring / ring / matrix
-//   inline SEXP remove_multipolygon_holes(
-//       Rcpp::List& sfg_mp,
-//       std::string xyzm,
-//       bool close = true
-//   ) {
-//     // loop over and only keep the first line
-//     R_xlen_t i;
-//     R_xlen_t n = sfg_mp.size();
-//     Rcpp::List res( n );
-//     for( i = 0; i < n; ++i ) {
-//       Rcpp::List poly = sfg_mp[ i ];
-//       Rcpp::List new_poly(1);
-//       new_poly[ 0 ] = poly[ 0 ];
-//       res[ i ] = new_poly;
-//     }
-//     return sfg_multipolygon( res, xyzm, close);
-//
-//   }
+  inline SEXP sfg_multipolygon(
+    SEXP& sfg,
+    std::string xyzm,
+    bool close = true
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP polygon_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    return sfg_multipolygon( sfg, geometry_cols, polygon_id, linestring_id, xyzm, close );
+  }
+
+  // only keep the outer-linestring / ring / matrix
+  inline SEXP remove_multipolygon_holes(
+      Rcpp::List& sfg_mp,
+      std::string xyzm,
+      bool close = true
+  ) {
+    // loop over and only keep the first line
+    R_xlen_t i;
+    R_xlen_t n = sfg_mp.size();
+    Rcpp::List res( n );
+    for( i = 0; i < n; ++i ) {
+      Rcpp::List poly = sfg_mp[ i ];
+      Rcpp::List new_poly(1);
+      new_poly[ 0 ] = poly[ 0 ];
+      res[ i ] = new_poly;
+    }
+
+    Rcpp::StringVector class_attribute = { xyzm.c_str(), "MULTIPOLYGON","sfg" };
+    Rcpp::List atts = Rcpp::List::create(
+      Rcpp::_["class"] = class_attribute
+    );
+    geometries::utils::attach_attributes( res, atts );
+    return res;
+    //return sfg_multipolygon( res, xyzm, close);
+
+  }
 
 } // sfg
 } // sfheaders

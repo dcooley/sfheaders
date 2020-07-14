@@ -7,25 +7,31 @@
 namespace sfheaders {
 namespace sfg {
 
-  // inline Rcpp::List sfg_points( Rcpp::List& lst, std::string xyzm ) {
-  //   R_xlen_t n = lst.size();
-  //   R_xlen_t i;
-  //   Rcpp::List sfcs( n );
-  //
-  //   for( i = 0; i < n; ++i ) {
-  //     SEXP x = lst[ i ];
-  //     sfcs[ i ] = sfheaders::sfg::sfg_point( x, xyzm );
-  //   }
-  //   return sfcs;
-  // }
-  //
+  inline Rcpp::List sfg_points( Rcpp::List& lst, std::string xyzm ) {
+    R_xlen_t n = lst.size();
+    R_xlen_t i;
+    Rcpp::List sfcs( n );
+
+    SEXP geometry_cols = R_NilValue;
+
+    for( i = 0; i < n; ++i ) {
+      SEXP x = lst[ i ];
+      sfcs[ i ] = sfheaders::sfg::sfg_point( x, geometry_cols, xyzm );
+    }
+    return sfcs;
+  }
+
   // inline Rcpp::List sfg_points( Rcpp::NumericMatrix& nm, std::string xyzm ) {
   //   R_xlen_t n = nm.nrow();
   //   R_xlen_t i;
   //   Rcpp::List sfcs( n );
+  //
+  //   SEXP geometry_cols = R_NilValue;
+  //
   //   for( i = 0; i < n; ++i ) {
   //     Rcpp::NumericVector nv = nm( i, Rcpp::_ );
-  //     sfcs[ i ] = sfheaders::sfg::sfg_point( nv, xyzm );
+  //
+  //     sfcs[ i ] = sfheaders::sfg::sfg_point( nv, geometry_cols, xyzm );
   //   }
   //   return sfcs;
   // }

@@ -101,24 +101,52 @@ rcpp_sfg_point <- function(x, geometry_columns, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_point`, x, geometry_columns, xyzm)
 }
 
+rcpp_sfg_points <- function(lst, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_points`, lst, xyzm)
+}
+
 rcpp_sfg_multipoint <- function(x, geometry_columns, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_multipoint`, x, geometry_columns, xyzm)
+}
+
+rcpp_sfg_multipoints <- function(lst, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_multipoints`, lst, xyzm)
 }
 
 rcpp_sfg_linestring <- function(x, geometry_columns, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_linestring`, x, geometry_columns, xyzm)
 }
 
+rcpp_sfg_linestrings <- function(lst, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_linestrings`, lst, xyzm)
+}
+
 rcpp_sfg_multilinestring <- function(x, geometry_columns, line_id, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_multilinestring`, x, geometry_columns, line_id, xyzm)
+}
+
+rcpp_sfg_multilinestrings <- function(lst, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_multilinestrings`, lst, xyzm)
 }
 
 rcpp_sfg_polygon <- function(x, geometry_columns, line_id, close, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_polygon`, x, geometry_columns, line_id, close, xyzm)
 }
 
+rcpp_sfg_polygons <- function(lst, close, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_polygons`, lst, close, xyzm)
+}
+
 rcpp_sfg_multipolygon <- function(x, geometry_columns, polygon_id, line_id, close, xyzm) {
     .Call(`_sfheaders_rcpp_sfg_multipolygon`, x, geometry_columns, polygon_id, line_id, close, xyzm)
+}
+
+rcpp_sfg_multipolygons <- function(lst, close, xyzm) {
+    .Call(`_sfheaders_rcpp_sfg_multipolygons`, lst, close, xyzm)
+}
+
+rcpp_sfg_remove_holes <- function(sfg, close) {
+    .Call(`_sfheaders_rcpp_sfg_remove_holes`, sfg, close)
 }
 
 rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
