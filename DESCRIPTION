@@ -1,8 +1,8 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2020-03-19
-Version: 0.2.1005
+Date: 2020-05-15
+Version: 0.2.2
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre")),
     person(given = "Michael", family = "Sumner", role = "ctb")
