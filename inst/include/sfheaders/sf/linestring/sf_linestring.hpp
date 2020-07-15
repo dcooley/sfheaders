@@ -42,6 +42,10 @@ namespace sf {
       Rcpp::stop("sfheaders - please specify the geometry columns x, y (z, (m)) when keep = TRUE");
     }
 
+    // TODO
+    // can I re-do this by making 'sfc'
+    // then subseting the input 'x' by the other columns taht aren't the geoemtries?
+
     //if( Rf_isNull( linestring_id ) ) {
       Rcpp::List sfc = sfheaders::sfc::sfc_linestring( x, geometry_cols, linestring_id, xyzm );
       SEXP property_columns = geometries::utils::other_columns( x, geometry_cols );
