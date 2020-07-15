@@ -465,48 +465,48 @@ calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
 }
 
 
-#' #' sf boxes
-#' #'
-#' #' returns the bounding box of each geometry
-#' #'
-#' #' @param obj sf, sfc or sfg object
-#' #'
-#' #' @examples
-#' #'
-#' #' df <- data.frame(
-#' #'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
-#' #'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
-#' #'  , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
-#' #'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
-#' #' )
-#' #'
-#' #' sf_line <- sfheaders::sf_linestring(
-#' #'   obj = df
-#' #'   , x = "x"
-#' #'   , y = "y"
-#' #'   , linestring_id = "id1"
-#' #' )
-#' #'
-#' #' sf_boxes( sf_line )
-#' #'
-#' #' @export
-#' sf_boxes <- function( obj ) calculate_boxes( obj )
+#' sf boxes
 #'
+#' returns the bounding box of each geometry
 #'
-#' calculate_boxes <- function( obj ) UseMethod("calculate_boxes")
+#' @param obj sf, sfc or sfg object
 #'
-#' #' @export
-#' calculate_boxes.sf <- function( obj ) {
-#'   geom_column <- attr( obj, "sf_column" )
-#'   obj[[geom_column]] <- rcpp_sfc_boxes( obj[[geom_column]] )
-#'   return( obj )
-#' }
+#' @examples
 #'
-#' #' @export
-#' calculate_boxes.sfc <- function( obj ) {
-#'   return( rcpp_sfc_boxes( obj ) )
-#' }
+#' df <- data.frame(
+#'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+#'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+#'  , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+#'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+#' )
 #'
-#' #' @export
-#' calculate_boxes.sfg <- function( obj ) return( rcpp_sfg_boxes( obj ) )
+#' sf_line <- sfheaders::sf_linestring(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , linestring_id = "id1"
+#' )
+#'
+#' sf_boxes( sf_line )
+#'
+#' @export
+sf_boxes <- function( obj ) calculate_boxes( obj )
+
+
+calculate_boxes <- function( obj ) UseMethod("calculate_boxes")
+
+#' @export
+calculate_boxes.sf <- function( obj ) {
+  geom_column <- attr( obj, "sf_column" )
+  obj[[geom_column]] <- rcpp_sfc_boxes( obj[[geom_column]] )
+  return( obj )
+}
+
+#' @export
+calculate_boxes.sfc <- function( obj ) {
+  return( rcpp_sfc_boxes( obj ) )
+}
+
+#' @export
+calculate_boxes.sfg <- function( obj ) return( rcpp_sfg_boxes( obj ) )
 

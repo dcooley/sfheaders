@@ -1,7 +1,7 @@
 
 
 #include <Rcpp.h>
-//#include "sfheaders/sf/sf.hpp"
+#include "sfheaders/sf/sf.hpp"
 
 // #include "sfheaders/sf/sf.hpp"
 // //#include "sfheaders/sf/point/sf_point.hpp"
@@ -21,36 +21,36 @@
 // //   return sfheaders::sf::make_sf( sfc, ids );
 // // }
 //
-// // [[Rcpp::export]]
-// SEXP rcpp_to_sf(
-//     SEXP obj,
-//     SEXP geometry_columns,
-//     SEXP multipoint_id,
-//     SEXP linestring_id,
-//     SEXP multilinestring_id,
-//     SEXP polygon_id,
-//     SEXP multipolygon_id,
-//     SEXP list_columns,
-//     bool close,
-//     bool keep,
-//     std::string xyzm,
-//     std::string sf_type
-// ) {
-//   return sfheaders::api::to_sf(
-//     obj,
-//     geometry_columns,
-//     multipoint_id,
-//     linestring_id,
-//     multilinestring_id,
-//     polygon_id,
-//     multipolygon_id,
-//     list_columns,
-//     close,
-//     keep,
-//     xyzm,
-//     sf_type
-//   );
-// }
+// [[Rcpp::export]]
+SEXP rcpp_to_sf(
+    SEXP obj,
+    SEXP geometry_columns,
+    SEXP multipoint_id,
+    SEXP linestring_id,
+    SEXP multilinestring_id,
+    SEXP polygon_id,
+    SEXP multipolygon_id,
+    SEXP list_columns,
+    bool close,
+    bool keep,
+    std::string xyzm,
+    std::string sf_type
+) {
+  return sfheaders::api::to_sf(
+    obj,
+    geometry_columns,
+    multipoint_id,
+    linestring_id,
+    multilinestring_id,
+    polygon_id,
+    multipolygon_id,
+    list_columns,
+    close,
+    keep,
+    xyzm,
+    sf_type
+  );
+}
 //
 //
 // // [[Rcpp::export]]

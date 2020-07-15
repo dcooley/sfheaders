@@ -2,12 +2,12 @@
 #define R_SFHEADERS_SF_H
 
 #include <Rcpp.h>
-#include "sfheaders/sf/point/sf_point.hpp"
-#include "sfheaders/sf/multipoint/sf_multipoint.hpp"
+//#include "sfheaders/sf/point/sf_point.hpp"
+//#include "sfheaders/sf/multipoint/sf_multipoint.hpp"
 #include "sfheaders/sf/linestring/sf_linestring.hpp"
-#include "sfheaders/sf/multilinestring/sf_multilinestring.hpp"
-#include "sfheaders/sf/polygon/sf_polygon.hpp"
-#include "sfheaders/sf/multipolygon/sf_multipolygon.hpp"
+//#include "sfheaders/sf/multilinestring/sf_multilinestring.hpp"
+//#include "sfheaders/sf/polygon/sf_polygon.hpp"
+//#include "sfheaders/sf/multipolygon/sf_multipolygon.hpp"
 
 namespace sfheaders {
 namespace api {
@@ -71,17 +71,17 @@ namespace api {
 
 
     if( sf_type == "POINT" ) {
-      sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep, xyzm );
-    } else if ( sf_type == "MULTIPOINT" ) {
-      sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep, xyzm );
+    //   sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep, xyzm );
+    // } else if ( sf_type == "MULTIPOINT" ) {
+    //   sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep, xyzm );
     } else if ( sf_type == "LINESTRING" ) {
       sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, keep, xyzm );
-    } else if ( sf_type == "MULTILINESTRING" ) {
-      sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep, xyzm );
-    } else if ( sf_type == "POLYGON" ) {
-      sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, xyzm, close, keep );
-    } else if ( sf_type == "MULTIPOLYGON" ) {
-      sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, xyzm, close, keep );
+    // } else if ( sf_type == "MULTILINESTRING" ) {
+    //   sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep, xyzm );
+    // } else if ( sf_type == "POLYGON" ) {
+    //   sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, xyzm, close, keep );
+    // } else if ( sf_type == "MULTIPOLYGON" ) {
+    //   sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, xyzm, close, keep );
     } else {
       Rcpp::stop("sfheaders - unknown sf type");
     }

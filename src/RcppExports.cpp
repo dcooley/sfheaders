@@ -144,6 +144,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_to_sf
+SEXP rcpp_to_sf(SEXP obj, SEXP geometry_columns, SEXP multipoint_id, SEXP linestring_id, SEXP multilinestring_id, SEXP polygon_id, SEXP multipolygon_id, SEXP list_columns, bool close, bool keep, std::string xyzm, std::string sf_type);
+RcppExport SEXP _sfheaders_rcpp_to_sf(SEXP objSEXP, SEXP geometry_columnsSEXP, SEXP multipoint_idSEXP, SEXP linestring_idSEXP, SEXP multilinestring_idSEXP, SEXP polygon_idSEXP, SEXP multipolygon_idSEXP, SEXP list_columnsSEXP, SEXP closeSEXP, SEXP keepSEXP, SEXP xyzmSEXP, SEXP sf_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type obj(objSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type geometry_columns(geometry_columnsSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multipoint_id(multipoint_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type linestring_id(linestring_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multilinestring_id(multilinestring_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type polygon_id(polygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type multipolygon_id(multipolygon_idSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type list_columns(list_columnsSEXP);
+    Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
+    Rcpp::traits::input_parameter< bool >::type keep(keepSEXP);
+    Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
+    Rcpp::traits::input_parameter< std::string >::type sf_type(sf_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_to_sf(obj, geometry_columns, multipoint_id, linestring_id, multilinestring_id, polygon_id, multipolygon_id, list_columns, close, keep, xyzm, sf_type));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_sfc_point
 SEXP rcpp_sfc_point(SEXP x, SEXP cols, std::string xyzm);
 RcppExport SEXP _sfheaders_rcpp_sfc_point(SEXP xSEXP, SEXP colsSEXP, SEXP xyzmSEXP) {
@@ -304,6 +326,28 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
     Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_sfc_multipolygons(lst, close, xyzm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfg_boxes
+SEXP rcpp_sfg_boxes(SEXP sfg);
+RcppExport SEXP _sfheaders_rcpp_sfg_boxes(SEXP sfgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type sfg(sfgSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfg_boxes(sfg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sfc_boxes
+SEXP rcpp_sfc_boxes(Rcpp::List sfc);
+RcppExport SEXP _sfheaders_rcpp_sfc_boxes(SEXP sfcSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_boxes(sfc));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -579,6 +623,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_to_df", (DL_FUNC) &_sfheaders_rcpp_sfc_to_df, 1},
     {"_sfheaders_rcpp_sf_to_df", (DL_FUNC) &_sfheaders_rcpp_sf_to_df, 2},
     {"_sfheaders_rcpp_sf_to_df_unlist", (DL_FUNC) &_sfheaders_rcpp_sf_to_df_unlist, 3},
+    {"_sfheaders_rcpp_to_sf", (DL_FUNC) &_sfheaders_rcpp_to_sf, 12},
     {"_sfheaders_rcpp_sfc_point", (DL_FUNC) &_sfheaders_rcpp_sfc_point, 3},
     {"_sfheaders_rcpp_sfc_points", (DL_FUNC) &_sfheaders_rcpp_sfc_points, 2},
     {"_sfheaders_rcpp_sfc_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfc_multipoint, 4},
@@ -591,6 +636,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfc_polygons", (DL_FUNC) &_sfheaders_rcpp_sfc_polygons, 3},
     {"_sfheaders_rcpp_sfc_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygon, 7},
     {"_sfheaders_rcpp_sfc_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfc_multipolygons, 3},
+    {"_sfheaders_rcpp_sfg_boxes", (DL_FUNC) &_sfheaders_rcpp_sfg_boxes, 1},
+    {"_sfheaders_rcpp_sfc_boxes", (DL_FUNC) &_sfheaders_rcpp_sfc_boxes, 1},
     {"_sfheaders_rcpp_sfg_point", (DL_FUNC) &_sfheaders_rcpp_sfg_point, 3},
     {"_sfheaders_rcpp_sfg_points", (DL_FUNC) &_sfheaders_rcpp_sfg_points, 2},
     {"_sfheaders_rcpp_sfg_multipoint", (DL_FUNC) &_sfheaders_rcpp_sfg_multipoint, 3},

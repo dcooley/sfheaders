@@ -2,6 +2,8 @@
 #include "geometries/bbox/bbox.hpp"
 #include "sfheaders/sfc/sfc.hpp"
 
+#include "sfheaders/sfg/polygon/sfg_polygon.hpp"
+
 // [[Rcpp::export]]
 SEXP rcpp_sfc_point( SEXP x, SEXP cols, std::string xyzm ) {
   return sfheaders::sfc::sfc_point( x, cols, xyzm );
@@ -98,31 +100,31 @@ SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
 //   return sfheaders::sfc::get_sfc_attributes( sfc );
 // }
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfg_boxes( SEXP sfg ) {
-//   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-//   geometries::bbox::calculate_bbox( bbox, sfg );
-//   return sfheaders::sfg::sfg_box( bbox );
-// }
+// [[Rcpp::export]]
+SEXP rcpp_sfg_boxes( SEXP sfg ) {
+  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  geometries::bbox::calculate_bbox( bbox, sfg );
+  return sfheaders::sfg::sfg_box( bbox );
+}
 
 
-// // [[Rcpp::export]]
-// SEXP rcpp_sfc_boxes( Rcpp::List sfc ) {
-//   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-//   Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
-//   Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
-//   R_xlen_t n = sfc.length();
-//   R_xlen_t i;
-//   Rcpp::List res( n );
-//   for( i = 0; i < n; ++i ) {
-//     SEXP sfg = sfc[ i ];
-//     Rcpp::NumericVector box = sfheaders::bbox::start_bbox();
-//     geometries::bbox::calculate_bbox( box, sfg );
-//     Rcpp::List p = sfheaders::sfg::sfg_box( box );
-//     geometries::bbox::calculate_bbox( bbox, sfg );
-//     res[ i ] = p;
-//   }
-//
-//   sfheaders::sfc::make_sfc( res, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
-//   return res;
-// }
+// [[Rcpp::export]]
+SEXP rcpp_sfc_boxes( Rcpp::List sfc ) {
+  Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+  R_xlen_t n = sfc.length();
+  R_xlen_t i;
+  Rcpp::List res( n );
+  for( i = 0; i < n; ++i ) {
+    SEXP sfg = sfc[ i ];
+    Rcpp::NumericVector box = sfheaders::bbox::start_bbox();
+    geometries::bbox::calculate_bbox( box, sfg );
+    Rcpp::List p = sfheaders::sfg::sfg_box( box );
+    geometries::bbox::calculate_bbox( bbox, sfg );
+    res[ i ] = p;
+  }
+
+  sfheaders::sfc::make_sfc( res, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
+  return res;
+}
