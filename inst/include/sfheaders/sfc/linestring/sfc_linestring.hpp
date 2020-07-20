@@ -59,7 +59,6 @@ namespace sfc {
     sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
     Rcpp::IntegerVector int_linestring_id(1);
-
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
 
     Rcpp::List sfc = geometries::make_geometries( res, int_linestring_id, int_geometry_cols, attributes );

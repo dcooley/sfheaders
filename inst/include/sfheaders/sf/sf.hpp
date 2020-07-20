@@ -12,34 +12,34 @@
 namespace sfheaders {
 namespace api {
 
-  inline void get_list_column_index(
-      SEXP& list_columns,
-      Rcpp::IntegerVector& list_column_idx,
-      SEXP& property_cols,  // only needs to be stringified IFF list_columns is a string?
-      Rcpp::IntegerVector& property_idx
-  ) {
-
-    if( !Rf_isNull( list_columns ) ) {
-      switch( TYPEOF( list_columns ) ) {
-      case REALSXP: {}
-      case INTSXP: {
-        list_column_idx = Rcpp::as< Rcpp::IntegerVector >( list_columns );
-        break;
-      }
-      case STRSXP: {
-        Rcpp::StringVector str_list_columns = Rcpp::as< Rcpp::StringVector >( list_columns );
-        Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
-        Rcpp::IntegerVector idx = geometries::utils::where_is( str_list_columns, str_property_cols );
-        list_column_idx = property_idx[ idx ];
-        break;
-
-      }
-      default:{
-        Rcpp::stop("sfheaders - unknown list-column type");
-      }
-      }
-    }
-  }
+  // inline void get_list_column_index(
+  //     SEXP& list_columns,
+  //     Rcpp::IntegerVector& list_column_idx,
+  //     SEXP& property_cols,  // only needs to be stringified IFF list_columns is a string?
+  //     Rcpp::IntegerVector& property_idx
+  // ) {
+  //
+  //   if( !Rf_isNull( list_columns ) ) {
+  //     switch( TYPEOF( list_columns ) ) {
+  //     case REALSXP: {}
+  //     case INTSXP: {
+  //       list_column_idx = Rcpp::as< Rcpp::IntegerVector >( list_columns );
+  //       break;
+  //     }
+  //     case STRSXP: {
+  //       Rcpp::StringVector str_list_columns = Rcpp::as< Rcpp::StringVector >( list_columns );
+  //       Rcpp::StringVector str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
+  //       Rcpp::IntegerVector idx = geometries::utils::where_is( str_list_columns, str_property_cols );
+  //       list_column_idx = property_idx[ idx ];
+  //       break;
+  //
+  //     }
+  //     default:{
+  //       Rcpp::stop("sfheaders - unknown list-column type");
+  //     }
+  //     }
+  //   }
+  // }
 
   inline SEXP to_sf(
     SEXP& obj,
@@ -87,9 +87,52 @@ namespace api {
     }
 
     // if sf_objs doesn't contain any elements, it means it went directly through make_sf()
-    if( !sf_objs.containsElementNamed("df") && !sf_objs.containsElementNamed("x") ) {
+    if( !sf_objs.containsElementNamed("x") ) {
       return sf_objs;
     }
+
+    // otherwise, the returning sf_objs now contain all the same elements
+    // (but some can be null)
+    Rcpp::List data = sf_objs["x"];
+    Rcpp::List sfc = sf_objs["sfc"];
+    Rcpp::IntegerVector property_cols = sf_objs["property_cols"];
+    Rcpp::IntegerVector geometry_idx = sf_objs["geometry_idx"];
+
+    Rcpp::Rcout << "id_column can be null" << std::endl;
+    Rcpp::IntegerVector id_column;
+
+    if( sf_objs.containsElementNamed("id_column") ) {
+      id_column = sf_objs["id_column"];
+    }
+
+    Rcpp::IntegerVector int_list_columns;
+
+    if( !Rf_isNull( list_columns ) ) {
+      Rcpp::Rcout << "list columns " << std::endl;
+      int_list_columns = geometries::utils::sexp_col_int( data, list_columns );
+    }
+
+    Rcpp::Rcout << "return sf_objs" << std::endl;
+    //return sf_objs;
+    return sfheaders::sf::create_sf(data, sfc, id_column, property_cols, int_list_columns, geometry_idx );
+
+
+    // if there's an 'x' object, it has data
+    // if there is no 'id_column' then it needs one
+    // and is only one row
+    // if( !sf_objs.containsElementNamed("id_column") ) {
+    //
+    // }
+    if( Rf_isNull( id_column ) ) {
+      // it needs a one-row id column appended.
+    }
+
+
+    SEXP x = sf_objs["x"];
+    //Rcpp::IntegerVector int_list_column = geometries::utils::sexp_col_int( x, list_columns );
+
+    return sf_objs;
+
     // sf_objs is an object of either
     // 1. x, sfc, property_columns
     // 2. df, sfc, id_column, property_cols, row_idx, line_positions
@@ -109,55 +152,55 @@ namespace api {
 
     //SEXP x = sf_objs["df"];
 
-    SEXP property_cols = sf_objs[ "property_cols" ];
-    Rcpp::List sfc = sf_objs["sfc"];
-    Rcpp::IntegerMatrix line_positions = Rcpp::as< Rcpp::IntegerMatrix >( sf_objs["line_positions"] );
-    Rcpp::IntegerVector property_idx = sf_objs[ "property_idx" ];
-
-    Rcpp::String id_column;
-    Rcpp::IntegerVector row_idx;
-    Rcpp::IntegerVector list_column_idx;  // TODO - initialise as -1 ?? so its' never NULL and we only
-    // need one 'create_sf()' function?
-    Rcpp::StringVector str_property_cols;
-
-
-
-    // need to 'exit early' if some of the properties don't exist
-    if( sf_objs.containsElementNamed("x") ) {
-      SEXP x = sf_objs["x"];
-      get_list_column_index(
-        list_columns, list_column_idx, property_cols, property_idx
-      );
-      return sfheaders::sf::create_sf( x, sfc, property_cols, list_column_idx, line_positions );
-    }
-
-
-    row_idx = sf_objs["row_idx"];
-
-    str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
-
-    if( sf_objs.containsElementNamed("id_column") ) {
-      id_column = Rcpp::as< Rcpp::String >( sf_objs["id_column"] );
-    }
-
-    // this should give us list_column_idx, which is a subset (or all) of property_idx,
-    // which can be passed into create_sf()
-    // and checked iff property_idx %in% list_column_idx;
-    // and if so, make it a list-column, rather than subset the first row.
-    //Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
-    get_list_column_index(
-      list_columns, list_column_idx, property_cols, property_idx
-    );
-
-    Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
-
-    if( !sf_objs.containsElementNamed("id_column") ) {
-      return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
-    }
-
-    return sfheaders::sf::create_sf(
-      df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx, line_positions
-      );
+    // SEXP property_cols = sf_objs[ "property_cols" ];
+    // Rcpp::List sfc = sf_objs["sfc"];
+    // Rcpp::IntegerMatrix line_positions = Rcpp::as< Rcpp::IntegerMatrix >( sf_objs["line_positions"] );
+    // Rcpp::IntegerVector property_idx = sf_objs[ "property_idx" ];
+    //
+    // Rcpp::String id_column;
+    // Rcpp::IntegerVector row_idx;
+    // Rcpp::IntegerVector list_column_idx;  // TODO - initialise as -1 ?? so its' never NULL and we only
+    // // need one 'create_sf()' function?
+    // Rcpp::StringVector str_property_cols;
+    //
+    //
+    //
+    // // need to 'exit early' if some of the properties don't exist
+    // if( sf_objs.containsElementNamed("x") ) {
+    //   SEXP x = sf_objs["x"];
+    //   get_list_column_index(
+    //     list_columns, list_column_idx, property_cols, property_idx
+    //   );
+    //   return sfheaders::sf::create_sf( x, sfc, property_cols, list_column_idx, line_positions );
+    // }
+    //
+    //
+    // row_idx = sf_objs["row_idx"];
+    //
+    // str_property_cols = Rcpp::as< Rcpp::StringVector >( property_cols );
+    //
+    // if( sf_objs.containsElementNamed("id_column") ) {
+    //   id_column = Rcpp::as< Rcpp::String >( sf_objs["id_column"] );
+    // }
+    //
+    // // this should give us list_column_idx, which is a subset (or all) of property_idx,
+    // // which can be passed into create_sf()
+    // // and checked iff property_idx %in% list_column_idx;
+    // // and if so, make it a list-column, rather than subset the first row.
+    // //Rcpp::Rcout << "list_columns: " << list_column_idx << std::endl;
+    // get_list_column_index(
+    //   list_columns, list_column_idx, property_cols, property_idx
+    // );
+    //
+    // Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( sf_objs["df"] );
+    //
+    // if( !sf_objs.containsElementNamed("id_column") ) {
+    //   return sfheaders::sf::create_sf( df, sfc, str_property_cols, property_idx, list_column_idx, row_idx, line_positions );
+    // }
+    //
+    // return sfheaders::sf::create_sf(
+    //   df, sfc, id_column, str_property_cols, property_idx, list_column_idx, row_idx, line_positions
+    //   );
  }
 
   // TODO

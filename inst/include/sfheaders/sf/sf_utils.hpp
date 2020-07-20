@@ -61,32 +61,45 @@ namespace sf {
   }
 
   inline Rcpp::List create_sf(
-      Rcpp::DataFrame& df,
+      Rcpp::List& df,
       Rcpp::List& sfc,
-      Rcpp::StringVector& property_cols,
-      Rcpp::IntegerVector& property_idx,
+      Rcpp::IntegerVector& id_column,
+      Rcpp::IntegerVector& property_cols,
       Rcpp::IntegerVector& list_column_idx,
-      Rcpp::IntegerVector& row_idx,
-      Rcpp::IntegerMatrix& line_positions
+      Rcpp::IntegerVector& geometry_idx
+      //Rcpp::IntegerMatrix& line_positions
   ) {
-    R_xlen_t n_col = property_idx.length();
+
+    Rcpp::Rcout << "create_sf" << std::endl;
+
+    bool has_id = Rf_isNull( id_column );
+    bool has_list_cols = Rf_isNull( list_column_idx );
+
+    R_xlen_t n_col = has_id ? property_cols.length() : property_cols.length() + 1;
+    Rcpp::StringVector df_names = df.names();
+
+
+    //R_xlen_t n_col = property_cols.length();
     Rcpp::List sf( n_col + 1 );  // +1 == sfc
     Rcpp::StringVector res_names( n_col + 1 );
     R_xlen_t i;
 
-    // fill columns of properties
-    for( i = 0; i < n_col; ++i ) {
-      int idx = property_idx[i];
-      bool is_in = ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
-      SEXP v = df[ idx ];
+    //R_xlen_t start = geometry_idx[ ]
 
-      if( is_in ) {
-        sf[ i ] = geometries::utils::fill_list( v, line_positions );
-      } else {
-        sf[ i ] = subset_properties( v, row_idx );
-      }
-      res_names[ i ] = property_cols[ i ];
-    }
+    // fill columns of properties
+    // for( i = 0; i < n_col; ++i ) {
+    //
+    //   int idx = property_cols[ i ];
+    //   bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
+    //   SEXP v = df[ idx ];
+    //
+    //   if( is_in ) {
+    //     sf[ i ] = geometries::utils::fill_list( v, geometry_idx );
+    //   } else {
+    //     sf[ i ] = subset_properties( v, geometry_idx );
+    //   }
+    //   res_names[ i ] = df_names[ i ];
+    // }
 
     // make data.frame
     Rcpp::String sfc_name = "geometry";
@@ -95,147 +108,139 @@ namespace sf {
     res_names[ n_col ] = sfc_name;
     sf.names() = res_names;
 
-    R_xlen_t n_row = row_idx.length();
+    R_xlen_t n_row = geometry_idx.length();
 
     sfheaders::sf::attach_dataframe_attributes( sf, n_row );
 
     return sf;
   }
 
-  // where the input is a data.frame, and output includes an id column
-  inline Rcpp::List create_sf(
-      Rcpp::DataFrame& df,
-      Rcpp::List& sfc,
-      Rcpp::String& id_column,
-      Rcpp::StringVector& property_cols,
-      Rcpp::IntegerVector& property_idx,
-      Rcpp::IntegerVector& list_column_idx,
-      Rcpp::IntegerVector& row_idx,
-      Rcpp::IntegerMatrix& line_positions
-  ) {
-
-    // Rcpp::Rcout << "create_sf(df) + id " << std::endl;
-    R_xlen_t n_col = property_idx.length();
-    Rcpp::List sf( n_col + 2 );  // +1 == sfc, +1 == sf_id
-    Rcpp::StringVector res_names( n_col + 2 );
-    R_xlen_t i;
-
-    // fill columns of properties
-    for( i = 0; i < n_col; ++i ) {
-      int idx = property_idx[ i ];
-
-      // Rcpp::Rcout << "idx: " << idx << std::endl;
-      // Rcpp::Rcout << "lst_columns: " << list_column_idx << std::endl;
-
-      bool is_in = ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
-      SEXP v = df[ idx ];
-      if( is_in ) {
-        sf[ i + 1 ] = geometries::utils::fill_list( v, line_positions );
-      } else {
-        sf[ i + 1 ] = subset_properties( v, row_idx );
-      }
-
-      //SEXP v = df[ idx ];
-      //sf[ i + 1 ] = subset_properties( v, row_idx );
-      res_names[ i + 1 ] = property_cols[ i ];
-    }
-
-    // id column
-    SEXP id = df[ id_column ];
-    sf[ 0 ] = subset_properties( id, row_idx );
-    res_names[ 0 ] = id_column;
-
-    // make data.frame
-    sf[ n_col + 1 ] = sfc;
-    Rcpp::String sfc_name = "geometry";
-    res_names[ n_col + 1 ] = sfc_name;
-    sf.names() = res_names;
-
-    R_xlen_t n_row = row_idx.length();
-
-    sfheaders::sf::attach_dataframe_attributes( sf, n_row );
-
-    return sf;
-  }
-
-
-  // where there's only one-row sf
-  inline SEXP create_sf(
-      Rcpp::DataFrame& df,
-      Rcpp::List& sfc,
-      SEXP& property_columns,
-      Rcpp::IntegerVector& list_column_idx,
-      Rcpp::IntegerMatrix& line_positions
-  ) {
-
-    //Rcpp::Rcout << "create_sf(df)" << std::endl;
-    Rcpp::StringVector df_names = df.names();
-    Rcpp::StringVector str_property_columns;
-
-    switch( TYPEOF( property_columns ) ) {
-    case REALSXP: {}
-    case INTSXP: {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( property_columns );
-      str_property_columns = df_names[ iv ];
-      break;
-    }
-    case STRSXP: {
-      str_property_columns = Rcpp::as< Rcpp::StringVector >( property_columns );
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unknown column types"); // #nocov
-    }
-    }
-
-    // make_data.frame
-    Rcpp::IntegerVector row_idx(1);
-    row_idx[0] = 0;
-
-    Rcpp::IntegerVector property_idx = geometries::utils::where_is( str_property_columns, df_names );
-    return sfheaders::sf::create_sf( df, sfc, str_property_columns, property_idx, list_column_idx, row_idx, line_positions );
-  }
-
-  inline SEXP create_sf(
-      SEXP& x,
-      Rcpp::List& sfc,
-      SEXP& property_columns,
-      Rcpp::IntegerVector& list_column_idx,
-      Rcpp::IntegerMatrix& line_positions
-  ) {
-
-    //Rcpp::Rcout << "create_sf(x)" << std::endl;
-    Rcpp::DataFrame df;
-    switch( TYPEOF( x ) ) {
-    case INTSXP: {
-      Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
-      df = Rcpp::as< Rcpp::DataFrame >( im );
-      break;
-    }
-    case REALSXP: {
-      Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
-      df = Rcpp::as< Rcpp::DataFrame >( nm );
-      break;
-    }
-    case VECSXP: {
-      df = Rcpp::as< Rcpp::DataFrame >( x );
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unknown type"); // #nocov
-    }
-    }
-    return create_sf( df, sfc, property_columns, list_column_idx, line_positions );
-  }
-
-  // inline SEXP create_sf(
-  //   SEXP& x,
-  //   Rcpp::List& sfc,
-  //   SEXP& property_columns,
-  //   SEXP& list_columns
+  // // where the input is a data.frame, and output includes an id column
+  // inline Rcpp::List create_sf(
+  //     Rcpp::DataFrame& df,
+  //     Rcpp::List& sfc,
+  //     Rcpp::String& id_column,
+  //     Rcpp::StringVector& property_cols,
+  //     Rcpp::IntegerVector& property_idx,
+  //     Rcpp::IntegerVector& list_column_idx,
+  //     Rcpp::IntegerVector& row_idx,
+  //     Rcpp::IntegerMatrix& line_positions
   // ) {
   //
+  //   // Rcpp::Rcout << "create_sf(df) + id " << std::endl;
+  //   R_xlen_t n_col = property_idx.length();
+  //   Rcpp::List sf( n_col + 2 );  // +1 == sfc, +1 == sf_id
+  //   Rcpp::StringVector res_names( n_col + 2 );
+  //   R_xlen_t i;
+  //
+  //   // fill columns of properties
+  //   for( i = 0; i < n_col; ++i ) {
+  //     int idx = property_idx[ i ];
+  //
+  //     // Rcpp::Rcout << "idx: " << idx << std::endl;
+  //     // Rcpp::Rcout << "lst_columns: " << list_column_idx << std::endl;
+  //
+  //     bool is_in = ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
+  //     SEXP v = df[ idx ];
+  //     if( is_in ) {
+  //       sf[ i + 1 ] = geometries::utils::fill_list( v, line_positions );
+  //     } else {
+  //       sf[ i + 1 ] = subset_properties( v, row_idx );
+  //     }
+  //
+  //     //SEXP v = df[ idx ];
+  //     //sf[ i + 1 ] = subset_properties( v, row_idx );
+  //     res_names[ i + 1 ] = property_cols[ i ];
+  //   }
+  //
+  //   // id column
+  //   SEXP id = df[ id_column ];
+  //   sf[ 0 ] = subset_properties( id, row_idx );
+  //   res_names[ 0 ] = id_column;
+  //
+  //   // make data.frame
+  //   sf[ n_col + 1 ] = sfc;
+  //   Rcpp::String sfc_name = "geometry";
+  //   res_names[ n_col + 1 ] = sfc_name;
+  //   sf.names() = res_names;
+  //
+  //   R_xlen_t n_row = row_idx.length();
+  //
+  //   sfheaders::sf::attach_dataframe_attributes( sf, n_row );
+  //
+  //   return sf;
   // }
+
+
+  // // where there's only one-row sf
+  // inline SEXP create_sf(
+  //     Rcpp::DataFrame& df,
+  //     Rcpp::List& sfc,
+  //     SEXP& property_columns,
+  //     Rcpp::IntegerVector& list_column_idx,
+  //     Rcpp::IntegerMatrix& line_positions
+  // ) {
+  //
+  //   //Rcpp::Rcout << "create_sf(df)" << std::endl;
+  //   Rcpp::StringVector df_names = df.names();
+  //   Rcpp::StringVector str_property_columns;
+  //
+  //   switch( TYPEOF( property_columns ) ) {
+  //   case REALSXP: {}
+  //   case INTSXP: {
+  //     Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( property_columns );
+  //     str_property_columns = df_names[ iv ];
+  //     break;
+  //   }
+  //   case STRSXP: {
+  //     str_property_columns = Rcpp::as< Rcpp::StringVector >( property_columns );
+  //     break;
+  //   }
+  //   default: {
+  //     Rcpp::stop("sfheaders - unknown column types"); // #nocov
+  //   }
+  //   }
+  //
+  //   // make_data.frame
+  //   Rcpp::IntegerVector row_idx(1);
+  //   row_idx[0] = 0;
+  //
+  //   Rcpp::IntegerVector property_idx = geometries::utils::where_is( str_property_columns, df_names );
+  //   return sfheaders::sf::create_sf( df, sfc, str_property_columns, property_idx, list_column_idx, row_idx, line_positions );
+  // }
+  //
+  // inline SEXP create_sf(
+  //     SEXP& x,
+  //     Rcpp::List& sfc,
+  //     SEXP& property_columns,
+  //     Rcpp::IntegerVector& list_column_idx,
+  //     Rcpp::IntegerMatrix& line_positions
+  // ) {
+  //
+  //   //Rcpp::Rcout << "create_sf(x)" << std::endl;
+  //   Rcpp::DataFrame df;
+  //   switch( TYPEOF( x ) ) {
+  //   case INTSXP: {
+  //     Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+  //     df = Rcpp::as< Rcpp::DataFrame >( im );
+  //     break;
+  //   }
+  //   case REALSXP: {
+  //     Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+  //     df = Rcpp::as< Rcpp::DataFrame >( nm );
+  //     break;
+  //   }
+  //   case VECSXP: {
+  //     df = Rcpp::as< Rcpp::DataFrame >( x );
+  //     break;
+  //   }
+  //   default: {
+  //     Rcpp::stop("sfheaders - unknown type"); // #nocov
+  //   }
+  //   }
+  //   return create_sf( df, sfc, property_columns, list_column_idx, line_positions );
+  // }
+
 
   inline SEXP make_sf( Rcpp::List& sfc ) {
 
@@ -298,22 +303,22 @@ namespace sf {
     }
 
     switch( TYPEOF( ids ) ) {
-    case LGLSXP: {}
-    case INTSXP: {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( ids );
-      return make_sf( sfc, iv );
-    }
-    case REALSXP: {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( ids );
-      return make_sf( sfc, nv );
-    }
-    case STRSXP: {
-      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( ids );
-      return make_sf( sfc, sv );
-    }
-    default: {
-      Rcpp::stop("sfheaders - invalid sf id columns");   // #nocov
-    }
+      case LGLSXP: {}
+      case INTSXP: {
+        Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( ids );
+        return make_sf( sfc, iv );
+      }
+      case REALSXP: {
+        Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( ids );
+        return make_sf( sfc, nv );
+      }
+      case STRSXP: {
+        Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( ids );
+        return make_sf( sfc, sv );
+      }
+      default: {
+        Rcpp::stop("sfheaders - invalid sf id columns");   // #nocov
+      }
     }
 
     return Rcpp::List::create();

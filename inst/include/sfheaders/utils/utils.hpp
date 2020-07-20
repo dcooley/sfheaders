@@ -24,9 +24,25 @@ namespace utils {
     R_xlen_t n_row = Rf_length( VECTOR_ELT( res, 0 ) );
 
     Rcpp::IntegerVector ids( n_row, 1 );
-
     res[ col_counter ] = ids;
   }
+
+  // inline Rcpp::List append_id_column( Rcpp::List& lst ) {
+  //   // appends a column of 1s to a list
+  //   R_xlen_t n_col = lst.length();
+  //   if( n_col == 0 ) {
+  //     Rcpp::stop("sfheaders - not enough columns");
+  //   }
+  //   R_xlen_t n_row = Rf_length( VECTOR_ELT( lst, 0 ) );
+  //   R_xlen_t i;
+  //   Rcpp::List res( n_col + 1 );
+  //   for( i = 0; i < n_col; ++i ) {
+  //     res[ i ] = lst[ i ];
+  //   }
+  //   Rcpp::IntegerVector ids( n_row, 1 );
+  //   res[ n_col ] = ids;
+  //   return res;
+  // }
 
   inline void subset_geometries( Rcpp::List& x, Rcpp::List& res, Rcpp::IntegerVector& geometry_cols ) {
 
