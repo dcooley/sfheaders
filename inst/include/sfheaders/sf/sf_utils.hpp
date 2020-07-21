@@ -70,12 +70,13 @@ namespace sf {
       //Rcpp::IntegerMatrix& line_positions
   ) {
 
-    Rcpp::Rcout << "create_sf" << std::endl;
+    // Rcpp::Rcout << "create_sf" << std::endl;
 
-    bool has_id = Rf_isNull( id_column );
-    bool has_list_cols = Rf_isNull( list_column_idx );
+    bool has_id = !Rf_isNull( id_column );
+    bool has_list_cols = !Rf_isNull( list_column_idx );
 
-    R_xlen_t n_col = has_id ? property_cols.length() : property_cols.length() + 1;
+    R_xlen_t n_col = property_cols.length();
+    //_xlen_t n_col = has_id ? property_cols.length() : property_cols.length() + 1;
     Rcpp::StringVector df_names = df.names();
 
 
@@ -84,22 +85,24 @@ namespace sf {
     Rcpp::StringVector res_names( n_col + 1 );
     R_xlen_t i;
 
+    //Rcpp::Rcout << "geometry_idx: " << geometry_idx << std::endl;
+    //Rcpp::Rcout << "list_column_idx: " << list_column_idx << std::endl;
     //R_xlen_t start = geometry_idx[ ]
 
-    // fill columns of properties
-    // for( i = 0; i < n_col; ++i ) {
-    //
-    //   int idx = property_cols[ i ];
-    //   bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
-    //   SEXP v = df[ idx ];
-    //
-    //   if( is_in ) {
-    //     sf[ i ] = geometries::utils::fill_list( v, geometry_idx );
-    //   } else {
-    //     sf[ i ] = subset_properties( v, geometry_idx );
-    //   }
-    //   res_names[ i ] = df_names[ i ];
-    // }
+    //fill columns of properties
+    for( i = 0; i < n_col; ++i ) {
+
+      int idx = property_cols[ i ];
+      bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
+      SEXP v = df[ idx ];
+
+      if( is_in ) {
+        sf[ i ] = geometries::utils::fill_list( v, geometry_idx );
+      } else {
+        sf[ i ] = subset_properties( v, geometry_idx );
+      }
+      res_names[ i ] = df_names[ idx ];
+    }
 
     // make data.frame
     Rcpp::String sfc_name = "geometry";

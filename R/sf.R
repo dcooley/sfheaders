@@ -25,8 +25,6 @@
 #' where any properties are repeated down the table for the same geometry.
 #'
 #'
-#'
-#'
 #' @return \code{sf} object of POINT geometries
 #'
 #' @examples
@@ -55,6 +53,7 @@ sf_point <- function(
   m = NULL,
   keep = FALSE
   ) {
+  if( is.vector( obj ) ) obj <- matrix( obj, ncol = length( obj ) )
   geometry_columns <- c(x,y,z,m)
   geometry_columns <- index_correct( geometry_columns )
   return(
@@ -370,10 +369,6 @@ sf_multilinestring <- function(
 #'   , keep = TRUE
 #'   , list_columns = "val"
 #' )
-#'
-#'
-#'
-#'
 #'
 #' @export
 sf_polygon <- function(

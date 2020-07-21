@@ -13,6 +13,22 @@ rcpp_calculate_m_range <- function(x, xyzm) {
     .Call(`_sfheaders_rcpp_calculate_m_range`, x, xyzm)
 }
 
+rcpp_count_new_objects <- function(sfg, cast_to) {
+    .Call(`_sfheaders_rcpp_count_new_objects`, sfg, cast_to)
+}
+
+rcpp_count_new_sfc_objects <- function(sfc, cast_to) {
+    .Call(`_sfheaders_rcpp_count_new_sfc_objects`, sfc, cast_to)
+}
+
+rcpp_cast_sfc <- function(sfc, cast_to, close = TRUE) {
+    .Call(`_sfheaders_rcpp_cast_sfc`, sfc, cast_to, close)
+}
+
+rcpp_cast_sf <- function(sf, cast_to, close = TRUE) {
+    .Call(`_sfheaders_rcpp_cast_sf`, sf, cast_to, close)
+}
+
 rcpp_fill_list <- function(v, line_ids) {
     .Call(`_sfheaders_rcpp_fill_list`, v, line_ids)
 }

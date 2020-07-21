@@ -24,14 +24,20 @@ inline SEXP sfc_point(
   // TODO:
   // if the input is a single vector
   // if( Rf_isVector( x ) ) {
-  //   // Rcpp::NumericMatrix nm( 1, Rf_length( x ) );
-  //   // nm( 0, Rcpp::_ ) = Rcpp::as< Rcpp::NumericVector >( x );
-  //   // return sfc_point( nm, geometry_cols, xyzm );
+  //   Rcpp::NumericMatrix nm( 1, Rf_length( x ) );
+  //   nm( 0, Rcpp::_ ) = Rcpp::as< Rcpp::NumericVector >( x );
+  //   return sfc_point( nm, geometry_cols, xyzm );
   // }
 
   if( Rf_isNull( geometry_cols ) ) {
+    // Rcpp::Rcout << "sfc_point - null geometries" << std::endl;
+    // Rcpp::Rcout << "type x: " << TYPEOF( x ) << std::endl;
+    // Rcpp::Rcout << "is vec: " << Rf_isVector( x ) << std::endl;
+    // Rcpp::Rcout << "is mat: " << Rf_isMatrix( x ) << std::endl;
+    // Rcpp::Rcout << "type geom cols: " << TYPEOF( geometry_cols ) << std::endl;
     // make this all the other columns, then send back in
     SEXP geometry_cols2 = geometries::utils::other_columns( x );
+    // Rcpp::Rcout << "geometry_col2" << std::endl;
     return sfc_point( x, geometry_cols2, xyzm );
   }
 
@@ -65,13 +71,9 @@ inline SEXP sfc_point(
 
   sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
-  //Rcpp::IntegerVector int_linestring_id(1);
-
-
-  Rcpp::Rcout << "making geometries " << std::endl;
-  //sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
   Rcpp::List sfc = geometries::make_geometries( res, attributes );
 
+  // Rcpp::Rcout << "making_sfc" << std::endl;
   return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
 
 }

@@ -70,7 +70,7 @@ namespace sfc {
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_polygon_id, int_linestring_id );
 
     Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
-    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTILINESTRING, bbox, z_range, m_range );
+    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
 
   }
 
