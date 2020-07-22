@@ -21,6 +21,11 @@ namespace sfg {
     return sfcs;
   }
 
+  // inline Rcpp::List sfg_multipoints( SEXP& obj, std::string xyzm ) {
+  //   Rcpp::List lst = geometries::utils::as_list( obj );
+  //   return sfg_multipoints( lst, xyzm );
+  // }
+
 } // sfg
 } // sfheaders
 

@@ -39,78 +39,81 @@ namespace sfg {
     return ""; // never reaches
   }
 
-  // inline void make_sfg(
-  //   Rcpp::IntegerVector& iv,
-  //   int sfg_type,
-  //   std::string& xyzm
-  // ) {
-  //   R_xlen_t n_col = iv.length();
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
-  //
-  //   std::string geom_type = get_sfg_type( sfg_type );
-  //   iv.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  // }
-  //
-  // inline void make_sfg(
-  //     Rcpp::NumericVector& nv,
-  //     int sfg_type,
-  //     std::string& xyzm
-  // ) {
-  //   R_xlen_t n_col = nv.length();
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
-  //
-  //   std::string geom_type = get_sfg_type( sfg_type );
-  //   nv.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  // }
-  //
-  // inline void make_sfg(
-  //   Rcpp::IntegerMatrix& im,
-  //   int sfg_type,
-  //   std::string& xyzm
-  // ) {
-  //
-  //   R_xlen_t n_col = im.ncol();
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
-  //
-  //   std::string geom_type = get_sfg_type( sfg_type );
-  //   im.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  // }
-  //
-  // inline void make_sfg(
-  //     Rcpp::NumericMatrix& nm,
-  //     int sfg_type,
-  //     std::string& xyzm
-  // ) {
-  //
-  //   R_xlen_t n_col = nm.ncol();
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
-  //
-  //   std::string geom_type = get_sfg_type( sfg_type );
-  //   nm.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  // }
-  //
-  // inline void make_sfg(
-  //     Rcpp::List& lst,
-  //     int sfg_type,
-  //     std::string& xyzm
-  // ) {
-  //   std::string dim = sfheaders::sfg::sfg_dimension( lst, xyzm );
-  //
-  //   std::string geom_type = get_sfg_type( sfg_type );
-  //   lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  // }
-  //
-  // inline void make_sfg(
-  //   Rcpp::List& lst,
-  //   R_xlen_t n_col,
-  //   int sfg_type,
-  //   std::string& xyzm
-  // ) {
-  //   std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
-  //
-  //   std::string geom_type = get_sfg_type( sfg_type );
-  //   lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
-  // }
+
+  template < int RTYPE >
+  inline void make_sfg(
+      Rcpp::Vector< RTYPE >& vec,
+      int sfg_type,
+      std::string& xyzm
+  ) {
+    R_xlen_t n_col = vec.length();
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+
+    Rcpp::List attributes = Rcpp::List::create(
+      Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
+    );
+    geometries::utils::attach_attributes( vec, attributes );
+
+    //vec.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
+
+  template < int RTYPE >
+  inline void make_sfg(
+      Rcpp::Matrix< RTYPE >& mat,
+      int sfg_type,
+      std::string& xyzm
+  ) {
+
+    R_xlen_t n_col = mat.ncol();
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+
+    Rcpp::List attributes = Rcpp::List::create(
+      Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
+    );
+    geometries::utils::attach_attributes( mat, attributes );
+
+    //mat.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
+  inline void make_sfg(
+      Rcpp::List& lst,
+      int sfg_type,
+      std::string& xyzm
+  ) {
+    std::string dim = sfheaders::sfg::sfg_dimension( lst, xyzm );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+
+    Rcpp::List attributes = Rcpp::List::create(
+      Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
+    );
+    geometries::utils::attach_attributes( lst, attributes );
+
+    // lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
+
+  inline void make_sfg(
+    Rcpp::List& lst,
+    R_xlen_t n_col,
+    int sfg_type,
+    std::string& xyzm
+  ) {
+    std::string dim = sfheaders::sfg::sfg_dimension( n_col, xyzm );
+
+    std::string geom_type = get_sfg_type( sfg_type );
+
+    Rcpp::List attributes = Rcpp::List::create(
+      Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
+    );
+    geometries::utils::attach_attributes( lst, attributes );
+
+    //lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
+  }
 
   inline void make_sfg(
     SEXP& x,

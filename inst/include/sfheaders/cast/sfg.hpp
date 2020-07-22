@@ -304,6 +304,7 @@ namespace cast {
   }
 
   inline SEXP multilinestring_to_point( Rcpp::List& lst, std::string xyzm ) {
+
     R_xlen_t n_points = 0;
     R_xlen_t i, j;
     R_xlen_t n_linestrings = lst.size();
@@ -339,8 +340,8 @@ namespace cast {
     return l;
   }
 
-  inline SEXP multilinestring_to_multilinestring( Rcpp::List& lst, std::string xyzm ) {
-    return sfheaders::sfg::sfg_multilinestring( lst, xyzm );
+  inline SEXP multilinestring_to_multilinestring( SEXP& obj, std::string xyzm ) {
+    return sfheaders::sfg::sfg_multilinestring( obj, xyzm );
   }
 
   inline SEXP multilinestring_to_polygon( Rcpp::List& lst, std::string xyzm, bool close = true ) {
@@ -398,9 +399,9 @@ namespace cast {
 
   inline SEXP polygon_to_multipolygon( Rcpp::List& lst, std::string xyzm, bool close = true ) {
     Rcpp::List lst2 = Rcpp::clone( lst );
-    //lst.attr("class") = R_NilValue; // this will update the input by-reference
-    // not doing it will leave the sfg_POLYGON class on the inner-polygons of the MULTIPOLYGON
-    // not sure if this is an issue or note.
+    // //lst.attr("class") = R_NilValue; // this will update the input by-reference
+    // // not doing it will leave the sfg_POLYGON class on the inner-polygons of the MULTIPOLYGON
+    // // not sure if this is an issue or note.
     Rcpp::List mpl(1);
     mpl[0] = lst2;
     return sfheaders::sfg::sfg_multipolygon( mpl, xyzm, close );
@@ -478,6 +479,7 @@ namespace cast {
   }
 
   inline SEXP multipolygon_to_linestring( Rcpp::List& lst, std::string xyzm ) {
+
     // will return more than 1 list
     R_xlen_t n = lst.size();
     Rcpp::List lines( n );
@@ -504,8 +506,9 @@ namespace cast {
 
 
   inline SEXP multipolygon_to_multilinestring( Rcpp::List& lst, std::string xyzm ) {
+    // multipolygon is a list
     Rcpp::List lst2 = Rcpp::clone( lst );
-    return sfheaders::sfg::sfg_multilinestrings( lst2, xyzm );
+    return sfheaders::sfg::sfg_multilinestrings( lst, xyzm );
   }
 
   inline SEXP multipolygon_to_polygon( Rcpp::List& lst, std::string xyzm, bool close = true ) {
@@ -533,7 +536,7 @@ namespace cast {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return multipolygon_to_point( lst, xyzm );
     } else {
-      Rcpp::stop("sfheaders - I don't know how to convert this objet to a MULTIPOINT"); // #nocov
+      Rcpp::stop("sfheaders - I don't know how to convert this objet to a POINT"); // #nocov
     }
     return Rcpp::List(); // #nocov
   }

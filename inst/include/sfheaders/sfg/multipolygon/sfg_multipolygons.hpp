@@ -23,6 +23,11 @@ namespace sfg {
     return sfcs;
   }
 
+  // inline Rcpp::List sfg_multipolygons( SEXP& obj, std::string xyzm, bool close = true ) {
+  //   Rcpp::List lst = Rcpp::as< Rcpp::List >( obj );
+  //   return sfg_multipolygons( lst, xyzm, close );
+  // }
+
 
 } // sfg
 } // sfheaders

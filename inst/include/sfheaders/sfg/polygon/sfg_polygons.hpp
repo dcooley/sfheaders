@@ -22,6 +22,11 @@ namespace sfg {
     return sfcs;
   }
 
+  // inline Rcpp::List sfg_polygons( SEXP& obj, std::string xyzm, bool close = true ) {
+  //   Rcpp::List lst = Rcpp::as< Rcpp::List >( obj );
+  //   return sfg_polygons( lst, xyzm, close );
+  // }
+
 } // sfg
 } // sfheaders
 

@@ -53,7 +53,6 @@ sf_point <- function(
   m = NULL,
   keep = FALSE
   ) {
-  if( is.vector( obj ) ) obj <- matrix( obj, ncol = length( obj ) )
   geometry_columns <- c(x,y,z,m)
   geometry_columns <- index_correct( geometry_columns )
   return(

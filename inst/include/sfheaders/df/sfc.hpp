@@ -383,9 +383,9 @@ namespace df {
       // so if it's a POINT, can go direct to get_sfc_point()
       Rcpp::CharacterVector sfc_class = sfc.attr("class");
       std::string cls;
-      cls = sfc_class[1];
+      cls = sfc_class[0];
 
-      // Rcpp::Rcout << "cls: " << cls << std::endl;
+      Rcpp::Rcout << "cls: " << cls << std::endl;
 
       // switch on cls
       if ( cls == "sfc_POINT" ) {

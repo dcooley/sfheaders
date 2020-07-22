@@ -4,12 +4,40 @@
 #include <Rcpp.h>
 #include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/utils/utils.hpp"
+#include "sfheaders/sfg/polygon/close_polygon.hpp"
 
 #include "geometries/utils/utils.hpp"
 #include "geometries/geometries.hpp"
 
 namespace sfheaders {
 namespace sfg {
+
+  template< int RTYPE >
+  inline SEXP sfg_polygon(
+      Rcpp::Matrix< RTYPE >& mat,
+      std::string xyzm,
+      bool close = true
+  ) {
+    Rcpp::List mls( 1 );
+    mls[0] = sfheaders::polygon_utils::close_polygon< RTYPE >( mat, close );
+    R_xlen_t n_col = mat.ncol();
+
+    sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_POLYGON, xyzm );
+
+    return mls;
+  }
+
+  inline SEXP sfg_polygon(
+      Rcpp::List& lst,
+      std::string xyzm,
+      bool close = true
+  ) {
+
+    lst = sfheaders::polygon_utils::close_polygon( lst, close );
+    sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_POLYGON, xyzm );
+
+    return lst;
+  }
 
   inline SEXP sfg_polygon(
       SEXP& x,

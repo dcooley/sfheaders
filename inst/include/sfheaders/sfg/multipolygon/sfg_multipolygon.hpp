@@ -2,6 +2,7 @@
 #define R_SFHEADERS_SFG_MULTIPOLYGON_H
 
 #include <Rcpp.h>
+#include "sfheaders/sfg/polygon/close_polygon.hpp"
 #include "sfheaders/sfg/sfg_types.hpp"
 #include "sfheaders/utils/utils.hpp"
 
@@ -10,6 +11,33 @@
 
 namespace sfheaders {
 namespace sfg {
+
+  template< int RTYPE >
+  inline SEXP sfg_multipolygon(
+      Rcpp::Matrix< RTYPE >& mat,
+      std::string xyzm,
+      bool close = true
+  ) {
+    Rcpp::List p( 1 );
+    Rcpp::List mp( 1 );
+    p[0] = sfheaders::polygon_utils::close_polygon< RTYPE >( mat, close );;
+    mp[0] = p;
+    R_xlen_t n_col = mat.ncol();
+    sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON, xyzm );
+
+    return mp;
+  }
+
+  inline SEXP sfg_multipolygon(
+      Rcpp::List& lst,
+      std::string xyzm,
+      bool close = true
+  ) {
+
+    lst = sfheaders::polygon_utils::close_polygon( lst, close );
+    sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTIPOLYGON, xyzm );
+    return lst;
+  }
 
 
   inline SEXP sfg_multipolygon(
@@ -25,10 +53,12 @@ namespace sfg {
     // but attributes are assigned at the end
 
     if( Rf_isNull( geometry_cols ) ) {
+      Rcpp::Rcout << "0" << std::endl;
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, polygon_id, linestring_id );
       return sfg_multipolygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
     }
+    Rcpp::Rcout << "1" << std::endl;
 
     int n_id_cols = 2;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
@@ -48,14 +78,18 @@ namespace sfg {
 
     sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
+    Rcpp::Rcout << "3" << std::endl;
     Rcpp::IntegerVector int_polygon_id(1);
     sfheaders::utils::resolve_id( x, polygon_id, int_polygon_id, res, lst, col_counter );
 
+    Rcpp::Rcout << "4" << std::endl;
     Rcpp::IntegerVector int_linestring_id(1);
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
 
+    Rcpp::Rcout << "5" << std::endl;
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_polygon_id, int_linestring_id );
 
+    Rcpp::Rcout << "6" << std::endl;
     Rcpp::List attributes = Rcpp::List::create();
     Rcpp::List sfg = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
 
@@ -67,7 +101,6 @@ namespace sfg {
     geometries::utils::attach_attributes( sfg, atts );
 
     return sfg;
-
   }
 
   inline SEXP sfg_multipolygon(

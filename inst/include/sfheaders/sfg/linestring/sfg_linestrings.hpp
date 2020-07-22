@@ -22,6 +22,11 @@ namespace sfg {
     return sfcs;
   }
 
+  // inline Rcpp::List sfg_linestrings( SEXP& obj, std::string xyzm ) {
+  //   Rcpp::List lst = Rcpp::as< Rcpp::List >( obj );
+  //   return sfg_linestrings( lst, xyzm );
+  // }
+
 } // sfg
 } // sfheaders
 
