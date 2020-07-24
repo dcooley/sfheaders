@@ -32,10 +32,8 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-
     lst = sfheaders::polygon_utils::close_polygon( lst, close );
     sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_POLYGON, xyzm );
-
     return lst;
   }
 

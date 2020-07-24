@@ -13,17 +13,6 @@ namespace sfg {
 
   template < int RTYPE >
   inline SEXP sfg_multilinestring(
-    Rcpp::Vector< RTYPE >& vec,
-    std::string xyzm
-  ) {
-    R_xlen_t n = vec.length();
-    Rcpp::NumericMatrix nm( 1, n );
-    nm( 0, Rcpp::_ ) = vec;
-    return sfg_multilinestring( nm, xyzm );
-  }
-
-  template < int RTYPE >
-  inline SEXP sfg_multilinestring(
       Rcpp::Matrix< RTYPE >& mat,
       std::string xyzm
   ) {
@@ -32,6 +21,25 @@ namespace sfg {
     R_xlen_t n_col = mat.ncol();
     sfheaders::sfg::make_sfg( mls, n_col, sfheaders::sfg::SFG_MULTILINESTRING, xyzm );
     return mls;
+  }
+
+  template < int RTYPE >
+  inline SEXP sfg_multilinestring(
+      Rcpp::Vector< RTYPE >& vec,
+      std::string xyzm
+  ) {
+    R_xlen_t n = vec.length();
+    Rcpp::Matrix< RTYPE > mat( 1, n );
+    mat( 0, Rcpp::_ ) = vec;
+    return sfg_multilinestring( mat, xyzm );
+  }
+
+  inline SEXP sfg_multilinestring(
+      Rcpp::List& lst,
+      std::string xyzm
+  ) {
+    sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTILINESTRING, xyzm );
+    return lst;
   }
 
   inline SEXP sfg_multilinestring(

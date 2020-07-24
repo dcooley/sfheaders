@@ -385,7 +385,7 @@ namespace df {
       std::string cls;
       cls = sfc_class[0];
 
-      Rcpp::Rcout << "cls: " << cls << std::endl;
+      // Rcpp::Rcout << "cls: " << cls << std::endl;
 
       // switch on cls
       if ( cls == "sfc_POINT" ) {
@@ -395,7 +395,10 @@ namespace df {
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`
-    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+    //return sfc;
+    Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
+    //Rcpp::Rcout << "dim: " << sfc_coordinates << std::endl;
     return sfc_to_df( sfc, sfc_coordinates );
   }
 

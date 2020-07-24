@@ -508,7 +508,7 @@ namespace cast {
   inline SEXP multipolygon_to_multilinestring( Rcpp::List& lst, std::string xyzm ) {
     // multipolygon is a list
     Rcpp::List lst2 = Rcpp::clone( lst );
-    return sfheaders::sfg::sfg_multilinestrings( lst, xyzm );
+    return sfheaders::sfg::sfg_multilinestrings( lst2, xyzm );
   }
 
   inline SEXP multipolygon_to_polygon( Rcpp::List& lst, std::string xyzm, bool close = true ) {

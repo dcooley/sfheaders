@@ -111,7 +111,10 @@ namespace df {
 
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+    //Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
+
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
   }
 
@@ -177,7 +180,9 @@ namespace df {
   ) {
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+    //Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
 
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }

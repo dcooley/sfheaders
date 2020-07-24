@@ -40,7 +40,7 @@ namespace sfg {
       std::string xyzm
   ) {
 
-    Rcpp::stop("stopping");
+    //Rcpp::stop("stopping");
     SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
     R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
     xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
