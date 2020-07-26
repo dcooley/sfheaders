@@ -22,6 +22,8 @@ namespace sfc {
       std::string xyzm
   ) {
 
+
+
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, linestring_id );
@@ -41,7 +43,6 @@ namespace sfc {
     Rcpp::List attributes = Rcpp::List::create(
       Rcpp::_["class"] = class_attribute
     );
-
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();

@@ -13,7 +13,7 @@ namespace sfg {
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; ++i ) {
-      SEXP x = lst[i];
+      Rcpp::List x = lst[i];  // mlutilinestrings are lists of matrices
       sfcs[i] = sfheaders::sfg::sfg_multilinestring( x, xyzm );
     }
     return sfcs;

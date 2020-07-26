@@ -20,13 +20,15 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool close = true
+      bool close
   ) {
 
     Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close );
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
     SEXP ids = geometries::utils::get_ids( x, polygon_id );
+    sfheaders::sf::id_length_check( ids, sfc );
+
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
@@ -37,12 +39,12 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool& keep,
-      bool close = true
+      bool keep,
+      bool close
   ) {
 
     if( !keep ) {
-      return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm );
+      return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close );
     }
 
     Rcpp::List lst = geometries::utils::as_list( x );
@@ -66,6 +68,7 @@ namespace sf {
     }
 
     Rcpp::IntegerVector int_polygon_id = geometries::utils::sexp_col_int( x, polygon_id );
+
 
     // TODO:
     // - can I get this during 'sfc_linestring()' so I don't have to do it twice?

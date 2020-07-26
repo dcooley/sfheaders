@@ -139,7 +139,12 @@ sfg_linestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' @export
 sfg_multilinestring <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfg_multilinestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), xyzm(x,y,z,m) )
+  rcpp_sfg_multilinestring(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
@@ -180,8 +185,8 @@ sfg_polygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, linestring
     obj
     , index_correct( geometry_columns )
     , index_correct( linestring_id )
-    , close
     , xyzm(x,y,z,m)
+    , close
     )
 }
 
@@ -241,8 +246,8 @@ sfg_multipolygon <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, polyg
     , index_correct( geometry_columns )
     , index_correct( polygon_id )
     , index_correct( linestring_id )
-    , close
     , xyzm(x,y,z,m)
+    , close
     )
 }
 

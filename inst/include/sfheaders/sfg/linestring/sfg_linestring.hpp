@@ -34,11 +34,19 @@ namespace sfg {
   }
 
   inline SEXP sfg_linestring(
+      Rcpp::List& lst,
+      std::string xyzm
+  ) {
+    sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_LINESTRING, xyzm );
+    return lst;
+  }
+
+  inline SEXP sfg_linestring(
     SEXP& x,
     SEXP& geometry_cols,
     std::string xyzm
   ) {
-    SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+    SEXP geometry_mat = geometries::matrix::to_geometry_matrix( x, geometry_cols );
     R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
     xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
     sfheaders::sfg::make_sfg( geometry_mat, n_col, sfheaders::sfg::SFG_LINESTRING, xyzm );

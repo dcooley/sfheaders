@@ -12,11 +12,9 @@ namespace sfg {
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
-    SEXP geometry_cols = R_NilValue;
-
     for( i = 0; i < n; ++i ) {
-      SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfg::sfg_multipoint( x, geometry_cols, xyzm );
+      Rcpp::NumericMatrix x = lst[i];    // multipoints are matrices
+      sfcs[i] = sfheaders::sfg::sfg_multipoint( x, xyzm );
     }
     return sfcs;
   }

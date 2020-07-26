@@ -3,6 +3,7 @@
 
 #include <Rcpp.h>
 #include "sfheaders/sfg/sfg_dimension.hpp"
+#include "geometries/utils/utils.hpp"
 #include "geometries/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
@@ -77,51 +78,15 @@ namespace utils {
     } else {
 
       Rcpp::IntegerVector iv = validate_id_column( x, id_columns );
+      // make sure it exists before subsetting it
+      geometries::utils::column_exists( lst, iv );
+
       int col = iv[0];
+
       int_id_column[0] = col_counter;
       res[ col_counter ] = VECTOR_ELT( lst, col );
     }
     col_counter++;
-  }
-
-  // ---------------------------------------------------------------------------
-  // null geometries
-  inline bool is_null_geometry( Rcpp::IntegerVector& iv, std::string geom_type ) {
-    int n = iv.length();
-    if( geom_type == "POINT" ) {
-      if ( iv[0] == NA_INTEGER || iv[1] == NA_INTEGER ) {
-        return true;
-      }
-    } else if ( n == 0 ) { // #nocov
-      return true;         // #nocov
-    }
-    return false;
-  }
-
-  inline bool is_null_geometry( Rcpp::NumericVector& nv, std::string geom_type ) {
-    int n = nv.length();
-    if( geom_type == "POINT" ) {
-
-      if (ISNAN( nv[0] ) || ISNAN( nv[1] ) ) {
-        return true;
-      }
-    } else if ( n == 0 ) { // #nocov
-      return true;         // #nocov
-    }
-    return false;
-  }
-
-  inline bool is_null_geometry( SEXP& sfg, std::string geom_type ) {
-    R_xlen_t n = geometries::utils::sexp_length( sfg );
-    if( geom_type == "POINT" ) {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
-      if ( ISNAN( nv[0] ) ) {
-        return true;
-      }
-    } else if ( n == 0 ) {   // #nocov
-      return true;           // #nocov
-    }
-    return false;
   }
 
 } // utils

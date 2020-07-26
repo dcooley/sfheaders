@@ -134,15 +134,16 @@ namespace sfg {
     mat( 3, Rcpp::_ ) = tlv;
     mat( 4, Rcpp::_ ) = blv;
 
+    // Rcpp::StringVector class_attribute = { "XY", "POLYGON","sfg" };
+    // Rcpp::List atts = Rcpp::List::create(
+    //   Rcpp::_["class"] = class_attribute
+    // );
+
+    //geometries::utils::attach_attributes( mat, atts );
+
     std::string xyzm = "XY";
-
-    Rcpp::StringVector class_attribute = { "XY", "POLYGON","sfg" };
-    Rcpp::List atts = Rcpp::List::create(
-      Rcpp::_["class"] = class_attribute
-    );
-
-    geometries::utils::attach_attributes( mat, atts );
-    return mat;
+    bool close = false;
+    return sfg_polygon( mat, xyzm, close );
   }
 
 } // sfg

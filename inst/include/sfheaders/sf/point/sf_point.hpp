@@ -30,16 +30,9 @@ namespace sf {
   inline SEXP sf_point(
       SEXP& x,
       SEXP& geometry_cols,
-      bool& keep,
-      std::string xyzm
+      std::string xyzm,
+      bool& keep
   ) {
-
-    // if( Rf_isVector( x ) ) {
-    //   SEXP y = geometries::utils::as_list( x );
-    //   return sf_point( y, geometry_cols, keep, xyzm );
-    // }
-    //
-    // return x;
 
     if( !keep ) {
       return sf_point( x, geometry_cols, xyzm );
@@ -47,6 +40,7 @@ namespace sf {
 
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List sfc = sfheaders::sfc::sfc_point( x, geometry_cols, xyzm );
+
 
     // Rcpp::Rcout << "sfc done" << std::endl;
 

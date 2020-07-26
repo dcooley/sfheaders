@@ -35,7 +35,7 @@ namespace sfg {
   }
 
   // inline Rcpp::List sfg_points( SEXP& obj, std::string xyzm ) {
-  //   Rcpp::NumericMatrix mat = geometries::matrix::to_matrix( obj );
+  //   Rcpp::NumericMatrix mat = geometries::matrix::to_geometry_matrix( obj );
   //   return sfg_points( mat, xyzm );
   // }
 

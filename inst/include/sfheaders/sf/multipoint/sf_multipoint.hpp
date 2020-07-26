@@ -22,6 +22,8 @@ namespace sf {
     Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id, xyzm );
 
     SEXP ids = geometries::utils::get_ids( x, multipoint_id );
+    sfheaders::sf::id_length_check( ids, sfc );
+
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
@@ -30,14 +32,13 @@ namespace sf {
       SEXP& x,
       SEXP& geometry_cols,
       SEXP& multipoint_id,
-      bool& keep,
-      std::string xyzm
+      std::string xyzm,
+      bool& keep
   ) {
 
     if( !keep ) {
       return sf_multipoint( x, geometry_cols, multipoint_id, xyzm );
     }
-
 
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List sfc = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id, xyzm );

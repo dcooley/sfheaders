@@ -28,8 +28,9 @@ namespace sfc {
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, multipolygon_id, polygon_id, linestring_id );
-      return sfc_multipolygon( x, geometry_cols2, multipolygon_id, polygon_id, linestring_id, xyzm );
+      return sfc_multipolygon( x, geometry_cols2, multipolygon_id, polygon_id, linestring_id, xyzm, close );
     }
+
 
     int n_id_cols = 3;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
@@ -66,12 +67,17 @@ namespace sfc {
 
     Rcpp::IntegerVector int_polygon_id(1);
     sfheaders::utils::resolve_id( x, polygon_id, int_polygon_id, res, lst, col_counter );
+    // Rcpp::Rcout << "polygon_id: " << int_polygon_id << std::endl;
 
     Rcpp::IntegerVector int_linestring_id(1);
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
+    // Rcpp::Rcout << "linestring_id: " << int_linestring_id << std::endl;
+
 
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_multipolygon_id, int_polygon_id );
     int_id_cols = geometries::utils::concatenate_vectors( int_id_cols, int_linestring_id );
+    // Rcpp::Rcout << "id_cols: " << int_id_cols << std::endl;
+    // Rcpp::Rcout << "geometry_cols: " << int_geometry_cols << std::endl;
 
     Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
     return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTIPOLYGON, bbox, z_range, m_range );

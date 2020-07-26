@@ -21,13 +21,15 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool close = true
+      bool close
   ) {
 
     Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
     SEXP ids = geometries::utils::get_ids( x, multipolygon_id );
+    sfheaders::sf::id_length_check( ids, sfc );
+
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
@@ -39,16 +41,18 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool& keep,
-      bool close = true
+      bool keep,
+      bool close
   ) {
 
     if( !keep ) {
-      return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm );
+      return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
     }
 
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
+
+    // return sfc;
 
     SEXP id_cols = geometries::utils::concatenate_vectors( polygon_id, linestring_id );
     SEXP property_cols = geometries::utils::other_columns( x, geometry_cols, multipolygon_id, id_cols );

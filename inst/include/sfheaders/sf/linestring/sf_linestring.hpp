@@ -25,6 +25,8 @@ namespace sf {
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
     SEXP ids = geometries::utils::get_ids( x, linestring_id );
+    sfheaders::sf::id_length_check( ids, sfc );
+
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc, ids );
     return sf;
   }
@@ -33,8 +35,8 @@ namespace sf {
     SEXP& x,
     SEXP& geometry_cols,
     SEXP& linestring_id,
-    bool& keep,
-    std::string xyzm
+    std::string xyzm,
+    bool& keep
   ) {
 
     if( !keep ) {

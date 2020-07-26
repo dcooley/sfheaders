@@ -3,6 +3,7 @@
 #include "sfheaders/sfc/sfc.hpp"
 
 #include "sfheaders/sfg/polygon/sfg_polygon.hpp"
+#include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
 
 // [[Rcpp::export]]
 SEXP rcpp_sfc_point( SEXP x, SEXP cols, std::string xyzm ) {
@@ -50,7 +51,7 @@ SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, std::st
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_polygons( Rcpp::List lst, bool close, std::string xyzm ) {
+SEXP rcpp_sfc_polygons( Rcpp::List lst, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_polygons( lst, xyzm, close );
 }
 
@@ -61,38 +62,38 @@ SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygo
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
+SEXP rcpp_sfc_multipolygons( Rcpp::List lst, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_multipolygons( lst, xyzm, close );
 }
 
-// // [[Rcpp::export]]
-// Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, bool close ) {
-//
-//   Rcpp::List attributes = sfheaders::sfc::get_sfc_attributes( sfc );
-//
-//   R_xlen_t i;
-//   R_xlen_t n_sfc = sfc.size();
-//   Rcpp::List res( n_sfc );
-//   for( i = 0; i < n_sfc; ++i ) {
-//     SEXP sfg = sfc[ i ];
-//     Rcpp::CharacterVector cls = sfheaders::sfc::getSfClass( sfg );
-//     std::string sfg_type;
-//     sfg_type = cls[1];
-//     std::string xyzm;
-//     xyzm = cls[0];
-//     if( sfg_type == "POLYGON" ) {
-//       Rcpp::List p = Rcpp::as< Rcpp::List >( sfg );
-//       res[ i ] = sfheaders::sfg::remove_polygon_holes( p, xyzm, close );
-//     } else if ( sfg_type == "MULTIPOLYGON" ) {
-//       Rcpp::List mp = Rcpp::as< Rcpp::List >( sfg );
-//       res[ i ] = sfheaders::sfg::remove_multipolygon_holes( mp, xyzm, close );
-//     } else {
-//       res[ i ] = sfg;
-//     }
-//   }
-//   sfheaders::sfc::attach_sfc_attributes( res, attributes );
-//   return res;
-// }
+// [[Rcpp::export]]
+Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, bool close ) {
+
+  Rcpp::List attributes = sfheaders::sfc::get_sfc_attributes( sfc );
+
+  R_xlen_t i;
+  R_xlen_t n_sfc = sfc.size();
+  Rcpp::List res( n_sfc );
+  for( i = 0; i < n_sfc; ++i ) {
+    SEXP sfg = sfc[ i ];
+    Rcpp::CharacterVector cls = sfheaders::sfc::getSfClass( sfg );
+    std::string sfg_type;
+    sfg_type = cls[1];
+    std::string xyzm;
+    xyzm = cls[0];
+    if( sfg_type == "POLYGON" ) {
+      Rcpp::List p = Rcpp::as< Rcpp::List >( sfg );
+      res[ i ] = sfheaders::sfg::remove_polygon_holes( p, xyzm, close );
+    } else if ( sfg_type == "MULTIPOLYGON" ) {
+      Rcpp::List mp = Rcpp::as< Rcpp::List >( sfg );
+      res[ i ] = sfheaders::sfg::remove_multipolygon_holes( mp, xyzm, close );
+    } else {
+      res[ i ] = sfg;
+    }
+  }
+  sfheaders::sfc::attach_sfc_attributes( res, attributes );
+  return res;
+}
 
 
 // // [[Rcpp::export]]

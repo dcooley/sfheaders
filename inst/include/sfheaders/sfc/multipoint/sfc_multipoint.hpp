@@ -47,6 +47,7 @@ namespace sfc {
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
     geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
+
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
 
     R_xlen_t required_cols = col_counter + n_id_cols;

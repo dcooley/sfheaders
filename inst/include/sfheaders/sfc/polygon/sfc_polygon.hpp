@@ -27,7 +27,7 @@ namespace sfc {
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, polygon_id, linestring_id );
-      return sfc_polygon( x, geometry_cols2, polygon_id, linestring_id, xyzm );
+      return sfc_polygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
     }
 
     int n_id_cols = 2;
@@ -55,7 +55,6 @@ namespace sfc {
 
     Rcpp::IntegerVector geometry_cols_int = geometries::utils::sexp_col_int( x, geometry_cols );
 
-
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List res( required_cols );
 
@@ -63,6 +62,7 @@ namespace sfc {
 
     Rcpp::IntegerVector int_polygon_id(1);
     sfheaders::utils::resolve_id( x, polygon_id, int_polygon_id, res, lst, col_counter );
+
 
     Rcpp::IntegerVector int_linestring_id(1);
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );

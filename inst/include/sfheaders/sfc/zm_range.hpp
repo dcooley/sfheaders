@@ -12,7 +12,6 @@
 namespace sfheaders {
 namespace zm {
 
-  // #nocov start
   inline void calculate_zm_ranges(
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
@@ -120,6 +119,48 @@ namespace zm {
   }
 
   inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      Rcpp::IntegerVector& iv,
+      Rcpp::IntegerVector& geometry_cols,
+      std::string xyzm
+  ) {
+    if( xyzm.empty() ) {
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
+    }
+
+    if ( xyzm ==  "XYM" ) {
+      sfheaders::zm::calculate_m_range( m_range, iv, geometry_cols, xyzm );
+    } else if ( xyzm == "XYZ" ) {
+      sfheaders::zm::calculate_z_range( z_range, iv, geometry_cols );
+    } else if ( xyzm == "XYZM" ) {
+      sfheaders::zm::calculate_z_range( z_range, iv, geometry_cols );
+      sfheaders::zm::calculate_m_range( m_range, iv, geometry_cols, xyzm );
+    }
+  }
+
+  // inline void calculate_zm_ranges(
+  //     Rcpp::NumericVector& z_range,
+  //     Rcpp::NumericVector& m_range,
+  //     Rcpp::IntegerVector& iv,
+  //     Rcpp::StringVector& geometry_cols,
+  //     std::string xyzm
+  // ) {
+  //   if( xyzm.empty() ) {
+  //     xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
+  //   }
+  //
+  //   if ( xyzm ==  "XYM" ) {
+  //     sfheaders::zm::calculate_m_range( m_range, iv, geometry_cols, xyzm );
+  //   } else if ( xyzm == "XYZ" ) {
+  //     sfheaders::zm::calculate_z_range( z_range, iv, geometry_cols );
+  //   } else if ( xyzm == "XYZM" ) {
+  //     sfheaders::zm::calculate_z_range( z_range, iv, geometry_cols );
+  //     sfheaders::zm::calculate_m_range( m_range, iv, geometry_cols, xyzm );
+  //   }
+  // }
+
+  inline void calculate_zm_ranges(
     Rcpp::NumericVector& z_range,
     Rcpp::NumericVector& m_range,
     Rcpp::IntegerMatrix& im,
@@ -143,8 +184,92 @@ namespace zm {
   inline void calculate_zm_ranges(
       Rcpp::NumericVector& z_range,
       Rcpp::NumericVector& m_range,
+      Rcpp::IntegerMatrix& im,
+      Rcpp::StringVector& geometry_cols,
+      std::string xyzm
+  ) {
+    if( xyzm.empty() ) {
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
+    }
+
+    if ( xyzm ==  "XYM" ) {
+      sfheaders::zm::calculate_m_range( m_range, im, geometry_cols, xyzm );
+    } else if ( xyzm == "XYZ" ) {
+      sfheaders::zm::calculate_z_range( z_range, im, geometry_cols );
+    } else if ( xyzm == "XYZM" ) {
+      sfheaders::zm::calculate_z_range( z_range, im, geometry_cols );
+      sfheaders::zm::calculate_m_range( m_range, im, geometry_cols, xyzm );
+    }
+  }
+
+  inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      Rcpp::NumericVector& nv,
+      Rcpp::IntegerVector& geometry_cols,
+      std::string xyzm
+  ) {
+    if( xyzm.empty() ) {
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
+    }
+
+    if ( xyzm ==  "XYM" ) {
+      sfheaders::zm::calculate_m_range( m_range, nv, geometry_cols, xyzm );
+    } else if ( xyzm == "XYZ" ) {
+      sfheaders::zm::calculate_z_range( z_range, nv, geometry_cols );
+    } else if ( xyzm == "XYZM" ) {
+      sfheaders::zm::calculate_z_range( z_range, nv, geometry_cols );
+      sfheaders::zm::calculate_m_range( m_range, nv, geometry_cols, xyzm );
+    }
+  }
+
+  // inline void calculate_zm_ranges(
+  //     Rcpp::NumericVector& z_range,
+  //     Rcpp::NumericVector& m_range,
+  //     Rcpp::NumericVector& nv,
+  //     Rcpp::StringVector& geometry_cols,
+  //     std::string xyzm
+  // ) {
+  //   if( xyzm.empty() ) {
+  //     xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
+  //   }
+  //
+  //   if ( xyzm ==  "XYM" ) {
+  //     sfheaders::zm::calculate_m_range( m_range, nv, geometry_cols, xyzm );
+  //   } else if ( xyzm == "XYZ" ) {
+  //     sfheaders::zm::calculate_z_range( z_range, nv, geometry_cols );
+  //   } else if ( xyzm == "XYZM" ) {
+  //     sfheaders::zm::calculate_z_range( z_range, nv, geometry_cols );
+  //     sfheaders::zm::calculate_m_range( m_range, nv, geometry_cols, xyzm );
+  //   }
+  // }
+
+  inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
       Rcpp::NumericMatrix& nm,
       Rcpp::IntegerVector& geometry_cols,
+      std::string xyzm
+  ) {
+    if( xyzm.empty() ) {
+      xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
+    }
+
+    if ( xyzm ==  "XYM" ) {
+      sfheaders::zm::calculate_m_range( m_range, nm, geometry_cols, xyzm );
+    } else if ( xyzm == "XYZ" ) {
+      sfheaders::zm::calculate_z_range( z_range, nm, geometry_cols );
+    } else if ( xyzm == "XYZM" ) {
+      sfheaders::zm::calculate_z_range( z_range, nm, geometry_cols );
+      sfheaders::zm::calculate_m_range( m_range, nm, geometry_cols, xyzm );
+    }
+  }
+
+  inline void calculate_zm_ranges(
+      Rcpp::NumericVector& z_range,
+      Rcpp::NumericVector& m_range,
+      Rcpp::NumericMatrix& nm,
+      Rcpp::StringVector& geometry_cols,
       std::string xyzm
   ) {
     if( xyzm.empty() ) {
@@ -289,20 +414,42 @@ namespace zm {
       Rcpp::StringVector& geometry_cols,
       std::string xyzm
   ) {
-    if( Rf_inherits( x, "data.frame") ) {
 
-      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
+    switch( TYPEOF( x ) ) {
+      case INTSXP: {
+        if( Rf_isMatrix( x ) ) {
+          Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+          calculate_zm_ranges( z_range, m_range, im, geometry_cols, xyzm );
+        // } else {
+        //   Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+        //   calculate_zm_ranges( z_range, m_range, iv, geometry_cols, xyzm );
+        // }
+          break;
+        }
+      }
+      case REALSXP: {
+        if( Rf_isMatrix( x ) ) {
+          Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+          calculate_zm_ranges( z_range, m_range, nm, geometry_cols, xyzm );
+        // } else {
+        //   Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+        //   calculate_zm_ranges( z_range, m_range, nv, geometry_cols, xyzm );
+        // }
+          break;
+        }
+      }
+      case VECSXP: {
+        if( Rf_inherits( x, "data.frame") ) {
 
-    // } else if ( Rf_isMatrix( x ) ) {
-
-      // Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( x );
-      // calculate_zm_ranges( z_range, m_range, mat, geometry_cols, xyzm );
-
-    } else {
-      Rcpp::stop("sfheaders - expecting data.frame or matrix");
+          Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+          calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
+          break;
+        }
+      }
+      default: {
+        Rcpp::stop("sfheaders - expecting data.frame or matrix");
+      }
     }
-
   }
 
   inline void calculate_zm_ranges(
@@ -312,20 +459,39 @@ namespace zm {
       Rcpp::IntegerVector& geometry_cols,
       std::string xyzm
   ) {
-    if( Rf_inherits( x, "data.frame") ) {
+    switch( TYPEOF( x ) ) {
+      case INTSXP: {
+        if( Rf_isMatrix( x ) ) {
+          Rcpp::IntegerMatrix im = Rcpp::as< Rcpp::IntegerMatrix >( x );
+          calculate_zm_ranges( z_range, m_range, im, geometry_cols, xyzm );
+        } else {
+          Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( x );
+          calculate_zm_ranges( z_range, m_range, iv, geometry_cols, xyzm );
+        }
+        break;
+      }
+      case REALSXP: {
+        if( Rf_isMatrix( x ) ) {
+          Rcpp::NumericMatrix nm = Rcpp::as< Rcpp::NumericMatrix >( x );
+          calculate_zm_ranges( z_range, m_range, nm, geometry_cols, xyzm );
+        } else {
+          Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( x );
+          calculate_zm_ranges( z_range, m_range, nv, geometry_cols, xyzm );
+        }
+        break;
+      }
+      case VECSXP: {
+        if( Rf_inherits( x, "data.frame") ) {
 
-      Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
-      calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
-
-    } else if ( Rf_isMatrix( x ) ) {
-
-      Rcpp::NumericMatrix mat = Rcpp::as< Rcpp::NumericMatrix >( x );
-      calculate_zm_ranges( z_range, m_range, mat, geometry_cols, xyzm );
-
-    } else {
-      Rcpp::stop("sfheaders - expecting data.frame or matrix");
+          Rcpp::DataFrame df = Rcpp::as< Rcpp::DataFrame >( x );
+          calculate_zm_ranges( z_range, m_range, df, geometry_cols, xyzm );
+          break;
+        }
+      }
+      default: {
+        Rcpp::stop("sfheaders - expecting data.frame or matrix");
+      }
     }
-
   }
 
 
@@ -337,23 +503,21 @@ namespace zm {
       std::string xyzm
   ) {
     switch( TYPEOF( geometry_cols ) ) {
-    case INTSXP: {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
-      calculate_zm_ranges( z_range, m_range, x, iv, xyzm );
-      break;
-    }
-    case STRSXP: {
-      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( geometry_cols );
-      calculate_zm_ranges( z_range, m_range, x, sv, xyzm );
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unknown column type");
-    }
+      case INTSXP: {
+        Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
+        calculate_zm_ranges( z_range, m_range, x, iv, xyzm );
+        break;
+      }
+      case STRSXP: {
+        Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( geometry_cols );
+        calculate_zm_ranges( z_range, m_range, x, sv, xyzm );
+        break;
+      }
+      default: {
+        Rcpp::stop("sfheaders - unknown column type");
+      }
     }
   }
-
-  // #nocov end
 
   // overloads for revedeps (geojsonsf)
   inline void calculate_zm_ranges(

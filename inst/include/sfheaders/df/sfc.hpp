@@ -17,6 +17,7 @@ namespace df {
       Rcpp::stop("sfheaders - column indexing error - please report this issue, along with an example, at github.com/dcooley/sfheaders");  // #nocov
     }
   }
+
   inline Rcpp::List setup_result( R_xlen_t& total_coordinates ) {
 
     Rcpp::NumericVector sfc_id_res( total_coordinates, Rcpp::NumericVector::get_na() );

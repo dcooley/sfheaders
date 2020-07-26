@@ -146,9 +146,11 @@ test_that("ID order maintained",{
     , m = 1:10
   )
 
-  expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = FALSE, keep = FALSE, "" ), "geometries - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, keep = FALSE, "" ), "geometries - error indexing lines, perhaps caused by un-ordered data?" )
-  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0, keep = FALSE, "" ), "sfheaders - linestring columns types are different")
+  ## vv no longer errors now we're using rleid()
+  #expect_error( sfheaders:::rcpp_sf_polygon( df, c(2:3), 0L, 1L, close = FALSE, keep = FALSE, "" ), "geometries - error indexing lines, perhaps caused by un-ordered data?" ) ## because the id2 is out of order
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, keep = FALSE, "" ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 1L, keep = TRUE, "" ), "sfheaders - error indexing lines, perhaps caused by un-ordered data?" )
+  expect_error( sfheaders:::rcpp_sf_linestring( df, c(2:3), 0, keep = FALSE, "" ), "geometries - require either integer or string column indices" )
 
 })
 
@@ -176,7 +178,7 @@ test_that("unordered ids cause issues",{
     , m = 1:10
   )
 
-  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2", close = FALSE)
+  res <- sfheaders::sf_polygon(df, polygon_id = "id1", linestring_id = "id2", close = FALSE )
   expect_true( all( res$id == unique( df$id1 ) ) )
   m1 <- res$geometry[[1]][[1]]
   m2 <- res$geometry[[1]][[2]]

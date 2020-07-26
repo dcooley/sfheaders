@@ -23,65 +23,65 @@ test_that("errors and crashes are handled and fixed",{
 
   ## indexing incorrect id columns
   df <- data.frame(x = 1, y = 2 )
-  expect_error( sfheaders:::rcpp_sfc_multipoint(df, c(0L,1L), 2L, ""), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_linestring(df, c(0L,1L), 2L, ""), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), 2L, NULL, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), NULL, 2L, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), 2L, 2L, ""), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipoint(df, c(0L,1L), 2L, ""), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_linestring(df, c(0L,1L), 2L, ""), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), 2L, NULL, "" ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), NULL, 2L, "" ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), 2L, 2L, ""), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_polygon(df, c(0L,1L), 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, NULL, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), NULL, 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), NULL, NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, NULL, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), NULL, NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), NULL, 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), NULL, 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), NULL, 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(df, c(0L,1L), 2L, 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
   m <- matrix( 1:2, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfc_multipoint(m, c(0L,1L), 2L, ""), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_linestring(m, c(0L,1L), 2L, ""), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, NULL, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), NULL, 2L, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, 2L, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipoint(m, c(0L,1L), 2L, ""), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_linestring(m, c(0L,1L), 2L, ""), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, NULL, "" ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), NULL, 2L, "" ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, 2L, "" ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_polygon(m, c(0L,1L), 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, NULL, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), NULL, 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), NULL, NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, NULL, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), NULL, 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), NULL, NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), NULL, 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), NULL, 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfc_multipolygon(m, c(0L,1L), 2L, 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
 
   df <- data.frame(x = 1, y = 2 )
-  expect_error( sfheaders:::rcpp_sfg_multilinestring(m, c(0L,1L), 2L, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multilinestring(m, c(0L,1L), 2L, "" ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfg_polygon(m, c(0L,1L), 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_polygon(m, c(0L,1L), 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
   m <- matrix( 1:2, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfg_multilinestring(m, c(0L,1L), 2L, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multilinestring(m, c(0L,1L), 2L, "" ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfg_polygon(m, c(0L,1L), 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_polygon(m, c(0L,1L), 2L, "", FALSE ), "geometries - column index doesn't exist")
 
-  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, NULL, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), NULL, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
-  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, 2L, FALSE, "" ), "geometries - id column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, NULL, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), NULL, 2L, "", FALSE ), "geometries - column index doesn't exist")
+  expect_error( sfheaders:::rcpp_sfg_multipolygon(m, c(0L,1L), 2L, 2L, "", FALSE ), "geometries - column index doesn't exist")
 
 
 })

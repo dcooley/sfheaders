@@ -35,13 +35,22 @@ namespace sfg {
   }
 
   inline SEXP sfg_multipoint(
+      Rcpp::List& lst,
+      std::string xyzm
+  ) {
+    Rcpp::List lst2 = Rcpp::clone( lst );
+    sfheaders::sfg::make_sfg( lst2, sfheaders::sfg::SFG_MULTIPOINT, xyzm );
+    return lst2;
+  }
+
+  inline SEXP sfg_multipoint(
       SEXP& x,
       SEXP& geometry_cols,
       std::string xyzm
   ) {
 
     //Rcpp::stop("stopping");
-    SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+    SEXP geometry_mat = geometries::matrix::to_geometry_matrix( x, geometry_cols );
     R_xlen_t n_col = geometries::utils::sexp_n_col( geometry_mat );
     xyzm = sfheaders::utils::validate_xyzm( xyzm, n_col );
     sfheaders::sfg::make_sfg( geometry_mat, sfheaders::sfg::SFG_MULTIPOINT, xyzm );

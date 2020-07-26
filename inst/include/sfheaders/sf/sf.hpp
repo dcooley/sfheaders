@@ -50,9 +50,9 @@ namespace api {
     SEXP& polygon_id,
     SEXP& multipolygon_id,
     SEXP& list_columns,
-    bool close,
-    bool keep,
     std::string xyzm,
+    bool keep,
+    bool close,
     const std::string sf_type
   ) {
       // TODO - Make the id_columns the correct type
@@ -69,15 +69,14 @@ namespace api {
     // will the output 'df' remain un-sorted?
     // I think it will... right??....
 
-
     if( sf_type == "POINT" ) {
-      sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, keep, xyzm );
+      sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, xyzm, keep );
     } else if ( sf_type == "MULTIPOINT" ) {
-      sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, keep, xyzm );
+      sf_objs = sfheaders::sf::sf_multipoint( obj, geometry_columns, multipoint_id, xyzm, keep );
     } else if ( sf_type == "LINESTRING" ) {
-      sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, keep, xyzm );
+      sf_objs = sfheaders::sf::sf_linestring( obj, geometry_columns, linestring_id, xyzm, keep );
     } else if ( sf_type == "MULTILINESTRING" ) {
-      sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, keep, xyzm );
+      sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, xyzm, keep );
     } else if ( sf_type == "POLYGON" ) {
       sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, xyzm, keep, close );
     } else if ( sf_type == "MULTIPOLYGON" ) {
@@ -98,22 +97,33 @@ namespace api {
     Rcpp::IntegerVector property_cols = sf_objs["property_cols"];
     Rcpp::IntegerVector geometry_idx = sf_objs["geometry_idx"];
 
-    // Rcpp::Rcout << "id_column can be null" << std::endl;
     Rcpp::IntegerVector id_column;
+
+    Rcpp::Rcout << "here 1" << std::endl;
 
     if( sf_objs.containsElementNamed("id_column") ) {
       id_column = sf_objs["id_column"];
+      Rcpp::Rcout << "id_column: " << id_column << std::endl;
     }
 
     Rcpp::IntegerVector int_list_columns;
 
     if( !Rf_isNull( list_columns ) ) {
       // Rcpp::Rcout << "list columns " << std::endl;
-      int_list_columns = geometries::utils::sexp_col_int( data, list_columns );
+
+      //Rcpp::Rcout << "type of list: " << TYPEOF( list_columns ) << std::endl;
+      //return data;
+
+      // need to use 'obj' here because 'list_columns' may be a string, but 'data'
+      // has been made into an unnamed list
+      int_list_columns = geometries::utils::sexp_col_int( obj, list_columns );
     }
 
     // Rcpp::Rcout << "return sf_objs" << std::endl;
     //return sf_objs;
+
+    Rcpp::Rcout << "here 2" << std::endl;
+
     return sfheaders::sf::create_sf(data, sfc, id_column, property_cols, int_list_columns, geometry_idx );
 
 
@@ -121,28 +131,28 @@ namespace api {
 
   // TODO
   // write each of the rcpp_sf_xxx functions here, so they appropriately call the to_sf() code
-  inline SEXP rcpp_sf_point( SEXP x, SEXP cols, bool keep, std::string xyzm ) {
-    return to_sf( x, cols, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "POINT" );
+  inline SEXP sf_point( SEXP x, SEXP cols, std::string xyzm, bool keep ) {
+    return to_sf( x, cols, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, xyzm, keep, false, "POINT" );
   }
 
-  inline SEXP rcpp_sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id, bool keep, std::string xyzm ) {
-    return to_sf( x, cols, multipoint_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "MULTIPOINT" );
+  inline SEXP sf_multipoint( SEXP x, SEXP cols, SEXP multipoint_id, std::string xyzm, bool keep ) {
+    return to_sf( x, cols, multipoint_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, R_NilValue, xyzm, keep, false, "MULTIPOINT" );
   }
 
-  inline SEXP rcpp_sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, bool keep, std::string xyzm ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "LINESTRING" );
+  inline SEXP sf_linestring( SEXP x, SEXP cols, SEXP linestring_id, std::string xyzm, bool keep ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, R_NilValue, R_NilValue, R_NilValue, xyzm, keep, false, "LINESTRING" );
   }
 
-  inline SEXP rcpp_sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, bool keep, std::string xyzm ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, multilinestring_id, R_NilValue, R_NilValue, R_NilValue, false, keep, xyzm, "MULTILINESTRING" );
+  inline SEXP sf_multilinestring( SEXP x, SEXP cols, SEXP multilinestring_id, SEXP linestring_id, std::string xyzm, bool keep ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, multilinestring_id, R_NilValue, R_NilValue, R_NilValue, xyzm, keep, false, "MULTILINESTRING" );
   }
 
-  inline SEXP rcpp_sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, std::string xyzm ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, R_NilValue, R_NilValue, close, keep, xyzm, "POLYGON" );
+  inline SEXP sf_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP linestring_id, std::string xyzm, bool keep, bool close ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, R_NilValue, R_NilValue, xyzm, keep, close, "POLYGON" );
   }
 
-  inline SEXP rcpp_sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, bool keep, std::string xyzm ) {
-    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, multipolygon_id, R_NilValue, close, keep, xyzm, "MULTIPOLYGON" );
+  inline SEXP sf_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, std::string xyzm, bool keep, bool close ) {
+    return to_sf( x, cols, R_NilValue, linestring_id, R_NilValue, polygon_id, multipolygon_id, R_NilValue, xyzm, keep, close, "MULTIPOLYGON" );
   }
 
 

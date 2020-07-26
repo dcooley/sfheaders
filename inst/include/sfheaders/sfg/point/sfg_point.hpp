@@ -17,7 +17,7 @@ namespace sfg {
     Rcpp::Vector< RTYPE >& vec,
     std::string xyzm
   ) {
-    SEXP geometry_mat = geometries::matrix::to_matrix< RTYPE >( vec );
+    SEXP geometry_mat = geometries::matrix::to_geometry_matrix< RTYPE >( vec );
     sfheaders::sfg::make_sfg( geometry_mat, sfheaders::sfg::SFG_POINT, xyzm );
     return geometry_mat;
   }
@@ -28,7 +28,7 @@ namespace sfg {
       std::string xyzm
   ) {
 
-    SEXP geometry_mat = geometries::matrix::to_matrix( x, geometry_cols );
+    SEXP geometry_mat = geometries::matrix::to_geometry_matrix( x, geometry_cols );
     R_xlen_t n_row = geometries::utils::sexp_n_row( x );
     if( n_row > 1 ) {
       Rcpp::stop("sfheaders - points can only be one row");

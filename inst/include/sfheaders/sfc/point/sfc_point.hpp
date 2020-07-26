@@ -21,14 +21,6 @@ inline SEXP sfc_point(
     std::string xyzm
 ) {
 
-  // TODO:
-  // if the input is a single vector
-  // if( Rf_isVector( x ) ) {
-  //   Rcpp::NumericMatrix nm( 1, Rf_length( x ) );
-  //   nm( 0, Rcpp::_ ) = Rcpp::as< Rcpp::NumericVector >( x );
-  //   return sfc_point( nm, geometry_cols, xyzm );
-  // }
-
   if( Rf_isNull( geometry_cols ) ) {
     // Rcpp::Rcout << "sfc_point - null geometries" << std::endl;
     // Rcpp::Rcout << "type x: " << TYPEOF( x ) << std::endl;
@@ -41,8 +33,12 @@ inline SEXP sfc_point(
     return sfc_point( x, geometry_cols2, xyzm );
   }
 
+  int n_empty = 0; // can have empty POINT objects
   int n_id_cols = 0;
   R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
+
+
+  //Rcpp::Rcout << "col_counter: " << col_counter << std::endl;
 
   // After subset_geometries we have moved the geometry columns
   // into the 0:(n_geometry-1) positions
@@ -71,10 +67,15 @@ inline SEXP sfc_point(
 
   sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
-  Rcpp::List sfc = geometries::make_geometries( res, attributes );
+  // POINTs need to be done slightly differnetly
+  // because they can be NULLL
+  //
+  // return lst;
+
+  Rcpp::List sfc = geometries::make_geometries( res, attributes, n_empty );
 
   // Rcpp::Rcout << "making_sfc" << std::endl;
-  return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range );
+  return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
 
 }
 
