@@ -64,7 +64,7 @@ namespace sfc {
     sfheaders::utils::resolve_id( x, multipoint_id, int_multipoint_id, res, lst, col_counter );
 
     Rcpp::List sfc = geometries::make_geometries( res, int_multipoint_id, int_geometry_cols, attributes );
-    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+    return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTIPOINT, bbox, z_range, m_range );
 
   }
 

@@ -81,7 +81,7 @@ namespace sf {
   }
 
   inline Rcpp::List create_sf(
-      Rcpp::List& df,
+      Rcpp::List& data,
       Rcpp::List& sfc,
       Rcpp::IntegerVector& id_column,
       Rcpp::IntegerVector& property_cols,
@@ -100,69 +100,75 @@ namespace sf {
     bool has_properties = !Rf_isNull( property_cols ) && Rf_length( property_cols ) > 0;
     bool has_list_cols = !Rf_isNull( list_column_idx );
 
+    R_xlen_t data_n_cols = Rf_length( data );
+
     R_xlen_t n_properties = property_cols.length();
     //_xlen_t n_col = has_id ? property_cols.length() : property_cols.length() + 1;
-    Rcpp::Rcout << "here 3" << std::endl;
-    Rcpp::StringVector df_names;
+    Rcpp::StringVector data_names( data_n_cols );
 
     R_xlen_t total_cols = n_properties + 1 + has_id; // +1 == sfc
     Rcpp::List sf( total_cols );
     Rcpp::StringVector res_names( total_cols );
     R_xlen_t i;
 
-    if( !Rf_isNull( df.names() ) ) {
-      df_names = df.names();
+    if( !Rf_isNull( data.names() ) ) {
+      data_names = data.names();
     } else {
 
-      // the property_cols object points to index of df_names
+      // the property_cols object points to index of data_names
       // so we need the maxium property_cols value
-      R_xlen_t n_names = Rcpp::max( property_cols ) + 1;
-      R_xlen_t m = n_names > total_cols ? n_names : total_cols;
-      Rcpp::Rcout << "m: " << m << std::endl;
-      df_names = make_names( m );
+      //R_xlen_t n_names = Rcpp::max( property_cols ) + 1;
+      //R_xlen_t m = n_names > total_cols ? n_names : total_cols;
+      //Rcpp::Rcout << "m: " << m << std::endl;
+
+      data_names = make_names( data_n_cols );
       // TODO/ this needs to be max( property_cols );
       // or at leaste max( n_properties ) of the input data object
     }
 
-    Rcpp::Rcout << "here 4" << std::endl;
-    Rcpp::Rcout << "names: " << df_names << std::endl;
+    Rcpp::Rcout << "names: " << data_names << std::endl;
     Rcpp::Rcout << "property cols " << property_cols << std::endl;
+
 
     //SEXP unique_ids;
     if( has_id ) {
       Rcpp::Rcout << "id_column: " << id_column << std::endl;
-      //return df;
+      //return data;
+      //Rcpp::stop("stopping");
+      //return data;
       //Rcpp::stop("stopping");
       int id = id_column[0];
-      SEXP ids = VECTOR_ELT( df, id );
+      SEXP ids = VECTOR_ELT( data, id );
       //return ids;
       Rcpp::Rcout << "type of id : " << TYPEOF( ids ) << std::endl;
       SEXP unique_ids = geometries::utils::get_sexp_unique( ids );
       id_length_check( unique_ids, sfc );
 
       sf[ 0 ] = unique_ids;
-      res_names[ 0 ] = df_names[ id ];
+      res_names[ 0 ] = data_names[ id ];
     }
 
 
     if( has_properties ) {
 
       Rcpp::Rcout << "n_properties: " << n_properties << std::endl;
-      Rcpp::Rcout << "df_names: " << df_names << std::endl;
+      Rcpp::Rcout << "data_names: " << data_names << std::endl;
+
+      //Rcpp::stop("Stopping");
 
       for( i = 0; i < n_properties; ++i ) {
 
         int idx = property_cols[ i ];
         Rcpp::Rcout << "idx: " << idx << std::endl;
         bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
-        SEXP v = df[ idx ];
+        SEXP v = data[ idx ];
 
         if( is_in ) {
           sf[ i + has_id ] = geometries::utils::fill_list( v, geometry_idx );
         } else {
           sf[ i + has_id ] = subset_properties( v, geometry_idx );
         }
-        res_names[ i + has_id ] = df_names[ idx ];
+        res_names[ i + has_id ] = data_names[ idx ];
       }
     }
     //Rcpp::stop("Stopping");
