@@ -69,7 +69,9 @@ namespace zm {
       T& val
   ) {
     T d = static_cast< T >( val );
-    calculate_m_range( m_range, d );
+    //calculate_m_range( m_range, d );
+    m_range[0] = std::min( d, m_range[0] );
+    m_range[1] = std::max( d, m_range[1] );
   }
 
 
@@ -114,7 +116,10 @@ namespace zm {
     int i = xyzm == "XYM" ? point[2] : point[3];
 
     double d = static_cast< double >( i );
-    calculate_m_range( m_range, d );
+
+    //calculate_m_range( m_range, d );
+    m_range[0] = std::min( d, m_range[0] );
+    m_range[1] = std::max( d, m_range[1] );
   }
 
   inline void calculate_m_range(
@@ -127,11 +132,14 @@ namespace zm {
 
     Rcpp::IntegerVector m = xyzm == "XYM" ? im( Rcpp::_, 2 ) : im( Rcpp::_, 3 );
 
-    double zmin = Rcpp::min( m );
-    double zmax = Rcpp::max( m );
+    int zmin = Rcpp::min( m );
+    int zmax = Rcpp::max( m );
 
-    m_range[0] = std::min( zmin, m_range[0] );
-    m_range[1] = std::max( zmax, m_range[1] );
+    double dmin = static_cast< double >( zmin );
+    double dmax = static_cast< double >( zmax );
+
+    m_range[0] = std::min( dmin, m_range[0] );
+    m_range[1] = std::max( dmax, m_range[1] );
 
   }
 
@@ -230,13 +238,14 @@ namespace zm {
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
 
-      Rcpp::IntegerVector v = iv[ idx ];
+      int v = iv[ idx ];
+      double d = static_cast< double >( v );
 
-      double zmin = Rcpp::min( v );
-      double zmax = Rcpp::max( v );
+      // double zmin = Rcpp::min( v );
+      // double zmax = Rcpp::max( v );
 
-      m_range[0] = std::min( zmin, m_range[0] );
-      m_range[1] = std::max( zmax, m_range[1] );
+      m_range[0] = std::min( d, m_range[0] );
+      m_range[1] = std::max( d, m_range[1] );
     }
   }
 
@@ -250,8 +259,10 @@ namespace zm {
     int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
+
       int idx = geometry_cols[ index_required ];
       Rcpp::IntegerVector m = im( Rcpp::_, idx );
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 
@@ -272,9 +283,11 @@ namespace zm {
     int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
+
       Rcpp::String idx = geometry_cols[ index_required ];
       std::string s_idx = idx.get_cstring();
       Rcpp::IntegerVector m = df[ s_idx ];
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 
@@ -297,13 +310,14 @@ namespace zm {
 
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
-      Rcpp::NumericVector v = vec[ idx ];
 
-      T zmin = Rcpp::min( v );
-      T zmax = Rcpp::max( v );
+      T v = vec[ idx ];
 
-      m_range[0] = std::min( zmin, m_range[0] );
-      m_range[1] = std::max( zmax, m_range[1] );
+      // T zmin = Rcpp::min( v );
+      // T zmax = Rcpp::max( v );
+
+      m_range[0] = std::min( v, m_range[0] );
+      m_range[1] = std::max( v, m_range[1] );
     }
   }
 
@@ -321,7 +335,7 @@ namespace zm {
 
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
-      Rcpp::NumericVector m = mat( Rcpp::_, idx );
+      Rcpp::Vector< RTYPE > m = mat( Rcpp::_, idx );
 
       T zmin = Rcpp::min( m );
       T zmax = Rcpp::max( m );
@@ -387,16 +401,13 @@ namespace zm {
       std::string xyzm
   ) {
 
-    // if( xyzm.empty() ) {
-    //   // it needs to be something for this function to work
-    //
-    // }
     int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       Rcpp::String idx = geometry_cols[ index_required ];
       std::string s_idx = idx.get_cstring();
       Rcpp::NumericVector m = df[ s_idx ];
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 

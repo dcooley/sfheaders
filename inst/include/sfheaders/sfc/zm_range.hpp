@@ -125,6 +125,10 @@ namespace zm {
       Rcpp::IntegerVector& geometry_cols,
       std::string xyzm
   ) {
+
+    Rcpp::Rcout << "zm iv: " << iv  << std::endl;
+    Rcpp::Rcout << "geometry_cols: " << geometry_cols << std::endl;
+
     if( xyzm.empty() ) {
       xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
@@ -209,6 +213,7 @@ namespace zm {
       Rcpp::IntegerVector& geometry_cols,
       std::string xyzm
   ) {
+
     if( xyzm.empty() ) {
       xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
@@ -316,6 +321,8 @@ namespace zm {
       std::string xyzm
   ) {
 
+    Rcpp::Rcout << "zm ranges" << std::endl;
+
     if( xyzm.empty() ) {
       xyzm = sfheaders::sfg::guess_xyzm( geometry_cols.size() );
     }
@@ -389,6 +396,9 @@ namespace zm {
       SEXP& geometry_cols,
       std::string xyzm
   ) {
+
+    Rcpp::Rcout << "zm ranges 3 " << std::endl;
+
     switch( TYPEOF( geometry_cols ) ) {
     case REALSXP: {}
     case INTSXP: {
@@ -414,6 +424,8 @@ namespace zm {
       Rcpp::StringVector& geometry_cols,
       std::string xyzm
   ) {
+
+    Rcpp::Rcout << "zm ranges 2 " << std::endl;
 
     switch( TYPEOF( x ) ) {
       case INTSXP: {
@@ -502,6 +514,9 @@ namespace zm {
       SEXP& geometry_cols,
       std::string xyzm
   ) {
+
+    Rcpp::Rcout << "zm ranges 1 " << std::endl;
+
     switch( TYPEOF( geometry_cols ) ) {
       case INTSXP: {
         Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( geometry_cols );
