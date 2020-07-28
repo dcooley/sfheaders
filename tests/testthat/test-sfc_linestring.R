@@ -251,3 +251,4 @@ test_that("issue 38 is fixed", {
   expect_true( all( unclass( attr( sfc, "z_range" ) ) == c(1, 10) ) )
   expect_true( all( is.na( unclass( attr( sfc, "m_range" ) ) ) ) )
 })
+

@@ -29,7 +29,7 @@ namespace sfg {
   ) {
 
     SEXP geometry_mat = geometries::matrix::to_geometry_matrix( x, geometry_cols );
-    R_xlen_t n_row = geometries::utils::sexp_n_row( x );
+    R_xlen_t n_row = geometries::utils::sexp_n_row( geometry_mat );
     if( n_row > 1 ) {
       Rcpp::stop("sfheaders - points can only be one row");
     }

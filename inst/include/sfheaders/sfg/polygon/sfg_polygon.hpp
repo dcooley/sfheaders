@@ -45,6 +45,11 @@ namespace sfg {
       bool close = true
   ) {
 
+    if( !Rf_inherits( x, "data.frame") && Rf_isNewList( x ) ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
+      return sfg_polygon( lst, xyzm, close );
+    }
+
     // needs to go through the make_geoemtries()
     // but attributes are assigned at the end
 

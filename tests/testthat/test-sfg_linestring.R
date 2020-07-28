@@ -134,9 +134,9 @@ test_that("sfg_LINESTRINGS returned from various R objects from src", {
 
 test_that("errors are found and handled", {
 
-  expect_error( sfheaders:::rcpp_sfg_linestring( 1L, NULL, "" ), "sfheaders - invalid dimension" )
+  expect_error( sfheaders:::rcpp_sfg_linestring( 1L, NULL, "" ), "sfheaders - can't work out the dimension" )
   x <- list(x = 1)
-  expect_error( sfheaders:::rcpp_sfg_linestring( x, NULL, "" ), "sfheaders - unsupported sfg_LINESTRING type" )
+  expect_error( sfheaders:::rcpp_sfg_linestring( x, NULL, "" ), "sfheaders - can't work out the dimension" )
 
   x <- matrix(1:4, ncol = 2)
   expect_error( sfheaders:::rcpp_sfg_linestring( x, c(1,2), "" ) )

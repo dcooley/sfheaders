@@ -56,7 +56,7 @@ namespace sfc {
 
     Rcpp::Rcout << "sfc_polygon 3"  << std::endl;
 
-    geometries::bbox::calculate_bbox( bbox, x );
+    geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
 
     Rcpp::Rcout << "sfc_polygon 4"  << std::endl;
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );

@@ -259,11 +259,11 @@ test_that("sfc_polygon works", {
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, NULL, NULL, c(0), "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, NULL, NULL, c(0L), "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, NULL, c(0), NULL, "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, NULL, c(0L), NULL, "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
@@ -271,29 +271,29 @@ test_that("sfc_polygon works", {
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, c(2,3), NULL, NULL, "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, c(2L,3L), NULL, NULL, "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, NULL, 0, 1, "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, NULL, 0L, 1L, "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, c(2,3), 0, NULL, "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, c(2L,3L), 0L, NULL, "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, c(2,3), NULL, 1, "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, c(2L,3L), NULL, 1L, "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
-  res <- sfheaders:::rcpp_sfc_polygon( df, c(2,3), c(0), c(1), "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( df, c(2L,3L), c(0L), c(1L), "", close = FALSE)
   expect_equal( attr( res, "class" ), c("sfc_POLYGON", "sfc") )
   expect_true( is_polygon( res ) )
 
   m <- as.matrix( df )
   m <- matrix( as.integer( m ), ncol = 4 )
-  res <- sfheaders:::rcpp_sfc_polygon( m, c(2,3), c(0), c(1), "", close = FALSE)
+  res <- sfheaders:::rcpp_sfc_polygon( m, c(2L,3L), c(0L), c(1L), "", close = FALSE)
   expect_true( is_polygon( res ) )
 
   res <- sfheaders:::rcpp_sfc_polygon( df, c("x","y"),c("p_id"),c("l_id"), "", close = FALSE)
@@ -367,3 +367,4 @@ test_that("vectorised version works",{
   expect_true( all( sapply( res, is_polygon ) ) )
 
 })
+

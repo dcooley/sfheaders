@@ -33,7 +33,7 @@ namespace sfg {
       std::string xyzm,
       bool close = true
   ) {
-
+    //Rcpp::List lst2 = Rcpp::clone( lst );
     lst = sfheaders::polygon_utils::close_polygon( lst, close );
     sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_MULTIPOLYGON, xyzm );
     return lst;
@@ -52,8 +52,15 @@ namespace sfg {
     // needs to go through the make_geoemtries()
     // but attributes are assigned at the end
 
+    if( !Rf_inherits( x, "data.frame") && Rf_isNewList( x ) ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
+      Rcpp::Rcout << "list" << std::endl;
+      return sfg_multipolygon( lst, xyzm, close );
+    }
+
+
     if( Rf_isNull( geometry_cols ) ) {
-      Rcpp::Rcout << "0" << std::endl;
+      // Rcpp::Rcout << "0" << std::endl;
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, polygon_id, linestring_id );
       return sfg_multipolygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
@@ -72,24 +79,23 @@ namespace sfg {
     R_xlen_t required_cols = col_counter + n_id_cols;
 
     Rcpp::IntegerVector geometry_cols_int = geometries::utils::sexp_col_int( x, geometry_cols );
-
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List res( required_cols );
 
     sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
-    Rcpp::Rcout << "3" << std::endl;
+    // Rcpp::Rcout << "3" << std::endl;
     Rcpp::IntegerVector int_polygon_id(1);
     sfheaders::utils::resolve_id( x, polygon_id, int_polygon_id, res, lst, col_counter );
 
-    Rcpp::Rcout << "4" << std::endl;
+    // Rcpp::Rcout << "4" << std::endl;
     Rcpp::IntegerVector int_linestring_id(1);
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
 
-    Rcpp::Rcout << "5" << std::endl;
+    // Rcpp::Rcout << "5" << std::endl;
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_polygon_id, int_linestring_id );
 
-    Rcpp::Rcout << "6" << std::endl;
+    // Rcpp::Rcout << "6" << std::endl;
     Rcpp::List attributes = Rcpp::List::create();
     Rcpp::List sfg = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
 
@@ -98,8 +104,10 @@ namespace sfg {
     Rcpp::List atts = Rcpp::List::create(
       Rcpp::_["class"] = class_attribute
     );
+    // Rcpp::Rcout << "7" << std::endl;
     geometries::utils::attach_attributes( sfg, atts );
 
+    // Rcpp::Rcout << "8" << std::endl;
     return sfg;
   }
 

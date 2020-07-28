@@ -49,8 +49,10 @@ namespace sfg {
       std::string xyzm
   ) {
 
-    // needs to go through the make_geoemtries()
-    // but attributes are assigned at the end
+    if( !Rf_inherits( x, "data.frame") && Rf_isNewList( x ) ) {
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
+      return sfg_multilinestring( lst, xyzm );
+    }
 
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
