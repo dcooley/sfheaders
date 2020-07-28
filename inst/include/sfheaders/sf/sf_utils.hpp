@@ -126,13 +126,13 @@ namespace sf {
       // or at leaste max( n_properties ) of the input data object
     }
 
-    Rcpp::Rcout << "names: " << data_names << std::endl;
-    Rcpp::Rcout << "property cols " << property_cols << std::endl;
+    // Rcpp::Rcout << "names: " << data_names << std::endl;
+    // Rcpp::Rcout << "property cols " << property_cols << std::endl;
 
 
     //SEXP unique_ids;
     if( has_id ) {
-      Rcpp::Rcout << "id_column: " << id_column << std::endl;
+      // Rcpp::Rcout << "id_column: " << id_column << std::endl;
       //return data;
       //Rcpp::stop("stopping");
       //return data;
@@ -140,7 +140,7 @@ namespace sf {
       int id = id_column[0];
       SEXP ids = VECTOR_ELT( data, id );
       //return ids;
-      Rcpp::Rcout << "type of id : " << TYPEOF( ids ) << std::endl;
+      // Rcpp::Rcout << "type of id : " << TYPEOF( ids ) << std::endl;
       SEXP unique_ids = geometries::utils::get_sexp_unique( ids );
       id_length_check( unique_ids, sfc );
 
@@ -151,15 +151,15 @@ namespace sf {
 
     if( has_properties ) {
 
-      Rcpp::Rcout << "n_properties: " << n_properties << std::endl;
-      Rcpp::Rcout << "data_names: " << data_names << std::endl;
+      // Rcpp::Rcout << "n_properties: " << n_properties << std::endl;
+      // Rcpp::Rcout << "data_names: " << data_names << std::endl;
 
       //Rcpp::stop("Stopping");
 
       for( i = 0; i < n_properties; ++i ) {
 
         int idx = property_cols[ i ];
-        Rcpp::Rcout << "idx: " << idx << std::endl;
+        // Rcpp::Rcout << "idx: " << idx << std::endl;
         bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
         SEXP v = data[ idx ];
 

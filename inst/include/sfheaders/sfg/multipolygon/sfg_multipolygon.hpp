@@ -54,7 +54,7 @@ namespace sfg {
 
     if( !Rf_inherits( x, "data.frame") && Rf_isNewList( x ) ) {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
-      Rcpp::Rcout << "list" << std::endl;
+      // Rcpp::Rcout << "list" << std::endl;
       return sfg_multipolygon( lst, xyzm, close );
     }
 
@@ -65,7 +65,7 @@ namespace sfg {
       SEXP geometry_cols2 = geometries::utils::other_columns( x, polygon_id, linestring_id );
       return sfg_multipolygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
     }
-    Rcpp::Rcout << "1" << std::endl;
+    // Rcpp::Rcout << "1" << std::endl;
 
     int n_id_cols = 2;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );

@@ -58,7 +58,7 @@ inline SEXP sfc_point(
   geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
   sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
 
-  Rcpp::Rcout << "z_range: " << z_range << std::endl;
+  // Rcpp::Rcout << "z_range: " << z_range << std::endl;
 
   R_xlen_t required_cols = col_counter + n_id_cols;
 

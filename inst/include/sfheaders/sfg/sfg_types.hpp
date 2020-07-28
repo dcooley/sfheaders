@@ -55,8 +55,6 @@ namespace sfg {
       Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
     );
     geometries::utils::attach_attributes( vec, attributes );
-
-    //vec.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
   }
 
 
@@ -76,8 +74,6 @@ namespace sfg {
       Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
     );
     geometries::utils::attach_attributes( mat, attributes );
-
-    //mat.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
   }
 
   inline void make_sfg(
@@ -93,8 +89,6 @@ namespace sfg {
       Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
     );
     geometries::utils::attach_attributes( lst, attributes );
-
-    // lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
   }
 
   inline void make_sfg(
@@ -111,8 +105,6 @@ namespace sfg {
       Rcpp::_["class"] = Rcpp::CharacterVector::create( dim, geom_type, "sfg" )
     );
     geometries::utils::attach_attributes( lst, attributes );
-
-    //lst.attr("class") = sfheaders::sfg::sfg_attributes( dim, geom_type );
   }
 
   inline void make_sfg(

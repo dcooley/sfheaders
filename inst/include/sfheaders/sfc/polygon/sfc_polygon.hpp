@@ -31,7 +31,7 @@ namespace sfc {
       return sfc_polygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
     }
 
-    Rcpp::Rcout << "sfc_polygon" << std::endl;
+    // Rcpp::Rcout << "sfc_polygon" << std::endl;
 
     int n_id_cols = 2;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
@@ -47,21 +47,21 @@ namespace sfc {
       Rcpp::_["class"] = class_attribute
     );
 
-    Rcpp::Rcout << "sfc_polygon 2" << std::endl;
+    // Rcpp::Rcout << "sfc_polygon 2" << std::endl;
 
 
     Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
     Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 
-    Rcpp::Rcout << "sfc_polygon 3"  << std::endl;
+    // Rcpp::Rcout << "sfc_polygon 3"  << std::endl;
 
     geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
 
-    Rcpp::Rcout << "sfc_polygon 4"  << std::endl;
+    // Rcpp::Rcout << "sfc_polygon 4"  << std::endl;
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
 
-    Rcpp::Rcout << "sfc_polygon 5"  << std::endl;
+    // Rcpp::Rcout << "sfc_polygon 5"  << std::endl;
 
     R_xlen_t required_cols = col_counter + n_id_cols;
 

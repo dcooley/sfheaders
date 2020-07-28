@@ -2,42 +2,42 @@ context("sfg_polygon")
 
 test_that("sfg polygon", {
 
-  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, NULL, NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
-  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), NULL, NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
-
-  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c(0L,1L), NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
-  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c(0L,1L), NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
+  # expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, NULL, NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
+  # expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), NULL, NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
+  #
+  # expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c(0L,1L), NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
+  # expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c(0L,1L), NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
 
   expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c(0L,1L), 2L, "", close = FALSE ), "geometries - column index doesn't exist" )
   expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c(0L,1L), 2L, "", close = FALSE ), "geometries - column index doesn't exist" )
 
-  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c("x","y"), NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
-  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c("x","y"), NULL, "", close = FALSE ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c("x","y"), NULL, "", close = FALSE ), "geometries - object does not have names" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c("x","y"), NULL, "", close = FALSE ), "geometries - object does not have names" )
 
-  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c("x","y"), "z", "", close = FALSE ), "sfheaders - expecting a matrix" )
-  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c("x","y"), "z", "", close = FALSE ), "sfheaders - expecting a matrix" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( 1L:2L, c("x","y"), "z", "", close = FALSE ), "geometries - object does not have names" )
+  expect_error( sfheaders:::rcpp_sfg_polygon( c(1.2,2), c("x","y"), "z", "", close = FALSE ), "geometries - object does not have names" )
 
   ## matrix
   x <- matrix(c(1:24), ncol = 2)
-  res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:24), ncol = 3)
-  res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:24), ncol = 4)
-  res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, NULL, NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XYZM", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:24), ncol = 2)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )
@@ -50,22 +50,22 @@ test_that("sfg polygon", {
 
   x <- matrix(c(1,2), ncol = 2)
   expect_error(
-    sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, close = TRUE, "" )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, "", close = TRUE )
+    , "geometries - closed shapes must have at least 4 rows. Use close = FALSE to bypass this check"
     )
 
   x <- matrix(c(1:8), ncol = 2)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XY", "POLYGON","sfg"))
 
   x <- matrix(c(1:24), ncol = 3)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L), NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XYZ", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )
 
   x <- matrix(c(1:24), ncol = 4)
-  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L,3L), NULL, close = TRUE, "" )
+  res <- sfheaders:::rcpp_sfg_polygon( x, c(0L,1L,2L,3L), NULL, "", close = TRUE )
   expect_equal( attr(res, "class"), c("XYZM", "POLYGON","sfg"))
   r_res <- sfg_polygon(x)
   expect_equal( res, r_res )

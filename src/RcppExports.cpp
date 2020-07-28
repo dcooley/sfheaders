@@ -533,12 +533,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sfg_points
-Rcpp::List rcpp_sfg_points(Rcpp::List& lst, std::string xyzm);
+Rcpp::List rcpp_sfg_points(Rcpp::List lst, std::string xyzm);
 RcppExport SEXP _sfheaders_rcpp_sfg_points(SEXP lstSEXP, SEXP xyzmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List& >::type lst(lstSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type lst(lstSEXP);
     Rcpp::traits::input_parameter< std::string >::type xyzm(xyzmSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_sfg_points(lst, xyzm));
     return rcpp_result_gen;

@@ -99,11 +99,11 @@ namespace api {
 
     Rcpp::IntegerVector id_column;
 
-    Rcpp::Rcout << "here 1" << std::endl;
+    // Rcpp::Rcout << "here 1" << std::endl;
 
     if( sf_objs.containsElementNamed("id_column") ) {
       id_column = sf_objs["id_column"];
-      Rcpp::Rcout << "id_column: " << id_column << std::endl;
+      // Rcpp::Rcout << "id_column: " << id_column << std::endl;
     }
 
     Rcpp::IntegerVector int_list_columns;
@@ -122,7 +122,7 @@ namespace api {
     // Rcpp::Rcout << "return sf_objs" << std::endl;
     //return sf_objs;
 
-    Rcpp::Rcout << "here 2" << std::endl;
+    // Rcpp::Rcout << "here 2" << std::endl;
 
     return sfheaders::sf::create_sf(data, sfc, id_column, property_cols, int_list_columns, geometry_idx );
 

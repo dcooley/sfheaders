@@ -12,9 +12,12 @@ namespace sfg {
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
+    SEXP geometry_cols = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+
     for( i = 0; i < n; ++i ) {
-      Rcpp::NumericMatrix x = lst[i];  // mlutilinestrings are lists of matrices
-      sfcs[i] = sfheaders::sfg::sfg_multilinestring( x, xyzm );
+      SEXP x = lst[i];  // mlutilinestrings are lists of matrices
+      sfcs[i] = sfheaders::sfg::sfg_multilinestring( x, geometry_cols, linestring_id, xyzm );
     }
     return sfcs;
   }

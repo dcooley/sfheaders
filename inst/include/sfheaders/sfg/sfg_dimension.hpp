@@ -41,6 +41,8 @@ namespace sfg {
       return xyzm;
     }
 
+    // Rcpp::Rcout << "n: " << n << std::endl;
+
     dimension_check( n );
     std::string dim = "XY";
 
@@ -55,23 +57,15 @@ namespace sfg {
     return dim;
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, std::string xyzm = "" ) {
-    R_xlen_t n = iv.size();
+  template< int RTYPE >
+  inline std::string sfg_dimension( Rcpp::Vector< RTYPE >& vec, std::string xyzm = "" ) {
+    R_xlen_t n = vec.size();
     return sfg_dimension( n, xyzm );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericVector& nv, std::string xyzm = "" ) {
-    R_xlen_t n = nv.size();
-    return sfg_dimension( n, xyzm );
-  }
-
-  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, std::string xyzm = "" ) {
-    R_xlen_t n_col = im.ncol();
-    return sfg_dimension( n_col, xyzm );
-  }
-
-  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, std::string xyzm = "" ) {
-    R_xlen_t n_col = nm.ncol();
+  template< int RTYPE >
+  inline std::string sfg_dimension( Rcpp::Matrix< RTYPE >& mat, std::string xyzm = "" ) {
+    R_xlen_t n_col = mat.ncol();
     return sfg_dimension( n_col, xyzm );
   }
 
