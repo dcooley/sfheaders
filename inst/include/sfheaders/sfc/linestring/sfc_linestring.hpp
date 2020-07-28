@@ -22,8 +22,6 @@ namespace sfc {
       std::string xyzm
   ) {
 
-
-
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, linestring_id );
@@ -64,7 +62,15 @@ namespace sfc {
 
     Rcpp::List sfc = geometries::make_geometries( res, int_linestring_id, int_geometry_cols, attributes );
     return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_LINESTRING, bbox, z_range, m_range );
+  }
 
+  inline SEXP sfc_linestring(
+      SEXP& x
+  ) {
+      SEXP geometry_cols = R_NilValue;
+      SEXP linestring_id = R_NilValue;
+      std::string xyzm;
+      return sfc_linestring( x, geometry_cols, linestring_id, xyzm );
   }
 
 } // sfc

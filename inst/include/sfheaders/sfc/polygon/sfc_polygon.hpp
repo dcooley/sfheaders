@@ -86,6 +86,16 @@ namespace sfc {
 
   }
 
+  inline SEXP sfc_polygon(
+      SEXP& x
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP polygon_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    std::string xyzm;
+    return sfc_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm );
+  }
+
 } // sfc
 } // sfheaders
 

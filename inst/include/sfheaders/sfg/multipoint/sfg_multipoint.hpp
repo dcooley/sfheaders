@@ -65,6 +65,14 @@ namespace sfg {
     return sfg_multipoint( x, geometry_cols, xyzm );
   }
 
+  inline SEXP sfg_multipoint(
+      SEXP& x
+  ) {
+    SEXP geometry_cols;
+    std::string xyzm;
+    return sfg_multipoint( x, geometry_cols, xyzm );
+  }
+
 } // sfg
 } // sfheaders
 

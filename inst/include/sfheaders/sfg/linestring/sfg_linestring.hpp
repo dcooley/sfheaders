@@ -61,6 +61,14 @@ namespace sfg {
     return sfg_linestring( x, geometry_cols, xyzm );
   }
 
+  inline SEXP sfg_linestring(
+      SEXP& x
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    std::string xyzm;
+    return sfg_linestring( x, geometry_cols, xyzm );
+  }
+
 } // sfg
 } // sfheaders
 

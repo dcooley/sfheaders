@@ -117,6 +117,37 @@ namespace sfg {
     return sfg_polygon( sfg_poly, geometry_cols, id_cols, xyzm, close );
   }
 
+  inline SEXP sfg_polygon(
+      SEXP& sfg_poly,
+      std::string xyzm
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP id_cols = R_NilValue;
+    bool close = true;
+    return sfg_polygon( sfg_poly, geometry_cols, id_cols, xyzm, close );
+  }
+
+  inline SEXP sfg_polygon(
+      SEXP& sfg_poly,
+      bool close = true
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP id_cols = R_NilValue;
+    std::string xyzm;
+    return sfg_polygon( sfg_poly, geometry_cols, id_cols, xyzm, close );
+  }
+
+  inline SEXP sfg_polygon(
+      SEXP& sfg_poly
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP id_cols = R_NilValue;
+    std::string xyzm;
+    bool close = true;
+    return sfg_polygon( sfg_poly, geometry_cols, id_cols, xyzm, close );
+  }
+
+
   inline SEXP remove_polygon_holes(
       Rcpp::List& sfg_poly,
       std::string xyzm,

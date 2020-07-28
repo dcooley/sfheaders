@@ -74,6 +74,16 @@ namespace sfc {
 
   }
 
+  inline SEXP sfc_multilinestring(
+      SEXP& x
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP multilinestring_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    std::string xyzm;
+    return sfc_multilinestring( x, geometry_cols, multilinestring_id, linestring_id, xyzm );
+  }
+
 } // sfc
 } // sfheaders
 

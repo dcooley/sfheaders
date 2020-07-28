@@ -84,6 +84,17 @@ namespace sfc {
 
   }
 
+  inline SEXP sfc_multipolygon(
+      SEXP& x
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP multipolygon_id = R_NilValue;
+    SEXP polygon_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    std::string xyzm;
+    return sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm );
+  }
+
 } // sfc
 } // sfheaders
 

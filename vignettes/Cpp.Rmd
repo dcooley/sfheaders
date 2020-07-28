@@ -76,16 +76,14 @@ Here are some example `cppFunction()` calls you can use to make various sf objec
 ```{r, eval = T}
 
 cppFunction(
-  includes = '
-    #include "sfheaders/sfg/sfg.hpp"
-  ',
-  code = '
+  includes = '#include "sfheaders/sfg/sfg.hpp"'
+  , code = '
     SEXP a_point( SEXP x ) {
       return sfheaders::sfg::sfg_point( x );
     }
   '
   , plugins = "cpp11"
-  , depends = "sfheaders"
+  , depends = c("geometries", "sfheaders")
 )
 
 ## vector
@@ -111,7 +109,7 @@ cppFunction(
     }
   '
   , plugins = "cpp11"
-  , depends = "sfheaders"
+  , depends = c("geometries", "sfheaders")
 )
 
 x <- 1:2
@@ -138,7 +136,7 @@ cppFunction(
     }
   ',
   plugins = "cpp11",
-  depends = "sfheaders"
+  depends = c("geometries", "sfheaders")
 )
 
 x <- 1:2

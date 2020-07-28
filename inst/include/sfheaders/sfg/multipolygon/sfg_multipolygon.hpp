@@ -122,6 +122,39 @@ namespace sfg {
     return sfg_multipolygon( sfg, geometry_cols, polygon_id, linestring_id, xyzm, close );
   }
 
+  inline SEXP sfg_multipolygon(
+      SEXP& sfg,
+      bool close = true
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP polygon_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    std::string xyzm;
+    return sfg_multipolygon( sfg, geometry_cols, polygon_id, linestring_id, xyzm, close );
+  }
+
+  inline SEXP sfg_multipolygon(
+      SEXP& sfg,
+      std::string xyzm
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP polygon_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    bool close = true;
+    return sfg_multipolygon( sfg, geometry_cols, polygon_id, linestring_id, xyzm, close );
+  }
+
+  inline SEXP sfg_multipolygon(
+      SEXP& sfg
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP polygon_id = R_NilValue;
+    SEXP linestring_id = R_NilValue;
+    std::string xyzm;
+    bool close = true;
+    return sfg_multipolygon( sfg, geometry_cols, polygon_id, linestring_id, xyzm, close );
+  }
+
   // only keep the outer-linestring / ring / matrix
   inline SEXP remove_multipolygon_holes(
       Rcpp::List& sfg_mp,
@@ -146,7 +179,6 @@ namespace sfg {
     geometries::utils::attach_attributes( res, atts );
     return res;
     //return sfg_multipolygon( res, xyzm, close);
-
   }
 
 } // sfg

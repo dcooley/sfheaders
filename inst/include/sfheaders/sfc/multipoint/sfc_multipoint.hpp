@@ -68,6 +68,15 @@ namespace sfc {
 
   }
 
+  inline SEXP sfc_multipoint(
+      SEXP& x
+  ) {
+    SEXP geometry_cols = R_NilValue;
+    SEXP multipoint_id = R_NilValue;
+    std::string xyzm;
+    return sfc_multipoint( x, geometry_cols, multipoint_id, xyzm );
+  }
+
 } // sfc
 } // sfheaders
 

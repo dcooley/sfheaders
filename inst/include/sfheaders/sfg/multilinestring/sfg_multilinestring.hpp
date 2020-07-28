@@ -104,6 +104,15 @@ namespace sfg {
     return sfg_multilinestring( x, geometry_cols, linestring_id, xyzm );
   }
 
+  inline SEXP sfg_multilinestring(
+      SEXP& x
+  ) {
+    SEXP geometry_cols;
+    SEXP linestring_id;
+    std::string xyzm;
+    return sfg_multilinestring( x, geometry_cols, linestring_id, xyzm );
+  }
+
 
 } // sfg
 } // sfheaders

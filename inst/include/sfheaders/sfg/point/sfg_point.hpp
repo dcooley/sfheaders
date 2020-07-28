@@ -47,6 +47,14 @@ namespace sfg {
     return sfg_point( x, geometry_cols, xyzm );
   }
 
+  inline SEXP sfg_point(
+      SEXP& x
+  ) {
+    SEXP geometry_cols;
+    std::string xyzm;
+    return sfg_point( x, geometry_cols, xyzm );
+  }
+
 } // sfg
 } // sfheaders
 
