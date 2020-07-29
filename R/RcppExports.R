@@ -209,31 +209,3 @@ rcpp_sfg_remove_holes <- function(sfg, close) {
     .Call(`_sfheaders_rcpp_sfg_remove_holes`, sfg, close)
 }
 
-rcpp_other_columns <- function(x, id_cols, id_col2, id_col3) {
-    .Call(`_sfheaders_rcpp_other_columns`, x, id_cols, id_col2, id_col3)
-}
-
-rcpp_id_positions <- function(line_ids, unique_ids) {
-    .Call(`_sfheaders_rcpp_id_positions`, line_ids, unique_ids)
-}
-
-rcpp_subset_dataframe <- function(df, cols, start, end) {
-    .Call(`_sfheaders_rcpp_subset_dataframe`, df, cols, start, end)
-}
-
-rcpp_concatenate_vectors <- function(vec_1, vec_2) {
-    .Call(`_sfheaders_rcpp_concatenate_vectors`, vec_1, vec_2)
-}
-
-rcpp_column_positions <- function(m, cols) {
-    .Call(`_sfheaders_rcpp_column_positions`, m, cols)
-}
-
-rcpp_where_is <- function(to_find, sv) {
-    .Call(`_sfheaders_rcpp_where_is`, to_find, sv)
-}
-
-rcpp_get_ids <- function(x, id_col) {
-    .Call(`_sfheaders_rcpp_get_ids`, x, id_col)
-}
-

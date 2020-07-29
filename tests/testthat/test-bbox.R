@@ -18,10 +18,10 @@ test_that("bounding box correctly calculated", {
   bbox <- bb( c(1.0, 2.0) )
   expect_equal( bbox, c(1,2,1,2) )
 
-  bbox <- bb( 1L:2L, c(1L,2L) )
+  bbox <- bb( 1L:2L, c(0L,1L) )
   expect_equal( bbox, c(1,2,1,2) )
 
-  bbox <- bb( c(1.0, 2.0), c(1,2) )
+  bbox <- bb( c(1.0, 2.0), c(0L,1L) )
   expect_equal( bbox, c(1,2,1,2) )
 
   x <- matrix(c(0,0,0,1), ncol = 2 )

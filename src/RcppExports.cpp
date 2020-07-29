@@ -689,94 +689,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_other_columns
-SEXP rcpp_other_columns(SEXP x, SEXP id_cols, SEXP id_col2, SEXP id_col3);
-RcppExport SEXP _sfheaders_rcpp_other_columns(SEXP xSEXP, SEXP id_colsSEXP, SEXP id_col2SEXP, SEXP id_col3SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type id_cols(id_colsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type id_col2(id_col2SEXP);
-    Rcpp::traits::input_parameter< SEXP >::type id_col3(id_col3SEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_other_columns(x, id_cols, id_col2, id_col3));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_id_positions
-Rcpp::IntegerMatrix rcpp_id_positions(SEXP line_ids, SEXP unique_ids);
-RcppExport SEXP _sfheaders_rcpp_id_positions(SEXP line_idsSEXP, SEXP unique_idsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type line_ids(line_idsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type unique_ids(unique_idsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_id_positions(line_ids, unique_ids));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_subset_dataframe
-Rcpp::DataFrame rcpp_subset_dataframe(Rcpp::DataFrame df, Rcpp::StringVector cols, int start, int end);
-RcppExport SEXP _sfheaders_rcpp_subset_dataframe(SEXP dfSEXP, SEXP colsSEXP, SEXP startSEXP, SEXP endSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type df(dfSEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type cols(colsSEXP);
-    Rcpp::traits::input_parameter< int >::type start(startSEXP);
-    Rcpp::traits::input_parameter< int >::type end(endSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_subset_dataframe(df, cols, start, end));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_concatenate_vectors
-SEXP rcpp_concatenate_vectors(SEXP vec_1, SEXP vec_2);
-RcppExport SEXP _sfheaders_rcpp_concatenate_vectors(SEXP vec_1SEXP, SEXP vec_2SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type vec_1(vec_1SEXP);
-    Rcpp::traits::input_parameter< SEXP >::type vec_2(vec_2SEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_concatenate_vectors(vec_1, vec_2));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_column_positions
-Rcpp::IntegerVector rcpp_column_positions(SEXP m, Rcpp::StringVector cols);
-RcppExport SEXP _sfheaders_rcpp_column_positions(SEXP mSEXP, SEXP colsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type m(mSEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type cols(colsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_column_positions(m, cols));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_where_is
-int rcpp_where_is(Rcpp::String to_find, Rcpp::StringVector sv);
-RcppExport SEXP _sfheaders_rcpp_where_is(SEXP to_findSEXP, SEXP svSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::String >::type to_find(to_findSEXP);
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type sv(svSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_where_is(to_find, sv));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_get_ids
-SEXP rcpp_get_ids(SEXP x, SEXP id_col);
-RcppExport SEXP _sfheaders_rcpp_get_ids(SEXP xSEXP, SEXP id_colSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type id_col(id_colSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_ids(x, id_col));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_calculate_bbox", (DL_FUNC) &_sfheaders_rcpp_calculate_bbox, 2},
@@ -831,13 +743,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_sfg_multipolygon", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygon, 6},
     {"_sfheaders_rcpp_sfg_multipolygons", (DL_FUNC) &_sfheaders_rcpp_sfg_multipolygons, 3},
     {"_sfheaders_rcpp_sfg_remove_holes", (DL_FUNC) &_sfheaders_rcpp_sfg_remove_holes, 2},
-    {"_sfheaders_rcpp_other_columns", (DL_FUNC) &_sfheaders_rcpp_other_columns, 4},
-    {"_sfheaders_rcpp_id_positions", (DL_FUNC) &_sfheaders_rcpp_id_positions, 2},
-    {"_sfheaders_rcpp_subset_dataframe", (DL_FUNC) &_sfheaders_rcpp_subset_dataframe, 4},
-    {"_sfheaders_rcpp_concatenate_vectors", (DL_FUNC) &_sfheaders_rcpp_concatenate_vectors, 2},
-    {"_sfheaders_rcpp_column_positions", (DL_FUNC) &_sfheaders_rcpp_column_positions, 2},
-    {"_sfheaders_rcpp_where_is", (DL_FUNC) &_sfheaders_rcpp_where_is, 2},
-    {"_sfheaders_rcpp_get_ids", (DL_FUNC) &_sfheaders_rcpp_get_ids, 2},
     {NULL, NULL, 0}
 };
 

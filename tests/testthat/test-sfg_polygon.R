@@ -51,7 +51,7 @@ test_that("sfg polygon", {
   x <- matrix(c(1,2), ncol = 2)
   expect_error(
     sfheaders:::rcpp_sfg_polygon( x, c(0L,1L), NULL, "", close = TRUE )
-    , "geometries - closed shapes must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
     )
 
   x <- matrix(c(1:8), ncol = 2)
