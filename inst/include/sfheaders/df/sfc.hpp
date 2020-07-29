@@ -231,9 +231,6 @@ namespace df {
         columns[ M_COLUMN ] = true;
       }
 
-      // Rcpp::Rcout << "dim: " << dim << std::endl;
-      // Rcpp::Rcout << "columns: " << columns << std::endl;
-
       sfg_class = cls[1];
       sfg_type = get_sfg_type( sfg_class );
       sfg_column_idx = get_sfg_column_index( sfg_class );
@@ -385,9 +382,6 @@ namespace df {
       Rcpp::CharacterVector sfc_class = sfc.attr("class");
       std::string cls;
       cls = sfc_class[0];
-
-      // Rcpp::Rcout << "cls: " << cls << std::endl;
-
       // switch on cls
       if ( cls == "sfc_POINT" ) {
         R_xlen_t n_geometries = sfc.size();
@@ -399,7 +393,6 @@ namespace df {
     //return sfc;
     Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
     Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
-    //Rcpp::Rcout << "dim: " << sfc_coordinates << std::endl;
     return sfc_to_df( sfc, sfc_coordinates );
   }
 

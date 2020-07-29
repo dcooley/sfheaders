@@ -228,9 +228,6 @@ namespace zm {
       Rcpp::IntegerVector& geometry_cols
   ) {
 
-    // Rcpp::Rcout << "here" << std::endl;
-    // Rcpp::Rcout << "iv: " << iv << std::endl;
-
     if( geometry_cols.length() > 2 ) {
       int idx = geometry_cols[2];
 

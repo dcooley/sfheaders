@@ -41,8 +41,6 @@ namespace sfg {
       return xyzm;
     }
 
-    // Rcpp::Rcout << "n: " << n << std::endl;
-
     dimension_check( n );
     std::string dim = "XY";
 

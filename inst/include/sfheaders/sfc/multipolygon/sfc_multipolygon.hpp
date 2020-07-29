@@ -67,17 +67,12 @@ namespace sfc {
 
     Rcpp::IntegerVector int_polygon_id(1);
     sfheaders::utils::resolve_id( x, polygon_id, int_polygon_id, res, lst, col_counter );
-    // Rcpp::Rcout << "polygon_id: " << int_polygon_id << std::endl;
 
     Rcpp::IntegerVector int_linestring_id(1);
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
-    // Rcpp::Rcout << "linestring_id: " << int_linestring_id << std::endl;
-
 
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_multipolygon_id, int_polygon_id );
     int_id_cols = geometries::utils::concatenate_vectors( int_id_cols, int_linestring_id );
-    // Rcpp::Rcout << "id_cols: " << int_id_cols << std::endl;
-    // Rcpp::Rcout << "geometry_cols: " << int_geometry_cols << std::endl;
 
     Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
     return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTIPOLYGON, bbox, z_range, m_range );

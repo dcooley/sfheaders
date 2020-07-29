@@ -110,9 +110,6 @@ namespace sf {
 
       // the property_cols object points to index of data_names
       // so we need the maxium property_cols value
-      //R_xlen_t n_names = Rcpp::max( property_cols ) + 1;
-      //R_xlen_t m = n_names > total_cols ? n_names : total_cols;
-      //Rcpp::Rcout << "m: " << m << std::endl;
 
       data_names = make_names( data_n_cols );
       // TODO/ this needs to be max( property_cols );
@@ -135,7 +132,6 @@ namespace sf {
       for( i = 0; i < n_properties; ++i ) {
 
         int idx = property_cols[ i ];
-        // Rcpp::Rcout << "idx: " << idx << std::endl;
         bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
         SEXP v = data[ idx ];
 

@@ -22,14 +22,8 @@ namespace sfc {
   ) {
 
     if( Rf_isNull( geometry_cols ) ) {
-      // Rcpp::Rcout << "sfc_point - null geometries" << std::endl;
-      // Rcpp::Rcout << "type x: " << TYPEOF( x ) << std::endl;
-      // Rcpp::Rcout << "is vec: " << Rf_isVector( x ) << std::endl;
-      // Rcpp::Rcout << "is mat: " << Rf_isMatrix( x ) << std::endl;
-      // Rcpp::Rcout << "type geom cols: " << TYPEOF( geometry_cols ) << std::endl;
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x );
-      // Rcpp::Rcout << "geometry_col2" << std::endl;
       return sfc_point( x, geometry_cols2, xyzm );
     }
 
@@ -37,13 +31,8 @@ namespace sfc {
     int n_id_cols = 0;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
 
-
-    //Rcpp::Rcout << "col_counter: " << col_counter << std::endl;
-
     // After subset_geometries we have moved the geometry columns
     // into the 0:(n_geometry-1) positions
-    //Rcpp::IntegerVector int_geometry_cols = Rcpp::seq( 0, ( col_counter - 1 ) );
-
     xyzm = sfheaders::utils::validate_xyzm( xyzm, col_counter );
 
     Rcpp::StringVector class_attribute = { xyzm.c_str(), "POINT","sfg" };
@@ -57,8 +46,6 @@ namespace sfc {
     Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
     geometries::bbox::calculate_bbox( bbox, x, geometry_cols );
     sfheaders::zm::calculate_zm_ranges( z_range, m_range, x, geometry_cols, xyzm );
-
-    // Rcpp::Rcout << "z_range: " << z_range << std::endl;
 
     R_xlen_t required_cols = col_counter + n_id_cols;
 
@@ -76,7 +63,6 @@ namespace sfc {
 
     Rcpp::List sfc = geometries::make_geometries( res, attributes, n_empty );
 
-    // Rcpp::Rcout << "making_sfc" << std::endl;
     return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POINT, bbox, z_range, m_range, n_empty );
 
   }

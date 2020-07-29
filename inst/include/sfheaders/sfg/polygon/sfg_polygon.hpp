@@ -33,7 +33,6 @@ namespace sfg {
   ) {
     lst = sfheaders::polygon_utils::close_polygon( lst, close );
     sfheaders::sfg::make_sfg( lst, sfheaders::sfg::SFG_POLYGON, xyzm );
-    // Rcpp::Rcout << "lst polygon" << std::endl;
     return lst;
   }
 
@@ -53,21 +52,14 @@ namespace sfg {
     // needs to go through the make_geoemtries()
     // but attributes are assigned at the end
 
-    // Rcpp::Rcout << "1" << std::endl;
-
     if( Rf_isNull( geometry_cols ) ) {
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, linestring_id );
-      // Rcpp::Rcout << "3" << std::endl;
       return sfg_polygon( x, geometry_cols2, linestring_id, xyzm, close );
     }
 
-    // Rcpp::Rcout << "3" << std::endl;
-
     int n_id_cols = 1;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
-
-    // Rcpp::Rcout << "4" << std::endl;
 
     // After subset_geometries we have moved the geometry columns
     // into the 0:(n_geometry-1) positions
@@ -76,11 +68,8 @@ namespace sfg {
     xyzm = sfheaders::utils::validate_xyzm( xyzm, col_counter );
 
     R_xlen_t required_cols = col_counter + n_id_cols;
-    // Rcpp::Rcout << "5" << std::endl;
 
     Rcpp::IntegerVector geometry_cols_int = geometries::utils::sexp_col_int( x, geometry_cols );
-
-    // Rcpp::Rcout << "6" << std::endl;
 
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List res( required_cols );
@@ -92,10 +81,7 @@ namespace sfg {
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
 
     Rcpp::List attributes = Rcpp::List::create();
-    // Rcpp::Rcout << "making geometries" << std::endl;
     Rcpp::List sfg = geometries::make_geometries( res, int_linestring_id, int_geometry_cols, attributes, close );
-    // Rcpp::Rcout << "made geometries" << std::endl;
-
 
     Rcpp::StringVector class_attribute = { xyzm.c_str(), "POLYGON","sfg" };
     Rcpp::List atts = Rcpp::List::create(

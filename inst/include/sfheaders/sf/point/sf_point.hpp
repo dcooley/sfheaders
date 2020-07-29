@@ -19,11 +19,8 @@ namespace sf {
       std::string xyzm
   ) {
 
-    // Rcpp::Rcout << "sf_poitn" << std::endl;
     Rcpp::List sfc = sfheaders::sfc::sfc_point( x, geometry_cols, xyzm );
-    // Rcpp::Rcout << "sfc make sf" << std::endl;
     Rcpp::DataFrame sf = sfheaders::sf::make_sf( sfc );
-    // Rcpp::Rcout << "return sf" << std::endl;
     return sf;
   }
 
@@ -40,9 +37,6 @@ namespace sf {
 
     Rcpp::List lst = geometries::utils::as_list( x );
     Rcpp::List sfc = sfheaders::sfc::sfc_point( x, geometry_cols, xyzm );
-
-
-    // Rcpp::Rcout << "sfc done" << std::endl;
 
     SEXP property_cols = geometries::utils::other_columns( x, geometry_cols );
     Rcpp::IntegerVector int_property_cols = geometries::utils::sexp_col_int( x, property_cols );

@@ -36,12 +36,9 @@ namespace cast {
     R_xlen_t i, n;
     R_xlen_t res = 0;
     n = lst.size();
-    // Rcpp::Rcout << "n: " << n << std::endl;
     for( i = 0; i < n; ++i ) {
-      // Rcpp::Rcout << "res: " << res << std::endl;
       Rcpp::List inner_lst = lst[ i ];
       res = res + inner_lst.size();
-      // Rcpp::Rcout << "res: " << res << std::endl;
     }
     return res;
   }
@@ -189,50 +186,6 @@ namespace cast {
 
   }
 
-  // inline Rcpp::List listListMat_to_mat( Rcpp::List& sfg, std::string& cast_to ) {
-  //
-  //   R_xlen_t n = sfg.size();
-  //   R_xlen_t i;
-  //   Rcpp::List res( n );
-  //   return res;
-  //   // for( i = 0; i < n; ++i ) {
-  //   //   Rcpp::List lst = sfg[ i ];
-  //   //
-  //   //   if( cast_to == "LINESTRING" ) {
-  //   //     res[ i ] = sfheaders::sfg::sfg_linestrings( sfg );
-  //   //   } else if ( cast_to == "MULTIPOINT" ) {
-  //   //     res[ i ] = sfheaders::sfg::sfg_multipoints( sfg );
-  //   //   }
-  //   // }
-  //
-  //   // now un-pack the res[] list to a single-level list
-  // }
-
-
-  // inline Rcpp::List cast_to_linestring( SEXP& sfg, std::string& geometry, std::string& cast_to ) {
-  //
-  //   R_xlen_t count = count_new_objects( sfg, cast_to );
-  //   Rcpp::Rcout << "new_objects: " << count << std::endl;
-  //
-  //   if( geometry == "POINT") {
-  //
-  //   } else if ( geometry == "MULTIPOINT" ) {
-  //
-  //   } else if ( geometry == "LINESTRING" ) {
-  //
-  //   } else if ( geometry == "MULTILINESTRING" ) {
-  //
-  //   } else if ( geometry == "POLYGON" ) {
-  //     // Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-  //     // return lst;
-  //   } else if ( geometry == "MULTIPOLYGON" ) {
-  //     Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-  //     return listListMat_to_mat( lst, cast_to );
-  //   } else {
-  //     Rcpp::stop("sfheaders - I don't know how to convert this objet to a POLYGON");
-  //   }
-  // }
-
   inline SEXP point_to_multilinestring( Rcpp::NumericVector& nv, std::string xyzm ) {
     return sfheaders::sfg::sfg_multilinestring( nv, xyzm );
   }
@@ -336,7 +289,6 @@ namespace cast {
 
   inline SEXP multilinestring_to_linestring( Rcpp::List& lst, std::string xyzm ) {
     Rcpp::List l = sfheaders::sfg::sfg_linestrings( lst, xyzm );
-    // Rcpp::Rcout << "l size: " << l.size() << std::endl;
     return l;
   }
 

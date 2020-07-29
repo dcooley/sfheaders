@@ -68,7 +68,6 @@ namespace df {
     }
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
-    // Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
 
     // in sfc.hpp I define geometry columns with names 'x','y','z','m'
     // so I know these will be geometry columns
@@ -87,7 +86,6 @@ namespace df {
     for( i = 0; i < sfc_cols; ++i ) {
       Rcpp::String this_name = sfheaders::utils::unique_name( sfc_df_names[ i ], res_names );
       // unique-ify 'this_name;
-      //sfc_df_names[ i ] = unique_name( this_name, res_names );
       sfc_df_names[ i ] = this_name; // use these names as sfc_columns attr
 
       res_names[ i + n_col - 1 ] = this_name;
@@ -107,11 +105,9 @@ namespace df {
       Rcpp::stop("sfheaders - sf_column not found");
     }
 
-    // Rcpp::Rcout << "sf_to_df" << std::endl;
-
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    //Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+
     Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
     Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
 

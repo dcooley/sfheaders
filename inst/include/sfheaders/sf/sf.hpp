@@ -99,34 +99,19 @@ namespace api {
 
     Rcpp::IntegerVector id_column;
 
-    // Rcpp::Rcout << "here 1" << std::endl;
-
     if( sf_objs.containsElementNamed("id_column") ) {
       id_column = sf_objs["id_column"];
-      // Rcpp::Rcout << "id_column: " << id_column << std::endl;
     }
 
     Rcpp::IntegerVector int_list_columns;
 
     if( !Rf_isNull( list_columns ) ) {
-      // Rcpp::Rcout << "list columns " << std::endl;
-
-      //Rcpp::Rcout << "type of list: " << TYPEOF( list_columns ) << std::endl;
-      //return data;
-
       // need to use 'obj' here because 'list_columns' may be a string, but 'data'
       // has been made into an unnamed list
       int_list_columns = geometries::utils::sexp_col_int( obj, list_columns );
     }
 
-    // Rcpp::Rcout << "return sf_objs" << std::endl;
-    //return sf_objs;
-
-    // Rcpp::Rcout << "here 2" << std::endl;
-
     return sfheaders::sf::create_sf(data, sfc, id_column, property_cols, int_list_columns, geometry_idx );
-
-
  }
 
   // TODO

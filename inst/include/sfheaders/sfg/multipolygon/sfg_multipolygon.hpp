@@ -54,18 +54,15 @@ namespace sfg {
 
     if( !Rf_inherits( x, "data.frame") && Rf_isNewList( x ) ) {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( x );
-      // Rcpp::Rcout << "list" << std::endl;
       return sfg_multipolygon( lst, xyzm, close );
     }
 
 
     if( Rf_isNull( geometry_cols ) ) {
-      // Rcpp::Rcout << "0" << std::endl;
       // make this all the other columns, then send back in
       SEXP geometry_cols2 = geometries::utils::other_columns( x, polygon_id, linestring_id );
       return sfg_multipolygon( x, geometry_cols2, polygon_id, linestring_id, xyzm, close );
     }
-    // Rcpp::Rcout << "1" << std::endl;
 
     int n_id_cols = 2;
     R_xlen_t col_counter = geometries::utils::sexp_length( geometry_cols );
@@ -84,30 +81,24 @@ namespace sfg {
 
     sfheaders::utils::subset_geometries( lst, res, geometry_cols_int );
 
-    // Rcpp::Rcout << "3" << std::endl;
     Rcpp::IntegerVector int_polygon_id(1);
     sfheaders::utils::resolve_id( x, polygon_id, int_polygon_id, res, lst, col_counter );
 
-    // Rcpp::Rcout << "4" << std::endl;
     Rcpp::IntegerVector int_linestring_id(1);
     sfheaders::utils::resolve_id( x, linestring_id, int_linestring_id, res, lst, col_counter );
 
-    // Rcpp::Rcout << "5" << std::endl;
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_polygon_id, int_linestring_id );
 
-    // Rcpp::Rcout << "6" << std::endl;
     Rcpp::List attributes = Rcpp::List::create();
     Rcpp::List sfg = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
-
 
     Rcpp::StringVector class_attribute = { xyzm.c_str(), "MULTIPOLYGON","sfg" };
     Rcpp::List atts = Rcpp::List::create(
       Rcpp::_["class"] = class_attribute
     );
-    // Rcpp::Rcout << "7" << std::endl;
+
     geometries::utils::attach_attributes( sfg, atts );
 
-    // Rcpp::Rcout << "8" << std::endl;
     return sfg;
   }
 
@@ -178,7 +169,6 @@ namespace sfg {
     );
     geometries::utils::attach_attributes( res, atts );
     return res;
-    //return sfg_multipolygon( res, xyzm, close);
   }
 
 } // sfg
