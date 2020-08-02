@@ -51,7 +51,23 @@ namespace sf {
       Rcpp::_["geometry_idx"] = geometry_index
       // no id_column because it's null
     );
+  }
 
+  inline SEXP sf_point(
+      SEXP& x,
+      SEXP& geometry_cols
+  ) {
+    std::string xyzm;
+    return sf_point( x, geometry_cols, xyzm );
+  }
+
+  inline SEXP sf_point(
+      SEXP& x,
+      SEXP& geometry_cols,
+      bool& keep
+  ) {
+    std::string xyzm;
+    return sf_point( x, geometry_cols, xyzm, keep );
   }
 
 } // sf

@@ -80,6 +80,24 @@ namespace sf {
     return res;
   }
 
+  inline SEXP sf_linestring(
+      SEXP& x,
+      SEXP& geometry_cols,
+      SEXP& linestring_id
+  ) {
+    std::string xyzm;
+    return sf_linestring( x, geometry_cols, linestring_id, xyzm );
+  }
+
+  inline SEXP sf_linestring(
+      SEXP& x,
+      SEXP& geometry_cols,
+      SEXP& linestring_id,
+      bool& keep
+  ) {
+    std::string xyzm;
+    return sf_linestring( x, geometry_cols, linestring_id, xyzm, keep );
+  }
 
 } // sf
 } // sfheaders

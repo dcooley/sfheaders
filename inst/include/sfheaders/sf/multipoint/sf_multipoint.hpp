@@ -77,6 +77,25 @@ namespace sf {
     return res;
   }
 
+  inline SEXP sf_multipoint(
+      SEXP& x,
+      SEXP& geometry_cols,
+      SEXP& multipoint_id
+  ) {
+    std::string xyzm;
+    return sf_multipoint( x, geometry_cols, multipoint_id, xyzm );
+  }
+
+  inline SEXP sf_multipoint(
+      SEXP& x,
+      SEXP& geometry_cols,
+      SEXP& multipoint_id,
+      bool& keep
+  ) {
+    std::string xyzm;
+    return sf_multipoint( x, geometry_cols, multipoint_id, xyzm, keep );
+  }
+
 } // sf
 } // sfheaders
 

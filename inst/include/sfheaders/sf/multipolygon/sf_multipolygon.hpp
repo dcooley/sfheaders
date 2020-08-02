@@ -89,6 +89,31 @@ namespace sf {
     return res;
   }
 
+  inline SEXP sf_multipolygon(
+      SEXP& x,
+      SEXP& geometry_cols,
+      SEXP& multipolygon_id,
+      SEXP& polygon_id,
+      SEXP& linestring_id,
+      bool close
+  ) {
+    std::string xyzm;
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
+  }
+
+  inline SEXP sf_multipolygon(
+      SEXP& x,
+      SEXP& geometry_cols,
+      SEXP& multipolygon_id,
+      SEXP& polygon_id,
+      SEXP& linestring_id,
+      bool keep,
+      bool close
+  ) {
+    std::string xyzm;
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, keep, close);
+  }
+
 } // sf
 } // sfheaders
 
