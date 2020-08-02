@@ -2,7 +2,7 @@
 #define R_SFHEADERS_M_RANGE_H
 
 #include <Rcpp.h>
-#include "sfheaders/utils/sexp/sexp.hpp"
+#include "geometries/utils/sexp/sexp.hpp"
 
 namespace sfheaders {
 namespace zm {
@@ -56,40 +56,51 @@ namespace zm {
 
   inline void m_range_size_check( SEXP& x, std::string xyzm ) {
     int size_required = xyzm == "XYM" ? 3 : 4;
-    R_xlen_t n_col = sfheaders::utils::get_sexp_n_col( x );
+    R_xlen_t n_col = geometries::utils::sexp_n_col( x );
     if( n_col < size_required ) {
       Rcpp::stop("sfheaders - incorrect size of m_range");
     }
   }
 
 
+  template< int RTYPE, typename T >
   inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
-      double& val
+      Rcpp::Vector< RTYPE >& m_range,
+      T& val
   ) {
+    T d = static_cast< T >( val );
+    //calculate_m_range( m_range, d );
+    m_range[0] = std::min( d, m_range[0] );
+    m_range[1] = std::max( d, m_range[1] );
+  }
 
+
+  template< int RTYPE >
+  inline void calculate_m_range(
+      Rcpp::Vector< RTYPE >& m_range,
+      Rcpp::Vector< RTYPE >& point
+  ) {
+    m_range_size_check( point );
+
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
+
+    T d = point[2];
     //xmin, ymin, xmax, ymax
-    m_range[0] = std::min( val, m_range[0] );
-    m_range[1] = std::max( val, m_range[1] );
+    m_range[0] = std::min( d, m_range[0] );
+    m_range[1] = std::max( d, m_range[1] );
   }
 
+  template< int RTYPE >
   inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
-      int& val
-  ) {
-    double d = static_cast< double >( val );
-    calculate_m_range( m_range, d );
-  }
-
-
-  inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
-      Rcpp::NumericVector& point,
+      Rcpp::Vector< RTYPE >& m_range,
+      Rcpp::Vector< RTYPE >& point,
       std::string xyzm
   ) {
     m_range_size_check( point, xyzm );
 
-    double d = xyzm == "XYM" ? point[2] : point[3];
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
+
+    T d = xyzm == "XYM" ? point[2] : point[3];
     //xmin, ymin, xmax, ymax
     m_range[0] = std::min( d, m_range[0] );
     m_range[1] = std::max( d, m_range[1] );
@@ -105,7 +116,10 @@ namespace zm {
     int i = xyzm == "XYM" ? point[2] : point[3];
 
     double d = static_cast< double >( i );
-    calculate_m_range( m_range, d );
+
+    //calculate_m_range( m_range, d );
+    m_range[0] = std::min( d, m_range[0] );
+    m_range[1] = std::max( d, m_range[1] );
   }
 
   inline void calculate_m_range(
@@ -118,44 +132,53 @@ namespace zm {
 
     Rcpp::IntegerVector m = xyzm == "XYM" ? im( Rcpp::_, 2 ) : im( Rcpp::_, 3 );
 
-    double zmin = Rcpp::min( m );
-    double zmax = Rcpp::max( m );
+    int zmin = Rcpp::min( m );
+    int zmax = Rcpp::max( m );
 
-    m_range[0] = std::min( zmin, m_range[0] );
-    m_range[1] = std::max( zmax, m_range[1] );
+    double dmin = static_cast< double >( zmin );
+    double dmax = static_cast< double >( zmax );
+
+    m_range[0] = std::min( dmin, m_range[0] );
+    m_range[1] = std::max( dmax, m_range[1] );
 
   }
 
+  template< int RTYPE >
   inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
-      Rcpp::NumericMatrix& nm,
+      Rcpp::Vector< RTYPE >& m_range,
+      Rcpp::Matrix< RTYPE >& mat,
       std::string xyzm
   ) {
 
-    m_range_size_check( nm, xyzm );
+    m_range_size_check( mat, xyzm );
 
-    Rcpp::NumericVector m = xyzm == "XYM" ? nm( Rcpp::_, 2 ) : nm( Rcpp::_, 3 );
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
 
-    double zmin = Rcpp::min( m );
-    double zmax = Rcpp::max( m );
+    Rcpp::NumericVector m = xyzm == "XYM" ? mat( Rcpp::_, 2 ) : mat( Rcpp::_, 3 );
+
+    T zmin = Rcpp::min( m );
+    T zmax = Rcpp::max( m );
 
     m_range[0] = std::min( zmin, m_range[0] );
     m_range[1] = std::max( zmax, m_range[1] );
 
   }
 
+  template< int RTYPE >
   inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
+      Rcpp::Vector< RTYPE >& m_range,
       Rcpp::DataFrame& df,
       std::string xyzm
   ) {
     // assumes 'x' & 'y' column vectors
     m_range_size_check( df, xyzm );
 
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
+
     Rcpp::NumericVector m = xyzm == "XYM" ? df[2] : df[3];
 
-    double zmin = Rcpp::min( m );
-    double zmax = Rcpp::max( m );
+    T zmin = Rcpp::min( m );
+    T zmax = Rcpp::max( m );
 
     m_range[0] = std::min( zmin, m_range[0] );
     m_range[1] = std::max( zmax, m_range[1] );
@@ -202,7 +225,30 @@ namespace zm {
     }
   }
 
-  // #nocov start
+
+  inline void calculate_m_range(
+      Rcpp::NumericVector& m_range,
+      Rcpp::IntegerVector& iv,
+      Rcpp::IntegerVector& geometry_cols,
+      std::string xyzm
+  ) {
+
+    int index_required = xyzm == "XYM" ? 2 : 3;
+
+    if( geometry_cols.length() > index_required ) {
+      int idx = geometry_cols[ index_required ];
+
+      int v = iv[ idx ];
+      double d = static_cast< double >( v );
+
+      // double zmin = Rcpp::min( v );
+      // double zmax = Rcpp::max( v );
+
+      m_range[0] = std::min( d, m_range[0] );
+      m_range[1] = std::max( d, m_range[1] );
+    }
+  }
+
   inline void calculate_m_range(
       Rcpp::NumericVector& m_range,
       Rcpp::IntegerMatrix& im,
@@ -213,8 +259,10 @@ namespace zm {
     int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
+
       int idx = geometry_cols[ index_required ];
       Rcpp::IntegerVector m = im( Rcpp::_, idx );
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 
@@ -235,9 +283,11 @@ namespace zm {
     int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
+
       Rcpp::String idx = geometry_cols[ index_required ];
       std::string s_idx = idx.get_cstring();
       Rcpp::IntegerVector m = df[ s_idx ];
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 
@@ -246,29 +296,59 @@ namespace zm {
     }
   }
 
+  template< int RTYPE >
   inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
-      Rcpp::NumericMatrix& nm,
+      Rcpp::Vector< RTYPE >& m_range,
+      Rcpp::Vector< RTYPE >& vec,
       Rcpp::IntegerVector& geometry_cols,
       std::string xyzm
   ) {
 
     int index_required = xyzm == "XYM" ? 2 : 3;
 
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
+
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
-      Rcpp::NumericVector m = nm( Rcpp::_, idx );
-      double zmin = Rcpp::min( m );
-      double zmax = Rcpp::max( m );
+
+      T v = vec[ idx ];
+
+      // T zmin = Rcpp::min( v );
+      // T zmax = Rcpp::max( v );
+
+      m_range[0] = std::min( v, m_range[0] );
+      m_range[1] = std::max( v, m_range[1] );
+    }
+  }
+
+  template< int RTYPE >
+  inline void calculate_m_range(
+      Rcpp::Vector< RTYPE >& m_range,
+      Rcpp::Matrix< RTYPE >& mat,
+      Rcpp::IntegerVector& geometry_cols,
+      std::string xyzm
+  ) {
+
+    int index_required = xyzm == "XYM" ? 2 : 3;
+
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
+
+    if( geometry_cols.length() > index_required ) {
+      int idx = geometry_cols[ index_required ];
+      Rcpp::Vector< RTYPE > m = mat( Rcpp::_, idx );
+
+      T zmin = Rcpp::min( m );
+      T zmax = Rcpp::max( m );
 
       m_range[0] = std::min( zmin, m_range[0] );
       m_range[1] = std::max( zmax, m_range[1] );
     }
   }
 
+  template< int RTYPE >
   inline void calculate_m_range(
-      Rcpp::NumericVector& m_range,
-      Rcpp::NumericMatrix& nm,
+      Rcpp::Vector< RTYPE >& m_range,
+      Rcpp::Matrix< RTYPE >& nm,
       Rcpp::StringVector& geometry_cols,
       std::string xyzm
   ) {
@@ -277,12 +357,15 @@ namespace zm {
 
     int index_required = xyzm == "XYM" ? 2 : 3;
 
+    typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
+
     if( geometry_cols.length() > index_required ) {
       Rcpp::String idx = geometry_cols[ index_required ];
       std::string s_idx = idx.get_cstring();
       Rcpp::NumericVector m = df[ s_idx ];
-      double zmin = Rcpp::min( m );
-      double zmax = Rcpp::max( m );
+
+      T zmin = Rcpp::min( m );
+      T zmax = Rcpp::max( m );
 
       m_range[0] = std::min( zmin, m_range[0] );
       m_range[1] = std::max( zmax, m_range[1] );
@@ -302,6 +385,7 @@ namespace zm {
     if( geometry_cols.length() > index_required ) {
       int idx = geometry_cols[ index_required ];
       Rcpp::NumericVector m = df[ idx ];
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 
@@ -317,16 +401,13 @@ namespace zm {
       std::string xyzm
   ) {
 
-    // if( xyzm.empty() ) {
-    //   // it needs to be something for this function to work
-    //
-    // }
     int index_required = xyzm == "XYM" ? 2 : 3;
 
     if( geometry_cols.length() > index_required ) {
       Rcpp::String idx = geometry_cols[ index_required ];
       std::string s_idx = idx.get_cstring();
       Rcpp::NumericVector m = df[ s_idx ];
+
       double zmin = Rcpp::min( m );
       double zmax = Rcpp::max( m );
 

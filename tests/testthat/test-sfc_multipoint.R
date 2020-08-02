@@ -3,7 +3,7 @@ context( "sfc_multipoints " )
 test_that("various objects converted to sfc_MULTIPOINT objects",{
 
   m <- matrix()
-  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL, "" ), "sfheaders - unsupported multipoint type")
+  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL, "" ), "sfheaders - can't work out the dimension")
 
   m <- matrix(c(0,0), ncol = 2)
   res <- sfheaders:::rcpp_sfc_multipoint( m, NULL, NULL, "" )
@@ -20,21 +20,21 @@ test_that("various objects converted to sfc_MULTIPOINT objects",{
   expect_true( all( attr( res, "z_range") == c(0,1) ) )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
-  res <- sfheaders:::rcpp_sfc_multipoint( m, c(0,1), NULL, "" )
+  res <- sfheaders:::rcpp_sfc_multipoint( m, c(0L,1L), NULL, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
-  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, 0, "" ), "sfheaders - incorrect number of geometry columns" )
+  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, 0L, "" ), "sfheaders - can't work out the dimension" )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
-  res <- sfheaders:::rcpp_sfc_multipoint( m, c(0,1), 0, "" )
+  res <- sfheaders:::rcpp_sfc_multipoint( m, c(0L,1L), 0L, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
   m <- matrix(c(0,0,1,1), ncol = 2, byrow = T)
-  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, c(0), "" ), "sfheaders - incorrect number of geometry columns")
+  expect_error( sfheaders:::rcpp_sfc_multipoint( m, NULL, c(0L), "" ), "sfheaders - can't work out the dimension")
 
   m <- matrix(c(0,0,0,0,1,1,1,1,1), ncol = 3, byrow = T)
-  res <- sfheaders:::rcpp_sfc_multipoint( m, c(1,2), c(0), "" )
+  res <- sfheaders:::rcpp_sfc_multipoint( m, c(1L,2L), c(0L), "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
 
@@ -80,7 +80,7 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_true( is_multipoint( res ) )
 
   m <- matrix(1:4, ncol = 2)
-  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0,1), NULL, "")
+  res <- sfheaders:::rcpp_sfc_multipoint(m, c(0L,1L), NULL, "")
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
   expect_true( is_multipoint( res ) )
 
@@ -92,7 +92,7 @@ test_that("after refactoring issue14 I haven't lost anything",{
 
   m <- matrix(1:4, ncol = 2)
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_multipoint(df, c(0,1), NULL, "")
+  res <- sfheaders:::rcpp_sfc_multipoint(df, c(0L,1L), NULL, "")
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
   expect_true( is_multipoint( res ) )
 
@@ -118,7 +118,7 @@ test_that("after refactoring issue14 I haven't lost anything",{
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
-  res <- sfheaders:::rcpp_sfc_multipoint(m, NULL, 2, "")
+  res <- sfheaders:::rcpp_sfc_multipoint(m, NULL, 2L, "")
   expect_true( is_multipoint( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
@@ -138,14 +138,14 @@ test_that("after refactoring issue14 I haven't lost anything",{
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_multipoint(df, NULL, 2, "")
+  res <- sfheaders:::rcpp_sfc_multipoint(df, NULL, 2L, "")
   expect_true( is_multipoint( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_multipoint(df, c(0,1), 2, "")
+  res <- sfheaders:::rcpp_sfc_multipoint(df, c(0L,1L), 2L, "")
   expect_true( is_multipoint( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
@@ -157,8 +157,7 @@ test_that("after refactoring issue14 I haven't lost anything",{
   expect_equal( attr( res, "class" ), c("sfc_MULTIPOINT", "sfc") )
 
   m <- matrix(1:4, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfc_multipoint(m, NULL, 0, ""), "sfheaders - incorrect number of geometry columns")
-
+  expect_error( sfheaders:::rcpp_sfc_multipoint(m, NULL, 0L, ""), "sfheaders - can't work out the dimension")
 
 })
 

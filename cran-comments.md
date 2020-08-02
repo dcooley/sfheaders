@@ -1,6 +1,6 @@
 
-* updates v0.2.1 to v0.2.2
-* Checked with `rhub::check_with_sanitizers()` and `rhub::check_for_cran()`
+* updates v0.2.2 to v0.3.0
+* Now Links to the geometries package 
 
 ## Test environments
 

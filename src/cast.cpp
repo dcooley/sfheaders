@@ -20,7 +20,8 @@ Rcpp::NumericVector rcpp_count_new_sfc_objects( Rcpp::List sfc, std::string cast
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_cast_sfc( Rcpp::List sfc, std::string cast_to, bool close = true ) {
-  return sfheaders::cast::cast_sfc( sfc, cast_to, close );
+  Rcpp::List sfc2 = Rcpp::clone( sfc );
+  return sfheaders::cast::cast_sfc( sfc2, cast_to, close );
 }
 
 // [[Rcpp::export]]

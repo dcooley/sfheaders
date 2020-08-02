@@ -33,8 +33,14 @@
 #' @export
 sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
+  rcpp_sfc_point(
+    obj
+    , index_correct( geometry_columns )
+    , xyzm(x,y,z,m)
+    )
 }
+
+
 
 #' sfc MULTIPOINT
 #'
@@ -61,7 +67,12 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' @export
 sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipoint_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipoint( obj, index_correct( geometry_columns ),  index_correct( multipoint_id ), xyzm(x,y,z,m) )
+  rcpp_sfc_multipoint(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( multipoint_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
@@ -86,10 +97,28 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #' sfc_linestring( x, x = "y", y = "x" )
 #' sfc_linestring( x, linestring_id = "id", x = "x", y = "y")
 #'
+#' df <- data.frame(
+#'   id = c(1,1,1,1,2,2,2)
+#'   , x = 1:7
+#'   , y = 7:1
+#'   , z = 14:8
+#'   , m = 8:14
+#' )
+#'
+#' sfc_linestring(df, x = "x", y = "y", linestring_id = "id")
+#' sfc_linestring(df, x = "x", y = "y", z = "z", linestring_id = "id")
+#' sfc_linestring(df, x = "x", y = "y", m = "m", linestring_id = "id")
+#' sfc_linestring(df, x = "x", y = "y", z = "z", m = "m", linestring_id = "id")
+#'
 #' @export
 sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), xyzm(x,y,z,m) )
+  rcpp_sfc_linestring(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
@@ -147,7 +176,13 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
                                  multilinestring_id = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multilinestring( obj, index_correct( geometry_columns ), index_correct( multilinestring_id ), index_correct( linestring_id ), xyzm(x,y,z,m) )
+  rcpp_sfc_multilinestring(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( multilinestring_id )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
@@ -207,7 +242,14 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
                          polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close, xyzm(x,y,z,m) )
+  rcpp_sfc_polygon(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( polygon_id )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    , close
+    )
 }
 
 
@@ -290,7 +332,15 @@ sfc_multipolygon <- function(
   multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL,
   close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), close, xyzm(x,y,z,m) )
+  rcpp_sfc_multipolygon(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( multipolygon_id )
+    , index_correct( polygon_id )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    , close
+  )
 }
 
 

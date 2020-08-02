@@ -2,94 +2,20 @@
 #define R_SFHEADERS_DF_SF_H
 
 #include "sfheaders/df/sfc.hpp"
-#include "sfheaders/utils/vectors/vectors.hpp"
-#include "sfheaders/utils/lists/list.hpp"
+#include "geometries/utils/vectors/vectors.hpp"
+#include "geometries/utils/lists/list.hpp"
+#include "geometries/coordinates/dimensions.hpp"
 
 #include <Rcpp.h>
 
 namespace sfheaders {
 namespace df {
 
-  inline Rcpp::String unique_name( Rcpp::String this_name, Rcpp::StringVector& existing_names ) {
-    int is_in = sfheaders::utils::where_is( this_name, existing_names );
-
-    if( is_in != -1 ) {
-      // the name already exists, so we need to uniqueify it
-      int counter = 1;
-      std::string new_name;
-      do {                       // #nocov
-        std::ostringstream os;
-        os << this_name.get_cstring() << ".." << counter;
-        new_name = os.str();
-        is_in = sfheaders::utils::where_is( new_name, existing_names );
-        counter += 1;
-      } while ( is_in != -1 );
-      this_name = new_name;
-    }
-
-    return this_name;
-  }
-
-  /*
-   * Expand Vector
-   *
-   *
-   */
-  inline void expand_vector(
-      Rcpp::List& res,
-      SEXP& v,
-      Rcpp::NumericVector& expanded_index,
-      R_xlen_t& i
-  ) {
-
-    switch( TYPEOF( v ) ) {
-    case LGLSXP: {
-      Rcpp::LogicalVector lv = Rcpp::as< Rcpp::LogicalVector >( v );
-      res[ i ] = lv[ expanded_index ];
-      break;
-    }
-    case INTSXP: {
-      Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( v );
-      res[ i ] = iv[ expanded_index ];
-      break;
-    }
-    case REALSXP: {
-      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( v );
-      Rcpp::NumericVector res_nv = nv[ expanded_index ];
-      res[ i ] = res_nv;
-      break;
-    }
-    case STRSXP: {
-      Rcpp::StringVector sv = Rcpp::as< Rcpp::StringVector >( v );
-      res[ i ] = sv[ expanded_index ];
-      break;
-    }
-    case CPLXSXP: {
-      Rcpp::ComplexVector cv = Rcpp::as< Rcpp::ComplexVector >( v );
-      res[ i ] = cv[ expanded_index ];
-      break;
-    }
-    case RAWSXP: {
-      Rcpp::RawVector rv = Rcpp::as< Rcpp::RawVector >( v );
-      res[ i ] = rv[ expanded_index ];
-      break;
-    }
-    case VECSXP: {
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( v );
-      res[ i ] = lst[ expanded_index ];
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unsupported column type using fill = TRUE");
-    }
-    }
-  }
-
   inline Rcpp::List sf_to_df(
       Rcpp::DataFrame& sf,
       Rcpp::List& sfc,
       std::string& geom_column,
-      Rcpp::NumericMatrix& sfc_coordinates,
+      Rcpp::IntegerMatrix& sfc_coordinates,
       bool fill = false
   ) {
 
@@ -136,13 +62,12 @@ namespace df {
 
         res_names[ name_position ] = sf_names[ i ];
         SEXP v = sf[ i ];
-        expand_vector( res, v, expanded_index, name_position );
+        geometries::utils::expand_vector( res, v, expanded_index, name_position );
         name_position += 1;
       }
     }
 
     Rcpp::CharacterVector sfc_df_names = sfc_df.names();
-    // Rcpp::Rcout << "sfc_df_names " << sfc_df_names << std::endl;
 
     // in sfc.hpp I define geometry columns with names 'x','y','z','m'
     // so I know these will be geometry columns
@@ -153,15 +78,15 @@ namespace df {
 
     for( i = 0; i < sfc_df_names.length(); ++i ) {
       Rcpp::String geom = sfc_df_names[ i ];
-      is_in = sfheaders::utils::where_is( geom, geometry_columns );
+      std::find( geometry_columns.begin(), geometry_columns.end(), geom );
+      is_in = geometries::utils::where_is( geom, geometry_columns );
       keep_columns[ i ] = is_in == -1 ? false : true;
     }
 
 
     for( i = 0; i < sfc_cols; ++i ) {
-      Rcpp::String this_name = unique_name( sfc_df_names[ i ], res_names );
+      Rcpp::String this_name = sfheaders::utils::unique_name( sfc_df_names[ i ], res_names );
       // unique-ify 'this_name;
-      //sfc_df_names[ i ] = unique_name( this_name, res_names );
       sfc_df_names[ i ] = this_name; // use these names as sfc_columns attr
 
       res_names[ i + n_col - 1 ] = this_name;
@@ -181,11 +106,12 @@ namespace df {
       Rcpp::stop("sfheaders - sf_column not found");
     }
 
-    // Rcpp::Rcout << "sf_to_df" << std::endl;
-
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+
+    Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
+
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, fill );
   }
 
@@ -193,7 +119,7 @@ namespace df {
       Rcpp::DataFrame& sf,
       Rcpp::List& sfc,
       std::string& geom_column,
-      Rcpp::NumericMatrix& sfc_coordinates,
+      Rcpp::IntegerMatrix& sfc_coordinates,
       Rcpp::StringVector& unlist,
       bool fill = false
   ) {
@@ -207,7 +133,7 @@ namespace df {
 
     // issue 75 - ignore undefined 'unlist' columns
     Rcpp::StringVector sf_names = sf.names();
-    Rcpp::IntegerVector unlist_idx = sfheaders::utils::where_is( unlist, sf_names );
+    Rcpp::IntegerVector unlist_idx = geometries::utils::where_is( unlist, sf_names );
     unlist = unlist[ unlist_idx >= 0 ];
 
     R_xlen_t n_unlist = unlist.size();
@@ -217,7 +143,7 @@ namespace df {
     for( i = 0; i < n_unlist; ++i ) {
       const char *s = unlist[ i ];
       Rcpp::List lst = sf[ s ];
-      to_unlist[ i ] = sfheaders::utils::unlist_list( lst );
+      to_unlist[ i ] = geometries::utils::unlist_list( lst );
       // iff total_size == sf.nrow();
       // then it's not a list column.
     }
@@ -231,7 +157,7 @@ namespace df {
     for( i = 0; i < n_unlist; ++i ) {
       const char *s = unlist[ i ];
       SEXP unlisted_col = to_unlist[ i ];
-      R_xlen_t n = sfheaders::utils::get_sexp_length( unlisted_col );
+      R_xlen_t n = geometries::utils::sexp_length( unlisted_col );
       if( n == sf.nrow() ) {
         continue; // issue 76
       }
@@ -251,7 +177,9 @@ namespace df {
   ) {
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    //Rcpp::IntegerMatrix sfc_coordinates = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
 
     return sf_to_df( sf, sfc, geom_column, sfc_coordinates, unlist, fill );
   }

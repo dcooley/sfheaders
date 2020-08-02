@@ -11,17 +11,17 @@ test_that("sfg_POINTS returned from various R objects from src", {
   expect_equal( pt, r_pt )
 
   x <- c(1,2,3)
-  pt <- sfheaders:::rcpp_sfg_point(x, c(1,2), "" )
+  pt <- sfheaders:::rcpp_sfg_point(x, c(1L,2L), "" )
   expect_true( pt[1] == x[2] )
   expect_true( pt[2] == x[3] )
 
   x <- as.integer( c(1,2,3) )
-  pt <- sfheaders:::rcpp_sfg_point(x, c(1,2), "" )
+  pt <- sfheaders:::rcpp_sfg_point(x, c(1L,2L), "" )
   expect_true( pt[1] == x[2] )
   expect_true( pt[2] == x[3] )
 
   x <- c(1,2,3)
-  pt <- sfheaders:::rcpp_sfg_point(x, c(0,1), "" )
+  pt <- sfheaders:::rcpp_sfg_point(x, c(0L,1L), "" )
   expect_true( pt[1] == x[1] )
   expect_true( pt[2] == x[2] )
 
@@ -124,7 +124,7 @@ test_that("sfg_POINTS returned from various R objects from src", {
 test_that("vectorised version works",{
 
   is_point <- function(x) {
-    y <- is.vector(unclass(x))
+    y <- is.vector(unclass(x)) || nrow( x ) == 1
     z <- attr( x, "class")[2] == "POINT"
     return( all(y) & all(z) )
   }

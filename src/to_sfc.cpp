@@ -1,5 +1,9 @@
 #include <Rcpp.h>
+#include "geometries/bbox/bbox.hpp"
 #include "sfheaders/sfc/sfc.hpp"
+
+#include "sfheaders/sfg/polygon/sfg_polygon.hpp"
+#include "sfheaders/sfg/multipolygon/sfg_multipolygon.hpp"
 
 // [[Rcpp::export]]
 SEXP rcpp_sfc_point( SEXP x, SEXP cols, std::string xyzm ) {
@@ -14,7 +18,6 @@ SEXP rcpp_sfc_points( Rcpp::List lst, std::string xyzm ) {
 // [[Rcpp::export]]
 SEXP rcpp_sfc_multipoint( SEXP x, SEXP cols, SEXP id_col, std::string xyzm ) {
   return sfheaders::sfc::sfc_multipoint( x, cols, id_col, xyzm );
-  //return sfheaders::sfc::sfc_multipoints( x );
 }
 
 // [[Rcpp::export]]
@@ -43,23 +46,23 @@ SEXP rcpp_sfc_multilinestrings( Rcpp::List lst, std::string xyzm ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, bool close, std::string xyzm ) {
+SEXP rcpp_sfc_polygon( SEXP x, SEXP cols, SEXP polygon_id, SEXP line_id, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_polygon( x, cols, polygon_id, line_id, xyzm, close );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_polygons( Rcpp::List lst, bool close, std::string xyzm ) {
+SEXP rcpp_sfc_polygons( Rcpp::List lst, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_polygons( lst, xyzm, close );
 }
 
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, bool close, std::string xyzm ) {
+SEXP rcpp_sfc_multipolygon( SEXP x, SEXP cols, SEXP multipolygon_id, SEXP polygon_id, SEXP linestring_id, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_multipolygon( x, cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfc_multipolygons( Rcpp::List lst, bool close, std::string xyzm ) {
+SEXP rcpp_sfc_multipolygons( Rcpp::List lst, std::string xyzm, bool close ) {
   return sfheaders::sfc::sfc_multipolygons( lst, xyzm, close );
 }
 
@@ -93,15 +96,15 @@ Rcpp::List rcpp_sfc_remove_holes( Rcpp::List sfc, bool close ) {
 }
 
 
-// [[Rcpp::export]]
-Rcpp::List rcpp_get_sfc_attributes( Rcpp::List sfc ) {
-  return sfheaders::sfc::get_sfc_attributes( sfc );
-}
+// // [[Rcpp::export]]
+// Rcpp::List rcpp_get_sfc_attributes( Rcpp::List sfc ) {
+//   return sfheaders::sfc::get_sfc_attributes( sfc );
+// }
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_boxes( SEXP sfg ) {
   Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-  sfheaders::bbox::calculate_bbox( bbox, sfg );
+  geometries::bbox::calculate_bbox( bbox, sfg );
   return sfheaders::sfg::sfg_box( bbox );
 }
 
@@ -117,9 +120,9 @@ SEXP rcpp_sfc_boxes( Rcpp::List sfc ) {
   for( i = 0; i < n; ++i ) {
     SEXP sfg = sfc[ i ];
     Rcpp::NumericVector box = sfheaders::bbox::start_bbox();
-    sfheaders::bbox::calculate_bbox( box, sfg );
+    geometries::bbox::calculate_bbox( box, sfg );
     Rcpp::List p = sfheaders::sfg::sfg_box( box );
-    sfheaders::bbox::calculate_bbox( bbox, sfg );
+    geometries::bbox::calculate_bbox( bbox, sfg );
     res[ i ] = p;
   }
 

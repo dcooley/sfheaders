@@ -8,7 +8,7 @@ test_that("sfg_polygons closed",{
   )
   expect_error(
     sfheaders::sfg_polygon( x )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
   )
 
   x <- data.frame(
@@ -32,7 +32,7 @@ test_that("sfc_polygons closed",{
   )
   expect_error(
     sfheaders::sfc_polygon( x )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
   )
 
   x <- data.frame(
@@ -49,6 +49,7 @@ test_that("sfc_polygons closed",{
 })
 
 test_that("sf_polygons closed",{
+
   x <- data.frame(
     x = 1:2
     , y = 1:2
@@ -56,7 +57,7 @@ test_that("sf_polygons closed",{
 
   expect_error(
     sfheaders::sf_polygon( x )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
   )
 
   x <- data.frame(
@@ -98,7 +99,7 @@ test_that("sfg_multipolygons closed",{
   )
   expect_error(
     sfheaders::sfg_multipolygon( x )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
   )
 
   x <- data.frame(
@@ -122,7 +123,7 @@ test_that("sfc_multipolygons closed",{
   )
   expect_error(
     sfheaders::sfc_multipolygon( x )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
   )
 
   x <- data.frame(
@@ -146,7 +147,7 @@ test_that("sf_multipolygons closed",{
 
   expect_error(
     sfheaders::sf_multipolygon( x )
-    , "sfheaders - closed polygons must have at least 4 rows. Use close = FALSE to bypass this check"
+    , "geometries - closed shapes must have at least 4 rows"
   )
 
   x <- data.frame(

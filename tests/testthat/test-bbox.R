@@ -7,10 +7,10 @@ test_that("bounding box correctly calculated", {
     unname( unclass( sfheaders:::rcpp_calculate_bbox( x, cols ) ) )
   }
 
-  expect_error( bb( 1L ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( 1L ), "geometries - incorrect size of bounding box")
   expect_error( bb( "a" ) )
-  expect_error( bb( matrix(1L) ), "sfheaders - incorrect size of bounding box")
-  expect_error( bb( matrix(1.2) ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( matrix(1L) ), "geometries - incorrect size of bounding box")
+  expect_error( bb( matrix(1.2) ), "geometries - incorrect size of bounding box")
 
   bbox <- bb( 1L:2L )
   expect_equal( bbox, c(1,2,1,2) )
@@ -18,10 +18,10 @@ test_that("bounding box correctly calculated", {
   bbox <- bb( c(1.0, 2.0) )
   expect_equal( bbox, c(1,2,1,2) )
 
-  bbox <- bb( 1L:2L, c(1L,2L) )
+  bbox <- bb( 1L:2L, c(0L,1L) )
   expect_equal( bbox, c(1,2,1,2) )
 
-  bbox <- bb( c(1.0, 2.0), c(1,2) )
+  bbox <- bb( c(1.0, 2.0), c(0L,1L) )
   expect_equal( bbox, c(1,2,1,2) )
 
   x <- matrix(c(0,0,0,1), ncol = 2 )
@@ -73,11 +73,11 @@ test_that("bounding box correctly calculated", {
   expect_equal( bbox, c(1,2,5,6) )
 
   x <- 1
-  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( x ), "geometries - incorrect size of bounding box")
   x <- matrix(1)
-  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( x ), "geometries - incorrect size of bounding box")
   x <- matrix(1.1)
-  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( x ), "geometries - incorrect size of bounding box")
 
 })
 

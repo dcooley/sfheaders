@@ -10,11 +10,13 @@ namespace sfc {
   inline Rcpp::List sfc_points( Rcpp::List& lst, std::string xyzm ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
-    Rcpp::List sfcs(n);
+    Rcpp::List sfcs( n );
+
+    SEXP geometry_cols = R_NilValue;
 
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfc::sfc_point( x, xyzm );
+      sfcs[i] = sfheaders::sfc::sfc_point( x, geometry_cols, xyzm );
     }
     return sfcs;
   }

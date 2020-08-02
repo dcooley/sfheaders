@@ -66,44 +66,44 @@ namespace sfg {
   //   return Rcpp::List::create(); // never reaches?
   // }
 
-  inline SEXP to_sfg( SEXP& x, std::string geom_type, std::string xyzm ) {
-    if( geom_type == "POINT" ) {
-      // must be a vector
-      return sfheaders::sfg::sfg_point( x, xyzm );
-    } else if ( geom_type == "MULTIPOINT" ) {
-      return sfheaders::sfg::sfg_multipoint( x, xyzm );
-    } else if ( geom_type == "LINESTRING" ) {
-      return sfheaders::sfg::sfg_linestring( x, xyzm );
-    } else if ( geom_type == "MULTIILNESTRING" ) {
-      return sfheaders::sfg::sfg_multilinestring( x, xyzm );
-    } else if ( geom_type == "POLYGON" ) {
-      return sfheaders::sfg::sfg_polygon( x, xyzm );
-    } else if ( geom_type == "MULTIPOLYGON" ) {
-      return sfheaders::sfg::sfg_multipolygon( x, xyzm );
-    }
-
-    Rcpp::stop("sfheaders - unknown sfg geometry type");
-    return Rcpp::List::create();
-  }
-
-  inline SEXP to_sfg( SEXP& x, std::string geom_type, SEXP geometry_columns, std::string xyzm ) {
-    if( geom_type == "POINT" ) {
-      return sfheaders::sfg::sfg_point( x, geometry_columns, xyzm );
-    } else if ( geom_type == "MULTIPOINT" ) {
-      return sfheaders::sfg::sfg_multipoint( x, geometry_columns, xyzm );
-    } else if ( geom_type == "LINESTRING" ) {
-      return sfheaders::sfg::sfg_linestring( x, geometry_columns, xyzm );
-    } else if ( geom_type == "MULTIILNESTRING" ) {
-      return sfheaders::sfg::sfg_multilinestring( x, geometry_columns, xyzm );
-    } else if ( geom_type == "POLYGON" ) {
-      return sfheaders::sfg::sfg_polygon( x, geometry_columns, xyzm );
-    } else if ( geom_type == "MULTIPOLYGON" ) {
-      return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, xyzm );
-    }
-
-    Rcpp::stop("sfheaders - unknown sfg geometry type");
-    return Rcpp::List::create(); // never reaches
-  }
+  // inline SEXP to_sfg( SEXP& x, std::string geom_type, std::string xyzm ) {
+  //   if( geom_type == "POINT" ) {
+  //     // must be a vector
+  //     return sfheaders::sfg::sfg_point( x, xyzm );
+  //   } else if ( geom_type == "MULTIPOINT" ) {
+  //     return sfheaders::sfg::sfg_multipoint( x, xyzm );
+  //   } else if ( geom_type == "LINESTRING" ) {
+  //     return sfheaders::sfg::sfg_linestring( x, xyzm );
+  //   } else if ( geom_type == "MULTIILNESTRING" ) {
+  //     return sfheaders::sfg::sfg_multilinestring( x, xyzm );
+  //   } else if ( geom_type == "POLYGON" ) {
+  //     return sfheaders::sfg::sfg_polygon( x, xyzm );
+  //   } else if ( geom_type == "MULTIPOLYGON" ) {
+  //     return sfheaders::sfg::sfg_multipolygon( x, xyzm );
+  //   }
+  //
+  //   Rcpp::stop("sfheaders - unknown sfg geometry type");
+  //   return Rcpp::List::create();
+  // }
+  //
+  // inline SEXP to_sfg( SEXP& x, std::string geom_type, SEXP geometry_columns, std::string xyzm ) {
+  //   if( geom_type == "POINT" ) {
+  //     return sfheaders::sfg::sfg_point( x, geometry_columns, xyzm );
+  //   } else if ( geom_type == "MULTIPOINT" ) {
+  //     return sfheaders::sfg::sfg_multipoint( x, geometry_columns, xyzm );
+  //   } else if ( geom_type == "LINESTRING" ) {
+  //     return sfheaders::sfg::sfg_linestring( x, geometry_columns, xyzm );
+  //   } else if ( geom_type == "MULTIILNESTRING" ) {
+  //     return sfheaders::sfg::sfg_multilinestring( x, geometry_columns, xyzm );
+  //   } else if ( geom_type == "POLYGON" ) {
+  //     return sfheaders::sfg::sfg_polygon( x, geometry_columns, xyzm );
+  //   } else if ( geom_type == "MULTIPOLYGON" ) {
+  //     return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, xyzm );
+  //   }
+  //
+  //   Rcpp::stop("sfheaders - unknown sfg geometry type");
+  //   return Rcpp::List::create(); // never reaches
+  // }
 
 
 } // sfg

@@ -4,6 +4,8 @@
 #include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/cast/sfc.hpp"
 
+#include "geometries/utils/vectors/vectors.hpp"
+
 #include <Rcpp.h>
 
 namespace sfheaders {
@@ -26,21 +28,15 @@ namespace cast {
     R_xlen_t n_col = sf.ncol();
 
     std::string geom_column = sf.attr("sf_column");
-    // Rcpp::Rcout << "geom_column: " << geom_column << std::endl;
     Rcpp::List sfc = sf[ geom_column ];
     Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
-
-    // Rcpp::Rcout << "n_results " << std::endl;
 
     R_xlen_t total_coordinates = Rcpp::sum( n_results );
 
     Rcpp::NumericVector expanded_index( total_coordinates );
 
-    // Rcpp::Rcout << "expanded_index " << std::endl;
-
     R_xlen_t counter = 0;
     for( i = 0; i < n_row; ++i ) {
-      //R_xlen_t expand_by = sfc_coordinates( i, 1 ) - sfc_coordinates( i, 0 ) + 1;
       R_xlen_t expand_by = n_results[ i ];
 
       for( j = 0; j < expand_by; ++j ) {
@@ -49,15 +45,9 @@ namespace cast {
       counter = counter + expand_by;
     }
 
-    // Rcpp::Rcout << expanded_index << std::endl;
-    // Rcpp::Rcout << "n_results: " << n_results << std::endl;
-
     // other than the sfc column, expand all the other columsn by 'n_reuslts'
     Rcpp::List casted_sfc = cast_sfc( sfc, n_results, cast_to, close );
 
-    // Rcpp::Rcout << "casted_sfc " << std::endl;
-
-    // return casted_sfc;
 
     Rcpp::List sf_res( n_names );
     // loop over each of the df_names which aren't the geometry
@@ -70,17 +60,15 @@ namespace cast {
       std::string str_name = this_name;
       if( str_name != geom_column ) {
         SEXP v = sf[ i ];
-        //Rcpp::Rcout << "this_name: " << str_name << std::endl;
-        sfheaders::df::expand_vector( sf_res, v, expanded_index, column_counter );
+
+        geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
         res_names[ column_counter ] = str_name;
         ++column_counter;
       }
     }
 
-    // Rcpp::Rcout << "res_names: " << res_names << std::endl;
     // append 'geom_column' to res_columns;
     res_names[ column_counter ] = geom_column;
-    // Rcpp::Rcout << "res_names: " << res_names << std::endl;
 
     sf_res[ column_counter ] = casted_sfc;
     sf_res.names() = res_names;
