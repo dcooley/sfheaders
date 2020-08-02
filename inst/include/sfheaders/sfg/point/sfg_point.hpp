@@ -58,5 +58,4 @@ namespace sfg {
 } // sfg
 } // sfheaders
 
-
 #endif

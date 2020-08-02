@@ -1,4 +1,8 @@
 
+# v0.3.0
+
+* LinksTo [geometries](https://github.com/dcooley/geometries) library for faster conversion to geometry structures
+
 # v0.2.2
 
 * crs structure matches new `sf` definition [issue49](https://github.com/dcooley/sfheaders/issues/49)
