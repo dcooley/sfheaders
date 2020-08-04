@@ -396,7 +396,6 @@ namespace df {
     return sfc_to_df( sfc, sfc_coordinates );
   }
 
-
 } // df
 } // sfheaders
 

@@ -27,3 +27,5 @@ Suggests:
     knitr,
     testthat
 Roxygen: list(markdown = TRUE)
+Remotes:
+    dcooley/geometries
