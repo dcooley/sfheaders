@@ -1,6 +1,7 @@
 
 # v0.3.0
 
+* changed licence to MIT
 * LinksTo [geometries](https://github.com/dcooley/geometries) library for faster conversion to geometry structures
 
 # v0.2.2

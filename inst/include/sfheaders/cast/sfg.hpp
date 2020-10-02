@@ -2,8 +2,10 @@
 #define R_SFHEADERS_CAST_SFG_H
 
 #include "geometries/utils/utils.hpp"
+
 #include "sfheaders/df/sfc.hpp"
 #include "sfheaders/sfg/sfg.hpp"
+
 //#include "sfheaders/sfg/sfg_types.hpp"
 // #include "geometries/utils/sexp/sexp.hpp"
 // #include "sfheaders/df/sfg.hpp"

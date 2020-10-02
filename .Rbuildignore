@@ -11,3 +11,4 @@
 ^vignettes/images/*
 ^Vignettes*
 ^\.github$
+^LICENSE\.md$

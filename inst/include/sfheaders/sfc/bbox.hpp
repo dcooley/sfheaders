@@ -18,8 +18,6 @@ namespace bbox {
     return bbox;
   }
 
-
-
   // inline void get_bbox(
   //   Rcpp::NumericVector& bbox,
   //   SEXP sfg

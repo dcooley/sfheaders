@@ -10,7 +10,7 @@ Authors@R: c(
 Description: Converts between R and Simple Feature 'sf' objects, without depending
   on the Simple Feature library. Conversion functions are available at both the R level, 
   and through 'Rcpp'.
-License: GPL-3
+License: MIT + file LICENSE
 URL: https://dcooley.github.io/sfheaders/
 BugReports: https://github.com/dcooley/sfheaders/issues
 Encoding: UTF-8
