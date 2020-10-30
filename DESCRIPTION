@@ -1,8 +1,8 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2020-08-03
-Version: 0.3.0
+Date: 2020-10-05
+Version: 0.3.0001
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre")),
     person(given = "Michael", family = "Sumner", role = "ctb")
@@ -27,5 +27,3 @@ Suggests:
     knitr,
     testthat
 Roxygen: list(markdown = TRUE)
-Remotes:
-    dcooley/geometries
