@@ -78,7 +78,13 @@ sf_linestring( x, x = "y", y = "x" )
 sf_linestring( x, linestring_id = "line_id", x = "x", y = "y")
 
 ## keeping properties
-x <- data.frame( line_id = c(1,1,2,2), x = 1:4, y = 4:1, val = letters[1:4], stringsAsFactors = FALSE)
+x <- data.frame(
+  line_id = c(1,1,2,2)
+  , x = 1:4
+  , y = 4:1
+  , val = letters[1:4]
+  , stringsAsFactors = FALSE
+  )
 
 ## first-row of 'val' is kept
 sf_linestring( x, x = "x", y = "y", keep = TRUE )
