@@ -192,10 +192,15 @@ namespace sfc {
     sfc.attr("bbox") = bbox;
 
     sfheaders::zm::attach_z_range_attributes( z_range );
-    sfc.attr("z_range") = z_range;
+
+    if( !Rcpp::NumericVector::is_na( z_range[0] ) && !Rcpp::NumericVector::is_na( z_range[1] ) ) {
+      sfc.attr("z_range") = z_range;
+    }
 
     sfheaders::zm::attach_m_range_attributes( m_range );
-    sfc.attr("m_range") = m_range;
+    if( !Rcpp::NumericVector::is_na( m_range[0] ) && !Rcpp::NumericVector::is_na( m_range[1] ) ) {
+      sfc.attr("m_range") = m_range;
+    }
   }
 
   inline void attach_sfc_attributes(

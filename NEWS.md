@@ -1,4 +1,8 @@
 
+# v0.3.1
+
+* `z_range` and `m_range` only created if those dimensions exist
+
 # v0.3.0
 
 * changed licence to MIT
