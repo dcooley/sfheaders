@@ -10,7 +10,7 @@ sfc_to_df(sfc)
 \item{sfc}{sfc object}
 }
 \description{
-Converts an sfc object a to data.frame
+Converts an sfc object to a data.frame
 }
 \examples{
 

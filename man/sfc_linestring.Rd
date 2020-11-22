@@ -30,7 +30,7 @@ sfc_linestring(
 \code{sfc} object of LINESTRING geometries
 }
 \description{
-constructs sfc of MULTIPOINT objects
+constructs sfc of LINESTRING objects
 }
 \section{notes}{
 
