@@ -11,14 +11,14 @@ sf_to_df(sf, fill = FALSE, unlist = NULL)
 
 \item{fill}{logical indicating if the resulting data.frame should be filled
 with the data columns from the sf object. If \code{TRUE}, each row of data will
-be replicated for every coordiante in every geometry.}
+be replicated for every coordinate in every geometry.}
 
 \item{unlist}{string vector of columns to unlist. Each list element is equivalent
 to a row of the input object, and is expected to be the same
 length as the number of coordinates in the geometry.}
 }
 \description{
-Converts an sf object ot a data.frame
+Converts an sf object to a data.frame
 }
 \examples{
 
@@ -40,7 +40,7 @@ sf$val2 <- c(1L, 2L)
 
 df <- sf_to_df( sf, fill = TRUE )
 
-## Unlisting lsit columns
+## Unlisting list columns
 
 df <- data.frame(
 l_id = c(1,1,1,2,2,2,3,3,3,3)

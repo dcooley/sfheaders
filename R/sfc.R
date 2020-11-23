@@ -78,7 +78,7 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 
 #' sfc LINESTRING
 #'
-#' constructs sfc of MULTIPOINT objects
+#' constructs sfc of LINESTRING objects
 #'
 #' @inheritParams sfc_multipoint
 #' @inheritSection sfc_point notes
