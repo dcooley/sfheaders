@@ -19,7 +19,7 @@ sfg_to_df <- function( sfg ) return( rcpp_sfg_to_df( sfg ) )
 
 #' sfc to df
 #'
-#' Converts an sfc object a to data.frame
+#' Converts an sfc object to a data.frame
 #'
 #' @param sfc sfc object
 #'
@@ -47,12 +47,12 @@ sfc_to_df <- function( sfc ) return( rcpp_sfc_to_df( sfc ) )
 
 #' sf to df
 #'
-#' Converts an sf object ot a data.frame
+#' Converts an sf object to a data.frame
 #'
 #' @param sf sf object
 #' @param fill logical indicating if the resulting data.frame should be filled
 #' with the data columns from the sf object. If \code{TRUE}, each row of data will
-#' be replicated for every coordiante in every geometry.
+#' be replicated for every coordinate in every geometry.
 #' @param unlist string vector of columns to unlist. Each list element is equivalent
 #' to a row of the input object, and is expected to be the same
 #' length as the number of coordinates in the geometry.
@@ -77,7 +77,7 @@ sfc_to_df <- function( sfc ) return( rcpp_sfc_to_df( sfc ) )
 #'
 #' df <- sf_to_df( sf, fill = TRUE )
 #'
-#' ## Unlisting lsit columns
+#' ## Unlisting list columns
 #'
 #' df <- data.frame(
 #' l_id = c(1,1,1,2,2,2,3,3,3,3)
