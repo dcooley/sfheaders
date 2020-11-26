@@ -1,4 +1,8 @@
 
+# v0.4
+
+* list-column properties are better supported for nested geometries (MULTILINESTRING, POLYGON, MULTIPOLYGON)
+
 # v0.3.1
 
 * `z_range` and `m_range` only created if those dimensions exist

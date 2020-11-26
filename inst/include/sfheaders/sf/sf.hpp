@@ -69,6 +69,8 @@ namespace api {
     // will the output 'df' remain un-sorted?
     // I think it will... right??....
 
+    bool closed_attributes = Rf_length( list_columns ) > 0 && keep == true && close == true;
+
     if( sf_type == "POINT" ) {
       sf_objs = sfheaders::sf::sf_point( obj, geometry_columns, xyzm, keep );
     } else if ( sf_type == "MULTIPOINT" ) {
@@ -78,9 +80,9 @@ namespace api {
     } else if ( sf_type == "MULTILINESTRING" ) {
       sf_objs = sfheaders::sf::sf_multilinestring( obj, geometry_columns, multilinestring_id, linestring_id, xyzm, keep );
     } else if ( sf_type == "POLYGON" ) {
-      sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, xyzm, keep, close );
+      sf_objs = sfheaders::sf::sf_polygon( obj, geometry_columns, polygon_id, linestring_id, xyzm, keep, close, closed_attributes );
     } else if ( sf_type == "MULTIPOLYGON" ) {
-      sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, xyzm, keep, close );
+      sf_objs = sfheaders::sf::sf_multipolygon( obj, geometry_columns, multipolygon_id, polygon_id, linestring_id, xyzm, keep, close, closed_attributes );
     } else {
       Rcpp::stop("sfheaders - unknown sf type");
     }

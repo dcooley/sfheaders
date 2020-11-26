@@ -21,10 +21,11 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
 
-    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close, closed_attribute );
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
     SEXP ids = geometries::utils::get_ids( x, multipolygon_id );
@@ -42,15 +43,16 @@ namespace sf {
       SEXP& linestring_id,
       std::string xyzm,
       bool keep,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
 
     if( !keep ) {
-      return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
+      return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close, closed_attribute );
     }
 
     Rcpp::List lst = geometries::utils::as_list( x );
-    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
+    Rcpp::List sfc = sfheaders::sfc::sfc_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close, closed_attribute );
 
     // return sfc;
 
@@ -95,10 +97,11 @@ namespace sf {
       SEXP& multipolygon_id,
       SEXP& polygon_id,
       SEXP& linestring_id,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
     std::string xyzm;
-    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close );
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, close, closed_attribute );
   }
 
   inline SEXP sf_multipolygon(
@@ -108,10 +111,11 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       bool keep,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
     std::string xyzm;
-    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, keep, close);
+    return sf_multipolygon( x, geometry_cols, multipolygon_id, polygon_id, linestring_id, xyzm, keep, close, closed_attribute);
   }
 
 } // sf

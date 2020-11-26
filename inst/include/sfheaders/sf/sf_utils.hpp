@@ -3,6 +3,8 @@
 
 #include "geometries/utils/vectors/vectors.hpp"
 #include "geometries/utils/lists/list.hpp"
+#include "geometries/nest/nest.hpp"
+#include "geometries/coordinates/dimensions.hpp"
 
 namespace sfheaders {
 namespace sf {
@@ -80,18 +82,162 @@ namespace sf {
     return res;
   }
 
+  // inline void unlist_indexes(
+  //   const Rcpp::List& lst_indexes,
+  //   Rcpp::IntegerVector& indexes,
+  //   R_xlen_t& start_idx
+  // ) {
+  //   R_xlen_t n_geometries = lst_indexes.size();
+  //   R_xlen_t i;
+  //   for( i = 0; i < n_geometries; ++i ) {
+  //     switch( TYPEOF( lst_indexes[ i ] ) ) {
+  //       case VECSXP: {
+  //         unlist_indexes( lst_indexes[ i ], indexes, start_idx );
+  //         break;
+  //       }
+  //       case INTSXP: {
+  //         Rcpp::IntegerVector elements = Rcpp::as< Rcpp::IntegerVector >( lst_indexes [ i ] );
+  //         R_xlen_t end_position = start_idx + elements.length() - 1;
+  //         Rcpp::IntegerVector idx = Rcpp::seq( start_idx, end_position );
+  //         indexes[ idx ] = elements;
+  //         start_idx = end_position + 1;
+  //         break;
+  //       }
+  //       default: {
+  //         Rcpp::stop("sfheaders - error trying to unlist indexes");
+  //       }
+  //     }
+  //   }
+  // }
+
+  //' @param start_idx is the row of the input data.frame corresponding to 'this'
+  //' matrix
+  //' @param total_length to keep track of the total length of the new property index
+  //' column we will be creating
+  inline SEXP property_indexes(
+    SEXP& obj,
+    R_xlen_t& start_idx,
+    R_xlen_t& total_length
+  ) {
+
+    switch( TYPEOF( obj ) ) {
+    case VECSXP: {
+
+      Rcpp::List lst = Rcpp::as< Rcpp::List >( obj );
+      Rcpp::List res( lst.size() );
+      R_xlen_t i;
+
+      for( i = 0; i < lst.size(); ++i ) {
+        SEXP inner_obj = lst[ i ];
+        res[ i ] = property_indexes( inner_obj, start_idx, total_length );
+      }
+      return res;
+    }
+    default: {
+      if( !Rf_isMatrix( obj ) ) {
+        Rcpp::stop("geometries - error filling list column. Expecting either matrix or list");
+      }
+
+      R_xlen_t has_been_closed = geometries::utils::has_been_closed_attribute( obj );
+      R_xlen_t n_row = geometries::utils::sexp_n_row( obj );
+
+      R_xlen_t input_n_row = n_row - has_been_closed; // iff the matrix was closed, a row was appended to the original
+      R_xlen_t res_size = input_n_row + has_been_closed;
+
+      Rcpp::IntegerVector idx( res_size );
+      total_length = total_length + res_size;
+
+      R_xlen_t k;
+      for( k = 0; k < input_n_row; ++k ) {
+        idx[ k ] = k + start_idx;
+      }
+      if( has_been_closed == 1 ) {
+        idx[ res_size - 1 ] = start_idx;
+      }
+
+      // update the start_idx
+      start_idx = start_idx + input_n_row;
+      return idx;
+    }
+    }
+
+    return Rcpp::List();
+  }
+
+  //' @param lst_indexes the list of property indexes. This list will be the result of
+  //' property_indexes(), where each list element corresponds to a matrix (geometry)
+  //'
+  inline Rcpp::List fill_list(
+    const Rcpp::List& lst_indexes,
+    SEXP& v
+  ) {
+
+    R_xlen_t n = lst_indexes.size();
+    R_xlen_t i;
+    Rcpp::List res( n );
+
+    for( i = 0; i < n; ++i ) {
+      switch( TYPEOF( lst_indexes[ i ] ) ) {
+        case VECSXP: {
+          // if it's a list, go back around
+          res[ i ] = fill_list( lst_indexes[ i ], v );
+          break;
+        }
+        case INTSXP: {
+          // the elements of the lst_indexes tell us which values of 'v' we need
+          Rcpp::IntegerVector idx = Rcpp::as< Rcpp::IntegerVector >( lst_indexes[ i ] );
+          res[ i ] = subset_properties( v, idx );
+          break;
+        }
+        default: {
+          Rcpp::stop("sfheaders - filling lists requires integer indexes");
+        }
+      }
+    }
+    return res;
+  }
+
+  // creates a list-column the same dimension as the `sfc` object
+  // i.e, a polygon will be a list-of-lists,
+  // where each list element will (should) have the same number of rows
+  // as the matrix (geometry)
+  // because it assumes each coordinate has an associated data elment inside the list
+  // for polygons that have been closed, it adds the first element to the end of the
+  // vector, to account for the repeated coordinate
+  inline Rcpp::List create_property_indexes(
+    Rcpp::List& sfc
+  ) {
+
+    R_xlen_t i, j, k;
+    R_xlen_t n_geometries = sfc.size();
+    Rcpp::List lst_indexes( n_geometries );
+
+    R_xlen_t start_idx = 0;
+    R_xlen_t total_length = 0;
+    for( i = 0; i < n_geometries; ++i ) {
+      SEXP sfg = sfc[ i ];
+      lst_indexes[ i ] = property_indexes( sfg, start_idx, total_length );
+    }
+
+    return lst_indexes;
+  }
+
   inline Rcpp::List create_sf(
       Rcpp::List& data,
       Rcpp::List& sfc,
       Rcpp::IntegerVector& id_column,
       Rcpp::IntegerVector& property_cols,
       Rcpp::IntegerVector& list_column_idx,
-      Rcpp::IntegerVector& geometry_idx
+      Rcpp::IntegerVector& geometry_idx,
+      bool closed_attributes = false
   ) {
 
     bool has_id = !Rf_isNull( id_column ) && Rf_length( id_column ) > 0;
     bool has_properties = !Rf_isNull( property_cols ) && Rf_length( property_cols ) > 0;
     bool has_list_cols = !Rf_isNull( list_column_idx );
+
+    Rcpp::List lst_indexes; // if there are list columns, this wills tore the row-indexes of the properties
+    // used to fill the list columns
 
     R_xlen_t data_n_cols = Rf_length( data );
 
@@ -109,7 +255,7 @@ namespace sf {
     } else {
 
       // the property_cols object points to index of data_names
-      // so we need the maxium property_cols value
+      // so we need the maximum property_cols value
 
       data_names = make_names( data_n_cols );
       // TODO/ this needs to be max( property_cols );
@@ -126,22 +272,32 @@ namespace sf {
       res_names[ 0 ] = data_names[ id ];
     }
 
-
     if( has_properties ) {
+
+      if( list_column_idx.size() > 0 ) {
+        // only need to do this once, so it's outside the main loop.
+        lst_indexes = create_property_indexes( sfc );
+      }
 
       for( i = 0; i < n_properties; ++i ) {
 
         int idx = property_cols[ i ];
-        bool is_in = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
+        bool is_list_column = has_list_cols && ( std::find( list_column_idx.begin(), list_column_idx.end(), idx ) != list_column_idx.end()  );
         SEXP v = data[ idx ];
 
-        if( is_in ) {
-          sf[ i + has_id ] = geometries::utils::fill_list( v, geometry_idx );
+        if( is_list_column ) {
+          sf[ i + has_id ] = fill_list( lst_indexes, v );
         } else {
           sf[ i + has_id ] = subset_properties( v, geometry_idx );
         }
         res_names[ i + has_id ] = data_names[ idx ];
       }
+    }
+
+    // TODO
+    if( closed_attributes ) {
+      // remove these from each matrix because
+      // we don't want them hanging around
     }
 
     // make data.frame

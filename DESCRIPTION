@@ -1,8 +1,8 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2020-10-31
-Version: 0.3.0001
+Date: 2020-11-26
+Version: 0.4
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre")),
     person(given = "Michael", family = "Sumner", role = "ctb")
@@ -18,7 +18,7 @@ LazyData: true
 RoxygenNote: 7.1.1
 SystemRequirements: C++11
 LinkingTo: 
-    geometries,
+    geometries (>= 0.2.0),
     Rcpp
 Imports: 
     Rcpp

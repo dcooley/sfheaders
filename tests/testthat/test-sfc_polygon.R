@@ -367,4 +367,3 @@ test_that("vectorised version works",{
   expect_true( all( sapply( res, is_polygon ) ) )
 
 })
-

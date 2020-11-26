@@ -22,7 +22,8 @@ namespace sfc {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool close = true
+      bool close = true,
+      bool closed_attribute = false
   ) {
 
     if( Rf_isNull( geometry_cols ) ) {
@@ -74,7 +75,7 @@ namespace sfc {
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_multipolygon_id, int_polygon_id );
     int_id_cols = geometries::utils::concatenate_vectors( int_id_cols, int_linestring_id );
 
-    Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
+    Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close, closed_attribute );
     return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_MULTIPOLYGON, bbox, z_range, m_range );
 
   }

@@ -20,10 +20,11 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
 
-    Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close );
+    Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close, closed_attribute );
     // TODO: we're getting the linestring_ids inside sfc_linestring,
     // and re-doing it here... say what...
     SEXP ids = geometries::utils::get_ids( x, polygon_id );
@@ -40,15 +41,16 @@ namespace sf {
       SEXP& linestring_id,
       std::string xyzm,
       bool keep,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
 
     if( !keep ) {
-      return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close );
+      return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close, closed_attribute );
     }
 
     Rcpp::List lst = geometries::utils::as_list( x );
-    Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close );
+    Rcpp::List sfc = sfheaders::sfc::sfc_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close, closed_attribute );
 
     SEXP property_cols = geometries::utils::other_columns( x, geometry_cols, polygon_id, linestring_id );
     Rcpp::IntegerVector int_property_cols = geometries::utils::sexp_col_int( x, property_cols );
@@ -68,10 +70,6 @@ namespace sf {
     }
 
     Rcpp::IntegerVector int_polygon_id = geometries::utils::sexp_col_int( x, polygon_id );
-
-
-    // TODO:
-    // - can I get this during 'sfc_linestring()' so I don't have to do it twice?
     Rcpp::IntegerVector geometry_idx = geometries::utils::rleid_indices( lst, int_polygon_id );
 
     Rcpp::List res = Rcpp::List::create(
@@ -90,10 +88,11 @@ namespace sf {
       SEXP& geometry_cols,
       SEXP& polygon_id,
       SEXP& linestring_id,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
     std::string xyzm;
-    return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close );
+    return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, close, closed_attribute );
   }
 
   inline SEXP sf_polygon(
@@ -102,10 +101,11 @@ namespace sf {
       SEXP& polygon_id,
       SEXP& linestring_id,
       bool keep,
-      bool close
+      bool close,
+      bool closed_attribute
   ) {
     std::string xyzm;
-    return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, keep, close );
+    return sf_polygon( x, geometry_cols, polygon_id, linestring_id, xyzm, keep, close, closed_attribute );
   }
 
 } // sf

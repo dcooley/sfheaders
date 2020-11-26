@@ -21,7 +21,8 @@ namespace sfc {
       SEXP& polygon_id,
       SEXP& linestring_id,
       std::string xyzm,
-      bool close = true
+      bool close = true,
+      bool closed_attribute = false
   ) {
 
 
@@ -71,7 +72,20 @@ namespace sfc {
 
     Rcpp::IntegerVector int_id_cols = geometries::utils::concatenate_vectors( int_polygon_id, int_linestring_id );
 
-    Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
+    // TODO:
+    // iff close == TRUE && sf_polygon() list_columns != NULL
+    // we need to know IFF any matrix will be closed
+    // so we need to konw where each matrix starts and ends
+    // and test closure
+    // This can only really happen inside geometries::split_by_id
+    // becaues here is where we close the matrix
+    //
+    // Here I can attach an 'has_been_closed attribute to each matrix (ring)
+    // then just extract those as a vector, right?
+    // so those which 'have-been-closed' need an extra element on their list columns
+
+    Rcpp::List sfc = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close, closed_attribute );
+
     return sfheaders::sfc::make_sfc( sfc, sfheaders::sfc::SFC_POLYGON, bbox, z_range, m_range );
 
   }
