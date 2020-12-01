@@ -208,7 +208,7 @@ namespace sf {
     Rcpp::List& sfc
   ) {
 
-    R_xlen_t i, j, k;
+    R_xlen_t i;
     R_xlen_t n_geometries = sfc.size();
     Rcpp::List lst_indexes( n_geometries );
 
