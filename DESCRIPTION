@@ -21,7 +21,7 @@ LinkingTo:
     geometries,
     Rcpp
 Imports: 
-    geometries (>= 0.2.0),
+    geometries (>= 0.2.1),
     Rcpp
 Suggests:
     covr,

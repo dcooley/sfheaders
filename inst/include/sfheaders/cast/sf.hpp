@@ -33,7 +33,7 @@ namespace cast {
 
     R_xlen_t total_coordinates = Rcpp::sum( n_results );
 
-    Rcpp::NumericVector expanded_index( total_coordinates );
+    Rcpp::IntegerVector expanded_index( total_coordinates );
 
     R_xlen_t counter = 0;
     for( i = 0; i < n_row; ++i ) {
@@ -66,7 +66,28 @@ namespace cast {
 
         Rcpp::Rcout << "Type of property column: " << TYPEOF( v ) << std::endl;
         Rcpp::Rcout << "expanded_index: " << expanded_index << std::endl;
-        geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
+
+        // TODO:
+        // IFF v is a LIST (VECSXP) column, then it should contain the same number of elements
+        // as teh sfg
+        // - e.g., a POLYGON((), (), ()) has 3 rings. The lsit column should have 3 elements
+        // - if we are down-casting, then each ring is being separated. so the list needs to be separated too.
+        if( TYPEOF( v ) == VECSXP ) {
+          Rcpp::List lst_v = Rcpp::as< Rcpp::List >( v );
+          Rcpp::Rcout << "lst_v length: " << lst_v.length() << std::endl;
+          if( expanded_index.length() != lst_v.length() ) {
+            // this isn't correct....
+            Rcpp::stop("sfheaders - invalid list column");
+
+          }
+          for( j = 0; j < lst_v.length(); ++j ) {
+            SEXP lv = lst_v[ j ];
+            Rcpp::IntegerVector ie = expanded_index[ j ];
+            geometries::utils::expand_vector( sf_res, lv, ie, column_counter );
+          }
+        } else {
+          geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
+        }
 
         res_names[ column_counter ] = str_name;
         ++column_counter;
