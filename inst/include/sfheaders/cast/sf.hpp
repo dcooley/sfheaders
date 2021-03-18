@@ -48,20 +48,26 @@ namespace cast {
     // other than the sfc column, expand all the other columsn by 'n_reuslts'
     Rcpp::List casted_sfc = cast_sfc( sfc, n_results, cast_to, close );
 
-
     Rcpp::List sf_res( n_names );
     // loop over each of the df_names which aren't the geometry
     // then add on the created_sfc;
     Rcpp::StringVector res_names( n_col );
     R_xlen_t column_counter = 0;
+
     for( i = 0; i < n_names; ++i ) {
       // iff this_name != geom_column, expand the vector and doene.
       Rcpp::String this_name = df_names[ i ];
       std::string str_name = this_name;
+
+      Rcpp::Rcout << "this_name: " << str_name << std::endl;
+
       if( str_name != geom_column ) {
         SEXP v = sf[ i ];
 
+        Rcpp::Rcout << "Type of property column: " << TYPEOF( v ) << std::endl;
+        Rcpp::Rcout << "expanded_index: " << expanded_index << std::endl;
         geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
+
         res_names[ column_counter ] = str_name;
         ++column_counter;
       }
