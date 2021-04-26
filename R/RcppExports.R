@@ -25,8 +25,8 @@ rcpp_cast_sfc <- function(sfc, cast_to, close = TRUE) {
     .Call(`_sfheaders_rcpp_cast_sfc`, sfc, cast_to, close)
 }
 
-rcpp_cast_sf <- function(sf, cast_to, close = TRUE) {
-    .Call(`_sfheaders_rcpp_cast_sf`, sf, cast_to, close)
+rcpp_cast_sf <- function(sf, cast_to, list_columns, close = TRUE) {
+    .Call(`_sfheaders_rcpp_cast_sf`, sf, cast_to, list_columns, close)
 }
 
 rcpp_fill_list <- function(v, line_ids) {

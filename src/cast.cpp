@@ -25,7 +25,7 @@ Rcpp::List rcpp_cast_sfc( Rcpp::List sfc, std::string cast_to, bool close = true
 }
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_cast_sf( Rcpp::DataFrame sf, std::string cast_to, bool close = true ) {
-  return sfheaders::cast::cast_sf( sf, cast_to, close );
+Rcpp::DataFrame rcpp_cast_sf( Rcpp::DataFrame sf, std::string cast_to, SEXP list_columns, bool close = true ) {
+  return sfheaders::cast::cast_sf( sf, cast_to, list_columns, close );
 }
 

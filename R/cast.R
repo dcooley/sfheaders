@@ -95,8 +95,9 @@ sfc_cast <- function( sfc, to, close = TRUE ) {
 #'
 #'
 #' @export
-sf_cast <- function( sf, to, close = TRUE ) {
+sf_cast <- function( sf, to, close = TRUE, list_columns = NULL ) {
   to <- toupper( to )
-  return( rcpp_cast_sf( sf, to, close ) )
+  list_columns <- index_correct( list_columns )
+  return( rcpp_cast_sf( sf, to, list_columns, close ) )
 }
 
