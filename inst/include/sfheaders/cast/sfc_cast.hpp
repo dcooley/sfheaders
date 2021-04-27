@@ -3,7 +3,7 @@
 
 //#include "sfheaders/sf/sf_utils.hpp"
 #include "sfheaders/df/sf.hpp"
-#include "sfheaders/cast/sfg.hpp"
+#include "sfheaders/cast/sfg_cast.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 //#include "sfheaders/df/sfg.hpp"
@@ -15,9 +15,9 @@ namespace sfheaders {
 namespace cast {
 
 
-  inline Rcpp::NumericVector count_new_sfc_objects( Rcpp::List& sfc, std::string& cast_to ) {
+  inline Rcpp::IntegerVector count_new_sfc_objects( Rcpp::List& sfc, std::string& cast_to ) {
     R_xlen_t n = sfc.size();
-    Rcpp::NumericVector res( n );
+    Rcpp::IntegerVector res( n );
     R_xlen_t i;
     for( i = 0; i < n; ++i ) {
       SEXP sfg = sfc[ i ];
@@ -53,7 +53,7 @@ namespace cast {
   // these shouldn't change; because the coordinates aren't changing,right?
   inline Rcpp::List cast_sfc(
       Rcpp::List& sfc,
-      Rcpp::NumericVector& n_results,
+      Rcpp::IntegerVector& n_results,
       std::string& cast_to,
       bool close = true
   ) {
@@ -135,7 +135,7 @@ namespace cast {
       bool close = true
   ) {
 
-    Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
+    Rcpp::IntegerVector n_results = count_new_sfc_objects( sfc, cast_to );
     return cast_sfc( sfc, n_results, cast_to, close );
   }
 

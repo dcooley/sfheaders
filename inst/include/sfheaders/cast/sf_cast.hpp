@@ -2,7 +2,7 @@
 #define R_SFHEADERS_CAST_SF_H
 
 #include "sfheaders/sf/sf_utils.hpp"
-#include "sfheaders/cast/sfc.hpp"
+#include "sfheaders/cast/sfc_cast.hpp"
 
 #include "geometries/utils/vectors/vectors.hpp"
 
@@ -29,7 +29,7 @@ namespace cast {
 
     std::string geom_column = sf.attr("sf_column");
     Rcpp::List sfc = sf[ geom_column ];
-    Rcpp::NumericVector n_results = count_new_sfc_objects( sfc, cast_to );
+    Rcpp::IntegerVector n_results = count_new_sfc_objects( sfc, cast_to );
 
     R_xlen_t total_coordinates = Rcpp::sum( n_results );
 
@@ -45,7 +45,7 @@ namespace cast {
       counter = counter + expand_by;
     }
 
-    // other than the sfc column, expand all the other columsn by 'n_reuslts'
+    // other than the sfc column, expand all the other (non-list) columns by 'n_results'
     Rcpp::List casted_sfc = sfheaders::cast::cast_sfc( sfc, n_results, cast_to, close );
 
 

@@ -1,20 +1,20 @@
 #include <Rcpp.h>
-#include "sfheaders/cast/sfg.hpp"
-#include "sfheaders/cast/sfc.hpp"
-#include "sfheaders/cast/sf.hpp"
+#include "sfheaders/cast/sfg_cast.hpp"
+#include "sfheaders/cast/sfc_cast.hpp"
+#include "sfheaders/cast/sf_cast.hpp"
 
 #include "sfheaders/sfc/sfc.hpp"
 
 // [[Rcpp::export]]
-Rcpp::NumericVector rcpp_count_new_objects( SEXP sfg, std::string cast_to ) {
+Rcpp::IntegerVector rcpp_count_new_objects( SEXP sfg, std::string cast_to ) {
   R_xlen_t x = sfheaders::cast::count_new_objects( sfg, cast_to );
-  Rcpp::NumericVector res(1);
+  Rcpp::IntegerVector res(1);
   res[0] = x;
   return res;
 }
 
 // [[Rcpp::export]]
-Rcpp::NumericVector rcpp_count_new_sfc_objects( Rcpp::List sfc, std::string cast_to ) {
+Rcpp::IntegerVector rcpp_count_new_sfc_objects( Rcpp::List sfc, std::string cast_to ) {
  return sfheaders::cast::count_new_sfc_objects( sfc, cast_to );
 }
 

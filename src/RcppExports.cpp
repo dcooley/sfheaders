@@ -41,7 +41,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_count_new_objects
-Rcpp::NumericVector rcpp_count_new_objects(SEXP sfg, std::string cast_to);
+Rcpp::IntegerVector rcpp_count_new_objects(SEXP sfg, std::string cast_to);
 RcppExport SEXP _sfheaders_rcpp_count_new_objects(SEXP sfgSEXP, SEXP cast_toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -53,7 +53,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_count_new_sfc_objects
-Rcpp::NumericVector rcpp_count_new_sfc_objects(Rcpp::List sfc, std::string cast_to);
+Rcpp::IntegerVector rcpp_count_new_sfc_objects(Rcpp::List sfc, std::string cast_to);
 RcppExport SEXP _sfheaders_rcpp_count_new_sfc_objects(SEXP sfcSEXP, SEXP cast_toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
