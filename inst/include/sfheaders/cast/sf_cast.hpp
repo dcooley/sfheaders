@@ -14,7 +14,7 @@ namespace cast {
   inline Rcpp::List cast_sf(
       Rcpp::DataFrame& sf,
       std::string& cast_to,
-      SEXP list_columns,
+      Rcpp::StringVector list_columns,  // TODO - change to SEXP
       bool close = true
   ) {
     if( !sf.hasAttribute("sf_column") ) {
@@ -35,6 +35,7 @@ namespace cast {
 
     Rcpp::IntegerVector expanded_index( total_coordinates );
 
+    // other than the sfc column, expand all the other (non-list) columns by 'n_results'
     R_xlen_t counter = 0;
     for( i = 0; i < n_row; ++i ) {
       R_xlen_t expand_by = n_results[ i ];
@@ -45,12 +46,10 @@ namespace cast {
       counter = counter + expand_by;
     }
 
-    // other than the sfc column, expand all the other (non-list) columns by 'n_results'
     Rcpp::List casted_sfc = sfheaders::cast::cast_sfc( sfc, n_results, cast_to, close );
 
-
     Rcpp::List sf_res( n_names );
-    // loop over each of the df_names which aren't the geometry
+    // loop over each of the df_names which aren't the geometry or list-columns
     // then add on the created_sfc;
     Rcpp::StringVector res_names( n_col );
     R_xlen_t column_counter = 0;
@@ -61,7 +60,18 @@ namespace cast {
       if( str_name != geom_column ) {
         SEXP v = sf[ i ];
 
-        geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
+
+        int is_in = geometries::utils::where_is(this_name, list_columns);
+        Rcpp::Rcout << "is_list: " << str_name << std::endl << " - " << is_in << std::endl;
+
+        if( is_in >= 0 ) {
+          Rcpp::List lst = Rcpp::as< Rcpp::List >( v );
+          //sf_res[ column_counter ] = lst;
+          sf_res[ column_counter ] = sfheaders::cast::cast_list( lst, sfc, n_results, cast_to );
+        } else {
+          geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );
+        }
+
         res_names[ column_counter ] = str_name;
         ++column_counter;
       }

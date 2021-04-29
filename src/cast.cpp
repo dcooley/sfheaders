@@ -2,7 +2,7 @@
 #include "sfheaders/cast/sfg_cast.hpp"
 #include "sfheaders/cast/sfc_cast.hpp"
 #include "sfheaders/cast/sf_cast.hpp"
-
+// #include "sfheaders/cast/list_cast.hpp"
 #include "sfheaders/sfc/sfc.hpp"
 
 // [[Rcpp::export]]
@@ -29,3 +29,7 @@ Rcpp::DataFrame rcpp_cast_sf( Rcpp::DataFrame sf, std::string cast_to, SEXP list
   return sfheaders::cast::cast_sf( sf, cast_to, list_columns, close );
 }
 
+// // [[Rcpp::export]]
+// SEXP rcpp_cast_remove_one( Rcpp::List lst ) {
+//   return sfheaders::cast::remove_one( lst );
+// }
