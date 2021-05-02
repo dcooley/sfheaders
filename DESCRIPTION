@@ -1,7 +1,7 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2020-12-01
+Date: 2021-04-30
 Version: 0.4.1
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre")),
@@ -14,7 +14,7 @@ License: MIT + file LICENSE
 URL: https://dcooley.github.io/sfheaders/
 BugReports: https://github.com/dcooley/sfheaders/issues
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 RoxygenNote: 7.1.1
 SystemRequirements: C++11
 LinkingTo: 

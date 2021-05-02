@@ -34,16 +34,41 @@
 #   , list_columns = "val"
 # )
 #
+# sf_l <- sfheaders::sf_linestring(
+#   obj = df
+#   , x = "x"
+#   , y = "y"
+#   , linestring_id = "id2"
+#   , keep = TRUE
+#   , list_columns = "val"
+# )
+#
+#
 # library(sf)
 #
-# sf <- rbind( sf_mp, sf_p[, c("id1","val")] )
+# sf <- rbind( sf_mp[, "val"], sf_p[, c("val")], sf_l[, c("val")] )
 #
-# sfheaders::sf_cast( sf, "LINESTRING", list_columns = c("val") )
+# # sfheaders::sf_cast( sf, "LINESTRING", list_columns = c("val") )
 #
-# ## Multipolygon -> LINESTRING
+# geometries:::gm_dimensions( sf[1, ][['val']] )
+# ## MULTIPOLYGON: 4
+# ## POLYGON: 2
+# ## LINESTRING: 1
+#
+# ## MLUTIPOLYGON -> LINESTRING
+#
+# ## 4 --> 2
+# str( sf[1, ]$val ) ## MULTIPOLYGON
+# str( sf[2, ]$val ) ## POLYGON
+#
+# ## MULTIPOLYGON -> LINESTRING
 # geometries:::rcpp_nest( sf[1, ]$val, 2 )  ## need to go down 2 levels
 #
-# ## Polygon -> LINESTRING
+# ## POLYGON -> LINESTRING
+# geometries:::gm_dimensions( sf[2, ]$val )
+#
+# ## 2 --> 1
+# str( sf[2, ]$val )
 # geometries:::rcpp_nest( sf[2, ]$val, 1 )  ## need to go down 1 level
 # geometries:::rcpp_nest( sf[2, ]$val, 1 )
 #

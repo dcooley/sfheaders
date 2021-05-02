@@ -14,11 +14,20 @@ namespace cast {
   inline Rcpp::List cast_sf(
       Rcpp::DataFrame& sf,
       std::string& cast_to,
-      Rcpp::StringVector list_columns,  // TODO - change to SEXP
+      SEXP list_columns,
       bool close = true
   ) {
     if( !sf.hasAttribute("sf_column") ) {
       Rcpp::stop("sfheaders - sf_column not found");
+    }
+
+    Rcpp::IntegerVector iv_list_columns;
+    Rcpp::IntegerVector iv_geom_column;
+
+    if( !Rf_isNull( list_columns ) ) {
+      // need to use 'obj' here because 'list_columns' may be a string, but 'data'
+      // has been made into an unnamed list
+      iv_list_columns = geometries::utils::sexp_col_int( sf, list_columns );
     }
 
     Rcpp::StringVector df_names = sf.names();
@@ -28,6 +37,8 @@ namespace cast {
     R_xlen_t n_col = sf.ncol();
 
     std::string geom_column = sf.attr("sf_column");
+    iv_geom_column = geometries::utils::sexp_col_int( df_names, geom_column );
+
     Rcpp::List sfc = sf[ geom_column ];
     Rcpp::IntegerVector n_results = count_new_sfc_objects( sfc, cast_to );
 
@@ -53,20 +64,24 @@ namespace cast {
     // then add on the created_sfc;
     Rcpp::StringVector res_names( n_col );
     R_xlen_t column_counter = 0;
+
+
     for( i = 0; i < n_names; ++i ) {
       // iff this_name != geom_column, expand the vector and doene.
       Rcpp::String this_name = df_names[ i ];
       std::string str_name = this_name;
+
       if( str_name != geom_column ) {
         SEXP v = sf[ i ];
 
+        //return v;
 
-        int is_in = geometries::utils::where_is(this_name, list_columns);
-        Rcpp::Rcout << "is_list: " << str_name << std::endl << " - " << is_in << std::endl;
+        int is_in = geometries::utils::where_is( i, iv_list_columns );
+        // Rcpp::Rcout << "is_list: " << str_name << std::endl << " - " << is_in << std::endl;
 
         if( is_in >= 0 ) {
           Rcpp::List lst = Rcpp::as< Rcpp::List >( v );
-          //sf_res[ column_counter ] = lst;
+
           sf_res[ column_counter ] = sfheaders::cast::cast_list( lst, sfc, n_results, cast_to );
         } else {
           geometries::utils::expand_vector( sf_res, v, expanded_index, column_counter );

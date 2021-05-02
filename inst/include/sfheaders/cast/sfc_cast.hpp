@@ -31,17 +31,17 @@ namespace cast {
   // casting to the same geometry will be counted as 'DOWN'
   inline int cast_type( std::string& cast ) {
     if( cast == "POINT" ) {
-      return sfheaders::sfg::VECTOR;    // 1
+      return 0;
     } else if ( cast == "MULTIPOINT" ) {
-      return sfheaders::sfg::MATRIX;    // 2
+      return 1;
     } else if ( cast == "LINESTRING" ) {
-      return sfheaders::sfg::MATRIX;    // 2
+      return 1;
     } else if ( cast == "MULTILINESTRING" ) {
-      return sfheaders::sfg::LIST_MATRIX;  // 3
+      return 2;
     } else if ( cast == "POLYGON" ) {
-      return sfheaders::sfg::LIST_MATRIX;  // 3
+      return 2;
     } else if ( cast == "MULTIPOLYGON" ) {
-      return sfheaders::sfg::LIST_LIST_MATRIX;  // 4
+      return 3;
     } else {
       Rcpp::stop("sfheders - unknown geometry type to cast to");  // #nocov
     }
@@ -57,7 +57,7 @@ namespace cast {
       std::string& cast_to
   ) {
 
-    int casting_to = cast_type( cast_to ) - 1; // TODO: why is this -1 needed???
+    int casting_to = cast_type( cast_to );
     std::string cast_from;
 
     R_xlen_t i, j;
@@ -71,7 +71,7 @@ namespace cast {
 
     for( i = 0; i < n; ++i ) {
 
-      Rcpp::Rcout << "i: " << i << std::endl;
+      // Rcpp::Rcout << "i: " << i << std::endl;
 
       // the value at n_results[ i ] tells us the size of the returning object
       R_xlen_t returned_size = n_results[ i ];
@@ -84,21 +84,39 @@ namespace cast {
 
       int casting_from = cast_type( cast_from );
 
-      //SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
-      Rcpp::Rcout << "casting_from: " << casting_from << std::endl;
-      Rcpp::Rcout << "casting_to: " << casting_to << std::endl;
-      Rcpp::Rcout << "input list element size: " << geometries::utils::sexp_length( list_element ) << std::endl;
-      //return list_element;
+      // Rcpp::List sfg_dimensions = geometries::coordinates::geometry_dimensions( sfg );
+      // int sfg_current_depth = sfg_dimensions["max_nest"];
+      // Rcpp::Rcout << "sfg_current_depth: " << sfg_current_depth << std::endl;
+      //
+      // Rcpp::List lst_dimensions = geometries::coordinates::geometry_dimensions( list_element );
+      // int lst_current_depth = lst_dimensions["max_nest"];
+      // Rcpp::Rcout << "lst_current_depth: " << lst_current_depth << std::endl;
+
+
+      // //SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
+      // Rcpp::Rcout << "casting_from: " << casting_from << std::endl;
+      // Rcpp::Rcout << "casting_to: " << casting_to << std::endl;
+      // Rcpp::Rcout << "input list element size: " << geometries::utils::sexp_length( list_element ) << std::endl;
+      // //return list_element;
+
+      // casting up nests the result one-level too deep.
+      // if( casting_from < casting_to ) {
+      //   casting_to = casting_to - 1;
+      // }
 
       Rcpp::List new_res = geometries::nest::nest_impl( list_element, casting_to );
 
-      //Rcpp::List lst_res = Rcpp::as< Rcpp::List >( new_res );
-      Rcpp::Rcout << "output size: " << new_res.size() << std::endl;
-      Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
-      //return new_res;
-      //Rcpp::stop("stopping");
+      // //Rcpp::List lst_res = Rcpp::as< Rcpp::List >( new_res );
+      // Rcpp::Rcout << "output size: " << new_res.size() << std::endl;
+      // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
+      // //return new_res;
 
-      if( casting_from <= casting_to ) {
+      if( new_res.size() != returned_size ) {
+        Rcpp::stop("sfheaders - error casting list column. Please make sure the input list has an element for each coordinate.");
+      }
+
+      //Rcpp::stop("stopping");
+      if( casting_from < casting_to ) {
         res[ result_counter ] = new_res;
         ++result_counter;
       } else {
