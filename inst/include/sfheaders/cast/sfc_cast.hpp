@@ -26,9 +26,6 @@ namespace cast {
     return res;
   }
 
-  // returns CAST_UP or CAST_DOWN
-  // given the from & to
-  // casting to the same geometry will be counted as 'DOWN'
   inline int cast_type( std::string& cast ) {
     if( cast == "POINT" ) {
       return 0;
@@ -92,12 +89,12 @@ namespace cast {
       // int lst_current_depth = lst_dimensions["max_nest"];
       // Rcpp::Rcout << "lst_current_depth: " << lst_current_depth << std::endl;
 
-
       // //SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
-      // Rcpp::Rcout << "casting_from: " << casting_from << std::endl;
-      // Rcpp::Rcout << "casting_to: " << casting_to << std::endl;
+      Rcpp::Rcout << "casting_from: " << casting_from << std::endl;
+      Rcpp::Rcout << "casting_to: " << casting_to << std::endl;
       // Rcpp::Rcout << "input list element size: " << geometries::utils::sexp_length( list_element ) << std::endl;
       // //return list_element;
+
 
       // casting up nests the result one-level too deep.
       // if( casting_from < casting_to ) {

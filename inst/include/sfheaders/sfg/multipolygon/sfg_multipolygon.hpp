@@ -20,7 +20,7 @@ namespace sfg {
   ) {
     Rcpp::List p( 1 );
     Rcpp::List mp( 1 );
-    p[0] = sfheaders::polygon_utils::close_polygon< RTYPE >( mat, close );;
+    p[0] = sfheaders::polygon_utils::close_polygon< RTYPE >( mat, close );
     mp[0] = p;
     R_xlen_t n_col = mat.ncol();
     sfheaders::sfg::make_sfg( mp, n_col, sfheaders::sfg::SFG_MULTIPOLYGON, xyzm );
@@ -91,6 +91,8 @@ namespace sfg {
 
     Rcpp::List attributes = Rcpp::List::create();
     Rcpp::List sfg = geometries::make_geometries( res, int_id_cols, int_geometry_cols, attributes, close );
+
+//    return sfg;
 
     Rcpp::StringVector class_attribute = { xyzm.c_str(), "MULTIPOLYGON","sfg" };
     Rcpp::List atts = Rcpp::List::create(

@@ -44,12 +44,29 @@
 # )
 #
 #
-# library(sf)
+# #library(sf)
 #
 # sf <- rbind( sf_mp[, "val"], sf_p[, c("val")], sf_l[, c("val")] )
 #
-# # sfheaders::sf_cast( sf, "LINESTRING", list_columns = c("val") )
+# res <- sfheaders::sf_cast( sf, "POLYGON", list_columns = c("val") )
 #
+# str( sf )
+# str( res )
+#
+# geometries:::gm_dimensions( sf[1, ]$geometry )
+# unclass( sf[1, ][['geometry']] )
+# unclass( sf[1, ][['geometry']][[1]] )
+# unclass( sf[1, ][['geometry']][[1]][[1]] )
+# unclass( sf[1, ][['geometry']][[1]][[1]][[1]] )
+#
+# geometries:::gm_dimensions( sf[2, ]$geometry )
+# unclass( sf[2, ][['geometry']] )
+# unclass( sf[2, ][['geometry']][[1]] )
+# unclass( sf[2, ][['geometry']][[1]][[1]] )
+#
+#
+#
+# geometries:::gm_dimensions( sf[1, ][['geometry']] )
 # geometries:::gm_dimensions( sf[1, ][['val']] )
 # ## MULTIPOLYGON: 4
 # ## POLYGON: 2
@@ -65,6 +82,8 @@
 # geometries:::rcpp_nest( sf[1, ]$val, 2 )  ## need to go down 2 levels
 #
 # ## POLYGON -> LINESTRING
+# geometries:::gm_dimensions( sf[2, ][['geometry']] )
+# geometries:::gm_dimensions( sf[2, ][['val']] )
 # geometries:::gm_dimensions( sf[2, ]$val )
 #
 # ## 2 --> 1
