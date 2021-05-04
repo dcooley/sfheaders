@@ -341,3 +341,28 @@ test_that("ignore unlist columns if they aren't lists",{
    expect_equal( res$val, c(1,1,3,3) )#sf$val )
 
 })
+
+## issue 90
+test_that("list columns get casted ", {
+
+   df <- data.frame(
+      x = 1:5
+      , y = 5:1
+      , id = rep(1, 5)
+      , s = letters[1:5]
+   )
+
+   sf_line <- sfheaders::sf_linestring(
+      obj = df
+      , x = "x"
+      , y = "y"
+      , keep = TRUE
+      , list_columns = "s"
+   )
+
+   sf_poly <- sfheaders::sf_cast( sf_line, "POLYGON" )
+
+
+})
+
+

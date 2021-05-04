@@ -4,7 +4,7 @@
 \alias{sf_cast}
 \title{sf cast}
 \usage{
-sf_cast(sf, to, close = TRUE)
+sf_cast(sf, to, close = TRUE, list_columns = NULL)
 }
 \arguments{
 \item{sf}{object to convert}

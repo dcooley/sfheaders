@@ -6,11 +6,6 @@
 #include "sfheaders/df/sfc.hpp"
 #include "sfheaders/sfg/sfg.hpp"
 
-//#include "sfheaders/sfg/sfg_types.hpp"
-// #include "geometries/utils/sexp/sexp.hpp"
-// #include "sfheaders/df/sfg.hpp"
-// #include "sfheaders/df/utils.hpp"
-
 #include <Rcpp.h>
 
 #define M_COLUMN_CAST                9

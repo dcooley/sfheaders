@@ -510,7 +510,6 @@ test_that("sf objects are casted",{
 
   expect_true( nrow( res ) == sum( new_coords ) )
 
-
 })
 
 
@@ -671,5 +670,68 @@ test_that("input objects not updated by-reference",{
 
 })
 
+test_that("list-columns casted",{
+
+  df <- data.frame(
+    id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+    , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+    , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+    , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+  )
+
+  df$val <- letters[1:nrow(df)]
+
+  pt <- sf_point(obj = df, x = "x", y = "y")
+  mpt <- sf_multipoint(obj = df, x = "x", y = "y", multipoint_id = "id1", keep = TRUE, list_columns = "val")
+  ls <- sf_linestring(obj = df, x = "x", y = "y", linestring_id = "id1", keep = TRUE, list_columns = "val")
+  mls <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "id1", keep = TRUE, list_columns = "val")
+  p <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "id1", linestring_id = "id2", close = FALSE, keep = TRUE, list_columns = "val" )
+  mp <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "id1", linestring_id = "id2", close = FALSE, keep = TRUE, list_columns = "val" )
+
+  ## Linestring to Point
+  res <- sf_cast(ls, "POINT", list_columns = "val")
+  expect_true( nrow( res ) == nrow( df ) )
+  expect_equal( res$val, df$val )
+  expect_true( is.character( res$val ) )
+
+  ## Linestring to Polygon
+  res <- sf_cast(ls, "POLYGON", list_columns = "val")
+
+  expect_true( nrow( res ) == 2 )
+  expect_equal( res$val[[1]][[1]], ls$val[[1]] )
+  expect_equal( res$val[[2]][[1]], ls$val[[2]] )
+
+
+  ## Linestring to Multipolygon
+  res <- sf_cast(ls, "MULTIPOLYGON", list_columns = "val")
+
+  expect_true( nrow( res ) == 2 )
+  expect_equal( res$val[[1]][[1]][[1]], ls$val[[1]] )
+  expect_equal( res$val[[2]][[1]][[1]], ls$val[[2]] )
+
+
+  ## Polygon to Point
+  res <- sf_cast(p, "POINT", list_columns = "val")
+  expect_true( nrow( res ) == nrow( df ) )
+  expect_equal( res$val, df$val )
+  expect_true( is.character( res$val ) )
+
+  ## Polygon to Linestring
+  res <- sf_cast(p, "LINESTRING", list_columns = "val")
+
+  expect_equal(length(res$val), 3)
+  expect_equal( res$val[[1]], p$val[[1]][[1]] )
+  expect_equal( res$val[[2]], p$val[[1]][[2]] )
+  expect_equal( res$val[[3]], p$val[[2]][[1]] )
+
+  ## Polygon to Multipolygon
+  res <- sf_cast(p, "MULTIPOLYGON", list_columns = "val")
+  expect_true( nrow( res ) == 2 )
+  expect_equal( res$val[[1]][[1]], p$val[[1]] )
+  expect_equal( res$val[[2]][[1]], p$val[[2]] )
+
+
+
+})
 
 

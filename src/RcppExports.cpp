@@ -41,7 +41,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_count_new_objects
-Rcpp::NumericVector rcpp_count_new_objects(SEXP sfg, std::string cast_to);
+Rcpp::IntegerVector rcpp_count_new_objects(SEXP sfg, std::string cast_to);
 RcppExport SEXP _sfheaders_rcpp_count_new_objects(SEXP sfgSEXP, SEXP cast_toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -53,7 +53,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_count_new_sfc_objects
-Rcpp::NumericVector rcpp_count_new_sfc_objects(Rcpp::List sfc, std::string cast_to);
+Rcpp::IntegerVector rcpp_count_new_sfc_objects(Rcpp::List sfc, std::string cast_to);
 RcppExport SEXP _sfheaders_rcpp_count_new_sfc_objects(SEXP sfcSEXP, SEXP cast_toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -78,15 +78,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_cast_sf
-Rcpp::DataFrame rcpp_cast_sf(Rcpp::DataFrame sf, std::string cast_to, bool close);
-RcppExport SEXP _sfheaders_rcpp_cast_sf(SEXP sfSEXP, SEXP cast_toSEXP, SEXP closeSEXP) {
+Rcpp::DataFrame rcpp_cast_sf(Rcpp::DataFrame sf, std::string cast_to, SEXP list_columns, bool close);
+RcppExport SEXP _sfheaders_rcpp_cast_sf(SEXP sfSEXP, SEXP cast_toSEXP, SEXP list_columnsSEXP, SEXP closeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame >::type sf(sfSEXP);
     Rcpp::traits::input_parameter< std::string >::type cast_to(cast_toSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type list_columns(list_columnsSEXP);
     Rcpp::traits::input_parameter< bool >::type close(closeSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sf(sf, cast_to, close));
+    rcpp_result_gen = Rcpp::wrap(rcpp_cast_sf(sf, cast_to, list_columns, close));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -697,7 +698,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sfheaders_rcpp_count_new_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_objects, 2},
     {"_sfheaders_rcpp_count_new_sfc_objects", (DL_FUNC) &_sfheaders_rcpp_count_new_sfc_objects, 2},
     {"_sfheaders_rcpp_cast_sfc", (DL_FUNC) &_sfheaders_rcpp_cast_sfc, 3},
-    {"_sfheaders_rcpp_cast_sf", (DL_FUNC) &_sfheaders_rcpp_cast_sf, 3},
+    {"_sfheaders_rcpp_cast_sf", (DL_FUNC) &_sfheaders_rcpp_cast_sf, 4},
     {"_sfheaders_rcpp_fill_list", (DL_FUNC) &_sfheaders_rcpp_fill_list, 2},
     {"_sfheaders_rcpp_list_sizes", (DL_FUNC) &_sfheaders_rcpp_list_sizes, 1},
     {"_sfheaders_rcpp_list_type", (DL_FUNC) &_sfheaders_rcpp_list_type, 1},
