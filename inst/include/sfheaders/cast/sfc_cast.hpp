@@ -45,9 +45,8 @@ namespace cast {
     return -1;
   }
 
-
   // casting list-columns follows similar logic to sfc
-  inline Rcpp::List cast_list(
+  inline SEXP cast_list(
       Rcpp::List& list_column,
       Rcpp::List& sfc,                 // required to know the 'from' type
       Rcpp::IntegerVector& n_results,
@@ -55,6 +54,12 @@ namespace cast {
   ) {
 
     int casting_to = cast_type( cast_to );
+
+    if( casting_to == 0 ) { // POINT
+      return geometries::utils::unlist_list( list_column );
+    }
+
+
     std::string cast_from;
 
     R_xlen_t i, j;
@@ -68,13 +73,16 @@ namespace cast {
 
     for( i = 0; i < n; ++i ) {
 
-      // Rcpp::Rcout << "i: " << i << std::endl;
 
       // the value at n_results[ i ] tells us the size of the returning object
       R_xlen_t returned_size = n_results[ i ];
 
       SEXP sfg = sfc[ i ];
+      // Rcpp::List list_element(1);
+      // list_element[0] = list_column[i];
       SEXP list_element = list_column[ i ];
+
+      // Rcpp::Rcout << "TYPEOF( list_element ) " << TYPEOF( list_element ) << std::endl;
 
       Rcpp::CharacterVector cls = sfheaders::utils::getSfgClass( sfg );
       cast_from = cls[1];
@@ -84,44 +92,69 @@ namespace cast {
       // Rcpp::List sfg_dimensions = geometries::coordinates::geometry_dimensions( sfg );
       // int sfg_current_depth = sfg_dimensions["max_nest"];
       // Rcpp::Rcout << "sfg_current_depth: " << sfg_current_depth << std::endl;
-      //
+
       // Rcpp::List lst_dimensions = geometries::coordinates::geometry_dimensions( list_element );
       // int lst_current_depth = lst_dimensions["max_nest"];
       // Rcpp::Rcout << "lst_current_depth: " << lst_current_depth << std::endl;
 
       // //SEXP new_res = sfheaders::cast::cast_to( sfg, cast_from, cast_to, xyzm, close );
-      Rcpp::Rcout << "casting_from: " << casting_from << std::endl;
-      Rcpp::Rcout << "casting_to: " << casting_to << std::endl;
-      // Rcpp::Rcout << "input list element size: " << geometries::utils::sexp_length( list_element ) << std::endl;
+
+      //Rcpp::Rcout << "input list element size: " << geometries::utils::sexp_length( list_element ) << std::endl;
       // //return list_element;
 
 
-      // casting up nests the result one-level too deep.
+      // //casting up nests the result one-level too deep.
       // if( casting_from < casting_to ) {
-      //   casting_to = casting_to - 1;
+      //   casting_to = casting_to - 1;  // why?? - the 'current_depth is one less than what I think it should be...
       // }
 
-      Rcpp::List new_res = geometries::nest::nest_impl( list_element, casting_to );
+      int reduce = casting_from < casting_to ? 1 : 0;
+
+      // Rcpp::Rcout << "casting_from: " << casting_from << std::endl;
+      // Rcpp::Rcout << "casting_to: " << casting_to << std::endl;
+
 
       // //Rcpp::List lst_res = Rcpp::as< Rcpp::List >( new_res );
       // Rcpp::Rcout << "output size: " << new_res.size() << std::endl;
       // Rcpp::Rcout << "returned_size: " << returned_size << std::endl;
-      // //return new_res;
-
-      if( new_res.size() != returned_size ) {
-        Rcpp::stop("sfheaders - error casting list column. Please make sure the input list has an element for each coordinate.");
-      }
+      // return new_res;
 
       //Rcpp::stop("stopping");
       if( casting_from < casting_to ) {
+
+        Rcpp::List new_res = geometries::nest::nest_impl( list_element, casting_to - reduce );
+        if( new_res.size() != returned_size ) {
+          Rcpp::stop("sfheaders - error casting list column. Please make sure the input list has an element for each coordinate.");
+        }
+
+        // Rcpp::Rcout << "refilling: casting_from < casting_to" << std::endl;
+        // Rcpp::List container(1);
+        // container[0] = new_res;
         res[ result_counter ] = new_res;
         ++result_counter;
+
+      } else if ( casting_from == casting_to ) {
+
+        // Rcpp::Rcout << "refilling: casting_from == casting_to" << std::endl;
+        res[ result_counter ] = list_element;
+        ++result_counter;
+
       } else {
+
+        Rcpp::List new_res = geometries::nest::nest_impl( list_element, casting_to - reduce );
+        if( new_res.size() != returned_size ) {
+          Rcpp::stop("sfheaders - error casting list column. Please make sure the input list has an element for each coordinate.");
+        }
+
         for( j = 0; j < returned_size; ++j ) {
           Rcpp::List new_lst = Rcpp::as< Rcpp::List >( new_res );
+          // Rcpp::Rcout << "refilling: casting_from > casting_to" << std::endl;
+
           res[ result_counter ] = new_lst[ j ];
           ++result_counter;
+
         }
+
       }
 
     }
@@ -197,7 +230,7 @@ namespace cast {
       } else {
         for( j = 0; j < returned_size; ++j ) {
           Rcpp::List new_lst = Rcpp::as< Rcpp::List >( new_res );
-          res[ result_counter ] = new_lst[ j ];
+          res[ result_counter ] = new_lst[j];
           ++result_counter;
         }
       }

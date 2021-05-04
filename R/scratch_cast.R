@@ -1,6 +1,4 @@
 #
-#
-#
 # df <- data.frame(
 #   x = 1:20
 #   , y = 1:20
@@ -43,12 +41,49 @@
 #   , list_columns = "val"
 # )
 #
+# str( sf_l )
+# sf_l[1, ]$geometry
+# sf_l[1, ]$val
+# str( sf_l )
 #
-# #library(sf)
+# geometries:::gm_dimensions( sf_l[1, ]$geometry )
+# geometries:::gm_dimensions( sf_l[1, ]$val )
 #
-# sf <- rbind( sf_mp[, "val"], sf_p[, c("val")], sf_l[, c("val")] )
+# sf_l$id2 <- NULL
+# sf_l$id1 <- NULL
+# sf_l$id3 <- NULL
+#
+# res <- sfheaders::sf_cast( sf_l, "POLYGON", list_columns = c("val") )
+#
+# str( res )
+#
+# sf_l[1, ]$val
+# sf_l[1, ]$geometry
+#
+# library(sf)
+# res <- sfheaders::sf_cast( sf_l[1, c("val","geometry") ], "POLYGON", list_columns = c("val") )
+#
+# str( res )
+#
+# # library(sf)
+#
+# sf <- rbind(
+#   sf_mp[, "val"]
+#   , sf_p[, c("val")]
+#   , sf_l[, c("val")]
+#   )
 #
 # res <- sfheaders::sf_cast( sf, "POLYGON", list_columns = c("val") )
+#
+# str( sf )
+# str( res )
+#
+#
+#
+# sfheaders::sf_cast( sf[4, ], "POLYGON", list_columns = c("val") )
+#
+# geometries:::gm_dimensions( sf[4, ]$geometry )
+# geometries:::gm_dimensions( sf[4, ]$val )
 #
 # str( sf )
 # str( res )
@@ -68,13 +103,14 @@
 #
 # geometries:::gm_dimensions( sf[1, ][['geometry']] )
 # geometries:::gm_dimensions( sf[1, ][['val']] )
-# ## MULTIPOLYGON: 4
+# geometries:::gm_dimensions( sf[2, ][['val']] )
+# ## MULTIPOLYGON: 3
 # ## POLYGON: 2
 # ## LINESTRING: 1
 #
 # ## MLUTIPOLYGON -> LINESTRING
 #
-# ## 4 --> 2
+# ## 3 --> 2
 # str( sf[1, ]$val ) ## MULTIPOLYGON
 # str( sf[2, ]$val ) ## POLYGON
 #
