@@ -74,18 +74,10 @@ namespace cast {
       if( str_name != geom_column ) {
 
         int is_in = geometries::utils::where_is( i, iv_list_columns );
-        // Rcpp::Rcout << "is_list: " << str_name << std::endl << " - " << is_in << std::endl;
 
         if( is_in >= 0 ) {
 
           Rcpp::List v = sf[ i ];
-
-          // Rcpp::Rcout << "TYPEOF( v ) " << TYPEOF( v ) << std::endl;
-          // Rcpp::Rcout << "size of v " << Rf_length( v ) << std::endl;
-
-          //Rcpp::List lst = Rcpp::as< Rcpp::List >( v );
-          //Rcpp::Rcout << "TYPEOF( lst ) " << TYPEOF( lst ) << std::endl;
-          //Rcpp::Rcout << "lst.size() " << lst.size() << std::endl;
 
           sf_res[ column_counter ] = sfheaders::cast::cast_list( v, sfc, n_results, cast_to );
         } else {
