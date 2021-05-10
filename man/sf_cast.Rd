@@ -83,7 +83,7 @@ mp <- sf_multipolygon(
   )
 
 ## The 'val' attributes follow the same structure as the geometry column
-## So each 'val' corresponds to a single coordiante in the geometry
+## So each 'val' corresponds to a single coordinate in the geometry
 str( mp )
 
 ## specifying `list_columns = "val"` when casting will retain the association
