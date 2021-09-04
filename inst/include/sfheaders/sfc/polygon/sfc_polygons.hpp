@@ -7,6 +7,7 @@
 namespace sfheaders {
 namespace sfc {
 
+
   inline Rcpp::List sfc_polygons( Rcpp::List& lst, std::string xyzm, bool close = true ) {
     R_xlen_t n = lst.size();
     R_xlen_t i;
