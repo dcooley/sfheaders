@@ -30,7 +30,7 @@ sfc_linestring(
 \code{sfc} object of LINESTRING geometries
 }
 \description{
-constructs sfc of MULTIPOINT objects
+constructs sfc of LINESTRING objects
 }
 \section{notes}{
 
@@ -50,5 +50,18 @@ sfc_linestring( x )
 sfc_linestring( x, x = "x", y = "y" )
 sfc_linestring( x, x = "y", y = "x" )
 sfc_linestring( x, linestring_id = "id", x = "x", y = "y")
+
+df <- data.frame(
+  id = c(1,1,1,1,2,2,2)
+  , x = 1:7
+  , y = 7:1
+  , z = 14:8
+  , m = 8:14
+)
+
+sfc_linestring(df, x = "x", y = "y", linestring_id = "id")
+sfc_linestring(df, x = "x", y = "y", z = "z", linestring_id = "id")
+sfc_linestring(df, x = "x", y = "y", m = "m", linestring_id = "id")
+sfc_linestring(df, x = "x", y = "y", z = "z", m = "m", linestring_id = "id")
 
 }

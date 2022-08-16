@@ -352,7 +352,7 @@ test_that("XYM dimension works",{
   expect_true( "m" %in% names(res) )
 
 
-  x <- matrix( c(1:16), ncol = 3 )
+  x <- matrix( c(1:16), ncol = 4 )
   x[1,1] <- 1.1
   sfc <- sfc_point( x, x = 1, y = 2, m = 3  )
   res <- sfheaders:::rcpp_sfc_to_df( sfc )

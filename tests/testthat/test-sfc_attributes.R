@@ -1,13 +1,13 @@
 context("sfc_attributes")
 
-test_that("crs is int, proj4string is string",{
+test_that("crs_input and crs_wkt are strings",{
 
-  ## Issue 33
+  ## Issue 33 - superseded issue 49
   df <- data.frame(x = 1, y = 2)
   sf <- sfheaders::sf_point(df)
   a <- attributes( sf$geometry )
-  expect_true( is.integer( a$crs$epsg ) )
-  expect_true( is.character( a$crs$proj4string ) )
+  expect_true( is.character( a$crs$input ) )
+  expect_true( is.character( a$crs$wkt ) )
 })
 
 test_that("issue 44 is fixed",{

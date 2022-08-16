@@ -25,6 +25,10 @@ constructs sfg LINESTRING object
 }
 \examples{
 
+sfg_linestring( 1:2 )
+sfg_linestring( 1:3 )
+sfg_linestring( 1:4 )
+
 sfg_linestring( matrix( 1:24, ncol = 2 ) )
 sfg_linestring( matrix( 1:24, ncol = 3 ) )
 sfg_linestring( matrix( 1:24, ncol = 4 ) )

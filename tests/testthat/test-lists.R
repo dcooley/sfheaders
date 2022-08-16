@@ -216,60 +216,63 @@ test_that("list_columns are kept",{
    expect_equal( sf$val, lm2 )
 
 
+   ## nested-geometry types
+   ## the list-column is returned in the same list-nesting-structure as the geometry
    sf <- sf_multilinestring(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, l1 )
+   expect_equal( sf$val, lapply( l1, list ) )
    sf <- sf_multilinestring(obj = df, x = "x", y = "y", multilinestring_id = "line_id", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, l2 )
+   expect_equal( sf$val, lapply( l2, list ) )
    sf <- sf_multilinestring(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, l1 )
+   expect_equal( sf$val, lapply( l1, list ) )
    sf <- sf_multilinestring(obj = df, x = 1, y = 2, multilinestring_id = 4, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, l2 )
+   expect_equal( sf$val, lapply( l2, list ) )
 
    sf <- sf_multilinestring(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, lm1 )
+   expect_equal( sf$val, lapply( lm1, list ) )
    sf <- sf_multilinestring(obj = m, x = "x", y = "y", multilinestring_id = "line_id", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, lm2 )
+   expect_equal( sf$val, lapply( lm2, list ) )
    sf <- sf_multilinestring(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, lm1 )
+   expect_equal( sf$val, lapply( lm1, list ) )
    sf <- sf_multilinestring(obj = m, x = 1, y = 2, multilinestring_id = 4, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, lm2 )
+   expect_equal( sf$val, lapply( lm2, list ) )
 
-   sf <- sf_polygon(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, l1 )
+   sf <- sf_polygon(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val", close = FALSE )
+   expect_equal( sf$val, lapply( l1, list ) )
    sf <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
-   expect_equal( sf$val, l2 )
-   sf <- sf_polygon(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, l1 )
+   expect_equal( sf$val, lapply( l2, list ) )
+   sf <- sf_polygon(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3, close = FALSE )
+   expect_equal( sf$val, lapply( l1, list ) )
    sf <- sf_polygon(obj = df, x = 1, y = 2, polygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
-   expect_equal( sf$val, l2 )
+   expect_equal( sf$val, lapply( l2, list ) )
 
-   sf <- sf_polygon(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, lm1 )
+   sf <- sf_polygon(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val", close = FALSE )
+   expect_equal( sf$val, lapply( lm1, list ) )
    sf <- sf_polygon(obj = m, x = "x", y = "y", polygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
-   expect_equal( sf$val, lm2 )
-   sf <- sf_polygon(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, lm1 )
+   expect_equal( sf$val, lapply( lm2, list ) )
+   sf <- sf_polygon(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3, close = FALSE )
+   expect_equal( sf$val, lapply( lm1, list ) )
    sf <- sf_polygon(obj = m, x = 1, y = 2, polygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
-   expect_equal( sf$val, lm2 )
+   expect_equal( sf$val, lapply( lm2, list ) )
 
 
-   sf <- sf_multipolygon(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, l1 )
+   nest <- function( x ) lapply( x, function( y ) list( list( y ) ) )
+   sf <- sf_multipolygon(obj = df, x = "x", y = "y", keep = TRUE, list_columns = "val", close = FALSE )
+   expect_equal( sf$val, nest( l1 ) )
    sf <- sf_multipolygon(obj = df, x = "x", y = "y", multipolygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
-   expect_equal( sf$val, l2 )
-   sf <- sf_multipolygon(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, l1 )
+   expect_equal( sf$val, nest( l2 ) )
+   sf <- sf_multipolygon(obj = df, x = 1, y = 2, keep = TRUE, list_columns = 3, close = FALSE)
+   expect_equal( sf$val, nest( l1 ) )
    sf <- sf_multipolygon(obj = df, x = 1, y = 2, multipolygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
-   expect_equal( sf$val, l2 )
+   expect_equal( sf$val, nest( l2 ) )
 
-   sf <- sf_multipolygon(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val")
-   expect_equal( sf$val, lm1 )
+   sf <- sf_multipolygon(obj = m, x = "x", y = "y", keep = TRUE, list_columns = "val", close = FALSE )
+   expect_equal( sf$val, nest( lm1 ) )
    sf <- sf_multipolygon(obj = m, x = "x", y = "y", multipolygon_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
-   expect_equal( sf$val, lm2 )
-   sf <- sf_multipolygon(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3)
-   expect_equal( sf$val, lm1 )
+   expect_equal( sf$val, nest( lm2 ) )
+   sf <- sf_multipolygon(obj = m, x = 1, y = 2, keep = TRUE, list_columns = 3, close = FALSE )
+   expect_equal( sf$val, nest( lm1 ) )
    sf <- sf_multipolygon(obj = m, x = 1, y = 2, multipolygon_id = 4, keep = TRUE, list_columns = 3, close = FALSE)
-
+   expect_equal( sf$val, nest( lm2 ) )
 
    ## two id_columns
    df <- data.frame(
@@ -281,10 +284,85 @@ test_that("list_columns are kept",{
      , stringsAsFactors = FALSE
    )
 
-   l2 <- list(letters[1:12], letters[13:24], letters[25:26])
+   ## l2 is a list element per 'ring'
+   l2 <- list(
+      list( letters[1:5], letters[6:10], letters[11:12] )
+      , list( letters[13:15], letters[16:20], letters[21:24] )
+      , list( letters[25], letters[26] )
+   )
+
    sf <- sf_polygon(obj = df, x = "x", y = "y", polygon_id = "poly_id", linestring_id = "line_id", keep = TRUE, list_columns = "val", close = FALSE)
    expect_equal( sf$val, l2 )
    sf <- sf_polygon(obj = df, x = 1, y = 2, polygon_id = 4, linestring_id = 5, keep = TRUE, list_columns = 3, close = FALSE)
    expect_equal( sf$val, l2 )
+})
+
+## issue 75
+test_that("non-existant list-columns are ignored",{
+
+   df <- data.frame(
+      x = 1:4
+      , y = 1:4
+      , val = 1:4
+   )
+
+   sf <- sf_linestring(
+      obj = df
+      , x = "x"
+      , y = "y"
+   )
+
+   res <- sf_to_df(sf = sf, unlist = "val")
+   expect_true( !"val" %in% names(res))
 
 })
+
+## issue 76
+test_that("ignore unlist columns if they aren't lists",{
+
+   ## waht if we try to unlist a column which isn't a list?
+
+   df <- data.frame(
+      x = 1:4
+      , y = 1:4
+      , val = 1:4
+      , ix = c(1,1,2,2)
+   )
+
+   sf <- sf_linestring(
+      obj = df
+      , x = "x"
+      , y = "y"
+      , linestring_id = "ix"
+      , keep = T
+   )
+
+   res <- sf_to_df( sf = sf, fill = TRUE, unlist = "val")
+   expect_equal( res$val, c(1,1,3,3) )#sf$val )
+
+})
+
+## issue 90
+test_that("list columns get casted ", {
+
+   df <- data.frame(
+      x = 1:5
+      , y = 5:1
+      , id = rep(1, 5)
+      , s = letters[1:5]
+   )
+
+   sf_line <- sfheaders::sf_linestring(
+      obj = df
+      , x = "x"
+      , y = "y"
+      , keep = TRUE
+      , list_columns = "s"
+   )
+
+   sf_poly <- sfheaders::sf_cast( sf_line, "POLYGON" )
+
+
+})
+
+

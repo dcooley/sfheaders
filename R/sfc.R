@@ -33,8 +33,14 @@
 #' @export
 sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_point( obj, index_correct( geometry_columns ), xyzm(x,y,z,m) )
+  rcpp_sfc_point(
+    obj
+    , index_correct( geometry_columns )
+    , xyzm(x,y,z,m)
+    )
 }
+
+
 
 #' sfc MULTIPOINT
 #'
@@ -61,13 +67,18 @@ sfc_point <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL ) {
 #' @export
 sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipoint_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipoint( obj, index_correct( geometry_columns ),  index_correct( multipoint_id ), xyzm(x,y,z,m) )
+  rcpp_sfc_multipoint(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( multipoint_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
 #' sfc LINESTRING
 #'
-#' constructs sfc of MULTIPOINT objects
+#' constructs sfc of LINESTRING objects
 #'
 #' @inheritParams sfc_multipoint
 #' @inheritSection sfc_point notes
@@ -86,10 +97,28 @@ sfc_multipoint <- function( obj, x = NULL, y = NULL, z = NULL, m = NULL, multipo
 #' sfc_linestring( x, x = "y", y = "x" )
 #' sfc_linestring( x, linestring_id = "id", x = "x", y = "y")
 #'
+#' df <- data.frame(
+#'   id = c(1,1,1,1,2,2,2)
+#'   , x = 1:7
+#'   , y = 7:1
+#'   , z = 14:8
+#'   , m = 8:14
+#' )
+#'
+#' sfc_linestring(df, x = "x", y = "y", linestring_id = "id")
+#' sfc_linestring(df, x = "x", y = "y", z = "z", linestring_id = "id")
+#' sfc_linestring(df, x = "x", y = "y", m = "m", linestring_id = "id")
+#' sfc_linestring(df, x = "x", y = "y", z = "z", m = "m", linestring_id = "id")
+#'
 #' @export
 sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_linestring( obj, index_correct( geometry_columns ),  index_correct( linestring_id ), xyzm(x,y,z,m) )
+  rcpp_sfc_linestring(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
@@ -147,7 +176,13 @@ sfc_linestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL, 
 sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
                                  multilinestring_id = NULL, linestring_id = NULL ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multilinestring( obj, index_correct( geometry_columns ), index_correct( multilinestring_id ), index_correct( linestring_id ), xyzm(x,y,z,m) )
+  rcpp_sfc_multilinestring(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( multilinestring_id )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    )
 }
 
 
@@ -207,7 +242,14 @@ sfc_multilinestring <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = N
 sfc_polygon <- function( obj = NULL, x = NULL, y = NULL, z = NULL, m = NULL,
                          polygon_id = NULL, linestring_id = NULL, close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_polygon( obj, index_correct( geometry_columns ), index_correct( polygon_id ), index_correct( linestring_id ), close, xyzm(x,y,z,m) )
+  rcpp_sfc_polygon(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( polygon_id )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    , close
+    )
 }
 
 
@@ -290,7 +332,15 @@ sfc_multipolygon <- function(
   multipolygon_id = NULL, polygon_id = NULL, linestring_id = NULL,
   close = TRUE ) {
   geometry_columns <- c(x,y,z,m)
-  rcpp_sfc_multipolygon( obj, index_correct( geometry_columns ), index_correct( multipolygon_id ), index_correct( polygon_id ), index_correct( linestring_id ), close, xyzm(x,y,z,m) )
+  rcpp_sfc_multipolygon(
+    obj
+    , index_correct( geometry_columns )
+    , index_correct( multipolygon_id )
+    , index_correct( polygon_id )
+    , index_correct( linestring_id )
+    , xyzm(x,y,z,m)
+    , close
+  )
 }
 
 
@@ -412,3 +462,50 @@ calculate_bbox.default <- function( obj, x = NULL, y = NULL ) {
   geometry_coords <- c(x,y)
   return( rcpp_calculate_bbox( obj, geometry_coords ) )
 }
+
+
+#' sf boxes
+#'
+#' returns the bounding box of each geometry
+#'
+#' @param obj sf, sfc or sfg object
+#'
+#' @examples
+#'
+#' df <- data.frame(
+#'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+#'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+#'  , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+#'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+#' )
+#'
+#' sf_line <- sfheaders::sf_linestring(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , linestring_id = "id1"
+#' )
+#'
+#' sf_boxes( sf_line )
+#'
+#' @export
+sf_boxes <- function( obj ) calculate_boxes( obj )
+
+
+calculate_boxes <- function( obj ) UseMethod("calculate_boxes")
+
+#' @export
+calculate_boxes.sf <- function( obj ) {
+  geom_column <- attr( obj, "sf_column" )
+  obj[[geom_column]] <- rcpp_sfc_boxes( obj[[geom_column]] )
+  return( obj )
+}
+
+#' @export
+calculate_boxes.sfc <- function( obj ) {
+  return( rcpp_sfc_boxes( obj ) )
+}
+
+#' @export
+calculate_boxes.sfg <- function( obj ) return( rcpp_sfg_boxes( obj ) )
+

@@ -9,8 +9,9 @@ test_that("various objects converted to sfc_multilinestring",{
     return( all(y) & all(z))
   }
 
-  v <- 1:3
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(v, NULL, NULL, NULL, ""), "sfheaders - unsupported object")
+  ## v0.3.0 vectors now supported
+  # v <- 1:3
+  # expect_error( sfheaders:::rcpp_sfc_multilinestring(v, NULL, NULL, NULL, ""), "geometries - unsupported object")
 
   m <- matrix(1:4, ncol = 2)
   res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, NULL, NULL, "")
@@ -23,12 +24,12 @@ test_that("various objects converted to sfc_multilinestring",{
   expect_true( is_multilinestring( res ) )
 
   m <- matrix(1:4, ncol = 2)
-  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0,1), NULL, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), NULL, NULL, "")
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
   m <- matrix(c(1.2,3,4,5), ncol = 2)
-  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0,1), NULL, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), NULL, NULL, "")
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
@@ -40,7 +41,7 @@ test_that("various objects converted to sfc_multilinestring",{
 
   m <- matrix(1:4, ncol = 2)
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0,1), NULL, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), NULL, NULL, "")
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
@@ -67,20 +68,20 @@ test_that("various objects converted to sfc_multilinestring",{
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
-  res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, 2, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, NULL, 2L, NULL, "")
   expect_true( is_multilinestring( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
-  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0,1), 2, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(m, c(0L,1L), 2L, NULL, "")
   expect_true( is_multilinestring( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
 
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_multilinestring(df, NULL, 2, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, NULL, 2L, NULL, "")
   expect_true( is_multilinestring( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
 
@@ -105,7 +106,7 @@ test_that("various objects converted to sfc_multilinestring",{
   m <- matrix(1:8, ncol = 2)
   m <- cbind(m, c(1,1,2,2))
   df <- as.data.frame( m )
-  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0,1), 2, NULL, "")
+  res <- sfheaders:::rcpp_sfc_multilinestring(df, c(0L,1L), 2L, NULL, "")
   expect_true( is_multilinestring( res ) )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
 
@@ -214,7 +215,7 @@ test_that("various objects converted to sfc_multilinestring",{
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
 
   m <- matrix(1:4, ncol = 2)
-  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, NULL, 0, NULL, ""), "sfheaders - incorrect number of geometry columns")
+  expect_error( sfheaders:::rcpp_sfc_multilinestring(m, NULL, 0L, NULL, ""), "sfheaders - can't work out the dimension")
 
 })
 
@@ -237,11 +238,11 @@ test_that("sfc_multilinestring works", {
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, NULL, NULL, c(0), "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, NULL, NULL, c(0L), "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, NULL, c(0), NULL, "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, NULL, c(0L), NULL, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
@@ -249,29 +250,29 @@ test_that("sfc_multilinestring works", {
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2,3), NULL, NULL, "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2L,3L), NULL, NULL, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, NULL, 0, 1, "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, NULL, 0L, 1L, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2,3), 0, NULL, "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2L,3L), 0L, NULL, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2,3), NULL, 1, "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2L,3L), NULL, 1L, "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
-  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2,3), c(0), c(1), "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( df, c(2L,3L), c(0L), c(1L), "" )
   expect_equal( attr( res, "class" ), c("sfc_MULTILINESTRING", "sfc") )
   expect_true( is_multilinestring( res ) )
 
   m <- as.matrix( df )
   m <- matrix( as.integer( m ), ncol = 4 )
-  res <- sfheaders:::rcpp_sfc_multilinestring( m, c(2,3), c(0), c(1), "" )
+  res <- sfheaders:::rcpp_sfc_multilinestring( m, c(2L,3L), c(0L), c(1L), "" )
   expect_true( is_multilinestring( res ) )
 
   res <- sfheaders:::rcpp_sfc_multilinestring( df, c("x","y"),c("p_id"),c("l_id"), "")
@@ -343,3 +344,4 @@ test_that("vectorised version works",{
   expect_true( all( sapply( res, is_multilinestring ) ) )
 
 })
+

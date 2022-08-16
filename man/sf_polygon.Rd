@@ -138,8 +138,4 @@ sf_polygon(
   , list_columns = "val"
 )
 
-
-
-
-
 }

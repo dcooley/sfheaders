@@ -35,13 +35,18 @@ namespace sfc {
     std::string geom = get_sfc_type( sfc_type );
     std::unordered_set< std::string > geometry_types{ geom };
 
-    int epsg = NA_INTEGER;
-    Rcpp::String proj4string = NA_STRING;
+    Rcpp::String crs_input = NA_STRING;
+    Rcpp::String crs_wkt = NA_STRING;
+
+    Rcpp::List crs = Rcpp::List::create(
+      Rcpp::_["input"] = crs_input,
+      Rcpp::_["wkt"] = crs_wkt
+    );
     //int n_empty = 0;
     double precision = 0.0;
 
     return sfheaders::sfc::create_sfc(
-      sfc, geom, geometry_types, bbox, z_range, m_range, epsg, proj4string, n_empty, precision
+      sfc, geom, geometry_types, bbox, z_range, m_range, crs, n_empty, precision
       );
   }
 

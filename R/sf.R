@@ -25,8 +25,6 @@
 #' where any properties are repeated down the table for the same geometry.
 #'
 #'
-#'
-#'
 #' @return \code{sf} object of POINT geometries
 #'
 #' @examples
@@ -113,8 +111,7 @@ sf_multipoint <- function(
   geometry_columns <- index_correct( geometry_columns )
   multipoint_id <- index_correct( multipoint_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , multipoint_id ## multipoint_id
@@ -127,9 +124,7 @@ sf_multipoint <- function(
       , keep ## keep
       , xyzm(x,y,z,m)
       , "MULTIPOINT"
-    )
   )
-
   return( replace_id( res, multipoint_id ) )
 }
 
@@ -147,20 +142,31 @@ sf_multipoint <- function(
 #'
 #' @examples
 #'
-#' x <- matrix( c(1:4), ncol = 2 )
+#' x <- matrix( c(1:8), ncol = 2 )
 #' sf_linestring( x )
 #'
-#' x <- data.frame( id = 1:2, x = 1:2, y = 2:1 )
+#' x <- cbind( x, c(1,1,2,2) )
+#' sf_linestring( obj = x, x = 1, y = 2 )
+#' sf_linestring( obj = x, x = 1, y = 2, linestring_id = 3 )
+#'
+#' x <- data.frame( line_id = 1:2, x = 1:2, y = 2:1 )
 #' sf_linestring( x )
 #' sf_linestring( x, x = "x", y = "y" )
 #' sf_linestring( x, x = "y", y = "x" )
-#' sf_linestring( x, linestring_id = "id", x = "x", y = "y")
+#' sf_linestring( x, linestring_id = "line_id", x = "x", y = "y")
 #'
 #' ## keeping properties
-#' x <- data.frame( id = c(1,1,2,2), x = 1:4, y = 4:1, val = letters[1:4], stringsAsFactors = FALSE)
+#' x <- data.frame(
+#'   line_id = c(1,1,2,2)
+#'   , x = 1:4
+#'   , y = 4:1
+#'   , val = letters[1:4]
+#'   , stringsAsFactors = FALSE
+#'   )
 #'
 #' ## first-row of 'val' is kept
-#' sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE )
+#' sf_linestring( x, x = "x", y = "y", keep = TRUE )
+#' sf_linestring( x, linestring_id = "line_id", x = "x", y = "y", keep = TRUE )
 #'
 #' ## 'val' column converted to a list
 #' sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE, list_columns = "val" )
@@ -181,8 +187,7 @@ sf_linestring <- function(
   geometry_columns <- index_correct( geometry_columns )
   linestring_id <- index_correct( linestring_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -195,8 +200,7 @@ sf_linestring <- function(
       , keep ## keep
       , xyzm(x,y,z,m)
       , "LINESTRING"
-    )
-  )
+      )
   return( replace_id( res, linestring_id ) )
 }
 
@@ -269,8 +273,7 @@ sf_multilinestring <- function(
   linestring_id <- index_correct( linestring_id )
   multilinestring_id <- index_correct( multilinestring_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -284,7 +287,6 @@ sf_multilinestring <- function(
       , xyzm(x,y,z,m)
       , "MULTILINESTRING"
     )
-  )
   return( replace_id( res, multilinestring_id ) )
 }
 
@@ -373,10 +375,6 @@ sf_multilinestring <- function(
 #'   , list_columns = "val"
 #' )
 #'
-#'
-#'
-#'
-#'
 #' @export
 sf_polygon <- function(
   obj = NULL,
@@ -395,8 +393,7 @@ sf_polygon <- function(
   linestring_id <- index_correct( linestring_id )
   polygon_id <- index_correct( polygon_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -410,7 +407,6 @@ sf_polygon <- function(
       , xyzm(x,y,z,m)
       , "POLYGON"
     )
-  )
 
   return( replace_id( res, polygon_id ) )
 }
@@ -511,8 +507,7 @@ sf_multipolygon <- function(
   polygon_id <- index_correct( polygon_id )
   multipolygon_id <- index_correct( multipolygon_id )
   list_columns <- index_correct( list_columns )
-  res <- return(
-    rcpp_to_sf(
+  res <- rcpp_to_sf(
       obj,
       geometry_columns
       , NULL ## multipoint_id
@@ -526,7 +521,6 @@ sf_multipolygon <- function(
       , xyzm(x,y,z,m)
       , "MULTIPOLYGON"
     )
-  )
   return( replace_id( res, multipolygon_id ) )
 }
 

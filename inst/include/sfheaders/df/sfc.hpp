@@ -4,6 +4,9 @@
 #include "sfheaders/df/sfg.hpp"
 #include "sfheaders/df/utils.hpp"
 
+#include "geometries/coordinates/dimensions.hpp"
+#include "geometries/utils/lists/collapse.hpp"
+
 #include <Rcpp.h>
 
 namespace sfheaders {
@@ -14,6 +17,7 @@ namespace df {
       Rcpp::stop("sfheaders - column indexing error - please report this issue, along with an example, at github.com/dcooley/sfheaders");  // #nocov
     }
   }
+
   inline Rcpp::List setup_result( R_xlen_t& total_coordinates ) {
 
     Rcpp::NumericVector sfc_id_res( total_coordinates, Rcpp::NumericVector::get_na() );
@@ -106,72 +110,6 @@ namespace df {
     return Rcpp::IntegerVector(); // #nocov never reached
   }
 
-  inline void sfg_n_coordinates(
-      SEXP& sfg,
-      R_xlen_t& sfg_count
-  ) {
-
-    switch( TYPEOF( sfg ) ) {
-    case INTSXP: {}
-    case REALSXP: {
-      if( !Rf_isMatrix( sfg ) ) {
-      //Rcpp::stop("sfheaders - unsupported coordinate type");
-      // it's a vector, right?
-      sfg_count += 1;
-    } else {
-      sfg_count += sfheaders::utils::sexp_n_row( sfg );
-    }
-    break;
-    }
-    case VECSXP: {
-      if( Rf_inherits( sfg, "data.frame" ) ) {
-        Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
-      }
-      Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-      //if (lst.size() == 0 ) {
-      //return 0; // ?
-      //}
-      R_xlen_t n = lst.size();
-      R_xlen_t i;
-      Rcpp::IntegerVector res( n );
-      for( i = 0; i < n; ++i ) {
-        SEXP tmp_sfg = lst[i];
-        sfg_n_coordinates( tmp_sfg, sfg_count );  // recurse
-      }
-      break;
-    }
-    default: {
-      Rcpp::stop("sfheaders - unsupported coordinate type");  // #nocov
-    }
-    }
-
-    //return sfg_count;
-  }
-
-  // if I make this cumulative, it gives me a vector where the last element
-  // is the size of any result, and each element
-  // is the row index where a new element starts
-  inline Rcpp::NumericMatrix sfc_n_coordinates(
-      Rcpp::List& sfc
-  ) {
-
-    R_xlen_t cumulative_coords = 0;
-    R_xlen_t n = sfc.size();
-    Rcpp::NumericMatrix res( n, 2 );
-    R_xlen_t i;
-
-    for( i = 0; i < n; ++i ) {
-      R_xlen_t sfg_counter = 0;
-      SEXP sfg = sfc[i];
-      sfg_n_coordinates( sfg, sfg_counter );
-
-      res( i, 0 ) = cumulative_coords;
-      cumulative_coords += sfg_counter;
-      res( i, 1 ) = cumulative_coords - 1;
-    }
-    return res;
-  }
-
   // sfcs are a list of sfgs.
   // they can be mixed, or individual.
   // if indiidual, loop over each one and extract the sfgs, list by list, then collapse the lists??
@@ -247,7 +185,7 @@ namespace df {
   }
 
 
-  // used for any mixed geomtry, or non-POINT, because the total number of rows is varaible
+  // used for any mixed geomtry, or non-POINT, because the total number of rows is variable
   inline Rcpp::List get_sfc_geometry_coordinates(
       Rcpp::List& sfc,
       R_xlen_t& total_coordinates
@@ -293,9 +231,6 @@ namespace df {
         columns[ M_COLUMN ] = true;
       }
 
-      // Rcpp::Rcout << "dim: " << dim << std::endl;
-      // Rcpp::Rcout << "columns: " << columns << std::endl;
-
       sfg_class = cls[1];
       sfg_type = get_sfg_type( sfg_class );
       sfg_column_idx = get_sfg_column_index( sfg_class );
@@ -314,18 +249,18 @@ namespace df {
         int col_idx = sfg_cols[ j ];
         columns[ col_idx ] = true;
         Rcpp::NumericVector current_values_vector = res[ col_idx ];
-        Rcpp::NumericVector result_vector = sfheaders::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
+        Rcpp::NumericVector result_vector = geometries::utils::fill_vector( current_values_vector, new_values_vector, total_rows );
         res[ col_idx ] = result_vector;
       }
 
       id = i + 1;
       Rcpp::NumericVector new_id_vector = Rcpp::rep( id, sfc_rows );
       Rcpp::NumericVector current_id_vector = res[ sfg_column_idx ];
-      Rcpp::NumericVector filled = sfheaders::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
+      Rcpp::NumericVector filled = geometries::utils::fill_vector( current_id_vector, new_id_vector, total_rows );
       res[ sfg_column_idx ] = filled;
 
       Rcpp::NumericVector current_sfg_id_vector = res[ SFG_COLUMN ];
-      filled = sfheaders::utils::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
+      filled = geometries::utils::fill_vector( current_sfg_id_vector, new_id_vector, total_rows );
 
       res[ SFG_COLUMN ] = filled;
 
@@ -428,7 +363,7 @@ namespace df {
 
   inline Rcpp::List sfc_to_df(
       Rcpp::List& sfc,
-      Rcpp::NumericMatrix& sfc_coordinates
+      Rcpp::IntegerMatrix& sfc_coordinates
   ) {
 
     R_xlen_t n_geometries = sfc_coordinates.nrow();
@@ -446,10 +381,7 @@ namespace df {
       // so if it's a POINT, can go direct to get_sfc_point()
       Rcpp::CharacterVector sfc_class = sfc.attr("class");
       std::string cls;
-      cls = sfc_class[1];
-
-      // Rcpp::Rcout << "cls: " << cls << std::endl;
-
+      cls = sfc_class[0];
       // switch on cls
       if ( cls == "sfc_POINT" ) {
         R_xlen_t n_geometries = sfc.size();
@@ -458,10 +390,11 @@ namespace df {
     }
 
     // seprated this so it's independant / not called twice from `sf_to_df()`
-    Rcpp::NumericMatrix sfc_coordinates = sfc_n_coordinates( sfc );
+    //return sfc;
+    Rcpp::List dims = geometries::coordinates::geometry_dimensions( sfc );
+    Rcpp::IntegerMatrix sfc_coordinates = dims["dimensions"];
     return sfc_to_df( sfc, sfc_coordinates );
   }
-
 
 } // df
 } // sfheaders

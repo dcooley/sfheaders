@@ -12,9 +12,12 @@ namespace sfc {
     R_xlen_t i;
     Rcpp::List sfcs(n);
 
+    SEXP geometry_cols = R_NilValue;
+    SEXP multipoint_id = R_NilValue;
+
     for( i = 0; i < n; ++i ) {
       SEXP x = lst[i];
-      sfcs[i] = sfheaders::sfc::sfc_multipoint( x, xyzm );
+      sfcs[i] = sfheaders::sfc::sfc_multipoint( x, geometry_cols, multipoint_id, xyzm );
     }
     return sfcs;
   }

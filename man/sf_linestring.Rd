@@ -64,20 +64,31 @@ where any properties are repeated down the table for the same geometry.
 
 \examples{
 
-x <- matrix( c(1:4), ncol = 2 )
+x <- matrix( c(1:8), ncol = 2 )
 sf_linestring( x )
 
-x <- data.frame( id = 1:2, x = 1:2, y = 2:1 )
+x <- cbind( x, c(1,1,2,2) )
+sf_linestring( obj = x, x = 1, y = 2 )
+sf_linestring( obj = x, x = 1, y = 2, linestring_id = 3 )
+
+x <- data.frame( line_id = 1:2, x = 1:2, y = 2:1 )
 sf_linestring( x )
 sf_linestring( x, x = "x", y = "y" )
 sf_linestring( x, x = "y", y = "x" )
-sf_linestring( x, linestring_id = "id", x = "x", y = "y")
+sf_linestring( x, linestring_id = "line_id", x = "x", y = "y")
 
 ## keeping properties
-x <- data.frame( id = c(1,1,2,2), x = 1:4, y = 4:1, val = letters[1:4], stringsAsFactors = FALSE)
+x <- data.frame(
+  line_id = c(1,1,2,2)
+  , x = 1:4
+  , y = 4:1
+  , val = letters[1:4]
+  , stringsAsFactors = FALSE
+  )
 
 ## first-row of 'val' is kept
-sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE )
+sf_linestring( x, x = "x", y = "y", keep = TRUE )
+sf_linestring( x, linestring_id = "line_id", x = "x", y = "y", keep = TRUE )
 
 ## 'val' column converted to a list
 sf_linestring( x, linestring_id = "id", x = "x", y = "y", keep = TRUE, list_columns = "val" )

@@ -1,15 +1,18 @@
 
 name_matcher <- function(x, ...) {
-  args <- list(obj = NULL,
-               x = "x",
-               y = "y",
-               z = "z",
-               m = "m",
-               multipolygon_id = "multipolygon_id",
-               polygon_id = "polygon_id",
-               multilinestring_id = "multilinestring_id",
-               linestring_id = "linestring_id",
-               multipoint_id = "multipoint_id")
+  args <- list(
+    obj = NULL
+    , x = "x"
+    , y = "y"
+    , z = "z"
+    , m = "m"
+    , multipolygon_id = "multipolygon_id"
+    , polygon_id = "polygon_id"
+    , multilinestring_id = "multilinestring_id"
+    , linestring_id = "linestring_id"
+    , multipoint_id = "multipoint_id"
+    )
+
   ## return the list args that make sense for this data frame
   args[base::intersect(colnames(x), names(args))]
 }
@@ -105,6 +108,7 @@ sf_pt <- function(obj, keep = FALSE) {
 #' simpler syntax.
 #'
 #' @inheritParams sf_point
+#' @inheritParams sf_multipoint
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
@@ -123,95 +127,57 @@ sf_pt <- function(obj, keep = FALSE) {
 #' ## we trivially round-trip with sf_mpt()
 #' sf_mpt(sf_to_df(sfx))
 #' @export
-sf_mpt <- function(obj, keep = FALSE) {
+sf_mpt <- function(obj, keep = FALSE, list_columns = NULL) {
   check_columns(obj, c("x", "y", "multipoint_id"), "sf_mpt")
   call_args <- name_matcher(obj)
-  call_args[c("obj", "keep")] <- list(obj, keep)
+  call_args[c("obj", "keep","list_columns")] <- list(obj, keep, list_columns)
 
   call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
               "linestring_id")] <- NULL
   do.call(sfheaders::sf_multipoint, call_args)
 }
 
-#' Helper for sf MULTIPOLYGON
+
+
+
+#' Helper for sf LINESTRING
 #'
-#' Constructs sf of MULTIPOLYGON objects, a helper for [sf_multipolygon()] with
-#' a simpler syntax.
+#' Constructs sf of LINESTRING objects, a helper for [sf_linestring()] with a
+#' simpler syntax.
 #'
-#' @inheritParams sf_multipolygon
-#' @inheritParams sf_point
+#' @inheritParams sf_linestring
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
-#' @return \code{sf} object of MULTIPOLYGON geometries
+#' @return \code{sf} object of LINESTRING geometries
+#' @examples
 #'
-#'@examples
+#' x <- cbind(x = 1:2, y = 3:4, linestring_id = 1)
+#' sf_line( x )
 #'
-#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE,
-#'       dimnames = list(NULL, c("x", "y", "z")))
-#' m <- cbind(m, multipolygon_id = 1, polygon_id = 1, linestring_id = 1)
-#' sf_mpoly( m )
+#' x <- data.frame( linestring_id = rep(1:2, each = 2), x = 1:4, y = 4:1 )
+#' (sfx <- sf_line( x ))
 #'
-#' df <- as.data.frame(m)
-#'
-#' sf_mpoly( df)
-#'
-#' ## order doesn't matter, only the names are used
-#' sf_mpoly(df[c(6, 5, 3, 4, 1, 2)])
-#'
+#' ## we trivially round-trip with sf_line()
+#' sf_line(sf_to_df(sfx))
 #' @export
-sf_mpoly <- function(obj, close = TRUE, keep = FALSE) {
-  check_columns(obj, c("x", "y", "multipolygon_id",
-                  "polygon_id", "linestring_id"), "sf_mpoly")
+sf_line <- function(obj, keep = FALSE, list_columns = NULL ) {
+  check_columns(obj, c("x", "y", "linestring_id"), "sf_line")
   call_args <- name_matcher(obj)
-  call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
+  call_args[c("obj", "keep", "list_columns")] <- list(obj, keep, list_columns)
 
-  call_args[c("multilinestring_id", "multipoint_id")] <- NULL
-
-  do.call(sfheaders::sf_multipolygon, call_args)
+  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
+              "multipoint_id")] <- NULL
+  do.call(sfheaders::sf_linestring, call_args)
 }
-#'Helper for sf POLYGON
-#'
-#'Constructs sf of POLYGON objects, a helper for [sf_polygon()] with a simpler
-#'syntax.
-#'
-#'@inheritParams sf_multipolygon
-#'@inheritParams sf_point
-#'@inheritSection sf_pt Helpers
-#'@inheritSection sfc_point notes
-#'@inheritSection sf_point Keeping Properties
-#'@return \code{sf} object of POLYGON geometries
-#'
-#'@examples
-#'
-#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE,
-#'       dimnames = list(NULL, c("x", "y", "z")))
-#' m <- cbind(m, polygon_id = 1, linestring_id = 1)
-#' sf_poly( m )
-#'
-#' df <- as.data.frame(m)
-#'
-#' sf_poly( df)
-#'
-#' ## order doesn't matter, only the names are used
-#' sf_poly(df[c(5, 3, 4, 1, 2)])
-#'
-#'@export
-sf_poly <- function(obj, close = TRUE, keep = FALSE) {
-  check_columns(obj, c("x", "y", "polygon_id", "linestring_id"), "sf_poly")
-  call_args <- name_matcher(obj)
-  call_args[c("obj", "keep", "close")] <- list(obj, keep, close)
 
-  call_args[c("multipolygon_id", "multilinestring_id", "multipoint_id")] <- NULL
-  do.call(sfheaders::sf_polygon, call_args)
-}
 
 #' Helper for sf MULTILINESTRING
 #'
 #' Constructs sf of MULTILINESTRING objects, a helper for [sf_multilinestring()]
 #' with a simpler syntax.
 #'
-#' @inheritParams sf_point
+#' @inheritParams sf_line
 #' @inheritSection sf_pt Helpers
 #' @inheritSection sfc_point notes
 #' @inheritSection sf_point Keeping Properties
@@ -242,47 +208,86 @@ sf_poly <- function(obj, close = TRUE, keep = FALSE) {
 #' sf_mline(sf_to_df(sfx, fill = TRUE), keep = TRUE)
 #'
 #' @export
-sf_mline <- function(obj, keep = FALSE) {
+sf_mline <- function(obj, keep = FALSE, list_columns = NULL ) {
   check_columns(obj, c("x", "y", "multilinestring_id",
-                  "linestring_id"), "sf_mline")
+                       "linestring_id"), "sf_mline")
   call_args <- name_matcher(obj)
-  call_args[c("obj", "keep")] <- list(obj, keep)
+  call_args[c("obj", "keep", "list_columns")] <- list(obj, keep, list_columns)
 
   call_args[c("multipolygon_id", "polygon_id", "multipoint_id")] <- NULL
   do.call(sfheaders::sf_multilinestring, call_args)
 
 }
 
-#' Helper for sf LINESTRING
+#'Helper for sf POLYGON
 #'
-#' Constructs sf of LINESTRING objects, a helper for [sf_linestring()] with a
-#' simpler syntax.
+#'Constructs sf of POLYGON objects, a helper for [sf_polygon()] with a simpler
+#'syntax.
 #'
-#' @inheritParams sf_point
-#' @inheritSection sf_pt Helpers
-#' @inheritSection sfc_point notes
-#' @inheritSection sf_point Keeping Properties
-#' @return \code{sf} object of LINESTRING geometries
-#' @examples
+#'@inheritParams sf_polygon
+#'@inheritSection sf_pt Helpers
+#'@inheritSection sfc_point notes
+#'@inheritSection sf_point Keeping Properties
+#'@return \code{sf} object of POLYGON geometries
 #'
-#' x <- cbind(x = 1:2, y = 3:4, linestring_id = 1)
-#' sf_line( x )
+#'@examples
 #'
-#' x <- data.frame( linestring_id = rep(1:2, each = 2), x = 1:4, y = 4:1 )
-#' (sfx <- sf_line( x ))
+#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE,
+#'       dimnames = list(NULL, c("x", "y", "z")))
+#' m <- cbind(m, polygon_id = 1, linestring_id = 1)
+#' sf_poly( m )
 #'
-#' ## we trivially round-trip with sf_line()
-#' sf_line(sf_to_df(sfx))
-#' @export
-sf_line <- function(obj, keep = FALSE) {
-  check_columns(obj, c("x", "y", "linestring_id"), "sf_line")
+#' df <- as.data.frame(m)
+#'
+#' sf_poly( df)
+#'
+#' ## order doesn't matter, only the names are used
+#' sf_poly(df[c(5, 3, 4, 1, 2)])
+#'
+#'@export
+sf_poly <- function(obj, close = TRUE, keep = FALSE, list_columns = NULL ) {
+  check_columns(obj, c("x", "y", "polygon_id", "linestring_id"), "sf_poly")
   call_args <- name_matcher(obj)
-  call_args[c("obj", "keep")] <- list(obj, keep)
+  call_args[c("obj", "keep", "close", "list_columns")] <- list(obj, keep, close, list_columns)
 
-  call_args[c("multipolygon_id", "polygon_id", "multilinestring_id",
-              "multipoint_id")] <- NULL
-  do.call(sfheaders::sf_linestring, call_args)
+  call_args[c("multipolygon_id", "multilinestring_id", "multipoint_id")] <- NULL
+  do.call(sfheaders::sf_polygon, call_args)
 }
 
 
+#' Helper for sf MULTIPOLYGON
+#'
+#' Constructs sf of MULTIPOLYGON objects, a helper for [sf_multipolygon()] with
+#' a simpler syntax.
+#'
+#' @inheritParams sf_polygon
+#' @inheritSection sf_pt Helpers
+#' @inheritSection sfc_point notes
+#' @inheritSection sf_point Keeping Properties
+#' @return \code{sf} object of MULTIPOLYGON geometries
+#'
+#'@examples
+#'
+#' m <- matrix(c(0,0,0,0,1,0,0,1,1,0,0,1,0,0,0), ncol = 3, byrow = TRUE,
+#'       dimnames = list(NULL, c("x", "y", "z")))
+#' m <- cbind(m, multipolygon_id = 1, polygon_id = 1, linestring_id = 1)
+#' sf_mpoly( m )
+#'
+#' df <- as.data.frame(m)
+#'
+#' sf_mpoly( df)
+#'
+#' ## order doesn't matter, only the names are used
+#' sf_mpoly(df[c(6, 5, 3, 4, 1, 2)])
+#'
+#' @export
+sf_mpoly <- function(obj, close = TRUE, keep = FALSE, list_columns = NULL ) {
+  check_columns(obj, c("x", "y", "multipolygon_id",
+                       "polygon_id", "linestring_id"), "sf_mpoly")
+  call_args <- name_matcher(obj)
+  call_args[c("obj", "keep", "close", "list_columns")] <- list(obj, keep, close, list_columns)
 
+  call_args[c("multilinestring_id", "multipoint_id")] <- NULL
+
+  do.call(sfheaders::sf_multipolygon, call_args)
+}

@@ -7,10 +7,10 @@ test_that("bounding box correctly calculated", {
     unname( unclass( sfheaders:::rcpp_calculate_bbox( x, cols ) ) )
   }
 
-  expect_error( bb( 1L ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( 1L ), "geometries - incorrect size of bounding box")
   expect_error( bb( "a" ) )
-  expect_error( bb( matrix(1L) ), "sfheaders - incorrect size of bounding box")
-  expect_error( bb( matrix(1.2) ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( matrix(1L) ), "geometries - incorrect size of bounding box")
+  expect_error( bb( matrix(1.2) ), "geometries - incorrect size of bounding box")
 
   bbox <- bb( 1L:2L )
   expect_equal( bbox, c(1,2,1,2) )
@@ -18,10 +18,10 @@ test_that("bounding box correctly calculated", {
   bbox <- bb( c(1.0, 2.0) )
   expect_equal( bbox, c(1,2,1,2) )
 
-  bbox <- bb( 1L:2L, c(1L,2L) )
+  bbox <- bb( 1L:2L, c(0L,1L) )
   expect_equal( bbox, c(1,2,1,2) )
 
-  bbox <- bb( c(1.0, 2.0), c(1,2) )
+  bbox <- bb( c(1.0, 2.0), c(0L,1L) )
   expect_equal( bbox, c(1,2,1,2) )
 
   x <- matrix(c(0,0,0,1), ncol = 2 )
@@ -73,11 +73,11 @@ test_that("bounding box correctly calculated", {
   expect_equal( bbox, c(1,2,5,6) )
 
   x <- 1
-  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( x ), "geometries - incorrect size of bounding box")
   x <- matrix(1)
-  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( x ), "geometries - incorrect size of bounding box")
   x <- matrix(1.1)
-  expect_error( bb( x ), "sfheaders - incorrect size of bounding box")
+  expect_error( bb( x ), "geometries - incorrect size of bounding box")
 
 })
 
@@ -270,9 +270,6 @@ test_that("z and m range correctly reported",{
     , m = 20:9
   )
 
-
-
-
   pt <- sf_point(obj = df, x = "x", y = "y", z = "z")
   mpt <- sf_multipoint(obj = df, x = "x", y = "y", z = "z", multipoint_id = "id1")
   ls <- sf_linestring(obj = df, x = "x", y = "y", z = "z", linestring_id = "id1")
@@ -303,18 +300,12 @@ test_that("z and m range correctly reported",{
  expect_true( all( attr( p$geometry, "z_range" ) == c(1,12) ) )
  expect_true( all( attr( mp$geometry, "z_range" ) == c(1,12) ) )
 
- expect_true( is.na( attr( pt$geometry, "m_range" )[1] ) )
- expect_true( is.na( attr( pt$geometry, "m_range" )[2] ) )
- expect_true( is.na( attr( mp$geometry, "m_range" )[1] ) )
- expect_true( is.na( attr( mp$geometry, "m_range" )[2] ) )
- expect_true( is.na( attr( ls$geometry, "m_range" )[1] ) )
- expect_true( is.na( attr( ls$geometry, "m_range" )[2] ) )
- expect_true( is.na( attr( mls$geometry, "m_range" )[1] ) )
- expect_true( is.na( attr( mls$geometry, "m_range" )[2] ) )
- expect_true( is.na( attr( p$geometry, "m_range" )[1] ) )
- expect_true( is.na( attr( p$geometry, "m_range" )[2] ) )
- expect_true( is.na( attr( mp$geometry, "m_range" )[1] ) )
- expect_true( is.na( attr( mp$geometry, "m_range" )[2] ) )
+ expect_true( is.null( attr( pt$geometry, "m_range" ) ) )
+ expect_true( is.null( attr( mp$geometry, "m_range" ) ) )
+ expect_true( is.null( attr( ls$geometry, "m_range" ) ) )
+ expect_true( is.null( attr( mls$geometry, "m_range" ) ) )
+ expect_true( is.null( attr( p$geometry, "m_range" ) ) )
+ expect_true( is.null( attr( mp$geometry, "m_range" ) ) )
 
 
  pt <- sf_point(obj = df, x = "x", y = "y", m = "m")
@@ -347,18 +338,12 @@ test_that("z and m range correctly reported",{
  expect_true( all( attr( p$geometry, "m_range" ) == c(9,20) ) )
  expect_true( all( attr( mp$geometry, "m_range" ) == c(9,20) ) )
 
- expect_true( is.na( attr( pt$geometry, "z_range" )[1] ) )
- expect_true( is.na( attr( pt$geometry, "z_range" )[2] ) )
- expect_true( is.na( attr( mp$geometry, "z_range" )[1] ) )
- expect_true( is.na( attr( mp$geometry, "z_range" )[2] ) )
- expect_true( is.na( attr( ls$geometry, "z_range" )[1] ) )
- expect_true( is.na( attr( ls$geometry, "z_range" )[2] ) )
- expect_true( is.na( attr( mls$geometry, "z_range" )[1] ) )
- expect_true( is.na( attr( mls$geometry, "z_range" )[2] ) )
- expect_true( is.na( attr( p$geometry, "z_range" )[1] ) )
- expect_true( is.na( attr( p$geometry, "z_range" )[2] ) )
- expect_true( is.na( attr( mp$geometry, "z_range" )[1] ) )
- expect_true( is.na( attr( mp$geometry, "z_range" )[2] ) )
+ expect_true( is.null( attr( pt$geometry, "z_range" ) ) )
+ expect_true( is.null( attr( mp$geometry, "z_range" ) ) )
+ expect_true( is.null( attr( ls$geometry, "z_range" ) ) )
+ expect_true( is.null( attr( mls$geometry, "z_range" ) ) )
+ expect_true( is.null( attr( p$geometry, "z_range" ) ) )
+ expect_true( is.null( attr( mp$geometry, "z_range" ) ) )
 
 
  pt <- sf_point(obj = df, x = "x", y = "y", z = "z", m = "m")

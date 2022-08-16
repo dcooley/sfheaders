@@ -55,6 +55,9 @@ sfc_cast <- function( sfc, to, close = TRUE ) {
 #'
 #' @inheritParams sfc_cast
 #' @param sf object to convert
+#' @param list_columns vector of column names or indexes. List columns are columns
+#' of data where there is a value corresponding to each coordinate in the geometry (sfc).
+#' List columns get cast with the geometries.
 #'
 #' @examples
 #'
@@ -94,9 +97,45 @@ sfc_cast <- function( sfc, to, close = TRUE ) {
 #' sf_cast( mp, "LINESTRING" )
 #'
 #'
+#' ## List Columns
+#'
+#' df <- data.frame(
+#'  id1 = c(1,1,1,1,1,1,1,1,2,2,2,2)
+#'  , id2 = c(1,1,1,1,2,2,2,2,1,1,1,1)
+#'  , x = c(0,0,1,1,1,1,2,2,3,4,4,3)
+#'  , y = c(0,1,1,0,1,2,2,1,3,3,4,4)
+#' )
+#'
+#' ## Add a column where each value is an attribute of each coordinate
+#' df$val <- letters[1:nrow(df)]
+#'
+#' ## Make a multipolygon, and specify `val` as a list_column
+#' mp <- sf_multipolygon(
+#'   obj = df
+#'   , x = "x"
+#'   , y = "y"
+#'   , multipolygon_id = "id1"
+#'   , linestring_id = "id2"
+#'   , list_column = "val"
+#'   , keep = TRUE
+#'   , close = FALSE
+#'   )
+#'
+#' ## The 'val' attributes follow the same structure as the geometry column
+#' ## So each 'val' corresponds to a single coordinate in the geometry
+#' str( mp )
+#'
+#' ## specifying `list_columns = "val"` when casting will retain the association
+#' ## between the 'val' attribute and each coordinate.
+#' res <- sf_cast( mp, "LINESTRING", list_columns = "val" )
+#'
+#' ## The 'val' attribute still follows the same structure as the geometry column
+#' str( res )
+#'
 #' @export
-sf_cast <- function( sf, to, close = TRUE ) {
+sf_cast <- function( sf, to, close = TRUE, list_columns = NULL ) {
   to <- toupper( to )
-  return( rcpp_cast_sf( sf, to, close ) )
+  list_columns <- index_correct( list_columns )
+  return( rcpp_cast_sf( sf, to, list_columns, close ) )
 }
 

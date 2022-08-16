@@ -1,24 +1,27 @@
-#include <Rcpp.h>
+// #include <Rcpp.h>
 #include "sfheaders/sfg/sfg.hpp"
-
+//
 // [[Rcpp::export]]
 std::string rcpp_get_sfg_type( int sfg_type ) {
   return sfheaders::sfg::get_sfg_type( sfg_type );
 }
-
+//
 // [[Rcpp::export]]
 SEXP rcpp_sfg_point( SEXP x, SEXP geometry_columns, std::string xyzm ) {
-  return sfheaders::sfg::sfg_point( x, geometry_columns, xyzm );
+  SEXP x2 = Rcpp::clone( x );
+  return sfheaders::sfg::sfg_point( x2, geometry_columns, xyzm );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfg_points( Rcpp::List& lst, std::string xyzm ) {
+Rcpp::List rcpp_sfg_points( Rcpp::List lst, std::string xyzm ) {
+  //Rcpp::List lst2 = Rcpp::clone( lst );
   return sfheaders::sfg::sfg_points( lst, xyzm );
 }
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_multipoint( SEXP x, SEXP geometry_columns, std::string xyzm ) {
-  return sfheaders::sfg::sfg_multipoint( x, geometry_columns, xyzm );
+  SEXP x2 = Rcpp::clone( x );
+  return sfheaders::sfg::sfg_multipoint( x2, geometry_columns, xyzm );
 }
 
 // [[Rcpp::export]]
@@ -28,7 +31,8 @@ Rcpp::List rcpp_sfg_multipoints( Rcpp::List& lst, std::string xyzm ) {
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_linestring( SEXP x, SEXP geometry_columns, std::string xyzm ) {
-  return sfheaders::sfg::sfg_linestring( x, geometry_columns, xyzm );
+  SEXP x2 = Rcpp::clone( x );
+  return sfheaders::sfg::sfg_linestring( x2, geometry_columns, xyzm );
 }
 
 // [[Rcpp::export]]
@@ -39,7 +43,8 @@ Rcpp::List rcpp_sfg_linestrings( Rcpp::List& lst, std::string xyzm ) {
 
 // [[Rcpp::export]]
 SEXP rcpp_sfg_multilinestring( SEXP x, SEXP geometry_columns, SEXP line_id, std::string xyzm ) {
-  return sfheaders::sfg::sfg_multilinestring( x, geometry_columns, line_id, xyzm );
+  SEXP x2 = Rcpp::clone( x );
+  return sfheaders::sfg::sfg_multilinestring( x2, geometry_columns, line_id, xyzm );
 }
 
 // [[Rcpp::export]]
@@ -48,22 +53,24 @@ Rcpp::List rcpp_sfg_multilinestrings( Rcpp::List& lst, std::string xyzm ) {
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id, bool close, std::string xyzm ) {
-  return sfheaders::sfg::sfg_polygon( x, geometry_columns, line_id, xyzm, close );
+SEXP rcpp_sfg_polygon( SEXP x, SEXP geometry_columns, SEXP line_id, std::string xyzm, bool close ) {
+  SEXP x2 = Rcpp::clone( x );
+  return sfheaders::sfg::sfg_polygon( x2, geometry_columns, line_id, xyzm, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfg_polygons( Rcpp::List& lst, bool close, std::string xyzm ) {
+Rcpp::List rcpp_sfg_polygons( Rcpp::List& lst,std::string xyzm, bool close ) {
   return sfheaders::sfg::sfg_polygons( lst, xyzm, close );
 }
 
 // [[Rcpp::export]]
-SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, bool close, std::string xyzm ) {
-  return sfheaders::sfg::sfg_multipolygon( x, geometry_columns, polygon_id, line_id, xyzm, close );
+SEXP rcpp_sfg_multipolygon( SEXP x, SEXP geometry_columns, SEXP polygon_id, SEXP line_id, std::string xyzm, bool close ) {
+  SEXP x2 = Rcpp::clone( x );
+  return sfheaders::sfg::sfg_multipolygon( x2, geometry_columns, polygon_id, line_id, xyzm, close );
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst, bool close, std::string xyzm ) {
+Rcpp::List rcpp_sfg_multipolygons( Rcpp::List& lst, std::string xyzm, bool close ) {
   return sfheaders::sfg::sfg_multipolygons( lst, xyzm, close );
 }
 

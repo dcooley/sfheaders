@@ -1,9 +1,25 @@
 
+# v0.4
+
+* list-column properties are better supported for nested geometries (MULTILINESTRING, POLYGON, MULTIPOLYGON)
+
+# v0.3.1
+
+* `z_range` and `m_range` only created if those dimensions exist
+
+# v0.3.0
+
+* changed licence to MIT
+* Faster sf object creation by Linking-To [geometries](https://github.com/dcooley/geometries) library
+
 # v0.2.2
 
+* crs structure matches new `sf` definition [issue49](https://github.com/dcooley/sfheaders/issues/49)
+* `sf_to_df()` adds `sfc_columns` attributes to identify which of the columns form the coordinates [issue50](https://github.com/dcooley/sfheaders/issues/50)
 * `XYM` dimensions correctly handled
 * `unlist` argument in `sf_to_df()` to specify columns you want to unlist when converted to data.frame
 * helper functions with easier syntax - thanks to @mdsumner
+* `list_columns` argument in `sf_` functions to specify which columns should be filled with all the values in a list
 
 # v 0.2.1
 

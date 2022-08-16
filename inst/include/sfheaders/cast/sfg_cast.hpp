@@ -1,28 +1,25 @@
 #ifndef R_SFHEADERS_CAST_SFG_H
 #define R_SFHEADERS_CAST_SFG_H
 
-#include "sfheaders/utils/utils.hpp"
+#include "geometries/utils/utils.hpp"
+
 #include "sfheaders/df/sfc.hpp"
 #include "sfheaders/sfg/sfg.hpp"
-//#include "sfheaders/sfg/sfg_types.hpp"
-// #include "sfheaders/utils/sexp/sexp.hpp"
-// #include "sfheaders/df/sfg.hpp"
-// #include "sfheaders/df/utils.hpp"
 
 #include <Rcpp.h>
 
-// #define M_COLUMN_CAST                9
-// #define Z_COLUMN_CAST                8
-// #define Y_COLUMN_CAST                7
-// #define X_COLUMN_CAST                6
-// #define VECTOR_ID                    5
-// #define MATRIX_ID                    4
-// #define LIST_MATRIX_ID               3
-// #define LIST_LIST_MATRIX_ID          2
-// #define SFG_COLUMN_CAST              1
-// #define SFC_COLUMN_CAST              0
-//
-// #define MAX_COLUMNS_CAST             10
+#define M_COLUMN_CAST                9
+#define Z_COLUMN_CAST                8
+#define Y_COLUMN_CAST                7
+#define X_COLUMN_CAST                6
+#define VECTOR_ID                    5
+#define MATRIX_ID                    4
+#define LIST_MATRIX_ID               3
+#define LIST_LIST_MATRIX_ID          2
+#define SFG_COLUMN_CAST              1
+#define SFC_COLUMN_CAST              0
+
+#define MAX_COLUMNS_CAST             10
 
 namespace sfheaders {
 namespace cast {
@@ -36,24 +33,26 @@ namespace cast {
     R_xlen_t i, n;
     R_xlen_t res = 0;
     n = lst.size();
-    // Rcpp::Rcout << "n: " << n << std::endl;
     for( i = 0; i < n; ++i ) {
-      // Rcpp::Rcout << "res: " << res << std::endl;
       Rcpp::List inner_lst = lst[ i ];
       res = res + inner_lst.size();
-      // Rcpp::Rcout << "res: " << res << std::endl;
     }
     return res;
   }
 
-  inline R_xlen_t count_new_point_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_point_objects(
+      SEXP& sfg
+  ) {
     R_xlen_t n_coords = 0;
-    sfheaders::df::sfg_n_coordinates( sfg, n_coords );
+    geometries::coordinates::geometry_dimension( sfg, n_coords );
     return n_coords;
   }
 
 
-  inline R_xlen_t count_new_multipoint_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_multipoint_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     if( geometry == "POINT" ) {
       return 1;
     } else if ( geometry == "MULTIPOINT") {
@@ -75,7 +74,10 @@ namespace cast {
     }
   }
 
-  inline R_xlen_t count_new_linestring_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_linestring_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     if( geometry == "POINT" ) {
       return 1;
     } else if ( geometry == "MULTIPOINT") {
@@ -97,7 +99,10 @@ namespace cast {
     }
   }
 
-  inline R_xlen_t count_new_multilinestring_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_multilinestring_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     // going to polygon
 
     if( geometry == "POINT" ) {
@@ -121,7 +126,10 @@ namespace cast {
     }
   }
 
-  inline R_xlen_t count_new_polygon_objects( SEXP& sfg, std::string& geometry ) {
+  inline R_xlen_t count_new_polygon_objects(
+      SEXP& sfg,
+      std::string& geometry
+  ) {
     // going to polygon
 
     if( geometry == "POINT" ) {
@@ -158,7 +166,7 @@ namespace cast {
     geometry = cls[1];
 
     if( cast_to == "POINT" ) {
-      return count_new_point_objects( sfg, geometry );
+      return count_new_point_objects( sfg );
     } else if ( cast_to == "MULTIPOINT" ) {
       return count_new_multipoint_objects( sfg, geometry );
     } else if ( cast_to == "LINESTRING" ) {
@@ -174,50 +182,6 @@ namespace cast {
     }
 
   }
-
-  // inline Rcpp::List listListMat_to_mat( Rcpp::List& sfg, std::string& cast_to ) {
-  //
-  //   R_xlen_t n = sfg.size();
-  //   R_xlen_t i;
-  //   Rcpp::List res( n );
-  //   return res;
-  //   // for( i = 0; i < n; ++i ) {
-  //   //   Rcpp::List lst = sfg[ i ];
-  //   //
-  //   //   if( cast_to == "LINESTRING" ) {
-  //   //     res[ i ] = sfheaders::sfg::sfg_linestrings( sfg );
-  //   //   } else if ( cast_to == "MULTIPOINT" ) {
-  //   //     res[ i ] = sfheaders::sfg::sfg_multipoints( sfg );
-  //   //   }
-  //   // }
-  //
-  //   // now un-pack the res[] list to a single-level list
-  // }
-
-
-  // inline Rcpp::List cast_to_linestring( SEXP& sfg, std::string& geometry, std::string& cast_to ) {
-  //
-  //   R_xlen_t count = count_new_objects( sfg, cast_to );
-  //   Rcpp::Rcout << "new_objects: " << count << std::endl;
-  //
-  //   if( geometry == "POINT") {
-  //
-  //   } else if ( geometry == "MULTIPOINT" ) {
-  //
-  //   } else if ( geometry == "LINESTRING" ) {
-  //
-  //   } else if ( geometry == "MULTILINESTRING" ) {
-  //
-  //   } else if ( geometry == "POLYGON" ) {
-  //     // Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-  //     // return lst;
-  //   } else if ( geometry == "MULTIPOLYGON" ) {
-  //     Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
-  //     return listListMat_to_mat( lst, cast_to );
-  //   } else {
-  //     Rcpp::stop("sfheaders - I don't know how to convert this objet to a POLYGON");
-  //   }
-  // }
 
   inline SEXP point_to_multilinestring( Rcpp::NumericVector& nv, std::string xyzm ) {
     return sfheaders::sfg::sfg_multilinestring( nv, xyzm );
@@ -290,6 +254,7 @@ namespace cast {
   }
 
   inline SEXP multilinestring_to_point( Rcpp::List& lst, std::string xyzm ) {
+
     R_xlen_t n_points = 0;
     R_xlen_t i, j;
     R_xlen_t n_linestrings = lst.size();
@@ -321,12 +286,11 @@ namespace cast {
 
   inline SEXP multilinestring_to_linestring( Rcpp::List& lst, std::string xyzm ) {
     Rcpp::List l = sfheaders::sfg::sfg_linestrings( lst, xyzm );
-    // Rcpp::Rcout << "l size: " << l.size() << std::endl;
     return l;
   }
 
-  inline SEXP multilinestring_to_multilinestring( Rcpp::List& lst, std::string xyzm ) {
-    return sfheaders::sfg::sfg_multilinestring( lst, xyzm );
+  inline SEXP multilinestring_to_multilinestring( SEXP& obj, std::string xyzm ) {
+    return sfheaders::sfg::sfg_multilinestring( obj, xyzm );
   }
 
   inline SEXP multilinestring_to_polygon( Rcpp::List& lst, std::string xyzm, bool close = true ) {
@@ -384,9 +348,9 @@ namespace cast {
 
   inline SEXP polygon_to_multipolygon( Rcpp::List& lst, std::string xyzm, bool close = true ) {
     Rcpp::List lst2 = Rcpp::clone( lst );
-    //lst.attr("class") = R_NilValue; // this will update the input by-reference
-    // not doing it will leave the sfg_POLYGON class on the inner-polygons of the MULTIPOLYGON
-    // not sure if this is an issue or note.
+    // //lst.attr("class") = R_NilValue; // this will update the input by-reference
+    // // not doing it will leave the sfg_POLYGON class on the inner-polygons of the MULTIPOLYGON
+    // // not sure if this is an issue or note.
     Rcpp::List mpl(1);
     mpl[0] = lst2;
     return sfheaders::sfg::sfg_multipolygon( mpl, xyzm, close );
@@ -464,6 +428,7 @@ namespace cast {
   }
 
   inline SEXP multipolygon_to_linestring( Rcpp::List& lst, std::string xyzm ) {
+
     // will return more than 1 list
     R_xlen_t n = lst.size();
     Rcpp::List lines( n );
@@ -490,6 +455,7 @@ namespace cast {
 
 
   inline SEXP multipolygon_to_multilinestring( Rcpp::List& lst, std::string xyzm ) {
+    // multipolygon is a list
     Rcpp::List lst2 = Rcpp::clone( lst );
     return sfheaders::sfg::sfg_multilinestrings( lst2, xyzm );
   }
@@ -519,7 +485,7 @@ namespace cast {
       Rcpp::List lst = Rcpp::as< Rcpp::List >( sfg );
       return multipolygon_to_point( lst, xyzm );
     } else {
-      Rcpp::stop("sfheaders - I don't know how to convert this objet to a MULTIPOINT"); // #nocov
+      Rcpp::stop("sfheaders - I don't know how to convert this objet to a POINT"); // #nocov
     }
     return Rcpp::List(); // #nocov
   }

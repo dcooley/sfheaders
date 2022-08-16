@@ -12,6 +12,17 @@ namespace sfg {
     }
   }
 
+  inline std::string guess_xyzm( R_xlen_t n_col ) {
+
+    switch( n_col ) {
+    case 2: { return "XY"; }
+    case 3: { return "XYZ"; }
+    case 4: { return "XYZM"; }
+    default: { Rcpp::stop("sfheaders - can't work out the dimension"); }
+    }
+    return ""; // #nocov - never reaches
+  }
+
   // re-write
   // it can be XYM, and we'll know from R based on the x, y, m columns specified.
   // but if none are specified, and just 3 columns, it will defualt to XYZ
@@ -44,23 +55,15 @@ namespace sfg {
     return dim;
   }
 
-  inline std::string sfg_dimension( Rcpp::IntegerVector& iv, std::string xyzm = "" ) {
-    R_xlen_t n = iv.size();
+  template< int RTYPE >
+  inline std::string sfg_dimension( Rcpp::Vector< RTYPE >& vec, std::string xyzm = "" ) {
+    R_xlen_t n = vec.size();
     return sfg_dimension( n, xyzm );
   }
 
-  inline std::string sfg_dimension( Rcpp::NumericVector& nv, std::string xyzm = "" ) {
-    R_xlen_t n = nv.size();
-    return sfg_dimension( n, xyzm );
-  }
-
-  inline std::string sfg_dimension( Rcpp::IntegerMatrix& im, std::string xyzm = "" ) {
-    R_xlen_t n_col = im.ncol();
-    return sfg_dimension( n_col, xyzm );
-  }
-
-  inline std::string sfg_dimension( Rcpp::NumericMatrix& nm, std::string xyzm = "" ) {
-    R_xlen_t n_col = nm.ncol();
+  template< int RTYPE >
+  inline std::string sfg_dimension( Rcpp::Matrix< RTYPE >& mat, std::string xyzm = "" ) {
+    R_xlen_t n_col = mat.ncol();
     return sfg_dimension( n_col, xyzm );
   }
 

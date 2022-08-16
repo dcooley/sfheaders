@@ -4,14 +4,16 @@
 \alias{sf_line}
 \title{Helper for sf LINESTRING}
 \usage{
-sf_line(obj, keep = FALSE)
+sf_line(obj, keep = FALSE, list_columns = NULL)
 }
 \arguments{
-\item{obj}{sorted vector, matrix or data.frame}
+\item{obj}{sorted matrix or data.frame}
 
 \item{keep}{logical indicating if the non-geometry and non-id columns should be kept.
 if TRUE you must supply the geometry and id columns, and only the first row of
 each geometry is kept. See Keeping Properties.}
+
+\item{list_columns}{vector of column names to turn into a list.}
 }
 \value{
 \code{sf} object of LINESTRING geometries

@@ -13,11 +13,16 @@ namespace sfg {
     Rcpp::List sfcs(n);
 
     for( i = 0; i < n; ++i ) {
-      SEXP x = lst[i];
+      Rcpp::NumericMatrix x = lst[i];    // multipoints are matrices
       sfcs[i] = sfheaders::sfg::sfg_multipoint( x, xyzm );
     }
     return sfcs;
   }
+
+  // inline Rcpp::List sfg_multipoints( SEXP& obj, std::string xyzm ) {
+  //   Rcpp::List lst = geometries::utils::as_list( obj );
+  //   return sfg_multipoints( lst, xyzm );
+  // }
 
 } // sfg
 } // sfheaders
