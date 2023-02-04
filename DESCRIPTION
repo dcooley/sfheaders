@@ -1,8 +1,8 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2021-05-10
-Version: 0.4.1
+Date: 2023-02-04
+Version: 0.4.2
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre")),
     person(given = "Michael", family = "Sumner", role = "ctb")
@@ -14,14 +14,13 @@ License: MIT + file LICENSE
 URL: https://dcooley.github.io/sfheaders/
 BugReports: https://github.com/dcooley/sfheaders/issues
 Encoding: UTF-8
-RoxygenNote: 7.1.1
-SystemRequirements: C++11
+RoxygenNote: 7.2.3
+SystemRequirements: C++17
 LinkingTo: 
     geometries,
     Rcpp
 Imports: 
-    geometries (>= 0.2.1),
-    Rcpp
+    Rcpp (>= 1.0.10)
 Suggests:
     covr,
     knitr,

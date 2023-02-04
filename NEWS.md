@@ -1,4 +1,8 @@
 
+# v0.4.2
+
+* updated C++ dependencies
+
 # v0.4
 
 * list-column properties are better supported for nested geometries (MULTILINESTRING, POLYGON, MULTIPOLYGON)

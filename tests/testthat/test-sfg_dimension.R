@@ -8,6 +8,9 @@ test_that("sfg dimensions", {
   expect_equal( sfheaders:::rcpp_sfg_dimension( 1:4, "" ), "XYZM" )
   expect_error( sfheaders:::rcpp_sfg_dimension( 1:5, "" ), "sfheaders - invalid dimension" )
 
+  expect_equal( sfheaders:::rcpp_sfg_dimension( c(NA_real_, NA_real_), "" ), "XY" ) ## geojsonsf issue 91
+  # expect_error( sfheaders:::rcpp_sfg_dimension( c(NA_real_, NA_real_), "" ), "XY" ) ## geojsonsf issue 91
+
   m <- matrix(1:2, ncol = 2 )
   expect_equal( sfheaders:::rcpp_sfg_dimension( m, "" ), "XY" )
   m <- matrix(1:3, ncol = 3 )

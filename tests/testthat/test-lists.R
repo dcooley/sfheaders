@@ -362,6 +362,7 @@ test_that("list columns get casted ", {
 
    sf_poly <- sfheaders::sf_cast( sf_line, "POLYGON" )
 
+   expect_equal(sf_poly$s, list(df$s))
 
 })
 
