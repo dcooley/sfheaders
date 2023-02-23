@@ -12,3 +12,4 @@
 ^Vignettes*
 ^\.github$
 ^LICENSE\.md$
+^CRAN-SUBMISSION$
