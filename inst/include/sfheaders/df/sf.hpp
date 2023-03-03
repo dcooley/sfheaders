@@ -77,7 +77,6 @@ namespace df {
 
     for( i = 0; i < sfc_df_names.length(); ++i ) {
       Rcpp::String geom = sfc_df_names[ i ];
-      std::find( geometry_columns.begin(), geometry_columns.end(), geom );
       is_in = geometries::utils::where_is( geom, geometry_columns );
       keep_columns[ i ] = is_in == -1 ? false : true;
     }
