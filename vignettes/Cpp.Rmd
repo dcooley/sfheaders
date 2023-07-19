@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 ```{r packages, include = FALSE, eval = T}
 library(Rcpp)
 library(sfheaders)
-library(sf)
+# library(sf)
 ```
 
 There are two ways you can use the C++ code
@@ -88,11 +88,11 @@ cppFunction(
 )
 
 ## vector
-a_point( c(1,2) )
+a_point( c(1,3) )
 ## single-row matrix
 a_point( matrix(c(1,2), ncol = 2) )
 ## single-row data.frame
-a_point( data.frame(x =1, y = 2) )
+a_point( data.frame(x = 1, y = 2) )
 ```
 
 

@@ -99,16 +99,16 @@ namespace sfg {
       SEXP& x,
       std::string xyzm
   ) {
-    SEXP geometry_cols;
-    SEXP linestring_id;
+    SEXP geometry_cols = R_NilValue;
+    SEXP linestring_id = R_NilValue;
     return sfg_multilinestring( x, geometry_cols, linestring_id, xyzm );
   }
 
   inline SEXP sfg_multilinestring(
       SEXP& x
   ) {
-    SEXP geometry_cols;
-    SEXP linestring_id;
+    SEXP geometry_cols = R_NilValue;
+    SEXP linestring_id = R_NilValue;
     std::string xyzm;
     return sfg_multilinestring( x, geometry_cols, linestring_id, xyzm );
   }

@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 
 ```{r, eval = T, warning=FALSE, message = FALSE}
 library(sfheaders)
-library(sf) ## for nice printing
+# library(sf) ## for nice printing (disabled on github actinos!)
 ```
 
 

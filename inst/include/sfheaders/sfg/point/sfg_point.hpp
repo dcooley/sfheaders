@@ -43,14 +43,14 @@ namespace sfg {
       SEXP& x,
       std::string xyzm
   ) {
-    SEXP geometry_cols;
+    SEXP geometry_cols = R_NilValue;
     return sfg_point( x, geometry_cols, xyzm );
   }
 
   inline SEXP sfg_point(
       SEXP& x
   ) {
-    SEXP geometry_cols;
+    SEXP geometry_cols = R_NilValue;
     std::string xyzm;
     return sfg_point( x, geometry_cols, xyzm );
   }

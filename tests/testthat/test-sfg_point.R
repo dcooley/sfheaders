@@ -2,6 +2,8 @@ context("sfg_point")
 
 test_that("sfg_POINTS returned from various R objects from src", {
 
+  # sfheaders:::rcpp_sfg_point()
+
   ## vectors
   x <- c(0L,0L)
   pt <- sfheaders:::rcpp_sfg_point( x, NULL, "" )
