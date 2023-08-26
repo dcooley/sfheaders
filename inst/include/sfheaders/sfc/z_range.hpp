@@ -106,9 +106,13 @@ namespace zm {
 
     T d = point[2];
 
+    if ( std::isnan( d ) ) { return; };
+
     //xmin, ymin, xmax, ymax
     z_range[0] = std::min( d, z_range[0] );
     z_range[1] = std::max( d, z_range[1] );
+
+    // Rcpp::Rcout << "z_range 13 : " << z_range << std::endl;
   }
 
   inline void calculate_z_range(
@@ -121,8 +125,12 @@ namespace zm {
 
     double d = static_cast< double >( i );
 
+    if ( std::isnan( d ) ) { return; };
+
     z_range[0] = std::min( d, z_range[0] );
     z_range[1] = std::max( d, z_range[1] );
+
+    // Rcpp::Rcout << "z_range 12 : " << z_range << std::endl;
 
     //calculate_z_range( z_range, d );
   }
@@ -142,8 +150,10 @@ namespace zm {
     double mn = static_cast< double >( zmin );
     double mx = static_cast< double >( zmax );
 
-    z_range[0] = std::min( mn, z_range[0] );
-    z_range[1] = std::max( mx, z_range[1] );
+    z_range[0] = std::isnan( mn ) ? z_range[0] : std::min( mn, z_range[0] );
+    z_range[1] = std::isnan( mx ) ? z_range[1] : std::max( mx, z_range[1] );
+
+    // Rcpp::Rcout << "z_range 11 : " << z_range << std::endl;
   }
 
   template< int RTYPE >
@@ -164,6 +174,8 @@ namespace zm {
     z_range[0] = std::min( zmin, z_range[0] );
     z_range[1] = std::max( zmax, z_range[1] );
 
+    // Rcpp::Rcout << "z_range 10 : " << z_range << std::endl;
+
   }
 
   inline void calculate_z_range(
@@ -180,6 +192,8 @@ namespace zm {
 
     z_range[0] = std::min( zmin, z_range[0] );
     z_range[1] = std::max( zmax, z_range[1] );
+
+    // Rcpp::Rcout << "z_range 9 : " << z_range << std::endl;
 
   }
 
@@ -235,8 +249,12 @@ namespace zm {
 
       double zz = static_cast< double >( z );
 
+      if ( std::isnan( zz ) ) { return; };
+
       z_range[0] = std::min( zz, z_range[0] );
       z_range[1] = std::max( zz, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 8 : " << z_range << std::endl;
     }
   }
 
@@ -260,6 +278,8 @@ namespace zm {
 
       z_range[0] = std::min( z, z_range[0] );
       z_range[1] = std::max( z, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 7 : " << z_range << std::endl;
     }
   }
 
@@ -280,6 +300,8 @@ namespace zm {
 
       z_range[0] = std::min( mn, z_range[0] );
       z_range[1] = std::max( mx, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 6 : " << z_range << std::endl;
     }
   }
 
@@ -305,6 +327,8 @@ namespace zm {
 
       z_range[0] = std::min( mn, z_range[0] );
       z_range[1] = std::max( mx, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 5 : " << z_range << std::endl;
     }
   }
 
@@ -325,6 +349,8 @@ namespace zm {
 
       z_range[0] = std::min( zmin, z_range[0] );
       z_range[1] = std::max( zmax, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 4 : " << z_range << std::endl;
     }
   }
 
@@ -348,6 +374,8 @@ namespace zm {
 
       z_range[0] = std::min( zmin, z_range[0] );
       z_range[1] = std::max( zmax, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 3 : " << z_range << std::endl;
     }
   }
 
@@ -365,6 +393,8 @@ namespace zm {
 
       z_range[0] = std::min( zmin, z_range[0] );
       z_range[1] = std::max( zmax, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 2 : " << z_range << std::endl;
     }
   }
 
@@ -385,6 +415,8 @@ namespace zm {
 
       z_range[0] = std::min( zmin, z_range[0] );
       z_range[1] = std::max( zmax, z_range[1] );
+
+      // Rcpp::Rcout << "z_range 1 : " << z_range << std::endl;
     }
   }
 
