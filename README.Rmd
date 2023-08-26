@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 ```
 
 [![R build status](https://github.com/dcooley/sfheaders/workflows/R-CMD-check/badge.svg)](https://github.com/dcooley/sfheaders/actions)
-[![Coverage status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://codecov.io/github/dcooley/sfheaders?branch=master)
+[![Coverage status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://app.codecov.io/github/dcooley/sfheaders?branch=master)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/sfheaders)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/sfheaders)](https://CRAN.R-project.org/package=sfheaders)
 

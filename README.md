@@ -2,7 +2,7 @@
 [![R build
 status](https://github.com/dcooley/sfheaders/workflows/R-CMD-check/badge.svg)](https://github.com/dcooley/sfheaders/actions)
 [![Coverage
-status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://codecov.io/github/dcooley/sfheaders?branch=master)
+status](https://codecov.io/gh/dcooley/sfheaders/branch/master/graph/badge.svg)](https://app.codecov.io/github/dcooley/sfheaders?branch=master)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/sfheaders)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/sfheaders)](https://CRAN.R-project.org/package=sfheaders)
@@ -39,7 +39,7 @@ Yes. Your data has to be ordered before coverting to `sf`.
 
 They’re on the
 [website](https://dcooley.github.io/sfheaders/articles/examples.html).
-GO NOW\!
+GO NOW!
 
 (however, here’s a taster)
 

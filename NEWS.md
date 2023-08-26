@@ -1,4 +1,8 @@
 
+# v0.4.3
+
+* removed C++ system requirements
+
 # v0.4.2
 
 * updated C++ dependencies
