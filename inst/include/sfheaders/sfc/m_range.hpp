@@ -69,6 +69,9 @@ namespace zm {
       T& val
   ) {
     T d = static_cast< T >( val );
+
+    if ( std::isnan( d ) ) { return; };
+
     //calculate_m_range( m_range, d );
     m_range[0] = std::min( d, m_range[0] );
     m_range[1] = std::max( d, m_range[1] );
@@ -85,6 +88,9 @@ namespace zm {
     typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
 
     T d = point[2];
+
+    if ( std::isnan( d ) ) { return; };
+
     //xmin, ymin, xmax, ymax
     m_range[0] = std::min( d, m_range[0] );
     m_range[1] = std::max( d, m_range[1] );
@@ -101,6 +107,9 @@ namespace zm {
     typedef typename Rcpp::traits::storage_type< RTYPE >::type T;
 
     T d = xyzm == "XYM" ? point[2] : point[3];
+
+    if ( std::isnan( d ) ) { return; };
+
     //xmin, ymin, xmax, ymax
     m_range[0] = std::min( d, m_range[0] );
     m_range[1] = std::max( d, m_range[1] );
@@ -116,6 +125,8 @@ namespace zm {
     int i = xyzm == "XYM" ? point[2] : point[3];
 
     double d = static_cast< double >( i );
+
+    if ( std::isnan( d ) ) { return; };
 
     //calculate_m_range( m_range, d );
     m_range[0] = std::min( d, m_range[0] );
@@ -138,8 +149,8 @@ namespace zm {
     double dmin = static_cast< double >( zmin );
     double dmax = static_cast< double >( zmax );
 
-    m_range[0] = std::min( dmin, m_range[0] );
-    m_range[1] = std::max( dmax, m_range[1] );
+    m_range[0] = std::isnan( dmin ) ? m_range[0] : std::min( dmin, m_range[0] );
+    m_range[1] = std::isnan( dmax ) ? m_range[1] : std::max( dmax, m_range[1] );
 
   }
 
