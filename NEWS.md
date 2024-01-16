@@ -1,4 +1,8 @@
 
+# v0.4.4
+
+* bumped {geometries} dependency
+
 # v0.4.3
 
 * removed C++ system requirements
