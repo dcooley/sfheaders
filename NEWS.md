@@ -1,3 +1,6 @@
+# v0.4.5
+
+* Checks for missing Z and M values [issue 100](https://github.com/dcooley/sfheaders/issues/100)
 
 # v0.4.4
 
