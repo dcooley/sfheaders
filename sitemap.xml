@@ -1,129 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Cpp.html</loc>
-  </url>
-  <url>
-    <loc>/articles/examples.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_bbox.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_boxes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_cast.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_line.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_linestring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_mline.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_mpoly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_mpt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_multilinestring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_multipoint.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_multipolygon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_point.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_poly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_polygon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_pt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_remove_holes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sf_to_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_cast.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_linestring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_multilinestring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_multipoint.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_multipolygon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_point.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_polygon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfc_to_df.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_linestring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_multilinestring.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_multipoint.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_multipolygon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_point.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_polygon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sfg_to_df.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/Cpp.html</loc></url>
+<url><loc>/articles/examples.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/sf_bbox.html</loc></url>
+<url><loc>/reference/sf_boxes.html</loc></url>
+<url><loc>/reference/sf_cast.html</loc></url>
+<url><loc>/reference/sf_line.html</loc></url>
+<url><loc>/reference/sf_linestring.html</loc></url>
+<url><loc>/reference/sf_mline.html</loc></url>
+<url><loc>/reference/sf_mpoly.html</loc></url>
+<url><loc>/reference/sf_mpt.html</loc></url>
+<url><loc>/reference/sf_multilinestring.html</loc></url>
+<url><loc>/reference/sf_multipoint.html</loc></url>
+<url><loc>/reference/sf_multipolygon.html</loc></url>
+<url><loc>/reference/sf_point.html</loc></url>
+<url><loc>/reference/sf_poly.html</loc></url>
+<url><loc>/reference/sf_polygon.html</loc></url>
+<url><loc>/reference/sf_pt.html</loc></url>
+<url><loc>/reference/sf_remove_holes.html</loc></url>
+<url><loc>/reference/sf_to_df.html</loc></url>
+<url><loc>/reference/sfc_cast.html</loc></url>
+<url><loc>/reference/sfc_linestring.html</loc></url>
+<url><loc>/reference/sfc_multilinestring.html</loc></url>
+<url><loc>/reference/sfc_multipoint.html</loc></url>
+<url><loc>/reference/sfc_multipolygon.html</loc></url>
+<url><loc>/reference/sfc_point.html</loc></url>
+<url><loc>/reference/sfc_polygon.html</loc></url>
+<url><loc>/reference/sfc_to_df.html</loc></url>
+<url><loc>/reference/sfg_linestring.html</loc></url>
+<url><loc>/reference/sfg_multilinestring.html</loc></url>
+<url><loc>/reference/sfg_multipoint.html</loc></url>
+<url><loc>/reference/sfg_multipolygon.html</loc></url>
+<url><loc>/reference/sfg_point.html</loc></url>
+<url><loc>/reference/sfg_polygon.html</loc></url>
+<url><loc>/reference/sfg_to_df.html</loc></url>
 </urlset>
+
