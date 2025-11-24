@@ -14,13 +14,13 @@ License: MIT + file LICENSE
 URL: https://dcooley.github.io/sfheaders/
 BugReports: https://github.com/dcooley/sfheaders/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Depends: R (>= 3.0.2)
 LinkingTo: 
     geometries (>= 0.2.4),
     Rcpp
 Imports: 
-    Rcpp (>= 1.0.10)
+    Rcpp (>= 1.1.0)
 Suggests:
     covr,
     knitr,
