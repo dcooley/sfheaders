@@ -1,7 +1,7 @@
 Package: sfheaders
 Type: Package
 Title: Converts Between R Objects and Simple Feature Objects
-Date: 2024-07-30
+Date: 2025-11-24
 Version: 0.4.5
 Authors@R: c(
     person("David", "Cooley", ,"david.cooley.au@gmail.com", role = c("aut", "cre")),
@@ -17,7 +17,7 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 Depends: R (>= 3.0.2)
 LinkingTo: 
-    geometries (>= 0.2.4),
+    geometries (>= 0.2.5),
     Rcpp
 Imports: 
     Rcpp (>= 1.1.0)
